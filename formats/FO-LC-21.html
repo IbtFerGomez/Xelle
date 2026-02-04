@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-21 Bitácora</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Estilos para campos autogenerados */
+        .auto-code {
+            background-color: #f0f4f8;
+            font-weight: bold;
+            color: #333;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 11px;
+        }
+        .footnote {
+            font-size: 10px; 
+            color: #555; 
+            margin-top: 5px; 
+            font-style: italic;
+        }
+    </style>
+</head>
+<body id="doc-fo-lc-21">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Bitácora</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-21-</span>
+                    <input type="text" id="reg-21" class="registry-input generate-barcode" data-target="barcode-21" data-prefix="FO-LC-21-">
+                </div>
+                <input type="date" class="registry-date no-auto-date">
+                <svg id="barcode-21" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>FORMATO BITÁCORA DE CULTIVO Y MANTENIMIENTO CELULAR.</h1>
+            <div class="metadata">Código: FO-LC-21 | Versión: 1.0 | Vig: Ene2026</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">1. Insumos y Reactivos del Día</div>
+            <table id="tabla-insumos-dia">
+                <thead>
+                    <tr>
+                        <th width="30%">Insumo</th>
+                        <th width="25%">Marca</th>
+                        <th width="25%">Lote</th>
+                        <th width="20%">Caducidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit" value="Medio Completo (MC)" readonly style="background-color: #f9f9f9; font-weight:bold;"></td>
+                        <td><input class="cedit"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" value="DPBS" readonly style="background-color: #f9f9f9; font-weight:bold;"></td>
+                        <td><input class="cedit"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" value="DMSO" readonly style="background-color: #f9f9f9; font-weight:bold;"></td>
+                        <td><input class="cedit"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" value="ENZYMA TRYPLE" readonly style="background-color: #f9f9f9; font-weight:bold;"></td>
+                        <td><input class="cedit"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" placeholder="OTROS (Especifique)..."></td>
+                        <td><input class="cedit"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                2. Gestión de Unidades de Cultivo (Flasks Activos)
+            </div>
+            <table id="tabla-flasks" class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="18%">CÓDIGO FLASK</th>
+                        <th width="12%">Línea</th>
+                        <th width="6%">Pasaje</th>
+                        <th width="10%">Fecha</th>
+                        <th width="5%">#</th>
+                        <th width="10%">Recipiente</th>
+                        <th width="5%">Inc</th>
+                        <th width="8%">Cant. (M)</th>
+                        <th width="8%">Viab %</th>
+                        <th width="12%">Estado</th>
+                        <th width="5%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-flasks"></tbody>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addFlaskManual21()" style="margin-top:5px;">+ Agregar Flask</button>
+        </div>
+
+        <div class="section">
+            <div class="section-title">3. Nuevos Flasks (Resultados Subcultivo)</div>
+            <table id="tabla-nuevos-flasks" class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="15%">Flask/Criovial Origen</th>
+                        <th width="8%">Línea</th>
+                        <th width="6%">Pasaje</th>
+                        <th width="10%">Recipiente</th>
+                        <th width="5%">#</th>
+                        <th width="20%">CÓDIGO</th>
+                        <th width="10%">Cant. Sembrada</th>
+                        <th width="10%">Incubadora</th>
+                        <th width="5%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-nuevos"></tbody>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addSubcultivoRow()">+ Subcultivo</button>
+        </div>
+
+        <div class="section">
+            <div class="section-title">4. Resumen de Cosechas (Salidas)</div>
+            <table id="tabla-cosechas" class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="20%">Flask Origen</th>
+                        <th width="15%">Cosecha Final Aprox.</th>
+                        <th width="15%">Conteo Real</th>
+                        <th width="20%">Destino</th>
+                        <th width="25%">Código Destino*</th>
+                        <th width="5%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-cosechas"></tbody>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addCosechaRow()">+ Cosecha</button>
+            <div class="footnote">* CRIOVIAL, FLASK, DOSIS.</div>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box"><p>Realizó:</p><input type="text"><p>Firma</p></div>
+            <div class="signature-box"><p>Verificó:</p><input type="text"><p>Firma</p></div>
+        </div>
+        <div class="footer">FO-LC-21 | Versión: 1.0 | Vigente a partir de: Enero2026 <br>El contenido de este documento es propiedad 
+            de “Xelle Scientific”, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+
+    <script>
+        // Opciones de recipiente compartidas
+        const recipientOptions = `
+            <option value="T-25">T-25</option>
+            <option value="T-75">T-75</option>
+            <option value="T-175">T-175</option>
+            <option value="T-225">T-225</option>
+            <option value="HF">HyperFlask</option>
+            <option value="CS-1">CS-1</option>
+            <option value="CS-2">CS-2</option>
+            <option value="CS-5">CS-5</option>
+        `;
+
+        // SECCIÓN 2: FLASKS ACTIVOS
+        function addFlaskManual21() {
+            const tbody = document.getElementById('tbody-flasks');
+            const row = document.createElement('tr');
+            
+            row.innerHTML = `
+                <td><input class="cedit code-input auto-code" readonly tabindex="-1"></td>
+                <td><input class="cedit linea-input" placeholder="Ej. TPL32" oninput="autoGenFlaskCode21(this)"></td>
+                <td><input class="cedit pase-input" placeholder="P#" oninput="autoGenFlaskCode21(this)"></td>
+                <td><input type="date" class="cedit"></td>
+                <td><input type="number" class="cedit num-input" value="1" style="width:40px" oninput="autoGenFlaskCode21(this)"></td>
+                <td><select class="cedit recip-select" onchange="autoGenFlaskCode21(this)">${recipientOptions}</select></td>
+                <td><input class="cedit" style="width:40px"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td>
+                    <select class="cedit">
+                        <option>ACTIVO</option>
+                        <option>CUARENTENA</option>
+                        <option>PARA PASE</option>
+                        <option>PARA COSECHA</option>
+                        <option>CONTAMINADO</option>
+                        <option>BAJA</option>
+                    </select>
+                </td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        // SECCIÓN 3: SUBCULTIVO
+        function addSubcultivoRow() {
+            const tbody = document.getElementById('tbody-nuevos');
+            const row = document.createElement('tr');
+            
+            row.innerHTML = `
+                <td><input class="cedit" placeholder="Origen..."></td>
+                <td><input class="cedit linea-input" placeholder="Línea" oninput="autoGenFlaskCode21(this)"></td>
+                <td><input class="cedit pase-input" placeholder="P#" oninput="autoGenFlaskCode21(this)"></td>
+                <td><select class="cedit recip-select" onchange="autoGenFlaskCode21(this)">${recipientOptions}</select></td>
+                <td><input type="number" class="cedit num-input" value="1" style="width:40px" oninput="autoGenFlaskCode21(this)"></td>
+                <td><input class="cedit code-input auto-code" readonly tabindex="-1"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        // SECCIÓN 4: COSECHAS
+        function addCosechaRow() {
+            const tbody = document.getElementById('tbody-cosechas');
+            const row = document.createElement('tr');
+            
+            row.innerHTML = `
+                <td><input class="cedit" placeholder="Flask Origen..."></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td>
+                    <select class="cedit">
+                        <option>DOSIFICACION</option>
+                        <option>RESIEMBRA</option>
+                        <option>CRIOPRESERVACION</option>
+                    </select>
+                </td>
+                <td><input class="cedit"></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        // GENERADOR DE CÓDIGO ÚNICO (COMPARTIDO SECCIÓN 2 Y 3)
+        // Formato: LINEA-PASAJE-RECIPIENTE-NUMERO
+        function autoGenFlaskCode21(el) {
+            const row = el.closest('tr');
+            if(!row) return;
+
+            const linea = row.querySelector('.linea-input').value.trim();
+            const pase = row.querySelector('.pase-input').value.trim();
+            const num = row.querySelector('.num-input').value.trim();
+            const recip = row.querySelector('.recip-select').value;
+
+            let code = "";
+            if (linea && pase && num) {
+                code = `${linea}-${pase}-${recip}-${num}`;
+            }
+            
+            const codeField = row.querySelector('.code-input');
+            if(codeField) codeField.value = code.toUpperCase();
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('tbody-flasks').children.length === 0) addFlaskManual21();
+            if(document.getElementById('tbody-nuevos').children.length === 0) addSubcultivoRow();
+        });
+    </script>
+</body>
+</html>

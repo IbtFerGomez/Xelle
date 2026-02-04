@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-30 Registro Lote</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-title { background-color: #2c3e50; color: white; padding: 5px 10px; font-weight: bold; margin-top: 15px; font-size: 12px; }
+        .calc-output { background-color: #f0f4f8; font-weight: bold; color: #333; }
+        .sig-block { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; background: #f9f9f9; }
+        
+        /* Regla estricta para no imprimir placeholders */
+        @media print {
+            input::placeholder, textarea::placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body id="doc-fo-lc-30">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Lote PT</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-30-</span>
+                    <input type="text" id="reg-30" class="registry-input generate-barcode" data-target="barcode-30" placeholder="Lote Final">
+                </div>
+                <input type="date" class="registry-date no-auto-date">
+                <svg id="barcode-30" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>FORMATO DE ACONDICIONAMIENTO Y REGISTRO DE LOTE DE PRODUCTO TERMINADO.</h1>
+            <div class="metadata">Código: FO-LC-30 | Versión: 1.0 | Vig: Ene2026</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">1. INFORMACIÓN GENERAL</div>
+            <table class="no-border-table">
+                <tr>
+                    <td width="40%"><strong>Nombre del Producto:</strong> 
+                        <select id="prod-select" class="cedit" onchange="updateProductLogic()">
+                            <option value="">- Seleccione -</option>
+                            <option value="STEM">Stem Xelle (Estándar)</option>
+                            <option value="ORTHO">Stem Ortho (Xelle)</option>
+                            <option value="HYBRID">Hybrid Xelle (Estándar)</option>
+                            <option value="HYBRID_ORTHO">Hybrid Ortho</option>
+                            <option value="BREATH">X-Breath Nebulizer</option>
+                            <option value="EXO">X-Exosomes</option>
+                            <option value="HA">X-Exosomes HA</option>
+                            <option value="IMPLANT">X-Implant</option>
+                            <option value="WOUND">X-Wound Care</option>
+                        </select>
+                    </td>
+                    <td width="30%"><strong>Presentación:</strong> <input class="cedit" list="presentaciones-list" placeholder="Ej. 10M">
+                        <datalist id="presentaciones-list">
+                            <option value="10 M">
+                            <option value="25 M">
+                            <option value="50 M">
+                            <option value="100 M">
+                            <option value="10M + 1B">
+                            <option value="Única">
+                            <option value="3B / 9B / 15B">
+                            <option value="1G / 2G">
+                            <option value="5x5 / 10x10">
+                        </datalist>
+                    </td>
+                    <td width="30%"><strong>Cant. Teórica (Unidades):</strong> <input type="number" id="cant-teorica" class="cedit" oninput="calcYield()" placeholder="0"></td>
+                </tr>
+                <tr>
+                    <td><strong>Número de Lote:</strong> <input class="cedit" id="lote-auto" placeholder="Prefijo + AAMMDD"></td>
+                    <td><strong>Fecha de Fabricación:</strong> <input type="date" id="fecha-fab" class="cedit" onchange="updateProductLogic()"></td>
+                    <td><strong>Fecha de Vencimiento:</strong> <input type="date" id="fecha-venc" class="cedit"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. COMPONENTES DEL PRODUCTO (GRANEL / ORIGEN)</div>
+            <table id="tbl-componentes" class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="25%">Componente</th>
+                        <th width="20%">Proveedor / Origen</th>
+                        <th width="15%">Lote</th>
+                        <th width="15%">Caducidad</th>
+                        <th width="10%">Cantidad</th>
+                        <th width="10%">Unidad</th>
+                        <th class="no-print" width="5%"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addCompRow()">+ Agregar Componente</button>
+        </div>
+
+        <div class="section">
+            <div class="section-title">3. MATERIALES DE ACONDICIONAMIENTO (PRIMARIOS Y SECUNDARIOS)</div>
+            <table id="tbl-materiales" class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="25%">Producto</th>
+                        <th width="20%">Tipo</th>
+                        <th width="15%">Lote</th>
+                        <th width="15%">Caducidad</th>
+                        <th width="15%">Cantidad</th>
+                        <th class="no-print" width="5%"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addMatRow()">+ Agregar Material</button>
+        </div>
+
+        <div class="section">
+            <div class="section-title">5. REGISTRO DE INSPECCIÓN Y CONTROL DURANTE EL PROCESO</div>
+            <div style="margin-bottom: 5px;">
+                <strong>Lote:</strong> <input class="cedit" style="width: 200px;" placeholder="Lote proceso...">
+                <strong>REF:</strong> <input class="cedit" style="width: 150px;" placeholder="Referencia SOP...">
+            </div>
+            <table id="tbl-control" class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="5%">ID (#)</th>
+                        <th width="30%">Muestra / Verificación (Parámetro)</th>
+                        <th width="10%">Código</th>
+                        <th width="20%">Especificación</th>
+                        <th width="10%">Resultado</th>
+                        <th width="15%">Observaciones</th>
+                        <th width="10%">Responsable</th>
+                        <th class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addControlRow()">+ Control</button>
+        </div>
+
+        <div class="section">
+            <div class="section-title">6. RECONCILIACIÓN DE PRODUCTO Y MATERIALES</div>
+            <table class="compact-table">
+                <tr>
+                    <td width="40%"><strong>Producto Terminado Obtenido (Unidades):</strong></td>
+                    <td><input type="number" id="cant-real" class="cedit" oninput="calcYield()" placeholder="0"></td>
+                </tr>
+                <tr>
+                    <td><strong>Mermas / Descarte Justificado:</strong></td>
+                    <td><input type="number" class="cedit" placeholder="0"></td>
+                </tr>
+                <tr>
+                    <td><strong>Causas:</strong></td>
+                    <td><textarea class="cedit" rows="1" placeholder="Explique las causas de mermas..."></textarea></td>
+                </tr>
+                <tr>
+                    <td style="background-color: #e8f6f3;"><strong>% Rendimiento:</strong></td>
+                    <td style="background-color: #e8f6f3;"><input id="yield-percent" class="cedit calc-output" readonly></td>
+                </tr>
+            </table>
+            <div style="margin-top:5px;">
+                <strong>Conclusión:</strong> 
+                <label><input type="radio" name="yield_status"> Dentro de límites</label> 
+                <label><input type="radio" name="yield_status"> Fuera de límites</label>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">7. VERIFICACIONES Y APROBACIONES</div>
+            
+            <div class="sig-block">
+                <p><strong>Operador(es) de Acondicionamiento:</strong></p>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <span style="width:50px;">Nombre:</span> <input type="text" class="cedit" style="flex:1" placeholder="Nombre completo">
+                    <span style="width:40px;">Firma:</span> <input type="text" class="cedit" style="flex:1" placeholder="Firma">
+                    <span style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px">
+                </div>
+            </div>
+
+            <div class="sig-block">
+                <p><strong>Supervisor de Producción:</strong></p>
+                <p style="font-size:11px; margin-bottom:5px;">Verificó que el proceso se realizó según procedimiento. <label><input type="checkbox"> Sí</label> <label><input type="checkbox"> No</label></p>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <span style="width:50px;">Nombre:</span> <input type="text" class="cedit" style="flex:1" placeholder="Nombre supervisor">
+                    <span style="width:40px;">Firma:</span> <input type="text" class="cedit" style="flex:1" placeholder="Firma">
+                    <span style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px">
+                </div>
+            </div>
+
+            <div class="sig-block">
+                <p><strong>Control de Calidad (Liberación Final):</strong></p>
+                <p style="font-size:11px; margin-bottom:5px;">Confirma que todos los datos están completos, las muestras fueron tomadas y el lote cumple con las especificaciones. <label><input type="checkbox"> Sí</label> <label><input type="checkbox"> No</label></p>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <span style="width:50px;">Nombre:</span> <input type="text" class="cedit" style="flex:1" placeholder="Nombre calidad">
+                    <span style="width:40px;">Firma:</span> <input type="text" class="cedit" style="flex:1" placeholder="Firma">
+                    <span style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">8. OBSERVACIONES, DESVIACIONES O INCIDENTES</div>
+            <textarea class="cedit" rows="4" placeholder="Registrar cualquier evento no planeado. Si no hay, escribir 'Ninguna'."></textarea>
+        </div>
+
+        <div class="footer">FO-LC-30 | Versión: 1.0 | Vigente a partir de: Enero2026<br>El contenido de este documento es propiedad de “Xelle Scientific”.</div>
+    </div>
+
+    <script>
+        const productRules = {
+            'STEM': { prefix: 'XCM', days: 4 }, 'ORTHO': { prefix: 'XOR', days: 4 },
+            'HYBRID': { prefix: 'XHY', days: 4 }, 'HYBRID_ORTHO': { prefix: 'XHO', days: 4 },
+            'BREATH': { prefix: 'XNB', months: 6 }, 'EXO': { prefix: 'EXO', months: 6 },
+            'HA': { prefix: 'XHA', months: 6 }, 'IMPLANT': { prefix: 'XIM', months: 24 },
+            'WOUND': { prefix: 'XWC', months: 12 }
+        };
+
+        function updateProductLogic() {
+            const code = document.getElementById('prod-select').value;
+            const dateStr = document.getElementById('fecha-fab').value;
+            if (!code || !productRules[code] || !dateStr) return;
+            
+            const rule = productRules[code];
+            const dateObj = new Date(dateStr);
+            const userTimezoneOffset = dateObj.getTimezoneOffset() * 60000;
+            const localDate = new Date(dateObj.getTime() + userTimezoneOffset);
+
+            if(!document.getElementById('lote-auto').value) {
+                const yy = String(localDate.getFullYear()).slice(2);
+                const mm = String(localDate.getMonth() + 1).padStart(2, '0');
+                const dd = String(localDate.getDate()).padStart(2, '0');
+                document.getElementById('lote-auto').value = `${rule.prefix}${yy}${mm}${dd}`;
+            }
+
+            let expDate = new Date(localDate);
+            if (rule.days) expDate.setDate(expDate.getDate() + rule.days);
+            else if (rule.months) expDate.setMonth(expDate.getMonth() + rule.months);
+            
+            const e_yyyy = expDate.getFullYear();
+            const e_mm = String(expDate.getMonth() + 1).padStart(2, '0');
+            const e_dd = String(expDate.getDate()).padStart(2, '0');
+            document.getElementById('fecha-venc').value = `${e_yyyy}-${e_mm}-${e_dd}`;
+        }
+
+        function calcYield() {
+            const teo = parseFloat(document.getElementById('cant-teorica').value);
+            const real = parseFloat(document.getElementById('cant-real').value);
+            const res = (teo > 0 && real >= 0) ? ((real / teo) * 100).toFixed(2) + '%' : '';
+            document.getElementById('yield-percent').value = res;
+        }
+
+        function addCompRow() {
+            const tbody = document.getElementById('tbl-componentes').querySelector('tbody');
+            const row = document.createElement('tr');
+            row.innerHTML = `<td><input class="cedit" placeholder="Comp..."></td><td><input class="cedit" placeholder="Prov..."></td><td><input class="cedit" placeholder="Lot..."></td><td><input type="date" class="cedit"></td><td><input type="number" class="cedit" placeholder="0"></td><td><input class="cedit" placeholder="Ud"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
+            tbody.appendChild(row);
+        }
+
+        function addMatRow() {
+            const tbody = document.getElementById('tbl-materiales').querySelector('tbody');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><input class="cedit" placeholder="Producto..."></td>
+                <td><select class="cedit"><option>Envase Primario</option><option>Envase Secundario</option><option>Otros Materiales</option></select></td>
+                <td><input class="cedit" placeholder="Lote..."></td>
+                <td><input type="date" class="cedit"></td>
+                <td><input type="number" class="cedit" placeholder="Cant..."></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        function addControlRow() {
+            const tbody = document.getElementById('tbl-control').querySelector('tbody');
+            const idNum = tbody.children.length + 1;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><input type="number" class="cedit text-center" value="${idNum}"></td>
+                <td><textarea class="cedit" rows="2" placeholder="Parámetro..."></textarea></td>
+                <td><input class="cedit" placeholder="Código..."></td>
+                <td><input class="cedit" placeholder="Espec..."></td>
+                <td><input class="cedit" placeholder="Res..."></td>
+                <td><input class="cedit" placeholder="Obs..."></td>
+                <td><input class="cedit" placeholder="Resp..."></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            addCompRow();
+            addMatRow();
+            addControlRow();
+        });
+    </script>
+</body>
+</html>

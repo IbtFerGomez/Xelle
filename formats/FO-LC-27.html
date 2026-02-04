@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-27 Control Equipos</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+</head>
+<body id="doc-fo-lc-27">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>No. Registro</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-27-</span>
+                    <input type="text" id="reg-27" class="registry-input generate-barcode" data-target="barcode-27" data-prefix="FO-LC-27-">
+                </div>
+                <input type="date" class="registry-date no-auto-date">
+                <svg id="barcode-27" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>BITÁCORA DE REGISTRO DE CONTROL DE EQUIPOS</h1>
+            <div class="metadata">Código: FO-LC-27 | Versión: 1.0 | Vig: Ene2026</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">SECCIÓN 1: CONTROL DE EQUIPOS</div>
+            <table id="tbl-equipos" class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="20%">Equipo</th>
+                        <th width="15%">N° Serie</th>
+                        <th width="15%">Temperatura Registrada</th>
+                        <th width="15%">Presión Registrada</th>
+                        <th width="20%">Mantenimiento Realizado</th>
+                        <th width="12%">Firma del Operador</th>
+                        <th width="3%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addEquipoRow()">+ Agregar Equipo</button>
+        </div>
+
+        <div class="signature-area" style="margin-top: 40px;">
+            <div class="signature-box">
+                <p>Operador:</p>
+                <input type="text" style="width: 100%;">
+                <p>Fecha: <input type="text" class="cedit" style="width: 120px; border:none; border-bottom:1px solid #000; text-align:center;" placeholder="DD/MM/AAAA"></p>
+            </div>
+            <div class="signature-box">
+                <p>Supervisor:</p>
+                <input type="text" style="width: 100%;">
+                <p>Fecha: <input type="text" class="cedit" style="width: 120px; border:none; border-bottom:1px solid #000; text-align:center;" placeholder="DD/MM/AAAA"></p>
+            </div>
+        </div>
+
+        <div class="footer">FO-LC-27 | Versión: 1.0 | Vigente a partir de: Enero2026<br>El contenido de este documento es propiedad 
+            de “Xelle Scientific”, S.A.P.I., de C. V.</div>
+    </div>
+
+    <script>
+        function addEquipoRow() {
+            const tbody = document.getElementById('tbl-equipos').querySelector('tbody');
+            const row = document.createElement('tr');
+            
+            row.innerHTML = `
+                <td><input class="cedit" placeholder="Nombre del Equipo"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        // Agregar fila inicial
+        document.addEventListener('DOMContentLoaded', () => {
+            if(document.querySelector('#tbl-equipos tbody').children.length === 0) {
+                addEquipoRow();
+            }
+        });
+    </script>
+</body>
+</html>

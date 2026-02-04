@@ -1,0 +1,80 @@
+# Estructura actualizada del proyecto
+
+- colores copy.py
+- colores.py
+- config-users.js
+- dashboard.html
+- estructura_completa.txt
+- index.html
+- Inicio Nueva version..txt
+- jquery-3.7.1.min.js
+- jszip.min.js
+- lims-core.js
+- lims-theme.css
+- Formatos completados/
+- formats/
+	- FO-LC-16.html
+	- FO-LC-17.html
+	- FO-LC-18.html
+	- FO-LC-19.html
+	- FO-LC-20.html
+	- FO-LC-21.html
+	- FO-LC-22.html
+	- FO-LC-23.html
+	- FO-LC-24.html
+	- FO-LC-25.html
+	- FO-LC-26.html
+	- FO-LC-27.html
+	- FO-LC-28.html
+	- FO-LC-29.html
+	- FO-LC-30.html
+	- FO-LC-31.html
+	- FO-LC-32.html
+	- FO-LC-40-B.html
+	- FO-LC-40.html
+	- FO-LC-41.html
+	- FO-LC-42.html
+	- FO-LC-43.html
+	- FO-LC-44.html
+	- FO-LC-45.html
+	- FO-OP-15.html
+	- FO-OP-16.html
+	- FO-OP-17.html
+	- FO-OP-20.html
+	- FO-OP-OP-01.html
+	- format-app-comercial.js
+	- format-app.js
+	- format-styles-comercial.css
+	- format-styles.css
+- formats-offLine/
+	- FO-LC-16-OffLine.html
+	- FO-LC-17-OffLine.html
+	- FO-LC-18-OffLine.html
+	- FO-LC-19-OffLine.html
+	- FO-LC-20-OffLine.html
+	- FO-LC-21-OffLine.html
+	- FO-LC-22-OffLine.html
+	- FO-LC-23-OffLine.html
+	- FO-LC-24-OffLine.html
+	- FO-LC-25-OffLine.html
+	- FO-LC-26-OffLine.html
+	- FO-LC-27-OffLine.html
+	- FO-LC-28-OffLine.html
+	- FO-LC-29-OffLine.html
+	- FO-LC-30-OffLine.html
+	- FO-LC-31-OffLine.html
+	- FO-LC-32-OffLine.html
+	- FO-LC-40-OffLine.html
+	- FO-LC-41-OffLine.html
+	- FO-LC-42-OffLine.html
+	- FO-LC-43-OffLine.html
+	- FO-LC-44-OffLine.html
+	- FO-LC-45-OffLine.html
+	- FO-OP-15.html
+	- FO-OP-16.html
+	- FO-OP-17.html
+	- FO-OP-20.html
+	- FO-OP-OP-01-OffLine.html
+	- format-app-OffLine.js
+	- format-styles-OffLine.css
+- Iconos/

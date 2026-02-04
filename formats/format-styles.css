@@ -1,0 +1,174 @@
+/* ==========================================================================
+   FORMAT-STYLES.CSS - V10 FINAL (Print & Functionality Optimized)
+   ========================================================================== */
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --danger-color: #e74c3c;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --border-color: #d1d5db; 
+    --bg-color: #f3f4f6;
+    --input-bg: #ffffff;
+}
+
+/* --- PANTALLA --- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;
+    margin: 0; padding: 20px;
+    background-color: var(--bg-color); color: #333;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    display: flex; justify-content: center; align-items: flex-start;
+    min-height: 100vh; padding-bottom: 80px; /* Espacio para botones */
+}
+
+.container {
+    background-color: white; width: 95%; max-width: 1400px;
+    margin: 0; padding: 40px 50px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    border-radius: 8px; min-height: 279mm;
+    box-sizing: border-box; display: flex; flex-direction: column; position: relative;
+}
+
+/* LOGO */
+.logo-container svg { height: 70px; width: auto; display: block; }
+
+/* HEADER */
+.header-top { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px; width: 100%; }
+.header-main { text-align: center; width: 100%; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+.header-main h1 { font-size: 18px; color: var(--primary-color); text-transform: uppercase; margin: 0; }
+
+/* REGISTRO, BARCODE Y FECHA */
+.registry-container { display: flex; flex-direction: column; align-items: flex-end; }
+.registry-wrapper { display: flex; align-items: center; justify-content: flex-end; margin-bottom: 2px; }
+.registry-prefix { font-weight: bold; color: var(--primary-color); margin-right: 5px; font-size: 14px; }
+.registry-input { font-weight: bold; color: var(--secondary-color); text-align: center; border: 1px dashed #ccc; font-size: 14px; width: 60px; }
+.registry-date { 
+    border: none; border-bottom: 1px solid #ccc; 
+    font-size: 10px; color: #666; text-align: right; 
+    width: 110px; margin-top: 2px; background: transparent;
+}
+.barcode-svg { max-height: 40px; display: block; margin-top: 5px; }
+
+/* INPUTS */
+input:not([type="checkbox"]):not([type="radio"]), select, textarea, .cedit {
+    width: 100%; box-sizing: border-box; border: 1px solid var(--border-color);
+    background-color: var(--input-bg); padding: 6px 8px; border-radius: 4px;
+    font-family: inherit; font-size: 11px; transition: all 0.2s ease;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--accent-color); outline: none; box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15); }
+textarea { resize: vertical; min-height: 30px; overflow: hidden; }
+
+/* TABLAS */
+table { width: 100%; border-collapse: collapse; margin-bottom: 15px; background-color: white; table-layout: fixed; }
+th, td { border: 1px solid var(--border-color); padding: 8px 10px; text-align: left; vertical-align: middle; word-wrap: break-word; }
+th { background-color: #f8f9fa; font-weight: 700; font-size: 11px; color: var(--primary-color); text-transform: uppercase; text-align: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.compact-table th, .compact-table td { padding: 4px 6px; font-size: 10px; }
+.no-border-table, .no-border-table td, .no-border-table th { border: none !important; background: transparent !important; }
+
+/* GRID FO-22 */
+.cryo-grid-container { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; max-width: 500px; margin: 10px auto; }
+.cryo-cell { aspect-ratio: 1; border: 1px solid #ccc; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; cursor: pointer; transition: transform 0.1s; }
+.cryo-cell:hover { transform: scale(1.1); border-color: #333; }
+.p-0-1 { background-color: #2ecc71 !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.p-2-3 { background-color: #f1c40f !important; color: black !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.p-4-5 { background-color: #e67e22 !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.p-6-7 { background-color: #e74c3c !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.p-8-9 { background-color: #8e44ad !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.p-empty { background-color: #fff; }
+
+/* SECCIONES */
+.section { margin-bottom: 20px; border: 1px solid #e5e7eb; padding: 15px; border-radius: 6px; background-color: #fff; page-break-inside: avoid; }
+.section-title { background-color: var(--secondary-color); color: white; padding: 5px 10px 5px 25px; font-weight: bold; margin: -15px -15px 15px -15px; border-radius: 6px 6px 0 0; font-size: 12px; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+/* BOTONES FLOTANTES */
+.global-controls { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 1000; background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 50px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border: 1px solid #ccc; }
+.btn { padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; color: white; font-size: 13px; min-width: 100px; }
+.btn-success { background-color: var(--success-color); }
+.btn-primary { background-color: var(--primary-color); }
+.btn-danger { background-color: var(--danger-color); }
+.btn-warning { background-color: var(--warning-color); }
+.btn-mini { padding: 4px 8px; font-size: 10px; border-radius: 4px; margin-left: 5px; color: white; cursor: pointer; min-width: auto; }
+
+/* UTILIDADES */
+.text-center { text-align: center !important; }
+.signature-area { display: flex; justify-content: space-around; margin-top: 40px; width: 100%; page-break-inside: avoid; }
+.signature-box { width: 40%; text-align: center; }
+.signature-box input { border: none; border-bottom: 1px solid #333; text-align: center; background: transparent; }
+.footer { margin-top: auto; border-top: 1px solid #eee; padding-top: 10px; font-size: 9px; color: #999; text-align: center; width: 100%; }
+.print-only-value { display: none; }
+div:where(.swal2-container) { z-index: 2000 !important; }
+
+/* IMPRESIÓN */
+@media print {
+    @page { size: letter; margin: 0.8cm; }
+    body { margin: 0; padding: 0; background-color: white; display: block; height: auto; overflow: visible; padding-bottom: 0; }
+    .container { width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; border: none !important; min-height: auto; display: block; overflow: visible; }
+    .global-controls, .no-print, button { display: none !important; }
+    input:not([type="checkbox"]):not([type="radio"]), textarea, .cedit, .registry-date { border: none !important; box-shadow: none !important; background: transparent !important; padding: 0 !important; margin: 0 !important; color: #000; font-weight: 500; resize: none; }
+    select { display: none !important; }
+    .print-only-value { display: inline-block !important; font-weight: 500; color: #000; }
+    input[type="checkbox"] { border: 1px solid #000; width: 12px; height: 12px; display: inline-block; -webkit-appearance: none; appearance: none; }
+    input[type="checkbox"]:checked { background-color: #000; }
+    .section { border: none !important; padding: 0 !important; margin-bottom: 30px !important; }
+    .section-title { background-color: #333 !important; color: white !important; border: 1px solid #000; margin-bottom: 5px !important; }
+}
+/* --- AGREGAR AL FINAL DE format-styles.css --- */
+
+@media print {
+    /* Ocultar leyendas (footer) y elementos marcados como no imprimir */
+    .footer, .no-print-legend {
+        display: none !important;
+    }
+
+    /* Solución fechas cortadas y ocultar icono calendario */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        display: none !important;
+        -webkit-appearance: none;
+    }
+    input[type="date"] {
+        background: transparent !important;
+        padding-right: 0 !important;
+        width: auto !important; /* Permite que el texto fluya */
+        min-width: 80px; /* Asegura espacio mínimo para la fecha */
+        overflow: visible;
+    }
+    
+    /* Asegurar que los selects se vean limpios (usando el span generado por JS) */
+    select { display: none !important; }
+}
+
+/* --- AGREGAR AL FINAL DE format-styles.css --- */
+@media print {
+    /* Ocultar elementos de navegación y leyendas (footer) */
+    .footer, .no-print, .global-controls, .btn {
+        display: none !important;
+    }
+
+    /* Ajuste crítico para Fechas: Muestra todo el texto y oculta icono calendario */
+    input[type="date"] {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: auto !important;
+        min-width: 80px;
+        appearance: none;
+        -webkit-appearance: none;
+        font-family: inherit;
+        color: #000;
+        display: inline-block;
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        display: none !important;
+        -webkit-appearance: none;
+    }
+    
+    /* Forzar que las columnas se ajusten al contenido */
+    th, td { white-space: nowrap; }
+    /* Permitir saltos de línea solo en columnas largas como observaciones */
+    td textarea, td .wrap-text { white-space: normal; }
+}

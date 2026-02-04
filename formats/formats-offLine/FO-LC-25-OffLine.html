@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-25 Prep Medios (OFF)</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app-OffLine.js"></script>
+    <style>
+        /* REGLAS DE IMPRESIÓN HORIZONTAL */
+        @media print {
+            @page { 
+                size: landscape; 
+                margin: 0.5cm; 
+            }
+            body, .container {
+                margin: 0 !important;
+                padding: 10px !important;
+                background: white !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .no-print { display: none !important; }
+            input::placeholder, textarea::placeholder { color: transparent !important; }
+            
+            table, th, td {
+                border: 1px solid #000 !important;
+                border-collapse: collapse !important;
+            }
+            input.cedit { border: none !important; }
+            
+            /* Ajuste de altura para que quepa en una hoja */
+            .row-tall td { height: 35px !important; }
+            .container { min-height: auto !important; }
+        }
+
+        /* Estilos de Tabla */
+        .media-table th { background: #f0f0f0; font-size: 10px; padding: 4px; border: 1px solid #999; vertical-align: middle; text-align: center; }
+        .media-table td { border: 1px solid #999; padding: 2px; vertical-align: top; }
+        .media-table input { width: 98%; border: none; outline: none; background: transparent; font-size: 11px; }
+        .media-table textarea { width: 98%; border: none; outline: none; resize: none; font-family: inherit; font-size: 10px; overflow: hidden; background: transparent; }
+        
+        .row-tall td { height: 40px; } /* Altura en pantalla */
+        
+        /* Sección de Validación */
+        .validation-box {
+            border: 1px solid #000;
+            padding: 5px 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            font-size: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body id="doc-fo-lc-25">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Mes / Año</label>
+                <div class="registry-wrapper">
+                    <input type="text" class="registry-input" style="text-align:center;" placeholder="MM / AAAA">
+                </div>
+                <input type="text" class="registry-date" placeholder="Área / Lab">
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>BITÁCORA DE PREPARACIÓN DE MEDIOS Y SOLUCIONES</h1>
+            <div class="metadata">Código: FO-LC-25 | Versión: 2.1-OFF | Vigencia: Ene 2026</div>
+        </div>
+
+        <div class="section">
+            <table class="compact-table media-table">
+                <thead>
+                    <tr>
+                        <th style="width: 7%;">Fecha</th>
+                        <th style="width: 18%;">Nombre del Medio / Solución</th>
+                        <th style="width: 12%;">Lote Interno Asignado</th>
+                        <th style="width: 33%;">Ingredientes (Nombre, Lote y Cantidad)</th>
+                        <th style="width: 7%;">Vol. Final</th>
+                        <th style="width: 8%;">Caducidad</th>
+                        <th style="width: 15%;">Realizó</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="row-tall">
+                        <td><input class="cedit" placeholder="DD/MM"></td>
+                        <td><textarea class="cedit" rows="2" placeholder="Ej. Medio MSC Completo"></textarea></td>
+                        <td><input class="cedit" style="text-align:center; font-weight:bold;" placeholder="Lote..."></td>
+                        <td><textarea class="cedit" rows="3" placeholder="1. DMEM (L:___)&#10;2. SFB (L:___)"></textarea></td>
+                        <td><input class="cedit" style="text-align:center;"></td>
+                        <td><input class="cedit" style="text-align:center;"></td>
+                        <td><input class="cedit" style="margin-top:5px;"></td>
+                    </tr>
+                    <tr class="row-tall"><td><input class="cedit"></td><td><textarea class="cedit" rows="2"></textarea></td><td><input class="cedit"></td><td><textarea class="cedit" rows="3"></textarea></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr class="row-tall"><td><input class="cedit"></td><td><textarea class="cedit" rows="2"></textarea></td><td><input class="cedit"></td><td><textarea class="cedit" rows="3"></textarea></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr class="row-tall"><td><input class="cedit"></td><td><textarea class="cedit" rows="2"></textarea></td><td><input class="cedit"></td><td><textarea class="cedit" rows="3"></textarea></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr class="row-tall"><td><input class="cedit"></td><td><textarea class="cedit" rows="2"></textarea></td><td><input class="cedit"></td><td><textarea class="cedit" rows="3"></textarea></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr class="row-tall"><td><input class="cedit"></td><td><textarea class="cedit" rows="2"></textarea></td><td><input class="cedit"></td><td><textarea class="cedit" rows="3"></textarea></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr class="row-tall"><td><input class="cedit"></td><td><textarea class="cedit" rows="2"></textarea></td><td><input class="cedit"></td><td><textarea class="cedit" rows="3"></textarea></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr class="row-tall"><td><input class="cedit"></td><td><textarea class="cedit" rows="2"></textarea></td><td><input class="cedit"></td><td><textarea class="cedit" rows="3"></textarea></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="validation-box">
+            <div style="font-weight:bold;">CRITERIOS DE LIBERACIÓN:</div>
+            <label><input type="checkbox"> Filtración / Esterilidad Correcta</label>
+            <label><input type="checkbox"> Coloración / Aspecto Normal</label>
+            <label><input type="checkbox"> Etiquetado (Lote/Cad) Conforme</label>
+            <label><input type="checkbox"> Envase Íntegro</label>
+        </div>
+
+        <div class="signature-area" style="margin-top:15px; margin-bottom:10px;">
+            <div class="signature-box">
+                <p>Preparó (Operativo):</p>
+                <input type="text" placeholder="Nombre y Firma">
+                <p>Fecha</p>
+            </div>
+            <div class="signature-box">
+                <p>Revisó (Calidad):</p>
+                <input type="text" placeholder="Nombre y Firma">
+                <p>Fecha</p>
+            </div>
+            <div class="signature-box">
+                <p>Liberó (Resp. Sanitario):</p>
+                <input type="text" placeholder="Nombre y Firma">
+                <p>Fecha</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            FO-LC-25 | Versión: 2.1-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.
+        </div>
+    </div>
+</body>
+</html>

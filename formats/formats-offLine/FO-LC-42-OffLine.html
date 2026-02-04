@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-42 Liof Placenta</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app-OffLine.js"></script>
+</head>
+<body id="doc-fo-lc-42">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Reg. Liofilización</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-42-</span>
+                    <input type="text" id="reg-42" class="registry-input generate-barcode" data-target="barcode-42" data-prefix="FO-LC-42-">
+                </div>
+                <input type="text" id="fecha_reg_42" class="registry-date">
+                <svg id="barcode-42" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>FORMATO BITÁCORA DE LIOFILIZACIÓN DE PLACENTA.</h1>
+            <div class="metadata">Código: FO-LC-42 | Versión: 1.0 | Vig: Ene2026</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">1. Información de Placentas</div>
+            <table id="tbl-mp" class="compact-table">
+                <thead><tr><th>ID Placenta</th><th>Fecha Ingreso</th><th>Cód. FO-LC-19</th><th>Masa Húmeda (g)</th><th class="no-print"></th></tr></thead>
+                <tbody></tbody>
+                <tr style="background-color: #eee; font-weight:bold;"><td colspan="3" style="text-align:right;">Total:</td><td><input type="text" id="total_masa_humeda" class="cedit"></td><td class="no-print"></td></tr>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="window.addPlacenta42()">+ Placenta</button>
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. Lavado y Granulación</div>
+            <div style="background-color: #f9f9f9; padding: 5px; margin-bottom: 5px; border: 1px solid #eee;">
+                <strong>Lavado:</strong> Fecha: <input type="text" id="lavado_fecha" class="cedit" style="width:110px;"> Masa Final: <input type="text" id="masa_final_lavado" class="cedit" style="width:70px;"> g <br>Obs: <input type="text" id="lavado_obs" class="cedit" style="width: 80%;">
+            </div>
+            <table class="compact-table">
+                <thead><tr><th width="15%">Bandeja</th><th>Masa bandeja vacía (g)</th><th>N2 usado (mL)</th><th>Masa tejido (g)</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>1</strong></td><td><input type="text" id="b1_vacia" class="cedit"></td><td><input type="text" id="b1_n2" class="cedit"></td><td><input type="text" id="b1_masa" class="cedit"></td></tr>
+                    <tr><td><strong>2</strong></td><td><input type="text" id="b2_vacia" class="cedit"></td><td><input type="text" id="b2_n2" class="cedit"></td><td><input type="text" id="b2_masa" class="cedit"></td></tr>
+                    <tr><td><strong>3</strong></td><td><input type="text" id="b3_vacia" class="cedit"></td><td><input type="text" id="b3_n2" class="cedit"></td><td><input type="text" id="b3_masa" class="cedit"></td></tr>
+                    <tr style="background-color: #eee; font-weight:bold;"><td colspan="3" style="text-align:right;">Total:</td><td><input type="text" id="total_masa_tejido" class="cedit"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">3. Monitoreo condiciones</div>
+            <table id="tbl-mon" class="compact-table">
+                <thead>
+                    <tr><th>Fecha</th><th>Hora</th><th>Tiempo (HH:mm)</th><th>T. Prod°C</th><th>P. Vacío Pa</th><th>T. Band°C</th><th>T. Cond°C</th><th>Masa (g)</th><th>% Pérdida</th><th class="no-print"></th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="window.addMonitoreo42()">+ Registro</button>
+        </div>
+
+        <div class="section">
+            <div class="section-title">4. Tamizado</div>
+            <div style="display: flex; gap: 20px;">
+                <label><strong>Fecha:</strong> <input type="text" id="tamizado_fecha" class="cedit" style="width:120px;"></label>
+                <label><strong>Masa post tamizada (Mesh 60):</strong> <input type="text" id="masa_mesh" class="cedit" style="width:100px;"> g</label>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">5. Dosificación</div>
+            <table id="tbl-dos" class="compact-table">
+                <thead><tr><th width="15%">Fecha</th><th width="30%">Lote Producto</th><th width="30%">Presentación</th><th width="20%">Cantidad</th><th width="5%" class="no-print"></th></tr></thead>
+                <tbody></tbody>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="window.addDosificacion42()">+ Fila</button>
+        </div>
+
+        <div class="section">
+            <div class="section-title">6. Embalaje y Esterilización</div>
+            <table class="no-border-table">
+                <tr>
+                    <td><strong>No. Servicio:</strong> <input type="text" id="serv_num" class="cedit"></td>
+                    <td><strong>Ref. Pago:</strong> <input type="text" id="pago_ref" class="cedit"></td>
+                    <td><strong>Cod FO-LC-45 Ref:</strong> <input type="text" id="fo45_ref" class="cedit"></td>                  
+                </tr>
+                <tr>
+                    <td><strong>Entregado a:</strong> <input type="text" id="entrega_a" class="cedit"></td>
+                    <td><strong>F. Ingreso Irradiar:</strong> <input type="text" id="irrad_fecha" class="cedit"></td>
+                    <td><strong>Lib. Micro:</strong> <input type="text" id="lib_micro_fecha" class="cedit"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box"><p>Realizó:</p><input type="text" id="sig_r"><p>Firma</p></div>
+            <div class="signature-box"><p>Verificó:</p><input type="text" id="sig_v"><p>Firma</p></div>
+        </div>
+        <div class="footer">
+            FO-LC-42 | Versión: 2.0 | Vigente a partir de: Enero2026<br>
+            El contenido de este documento es propiedad de “Xelle Scientific”, S.A.P.I., de C. V., y está protegido por los derechos de autor.
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<svg viewBox="10 10 80 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .svg-logo-celula { fill: #2E9D82; }
+    </style>
+  </defs>
+  <g>
+    <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
+    <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
+    <path class="svg-logo-celula" d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+  </g>
+</svg>

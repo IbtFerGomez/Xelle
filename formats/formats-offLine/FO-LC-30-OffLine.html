@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-30 Acondicionamiento (OFF)</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app-OffLine.js"></script>
+    <style>
+        @media print {
+            @page { size: letter; margin: 0.5cm; }
+            body { -webkit-print-color-adjust: exact; }
+            input::placeholder { color: transparent !important; }
+            table, th, td, div { border-color: #000 !important; }
+            .no-print { display: none !important; }
+        }
+        /* Estilos estrictos para tablas */
+        .data-table th { background: #f0f0f0; font-size: 9px; padding: 3px; border: 1px solid #000; text-align: center; }
+        .data-table td { border: 1px solid #000; padding: 2px; height: 20px; }
+        .data-table input { width: 98%; border: none; outline: none; background: transparent; font-size: 10px; text-align: center; }
+        
+        .box-container { border: 1px solid #000; padding: 5px; margin-bottom: 5px; font-size: 10px; }
+        .sample-area { height: 100px; border: 2px dashed #666; display: flex; align-items: center; justify-content: center; margin: 5px 0; color: #999; }
+    </style>
+</head>
+<body id="doc-fo-lc-30">
+    <div class="global-controls no-print">
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>No. Registro</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-30-</span>
+                    <input type="text" id="reg-30" class="registry-input generate-barcode" data-target="barcode-30" data-prefix="FO-LC-30-" placeholder="0001">
+                </div>
+                <input type="text" class="registry-date" placeholder="DD/MM/AA">
+                <svg id="barcode-30" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>BITÁCORA DE ACONDICIONAMIENTO Y ETIQUETADO</h1>
+            <div class="metadata">Código: FO-LC-30 | Versión: 1.0-OFF | Vigencia: Ene 2026</div>
+        </div>
+
+        <div class="box-container">
+            <table class="no-border-table">
+                <tr>
+                    <td width="15%"><strong>Producto:</strong></td>
+                    <td width="35%"><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                    <td width="15%"><strong>Lote Granel (PT):</strong></td>
+                    <td width="35%"><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Presentación:</strong></td>
+                    <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                    <td><strong>Caducidad:</strong></td>
+                    <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="box-container">
+            <div class="section-title" style="margin-top:0;">1. DESPEJE DE LÍNEA (LINE CLEARANCE)</div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
+                <label><input type="checkbox"> Área limpia y libre de productos anteriores.</label>
+                <label><input type="checkbox"> Ausencia de documentación ajena al lote.</label>
+                <label><input type="checkbox"> Equipos de impresión verificados y limpios.</label>
+                <label><input type="checkbox"> Personal con indumentaria completa y correcta.</label>
+            </div>
+            <div style="margin-top:5px; border-top:1px solid #ccc; padding-top:2px; text-align:right;">
+                <strong>Verificó Despeje (Supervisor):</strong> <input class="cedit" style="width:150px; border-bottom:1px solid #000;">
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. CONCILIACIÓN DE MATERIALES (BALANCE)</div>
+            <table class="compact-table data-table">
+                <thead>
+                    <tr>
+                        <th width="25%">Descripción del Material</th>
+                        <th width="15%">Lote Interno</th>
+                        <th width="12%">Cant. Recibida (A)</th>
+                        <th width="12%">Cant. Usada (B)</th>
+                        <th width="12%">Mermas (C)</th>
+                        <th width="12%">Devolución (D)</th>
+                        <th width="12%">Diferencia*</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="text-align:left;">Etiquetas Primarias (Vial)</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="text-align:left;">Etiquetas Secundarias</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="text-align:left;">Cajas / Envases</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="text-align:left;">Insertos / Instructivos</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="text-align:left;">Sellos de Seguridad</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                </tbody>
+            </table>
+            <div style="font-size:9px; text-align:right;">* Fórmula: A - (B + C + D). Debe ser 0.</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">3. ETIQUETA TESTIGO / MUESTRA FÍSICA</div>
+            <div class="sample-area">
+                (PEGAR AQUÍ UNA ETIQUETA REAL DEL LOTE)
+            </div>
+            <div style="font-size:10px;">
+                <label><input type="checkbox"> Datos impresos corresponden al Lote y Caducidad correctos.</label><br>
+                <label><input type="checkbox"> Código de barras / Datamatrix legible.</label>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">4. RENDIMIENTO DEL PROCESO</div>
+            <table class="compact-table data-table">
+                <thead>
+                    <tr>
+                        <th width="25%">Unidades Totales Acondicionadas</th>
+                        <th width="25%">Muestras de Retención</th>
+                        <th width="25%">Rechazos / Defectos</th>
+                        <th width="25%">Total Ingresado a PT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="height:30px;"><input class="cedit" style="font-weight:bold; font-size:14px;"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit" style="font-weight:bold; font-size:14px;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box"><p>Realizó Acondicionamiento:</p><input type="text"><p>Firma</p></div>
+            <div class="signature-box"><p>Verificó (Calidad):</p><input type="text"><p>Firma</p></div>
+        </div>
+        
+        <div class="footer">FO-LC-30 | Versión: 1.0-OFF | Xelle Scientific</div>
+    </div>
+</body>
+</html>

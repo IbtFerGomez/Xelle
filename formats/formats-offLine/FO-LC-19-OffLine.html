@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-19 Calidad (OFF)</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app-OffLine.js"></script>
+    <style>
+        /* Ocultar placeholders al imprimir */
+        @media print {
+            input::placeholder, textarea::placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
+            }
+        }
+        /* Ajuste de columnas para la tabla de serología */
+        .sero-table th { background: #f0f0f0; font-size: 10px; text-align: center; }
+        .sero-table td { padding: 4px; }
+        .row-header { font-weight: bold; font-size: 10px; background: #fafafa; }
+    </style>
+</head>
+<body id="doc-fo-lc-19">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>No. Registro / Folio</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-19-</span>
+                    <input type="text" id="reg-19" class="registry-input generate-barcode" data-target="barcode-19" data-prefix="FO-LC-19-" placeholder="0001">
+                </div>
+                <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
+                <svg id="barcode-19" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>CONTROL DE CALIDAD Y SEROLOGÍA (PLACENTA)</h1>
+            <div class="metadata">Código: FO-LC-19 | Versión: 2.0-OFF | Vigencia: Ene 2026</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">1. Referencia de la Muestra</div>
+            <table class="no-border-table">
+                <tr>
+                    <td><strong>ID Donante:</strong> <input class="cedit" placeholder="Nombre completo"></td>
+                    <td><strong>Laboratorio Externo:</strong> <input class="cedit" placeholder="Nombre Lab"></td>
+                </tr>
+            </table>
+            
+            <div style="border: 2px dashed #ccc; padding: 10px; margin-top: 10px; display: flex; align-items: center;">
+                <div style="width: 50%;">
+                    <strong>ID Placenta / Lote:</strong><br>
+                    <span style="font-size: 9px; color: #666;">(Escanear o escribir código generado en FO-LC-18)</span>
+                    <input type="text" class="cedit generate-barcode" data-target="bc_lote" style="font-weight: bold; font-size: 14px; margin-top: 5px;" placeholder="Ej: PL-XELLE-001">
+                </div>
+                <div style="width: 50%; text-align: center;">
+                    <svg id="bc_lote" class="barcode-svg" style="height: 40px;"></svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. Panel Viral y Microbiológico</div>
+            <table class="compact-table sero-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Prueba</th>
+                        <th style="width: 20%;">Resultado (Pos/Neg)</th>
+                        <th style="width: 20%;">Fecha Reporte</th>
+                        <th style="width: 35%;">Observaciones / Método</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-header">VIH (1 y 2)</td>
+                        <td><input class="cedit" placeholder="NEGATIVO"></td>
+                        <td><input class="cedit" placeholder="DD/MM/AA"></td>
+                        <td><input class="cedit" placeholder="Quimioluminiscencia..."></td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">Hepatitis B (HBsAg)</td>
+                        <td><input class="cedit" placeholder="NEGATIVO"></td>
+                        <td><input class="cedit" placeholder="DD/MM/AA"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">Hepatitis C (VHC)</td>
+                        <td><input class="cedit" placeholder="NEGATIVO"></td>
+                        <td><input class="cedit" placeholder="DD/MM/AA"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">Sífilis (VDRL/TP)</td>
+                        <td><input class="cedit" placeholder="NO REACTIVO"></td>
+                        <td><input class="cedit" placeholder="DD/MM/AA"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">Chagas (T. cruzi)</td>
+                        <td><input class="cedit" placeholder="NEGATIVO"></td>
+                        <td><input class="cedit" placeholder="DD/MM/AA"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">Citomegalovirus (CMV)</td>
+                        <td><input class="cedit" placeholder="IgG / IgM"></td>
+                        <td><input class="cedit" placeholder="DD/MM/AA"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="row-header"><input class="cedit" placeholder="Otra (Específica)..." style="font-weight:bold;"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">3. Resultados Adjuntos (Resumen)</div>
+            <div style="display:flex; gap:15px; margin-top:5px;">
+                <div style="width:50%; border:1px solid #eee; padding:5px;">
+                    <strong>Química Sanguínea:</strong>
+                    <textarea class="cedit" rows="4" placeholder="Describir valores fuera de rango o 'Dentro de límites normales'..."></textarea>
+                </div>
+                <div style="width:50%; border:1px solid #eee; padding:5px;">
+                    <strong>Biometría Hemática:</strong>
+                    <textarea class="cedit" rows="4" placeholder="Describir leucocitos, plaquetas, etc..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">4. Dictamen Final de Calidad</div>
+            <div style="margin-bottom: 10px;">
+                <strong>Comentarios Finales:</strong>
+                <textarea class="cedit" rows="2" style="border-bottom: 1px solid #ccc;"></textarea>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; border: 2px solid #333; padding: 15px; background: #f9f9f9;">
+                <div style="font-weight:bold; font-size:14px;">ESTADO DEL LOTE:</div>
+                <label style="font-weight: bold; font-size: 13px; color: #27ae60;">
+                    <input type="checkbox"> LIBERADO
+                </label>
+                <label style="font-weight: bold; font-size: 13px; color: #f39c12;">
+                    <input type="checkbox"> CUARENTENA
+                </label>
+                <label style="font-weight: bold; font-size: 13px; color: #c0392b;">
+                    <input type="checkbox"> RECHAZADO
+                </label>
+            </div>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box">
+                <p>Registró (QFB):</p>
+                <input type="text" placeholder="Nombre y Firma">
+                <p>Fecha</p>
+            </div>
+            <div class="signature-box">
+                <p>Validación Sanitaria:</p>
+                <input type="text" placeholder="Nombre y Firma">
+                <p>Fecha</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            FO-LC-19 | Versión: 2.0-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.
+        </div>
+    </div>
+</body>
+</html>

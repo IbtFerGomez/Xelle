@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-22 Crio Banco</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Estilos específicos para la cuadrícula de criocaja */
+        .cryo-grid-container {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 10px;
+            border: 1px solid #eee;
+            background: #fafafa;
+        }
+        .cryo-cell {
+            aspect-ratio: 1;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            cursor: pointer;
+            background-color: white;
+            user-select: none;
+            transition: all 0.2s;
+        }
+        .cryo-cell:hover { transform: scale(1.1); border-color: #333; }
+        
+        /* Colores por Pase (Coincidentes con leyenda) */
+        .cell-p0-1 { background-color: #aed6f1; border-color: #2e86c1; color: #154360; } /* Azul */
+        .cell-p2-3 { background-color: #a9dfbf; border-color: #229954; color: #145a32; } /* Verde */
+        .cell-p4-5 { background-color: #f9e79f; border-color: #d4ac0d; color: #7d6608; } /* Amarillo */
+        .cell-p6-7 { background-color: #f5b7b1; border-color: #cb4335; color: #78281f; } /* Rojo */
+        .cell-p8-9 { background-color: #d7bde2; border-color: #884ea0; color: #512e5f; } /* Morado */
+    </style>
+</head>
+<body id="doc-fo-lc-22">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>No. Registro</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-22-</span>
+                    <input type="text" id="reg-22" class="registry-input generate-barcode" data-target="barcode-22" data-prefix="FO-LC-22-">
+                </div>
+                <input type="date" class="registry-date no-auto-date">
+                <svg id="barcode-22" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>FORMATO DE REGISTRO DE CRIOPRESERVACIÓN BANCO CELULAR.</h1>
+            <div class="metadata">Código: FO-LC-22 | Versión: 1.0 | Vig: Ene2026</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">1. IDENTIFICACIÓN</div>
+            <table class="no-border-table">
+                <tr><td><strong>Cód. Muestra:</strong> <input class="cedit"></td><td><strong>Fecha Cong:</strong> <input type="date" class="cedit"></td></tr>
+                <tr>
+                    <td><strong>Línea Celular:</strong> <input class="cedit"></td>
+                    <td><strong>No. Pase:</strong> <input type="number" id="input-pase" class="cedit" value="0"></td>
+                </tr>
+                <tr><td><strong>Materia Prima:</strong> <input class="cedit"></td><td><strong>Hora Proceso:</strong> <input type="time" class="cedit"></td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. CÉDULA ALMACENAMIENTO (Color por Pase)</div>
+            
+            <div style="text-align:center; margin-bottom:10px; font-size:10px;">
+                <span style="padding:2px 8px; background:#aed6f1; border:1px solid #2e86c1; border-radius:10px;">P0-1</span> 
+                <span style="padding:2px 8px; background:#a9dfbf; border:1px solid #229954; border-radius:10px;">P2-3</span> 
+                <span style="padding:2px 8px; background:#f9e79f; border:1px solid #d4ac0d; border-radius:10px;">P4-5</span> 
+                <span style="padding:2px 8px; background:#f5b7b1; border:1px solid #cb4335; border-radius:10px;">P6-7</span> 
+                <span style="padding:2px 8px; background:#d7bde2; border:1px solid #884ea0; border-radius:10px;">P8-9</span>
+            </div>
+
+            <div id="cryo-grid" class="cryo-grid-container"></div>
+            
+            <div style="display:flex; justify-content:space-around; margin-top:10px;">
+                <label>Ultracongelador: <input class="cedit" style="width:80px"></label>
+                <label>Nivel: <input class="cedit" style="width:50px"></label>
+                <label>Criocaja: <input type="number" id="box-num-input" class="cedit" style="width:60px; font-weight:bold; text-align:center;" value="1" min="1" oninput="renderCryoGrid()"></label>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">3. DATOS DE CRIOPRESERVACIÓN</div>
+            <div class="form-group" style="margin-bottom:10px;">
+                <strong>Tipo de Banco: </strong>
+                <label><input type="checkbox" name="banco_bct"> Trabajo (BCT)</label>
+                <label><input type="checkbox" name="banco_bcm"> Maestro (BCM)</label>
+                <label><input type="checkbox" name="banco_bcp"> Producción (BCP)</label>
+            </div>
+            <table class="no-border-table">
+                <tr><td><strong>Tipo Vial:</strong> <input class="cedit"></td><td><strong>Total Viales:</strong> <input type="number" class="cedit"></td></tr>
+                <tr><td><strong>Vol/Vial (mL):</strong> <input class="cedit"></td><td><strong>Medio Cong:</strong> <input class="cedit"></td></tr>
+                <tr><td><strong>Conc. Celular:</strong> <input class="cedit"></td><td><strong>Viabilidad %:</strong> <input class="cedit"></td></tr>
+            </table>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box"><p>Operador:</p><input type="text"><p>Firma</p></div>
+            <div class="signature-box"><p>Supervisor:</p><input type="text"><p>Firma</p></div>
+        </div>
+        <div class="footer">FO-LC-22 | Versión: 1.0 | Vigente a partir de: Enero2026<br>El contenido de este documento es propiedad 
+            de “Xelle Scientific”, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+
+    <script>
+        // Configuración de clases para "Color por Pase"
+        const passClasses = [
+            '',           // 0: Sin color (blanco)
+            'cell-p0-1',  // 1: P0-1
+            'cell-p2-3',  // 2: P2-3
+            'cell-p4-5',  // 3: P4-5
+            'cell-p6-7',  // 4: P6-7
+            'cell-p8-9'   // 5: P8-9
+        ];
+
+        function renderCryoGrid() {
+            const grid = document.getElementById('cryo-grid');
+            const boxInput = document.getElementById('box-num-input');
+            let boxNum = parseInt(boxInput.value);
+
+            // Validar entrada
+            if (isNaN(boxNum) || boxNum < 1) boxNum = 1;
+
+            grid.innerHTML = ''; // Limpiar grid previo
+
+            // Calcular número inicial: Si Caja=1 -> 0, Caja=2 -> 100, Caja=3 -> 200
+            const startNum = (boxNum - 1) * 100;
+
+            for (let i = 1; i <= 100; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cryo-cell';
+                cell.textContent = startNum + i;
+                
+                // Añadir estado para el color (guardado en atributo data)
+                cell.dataset.state = 0;
+
+                // Evento click para cambiar color
+                cell.onclick = function() {
+                    let currentState = parseInt(this.dataset.state);
+                    let nextState = (currentState + 1) % passClasses.length;
+                    
+                    // Actualizar estado y clase
+                    this.dataset.state = nextState;
+                    this.className = 'cryo-cell ' + passClasses[nextState];
+                };
+
+                grid.appendChild(cell);
+            }
+        }
+
+        // Inicializar grid al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCryoGrid();
+        });
+    </script>
+</body>
+</html>

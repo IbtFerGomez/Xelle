@@ -1,0 +1,111 @@
+/* ==========================================================================
+   FORMAT-STYLES-OFFLINE.CSS - V1.6 MASTER FINAL
+   ========================================================================== */
+:root {
+    --primary-color: #1D1D1B;
+    --secondary-color: #2c3e50;
+    --border-color: #d1d5db; 
+    --bg-color: #f3f4f6;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: 11px;
+    margin: 0; padding: 20px;
+    background-color: var(--bg-color);
+    display: flex; justify-content: center;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.container {
+    background-color: white; width: 95%; max-width: 1400px;
+    margin: 0; padding: 25px 45px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    border-radius: 8px; 
+    min-height: 270mm;
+    box-sizing: border-box; 
+    display: flex; flex-direction: column; 
+    position: relative;
+}
+
+/* HEADER */
+.logo-container svg { height: 60px; width: auto; display: block; }
+.header-top { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--primary-color); padding-bottom: 8px; margin-bottom: 12px; }
+.header-main { text-align: center; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
+.header-main h1 { font-size: 15px; text-transform: uppercase; margin: 5px 0; color: var(--primary-color); }
+
+/* BARCODE & REGISTRY */
+.registry-container { display: flex; flex-direction: column; align-items: flex-end; }
+.registry-wrapper { display: flex; align-items: center; border-bottom: 1px solid #ccc; margin-bottom: 2px; }
+.registry-prefix { font-weight: bold; font-size: 13px; margin-right: 5px; }
+.registry-input { border: none; font-weight: bold; font-size: 13px; width: 50px; outline: none; text-align: center; background: transparent; }
+.registry-date { border: none; border-bottom: 1px solid #ccc; font-size: 9px; text-align: right; width: 100px; height: 14px; background: transparent; }
+.barcode-svg { max-height: 32px; margin-top: 5px; }
+
+/* TABLAS */
+table { width: 100%; border-collapse: collapse; margin-bottom: 10px; table-layout: fixed; }
+th, td { border: 1px solid var(--border-color); padding: 4px; }
+th { 
+    background-color: #f8f9fa !important; 
+    font-weight: bold; font-size: 9px; 
+    text-transform: uppercase; text-align: center; 
+    -webkit-print-color-adjust: exact;
+}
+
+.cedit { width: 100%; border: 1px solid #eee; padding: 2px; border-radius: 2px; font-size: 9.5px; text-align: center; outline: none; background: transparent; }
+
+/* SECCIONES */
+.section { margin-bottom: 12px; border: 1px solid #eee; padding: 10px; border-radius: 4px; page-break-inside: avoid; }
+.section-title { 
+    background-color: var(--secondary-color) !important; 
+    color: white !important; 
+    padding: 4px 10px; 
+    font-weight: bold; 
+    margin: -10px -10px 8px -10px; 
+    border-radius: 4px 4px 0 0; 
+    font-size: 10px; 
+    text-transform: uppercase;
+    -webkit-print-color-adjust: exact;
+}
+
+.no-border-table, .no-border-table td { border: none !important; background: transparent !important; }
+
+/* SIGNATURES */
+.signature-area { display: flex; justify-content: space-around; margin-top: 20px; margin-bottom: 35px; }
+.signature-box { width: 30%; text-align: center; }
+.signature-box input { border: none; border-bottom: 1px solid #000; text-align: center; width: 100%; margin-bottom: 5px; background: transparent; }
+
+/* FOOTER */
+.footer { 
+    margin-top: auto; 
+    border-top: 1px solid #eee; 
+    padding-top: 5px; 
+    font-size: 8px; 
+    color: #666; 
+    text-align: center; 
+}
+
+/* CONTROLES UI */
+.global-controls { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 1000; background: white; padding: 10px; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+.btn { padding: 6px 14px; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; color: white; font-size: 11px; }
+.btn-success { background: #27ae60; }
+.btn-primary { background: #2980b9; }
+.btn-danger { background: #c0392b; }
+.btn-mini { padding: 2px 6px; font-size: 8px; border-radius: 3px; }
+
+@media print {
+    body { background: white; padding: 0; }
+    .container { 
+        box-shadow: none; border: none; width: 100%; padding: 0; 
+        min-height: 250mm;
+    }
+    .global-controls, .no-print { display: none !important; }
+    .footer { 
+        position: absolute; 
+        bottom: 0; 
+        width: 100%;
+        border-top: 1px solid #000;
+    }
+    .cedit { border: none !important; }
+}

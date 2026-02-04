@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-31 Distribución (OFF)</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app-OffLine.js"></script>
+    <style>
+        @media print {
+            @page { size: letter; margin: 0.5cm; }
+            body { -webkit-print-color-adjust: exact; }
+            input::placeholder { color: transparent !important; }
+            table, th, td, div { border-color: #000 !important; }
+            .no-print { display: none !important; }
+        }
+        .data-table th { background: #f0f0f0; font-size: 10px; padding: 3px; border: 1px solid #000; vertical-align: middle; }
+        .data-table td { border: 1px solid #000; padding: 2px; height: 20px; }
+        .data-table input { width: 98%; border: none; outline: none; background: transparent; font-size: 10px; text-align: center; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border: 1px solid #000; padding: 10px; margin-bottom: 10px; font-size: 11px; }
+    </style>
+</head>
+<body id="doc-fo-lc-31">
+    <div class="global-controls no-print">
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Salida</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-31-</span>
+                    <input type="text" id="reg-31" class="registry-input generate-barcode" data-target="barcode-31" data-prefix="FO-LC-31-" placeholder="0001">
+                </div>
+                <input type="text" class="registry-date" placeholder="DD/MM/AA">
+                <svg id="barcode-31" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>ORDEN DE SALIDA, DISTRIBUCIÓN Y CADENA DE FRÍO</h1>
+            <div class="metadata">Código: FO-LC-31 | Versión: 1.0-OFF | Vigencia: Ene 2026</div>
+        </div>
+
+        <div class="info-grid">
+            <div>
+                <strong>Cliente / Médico / Institución:</strong><br>
+                <input class="cedit" style="width:100%; border-bottom:1px solid #ccc; margin-top:2px;">
+            </div>
+            <div>
+                <strong>Referencia (Pedido / OV):</strong><br>
+                <input class="cedit" style="width:100%; border-bottom:1px solid #ccc; margin-top:2px;">
+            </div>
+            <div style="grid-column: span 2;">
+                <strong>Dirección de Entrega:</strong><br>
+                <input class="cedit" style="width:100%; border-bottom:1px solid #ccc; margin-top:2px;">
+            </div>
+            <div>
+                <strong>Transportista:</strong><br>
+                <input class="cedit" style="width:100%; border-bottom:1px solid #ccc; margin-top:2px;">
+            </div>
+            <div>
+                <strong>Teléfono:</strong><br>
+                <input class="cedit" style="width:100%; border-bottom:1px solid #ccc; margin-top:2px;">
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">DETALLE DE PRODUCTOS ENVIADOS</div>
+            <table class="compact-table data-table">
+                <thead>
+                    <tr>
+                        <th width="10%">Cantidad</th>
+                        <th width="35%">Descripción del Producto</th>
+                        <th width="20%">Lote</th>
+                        <th width="15%">Caducidad</th>
+                        <th width="10%">Temp. Salida</th>
+                        <th width="10%">Verificado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit" placeholder="OK"></td></tr>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">VALIDACIÓN DE EMBALAJE Y CADENA DE FRÍO</div>
+            <div style="border:1px solid #000; padding:10px; font-size:11px;">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <label><input type="checkbox"> Contenedor Térmico (Hielera) íntegro.</label>
+                    <label><input type="checkbox"> Geles Refrigerantes congelados.</label>
+                    <label><input type="checkbox"> Configuración interna (Sandwich).</label>
+                    <label><input type="checkbox"> Producto protegido (Burbuja/Caja).</label>
+                    <label><input type="checkbox"> Documentación anexa (Certificado).</label>
+                    <label><input type="checkbox"> Sellado externo correcto.</label>
+                </div>
+                <div style="margin-top:10px; border-top:1px dashed #999; padding-top:5px;">
+                    <strong>Datalogger:</strong> 
+                    <label style="margin-left:15px;"><input type="checkbox"> Incluido</label>
+                    <span style="margin-left:20px;">ID / Serie: <input class="cedit" style="border-bottom:1px solid #000; width:120px;"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" style="margin-top:10px; border:2px solid #000; padding:15px; text-align:center; background:#f9f9f9;">
+            <strong style="display:block; margin-bottom:5px;">NÚMERO DE GUÍA / RASTREO:</strong>
+            <input class="cedit generate-barcode" data-target="bc-guia" style="font-size:18px; font-weight:bold; width:90%; text-align:center;" placeholder="Escanear o escribir guía...">
+            <svg id="bc-guia" style="height:50px; display:block; margin:5px auto;"></svg>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box"><p>Surtido / Almacén:</p><input type="text"><p>Firma</p></div>
+            <div class="signature-box"><p>Liberación (Calidad):</p><input type="text"><p>Firma</p></div>
+            <div class="signature-box"><p>Recolección:</p><input type="text"><p>Firma</p></div>
+        </div>
+        
+        <div class="footer">FO-LC-31 | Versión: 1.0-OFF | Xelle Scientific</div>
+    </div>
+</body>
+</html>

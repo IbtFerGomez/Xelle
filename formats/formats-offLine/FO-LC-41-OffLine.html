@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-41 Micro</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app-OffLine.js"></script>
+</head>
+<body id="doc-fo-lc-41">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            
+            <div class="registry-container">
+                <label>Reg. Micro</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-41-</span>
+                    <input type="text" id="reg-41" 
+                           class="registry-input generate-barcode" 
+                           data-target="barcode-41" 
+                           data-prefix="FO-LC-41-">
+                </div>
+                <input type="text" id="fecha_reg_manual" class="registry-date">
+                <svg id="barcode-41" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>FORMATO CONTROL MICROBIOLÓGICO DE MUESTRAS.</h1>
+            <div class="metadata">Código: FO-LC-41 | Versión: 1.0 | Vig: Ene2026</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Resultados de Análisis</div>
+            <table id="tbl-micro" class="compact-table">
+                <thead>
+                    <tr>
+                        <th>ID Muestra</th>
+                        <th>Ingreso</th>
+                        <th>TGL</th>
+                        <th>AST</th>
+                        <th>ADS</th>
+                        <th>Término</th>
+                        <th>Obs</th>
+                        <th class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <p>*POS= positivo; NEG= negativo; NA= no aplicable </p>
+            <button class="btn btn-primary btn-mini no-print" onclick="window.addMuestra41()">+ Agregar Muestra</button>
+        </div>
+        
+        <div class="signature-area">
+            <div class="signature-box"><p>Realizó:</p><input type="text" id="sig-realizo-input"><p>Firma</p></div>
+            <div class="signature-box"><p>Verificó:</p><input type="text" id="sig-verifico-input"><p>Firma</p></div>
+        </div>
+        <div class="footer">
+            FO-LC-41 | Versión: 2.0 | Vigente a partir de: Enero2026 <br>
+            El contenido de este documento es propiedad de “Xelle Scientific”, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.
+        </div>
+    </div>
+</body>
+</html>

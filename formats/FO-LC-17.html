@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-17 Recepción</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+</head>
+<body id="doc-fo-lc-17">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>No. Registro</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-17-</span>
+                    <input type="text" id="reg-17" class="registry-input generate-barcode" data-target="barcode-17" data-prefix="FO-LC-17-">
+                </div>
+                <input type="date" class="registry-date no-auto-date">
+                <svg id="barcode-17" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>FORMATO RECEPCIÓN DE MUESTRAS Y DATOS CLÍNICOS.</h1>
+            <div class="metadata">Código: FO-LC-17 | Versión: 1.0 | Vig: Ene2026</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">1. Datos del Donante y Neonato</div>
+            <table class="no-border-table">
+                <tr><td><strong>Nombre Madre:</strong> <input id="madre" class="cedit"></td><td><strong>Expediente:</strong> <input id="exp" class="cedit"></td></tr>
+                <tr><td><strong>Médico:</strong> <input id="medico" class="cedit"></td><td><strong>Cédula:</strong> <input id="cedula" class="cedit"></td></tr>
+            </table>
+            
+            <div style="border:1px dashed #ccc; padding:10px; margin:10px 0; display:flex;">
+                <div style="width:50%">
+                    <strong>ID Etiqueta Materia Prima:</strong>
+                    <input type="text" id="id_mp" class="cedit generate-barcode" data-target="bc_mp">
+                </div>
+                <div style="width:50%; text-align:center;"><svg id="bc_mp" class="barcode-svg"></svg></div>
+            </div>
+
+           <!--  <table class="compact-table">
+                <thead><tr><th colspan="4">Datos Neonato</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Sexo:</strong> <select id="sexo" class="cedit"><option>M</option><option>F</option></select></td>
+                        <td><strong>SDG:</strong> <input id="sdg" class="cedit"></td>
+                        <td><strong>Peso (g):</strong> <input id="peso" class="cedit"></td>
+                        <td><strong>Talla (cm):</strong> <input id="talla" class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>APGAR:</strong> <input id="apgar" class="cedit"></td>
+                        <td><strong>Fecha Nac:</strong> <input type="date" id="fnac" class="cedit"></td>
+                        <td colspan="2"><strong>Hora Nac:</strong> <input type="time" id="hnac" class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table> -->
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. Documentación y Logística</div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <label><input type="checkbox" id="doc_con"> Consentimiento Informado</label>
+                <label><input type="checkbox" id="doc_his"> Historia Clínica</label>
+                <label><input type="checkbox" id="doc_ser"> Resultados Serología</label> <label><input type="checkbox" id="doc_id"> Identificación Madre</label>
+                <label><input type="checkbox" id="doc_doc_id"> Identificación Doctor</label> <label><input type="checkbox" id="doc_sangre"> Muestra de Sangre</label> </div>
+            <div style="margin-top:10px; border-top:1px solid #eee; padding-top:10px;">
+                <table class="no-border-table">
+                    <tr><td><strong>Fecha Colecta:</strong> <input type="date" class="cedit"></td><td><strong>Hora:</strong> <input type="time" class="cedit"></td></tr>
+                    <tr><td><strong>Hospital/Sede:</strong> <input class="cedit"></td><td><strong>Temp. Recepción:</strong> <input class="cedit" placeholder="°C"></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box"><p>Entrega:</p><input type="text"><p>Firma</p></div>
+            <div class="signature-box"><p>Recibe:</p><input type="text"><p>Firma</p></div>
+        </div>
+        <div class="footer">FO-LC-17 | Versión: 1.0 | Vigente a partir de: Enero2026 <br>El contenido de este documento es propiedad 
+            de “Xelle Scientific”, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+</body>
+</html>

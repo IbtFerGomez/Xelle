@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-44 Lib Flasks</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+
+    <style>
+        .container { max-width: 270mm; }
+        .header-cell-group { border-bottom: 1px solid var(--border-color); }
+        @media print {
+            @page { size: landscape; margin: 10mm; }
+            .container { width: 100%; max-width: 100%; }
+        }
+    </style>
+</head>
+<body id="doc-fo-lc-44">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Reg. Liberación</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-44-</span>
+                    <input type="text" id="reg-44" class="registry-input generate-barcode" data-target="barcode-44" data-prefix="FO-LC-44-">
+                </div>
+                <input type="date" class="registry-date no-auto-date">
+                <svg id="barcode-44" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>FORMATO LIBERACIÓN MICROBIOLÓGICA FLASKS Y CRIOVIALES.</h1>
+            <div class="metadata">Código: FO-LC-44 | Versión: 2.0 | Vig: Ene2026</div>
+        </div>
+
+        <!-- <div class="section">
+            <label><strong>Responsable:</strong> <input type="text" id="responsable_lib" class="cedit" style="width:300px;"></label>
+        </div> -->
+
+        <div class="section">
+            <table id="tbl-flask" class="compact-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2" width="10%">ID Muestra</th>
+                        <th rowspan="2" width="8%" class="text-center">F. Ingreso</th>
+                        <th colspan="2" class="text-center header-cell-group" width="16%">Anaerobio</th>
+                        <th colspan="2" class="text-center header-cell-group" width="16%">Aerobio</th>
+                        <th colspan="2" class="text-center header-cell-group" width="16%">Hongos</th>
+                        <th rowspan="2" width="8%" class="text-center">F. Término</th>
+                        <th rowspan="2" style="width: 8%; white-space: nowrap; padding: 0 5px;" class="text-center">Estado</th>
+                        <th rowspan="2" width="4%" class="no-print"></th>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Fecha</th><th class="text-center">Resultado</th>
+                        <th class="text-center">Fecha</th><th class="text-center">Resultado</th>
+                        <th class="text-center">Fecha</th><th class="text-center">Resultado</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <p>*POS= positivo; NEG= negativo; NA= no aplicable</p><p>*LIB= liberado; RECH= Rechazado; NA= no aplicable</p>
+            <button class="btn btn-primary btn-mini no-print" onclick="window.addGenericRow('tbl-flask', `
+                <td><input class='cedit'></td>
+                <td class='text-center'><input type='date' class='cedit'></td>
+                
+                <td class='text-center'><input type='date' class='cedit'></td>
+                <td class='text-center'><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td>
+                
+                <td class='text-center'><input type='date' class='cedit'></td>
+                <td class='text-center'><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td>
+                
+                <td class='text-center'><input type='date' class='cedit'></td>
+                <td class='text-center'><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td>
+                
+                <td class='text-center'><input type='date' class='cedit'></td>
+                <td class='text-center'><select class='cedit' style='font-weight:bold;'><option value=''>-</option><option value='LIBERADO'>LIB</option><option value='RECHAZADO'>RECH</option></select></td>
+                <td class='no-print'><button class='btn-danger btn-mini' onclick='this.parentElement.parentElement.remove()'>x</button></td>
+            `)">
+            + Agregar Muestra</button>
+        </div>
+
+        <!-- <div class="section">
+            <label><strong>Observaciones Generales:</strong></label>
+            <textarea id="obs_generales" class="cedit"></textarea>
+        </div> -->
+
+        <div class="signature-area">
+            <div class="signature-box"><p>Realizó:</p><input type="text"><p>Firma</p></div>
+            <div class="signature-box"><p>Verificó:</p><input type="text"><p>Firma</p></div>
+        </div>
+        <div class="footer">FO-LC-44 | Versión: 2.0 | Vigente a partir de: Enero2026<br>El contenido de este documento es propiedad 
+            de “Xelle Scientific”, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+</body>
+</html>

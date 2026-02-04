@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xelle System V1 - Acceso</title>
+    <link rel="stylesheet" href="lims-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div id="login-logo-place" class="login-logo"></div>
+            
+            <h2 class="login-title">XELLE SYSTEM</h2>
+            <p style="color:#7f8c8d; font-size:13px; margin-bottom:25px; margin-top:-10px;">Gestión Modular de Laboratorio</p>
+            
+            <form id="loginForm">
+                <div style="position:relative; margin-bottom:15px;">
+                    <i class="fas fa-user" style="position:absolute; left:15px; top:13px; color:#bdc3c7;"></i>
+                    <input type="text" id="txtUser" class="form-input" placeholder="Usuario" style="padding-left:40px;" required>
+                </div>
+                
+                <div style="position:relative; margin-bottom:20px;">
+                    <i class="fas fa-lock" style="position:absolute; left:15px; top:13px; color:#bdc3c7;"></i>
+                    <input type="password" id="txtPass" class="form-input" placeholder="Contraseña" style="padding-left:40px;" required>
+                </div>
+
+                <button type="submit" id="btnLogin" class="btn-primary">INICIAR SESIÓN</button>
+            </form>
+
+            <div id="errorMsg" class="error-msg"></div>
+            
+            <div style="margin-top:30px; font-size:11px; color:#bdc3c7;">
+                Versión 1.0-OFF &bull; Xelle Scientific<br><br>
+                <a href="#" onclick="hardReset()" style="color:#2E9D82; text-decoration:none; font-weight:bold;">↻ Reparar / Resetear Datos</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="config-users.js"></script>
+    <script src="lims-core.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Cargar Logo
+            if(window.SeedData && window.SeedData.LOGO_SVG) {
+                $('#login-logo-place').html(window.SeedData.LOGO_SVG);
+            }
+
+            // Login Handler
+            $('#loginForm').on('submit', function(e) {
+                e.preventDefault();
+                const u = $('#txtUser').val();
+                const p = $('#txtPass').val();
+                const $btn = $('#btnLogin');
+                const $err = $('#errorMsg');
+
+                $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> VERIFICANDO...');
+                $err.slideUp();
+
+                // Verificar si Core cargó bien
+                if (typeof window.Core === 'undefined' || typeof window.Core.Auth === 'undefined') {
+                    $btn.prop('disabled', false).text('INICIAR SESIÓN');
+                    $err.html('Error crítico: lims-core.js no cargó correctamente. Revisa la consola (F12).').slideDown();
+                    return;
+                }
+
+                setTimeout(() => {
+                    const res = window.Core.Auth.login(u, p);
+                    
+                    if (res.success) {
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        $btn.prop('disabled', false).text('INICIAR SESIÓN');
+                        $err.html('<i class="fas fa-exclamation-triangle"></i> ' + res.msg).slideDown();
+                    }
+                }, 500);
+            });
+        });
+
+        // Función de Emergencia
+        function hardReset() {
+            if(confirm("¿Restaurar configuración de fábrica?")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
