@@ -1,9 +1,9 @@
-/* lims-core.js - V18 FILTER MANAGER LOGIC */
+/* lims-core.js - V2.0 AUTH & DASHBOARD LOGIC (CORREGIDO) */
 
 const KEYS = {
-    SESSION: 'xelle_v18_session',
-    USERS: 'xelle_v18_users',
-    FORMATS: 'xelle_v18_formats'
+    SESSION: 'xelle_v2_session',
+    USERS: 'xelle_v2_users',
+    FORMATS: 'xelle_v2_formats'
 };
 
 const Core = {
@@ -13,6 +13,7 @@ const Core = {
     },
 
     init: function() {
+        // Cargar datos semilla si existen (desde config-users.js)
         if(window.SeedData) {
             Core.Data.set(KEYS.USERS, window.SeedData.users);
             Core.Data.set(KEYS.FORMATS, window.SeedData.formats);
@@ -22,16 +23,35 @@ const Core = {
     Auth: {
         login: function(u, p) {
             const users = Core.Data.get(KEYS.USERS);
-            const user = users.find(x => x.user.toLowerCase() === u.trim().toLowerCase());
-            if(!user || user.pass !== p.trim()) return { success: false, msg: 'Credenciales inválidas.' };
             
-            Core.Data.set(KEYS.SESSION, { id: user.id, name: user.name, role: 'user' });
+            // BUSQUEDA SEGURA:
+            // Usamos optional chaining (?) para evitar error si username no existe en algún registro
+            const user = users.find(x => x.username?.toLowerCase() === u.trim().toLowerCase());
+            
+            if(!user || user.pass !== p.trim()) {
+                return { success: false, msg: 'Usuario o contraseña incorrectos.' };
+            }
+            
+            // Guardamos sesión con roles
+            Core.Data.set(KEYS.SESSION, { 
+                id: user.id, 
+                name: user.fullName, 
+                role: user.role,
+                access: user.moduleAccess // Array de permisos ej: ["comercial"]
+            });
             return { success: true };
         },
-        logout: function() { localStorage.removeItem(KEYS.SESSION); window.location.href = 'index.html'; },
+
+        logout: function() { 
+            localStorage.removeItem(KEYS.SESSION); 
+            window.location.href = 'index.html'; 
+        },
+
         check: function() {
-            try { return Core.Data.get(KEYS.SESSION).id ? Core.Data.get(KEYS.SESSION) : null; } 
-            catch { return null; }
+            try { 
+                const s = Core.Data.get(KEYS.SESSION);
+                return s && s.id ? s : null; 
+            } catch { return null; }
         }
     },
 
@@ -40,20 +60,35 @@ const Core = {
             const sess = Core.Auth.check();
             if(!sess) { window.location.href = 'index.html'; return; }
 
+            // Mostrar nombre de usuario
             $('#u-name').text(sess.name);
             $('#u-initial').text(sess.name.charAt(0));
 
-            // GENERAR FILTROS LATERALES
-            const areas = [
-                { id: 'all', label: 'Ver Todo', icon: 'fa-layer-group' },
-                { id: 'banco', label: 'Banco de Células', icon: 'fa-dna' },
-                { id: 'calidad', label: 'Lab. Calidad', icon: 'fa-microscope' },
-                { id: 'almacen', label: 'Almacén', icon: 'fa-boxes' },
-                { id: 'sgc', label: 'Sistema SGC', icon: 'fa-file-shield' }
+            // DEFINICIÓN DE ÁREAS Y REQUISITOS
+            const navAreas = [
+                { id: 'all', label: 'Ver Todo', icon: 'fa-layer-group', req: 'all' }, 
+                { id: 'banco', label: 'Banco de Células', icon: 'fa-dna', req: 'lab-calidad' },
+                { id: 'calidad', label: 'Lab. Calidad', icon: 'fa-microscope', req: 'lab-calidad' },
+                { id: 'almacen', label: 'Comercial/Almacén', icon: 'fa-boxes', req: 'comercial' },
+                { id: 'sgc', label: 'Sistema SGC', icon: 'fa-file-shield', req: 'documentacion' }
             ];
 
+            // FILTRADO DE MENÚ SEGÚN ROL
+            let visibleAreas = [];
+            
+            // Seguridad: Asegurar que access sea un array
+            const userAccess = Array.isArray(sess.access) ? sess.access : [];
+
+            if (userAccess.includes('all')) {
+                visibleAreas = navAreas;
+            } else {
+                // Muestra 'all' Y las áreas donde el usuario tenga permiso
+                visibleAreas = navAreas.filter(a => a.id === 'all' || userAccess.includes(a.req));
+            }
+
+            // Generar HTML del Sidebar
             let filterHtml = '';
-            areas.forEach(a => {
+            visibleAreas.forEach(a => {
                 filterHtml += `
                 <div class="filter-item ${a.id === 'all' ? 'active' : ''}" onclick="Core.UI.filterView('${a.id}', this)">
                     <div class="f-icon"><i class="fas ${a.icon}"></i></div>
@@ -63,11 +98,11 @@ const Core = {
             });
             $('#filter-container').html(filterHtml);
 
-            // RENDERIZAR TODO INICIALMENTE
+            // Cargar vista inicial
             Core.UI.filterView('all');
 
-            // BUSCADOR
-            $('#searchBox').on('keyup', function() {
+            // Activar Buscador
+            $('#searchBox').off('keyup').on('keyup', function() {
                 const val = $(this).val().toLowerCase();
                 $('.format-card').each(function() {
                     const text = $(this).data('search').toLowerCase();
@@ -77,26 +112,38 @@ const Core = {
         },
 
         filterView: function(areaId, element) {
-            // 1. Manejo visual de selección
+            // Manejo visual de selección (Clase Active)
             if(element) {
                 $('.filter-item').removeClass('active');
                 $(element).addClass('active');
             }
 
+            const sess = Core.Auth.check();
             const formats = Core.Data.get(KEYS.FORMATS);
             const container = $('#workspace');
+            const userAccess = Array.isArray(sess.access) ? sess.access : [];
             
-            // Definir qué áreas mostrar
+            // Mapa de configuración visual
             const areasMap = {
-                'banco': { title: 'Banco de Células', icon: 'fa-dna' },
-                'calidad': { title: 'Laboratorio de Calidad', icon: 'fa-microscope' },
-                'almacen': { title: 'Almacén y Logística', icon: 'fa-boxes' },
-                'sgc': { title: 'Sistema de Gestión (SGC)', icon: 'fa-file-shield' }
+                'banco': { title: 'Banco de Células', icon: 'fa-dna', req: 'lab-calidad' },
+                'calidad': { title: 'Laboratorio de Calidad', icon: 'fa-microscope', req: 'lab-calidad' },
+                'almacen': { title: 'Comercial y Logística', icon: 'fa-boxes', req: 'comercial' },
+                'sgc': { title: 'Sistema de Gestión (SGC)', icon: 'fa-file-shield', req: 'documentacion' }
             };
 
-            let html = '';
-            let keysToShow = (areaId === 'all') ? Object.keys(areasMap) : [areaId];
+            // Determinar qué áreas mostrar en el Grid
+            let keysToShow = [];
+            if (areaId === 'all') {
+                // Si es "Ver Todo", mostrar solo lo permitido por el rol
+                keysToShow = Object.keys(areasMap).filter(key => 
+                    userAccess.includes('all') || userAccess.includes(areasMap[key].req)
+                );
+            } else {
+                // Si es un área específica, mostrarla
+                keysToShow = [areaId];
+            }
 
+            let html = '';
             keysToShow.forEach(key => {
                 const info = areasMap[key];
                 const areaFormats = formats.filter(f => f.area === key);
@@ -125,12 +172,19 @@ const Core = {
                 }
             });
 
-            // Inyectar con efecto fade
+            if(html === '') {
+                html = `<div style="text-align:center; padding:50px; color:#888;">
+                            <i class="fas fa-lock fa-3x" style="margin-bottom:20px; opacity:0.3"></i><br>
+                            No tienes permisos para ver módulos en esta sección.
+                        </div>`;
+            }
+
             container.hide().html(html).fadeIn(300);
         }
     }
 };
 
+// Exponer Core globalmente y arrancar
 window.Core = Core;
 
 $(document).ready(function() {

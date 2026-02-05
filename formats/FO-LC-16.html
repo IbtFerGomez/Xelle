@@ -52,7 +52,13 @@
             <div class="registry-container">
                 <label>Lote Asignado</label>
                 <div class="registry-wrapper">
-                    <input type="text" id="lote-final" class="registry-input generate-barcode" data-target="barcode-res" style="width:120px; font-size:14px;">
+                    <span class="registry-prefix">FO-LC-16-</span>
+                    <input type="text" id="lote-final" 
+                           class="registry-input generate-barcode" 
+                           data-target="barcode-res" 
+                           data-prefix="FO-LC-16-"
+                           style="width:120px; font-size:14px;"
+                           placeholder="001">
                 </div>
                 <input type="date" class="registry-date no-auto-date">
                 <svg id="barcode-res" class="barcode-svg"></svg>
@@ -62,6 +68,7 @@
         <div class="header-main">
             <h1>FORMATO RESUMEN EJECUTIVO DE RECEPCIÓN LOTE (COVER SHEET)</h1>
             <div class="metadata">Consolidado de formatos FO-LC-17, 18 y 19</div>
+            <div class="metadata">Código: FO-OP-16 | Versión: 1.0 | Vig: Ene2026</div>
         </div>
 
         <div class="section">

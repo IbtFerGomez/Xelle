@@ -7,6 +7,25 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app-comercial.js"></script>
+    <style>
+        /* Estilo para fijar el footer al final de la hoja en impresión */
+        @media print {
+            .footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                text-align: center;
+                padding: 10px 0;
+                border-top: 1px solid #eee;
+                font-size: 9px !important;
+                color: #000 !important;
+            }
+            body { padding-bottom: 50px; }
+            .no-print { display: none !important; }
+        }
+    </style>
 </head>
 <body id="doc-fo-op-15">
     <div class="global-controls no-print">
@@ -23,8 +42,12 @@
             <div class="registry-container">
                 <label>No. Pedido (PV)</label>
                 <div class="registry-wrapper">
-                    <span class="registry-prefix">PV-</span>
-                    <input type="text" id="reg-op-15" class="registry-input generate-barcode" data-target="barcode-op-15" data-prefix="PV-">
+                    <span class="registry-prefix">FO-OP-15-</span>
+                    <input type="text" id="reg-op-15" 
+                           class="registry-input generate-barcode" 
+                           data-target="barcode-op-15" 
+                           data-prefix="FO-OP-15-" 
+                           placeholder="001">
                 </div>
                 <input type="date" class="registry-date no-auto-date">
                 <svg id="barcode-op-15" class="barcode-svg"></svg>
@@ -33,7 +56,7 @@
 
         <div class="header-main">
             <h1>REGISTRO MAESTRO DE PEDIDO (VENTAS)</h1>
-            <div class="metadata">Código: FO-OP-15 | Versión: 2.0 | Vig: Ene2026</div>
+            <div class="metadata">Código: FO-OP-15 | Versión: 1.0 | Vig: Ene2026</div>
         </div>
 
         <div class="section">
@@ -91,7 +114,11 @@
             <div class="signature-box"><p>Ejecutivo Ventas:</p><input type="text"><p>Firma</p></div>
             <div class="signature-box"><p>Autorizó (Gerencia):</p><input type="text"><p>Firma</p></div>
         </div>
-        <div class="footer">FO-OP-15 | Registro Maestro de Pedido | Xelle Scientific</div>
+
+        <div class="footer">
+            FO-OP-15 | Versión: 1.0 | Vigente a partir de: Enero2026<br>
+            El contenido de este documento es propiedad de “Xelle Scientific”.
+        </div>
     </div>
 </body>
 </html>

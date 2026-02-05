@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>FO-LC-30 Registro Lote</title>
+    <title>FO-LC-31 Acondicionamiento</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -21,7 +21,7 @@
         }
     </style>
 </head>
-<body id="doc-fo-lc-30">
+<body id="doc-fo-lc-31">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
@@ -36,17 +36,21 @@
             <div class="registry-container">
                 <label>Lote PT</label>
                 <div class="registry-wrapper">
-                    <span class="registry-prefix">FO-LC-30-</span>
-                    <input type="text" id="reg-30" class="registry-input generate-barcode" data-target="barcode-30" placeholder="Lote Final">
+                    <span class="registry-prefix">FO-LC-31-</span>
+                    <input type="text" id="reg-31" 
+                           class="registry-input generate-barcode" 
+                           data-target="barcode-31" 
+                           data-prefix="FO-LC-31-"
+                           placeholder="001">
                 </div>
                 <input type="date" class="registry-date no-auto-date">
-                <svg id="barcode-30" class="barcode-svg"></svg>
+                <svg id="barcode-31" class="barcode-svg"></svg>
             </div>
         </div>
 
         <div class="header-main">
             <h1>FORMATO DE ACONDICIONAMIENTO Y REGISTRO DE LOTE DE PRODUCTO TERMINADO.</h1>
-            <div class="metadata">Código: FO-LC-30 | Versión: 1.0 | Vig: Ene2026</div>
+            <div class="metadata">Código: FO-LC-31 | Versión: 1.0 | Vig: Ene2026</div>
         </div>
 
         <div class="section">
@@ -216,7 +220,7 @@
             <textarea class="cedit" rows="4" placeholder="Registrar cualquier evento no planeado. Si no hay, escribir 'Ninguna'."></textarea>
         </div>
 
-        <div class="footer">FO-LC-30 | Versión: 1.0 | Vigente a partir de: Enero2026<br>El contenido de este documento es propiedad de “Xelle Scientific”.</div>
+        <div class="footer">FO-LC-31 | Versión: 1.0 | Vigente a partir de: Enero2026<br>El contenido de este documento es propiedad de “Xelle Scientific”.</div>
     </div>
 
     <script>

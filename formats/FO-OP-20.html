@@ -7,6 +7,25 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
+    <style>
+        /* Estilo para fijar el footer al final de la hoja en impresión */
+        @media print {
+            .footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                text-align: center;
+                padding: 10px 0;
+                border-top: 1px solid #eee;
+                font-size: 9px !important;
+                color: #000 !important;
+            }
+            body { padding-bottom: 50px; }
+            .no-print { display: none !important; }
+        }
+    </style>
 </head>
 <body id="doc-fo-op-20">
     <div class="global-controls no-print">
@@ -24,7 +43,11 @@
                 <label>No. Liberación</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-OP-20-</span>
-                    <input type="text" id="reg-20" class="registry-input generate-barcode" data-target="barcode-20" data-prefix="FO-OP-20-">
+                    <input type="text" id="reg-20" 
+                           class="registry-input generate-barcode" 
+                           data-target="barcode-20" 
+                           data-prefix="FO-OP-20-" 
+                           placeholder="001">
                 </div>
                 <input type="date" class="registry-date no-auto-date">
                 <svg id="barcode-20" class="barcode-svg"></svg>
@@ -89,7 +112,10 @@
             </div>
         </div>
 
-        <div class="footer">FO-OP-20 | Versión: 1.0 | Vigente a partir de: Enero2026<br>El contenido de este documento es propiedad de “Xelle Scientific”, S.A.P.I., de C. V.</div>
+        <div class="footer">
+            FO-OP-20 | Versión: 1.0 | Vigente a partir de: Enero2026<br>
+            El contenido de este documento es propiedad de “Xelle Scientific”.
+        </div>
     </div>
 
     <script>
