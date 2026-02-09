@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-17 Remisión (OFF)</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app-OffLine.js"></script>
+    <style>
+        @media print {
+            @page { size: letter; margin: 0.5cm; }
+            body { 
+                background: white; 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact; 
+            }
+            .no-print { display: none !important; }
+            input::placeholder { color: transparent !important; }
+            table, th, td { border-color: #000 !important; }
+            input.cedit { border: none !important; }
+        }
+
+        .data-table th { 
+            background: #f0f0f0 !important; 
+            font-size: 10px; 
+            padding: 4px; 
+            border: 1px solid #000; 
+            text-align: center; 
+        }
+        .data-table td { border: 1px solid #000; padding: 4px; text-align: center; }
+        .data-table input { width: 98%; border: none; outline: none; background: transparent; font-size: 11px; text-align: center; }
+
+        .receipt-box {
+            border: 2px solid #000;
+            padding: 15px;
+            background-color: #fcfcfc;
+            margin-top: 15px;
+        }
+
+        .receipt-footer {
+            margin-top: 40px;
+            border-top: 1px solid #000;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            padding-top: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body id="doc-fo-op-17">
+    <div class="global-controls no-print">
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Remisión</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-17-</span>
+                    <input type="text" id="reg-op-17" class="registry-input generate-barcode" data-target="barcode-op-17" data-prefix="FO-OP-17-" placeholder="001">
+                </div>
+                <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
+                <svg id="barcode-op-17" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>NOTA DE REMISIÓN Y ENTREGA</h1>
+            <div class="metadata">Código: FO-OP-17 | Versión: 1.0-OFF | Vigencia: Ene 2026</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">1. DATOS DEL CLIENTE Y REFERENCIAS</div>
+            <table class="no-border-table" style="border: 1px solid #000; padding: 5px;">
+                <tr>
+                    <td width="50%"><strong>Cliente:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td width="50%"><strong>Fecha Envío:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;" placeholder="DD/MM/AAAA"></td>
+                </tr>
+                <tr>
+                    <td><strong>Dirección Entrega:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td><strong>Ref. Pedido (PV):</strong> <input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Atención a:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td><strong>Orden de Compra (OC):</strong> <input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. PRODUCTOS ENTREGADOS</div>
+            <table class="compact-table data-table" id="tbl-remision-off">
+                <thead>
+                    <tr>
+                        <th width="10%">Cantidad</th>
+                        <th width="35%">Producto</th>
+                        <th width="20%">Presentación</th>
+                        <th width="20%">Lote</th>
+                        <th width="15%">Caducidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section receipt-box">
+            <div class="section-title">3. ACUSE DE RECIBO</div>
+            <p style="font-size:10px; text-align:justify; margin-bottom:15px; line-height: 1.4;">
+                Por medio de la presente, acuso recibo de los productos descritos anteriormente, validando que el empaque se encuentra íntegro, sellado y manteniendo las condiciones de temperatura requeridas para su conservación.
+            </p>
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; font-size: 11px;">
+                <div style="width:30%">
+                    <strong>Fecha Recepción:</strong> <span style="border-bottom: 1px solid #000; display: inline-block; width: 100px; height: 15px;"></span>
+                </div>
+                <div style="width:25%">
+                    <strong>Hora:</strong> <span style="border-bottom: 1px solid #000; display: inline-block; width: 70px; height: 15px;"></span>
+                </div>
+                <div style="width:35%">
+                    <strong>Temp. Recepción:</strong> <span style="border-bottom: 1px solid #000; display: inline-block; width: 60px; height: 15px;"></span> °C
+                </div>
+            </div>
+            <div class="receipt-footer">
+                Nombre y Firma de Conformidad
+            </div>
+        </div>
+
+        <div class="footer">
+            FO-OP-17 | Versión: 1.0-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.
+        </div>
+    </div>
+</body>
+</html>

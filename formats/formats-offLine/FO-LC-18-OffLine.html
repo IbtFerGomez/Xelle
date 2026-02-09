@@ -2,12 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>FO-LC-18 Recepción Insumos (OFF)</title>
+    <title>FO-LC-18 Evaluación Macroscópica (OFF)</title>
     <link rel="stylesheet" href="format-styles-OffLine.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app-OffLine.js"></script>
     <style>
-        /* Corrección de sintaxis CSS */
         @media print {
             @page { size: letter; margin: 0.5cm; }
             body { 
@@ -17,11 +16,36 @@
             }
             .no-print { display: none !important; }
             input::placeholder { color: transparent !important; }
-            table, th, td { border-color: #000 !important; }
+            table, th, td, div { border-color: #000 !important; }
+            input.cedit { border: none !important; }
+            textarea { border: 1px solid #000 !important; resize: none; }
         }
-        .insumos-table th { background: #f0f0f0; font-size: 9px; padding: 3px; border: 1px solid #000; text-align: center; vertical-align: middle; }
-        .insumos-table td { border: 1px solid #000; padding: 2px; height: 25px; vertical-align: middle; }
-        .insumos-table input { width: 98%; border: none; outline: none; background: transparent; font-size: 10px; text-align: center; }
+
+        .data-table th { background: #f0f0f0; font-size: 10px; padding: 4px; border: 1px solid #000; text-align: center; }
+        .data-table td { border: 1px solid #000; padding: 8px; text-align: left; }
+        
+        .check-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .manual-check {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 1px solid #000;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .decision-box {
+            border: 2px solid #000;
+            background-color: #f4f4f4;
+            padding: 10px;
+            margin-top: 15px;
+            text-align: center;
+        }
     </style>
 </head>
 <body id="doc-fo-lc-18">
@@ -36,7 +60,7 @@
                 <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
             </div>
             <div class="registry-container">
-                <label>Folio Recepción</label>
+                <label>Folio Registro</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-18-</span>
                     <input type="text" id="reg-18" class="registry-input generate-barcode" data-target="barcode-18" data-prefix="FO-LC-18-" placeholder="001">
@@ -47,75 +71,118 @@
         </div>
 
         <div class="header-main">
-            <h1>RECEPCIÓN DE INSUMOS, REACTIVOS Y MATERIALES CRÍTICOS</h1>
+            <h1>EVALUACIÓN MACROSCÓPICA DE TEJIDO (PLACENTA)</h1>
             <div class="metadata">Código: FO-LC-18 | Versión: 1.0-OFF | Vigencia: Ene 2026</div>
         </div>
 
         <div class="section">
-            <table class="no-border-table" style="border:1px solid #000; padding:5px;">
+            <div class="section-title">1. IDENTIFICACIÓN DEL DONANTE Y TEJIDO</div>
+            <table class="no-border-table" style="border: 1px solid #000; padding: 5px;">
                 <tr>
-                    <td width="20%"><strong>Proveedor:</strong></td>
-                    <td width="30%"><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
-                    <td width="20%"><strong>No. Factura / Remisión:</strong></td>
-                    <td width="30%"><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                    <td><strong>ID Donante:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td><strong>ID Materia Prima:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td><strong>Fecha Proc:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;" placeholder="DD/MM/AAAA"></td>
+                </tr>
+                <tr>
+                    <td><strong>Edad Madre:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td><strong>Grupo Sanguíneo:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td><strong>ID Placenta Gen:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;" placeholder="PL-..."></td>
                 </tr>
             </table>
         </div>
 
         <div class="section">
-            <div class="section-title">DETALLE DE INSUMOS RECIBIDOS</div>
-            <table class="compact-table insumos-table">
+            <div class="section-title">2. CARACTERÍSTICAS FÍSICAS</div>
+            <table class="compact-table data-table">
                 <thead>
                     <tr>
-                        <th width="20%">Nombre del Insumo</th>
-                        <th width="15%">Marca / Fabricante</th>
-                        <th width="12%">No. Lote</th>
-                        <th width="10%">Caducidad</th>
-                        <th width="8%">Cant.</th>
-                        <th width="8%">Cert. Calidad (CoA)</th>
-                        <th width="10%">Integridad (OK/Mal)</th>
-                        <th width="12%">Lote Interno Asignado</th>
+                        <th width="25%">Peso Total (g)</th>
+                        <th width="25%">Dimensiones (cm)</th>
+                        <th width="25%">Coloración</th>
+                        <th width="25%">Cordón Umbilical</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit" placeholder="SI / NO"></td><td><input class="cedit"></td><td><input class="cedit" style="font-weight:bold;"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr>
+                        <td height="30"><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td>
+                            <div class="check-container">
+                                <span><span class="manual-check"></span> Sí</span>
+                                <span><span class="manual-check"></span> No</span>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="section">
-            <div class="section-title">VERIFICACIÓN Y DESTINO</div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap:10px; border:1px solid #000; padding:10px; font-size:11px;">
-                <div>
-                    <strong>Estado de Recepción:</strong><br>
-                    <label><input type="checkbox"> Empaque secundario limpio y sin daños.</label><br>
-                    <label><input type="checkbox"> Sellos de garantía intactos.</label><br>
-                    <label><input type="checkbox"> Cadena de frío mantenida (si aplica).</label>
-                </div>
-                <div>
-                    <strong>Destino de Almacenamiento:</strong><br>
-                    <label><input type="checkbox"> Almacén General (T. Amb)</label><br>
-                    <label><input type="checkbox"> Refrigeración (2-8°C)</label><br>
-                    <label><input type="checkbox"> Congelación (-20°C)</label>
-                </div>
+            <div class="section-title">3. EVALUACIÓN MORFOLÓGICA</div>
+            <table class="compact-table data-table">
+                <thead>
+                    <tr>
+                        <th width="33.3%">Fibrosis / Calcificaciones</th>
+                        <th width="33.3%">Coágulos</th>
+                        <th width="33.3%">Integridad de Membranas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td height="60">
+                            <div class="check-container">
+                                <span><span class="manual-check"></span> Ausente</span>
+                                <span><span class="manual-check"></span> Leve</span>
+                                <span><span class="manual-check"></span> Severa</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="check-container">
+                                <span><span class="manual-check"></span> Ausente</span>
+                                <span><span class="manual-check"></span> Escasos</span>
+                                <span><span class="manual-check"></span> Abundantes</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="check-container">
+                                <span><span class="manual-check"></span> Íntegras</span>
+                                <span><span class="manual-check"></span> Laceradas</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <strong>Observaciones Adicionales:</strong><br>
+            <textarea class="cedit" rows="4" style="width:98%; border:1px solid #ccc; background:white; margin-top:5px; resize:none;"></textarea>
+        </div>
+
+        <div class="section decision-box">
+            <h3 style="margin:0 0 10px 0; border-bottom:1px solid #ccc; padding-bottom:5px;">DICTAMEN FINAL</h3>
+            <div style="display:flex; justify-content:space-around; align-items: center; font-weight:bold;">
+                <label><span class="manual-check"></span> APTA PARA PROCESO</label>
+                <label><span class="manual-check"></span> NO APTA</label>
+                <label><span class="manual-check"></span> CUARENTENA</label>
             </div>
         </div>
 
         <div class="signature-area">
-            <div class="signature-box"><p>Recibió (Almacén):</p><input type="text"><p>Firma</p></div>
-            <div class="signature-box"><p>Verificó / Liberó (Calidad):</p><input type="text"><p>Firma</p></div>
+            <div class="signature-box">
+                <p>Evaluó (Laboratorio):</p>
+                <input type="text" placeholder="Nombre y Firma">
+            </div>
+            <div class="signature-box">
+                <p>Verificó (Calidad):</p>
+                <input type="text" placeholder="Nombre y Firma">
+            </div>
         </div>
-        
-        <div class="footer">FO-LC-18 | Versión: 1.0-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.</div>
+
+        <div class="footer">
+            FO-LC-18 | Versión: 1.0-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.
+        </div>
     </div>
 </body>
 </html>

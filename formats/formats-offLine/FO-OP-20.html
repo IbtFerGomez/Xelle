@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-20 Liberación Alm (OFF)</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app-OffLine.js"></script>
+    <style>
+        @media print {
+            @page { size: letter; margin: 0.5cm; }
+            body { 
+                background: white; 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact; 
+            }
+            .no-print { display: none !important; }
+            input::placeholder { color: transparent !important; }
+            table, th, td { border-color: #000 !important; }
+            input.cedit { border: none !important; }
+        }
+
+        .data-table th { 
+            background: #f0f0f0 !important; 
+            font-size: 10px; 
+            padding: 4px; 
+            border: 1px solid #000; 
+            text-align: center; 
+        }
+        .data-table td { border: 1px solid #000; padding: 4px; text-align: center; height: 25px; }
+        .data-table input { width: 98%; border: none; outline: none; background: transparent; font-size: 11px; text-align: center; }
+
+        .storage-info-box {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .handwritten-space {
+            border-bottom: 1px solid #000;
+            display: inline-block;
+            min-height: 15px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body id="doc-fo-op-20">
+    <div class="global-controls no-print">
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>No. Liberación</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-20-</span>
+                    <input type="text" id="reg-20" class="registry-input generate-barcode" data-target="barcode-20" data-prefix="FO-OP-20-" placeholder="001">
+                </div>
+                <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
+                <svg id="barcode-20" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>LIBERACIÓN PARA ALMACÉN (PRODUCTO TERMINADO)</h1>
+            <div class="metadata">Código: FO-OP-20 | Versión: 1.0-OFF | Vigencia: Ene 2026</div>
+        </div>
+
+        <div class="section storage-info-box">
+            <div class="section-title">1. ALMACENAMIENTO</div>
+            <p><strong>Ubicación de Almacenamiento del Lote Terminado:</strong><br>
+            <span class="handwritten-space" style="width: 100%;"></span></p>
+            
+            <p><strong>Condiciones de Almacenamiento Requeridas:</strong><br>
+            <span class="handwritten-space" style="width: 100%;"></span></p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. ESPECIFICACIÓN DE ENTREGA</div>
+            <table class="compact-table data-table" id="tbl-entrega-off">
+                <thead>
+                    <tr>
+                        <th width="25%">Producto</th>
+                        <th width="15%">Lote</th>
+                        <th width="15%">Caducidad</th>
+                        <th width="10%">Cantidad</th>
+                        <th width="15%">Ref FO-LC-30</th>
+                        <th width="15%">Ref FO-LC-31</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section" style="margin-top: 30px; border: 2px solid #000; padding: 15px;">
+            <p><strong>RESPONSABLE DE ALMACÉN (RECEPCIÓN):</strong></p>
+            <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+                <div style="width:45%">
+                    <p style="font-size:9px; margin:0;">Nombre:</p>
+                    <span class="handwritten-space" style="width: 100%;"></span>
+                </div>
+                <div style="width:25%">
+                    <p style="font-size:9px; margin:0;">Firma:</p>
+                    <span class="handwritten-space" style="width: 100%;"></span>
+                </div>
+                <div style="width:20%">
+                    <p style="font-size:9px; margin:0;">Fecha:</p>
+                    <span class="handwritten-space" style="width: 100%;"></span>
+                </div>
+            </div>
+            <p style="font-size:10px; color:#444; margin-top:10px; font-style:italic;">
+                * Al firmar este documento, se confirma la recepción física de las dosis descritas y su ingreso al inventario bajo las condiciones de temperatura indicadas.
+            </p>
+        </div>
+
+        <div class="footer">
+            FO-OP-20 | Versión: 1.0-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.
+        </div>
+    </div>
+</body>
+</html>
