@@ -11,7 +11,7 @@ from datetime import datetime
 # ==========================================
 # 1. CONFIGURACIÓN
 # ==========================================
-TU_CONTRASENA_REAL = "123"  # <--- TU CONTRASEÑA CORRECTA AQUÍ
+TU_CONTRASENA_REAL = "123"
 encoded_password = urllib.parse.quote_plus(TU_CONTRASENA_REAL)
 DATABASE_URL = f"postgresql://postgres:{encoded_password}@localhost:5432/xelle_db"
 
