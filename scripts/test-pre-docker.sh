@@ -3,6 +3,9 @@
 
 set -e
 
+# Asegurar ejecución desde la raíz del proyecto
+cd "$(dirname "$0")/.."
+
 echo ""
 echo "========================================"
 echo "   PRE-DOCKER TEST SUITE"
@@ -40,10 +43,10 @@ echo ""
 
 # PASO 3: Verificar estructura del proyecto
 echo "--- VERIFICACIÓN 3: Estructura del Proyecto ---"
-if [ -f "backend/backend_v6.py" ]; then
-    echo "$CHECK backend/backend_v6.py encontrado"
+if [ -f "backend/app/main.py" ]; then
+    echo "$CHECK backend/app/main.py encontrado"
 else
-    echo "$ERROR No se encuentra backend/backend_v6.py"
+    echo "$ERROR No se encuentra backend/app/main.py"
     exit 1
 fi
 
@@ -110,12 +113,12 @@ echo ""
 
 # PASO 8: Verificar sintaxis del backend
 echo "--- VERIFICACIÓN 8: Sintaxis del Backend ---"
-python3 -m py_compile backend/backend_v6.py 2>/dev/null
+python3 -m py_compile backend/app/main.py 2>/dev/null
 if [ $? -eq 0 ]; then
-    echo "$CHECK backend_v6.py - Sintaxis OK"
+    echo "$CHECK backend/app/main.py - Sintaxis OK"
 else
-    echo "$ERROR backend_v6.py - Error de sintaxis"
-    python3 -m py_compile backend/backend_v6.py
+    echo "$ERROR backend/app/main.py - Error de sintaxis"
+    python3 -m py_compile backend/app/main.py
     exit 1
 fi
 echo ""
@@ -154,4 +157,4 @@ echo "$WARN Presiona CTRL+C para detener después de verificar"
 echo ""
 
 # Iniciar uvicorn
-uvicorn backend.backend_v6:app --host 127.0.0.1 --port 8000 --reload
+uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload

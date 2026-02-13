@@ -3,6 +3,9 @@
 
 set -e
 
+# Asegurar ejecución desde la raíz del proyecto
+cd "$(dirname "$0")/.."
+
 echo "🚀 Iniciando preparación para migración a Docker..."
 
 # Colores para output

@@ -2,6 +2,9 @@
 @echo off
 setlocal enabledelayedexpansion
 
+REM Asegurar ejecución desde la raíz del proyecto
+cd /d "%~dp0.."
+
 echo.
 echo 🚀 Iniciando preparación para migración a Docker...
 echo.

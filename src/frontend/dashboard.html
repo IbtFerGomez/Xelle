@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XELLE LIMS - Dashboard V4</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { primary: "#2fa785", navy: "#1E3A5F", sky: "#64C4ED", "bg-light": "#f3f7f5" },
+                    fontFamily: { display: ["Manrope", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar-active { background-color: rgba(255, 255, 255, 0.1); border-left: 4px solid #2fa785; }
+        .glass-panel { background: white; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .tab-btn.active { color: #2fa785; border-bottom-color: #2fa785; }
+        /* Modal Transitions */
+        .modal { opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .modal.open { opacity: 1; visibility: visible; }
+        .modal.open .modal-content { transform: scale(1); opacity: 1; }
+        .modal-content { transform: scale(0.95); opacity: 0; transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="bg-bg-light font-display text-slate-800 h-screen flex overflow-hidden">
+
+    <aside class="w-72 bg-navy text-white flex flex-col shrink-0 transition-all duration-300 relative z-20">
+        <div class="p-6 flex flex-col items-center border-b border-white/10 shrink-0">
+            <div class="w-40 mb-2">
+                 <svg viewBox="0 0 320 80" class="w-full h-auto">
+                    <defs><style>.svg-title { font-family:'Arial Black',sans-serif; font-weight:900; fill:#FFF; } .svg-sub { font-family:'Arial',sans-serif; font-weight:700; fill:#FFF; letter-spacing:2px; } .svg-cell { fill:#2fa785; }</style></defs>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle class="svg-cell" cx="25" cy="25" r="13"/><circle class="svg-cell" cx="75" cy="75" r="13"/>
+                        <path class="svg-cell" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" class="svg-title" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="svg-sub" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <span class="text-[10px] font-bold text-sky uppercase tracking-widest bg-white/10 px-2 py-0.5 rounded">v1.0 Stable</span>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar">
+            <p class="px-4 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Módulos</p>
+            
+            <button onclick="switchTab('operation')" class="w-full flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-xl transition-all group text-left tab-trigger active" id="btn-tab-operation">
+                <span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+                <span class="text-sm font-semibold">Operación</span>
+            </button>
+            
+            <button onclick="switchTab('history')" class="w-full flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-xl transition-all group text-left tab-trigger" id="btn-tab-history">
+                <span class="material-symbols-outlined group-hover:text-primary transition-colors">history_edu</span>
+                <span class="text-sm font-semibold">Historial / Auditoría</span>
+            </button>
+            
+            <div id="admin-menu-item" class="hidden">
+                <button onclick="switchTab('admin')" class="w-full flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-xl transition-all group text-left tab-trigger" id="btn-tab-admin">
+                    <span class="material-symbols-outlined group-hover:text-primary transition-colors">admin_panel_settings</span>
+                    <span class="text-sm font-semibold">Administración</span>
+                </button>
+            </div>
+
+            <div id="sidebar-filters" class="pt-6 pb-2">
+                <div class="border-t border-white/10 mx-2 mb-4"></div>
+                <p class="px-4 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Filtros de Área</p>
+                <div id="filter-container" class="space-y-1"></div>
+            </div>
+        </nav>
+
+        <div class="p-4 border-t border-white/10 shrink-0 bg-navy">
+            <button onclick="Core.Auth.logout()" class="flex items-center gap-3 px-4 py-2 w-full text-white/60 hover:text-red-300 transition-colors rounded-lg hover:bg-white/5">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="text-sm font-bold">Cerrar Sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col min-w-0 bg-bg-light overflow-hidden">
+        
+        <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-8 shrink-0 z-10">
+            <div class="flex flex-col">
+                <h2 class="text-2xl font-black text-navy tracking-tight" id="page-title">Dashboard</h2>
+                <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Gestión de Laboratorio Clínico</p>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <div class="relative hidden md:block">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+                    <input id="searchBox" type="text" class="pl-10 pr-4 py-2 w-64 bg-slate-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-primary placeholder-slate-400 font-medium transition-all" placeholder="Buscar formato, lote...">
+                </div>
+                
+                <div class="h-8 w-px bg-slate-200"></div>
+                
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <p class="text-sm font-bold text-navy leading-none" id="u-name">Usuario</p>
+                        <p class="text-[10px] text-primary font-bold uppercase tracking-tight mt-1" id="u-role">ROL</p>
+                    </div>
+                    <div class="h-10 w-10 rounded-full bg-navy text-white flex items-center justify-center font-bold text-lg shadow-lg shadow-navy/20" id="u-initial">U</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8 relative">
+            
+            <div id="view-operation" class="tab-content block animate-fadeIn">
+                <div id="workspace">
+                    </div>
+            </div>
+
+            <div id="view-history" class="tab-content hidden animate-fadeIn">
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                        <h3 class="font-bold text-navy text-lg">Registro de Actividad</h3>
+                        <button onclick="loadHistory()" class="text-primary hover:bg-primary/5 p-2 rounded-lg transition-colors text-sm font-bold flex items-center gap-2">
+                            <span class="material-symbols-outlined">sync</span> Actualizar
+                        </button>
+                    </div>
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-50 text-xs uppercase font-bold text-slate-500">
+                            <tr>
+                                <th class="px-6 py-4">ID</th>
+                                <th class="px-6 py-4">Formato</th>
+                                <th class="px-6 py-4">Referencia / Lote</th>
+                                <th class="px-6 py-4">Fecha Modificación</th>
+                                <th class="px-6 py-4">Usuario</th>
+                                <th class="px-6 py-4 text-right">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body" class="divide-y divide-slate-100 text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="view-admin" class="tab-content hidden animate-fadeIn space-y-8">
+                
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-navy/5">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-navy p-2 rounded-lg text-white"><span class="material-symbols-outlined">group</span></div>
+                            <div>
+                                <h3 class="font-bold text-navy text-lg">Gestión de Usuarios</h3>
+                                <p class="text-xs text-slate-500">Control de Acceso & 21 CFR Audit Trail</p>
+                            </div>
+                        </div>
+                        <button onclick="openUserModal()" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-lg shadow-primary/20 flex items-center gap-2 transition-transform active:scale-95">
+                            <span class="material-symbols-outlined text-lg">person_add</span> Nuevo Usuario
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 text-xs uppercase font-bold text-slate-500">
+                                <tr>
+                                    <th class="px-6 py-4">Usuario</th>
+                                    <th class="px-6 py-4">Nombre Completo</th>
+                                    <th class="px-6 py-4">Rol</th>
+                                    <th class="px-6 py-4">Áreas Asignadas</th>
+                                    <th class="px-6 py-4">Estado</th>
+                                    <th class="px-6 py-4 text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-body" class="divide-y divide-slate-100 text-sm font-medium"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-sky/5">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-sky p-2 rounded-lg text-white"><span class="material-symbols-outlined">description</span></div>
+                            <div>
+                                <h3 class="font-bold text-navy text-lg">Catálogo de Formatos</h3>
+                                <p class="text-xs text-slate-500">Gestión de Tarjetas y Rutas</p>
+                            </div>
+                        </div>
+                        <button onclick="openFormatModal()" class="bg-white border border-slate-200 hover:bg-slate-50 text-navy px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 transition-transform active:scale-95">
+                            <span class="material-symbols-outlined text-lg">add_circle</span> Nuevo Formato
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 text-xs uppercase font-bold text-slate-500">
+                                <tr>
+                                    <th class="px-6 py-4">Código</th>
+                                    <th class="px-6 py-4">Título</th>
+                                    <th class="px-6 py-4">Área</th>
+                                    <th class="px-6 py-4">Archivo</th>
+                                    <th class="px-6 py-4">Visibilidad</th>
+                                    <th class="px-6 py-4 text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="formats-body" class="divide-y divide-slate-100 text-sm font-medium"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div id="modal-user" class="modal fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-navy/60 backdrop-blur-sm" onclick="closeModal('modal-user')"></div>
+        <div class="modal-content bg-white w-full max-w-lg rounded-2xl shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="font-black text-navy text-lg" id="modal-user-title">Gestión de Usuario</h3>
+                <button onclick="closeModal('modal-user')" class="text-slate-400 hover:text-red-500 transition-colors"><span class="material-symbols-outlined">close</span></button>
+            </div>
+            <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar">
+                <input type="hidden" id="user-id">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Usuario (Login)</label>
+                        <input id="user-login" type="text" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-bold text-navy placeholder:text-slate-300" placeholder="ej. j.doe">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Contraseña</label>
+                        <input id="user-pass" type="password" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-bold text-navy placeholder:text-slate-300" placeholder="••••••••">
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Nombre Completo</label>
+                    <input id="user-name" type="text" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-bold text-navy" placeholder="ej. John Doe">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Rol del Sistema</label>
+                    <select id="user-role" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-bold text-navy">
+                        <option value="super_admin">Administrador Total</option>
+                        <option value="quality_manager">Gerencia de Calidad</option>
+                        <option value="sales">Ventas / Comercial</option>
+                        <option value="banco">Operador Técnico</option>
+                    </select>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <label class="text-[10px] uppercase font-bold text-navy mb-3 block">Permisos de Visualización</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+                            <input type="checkbox" class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5" value="banco">
+                            <span class="text-sm font-bold text-slate-600">Banco de Células</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+                            <input type="checkbox" class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5" value="calidad">
+                            <span class="text-sm font-bold text-slate-600">Lab. Calidad</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+                            <input type="checkbox" class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5" value="almacen">
+                            <span class="text-sm font-bold text-slate-600">Almacén</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+                            <input type="checkbox" class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5" value="sgc">
+                            <span class="text-sm font-bold text-slate-600">SGC / Documentos</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl">
+                    <div>
+                        <p class="text-sm font-bold text-navy">Estado de la Cuenta</p>
+                        <p class="text-[10px] text-slate-500">Permitir acceso al sistema</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input id="user-active" type="checkbox" class="sr-only peer" checked>
+                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                </div>
+            </div>
+            <div class="p-6 bg-slate-50 border-t border-slate-100 flex gap-3 mt-auto">
+                <button onclick="saveUser()" class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-xl shadow-lg shadow-primary/20 transition-all">Guardar Cambios</button>
+                <button onclick="closeModal('modal-user')" class="flex-1 bg-white border border-slate-200 text-slate-600 font-bold py-3 rounded-xl hover:bg-slate-50 transition-all">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-format" class="modal fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-navy/60 backdrop-blur-sm" onclick="closeModal('modal-format')"></div>
+        <div class="modal-content bg-white w-full max-w-lg rounded-2xl shadow-2xl relative overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="font-black text-navy text-lg" id="modal-format-title">Nueva Tarjeta</h3>
+                <button onclick="closeModal('modal-format')" class="text-slate-400 hover:text-red-500 transition-colors"><span class="material-symbols-outlined">close</span></button>
+            </div>
+            <div class="p-6 space-y-4">
+                <input type="hidden" id="fmt-id">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Código</label>
+                        <input id="fmt-code" type="text" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-bold text-navy" placeholder="FO-XX-00">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Área</label>
+                        <select id="fmt-area" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-bold text-navy">
+                            <option value="banco">Banco (Verde)</option>
+                            <option value="calidad">Calidad (Azul)</option>
+                            <option value="almacen">Almacén (Naranja)</option>
+                            <option value="sgc">SGC (Gris)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Título del Documento</label>
+                    <input id="fmt-title" type="text" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-bold text-navy" placeholder="ej. Bitácora de...">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Ruta del Archivo HTML</label>
+                    <input id="fmt-file" type="text" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-mono text-slate-600" placeholder="formats/archivo.html">
+                </div>
+            </div>
+            <div class="p-6 bg-slate-50 border-t border-slate-100 flex gap-3">
+                <button onclick="saveFormat()" class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-xl shadow-lg shadow-primary/20 transition-all">Guardar</button>
+                <button onclick="closeModal('modal-format')" class="flex-1 bg-white border border-slate-200 text-slate-600 font-bold py-3 rounded-xl hover:bg-slate-50 transition-all">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/config/users.js"></script>
+    <script src="assets/js/core/core.js"></script>
+    
+    <script>
+        // Detectar URL del backend dinámicamente
+        const backendUrl = window.location.hostname === 'localhost' 
+            ? 'http://localhost:8000'
+            : `http://${window.location.hostname}:8000`;
+        const API_URL = `${backendUrl}/api`;
+
+        // --- INIT ---
+        $(document).ready(function() {
+            const sess = Core.Auth.check();
+            if(!sess) window.location.href = 'index.html';
+
+            // UI Update
+            $('#u-name').text(sess.name);
+            $('#u-role').text(sess.role);
+            $('#u-initial').text(sess.name.charAt(0));
+
+            // Admin Permission
+            if(sess.role === 'super_admin') $('#admin-menu-item').removeClass('hidden');
+
+            // Load Formats
+            fetch(`${API_URL}/formats`)
+                .then(r => r.json())
+                .then(data => {
+                    if(data.length > 0) {
+                        const dbFormats = data.map(f => ({ code: f.code, title: f.title, area: f.area, file: f.file_path }));
+                        Core.Data.set(KEYS.FORMATS, dbFormats);
+                    }
+                    Core.UI.renderDashboard(); 
+                })
+                .catch(() => Core.UI.renderDashboard());
+        });
+
+        // --- NAVIGATION ---
+        function switchTab(id) {
+            $('.tab-content').addClass('hidden');
+            $(`#view-${id}`).removeClass('hidden');
+            
+            $('.tab-trigger').removeClass('bg-white/10 text-white sidebar-active').addClass('text-white/80 hover:text-white');
+            $(`#btn-tab-${id}`).addClass('bg-white/10 text-white sidebar-active').removeClass('text-white/80');
+
+            $('#page-title').text(id === 'operation' ? 'Operación' : (id === 'history' ? 'Historial' : 'Administración'));
+            
+            if(id === 'operation') $('#sidebar-filters').fadeIn(); else $('#sidebar-filters').fadeOut();
+            if(id === 'history') loadHistory();
+            if(id === 'admin') { loadUsers(); loadFormats(); }
+        }
+
+        // --- DATA LOADERS ---
+        function loadHistory() {
+            fetch(`${API_URL}/history`).then(r=>r.json()).then(d => {
+                let h=''; d.forEach(r => {
+                    h += `<tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-6 py-4 font-mono text-xs text-slate-400">#${r.id}</td>
+                        <td class="px-6 py-4 font-bold text-navy">${r.format_code}</td>
+                        <td class="px-6 py-4"><span class="bg-sky/10 text-sky px-2 py-1 rounded text-xs font-bold">${r.record_key||'N/A'}</span></td>
+                        <td class="px-6 py-4 text-slate-500">${new Date(r.updated_at).toLocaleString()}</td>
+                        <td class="px-6 py-4 text-slate-500">ID: ${r.user_id}</td>
+                        <td class="px-6 py-4 text-right"><button onclick="openRec('${r.format_code}')" class="text-primary hover:bg-primary/10 p-2 rounded-lg transition-colors"><i class="fas fa-external-link-alt"></i></button></td>
+                    </tr>`;
+                }); $('#history-body').html(h || '<tr><td colspan="6" class="p-6 text-center text-slate-400">Sin registros.</td></tr>');
+            });
+        }
+        function openRec(c) { 
+            const f = Core.Data.get(KEYS.FORMATS).find(x => x.code === c);
+            if(f) window.open(f.file, '_blank'); 
+        }
+
+        function loadUsers() {
+            fetch(`${API_URL}/users`).then(r=>r.json()).then(d => {
+                let h=''; d.forEach(u => {
+                    const badge = u.active ? '<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Activo</span>' : '<span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Inactivo</span>';
+                    // Parse access array to string
+                    const areas = Array.isArray(u.module_access) ? u.module_access.join(', ') : u.module_access;
+                    
+                    // Escapamos los datos para pasarlos a la función
+                    const uData = JSON.stringify(u).replace(/"/g, '&quot;');
+
+                    h += `<tr class="hover:bg-slate-50 transition-colors border-b border-slate-50">
+                        <td class="px-6 py-4 font-bold text-navy">${u.username}</td>
+                        <td class="px-6 py-4 text-slate-600">${u.full_name}</td>
+                        <td class="px-6 py-4 text-xs font-bold uppercase text-slate-400">${u.role}</td>
+                        <td class="px-6 py-4 text-xs text-slate-500 max-w-xs truncate">${areas}</td>
+                        <td class="px-6 py-4">${badge}</td>
+                        <td class="px-6 py-4 text-right flex justify-end gap-2">
+                            <button onclick="openUserModal(${uData})" class="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
+                        </td>
+                    </tr>`;
+                }); $('#users-body').html(h);
+            });
+        }
+
+        function loadFormats() {
+            fetch(`${API_URL}/formats_admin`).then(r=>r.json()).then(d => {
+                let h=''; d.forEach(f => {
+                    const st = f.active ? 'text-primary' : 'text-slate-300';
+                    h += `<tr class="hover:bg-slate-50 transition-colors border-b border-slate-50">
+                        <td class="px-6 py-4 font-bold text-navy">${f.code}</td>
+                        <td class="px-6 py-4 text-slate-600">${f.title}</td>
+                        <td class="px-6 py-4"><span class="text-[10px] font-bold uppercase bg-slate-100 px-2 py-1 rounded text-slate-500">${f.area}</span></td>
+                        <td class="px-6 py-4 font-mono text-xs text-slate-400">${f.file_path}</td>
+                        <td class="px-6 py-4 text-right flex justify-end gap-2">
+                            <button onclick="openFormatModal('${f.id}', '${f.code}', '${f.title}', '${f.area}', '${f.file_path}')" class="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
+                            <button onclick="toggleApi('formats', ${f.id}, loadFormats)" class="p-2 text-slate-400 hover:text-sky hover:bg-sky/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg ${st}">visibility</span></button>
+                        </td>
+                    </tr>`;
+                }); $('#formats-body').html(h);
+            });
+        }
+
+        // --- MODAL LOGIC: USER (NUEVA CON CHECKBOXES) ---
+        function openUserModal(userObj = null) {
+            if (userObj) {
+                // Modo Edición
+                $('#user-id').val(userObj.id);
+                $('#user-login').val(userObj.username).prop('readonly', true);
+                $('#user-name').val(userObj.full_name);
+                $('#user-role').val(userObj.role);
+                $('#user-pass').val('');
+                $('#user-active').prop('checked', userObj.active);
+                $('#modal-user-title').text('Editar Usuario');
+                
+                // Marcar Checkboxes
+                $('.access-checkbox').prop('checked', false);
+                const access = Array.isArray(userObj.module_access) ? userObj.module_access : [];
+                if(access.includes('all')) $('.access-checkbox').prop('checked', true);
+                else {
+                    access.forEach(area => $(`input[value="${area}"]`).prop('checked', true));
+                }
+            } else {
+                // Modo Crear
+                $('#user-id').val('');
+                $('#user-login').val('').prop('readonly', false);
+                $('#user-name').val('');
+                $('#user-role').val('banco');
+                $('#user-pass').val('');
+                $('#user-active').prop('checked', true);
+                $('.access-checkbox').prop('checked', false);
+                $('#modal-user-title').text('Crear Nuevo Usuario');
+            }
+            $('#modal-user').addClass('open');
+        }
+
+        function saveUser() {
+            const id = $('#user-id').val();
+            
+            // Recolectar Checkboxes
+            const selectedAccess = [];
+            $('.access-checkbox:checked').each(function() {
+                selectedAccess.push($(this).val());
+            });
+            // Si no selecciona nada, enviar array vacío
+            
+            const payload = {
+                username: $('#user-login').val(),
+                fullName: $('#user-name').val(),
+                role: $('#user-role').val(),
+                password: $('#user-pass').val(),
+                moduleAccess: selectedAccess,
+                // El endpoint toggle es separado, pero si es nuevo usuario siempre es activo por defecto
+            };
+            
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `${API_URL}/users/${id}` : `${API_URL}/users`;
+
+            fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+            .then(r => { 
+                if(r.ok) { 
+                    // Si es edición y cambió el estado activo/inactivo (esto requiere logica extra en backend o dos llamadas, 
+                    // por simplicidad el toggle se hace con el botón en la tabla, aquí solo datos).
+                    closeModal('modal-user'); 
+                    loadUsers(); 
+                } 
+                else alert('Error al guardar. Revise datos.'); 
+            });
+        }
+
+        // --- MODAL LOGIC: FORMAT ---
+        function openFormatModal(id=null, code='', title='', area='banco', file='') {
+            $('#fmt-id').val(id || '');
+            $('#fmt-code').val(code);
+            $('#fmt-title').val(title);
+            $('#fmt-area').val(area);
+            $('#fmt-file').val(file);
+            $('#modal-format-title').text(id ? 'Editar Formato' : 'Nuevo Formato');
+            $('#modal-format').addClass('open');
+        }
+
+        function saveFormat() {
+            const id = $('#fmt-id').val();
+            const payload = {
+                code: $('#fmt-code').val(),
+                title: $('#fmt-title').val(),
+                area: $('#fmt-area').val(),
+                file_path: $('#fmt-file').val()
+            };
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `${API_URL}/formats/${id}` : `${API_URL}/formats`;
+
+            fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+            .then(r => { if(r.ok) { closeModal('modal-format'); loadFormats(); } else alert('Error'); });
+        }
+
+        function closeModal(id) { $(`#${id}`).removeClass('open'); }
+        
+        function toggleApi(ep, id, cb) {
+            if(confirm("¿Cambiar estado?")) fetch(`${API_URL}/${ep}/${id}`, {method:'DELETE'}).then(()=>cb());
+        }
+    </script>
+</body>
+</html>

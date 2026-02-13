@@ -1,0 +1,341 @@
+/* ============================================
+   ESTILOS PARA FORMATOS - SGCE
+   Estilos compartidos para todos los formatos
+   ============================================ */
+
+/* Variables CSS para consistencia */
+:root {
+    --formato-primary: #2563eb;
+    --formato-secondary: #64748b;
+    --formato-success: #16a34a;
+    --formato-danger: #dc2626;
+    --formato-warning: #f59e0b;
+    --formato-border: #e2e8f0;
+    --formato-bg-light: #f8fafc;
+    --formato-text-dark: #1e293b;
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos del body principal del formato */
+body.formato {
+    font-family: 'Arial', sans-serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: var(--formato-text-dark);
+    background: white;
+    padding: 20mm;
+}
+
+/* Contenedor principal del formato */
+.formato-container {
+    max-width: 210mm; /* A4 width */
+    margin: 0 auto;
+    background: white;
+    padding: 15mm;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del formato */
+.formato-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10mm;
+    border-bottom: 2px solid var(--formato-primary);
+    margin-bottom: 10mm;
+}
+
+.formato-logo {
+    max-width: 40mm;
+    height: auto;
+}
+
+.formato-info {
+    text-align: right;
+}
+
+.formato-codigo {
+    font-size: 14pt;
+    font-weight: bold;
+    color: var(--formato-primary);
+}
+
+.formato-version {
+    font-size: 10pt;
+    color: var(--formato-secondary);
+}
+
+/* Título del formato */
+.formato-titulo {
+    text-align: center;
+    font-size: 18pt;
+    font-weight: bold;
+    color: var(--formato-primary);
+    margin: 15mm 0;
+    text-transform: uppercase;
+}
+
+/* Sección de campos */
+.formato-seccion {
+    margin-bottom: 10mm;
+}
+
+.formato-seccion-titulo {
+    font-size: 14pt;
+    font-weight: bold;
+    color: var(--formato-primary);
+    background: var(--formato-bg-light);
+    padding: 3mm;
+    border-left: 4px solid var(--formato-primary);
+    margin-bottom: 5mm;
+}
+
+/* Tabla de campos */
+.formato-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 5mm;
+}
+
+.formato-tabla th,
+.formato-tabla td {
+    border: 1px solid var(--formato-border);
+    padding: 3mm;
+    text-align: left;
+}
+
+.formato-tabla th {
+    background: var(--formato-bg-light);
+    font-weight: bold;
+    color: var(--formato-text-dark);
+}
+
+.formato-tabla td {
+    min-height: 10mm;
+}
+
+/* Campos de entrada */
+.formato-campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5mm;
+}
+
+.formato-campo-label {
+    font-weight: bold;
+    margin-bottom: 2mm;
+    color: var(--formato-text-dark);
+}
+
+.formato-campo-input {
+    border: 1px solid var(--formato-border);
+    padding: 3mm;
+    border-radius: 2mm;
+    font-size: 11pt;
+    min-height: 10mm;
+}
+
+.formato-campo-input:focus {
+    outline: none;
+    border-color: var(--formato-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Área de texto */
+.formato-textarea {
+    min-height: 30mm;
+    resize: vertical;
+}
+
+/* Checkbox y radio */
+.formato-checkbox,
+.formato-radio {
+    margin-right: 2mm;
+}
+
+/* Sección de firmas */
+.formato-firmas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60mm, 1fr));
+    gap: 10mm;
+    margin-top: 15mm;
+}
+
+.formato-firma {
+    text-align: center;
+}
+
+.formato-firma-linea {
+    border-top: 1px solid var(--formato-text-dark);
+    margin-bottom: 2mm;
+    padding-top: 15mm; /* Espacio para la firma */
+}
+
+.formato-firma-nombre {
+    font-weight: bold;
+    font-size: 10pt;
+}
+
+.formato-firma-cargo {
+    font-size: 9pt;
+    color: var(--formato-secondary);
+}
+
+/* Pie de página */
+.formato-footer {
+    margin-top: 15mm;
+    padding-top: 5mm;
+    border-top: 1px solid var(--formato-border);
+    font-size: 9pt;
+    color: var(--formato-secondary);
+    text-align: center;
+}
+
+/* Botones de acción */
+.formato-acciones {
+    display: flex;
+    gap: 3mm;
+    justify-content: center;
+    margin-top: 10mm;
+    padding: 5mm;
+    background: var(--formato-bg-light);
+    border-radius: 2mm;
+}
+
+.formato-btn {
+    padding: 3mm 6mm;
+    border: none;
+    border-radius: 2mm;
+    font-size: 11pt;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.formato-btn-primary {
+    background: var(--formato-primary);
+    color: white;
+}
+
+.formato-btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.formato-btn-secondary {
+    background: var(--formato-secondary);
+    color: white;
+}
+
+.formato-btn-secondary:hover {
+    background: #475569;
+}
+
+.formato-btn-success {
+    background: var(--formato-success);
+    color: white;
+}
+
+.formato-btn-success:hover {
+    background: #15803d;
+}
+
+/* Estilos de impresión */
+@media print {
+    body.formato {
+        padding: 0;
+    }
+
+    .formato-container {
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .formato-acciones {
+        display: none !important;
+    }
+
+    /* Evitar saltos de página en elementos críticos */
+    .formato-seccion,
+    .formato-tabla,
+    .formato-firmas {
+        page-break-inside: avoid;
+    }
+
+    /* Asegurar correcta paginación */
+    @page {
+        size: A4;
+        margin: 15mm;
+    }
+}
+
+/* Estilos responsive para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+    body.formato {
+        padding: 5mm;
+    }
+
+    .formato-container {
+        padding: 5mm;
+    }
+
+    .formato-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .formato-info {
+        text-align: center;
+        margin-top: 3mm;
+    }
+
+    .formato-firmas {
+        grid-template-columns: 1fr;
+    }
+
+    .formato-tabla {
+        font-size: 10pt;
+    }
+
+    .formato-tabla th,
+    .formato-tabla td {
+        padding: 2mm;
+    }
+}
+
+/* Clases de utilidad */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+.font-bold { font-weight: bold; }
+.text-small { font-size: 10pt; }
+.text-large { font-size: 14pt; }
+.mt-5 { margin-top: 5mm; }
+.mb-5 { margin-bottom: 5mm; }
+.p-3 { padding: 3mm; }
+
+/* Estados de validación */
+.campo-error {
+    border-color: var(--formato-danger) !important;
+}
+
+.campo-success {
+    border-color: var(--formato-success) !important;
+}
+
+.mensaje-error {
+    color: var(--formato-danger);
+    font-size: 9pt;
+    margin-top: 1mm;
+}
+
+.mensaje-success {
+    color: var(--formato-success);
+    font-size: 9pt;
+    margin-top: 1mm;
+}

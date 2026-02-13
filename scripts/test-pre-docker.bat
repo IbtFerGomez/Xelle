@@ -2,6 +2,9 @@
 @echo off
 setlocal enabledelayedexpansion
 
+REM Asegurar ejecución desde la raíz del proyecto
+cd /d "%~dp0.."
+
 echo.
 echo ========================================
 echo   PRE-DOCKER TEST SUITE
@@ -42,10 +45,10 @@ echo.
 
 REM PASO 3: Verificar si estamos en el directorio correcto
 echo --- VERIFICACIÓN 3: Estructura del Proyecto ---
-if exist backend\backend_v6.py (
-    echo %CHECK% backend\backend_v6.py encontrado
+if exist backend\app\main.py (
+    echo %CHECK% backend\app\main.py encontrado
 ) else (
-    echo %ERROR% No se encuentra backend\backend_v6.py
+    echo %ERROR% No se encuentra backend\app\main.py
     exit /b 1
 )
 
@@ -129,12 +132,12 @@ echo.
 
 REM PASO 8: Verificar sintaxis de backend
 echo --- VERIFICACIÓN 8: Sintaxis del Backend ---
-python -m py_compile backend\backend_v6.py >nul 2>&1
+python -m py_compile backend\app\main.py >nul 2>&1
 if %errorlevel% equ 0 (
-    echo %CHECK% backend_v6.py - Sintaxis OK
+    echo %CHECK% backend\app\main.py - Sintaxis OK
 ) else (
-    echo %ERROR% backend_v6.py - Error de sintaxis
-    python -m py_compile backend\backend_v6.py
+    echo %ERROR% backend\app\main.py - Error de sintaxis
+    python -m py_compile backend\app\main.py
     exit /b 1
 )
 echo.
@@ -200,7 +203,7 @@ echo %WARN% Presiona CTRL+C para detener después de verificar
 echo.
 
 REM Iniciar uvicorn en background
-start cmd /k "cd /d "%cd%" && venv\Scripts\activate.bat && uvicorn backend.backend_v6:app --host 127.0.0.1 --port 8000 --reload"
+start cmd /k "cd /d "%cd%" && venv\Scripts\activate.bat && uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload"
 
 REM Esperar a que inicie
 timeout /t 5 /nobreak >nul
