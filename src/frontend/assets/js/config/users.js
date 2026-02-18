@@ -52,20 +52,27 @@ window.SeedData = {
         { code: 'FO-LC-27', title: 'Control de Equipos', area: 'calidad', file: 'formats/FO-LC-27.html' },
         { code: 'FO-LC-28', title: 'Uso de Equipos', area: 'calidad', file: 'formats/FO-LC-28.html' },
         { code: 'FO-LC-40', title: 'Prep. Soluciones (Gral)', area: 'calidad', file: 'formats/FO-LC-40.html' },
+        { code: 'FO-LC-40-B', title: 'Prep. Soluciones (Alterno B)', area: 'calidad', file: 'formats/FO-LC-40-B.html' },
         { code: 'FO-LC-41', title: 'Control Microbiológico', area: 'calidad', file: 'formats/FO-LC-41.html' },
         { code: 'FO-LC-44', title: 'Lib. Micro Flasks/Viales', area: 'calidad', file: 'formats/FO-LC-44.html' },
+        { code: 'FO-LC-50', title: 'Manifiesto de Destrucción', area: 'calidad', file: 'formats/FO-LC-50.html' },
 
         // --- ALMACÉN Y COMERCIAL (Acceso: comercial) ---
+        { code: 'FO-OP-12', title: 'Dictamen Técnico de Concesión', area: 'almacen', file: 'formats/FO-OP-12.html' },
+        { code: 'FO-OP-13', title: 'Lista Verificación Recepción MP', area: 'almacen', file: 'formats/FO-OP-13.html' },
         { code: 'FO-OP-15', title: 'Pedido Maestro (Ventas)', area: 'almacen', file: 'formats/FO-OP-15.html' },
         { code: 'FO-OP-16', title: 'Orden de Surtido (Picking)', area: 'almacen', file: 'formats/FO-OP-16.html' },
         { code: 'FO-OP-17', title: 'Nota de Remisión', area: 'almacen', file: 'formats/FO-OP-17.html' },
         { code: 'FO-OP-20', title: 'Liberación a Almacén', area: 'almacen', file: 'formats/FO-OP-20.html' },
+        { code: 'FO-OP-52', title: 'Reporte de MPNC', area: 'almacen', file: 'formats/FO-OP-52.html' },
         { code: 'FO-LC-31', title: 'Acondicionamiento Final', area: 'almacen', file: 'formats/FO-LC-31.html' },
         { code: 'FO-LC-45', title: 'Envío a Esterilización', area: 'almacen', file: 'formats/FO-LC-45.html' },
 
         // --- SISTEMA DE GESTIÓN (Acceso: documentacion) ---
+        { code: 'FO-LC-14', title: 'Histórico de Placentas', area: 'sgc', file: 'formats/FO-LC-14.html' },
+        { code: 'FO-LC-15', title: 'Histórico de Líneas', area: 'sgc', file: 'formats/FO-LC-15.html' },
         { code: 'FO-LC-32', title: 'Desviaciones (CAPA)', area: 'sgc', file: 'formats/FO-LC-32.html' },
-        { code: 'FO-OP-01', title: 'Limpieza de Áreas', area: 'sgc', file: 'formats/FO-OP-OP-01.html' }
+        { code: 'FO-LC-51', title: 'Registro de Desviaciones', area: 'sgc', file: 'formats/FO-LC-51.html' }
     ],
 
     LOGO_SVG: `<svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">

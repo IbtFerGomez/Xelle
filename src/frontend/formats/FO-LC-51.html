@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-51 Registro de Desviaciones</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 12px; margin-top: 15px; border-radius: 4px; }
+        .risk-table td { text-align: center; }
+        .risk-table input { text-align: center; }
+    </style>
+</head>
+<body id="doc-fo-lc-51">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Desviación</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">NC-</span>
+                    <input type="text" id="reg-51" class="registry-input generate-barcode" data-target="barcode-51" data-prefix="NC-" placeholder="000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-51" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>REPORTE DE PRODUCTO NO CONFORME (DESVIACIONES)</h1>
+            <div class="metadata">Código: FO-LC-51 | Base: Matriz de Riesgos (MR)</div>
+        </div>
+
+        <div class="section-header">1. DESCRIPCIÓN DEL INCIDENTE</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td><strong>Proceso / Área Afectada:</strong> <input class="cedit"></td>
+                    <td><strong>Fecha Ocurrencia:</strong> <input type="date" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><strong>Lote / Equipo Involucrado:</strong> <input class="cedit"></td>
+                    <td><strong>Detectado por:</strong> <input class="cedit"></td>
+                </tr>
+            </table>
+            <label><strong>Descripción Detallada de la Falla:</strong></label>
+            <textarea class="cedit" rows="3" style="width:100%"></textarea>
+        </div>
+
+        <div class="section-header">2. EVALUACIÓN DE RIESGO (SEGÚN MATRIZ MR)</div>
+        <div class="section">
+            <p style="font-size:10px; color:#666;">Calcular IPR basado en la Matriz de Riesgos del Proceso correspondiente (MR-OP-XX / MR-LC-XX).</p>
+            <table class="compact-table risk-table">
+                <thead>
+                    <tr>
+                        <th width="20%">Severidad (S) [1-5]</th>
+                        <th width="20%">Ocurrencia (O) [1-5]</th>
+                        <th width="20%">Detección (D) [1-5]</th>
+                        <th width="20%">IPR (S*O*D)</th>
+                        <th width="20%">Nivel de Riesgo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit" type="number" id="val-s" min="1" max="5" onchange="calcIPR()"></td>
+                        <td><input class="cedit" type="number" id="val-o" min="1" max="5" onchange="calcIPR()"></td>
+                        <td><input class="cedit" type="number" id="val-d" min="1" max="5" onchange="calcIPR()"></td>
+                        <td><input class="cedit" id="val-ipr" readonly style="background:#eee; font-weight:bold;"></td>
+                        <td><input class="cedit" id="val-nivel" readonly style="border:none; font-weight:bold;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">3. ANÁLISIS DE CAUSA Y PLAN DE ACCIÓN (CAPA)</div>
+        <div class="section">
+            <label><strong>Causa Raíz Identificada:</strong></label>
+            <textarea class="cedit" rows="2" style="width:100%"></textarea>
+            
+            <label style="margin-top:5px; display:block;"><strong>Acción Inmediata (Corrección):</strong></label>
+            <textarea class="cedit" rows="2" style="width:100%"></textarea>
+            
+            <label style="margin-top:5px; display:block;"><strong>Acción Correctiva / Preventiva (Largo Plazo):</strong></label>
+            <textarea class="cedit" rows="2" style="width:100%"></textarea>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box">
+                <p>Reportó</p>
+                <input type="text">
+            </div>
+            <div class="signature-box">
+                <p>Revisión Técnica (MR)</p>
+                <input type="text">
+            </div>
+            <div class="signature-box">
+                <p>Autorizó Cierre (Calidad)</p>
+                <input type="text">
+            </div>
+        </div>
+        <div class="footer">FO-LC-51 | Reporte de Desviaciones | Xelle Scientific</div>
+    </div>
+
+    <script>
+        function calcIPR() {
+            const s = parseInt(document.getElementById('val-s').value) || 0;
+            const o = parseInt(document.getElementById('val-o').value) || 0;
+            const d = parseInt(document.getElementById('val-d').value) || 0;
+            const ipr = s * o * d;
+            document.getElementById('val-ipr').value = ipr;
+            
+            const nivelEl = document.getElementById('val-nivel');
+            if (ipr >= 27) { 
+                nivelEl.value = 'CRÍTICO (CAPA)'; 
+                nivelEl.style.color = '#991b1b'; 
+                nivelEl.style.backgroundColor = '#fee2e2';
+            } else if (ipr >= 10) { 
+                nivelEl.value = 'ALTO (Preventiva)'; 
+                nivelEl.style.color = '#854d0e'; 
+                nivelEl.style.backgroundColor = '#fef9c3';
+            } else { 
+                nivelEl.value = 'BAJO (Monitoreo)'; 
+                nivelEl.style.color = '#166534'; 
+                nivelEl.style.backgroundColor = '#dcfce7';
+            }
+        }
+    </script>
+</body>
+</html>

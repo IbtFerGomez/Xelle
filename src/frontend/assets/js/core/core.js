@@ -12,6 +12,28 @@ const Core = {
         set: (k, v) => localStorage.setItem(k, JSON.stringify(v)),
         clear: () => localStorage.clear()
     },
+
+    Formats: {
+        syncWithSeed: function() {
+            const currentFormats = Core.Data.get(KEYS.FORMATS) || [];
+            const seedFormats = SeedData.formats || [];
+
+            const currentByFile = new Map(currentFormats.map(f => [f.file, f]));
+            const merged = [...currentFormats];
+
+            seedFormats.forEach(seedFormat => {
+                if(!currentByFile.has(seedFormat.file)) {
+                    merged.push(seedFormat);
+                }
+            });
+
+            if(merged.length !== currentFormats.length) {
+                Core.Data.set(KEYS.FORMATS, merged);
+            }
+
+            return merged;
+        }
+    },
     
     Auth: {
         login: function(u, p) {
@@ -49,12 +71,8 @@ const Core = {
         renderDashboard: function() {
             const sess = Core.Auth.check();
             if(!sess) return;
-            
-            const formats = Core.Data.get(KEYS.FORMATS);
-            if(!formats.length) {
-                formats.push(...SeedData.formats);
-                Core.Data.set(KEYS.FORMATS, formats);
-            }
+
+            const formats = Core.Formats.syncWithSeed();
             
             // Renderizar tarjetas de formatos
             const workspace = document.getElementById('workspace');
@@ -87,34 +105,42 @@ const Core = {
                 sgc: 'bg-slate-100 text-slate-700'
             };
             
-            let html = '';
-            Object.keys(areas).forEach(area => {
-                html += `
-                <div class="mb-8">
-                    <div class="flex items-center gap-2 mb-4">
-                        <h3 class="text-lg font-black text-navy">${areaLabels[area] || area}</h3>
-                        <span class="px-2 py-1 rounded text-xs font-bold ${areaBadgeColors[area]}">${areas[area].length} tarjetas</span>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                `;
-                
-                areas[area].forEach(f => {
+            const renderWorkspace = function(selectedArea = null) {
+                let html = '';
+                const areasToRender = selectedArea && areas[selectedArea]
+                    ? [selectedArea]
+                    : Object.keys(areas);
+
+                areasToRender.forEach(area => {
                     html += `
-                        <button onclick="Core.UI.openFormat('${f.file}')" class="p-4 rounded-xl border-2 transition-all ${areaColors[area]} hover:shadow-lg hover:scale-105 text-left group">
-                            <div class="text-xs uppercase font-bold text-slate-500 mb-1 group-hover:text-primary">${f.code}</div>
-                            <div class="text-sm font-bold text-navy mb-3 line-clamp-2 group-hover:text-primary">${f.title}</div>
-                            <div class="flex items-center gap-2 text-slate-400 group-hover:text-primary transition-colors">
-                                <span class="material-symbols-outlined text-lg">open_in_new</span>
-                                <span class="text-xs font-bold">Abrir</span>
-                            </div>
-                        </button>
+                    <div class="mb-8" data-area="${area}">
+                        <div class="flex items-center gap-2 mb-4">
+                            <h3 class="text-lg font-black text-navy">${areaLabels[area] || area}</h3>
+                            <span class="px-2 py-1 rounded text-xs font-bold ${areaBadgeColors[area]}">${areas[area].length} tarjetas</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     `;
+
+                    areas[area].forEach(f => {
+                        html += `
+                            <button onclick="Core.UI.openFormat('${f.file}')" class="p-4 rounded-xl border-2 transition-all ${areaColors[area]} hover:shadow-lg hover:scale-105 text-left group">
+                                <div class="text-xs uppercase font-bold text-slate-500 mb-1 group-hover:text-primary">${f.code}</div>
+                                <div class="text-sm font-bold text-navy mb-3 line-clamp-2 group-hover:text-primary">${f.title}</div>
+                                <div class="flex items-center gap-2 text-slate-400 group-hover:text-primary transition-colors">
+                                    <span class="material-symbols-outlined text-lg">open_in_new</span>
+                                    <span class="text-xs font-bold">Abrir</span>
+                                </div>
+                            </button>
+                        `;
+                    });
+
+                    html += `</div></div>`;
                 });
-                
-                html += `</div></div>`;
-            });
-            
-            workspace.innerHTML = html;
+
+                workspace.innerHTML = html;
+            };
+
+            renderWorkspace();
             
             // Renderizar filtros en sidebar
             const filterContainer = document.getElementById('filter-container');
@@ -131,11 +157,24 @@ const Core = {
                 });
                 filterContainer.innerHTML = filterHtml;
                 
-                document.querySelectorAll('.area-filter').forEach(btn => {
+                let selectedArea = null;
+                const filterButtons = document.querySelectorAll('.area-filter');
+
+                const updateFilterStyles = () => {
+                    filterButtons.forEach(button => {
+                        const isActive = button.dataset.area === selectedArea;
+                        button.classList.toggle('bg-white/20', isActive);
+                        button.classList.toggle('text-white', isActive);
+                        button.classList.toggle('text-white/70', !isActive);
+                    });
+                };
+
+                filterButtons.forEach(btn => {
                     btn.addEventListener('click', () => {
                         const area = btn.dataset.area;
-                        // Lógica de filtrado (aquí podría hacer más cosas)
-                        alert(`Filtrar por: ${areaLabels[area]}`);
+                        selectedArea = selectedArea === area ? null : area;
+                        renderWorkspace(selectedArea);
+                        updateFilterStyles();
                     });
                 });
             }
@@ -149,9 +188,7 @@ const Core = {
 
 // Inicializar seed data si no existe
 window.addEventListener('load', () => {
-    if(!Core.Data.get(KEYS.FORMATS).length) {
-        Core.Data.set(KEYS.FORMATS, SeedData.formats);
-    }
+    Core.Formats.syncWithSeed();
     if(!Core.Data.get(KEYS.USERS).length) {
         Core.Data.set(KEYS.USERS, SeedData.users);
     }

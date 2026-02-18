@@ -19,7 +19,7 @@ services:
       timeout: 5s
       retries: 5
 
-  # FastAPI Backend
+  # Spring Boot Backend
   backend:
     build:
       context: .
@@ -31,19 +31,13 @@ services:
       DB_HOST: postgres
       DB_PORT: ${DB_PORT:-5432}
       DB_NAME: ${DB_NAME:-xelle_db}
-      BACKEND_HOST: ${BACKEND_HOST:-0.0.0.0}
-      BACKEND_PORT: ${BACKEND_PORT:-8000}
     ports:
-      - "${BACKEND_PORT:-8000}:8000"
+      - "${BACKEND_PORT:-8000}:8080"
     depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - ./src/backend:/app
-      - ./src/frontend:/app/static
     networks:
       - xelle_network
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
   # Nginx - Frontend
   nginx:
@@ -51,7 +45,6 @@ services:
     container_name: xelle_nginx
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - ./src/frontend:/usr/share/nginx/html
       - ./nginx.conf:/etc/nginx/nginx.conf:ro

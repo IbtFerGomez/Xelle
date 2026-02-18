@@ -395,11 +395,10 @@
             fetch(`${API_URL}/users`).then(r=>r.json()).then(d => {
                 let h=''; d.forEach(u => {
                     const badge = u.active ? '<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Activo</span>' : '<span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Inactivo</span>';
-                    // Parse access array to string
                     const areas = Array.isArray(u.module_access) ? u.module_access.join(', ') : u.module_access;
-                    
-                    // Escapamos los datos para pasarlos a la función
                     const uData = JSON.stringify(u).replace(/"/g, '&quot;');
+                    const lockIcon = u.active ? 'lock_open' : 'lock';
+                    const lockTitle = u.active ? 'Desactivar usuario' : 'Activar usuario';
 
                     h += `<tr class="hover:bg-slate-50 transition-colors border-b border-slate-50">
                         <td class="px-6 py-4 font-bold text-navy">${u.username}</td>
@@ -409,27 +408,36 @@
                         <td class="px-6 py-4">${badge}</td>
                         <td class="px-6 py-4 text-right flex justify-end gap-2">
                             <button onclick="openUserModal(${uData})" class="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
+                            <button title="${lockTitle}" onclick="toggleApi('users', ${u.id}, loadUsers)" class="p-2 text-slate-400 hover:text-sky hover:bg-sky/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">${lockIcon}</span></button>
+                            <button title="Eliminar usuario" onclick="deleteApi('users', ${u.id}, loadUsers, 'usuario')" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
                         </td>
                     </tr>`;
-                }); $('#users-body').html(h);
+                });
+                $('#users-body').html(h || '<tr><td colspan="6" class="p-6 text-center text-slate-400">Sin usuarios.</td></tr>');
             });
         }
 
         function loadFormats() {
             fetch(`${API_URL}/formats_admin`).then(r=>r.json()).then(d => {
                 let h=''; d.forEach(f => {
-                    const st = f.active ? 'text-primary' : 'text-slate-300';
+                    const visibilityBadge = f.active
+                        ? '<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Visible</span>'
+                        : '<span class="bg-slate-200 text-slate-500 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Oculto</span>';
+                    const fData = JSON.stringify(f).replace(/"/g, '&quot;');
                     h += `<tr class="hover:bg-slate-50 transition-colors border-b border-slate-50">
                         <td class="px-6 py-4 font-bold text-navy">${f.code}</td>
                         <td class="px-6 py-4 text-slate-600">${f.title}</td>
                         <td class="px-6 py-4"><span class="text-[10px] font-bold uppercase bg-slate-100 px-2 py-1 rounded text-slate-500">${f.area}</span></td>
                         <td class="px-6 py-4 font-mono text-xs text-slate-400">${f.file_path}</td>
+                        <td class="px-6 py-4">${visibilityBadge}</td>
                         <td class="px-6 py-4 text-right flex justify-end gap-2">
-                            <button onclick="openFormatModal('${f.id}', '${f.code}', '${f.title}', '${f.area}', '${f.file_path}')" class="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
-                            <button onclick="toggleApi('formats', ${f.id}, loadFormats)" class="p-2 text-slate-400 hover:text-sky hover:bg-sky/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg ${st}">visibility</span></button>
+                            <button onclick="openFormatModalFromData(${fData})" class="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
+                            <button title="Cambiar visibilidad" onclick="toggleApi('formats', ${f.id}, loadFormats, true)" class="p-2 text-slate-400 hover:text-sky hover:bg-sky/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+                            <button title="Eliminar formato" onclick="deleteApi('formats', ${f.id}, loadFormats, 'formato', true)" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
                         </td>
                     </tr>`;
-                }); $('#formats-body').html(h);
+                });
+                $('#formats-body').html(h || '<tr><td colspan="6" class="p-6 text-center text-slate-400">Sin formatos.</td></tr>');
             });
         }
 
@@ -469,12 +477,10 @@
         function saveUser() {
             const id = $('#user-id').val();
             
-            // Recolectar Checkboxes
             const selectedAccess = [];
             $('.access-checkbox:checked').each(function() {
                 selectedAccess.push($(this).val());
             });
-            // Si no selecciona nada, enviar array vacío
             
             const payload = {
                 username: $('#user-login').val(),
@@ -482,7 +488,7 @@
                 role: $('#user-role').val(),
                 password: $('#user-pass').val(),
                 moduleAccess: selectedAccess,
-                // El endpoint toggle es separado, pero si es nuevo usuario siempre es activo por defecto
+                active: $('#user-active').is(':checked')
             };
             
             const method = id ? 'PUT' : 'POST';
@@ -491,8 +497,6 @@
             fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) })
             .then(r => { 
                 if(r.ok) { 
-                    // Si es edición y cambió el estado activo/inactivo (esto requiere logica extra en backend o dos llamadas, 
-                    // por simplicidad el toggle se hace con el botón en la tabla, aquí solo datos).
                     closeModal('modal-user'); 
                     loadUsers(); 
                 } 
@@ -501,6 +505,10 @@
         }
 
         // --- MODAL LOGIC: FORMAT ---
+        function openFormatModalFromData(formatObj) {
+            openFormatModal(formatObj.id, formatObj.code, formatObj.title, formatObj.area, formatObj.file_path);
+        }
+
         function openFormatModal(id=null, code='', title='', area='banco', file='') {
             $('#fmt-id').val(id || '');
             $('#fmt-code').val(code);
@@ -523,13 +531,52 @@
             const url = id ? `${API_URL}/formats/${id}` : `${API_URL}/formats`;
 
             fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) })
-            .then(r => { if(r.ok) { closeModal('modal-format'); loadFormats(); } else alert('Error'); });
+            .then(r => {
+                if(r.ok) {
+                    closeModal('modal-format');
+                    refreshDashboardFormats();
+                    loadFormats();
+                } else {
+                    alert('Error');
+                }
+            });
+        }
+
+        function refreshDashboardFormats() {
+            fetch(`${API_URL}/formats`)
+                .then(r => r.json())
+                .then(data => {
+                    const dbFormats = data.map(f => ({ code: f.code, title: f.title, area: f.area, file: f.file_path }));
+                    Core.Data.set(KEYS.FORMATS, dbFormats);
+                    Core.UI.renderDashboard();
+                });
         }
 
         function closeModal(id) { $(`#${id}`).removeClass('open'); }
         
-        function toggleApi(ep, id, cb) {
-            if(confirm("¿Cambiar estado?")) fetch(`${API_URL}/${ep}/${id}`, {method:'DELETE'}).then(()=>cb());
+        function toggleApi(ep, id, cb, refreshBoard = false) {
+            if(!confirm("¿Cambiar estado?")) return;
+            fetch(`${API_URL}/${ep}/${id}`, {method:'DELETE'})
+                .then(r => {
+                    if(!r.ok) throw new Error('toggle_failed');
+                    cb();
+                    if(refreshBoard) refreshDashboardFormats();
+                })
+                .catch(() => alert('No fue posible cambiar estado.'));
+        }
+
+        function deleteApi(ep, id, cb, label = 'registro', refreshBoard = false) {
+            if(!confirm(`¿Eliminar ${label} de forma permanente?`)) return;
+            fetch(`${API_URL}/${ep}/${id}/permanent`, {method:'DELETE'})
+                .then(async r => {
+                    if(!r.ok) {
+                        const err = await r.json().catch(() => ({}));
+                        throw new Error(err.msg || 'delete_failed');
+                    }
+                    cb();
+                    if(refreshBoard) refreshDashboardFormats();
+                })
+                .catch(e => alert(e.message || `No se pudo eliminar ${label}.`));
         }
     </script>
 </body>

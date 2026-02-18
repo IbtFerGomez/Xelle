@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-22 Crio Banco (OFF)</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app-OffLine.js"></script>
+    <style>
+        /* REGLAS DE IMPRESIÓN EXACTA */
+        @media print {
+            @page { size: letter; margin: 0.5cm; }
+            body, .container {
+                margin: 0 !important;
+                padding: 10px !important;
+                background: white !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .no-print { display: none !important; }
+            input::placeholder { color: transparent !important; }
+            .cryo-cell { border: 1px solid #666 !important; }
+        }
+
+        /* Estilos de la Cuadrícula 10x10 */
+        .cryo-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 0px 0;
+        }
+        
+        .cryo-board {
+            display: grid;
+            grid-template-columns: 25px repeat(10, 42px);
+            grid-template-rows: 25px repeat(10, 42px);
+            gap: 2px;
+            background: #f0f0f0;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 4px;
+        }
+
+        .axis-cell {
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 12px; color: #333;
+        }
+
+        .cryo-cell {
+            width: 42px; height: 42px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            background-color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; color: #aaa;
+            cursor: pointer; position: relative;
+            transition: all 0.1s;
+        }
+
+        /* Input interno invisible */
+        .cell-input {
+            width: 100%; height: 100%; background: transparent;
+            border: none; text-align: center; font-size: 10px;
+            font-weight: bold; color: #000;
+        }
+        .cell-input:focus { outline: none; }
+
+        /* --- PALETA DE COLORES (CORREGIDA) --- */
+        
+        .state-0 { background-color: #ffffff !important; } /* Vacío */
+        .state-1 { background-color: #d6eaf8 !important; border-color: #85c1e9 !important; } /* P0 */
+        .state-2 { background-color: #a9cce3 !important; border-color: #5499c7 !important; } /* P1 */
+        .state-3 { background-color: #a3e4d7 !important; border-color: #48c9b0 !important; } /* P2 */
+        .state-4 { background-color: #a9dfbf !important; border-color: #52be80 !important; } /* P3 */
+        .state-5 { background-color: #f9e79f !important; border-color: #f4d03f !important; } /* P4 */
+        .state-6 { background-color: #f7dc6f !important; border-color: #f1c40f !important; } /* P5 - CORREGIDO */
+        .state-7 { background-color: #edbb99 !important; border-color: #eb984e !important; } /* P6 */
+        .state-8 { background-color: #f5b7b1 !important; border-color: #ec7063 !important; } /* P7+ */
+        
+        /* Cuarentena / Infección (Amarillo Intenso con Borde Punteado) */
+        .state-9 { background-color: #ffff00 !important; border: 2px dashed #000 !important; font-weight:bold; }
+
+        /* Leyenda Ajustada */
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            padding: 5px;
+            background: #fafafa;
+        }
+        .legend-item { display: flex; align-items: center; gap: 5px; font-size: 10px; }
+        .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #999; }
+
+    </style>
+</head>
+<body id="doc-fo-lc-22">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Mapa</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-22-</span>
+                    <input type="text" id="reg-22" class="registry-input" placeholder="001">
+                </div>
+                <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>MAPA DE ALMACENAMIENTO (CRIO-CAJA 10x10)</h1>
+            <div class="metadata">Código: FO-LC-22 | Versión: 1.0-OFF | Vigencia: Ene 2026</div>
+        </div>
+
+        <div class="section">
+            <table class="no-border-table" style="border: 1px solid #000; padding: 5px;">
+                <tr>
+                    <td><strong>ID Tanque:</strong> <input class="cedit" placeholder="T-01"></td>
+                    <td><strong>ID Rack:</strong> <input class="cedit" placeholder="R-01"></td>
+                    <td><strong>No. Caja:</strong> <input class="cedit" id="box-num" placeholder="#" oninput="updateGridNumbers()"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><strong>Contenido:</strong> <input class="cedit" placeholder="Ej. Células Troncales Mesenquimales"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="cryo-wrapper">
+            <div class="cryo-board" id="cryo-grid">
+                </div>
+        </div>
+
+        <div class="section">
+            <div class="legend-grid">
+                <div class="legend-item"><div class="legend-dot state-0"></div> Vacío</div>
+                <div class="legend-item"><div class="legend-dot state-1"></div> Pase 0</div>
+                <div class="legend-item"><div class="legend-dot state-2"></div> Pase 1</div>
+                <div class="legend-item"><div class="legend-dot state-3"></div> Pase 2</div>
+                <div class="legend-item"><div class="legend-dot state-4"></div> Pase 3</div>
+                <div class="legend-item"><div class="legend-dot state-5"></div> Pase 4</div>
+                <div class="legend-item"><div class="legend-dot state-6"></div> Pase 5</div>
+                <div class="legend-item"><div class="legend-dot state-7"></div> Pase 6</div>
+                <div class="legend-item"><div class="legend-dot state-8"></div> Pase 7+</div>
+                <div class="legend-item"><div class="legend-dot state-9"></div> Cuarentena</div>
+            </div>
+        </div>
+
+<!--         <div class="section">
+            <strong>Observaciones:</strong>
+            <textarea class="cedit" rows="2" style="border-bottom: 1px solid #ccc;"></textarea>
+        </div> -->
+
+        <div class="signature-area">
+            <div class="signature-box"><p>Actualizó:</p><input type="text"><p>Firma</p></div>
+            <div class="signature-box"><p>Validó:</p><input type="text"><p>Firma</p></div>
+        </div>
+
+        <div class="footer">
+            FO-LC-22 | Versión: 1.0-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('cryo-grid');
+            const rows = ['A','B','C','D','E','F','G','H','I','J'];
+            
+            // Header X
+            grid.appendChild(createAxisCell('')); 
+            for(let i=1; i<=10; i++) grid.appendChild(createAxisCell(i));
+
+            // Grid
+            let counter = 1;
+            rows.forEach(letter => {
+                grid.appendChild(createAxisCell(letter));
+                for(let col=1; col<=10; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cryo-cell state-0';
+                    cell.dataset.state = 0;
+                    
+                    const input = document.createElement('input');
+                    input.className = 'cell-input';
+                    input.placeholder = counter;
+                    
+                    // Click: Ciclo 0 -> 9
+                    cell.onclick = (e) => {
+                        if(e.target === input) return;
+                        let state = parseInt(cell.dataset.state);
+                        state = (state + 1) % 10; // 0-9
+                        cell.dataset.state = state;
+                        cell.className = `cryo-cell state-${state}`;
+                    };
+
+                    cell.appendChild(input);
+                    grid.appendChild(cell);
+                    counter++;
+                }
+            });
+        });
+
+        function createAxisCell(text) {
+            const div = document.createElement('div');
+            div.className = 'axis-cell';
+            div.textContent = text;
+            return div;
+        }
+
+        function updateGridNumbers() {
+            const boxVal = parseInt(document.getElementById('box-num').value) || 1;
+            const offset = (boxVal - 1) * 100;
+            document.querySelectorAll('.cell-input').forEach((inp, i) => {
+                inp.placeholder = offset + i + 1;
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,29 +1,21 @@
-# Dockerfile - Backend FastAPI XELLE LIMS
-FROM python:3.11-slim
+# Dockerfile - Backend Spring Boot XELLE
+FROM maven:3.9.8-eclipse-temurin-21 AS build
+WORKDIR /build
 
+COPY src/backend/pom.xml ./pom.xml
+COPY src/backend/src ./src
+RUN mvn -B -DskipTests package
+
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 
-# Instalar dependencias del sistema
-RUN apt-get update && apt-get install -y \
-    postgresql-client \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
 
-# Copiar requirements primero para aprovechar caché
-COPY src/backend/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY --from=build /build/target/*.jar app.jar
 
-# Copiar código del backend
-COPY src/backend/ ./
+EXPOSE 8080
 
-# Copiar frontend para archivos estáticos
-COPY src/frontend/ /app/static/
+HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=5 \
+    CMD ["sh", "-c", "wget -qO- http://localhost:8080/health >/dev/null 2>&1 || exit 1"]
 
-# Exponer puerto
-EXPOSE 8000
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import requests; requests.get('http://localhost:8000/health', timeout=5)" || exit 1
-
-# Comando para ejecutar
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

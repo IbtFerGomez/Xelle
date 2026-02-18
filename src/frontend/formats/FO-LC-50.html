@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-50 Manifiesto de Destrucción</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 12px; margin-top: 15px; }
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; }
+        @media print { .btn-add, .del-btn { display:none; } }
+    </style>
+</head>
+<body id="doc-fo-lc-50">
+    <div class="global-controls no-print"><button class="btn btn-success" onclick="saveForm()">Guardar</button><button class="btn btn-primary" onclick="window.print()">Imprimir</button><button class="btn btn-danger" onclick="clearForm()">Limpiar</button></div>
+    
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container"><svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg></div>
+            <div class="registry-container"><label>Folio Destrucción</label><div class="registry-wrapper"><span class="registry-prefix">FO-LC-50-</span><input type="text" id="reg-50" class="registry-input generate-barcode" data-target="barcode-50" data-prefix="FO-LC-50-" placeholder="000"></div><input type="date" class="registry-date"><svg id="barcode-50" class="barcode-svg"></svg></div>
+        </div>
+        <div class="header-main"><h1>MANIFIESTO DE DESTRUCCIÓN MPNC</h1><div class="metadata">Código: FO-LC-50 | Ref: NOM-087-ECOL-SSA1-2002</div></div>
+
+        <div class="section-header">1. MATERIAL A DESTRUIR (RPBI / ESPECIAL)</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-waste">
+                <thead>
+                    <tr>
+                        <th width="20%">ID Lote / Origen</th>
+                        <th width="40%">Descripción del Residuo</th>
+                        <th width="10%">Peso (kg)</th>
+                        <th width="25%">Clasificación (NOM-087)</th>
+                        <th class="no-print" width="5%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit" placeholder="Lote Interno"></td>
+                        <td><textarea class="cedit" rows="2" style="width:100%; border:none; resize:none;" placeholder="Detalle del material..."></textarea></td>
+                        <td><input class="cedit" type="number"></td>
+                        <td>
+                            <select class="cedit" style="width:100%">
+                                <option value="">- Seleccionar -</option>
+                                <option value="PATOLOGICO">1. PATOLÓGICOS (Tejidos/Placenta) - Bolsa Amarilla</option>
+                                <option value="SANGRE">2. SANGRE - Recipiente Hermético</option>
+                                <!-- <option value="CEPAS">2. CULTIVOS Y CEPAS - Bolsa Roja</option>
+                                <option value="NO_ANATOMICO">3. NO ANATÓMICOS (Gasas/Material con Sangre) - Bolsa Roja</option>
+                                <option value="PUNZOCORTANTE">5. PUNZOCORTANTES - Recipiente Rígido</option> -->
+                            </select>
+                        </td>
+                        <td class="no-print"><span class="del-btn" onclick="delRow(this)" style="color:red;cursor:pointer;">×</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow()">+ AGREGAR RENGLÓN</button>
+        </div>
+
+        <div class="section-header">2. MÉTODO DE DISPOSICIÓN FINAL</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr><td><strong>Proveedor Recolector Autorizado:</strong> <input class="cedit"></td></tr>
+                <tr><td><strong>Número de Manifiesto (SEMARNAT):</strong> <input class="cedit"></td></tr>
+                <tr><td><strong>Fecha de Recolección:</strong> <input type="date" class="cedit"></td></tr>
+            </table>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box"><p>Entregó (Xelle)</p><input type="text"><p>Firma</p></div>
+            <div class="signature-box"><p>Recibió (Recolector)</p><input type="text"><p>Firma y Sello</p></div>
+        </div>
+        <div class="footer">FO-LC-50 | Manifiesto Destrucción | Xelle Scientific</div>
+    </div>
+    <script>
+        function addRow(){
+            let t=document.getElementById('tbl-waste').getElementsByTagName('tbody')[0];
+            let r=t.rows[0].cloneNode(true);
+            r.querySelectorAll('input, textarea, select').forEach(i=>i.value='');
+            t.appendChild(r);
+        }
+        function delRow(btn){
+            let row=btn.parentNode.parentNode;
+            if(row.parentNode.rows.length>1) row.parentNode.removeChild(row);
+        }
+    </script>
+</body>
+</html>
