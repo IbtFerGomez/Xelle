@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documento digitalizado DGW-FOLC46-260218-1810</title>
+<link rel="stylesheet" href="format-styles.css">
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="format-app.js"></script>
+<style>
+    .word-content table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+    .word-content td, .word-content th { border: 1px solid var(--border-color); padding: 6px; }
+    .word-content img { max-width: 100%; height: auto; }
+    .dgw-field-wrap { display: flex; flex-direction: column; gap: 4px; }
+    .dgw-field-label { font-size: 11px; font-weight: 700; color: var(--secondary-color); }
+</style>
+</head>
+<body id="doc-digitalizado-word">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Código Documento</label>
+                <div class="registry-wrapper">
+                    <input type="text" id="reg-digital" class="registry-input generate-barcode" data-target="barcode-digital" data-prefix="" value="DGW-FOLC46-260218-1810">
+                </div>
+                <input type="date" class="registry-date no-auto-date" value="2026-02-19">
+                <svg id="barcode-digital" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>DOCUMENTO DIGITALIZADO DESDE WORD</h1>
+            <div class="metadata">Código: DGW-FOLC46-260218-1810 | Fuente: Word (.docx)</div>
+        </div>
+
+        <div class="section word-content">
+            <p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">FORMATO REGISTRO MUESTREO PRODUCTO BIOLÓGICO</label>
+                    <input class="cedit" name="dgw_field_54" value="FORMATO REGISTRO MUESTREO PRODUCTO BIOLÓGICO" placeholder="Captura aquí">
+                </div>
+            </p><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">1. DATOS DE IDENTIFICACIÓN DEL LOTE</label>
+                    <input class="cedit" name="dgw_field_55" value="1. DATOS DE IDENTIFICACIÓN DEL LOTE" placeholder="Captura aquí">
+                </div>
+            </p><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><input class="cedit" name="dgw_field_1" value="Nombre del Producto:" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_2" value="Presentación (Vial/Jeringa):" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_3" value="Número de Lote:" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_4" value="Fecha de Caducidad:" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_5" value="Tamaño del Lote (Unidades totales):" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_6" value="Fecha de Muestreo:" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_7" value="Ubicación (Cámara Fría):" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_8" value="Estado: CUARENTENA +1" placeholder="Captura aquí"></td></tr></tbody></table><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">2. FASE PREVIA: ACONDICIONAMIENTO Y CADENA DE FRÍO (PCC 1)</label>
+                    <input class="cedit" name="dgw_field_56" value="2. FASE PREVIA: ACONDICIONAMIENTO Y CADENA DE FRÍO (PCC 1)" placeholder="Captura aquí">
+                </div>
+            </p><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">Referencia: Paso 6.1 Preparación Previa</label>
+                    <input class="cedit" name="dgw_field_57" value="Referencia: Paso 6.1 Preparación Previa" placeholder="Captura aquí">
+                </div>
+            </p><table><thead><tr><th><p><strong>Verificación</strong></p></th><th><p><strong>Cumple (Si/No)</strong></p></th><th><p><strong>Dato / Observación</strong></p></th></tr></thead><tbody><tr><td><textarea class="cedit" name="dgw_field_9" rows="2" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}">Limpieza de Hielera: Contenedor sanitizado y sin residuos.</textarea></td><td><input class="cedit" name="dgw_field_10" value="☐ Sí ☐ No" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_11" value="ID Hielera: __________" placeholder="Captura aquí"></td></tr><tr><td><textarea class="cedit" name="dgw_field_12" rows="2" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}">Geles Refrigerantes: Acondicionados (sin escarcha excesiva).</textarea></td><td><input class="cedit" name="dgw_field_13" value="☐ Sí ☐ No" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_14" value="" placeholder="Captura aquí"></td></tr><tr><td><textarea class="cedit" name="dgw_field_15" rows="2" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}">Monitoreo Previo (10 min): Temperatura interna estabilizada entre 2°C y 8°C antes de salir. +1</textarea></td><td><input class="cedit" name="dgw_field_16" value="☐ Sí ☐ No" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_17" value="Temp. Inicial: ______ °C" placeholder="Captura aquí"></td></tr><tr><td><textarea class="cedit" name="dgw_field_18" rows="2" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}">Materiales: Separadores (burbuja/cartón) y bolsas de seguridad listos.</textarea></td><td><input class="cedit" name="dgw_field_19" value="☐ Sí ☐ No" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_20" value="Crítico para evitar congelación" placeholder="Captura aquí"></td></tr></tbody></table><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">3. PLAN DE MUESTREO Y SELECCIÓN (PCC 2)</label>
+                    <input class="cedit" name="dgw_field_58" value="3. PLAN DE MUESTREO Y SELECCIÓN (PCC 2)" placeholder="Captura aquí">
+                </div>
+            </p><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">Referencia: Paso 6.2 y 7 Plan de Muestreo</label>
+                    <input class="cedit" name="dgw_field_59" value="Referencia: Paso 6.2 y 7 Plan de Muestreo" placeholder="Captura aquí">
+                </div>
+            </p><p>
+                    <div class="dgw-field-wrap">
+                        <label class="dgw-field-label">Criterio de Selección Utilizado: ☐ Tabla Militar Estándar (ANSI/ASQ Z1.4 - Nivel</label>
+                        <textarea class="cedit" name="dgw_field_60" rows="3" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}">Criterio de Selección Utilizado: ☐ Tabla Militar Estándar (ANSI/ASQ Z1.4 - Nivel I) ☐ Fórmula Raíz Cuadrada ($\sqrt{N}+1$)</textarea>
+                    </div>
+                </p><table><thead><tr><th><p><strong>Cálculo de Muestra</strong></p></th><th><p><strong>Cantidad</strong></p></th></tr></thead><tbody><tr><td><textarea class="cedit" name="dgw_field_21" rows="2" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}">Cantidad para Análisis (Fisicoquímico + Micro + Bio):</textarea></td><td><input class="cedit" name="dgw_field_22" value="_______ unidades" placeholder="Captura aquí"></td></tr><tr><td><textarea class="cedit" name="dgw_field_23" rows="2" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}">Cantidad para Retención Legal (Contramuestra):</textarea></td><td><input class="cedit" name="dgw_field_24" value="_______ unidades" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_25" value="TOTAL A MUESTREAR:" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_26" value="_______ unidades" placeholder="Captura aquí"></td></tr></tbody></table><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">4. EJECUCIÓN DEL MUESTREO ESTRATIFICADO (PCC 3)</label>
+                    <input class="cedit" name="dgw_field_61" value="4. EJECUCIÓN DEL MUESTREO ESTRATIFICADO (PCC 3)" placeholder="Captura aquí">
+                </div>
+            </p><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">Referencia: Paso 6.2 y 6.3 - Se debe garantizar muestra representativa</label>
+                    <input class="cedit" name="dgw_field_62" value="Referencia: Paso 6.2 y 6.3 - Se debe garantizar muestra representativa" placeholder="Captura aquí">
+                </div>
+            </p><table><thead><tr><th><p><strong>Estratificación (Ubicación en Tarima)</strong></p></th><th><p><strong>Cantidad Tomada</strong></p></th><th><p><strong>Inspección Visual (Defectos) </strong></p></th></tr></thead><tbody><tr><td><input class="cedit" name="dgw_field_27" value="Nivel Superior (Arriba):" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_28" value="_______ pzas" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_29" value="☐ Sin defectos ☐ Roto/Turbio" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_30" value="Nivel Medio (Centro):" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_31" value="_______ pzas" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_32" value="☐ Sin defectos ☐ Roto/Turbio" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_33" value="Nivel Inferior (Abajo):" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_34" value="_______ pzas" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_35" value="☐ Sin defectos ☐ Roto/Turbio" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_36" value="Total Recolectado:" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_37" value="_______ pzas" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_38" value="" placeholder="Captura aquí"></td></tr></tbody></table><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">Verificaciones Críticas durante la Toma:</label>
+                    <input class="cedit" name="dgw_field_63" value="Verificaciones Críticas durante la Toma:" placeholder="Captura aquí">
+                </div>
+            </p><ol><li>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">¿Se colocaron las muestras en bolsa de seguridad? ☐ Sí ☐ No</label>
+                    <input class="cedit" name="dgw_field_64" value="¿Se colocaron las muestras en bolsa de seguridad? ☐ Sí ☐ No" placeholder="Captura aquí">
+                </div>
+            </li><li>
+                    <div class="dgw-field-wrap">
+                        <label class="dgw-field-label">¿Se usaron separadores para evitar contacto directo con geles? (Prevención de co</label>
+                        <textarea class="cedit" name="dgw_field_65" rows="3" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}">¿Se usaron separadores para evitar contacto directo con geles? (Prevención de congelación - Riesgo IPR 75) ☐ Sí ☐ No</textarea>
+                    </div>
+                </li></ol><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">+1</label>
+                    <input class="cedit" name="dgw_field_66" value="+1" placeholder="Captura aquí">
+                </div>
+            </p><ol><li>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">¿Si es fotosensible, se usó protección opaca/negra? ☐ Sí ☐ N/A</label>
+                    <input class="cedit" name="dgw_field_67" value="¿Si es fotosensible, se usó protección opaca/negra? ☐ Sí ☐ N/A" placeholder="Captura aquí">
+                </div>
+            </li><li>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">¿Se identificó la caja original con etiqueta "MUESTREADO"? ☐ Sí ☐ No</label>
+                    <input class="cedit" name="dgw_field_68" value="¿Se identificó la caja original con etiqueta &quot;MUESTREADO&quot;? ☐ Sí ☐ No" placeholder="Captura aquí">
+                </div>
+            </li></ol><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">5. TRASLADO Y RECEPCIÓN EN LABORATORIO</label>
+                    <input class="cedit" name="dgw_field_69" value="5. TRASLADO Y RECEPCIÓN EN LABORATORIO" placeholder="Captura aquí">
+                </div>
+            </p><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">Referencia: Paso 6.5 Traslado</label>
+                    <input class="cedit" name="dgw_field_70" value="Referencia: Paso 6.5 Traslado" placeholder="Captura aquí">
+                </div>
+            </p><table><thead><tr><th><p><strong>Parámetro</strong></p></th><th><p><strong>Registro</strong></p></th><th><p><strong>Validación</strong></p></th></tr></thead><tbody><tr><td><input class="cedit" name="dgw_field_39" value="Hora de Salida de Almacén:" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_40" value=": hrs" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_41" value="" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_42" value="Hora de Llegada a Laboratorio:" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_43" value=": hrs" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_44" value="Tiempo total: _______ min" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_45" value="Lectura Datalogger/Termómetro:" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_46" value="Temp. Final: _______ °C" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_47" value="Criterio: 2.0°C a 8.0°C +1" placeholder="Captura aquí"></td></tr></tbody></table><p>
+                    <div class="dgw-field-wrap">
+                        <label class="dgw-field-label">Dictamen de Recepción de Muestra: ☐ ACEPTADA (Ingresar a refrigerador de retenci</label>
+                        <textarea class="cedit" name="dgw_field_71" rows="3" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}">Dictamen de Recepción de Muestra: ☐ ACEPTADA (Ingresar a refrigerador de retención inmediatamente) ☐ RECHAZADA (Temp &lt; 2°C o &gt; 8°C, o evidencia de daño físico). Iniciar Desviación.</textarea>
+                    </div>
+                </p><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">6. OBSERVACIONES / GESTIÓN DE RIESGOS</label>
+                    <input class="cedit" name="dgw_field_72" value="6. OBSERVACIONES / GESTIÓN DE RIESGOS" placeholder="Captura aquí">
+                </div>
+            </p><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">Referencia: MR-CAL-02 Matriz de Riesgos</label>
+                    <input class="cedit" name="dgw_field_73" value="Referencia: MR-CAL-02 Matriz de Riesgos" placeholder="Captura aquí">
+                </div>
+            </p><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">¿Se detectó alguna desviación o riesgo (ej. excursión térmica, falta de geles)?</label>
+                    <input class="cedit" name="dgw_field_74" value="¿Se detectó alguna desviación o riesgo (ej. excursión térmica, falta de geles)?" placeholder="Captura aquí">
+                </div>
+            </p><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">En caso de riesgo crítico (IPR ≥ 27), abrir CAPA inmediatamente.</label>
+                    <input class="cedit" name="dgw_field_75" value="En caso de riesgo crítico (IPR ≥ 27), abrir CAPA inmediatamente." placeholder="Captura aquí">
+                </div>
+            </p><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">7. FIRMAS DE RESPONSABILIDAD</label>
+                    <input class="cedit" name="dgw_field_76" value="7. FIRMAS DE RESPONSABILIDAD" placeholder="Captura aquí">
+                </div>
+            </p><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><input class="cedit" name="dgw_field_48" value="Realizó Muestreo (Inspector de Calidad):" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_49" value="Verificó y Recibió (Analista/Jefe CC):" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_50" value="" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_51" value="" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_52" value="Firma y Fecha" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_53" value="Firma y Fecha" placeholder="Captura aquí"></td></tr></tbody></table>
+        </div>
+
+        <div class="footer">Digitalizado automáticamente | DGW-FOLC46-260218-1810</div>
+    </div>
+</body>
+</html>

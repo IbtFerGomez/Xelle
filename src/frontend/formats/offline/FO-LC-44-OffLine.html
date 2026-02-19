@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>FO-LC-44 Lib Flasks</title>
     <link rel="stylesheet" href="format-styles-OffLine.css">
-    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app-OffLine.js"></script>
     <style>
@@ -65,15 +65,15 @@
                 </thead>
                 <tbody></tbody>
             </table>
-            <p>*POS= positivo; NEG= negativo; NA= no aplicable</p>
-            <p>*LIB= liberado; RECH= Rechazado; NA= no aplicable</p>
+            <!-- <p>*POS= positivo; NEG= negativo; NA= no aplicable</p>
+            <p>*LIB= liberado; RECH= Rechazado; NA= no aplicable</p> -->
             <button class="btn btn-primary btn-mini no-print" onclick="window.addMuestra44()">+ Agregar Muestra</button>
         </div>
 
-        <div class="section">
+<!--         <div class="section">
             <div class="section-title">Observaciones Generales</div>
             <textarea id="obs_generales" class="cedit" style="text-align: left; min-height: 60px;"></textarea>
-        </div>
+        </div> -->
 
         <div class="signature-area">
             <div class="signature-box"><p>Realizó:</p><input type="text" id="sig_r_44"><p>Firma</p></div>

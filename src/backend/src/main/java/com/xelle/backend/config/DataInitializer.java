@@ -18,10 +18,9 @@ public class DataInitializer implements CommandLineRunner {
     private final ObjectMapper objectMapper;
 
     public DataInitializer(
-        UserRepository userRepository,
-        FormatMetadataRepository formatRepository,
-        ObjectMapper objectMapper
-    ) {
+            UserRepository userRepository,
+            FormatMetadataRepository formatRepository,
+            ObjectMapper objectMapper) {
         this.userRepository = userRepository;
         this.formatRepository = formatRepository;
         this.objectMapper = objectMapper;
@@ -43,11 +42,13 @@ public class DataInitializer implements CommandLineRunner {
             return;
         }
         userRepository.save(buildUser("Xelle_Fer", "123", "Luis Fernando Gómez", "super_admin", List.of("all"), true));
-        userRepository.save(buildUser("calidad", "123", "Gerente de Calidad", "quality_manager", List.of("calidad", "sgc"), true));
+        userRepository.save(
+                buildUser("calidad", "123", "Gerente de Calidad", "quality_manager", List.of("calidad", "sgc"), true));
         userRepository.save(buildUser("ventas", "123", "Ejecutivo Comercial", "sales", List.of("almacen"), true));
     }
 
-    private UserEntity buildUser(String username, String pass, String fullName, String role, List<String> access, boolean active) {
+    private UserEntity buildUser(String username, String pass, String fullName, String role, List<String> access,
+            boolean active) {
         UserEntity user = new UserEntity();
         user.setUsername(username);
         user.setPasswordHash(pass);
@@ -59,40 +60,47 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void ensureDefaultFormats() {
-        if (formatRepository.count() > 0) {
-            return;
-        }
-        addFormat("FO-LC-16", "Cover Sheet (Resumen Lote)", "banco", "formats/FO-LC-16.html");
-        addFormat("FO-LC-20", "Procesamiento de Tejido", "banco", "formats/FO-LC-20.html");
-        addFormat("FO-LC-21", "Bitácora de Cultivo Celular", "banco", "formats/FO-LC-21.html");
-        addFormat("FO-LC-22", "Mapa de Crio-Conservación", "banco", "formats/FO-LC-22.html");
-        addFormat("FO-LC-17", "Recepción Muestras (MP)", "calidad", "formats/FO-LC-17.html");
-        addFormat("FO-LC-18", "Evaluación Macroscópica", "calidad", "formats/FO-LC-18.html");
-        addFormat("FO-LC-19", "Liberación MP (Serología)", "calidad", "formats/FO-LC-19.html");
-        addFormat("FO-LC-23", "Bitácora Movimientos Banco", "banco", "formats/FO-LC-23.html");
-        addFormat("FO-LC-24", "Inventario Prod. Terminado", "banco", "formats/FO-LC-24.html");
-        addFormat("FO-LC-25", "Preparación de Medios", "calidad", "formats/FO-LC-25.html");
-        addFormat("FO-LC-26", "Bitácora de Autoclave", "calidad", "formats/FO-LC-26.html");
-        addFormat("FO-LC-27", "Control de Equipos", "calidad", "formats/FO-LC-27.html");
-        addFormat("FO-LC-28", "Uso de Equipos", "calidad", "formats/FO-LC-28.html");
-        addFormat("FO-LC-29", "Hoja Prod. Lote Celular", "banco", "formats/FO-LC-29.html");
-        addFormat("FO-LC-30", "Hoja Prod. Lote Acelular", "banco", "formats/FO-LC-30.html");
-        addFormat("FO-LC-31", "Acondicionamiento Final", "almacen", "formats/FO-LC-31.html");
-        addFormat("FO-LC-32", "Desviaciones (CAPA)", "sgc", "formats/FO-LC-32.html");
-        addFormat("FO-LC-40", "Prep. Soluciones (Gral)", "calidad", "formats/FO-LC-40.html");
-        addFormat("FO-LC-41", "Control Microbiológico", "calidad", "formats/FO-LC-41.html");
-        addFormat("FO-LC-42", "Liofilización Placenta", "banco", "formats/FO-LC-42.html");
-        addFormat("FO-LC-43", "Liofilización Medio Cond.", "banco", "formats/FO-LC-43.html");
-        addFormat("FO-LC-44", "Lib. Micro Flasks/Viales", "calidad", "formats/FO-LC-44.html");
-        addFormat("FO-LC-45", "Envío a Esterilización", "almacen", "formats/FO-LC-45.html");
-        addFormat("FO-OP-15", "Pedido Maestro (Ventas)", "almacen", "formats/FO-OP-15.html");
-        addFormat("FO-OP-16", "Orden de Surtido (Picking)", "almacen", "formats/FO-OP-16.html");
-        addFormat("FO-OP-17", "Nota de Remisión", "almacen", "formats/FO-OP-17.html");
-        addFormat("FO-OP-20", "Liberación a Almacén", "almacen", "formats/FO-OP-20.html");
+        upsertFormat("FO-LC-14", "Histórico de Placentas", "sgc", "formats/FO-LC-14.html");
+        upsertFormat("FO-LC-15", "Histórico de Líneas", "sgc", "formats/FO-LC-15.html");
+        upsertFormat("FO-LC-16", "Cover Sheet (Resumen Lote)", "banco", "formats/FO-LC-16.html");
+        upsertFormat("FO-LC-17", "Recepción Muestras (MP)", "calidad", "formats/FO-LC-17.html");
+        upsertFormat("FO-LC-18", "Evaluación Macroscópica", "calidad", "formats/FO-LC-18.html");
+        upsertFormat("FO-LC-19", "Liberación MP (Serología)", "calidad", "formats/FO-LC-19.html");
+        upsertFormat("FO-LC-20", "Procesamiento de Tejido", "banco", "formats/FO-LC-20.html");
+        upsertFormat("FO-LC-21", "Bitácora de Cultivo Celular", "banco", "formats/FO-LC-21.html");
+        upsertFormat("FO-LC-22", "Mapa de Crio-Conservación", "banco", "formats/FO-LC-22.html");
+        upsertFormat("FO-LC-23", "Bitácora Movimientos Banco", "banco", "formats/FO-LC-23.html");
+        upsertFormat("FO-LC-24", "Inventario Prod. Terminado", "banco", "formats/FO-LC-24.html");
+        upsertFormat("FO-LC-25", "Preparación de Medios", "calidad", "formats/FO-LC-25.html");
+        upsertFormat("FO-LC-26", "Bitácora de Autoclave", "calidad", "formats/FO-LC-26.html");
+        upsertFormat("FO-LC-27", "Control de Equipos", "calidad", "formats/FO-LC-27.html");
+        upsertFormat("FO-LC-28", "Uso de Equipos", "calidad", "formats/FO-LC-28.html");
+        upsertFormat("FO-LC-29", "Hoja Prod. Lote Celular", "banco", "formats/FO-LC-29.html");
+        upsertFormat("FO-LC-30", "Hoja Prod. Lote Acelular", "banco", "formats/FO-LC-30.html");
+        upsertFormat("FO-LC-31", "Acondicionamiento Final", "almacen", "formats/FO-LC-31.html");
+        upsertFormat("FO-LC-32", "Desviaciones (CAPA)", "sgc", "formats/FO-LC-32.html");
+        upsertFormat("FO-LC-40", "Prep. Soluciones (Gral)", "calidad", "formats/FO-LC-40.html");
+        upsertFormat("FO-LC-40-B", "Prep. Soluciones (Alterno B)", "calidad", "formats/FO-LC-40-B.html");
+        upsertFormat("FO-LC-41", "Control Microbiológico", "calidad", "formats/FO-LC-41.html");
+        upsertFormat("FO-LC-42", "Liofilización Placenta", "banco", "formats/FO-LC-42.html");
+        upsertFormat("FO-LC-43", "Liofilización Medio Cond.", "banco", "formats/FO-LC-43.html");
+        upsertFormat("FO-LC-44", "Lib. Micro Flasks/Viales", "calidad", "formats/FO-LC-44.html");
+        upsertFormat("FO-LC-45", "Envío a Esterilización", "almacen", "formats/FO-LC-45.html");
+        upsertFormat("FO-LC-50", "Manifiesto de Destrucción", "calidad", "formats/FO-LC-50.html");
+        upsertFormat("FO-LC-51", "Registro de Desviaciones", "sgc", "formats/FO-LC-51.html");
+        upsertFormat("FO-LC-TEST", "Formato de Prueba", "sgc", "formats/FO-LC-TEST.html");
+        upsertFormat("FO-OP-12", "Dictamen Técnico de Concesión", "almacen", "formats/FO-OP-12.html");
+        upsertFormat("FO-OP-13", "Lista Verificación Recepción MP", "almacen", "formats/FO-OP-13.html");
+        upsertFormat("FO-OP-15", "Pedido Maestro (Ventas)", "almacen", "formats/FO-OP-15.html");
+        upsertFormat("FO-OP-16", "Orden de Surtido (Picking)", "almacen", "formats/FO-OP-16.html");
+        upsertFormat("FO-OP-17", "Nota de Remisión", "almacen", "formats/FO-OP-17.html");
+        upsertFormat("FO-OP-20", "Liberación a Almacén", "almacen", "formats/FO-OP-20.html");
+        upsertFormat("FO-OP-52", "Reporte de MPNC", "almacen", "formats/FO-OP-52.html");
+        upsertFormat("FO-OP-OP-01", "Formato Operativo OP-01", "almacen", "formats/FO-OP-OP-01.html");
     }
 
-    private void addFormat(String code, String title, String area, String path) {
-        FormatMetadataEntity entity = new FormatMetadataEntity();
+    private void upsertFormat(String code, String title, String area, String path) {
+        FormatMetadataEntity entity = formatRepository.findByCodeIgnoreCase(code).orElseGet(FormatMetadataEntity::new);
         entity.setCode(code);
         entity.setTitle(title);
         entity.setArea(area);

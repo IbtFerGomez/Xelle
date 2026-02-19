@@ -15,9 +15,18 @@ const App = {
         ]
     },
 
+    state: {
+        apiUrl: '/api',
+        formatType: null,
+        instanceCode: null,
+        loadedFromBackend: false
+    },
+
     init: function () {
         const docId = document.body.id;
         console.log("Iniciando App V10 para:", docId);
+
+        this.Api.setup();
 
         this.Universal.setupDateInputs();
         this.Universal.setupBarcodes();
@@ -30,8 +39,141 @@ const App = {
             case 'doc-fo-lc-21': this.Docs.FO_LC_21.init(); break;
             case 'doc-fo-lc-22': this.Docs.FO_LC_22.init(); break;
             case 'doc-fo-lc-24': this.Docs.FO_LC_24.init(); break;
-            case 'doc-fo-lc-40': case 'doc-fo-lc-41': case 'doc-fo-lc-42': case 'doc-fo-lc-43': case 'doc-fo-lc-44': case 'doc-fo-lc-45':
+            case 'doc-fo-lc-40': case 'doc-fo-lc-40-b': case 'doc-fo-lc-41': case 'doc-fo-lc-42': case 'doc-fo-lc-43': case 'doc-fo-lc-44': case 'doc-fo-lc-45':
                 this.Docs.FO_Generic.init(docId); break;
+        }
+
+        this.Api.loadInstanceFromQuery();
+    },
+
+    Api: {
+        setup: function () {
+            const filename = (window.location.pathname.split('/').pop() || '').toUpperCase();
+            App.state.formatType = filename.replace('.HTML', '');
+            const params = new URLSearchParams(window.location.search);
+            const fromQuery = (params.get('instance') || '').trim();
+            if (fromQuery) {
+                App.state.instanceCode = fromQuery;
+            }
+        },
+
+        getSessionUserId: function () {
+            try {
+                const session = JSON.parse(localStorage.getItem('xelle_session') || 'null');
+                return session?.id || null;
+            } catch (_) {
+                return null;
+            }
+        },
+
+        getRegistryInput: function () {
+            return document.querySelector('.registry-input.generate-barcode');
+        },
+
+        setRegistryCode: function (code) {
+            const input = this.getRegistryInput();
+            if (!input || !code) {
+                return;
+            }
+            input.value = code;
+            input.dispatchEvent(new Event('input'));
+            input.dispatchEvent(new Event('change'));
+        },
+
+        ensureUniqueCode: async function () {
+            const current = (this.getRegistryInput()?.value || '').trim();
+            if (current) {
+                App.state.instanceCode = current;
+                return current;
+            }
+
+            const response = await fetch(`${App.state.apiUrl}/formats/generate-unique-code`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ format_type: App.state.formatType })
+            });
+
+            if (!response.ok) {
+                throw new Error('No fue posible generar código único.');
+            }
+
+            const data = await response.json();
+            const generated = data.unique_code;
+            App.state.instanceCode = generated;
+            this.setRegistryCode(generated);
+            return generated;
+        },
+
+        loadInstanceFromQuery: async function () {
+            if (!App.state.instanceCode) {
+                return;
+            }
+            try {
+                const response = await fetch(`${App.state.apiUrl}/format-instances/${encodeURIComponent(App.state.instanceCode)}`);
+                if (!response.ok) {
+                    return;
+                }
+                const instance = await response.json();
+                if (instance?.data_payload && typeof instance.data_payload === 'object') {
+                    App.Universal.applyData(instance.data_payload);
+                }
+                this.setRegistryCode(App.state.instanceCode);
+                App.state.loadedFromBackend = true;
+            } catch (_) {
+                // Si falla backend, se conserva carga local
+            }
+        },
+
+        saveToBackend: async function (dataPayload) {
+            const uniqueCode = await this.ensureUniqueCode();
+            const payload = {
+                unique_code: uniqueCode,
+                format_type: App.state.formatType,
+                status: 'DRAFT',
+                data_payload: dataPayload,
+                user_id: this.getSessionUserId(),
+                notes: ''
+            };
+
+            if (App.state.loadedFromBackend) {
+                const updateResponse = await fetch(`${App.state.apiUrl}/format-instances/${encodeURIComponent(uniqueCode)}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!updateResponse.ok) {
+                    throw new Error('No fue posible actualizar la tarjeta en backend.');
+                }
+                return uniqueCode;
+            }
+
+            const createResponse = await fetch(`${App.state.apiUrl}/format-instances`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (createResponse.ok) {
+                App.state.loadedFromBackend = true;
+                return uniqueCode;
+            }
+
+            const errorBody = await createResponse.json().catch(() => ({}));
+            const message = (errorBody.msg || '').toLowerCase();
+            if (message.includes('ya existe')) {
+                const updateResponse = await fetch(`${App.state.apiUrl}/format-instances/${encodeURIComponent(uniqueCode)}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!updateResponse.ok) {
+                    throw new Error('No fue posible actualizar la tarjeta en backend.');
+                }
+                App.state.loadedFromBackend = true;
+                return uniqueCode;
+            }
+
+            throw new Error(errorBody.msg || 'No fue posible guardar la tarjeta en backend.');
         }
     },
 
@@ -74,7 +216,7 @@ const App = {
             textarea.style.height = 'auto';
             textarea.style.height = textarea.scrollHeight + 'px';
         },
-        saveData: function () {
+        saveData: async function () {
             const docId = document.body.id;
             const data = {};
             document.querySelectorAll('input, select, textarea').forEach(el => {
@@ -88,12 +230,20 @@ const App = {
                 Object.assign(data, App.Docs[docId.replace(/-/g, '_').toUpperCase()].getCustomData());
             }
             localStorage.setItem(`xelle_${docId}`, JSON.stringify(data));
-            Swal.fire({ icon: 'success', title: 'Guardado', timer: 1000, showConfirmButton: false });
+            try {
+                const code = await App.Api.saveToBackend(data);
+                Swal.fire({ icon: 'success', title: 'Guardado', text: `Código único: ${code}`, timer: 1300, showConfirmButton: false });
+            } catch (error) {
+                Swal.fire({ icon: 'warning', title: 'Guardado local', text: error.message || 'No se pudo guardar en backend.' });
+            }
         },
         loadData: function (docId) {
             const saved = localStorage.getItem(`xelle_${docId}`);
             if (!saved) return;
             const data = JSON.parse(saved);
+            this.applyData(data);
+        },
+        applyData: function (data) {
             for (const [key, value] of Object.entries(data)) {
                 let el = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
                 if (el && !el.closest('tr')) {
@@ -106,6 +256,7 @@ const App = {
                     el.dispatchEvent(new Event('change'));
                 }
             }
+            const docId = document.body.id;
             const docHandler = App.Docs[docId.replace(/-/g, '_').toUpperCase()];
             if (docHandler?.loadCustomData) docHandler.loadCustomData(data);
         },

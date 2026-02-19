@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-13 Lista de Verificación Recepción MP</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app-OffLine.js"></script>
+    <style>.status-ok{background:#dcfce7;color:#166534}.status-fail{background:#fee2e2;color:#991b1b}</style>
+</head>
+<body id="doc-fo-op-13">
+    <div class="global-controls no-print"><button class="btn btn-success" onclick="saveForm()">Guardar</button><button class="btn btn-primary" onclick="window.print()">Imprimir</button><button class="btn btn-danger" onclick="clearForm()">Limpiar</button></div>
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container"><svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg></div>
+            <div class="registry-container"><label>Folio Recepción</label><div class="registry-wrapper"><span class="registry-prefix">FO-OP-13-</span><input type="text" id="reg-13" class="registry-input generate-barcode" data-target="barcode-13" data-prefix="FO-OP-13-" placeholder="000"></div><input type="date" class="registry-date"><svg id="barcode-13" class="barcode-svg"></svg></div>
+        </div>
+        <div class="header-main"><h1>LISTA DE VERIFICACIÓN E INSPECCIÓN DE RECIBO (MATERIA PRIMA)</h1><div class="metadata">Código: FO-OP-13 | Versión: 1.0</div></div>
+
+        <div class="section-header">1. DATOS DE IDENTIFICACIÓN (TRAZABILIDAD)</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr><td><strong>ID Donante / Clave:</strong> <input class="cedit"></td><td><strong>Hospital Origen:</strong> <input class="cedit"></td></tr>
+                <tr><td><strong>Fecha Recolección:</strong> <input type="date" class="cedit"></td><td><strong>Hora Recolección:</strong> <input type="time" class="cedit"></td></tr>
+                <tr><td><strong>Hora Recepción Lab:</strong> <input type="time" class="cedit"></td><td><strong>Transportista:</strong> <input class="cedit"></td></tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. INSPECCIÓN DE ATRIBUTOS CRÍTICOS (PCC)</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead><tr><th>Parámetro</th><th>Criterio de Aceptación</th><th>Verificación</th></tr></thead>
+                <tbody>
+                    <tr><td>Integridad Kit</td><td>Caja cerrada, sellos intactos</td><td><input class="cedit" onchange="checkStatus(this)" type="text"></td></tr>
+                    <tr><td>Temperatura Llegada</td><td>Entre 2°C y 8°C (Gelpacks congelados)</td><td><input class="cedit" type="number" placeholder="°C" style="width:60px"> <input class="cedit" onchange="checkStatus(this)" type="text"></td></tr>
+                    <tr><td>Bolsa Recolección</td><td>Hermética, sin fugas de sangre</td><td><input class="cedit" onchange="checkStatus(this)" type="text"></td></tr>
+                    <tr><td>Consentimiento</td><td>Firmado, completo y legible</td><td><input class="cedit" onchange="checkStatus(this)" type="text"></td></tr>
+                    <tr><td>Muestra Sanguínea</td><td>Tubos íntegros, etiquetados</td><td><input class="cedit" onchange="checkStatus(this)" type="text"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">3. DICTAMEN DE RECEPCIÓN</div>
+        <div class="section" style="border:2px solid #1E3A5F; padding:15px; background:#f8fafc;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div style="width:70%"><label><strong>Observaciones:</strong></label><textarea class="cedit" rows="2" style="width:100%"></textarea></div>
+                <div style="width:25%;text-align:center;">
+                    <label style="font-weight:bold;display:block;">ESTADO:</label>
+                    <input class="cedit" style="font-size:14px;padding:8px;width:100%;font-weight:bold;" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="signature-area"><div class="signature-box"><p>Recibió (Almacén/Calidad)</p><input type="text"><p>Firma</p></div></div>
+        <div class="footer">FO-OP-13 | Check-list Recepción MP | Xelle Scientific</div>
+    </div>
+    <script>function checkStatus(e){e.style.backgroundColor=e.value==='NO CUMPLE'?'#fee2e2':'#dcfce7';}</script>
+</body>
+</html>

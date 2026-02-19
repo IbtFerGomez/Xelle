@@ -10,7 +10,7 @@
     <style>
         /* REGLAS DE IMPRESIÓN EXACTA */
         @media print {
-            @page { size: letter; margin: 0.5cm; }
+            @page { size: letter landscape; margin: 0.5cm; }
             body, .container {
                 margin: 0 !important;
                 padding: 10px !important;
@@ -30,10 +30,24 @@
             input.cedit { border: none !important; }
         }
 
+        .code-textarea {
+            min-height: 22px;
+            line-height: 1.2;
+            resize: none;
+            overflow: hidden;
+            white-space: pre-wrap;
+            word-break: break-word;
+            text-align: left;
+        }
+
         /* Estilos de Tabla */
         .log-table th { background: #f0f0f0; font-size: 10px; text-align: center; vertical-align: middle; border: 1px solid #999; }
         .log-table td { border: 1px solid #999; padding: 0; }
         .log-table input { width: 98%; text-align: center; border: none; outline: none; background: transparent; font-size: 11px; }
+        .log-table th:nth-child(4),
+        .log-table td:nth-child(4) { width: 30% !important; }
+        .log-table th:nth-child(6),
+        .log-table td:nth-child(6) { width: 18% !important; }
     </style>
 </head>
 <body id="doc-fo-lc-23">
@@ -126,5 +140,36 @@
             FO-LC-23 | Versión: 1.0-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.
         </div>
     </div>
+
+    <script>
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = `${textarea.scrollHeight}px`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const rows = document.querySelectorAll('.log-table tbody tr');
+
+            rows.forEach((row) => {
+                [3, 5].forEach((cellIndex) => {
+                    const cell = row.cells[cellIndex];
+                    if (!cell) return;
+
+                    const input = cell.querySelector('input.cedit');
+                    if (!input) return;
+
+                    const textarea = document.createElement('textarea');
+                    textarea.className = `${input.className} code-textarea`;
+                    textarea.rows = 1;
+                    textarea.value = input.value || '';
+                    textarea.oninput = () => autoResizeTextarea(textarea);
+
+                    cell.innerHTML = '';
+                    cell.appendChild(textarea);
+                    autoResizeTextarea(textarea);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

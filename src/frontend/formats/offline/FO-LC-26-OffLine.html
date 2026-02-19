@@ -73,9 +73,10 @@
             <div class="registry-container">
                 <label>Mes / Año</label>
                 <div class="registry-wrapper">
-                    <input type="text" class="registry-input" style="text-align:center;" placeholder="MM / AAAA">
+                    <input type="text" class="registry-input generate-barcode" style="text-align:center;" placeholder="MM / AAAA" data-target="barcode-fo-lc-26-offline-html" data-prefix="FO-LC-26-OffLine.html-">
                 </div>
                 <input type="text" class="registry-date" placeholder="Equipo (ID)">
+                <svg id=\"barcode-fo-lc-26-offline-html\" class=\"barcode-svg\"></svg>
             </div>
         </div>
 
@@ -126,10 +127,10 @@
 
         <div class="validation-box">
             <div style="font-weight:bold;">CRITERIOS DE LIBERACIÓN DE CARGA:</div>
-            <label><input type="checkbox"> Viraje Correcto (Cinta Testigo)</label>
-            <label><input type="checkbox"> Ampolleta Biológica (Lectura Negativa 24/48h)</label>
-            <label><input type="checkbox"> Paquetes Secos e Íntegros</label>
-            <label><input type="checkbox"> Parámetros de Ciclo Cumplidos</label>
+            <label><input type="text"> Viraje Correcto (Cinta Testigo)</label>
+            <label><input type="text"> Ampolleta Biológica (Lectura Negativa 24/48h)</label>
+            <label><input type="text"> Paquetes Secos e Íntegros</label>
+            <label><input type="text"> Parámetros de Ciclo Cumplidos</label>
         </div>
 
         <div class="signature-area" style="margin-top:20px; margin-bottom:10px;">

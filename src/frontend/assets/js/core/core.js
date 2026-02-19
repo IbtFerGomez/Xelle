@@ -14,7 +14,7 @@ const Core = {
     },
 
     Formats: {
-        syncWithSeed: function() {
+        syncWithSeed: function () {
             const currentFormats = Core.Data.get(KEYS.FORMATS) || [];
             const seedFormats = SeedData.formats || [];
 
@@ -22,29 +22,29 @@ const Core = {
             const merged = [...currentFormats];
 
             seedFormats.forEach(seedFormat => {
-                if(!currentByFile.has(seedFormat.file)) {
+                if (!currentByFile.has(seedFormat.file)) {
                     merged.push(seedFormat);
                 }
             });
 
-            if(merged.length !== currentFormats.length) {
+            if (merged.length !== currentFormats.length) {
                 Core.Data.set(KEYS.FORMATS, merged);
             }
 
             return merged;
         }
     },
-    
+
     Auth: {
-        login: function(u, p) {
+        login: function (u, p) {
             const users = Core.Data.get(KEYS.USERS);
-            if(!users.length) {
+            if (!users.length) {
                 users.push(...SeedData.users);
                 Core.Data.set(KEYS.USERS, users);
             }
             const user = users.find(x => x.username === u && x.pass === p);
-            if(!user) return {success: false, msg: 'Credenciales inválidas'};
-            
+            if (!user) return { success: false, msg: 'Credenciales inválidas' };
+
             const session = {
                 id: user.id,
                 name: user.fullName,
@@ -53,59 +53,62 @@ const Core = {
                 access: user.moduleAccess
             };
             Core.Data.set(KEYS.SESSION, session);
-            return {success: true, user: session};
+            return { success: true, user: session };
         },
-        
-        check: function() {
+
+        check: function () {
             const sess = Core.Data.get(KEYS.SESSION);
             return sess && sess.id ? sess : null;
         },
-        
-        logout: function() {
+
+        logout: function () {
             Core.Data.set(KEYS.SESSION, null);
             window.location.href = 'index.html';
         }
     },
-    
+
     UI: {
-        renderDashboard: function() {
+        renderDashboard: function () {
             const sess = Core.Auth.check();
-            if(!sess) return;
+            if (!sess) return;
 
             const formats = Core.Formats.syncWithSeed();
-            
+            const userAccess = Array.isArray(sess.access)
+                ? sess.access
+                : (Array.isArray(sess.moduleAccess) ? sess.moduleAccess : []);
+
             // Renderizar tarjetas de formatos
             const workspace = document.getElementById('workspace');
-            if(!workspace) return;
-            
+            if (!workspace) return;
+
             const areas = {};
             formats.forEach(f => {
-                if(!areas[f.area]) areas[f.area] = [];
+                if (!areas[f.area]) areas[f.area] = [];
                 areas[f.area].push(f);
             });
-            
-            const areaLabels = { 
-                banco: 'Banco de Células', 
+
+            const areaLabels = {
+                banco: 'Banco de Células',
                 calidad: 'Laboratorio de Calidad',
                 almacen: 'Almacén & Comercial',
                 sgc: 'Sistema de Gestión'
             };
-            
+
             const areaColors = {
                 banco: 'bg-emerald-50 border-emerald-200',
                 calidad: 'bg-blue-50 border-blue-200',
                 almacen: 'bg-orange-50 border-orange-200',
                 sgc: 'bg-slate-50 border-slate-200'
             };
-            
+
             const areaBadgeColors = {
                 banco: 'bg-emerald-100 text-emerald-700',
                 calidad: 'bg-blue-100 text-blue-700',
                 almacen: 'bg-orange-100 text-orange-700',
                 sgc: 'bg-slate-100 text-slate-700'
             };
-            
-            const renderWorkspace = function(selectedArea = null) {
+
+            const renderWorkspace = function (selectedArea = null) {
                 let html = '';
                 const areasToRender = selectedArea && areas[selectedArea]
                     ? [selectedArea]
@@ -141,13 +144,13 @@ const Core = {
             };
 
             renderWorkspace();
-            
+
             // Renderizar filtros en sidebar
             const filterContainer = document.getElementById('filter-container');
-            if(filterContainer) {
+            if (filterContainer) {
                 let filterHtml = '';
                 Object.keys(areas).forEach(area => {
-                    if(sess.access.includes('all') || sess.access.includes(area)) {
+                    if (userAccess.includes('all') || userAccess.includes(area)) {
                         filterHtml += `
                             <button class="area-filter w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-bold" data-area="${area}">
                                 ${areaLabels[area] || area}
@@ -156,7 +159,7 @@ const Core = {
                     }
                 });
                 filterContainer.innerHTML = filterHtml;
-                
+
                 let selectedArea = null;
                 const filterButtons = document.querySelectorAll('.area-filter');
 
@@ -179,8 +182,8 @@ const Core = {
                 });
             }
         },
-        
-        openFormat: function(file) {
+
+        openFormat: function (file) {
             window.open(file, '_blank');
         }
     }
@@ -189,7 +192,7 @@ const Core = {
 // Inicializar seed data si no existe
 window.addEventListener('load', () => {
     Core.Formats.syncWithSeed();
-    if(!Core.Data.get(KEYS.USERS).length) {
+    if (!Core.Data.get(KEYS.USERS).length) {
         Core.Data.set(KEYS.USERS, SeedData.users);
     }
 });

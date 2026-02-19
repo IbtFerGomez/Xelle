@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-16 Surtido (OFF)</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app-OffLine.js"></script>
+    <style>
+        @media print {
+            @page { size: letter; margin: 0.5cm; }
+            body { 
+                background: white; 
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact; 
+            }
+            .no-print { display: none !important; }
+            input::placeholder { color: transparent !important; }
+            table, th, td { border-color: #000 !important; }
+            input.cedit { border: none !important; }
+        }
+
+        .data-table th { 
+            background: #f0f0f0 !important; 
+            font-size: 9px; 
+            padding: 4px; 
+            border: 1px solid #000; 
+            text-align: center; 
+        }
+        .data-table td { border: 1px solid #000; padding: 4px; text-align: center; }
+        .data-table input { width: 98%; border: none; outline: none; background: transparent; font-size: 10px; text-align: center; }
+        
+        .manual-check {
+            display: inline-block;
+            width: 11px;
+            height: 11px;
+            border: 1px solid #000;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .grid-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .check-list-box {
+            border: 1px solid #000;
+            padding: 10px;
+            font-size: 10px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body id="doc-fo-op-16">
+    <div class="global-controls no-print">
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Surtido</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-16-</span>
+                    <input type="text" id="reg-op-16" class="registry-input generate-barcode" data-target="barcode-op-16" data-prefix="FO-OP-16-" placeholder="001">
+                </div>
+                <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
+                <svg id="barcode-op-16" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>ORDEN DE SURTIDO Y EMPAQUE (ALMACÉN)</h1>
+            <div class="metadata">Código: FO-OP-16 | Versión: 1.0-OFF | Vigencia: Ene 2026</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">1. ENLACE ADMINISTRATIVO</div>
+            <table class="no-border-table" style="border: 1px solid #000; padding: 5px;">
+                <tr>
+                    <td><strong>Ref. Pedido (PV):</strong> <input class="cedit" style="border-bottom:1px solid #ccc; font-weight:bold;"></td>
+                    <td><strong>Cliente Destino:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Fecha Surtido:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;" placeholder="DD/MM/AAAA"></td>
+                    <td><strong>Responsable Almacén:</strong> <input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">2. PICKING LIST (SURTIDO)</div>
+            <table class="compact-table data-table" id="tbl-picking-off">
+                <thead>
+                    <tr>
+                        <th width="28%">Producto</th>
+                        <th width="18%">Presentación</th>
+                        <th width="15%">Ubicación</th>
+                        <th width="15%">Lote</th>
+                        <th width="12%">Cant. Req.</th>
+                        <th width="12%">Surtido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">3. VALIDACIÓN DE EMPAQUE (CADENA DE FRÍO)</div>
+            <div class="grid-split">
+                <table class="compact-table data-table">
+                    <tr><td width="50%"><strong>Tipo Hielera:</strong></td><td><input class="cedit" placeholder="CH / MD / GR"></td></tr>
+                    <tr><td><strong>Geles Congelados:</strong></td><td><input class="cedit"></td></tr>
+                    <tr><td><strong>Geles Refrigerados:</strong></td><td><input class="cedit"></td></tr>
+                    <tr><td><strong>Datalogger ID:</strong></td><td><input class="cedit"></td></tr>
+                </table>
+                <div class="check-list-box">
+                    <strong>Checklist Final:</strong><br>
+                    <div><span class="manual-check"></span> Producto verificado vs Pedido</div>
+                    <div><span class="manual-check"></span> Acondicionamiento Térmico OK</div>
+                    <div><span class="manual-check"></span> Etiqueta de Envío Colocada</div>
+                    <div><span class="manual-check"></span> Documentación Adjunta</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box">
+                <p>Realizó Surtido:</p>
+                <input type="text" placeholder="Nombre y Firma">
+            </div>
+            <div class="signature-box">
+                <p>Liberó Empaque:</p>
+                <input type="text" placeholder="Nombre y Firma">
+            </div>
+        </div>
+
+        <div class="footer">
+            FO-OP-16 | Versión: 1.0-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+com\xelle\backend\record\FormatRecordEntity.class
+com\xelle\backend\instance\FormatInstanceRepository.class
+com\xelle\backend\web\HealthController.class
+com\xelle\backend\instance\FormatInstanceEntity.class
+com\xelle\backend\config\DataInitializer.class
+com\xelle\backend\format\FormatMetadataRepository.class
+com\xelle\backend\user\UserRepository.class
+com\xelle\backend\user\UserEntity.class
+com\xelle\backend\XelleBackendApplication.class
+com\xelle\backend\record\FormatRecordRepository.class
+com\xelle\backend\web\ApiController$1.class
+com\xelle\backend\format\FormatMetadataEntity.class
+com\xelle\backend\config\SecurityConfig.class
+com\xelle\backend\web\ApiController.class
