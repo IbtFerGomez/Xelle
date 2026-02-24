@@ -316,6 +316,23 @@
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-violet-50">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-violet-600 p-2 rounded-lg text-white"><span
+                                    class="material-symbols-outlined">scanner</span></div>
+                            <div>
+                                <h3 class="font-bold text-navy text-lg">Digitalizar Documento</h3>
+                                <p class="text-xs text-slate-500">Convierte Word a HTML y adminístralo como tarjeta</p>
+                            </div>
+                        </div>
+                        <button onclick="openDigitalizer()"
+                            class="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 transition-transform active:scale-95">
+                            <span class="material-symbols-outlined text-lg">upload_file</span> Abrir Digitalizador
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-sky/5">
                         <div class="flex items-center gap-3">
                             <div class="bg-sky p-2 rounded-lg text-white"><span
@@ -329,6 +346,35 @@
                             class="bg-white border border-slate-200 hover:bg-slate-50 text-navy px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 transition-transform active:scale-95">
                             <span class="material-symbols-outlined text-lg">add_circle</span> Nuevo Formato
                         </button>
+                    </div>
+                    <div class="p-5 border-b border-slate-100 bg-white">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div>
+                                <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Buscar</label>
+                                <input id="admin-format-search" type="text" placeholder="Código, título o archivo..."
+                                    class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-medium text-slate-700">
+                            </div>
+                            <div>
+                                <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Área</label>
+                                <select id="admin-format-area-filter"
+                                    class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-medium text-slate-700">
+                                    <option value="">Todas</option>
+                                    <option value="banco">Banco</option>
+                                    <option value="calidad">Calidad</option>
+                                    <option value="almacen">Almacén</option>
+                                    <option value="sgc">SGC</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Visibilidad</label>
+                                <select id="admin-format-visibility-filter"
+                                    class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-medium text-slate-700">
+                                    <option value="">Todas</option>
+                                    <option value="visible">Visible</option>
+                                    <option value="oculto">Oculto</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left">
@@ -539,6 +585,7 @@
     <script>
         const API_URL = '/api';
         let instanceCache = [];
+        let formatCatalogCache = [];
         let currentSession = null;
         let isAdminUser = false;
 
@@ -683,26 +730,54 @@
         function loadFormats() {
             if (!isAdminUser || !currentSession?.id) return;
             fetch(`${API_URL}/formats_admin?actor_user_id=${encodeURIComponent(currentSession.id)}`).then(r => r.json()).then(d => {
-                let h = ''; d.forEach(f => {
-                    const visibilityBadge = f.active
-                        ? '<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Visible</span>'
-                        : '<span class="bg-slate-200 text-slate-500 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Oculto</span>';
-                    const fData = JSON.stringify(f).replace(/"/g, '&quot;');
-                    h += `<tr class="hover:bg-slate-50 transition-colors border-b border-slate-50">
-                        <td class="px-6 py-4 font-bold text-navy">${f.code}</td>
-                        <td class="px-6 py-4 text-slate-600">${f.title}</td>
-                        <td class="px-6 py-4"><span class="text-[10px] font-bold uppercase bg-slate-100 px-2 py-1 rounded text-slate-500">${f.area}</span></td>
-                        <td class="px-6 py-4 font-mono text-xs text-slate-400">${f.file_path}</td>
-                        <td class="px-6 py-4">${visibilityBadge}</td>
-                        <td class="px-6 py-4 text-right flex justify-end gap-2">
-                            <button onclick="openFormatModalFromData(${fData})" class="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
-                            <button title="Cambiar visibilidad" onclick="toggleApi('formats', ${f.id}, loadFormats, true)" class="p-2 text-slate-400 hover:text-sky hover:bg-sky/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
-                            <button title="Eliminar formato" onclick="deleteApi('formats', ${f.id}, loadFormats, 'formato', true)" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
-                        </td>
-                    </tr>`;
-                });
-                $('#formats-body').html(h || '<tr><td colspan="6" class="p-6 text-center text-slate-400">Sin formatos.</td></tr>');
+                formatCatalogCache = Array.isArray(d) ? d : [];
+                renderFormatsCatalog();
             });
+        }
+
+        function renderFormatsCatalog() {
+            const tbody = document.getElementById('formats-body');
+            if (!tbody) return;
+
+            const search = (document.getElementById('admin-format-search')?.value || '').toLowerCase().trim();
+            const areaFilter = (document.getElementById('admin-format-area-filter')?.value || '').trim();
+            const visibilityFilter = (document.getElementById('admin-format-visibility-filter')?.value || '').trim();
+
+            const rows = formatCatalogCache.filter(f => {
+                const code = (f.code || '').toLowerCase();
+                const title = (f.title || '').toLowerCase();
+                const filePath = (f.file_path || '').toLowerCase();
+                const area = (f.area || '').trim();
+                const visibility = f.active ? 'visible' : 'oculto';
+
+                const passSearch = !search || code.includes(search) || title.includes(search) || filePath.includes(search);
+                const passArea = !areaFilter || area === areaFilter;
+                const passVisibility = !visibilityFilter || visibility === visibilityFilter;
+
+                return passSearch && passArea && passVisibility;
+            });
+
+            let h = '';
+            rows.forEach(f => {
+                const visibilityBadge = f.active
+                    ? '<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Visible</span>'
+                    : '<span class="bg-slate-200 text-slate-500 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Oculto</span>';
+                const fData = JSON.stringify(f).replace(/"/g, '&quot;');
+                h += `<tr class="hover:bg-slate-50 transition-colors border-b border-slate-50">
+                    <td class="px-6 py-4 font-bold text-navy">${f.code}</td>
+                    <td class="px-6 py-4 text-slate-600">${f.title}</td>
+                    <td class="px-6 py-4"><span class="text-[10px] font-bold uppercase bg-slate-100 px-2 py-1 rounded text-slate-500">${f.area}</span></td>
+                    <td class="px-6 py-4 font-mono text-xs text-slate-400">${f.file_path}</td>
+                    <td class="px-6 py-4">${visibilityBadge}</td>
+                    <td class="px-6 py-4 text-right flex justify-end gap-2">
+                        <button onclick="openFormatModalFromData(${fData})" class="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
+                        <button title="Cambiar visibilidad" onclick="toggleApi('formats', ${f.id}, loadFormats, true)" class="p-2 text-slate-400 hover:text-sky hover:bg-sky/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+                        <button title="Eliminar formato" onclick="deleteApi('formats', ${f.id}, loadFormats, 'formato', true)" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
+                    </td>
+                </tr>`;
+            });
+
+            tbody.innerHTML = h || '<tr><td colspan="6" class="p-6 text-center text-slate-400">Sin formatos con esos filtros.</td></tr>';
         }
 
         function loadInstances() {
@@ -841,13 +916,27 @@
                 .catch(e => alert(e.message || 'No se pudo actualizar estado.'));
         }
 
+        function openDigitalizer() {
+            if (!isAdminUser) {
+                alert('Esta sección es solo para administrador.');
+                return;
+            }
+            window.open('formats/digitalizar-word.html', '_blank');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const librarySearch = document.getElementById('library-search');
             const libraryFormat = document.getElementById('library-format-filter');
             const libraryStatus = document.getElementById('library-status-filter');
+            const adminFormatSearch = document.getElementById('admin-format-search');
+            const adminFormatArea = document.getElementById('admin-format-area-filter');
+            const adminFormatVisibility = document.getElementById('admin-format-visibility-filter');
             if (librarySearch) librarySearch.addEventListener('input', renderLibraryInstances);
             if (libraryFormat) libraryFormat.addEventListener('change', renderLibraryInstances);
             if (libraryStatus) libraryStatus.addEventListener('change', renderLibraryInstances);
+            if (adminFormatSearch) adminFormatSearch.addEventListener('input', renderFormatsCatalog);
+            if (adminFormatArea) adminFormatArea.addEventListener('change', renderFormatsCatalog);
+            if (adminFormatVisibility) adminFormatVisibility.addEventListener('change', renderFormatsCatalog);
         });
 
         // --- MODAL LOGIC: USER (NUEVA CON CHECKBOXES) ---

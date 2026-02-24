@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitalizar Word</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/mammoth@1.8.0/mammoth.browser.min.js"></script>
+    <style>
+        .digitalizer-wrap {
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .digitalizer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .file-label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .status-text {
+            font-size: 12px;
+            color: #555;
+            margin-left: 8px;
+        }
+
+        .code-area {
+            width: 100%;
+            min-height: 180px;
+            font-family: Consolas, monospace;
+            font-size: 12px;
+        }
+
+        .preview-box {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            min-height: 180px;
+            background: #fff;
+            overflow: auto;
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 6px;
+        }
+    </style>
+</head>
+
+<body id="doc-digitalizar-word">
+    <div class="container digitalizer-wrap">
+        <div class="header-main">
+            <h1>DIGITALIZAR WORD</h1>
+            <div class="metadata">Conversión de documento Word a HTML (solo .docx)</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">1. Cargar documento Word</div>
+            <div class="toolbar">
+                <label class="file-label" for="word-file">Archivo:</label>
+                <input id="word-file" type="file"
+                    accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                <label class="file-label" for="mode-template" style="margin-left:8px;">Modo:</label>
+                <select id="mode-template" style="max-width:220px;">
+                    <option value="auto" selected>AutoDetect</option>
+                    <option value="force">Plantilla</option>
+                </select>
+                <button class="btn btn-primary" id="btn-convert" type="button">Digitalizar documento</button>
+                <span id="status" class="status-text">Esperando archivo...</span>
+            </div>
+            <div class="hint">Este digitalizador está diseñado para Word .docx. El formato .doc antiguo no está
+                soportado en esta versión.</div>
+        </div>
+
+        <div class="section digitalizer-grid">
+            <div>
+                <div class="section-title">2. Vista previa HTML</div>
+                <div id="html-preview" class="preview-box"></div>
+            </div>
+            <div>
+                <div class="section-title">3. Código HTML generado</div>
+                <textarea id="html-output" class="code-area" readonly
+                    placeholder="Aquí aparecerá el HTML convertido..."></textarea>
+                <div class="toolbar" style="margin-top:10px;">
+                    <button class="btn btn-success" id="btn-copy" type="button">Copiar HTML</button>
+                    <button class="btn btn-warning" id="btn-download" type="button">Descargar HTML</button>
+                    <button class="btn btn-primary" id="btn-open" type="button">Abrir en pestaña</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">4. Aceptar y agregar tarjeta</div>
+            <div class="toolbar" style="align-items:flex-end; gap:12px;">
+                <div style="min-width:180px;">
+                    <label class="file-label" for="accept-code">Código</label>
+                    <input id="accept-code" type="text" style="width:100%;" placeholder="DGW-XXXXX">
+                </div>
+                <div style="min-width:320px; flex:1;">
+                    <label class="file-label" for="accept-title">Título tarjeta</label>
+                    <input id="accept-title" type="text" style="width:100%;" placeholder="Documento digitalizado">
+                </div>
+                <div style="min-width:180px;">
+                    <label class="file-label" for="accept-area">Área</label>
+                    <select id="accept-area" style="width:100%;">
+                        <option value="banco">Banco</option>
+                        <option value="calidad">Calidad</option>
+                        <option value="almacen">Almacén</option>
+                        <option value="sgc" selected>SGC</option>
+                    </select>
+                </div>
+                <button class="btn btn-success" id="btn-accept" type="button">Aceptar y agregar tarjeta</button>
+            </div>
+            <div class="hint">La tarjeta se registra en dashboard y abre esta herramienta con el documento digitalizado
+                correspondiente.</div>
+        </div>
+
+        <div class="footer">Digitalizar Word | Herramienta independiente para convertir Word a HTML</div>
+    </div>
+
+    <script src="digitalizar-word.js"></script>
+</body>
+
+</html>

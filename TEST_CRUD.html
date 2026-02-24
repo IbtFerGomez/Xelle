@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test CRUD - XELLE LIMS</title>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: #f3f7f5;
+            color: #1E3A5F;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2fa785;
+            border-bottom: 3px solid #2fa785;
+            padding-bottom: 15px;
+        }
+        h2 {
+            color: #1E3A5F;
+            margin-top: 30px;
+        }
+        .test-section {
+            background: #f8f8f8;
+            border-left: 4px solid #2fa785;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        .test-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.ready {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .status.done {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .button {
+            background: #2fa785;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: #2a9278;
+        }
+        .link {
+            color: #2fa785;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .success-text {
+            color: #059669;
+            font-weight: bold;
+        }
+        .error-text {
+            color: #dc2626;
+            font-weight: bold;
+        }
+        .warning-text {
+            color: #d97706;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test CRUD - XELLE LIMS v11.1</h1>
+        <p>Verifica que todas las operaciones funcionan correctamente</p>
+
+        <h2>👥 TEST 1: Gestión de Usuarios</h2>
+        
+        <div class="test-section">
+            <h3>1.1 - CREATE (Crear Usuario)</h3>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test1">
+                <span style="flex: 1;">Abre: <span class="link" onclick="openModule('users')">Gestión de Usuarios</span></span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test2">
+                <span style="flex: 1;">Click <code>+Add User</code></span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test3">
+                <span style="flex: 1;">
+                    Completa form:
+                    <ul style="margin: 5px 0;">
+                        <li>Nombre: <code>Test User</code></li>
+                        <li>Email: <code>test@xelle.com</code></li>
+                        <li>Role: <code>DOCUMENT_MANAGER</code></li>
+                        <li>Dept: <code>Operaciones</code></li>
+                    </ul>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test4">
+                <span style="flex: 1;">
+                    ✅ <span class="success-text">Resultado esperado:</span>
+                    <ul style="margin: 5px 0;">
+                        <li>Notificación verde: "Usuario creado exitosamente"</li>
+                        <li>Nuevo usuario aparece en tabla</li>
+                        <li>Datos se guardan en localStorage</li>
+                    </ul>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>1.2 - READ (Ver Usuarios)</h3>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test5">
+                <span style="flex: 1;">Tabla dibuja usuarios (avatar, nombre, email, rol, estado)</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test6">
+                <span style="flex: 1;">Búsqueda funciona: Escribe "admin" en search box</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test7">
+                <span style="flex: 1;">Filtros funcionan: By Role y By Department</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test8">
+                <span style="flex: 1;">Paginación: Info muestra total de usuarios y página actual</span>
+                <span class="status ready">Ready</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>1.3 - UPDATE (Editar Usuario)</h3>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test9">
+                <span style="flex: 1;">
+                    Encuentra el usuario creado ("Test User")
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test10">
+                <span style="flex: 1;">
+                    Click botón EDIT (ícono azul de lápiz)
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test11">
+                <span style="flex: 1;">
+                    Modal abre con datos precargados
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test12">
+                <span style="flex: 1;">
+                    Cambia nombre a: <code>Test User Updated</code>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test13">
+                <span style="flex: 1;">
+                    Click Save
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test14">
+                <span style="flex: 1;">
+                    ✅ <span class="success-text">Resultado esperado:</span>
+                    <ul style="margin: 5px 0;">
+                        <li>Notificación verde: "Usuario actualizado exitosamente"</li>
+                        <li>Nombre en tabla cambió a "Test User Updated"</li>
+                    </ul>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>1.4 - TOGGLE STATUS (Cambiar Estado)</h3>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test15">
+                <span style="flex: 1;">
+                    Click botón TOGGLE (ícono amarillo de switch)
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test16">
+                <span style="flex: 1;">
+                    ✅ <span class="success-text">Resultado esperado:</span>
+                    <ul style="margin: 5px 0;">
+                        <li>Notificación: "Estado actualizado"</li>
+                        <li>Badge en tabla cambió de color</li>
+                        <li>Activo ↔ Inactivo</li>
+                    </ul>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>1.5 - DELETE (Eliminar Usuario)</h3>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test17">
+                <span style="flex: 1;">
+                    Click botón DELETE (ícono rojo de basura)
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test18">
+                <span style="flex: 1;">
+                    Aparece confirmación: "¿Deseas eliminar a Test User Updated?"
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test19">
+                <span style="flex: 1;">
+                    Click OK para confirmar
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test20">
+                <span style="flex: 1;">
+                    ✅ <span class="success-text">Resultado esperado:</span>
+                    <ul style="margin: 5px 0;">
+                        <li>Notificación: "usuario ha sido eliminado"</li>
+                        <li>Usuario desaparece de tabla</li>
+                        <li>Total usuarios se reduce en 1</li>
+                    </ul>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+        </div>
+
+        <hr style="margin: 40px 0; border: none; border-top: 2px solid #e0e0e0;">
+
+        <h2>📄 TEST 2: Gestión de Documentos</h2>
+
+        <div class="test-section">
+            <h3>2.1 - CREATE (Crear Documento)</h3>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test21">
+                <span style="flex: 1;">Abre: <span class="link" onclick="openModule('documents')">Gestión de Documentos</span></span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test22">
+                <span style="flex: 1;">Click <code>+Add Document</code></span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test23">
+                <span style="flex: 1;">
+                    Completa form:
+                    <ul style="margin: 5px 0;">
+                        <li>Name: <code>Test Document</code></li>
+                        <li>Code: <code>TEST-001</code></li>
+                        <li>Type: <code>PDF</code></li>
+                        <li>Department: <code>Calidad</code></li>
+                        <li>Tags: <code>test,ejemplo</code></li>
+                    </ul>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test24">
+                <span style="flex: 1;">
+                    ✅ <span class="success-text">Resultado esperado:</span>
+                    <ul style="margin: 5px 0;">
+                        <li>Notificación verde: "Documento creado exitosamente"</li>
+                        <li>Dashboard se actualiza (contadores suben)</li>
+                        <li>Nuevo documento aparece en tabla</li>
+                        <li>Estado inicial: "Borrador" (gris)</li>
+                    </ul>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>2.2 - READ (Ver Documentos)</h3>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test25">
+                <span style="flex: 1;">Dashboard muestra 5 cards con estadísticas (Total, Review, Aprobados, etc.)</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test26">
+                <span style="flex: 1;">Tabla dibuja documentos con: Nombre, Código, Departamento, Versión, Estado, Fecha</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test27">
+                <span style="flex: 1;">Búsqueda funciona: Escribe "test" en search</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test28">
+                <span style="flex: 1;">Filtro by Status funciona: Selecciona "Borrador"</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test29">
+                <span style="flex: 1;">Filtro by Department funciona</span>
+                <span class="status ready">Ready</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>2.3 - UPDATE & RENAME (Editar/Renombrar)</h3>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test30">
+                <span style="flex: 1;">Encuentra el documento creado ("Test Document")</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test31">
+                <span style="flex: 1;">Click botón RENAME (ícono amarillo de lápiz)</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test32">
+                <span style="flex: 1;">Modal "Rename Document" abre con nombre actual</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test33">
+                <span style="flex: 1;">Cambia a: <code>Test Document Updated</code></span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test34">
+                <span style="flex: 1;">Click Rename</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test35">
+                <span style="flex: 1;">
+                    ✅ <span class="success-text">Resultado esperado:</span>
+                    <ul style="margin: 5px 0;">
+                        <li>Notificación: "Documento renombrado exitosamente"</li>
+                        <li>Nombre en tabla cambió</li>
+                    </ul>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>2.4 - VIEW (Ver Detalles)</h3>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test36">
+                <span style="flex: 1;">Click botón VIEW (ícono azul de ojo)</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test37">
+                <span style="flex: 1;">
+                    ✅ <span class="success-text">Popup muestra:</span>
+                    <ul style="margin: 5px 0;">
+                        <li>Nombre, Código, Versión, Tipo</li>
+                        <li>Departamento, Estado</li>
+                        <li>Fechas de creación y actualización</li>
+                    </ul>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>2.5 - CHANGE STATUS (Cambiar Estado - Workflow)</h3>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test38">
+                <span style="flex: 1;">Click botón STATUS (ícono púrpura)</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test39">
+                <span style="flex: 1;">Prompt muestra estados disponibles</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test40">
+                <span style="flex: 1;">Ingresa: <code>review</code></span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test41">
+                <span style="flex: 1;">
+                    ✅ <span class="success-text">Resultado esperado:</span>
+                    <ul style="margin: 5px 0;">
+                        <li>Notificación: "Estado actualizado exitosamente"</li>
+                        <li>Badge en tabla: Gris → Amarillo (Borrador → En Revisión)</li>
+                        <li>Card "En Revisión" en dashboard sube a 1</li>
+                        <li>Card "Total" sigue igual</li>
+                    </ul>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test42">
+                <span style="flex: 1;">Click STATUS otra vez y cámbialo a: <code>approved</code></span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test43">
+                <span style="flex: 1;">
+                    ✅ <span class="success-text">Badge pasa a Verde (Aprobado)</span>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>2.6 - DOWNLOAD (Descargar)</h3>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test44">
+                <span style="flex: 1;">Click botón DOWNLOAD (ícono verde)</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test45">
+                <span style="flex: 1;">
+                    ✅ <span class="success-text">Resultado esperado:</span>
+                    <ul style="margin: 5px 0;">
+                        <li>Notificación: "Descargando: Test Document Updated"</li>
+                        <li>(En producción: Descarga archivo real)</li>
+                    </ul>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>2.7 - DELETE (Eliminar)</h3>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test46">
+                <span style="flex: 1;">Click botón DELETE (ícono rojo)</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test47">
+                <span style="flex: 1;">Confirma: "¿Deseas eliminar "Test Document Updated"?"</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test48">
+                <span style="flex: 1;">Click OK</span>
+                <span class="status ready">Ready</span>
+            </div>
+            <div class="test-item">
+                <input type="checkbox" class="checkbox" id="test49">
+                <span style="flex: 1;">
+                    ✅ <span class="success-text">Resultado esperado:</span>
+                    <ul style="margin: 5px 0;">
+                        <li>Notificación: "ha sido eliminado"</li>
+                        <li>Documento desaparece de tabla</li>
+                        <li>Dashboard se actualiza (contadores bajan)</li>
+                        <li>Total de documentos se reduce</li>
+                    </ul>
+                </span>
+                <span class="status ready">Ready</span>
+            </div>
+        </div>
+
+        <hr style="margin: 40px 0; border: none; border-top: 2px solid #e0e0e0;">
+
+        <h2>✅ Resumen Final</h2>
+        <div class="test-section">
+            <div class="test-item">
+                <span style="flex: 1;">
+                    <strong>Total Tests:</strong> <span class="warning-text">49 pasos</span><br>
+                    <strong>Módulos:</strong> <span class="success-text">2 funcionales</span><br>
+                    <strong>Operaciones:</strong> <span class="success-text">CRUD Completo</span>
+                </span>
+            </div>
+            <div class="test-item">
+                <button class="button" onclick="printSummary()">📊 Generar Reporte</button>
+                <button class="button" onclick="resetTests()">🔄 Reiniciar Tests</button>
+            </div>
+        </div>
+
+        <h2>🔗 Enlaces Directos</h2>
+        <div class="test-section">
+            <div class="test-item">
+                <span style="flex: 1;">
+                    <a href="sgc-integration/modules/users/index.html" class="link">👥 Gestión de Usuarios</a> | 
+                    <a href="sgc-integration/modules/documents/index.html" class="link">📄 Gestión de Documentos</a> | 
+                    <a href="sgc-integration/index.html" class="link">📊 Dashboard</a> | 
+                    <a href="sgc-integration/modules/auth/login.html" class="link">🔐 Login</a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModule(module) {
+            if (module === 'users') {
+                window.open('sgc-integration/modules/users/index.html', '_blank');
+            } else if (module === 'documents') {
+                window.open('sgc-integration/modules/documents/index.html', '_blank');
+            }
+        }
+
+        function printSummary() {
+            const checkedCount = document.querySelectorAll('input.checkbox:checked').length;
+            const totalTests = document.querySelectorAll('input.checkbox').length;
+            const percentage = Math.round((checkedCount / totalTests) * 100);
+            
+            alert(`
+📊 REPORTE DE TESTS
+━━━━━━━━━━━━━━━━━━━━━
+Tests Completados: ${checkedCount}/${totalTests}
+Progreso: ${percentage}%
+
+✅ Usuarios: Crear, Leer, Editar, Cambiar Estado, Eliminar
+✅ Documentos: Crear, Leer, Editar, Renombrar, Ver, Cambiar Estado, Descargar, Eliminar
+✅ Búsqueda y Filtrado: Funcional
+✅ Validaciones: Activas
+✅ Notificaciones: Funcionando
+✅ Persistencia: localStorage activo
+
+Estado: ${percentage === 100 ? '🎉 COMPLETO' : '⏳ EN PROGRESO'}
+            `);
+        }
+
+        function resetTests() {
+            if (confirm('¿Reiniciar todos los tests?')) {
+                document.querySelectorAll('input.checkbox').forEach(cb => cb.checked = false);
+                alert('✅ Tests reiniciados');
+            }
+        }
+
+        // Auto-save en localStorage
+        document.querySelectorAll('input.checkbox').forEach(cb => {
+            cb.addEventListener('change', () => {
+                const id = cb.id;
+                const checked = cb.checked;
+                localStorage.setItem(`test_${id}`, checked);
+            });
+
+            // Restaurar estado
+            const saved = localStorage.getItem(`test_${cb.id}`);
+            if (saved === 'true') {
+                cb.checked = true;
+            }
+        });
+    </script>
+</body>
+</html>

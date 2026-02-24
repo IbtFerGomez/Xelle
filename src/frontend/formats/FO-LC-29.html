@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>FO-LC-29 Lote Celular</title>
+    <title>FO-LC-29 Registro Diario de Dosificación</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -31,7 +31,7 @@
                 <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
             </div>
             <div class="registry-container">
-                <label>Lote PT</label>
+                <label>Folio Diario</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-29-</span>
                     <input type="text" id="reg-29" class="registry-input generate-barcode" data-target="barcode-29" placeholder="Lote Final">
@@ -42,8 +42,14 @@
         </div>
 
         <div class="header-main">
-            <h1>REGISTRO DE LOTE DE PRODUCTO CELULAR (STEM/HYBRID)</h1>
+            <h1>REGISTRO DIARIO DE DOSIFICACIÓN.</h1>
             <div class="metadata">Código: FO-LC-29 | Versión: 1.0 | Vig: Ene2026</div>
+        </div>
+
+        <div style="margin-bottom:10px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+            <strong>Fecha de Registro Diario:</strong>
+            <input type="date" id="fecha-dia-29" class="cedit" style="width:170px;" onchange="loadDailyDosificacion()">
+            <button class="btn btn-primary btn-mini no-print" onclick="loadDailyDosificacion()">Cargar desde FO-LC-24</button>
         </div>
 
         <div class="section">
@@ -71,25 +77,26 @@
             </table>
 
             <div style="margin-top:10px; border-top:1px solid #ddd; padding-top:5px;">
-                <strong>Detalle de Presentaciones Producidas:</strong>
+                <strong>Detalle Diario de Presentaciones (FO-LC-24):</strong>
                 <table id="tbl-presentaciones" class="compact-table" style="margin-top:5px;">
                     <thead>
                         <tr>
-                            <th width="60%">Presentación</th>
-                            <th width="30%">Cantidad Teórica (Unidades)</th>
-                            <th width="10%" class="no-print"></th>
+                            <th width="22%">Producto</th>
+                            <th width="22%">Presentación</th>
+                            <th width="12%">Cantidad de Dosis</th>
+                            <th width="22%">Lotes Reportados</th>
+                            <th width="22%">Códigos Únicos</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
                     <tfoot>
                         <tr>
-                            <td style="text-align:right; font-weight:bold;">TOTAL TEÓRICO:</td>
+                            <td colspan="2" style="text-align:right; font-weight:bold;">TOTAL DOSIS DEL DÍA:</td>
                             <td><input type="number" id="total-teorico-global" class="cedit calc-output" readonly value="0"></td>
-                            <td class="no-print"></td>
+                            <td colspan="2"></td>
                         </tr>
                     </tfoot>
                 </table>
-                <button class="btn btn-primary btn-mini no-print" onclick="addPresRow()">+ Agregar Presentación</button>
             </div>
         </div>
 
@@ -188,14 +195,15 @@
             document.getElementById('total-cells').value = (conc * vol).toFixed(2);
         }
 
-        // Nueva lógica para sumar la tabla de presentaciones
+        // Suma total de dosis del día
         function calcTotalTeorico() {
             let total = 0;
             document.querySelectorAll('.qty-pres').forEach(input => {
                 total += parseFloat(input.value) || 0;
             });
             document.getElementById('total-teorico-global').value = total;
-            calcYield(); // Recalcular rendimiento
+            if (!document.getElementById('cant-real').value) document.getElementById('cant-real').value = total;
+            calcYield();
         }
 
         function calcYield() {
@@ -205,24 +213,103 @@
             document.getElementById('yield-percent').value = res;
         }
 
-        function addPresRow() {
+        function getDailyPayload(fecha) {
+            const dailyKey = `xelle_fo_lc_24_daily_${fecha}`;
+            const savedDaily = localStorage.getItem(dailyKey);
+            if (savedDaily) {
+                try {
+                    return JSON.parse(savedDaily);
+                } catch (e) { }
+            }
+
+            const rawFo24 = localStorage.getItem('xelle_doc-fo-lc-24');
+            if (!rawFo24) return null;
+
+            try {
+                const source = JSON.parse(rawFo24);
+                if (source.fecha_operacion !== fecha || !Array.isArray(source.t_dosis)) return null;
+
+                const grouped = {};
+                source.t_dosis.forEach(row => {
+                    if ((row.observaciones || '').trim()) return;
+                    const producto = (row.producto || '').trim();
+                    if (!producto) return;
+
+                    const presBase = (row.presentacion || '').trim();
+                    const presentacion = presBase === 'Especial'
+                        ? (`Especial: ${(row.presentacionEspecial || '').trim() || 'Sin especificar'}`)
+                        : (presBase || 'Sin especificar');
+
+                    const key = `${producto}||${presentacion}`;
+                    if (!grouped[key]) {
+                        grouped[key] = { producto, presentacion, cantidad: 0, lotes: new Set(), codigosUnicos: [] };
+                    }
+                    grouped[key].cantidad += 1;
+                    if (row.lote) grouped[key].lotes.add(row.lote);
+                    if (row.codigoUnico) grouped[key].codigosUnicos.push(row.codigoUnico);
+                });
+
+                const items = Object.values(grouped).map(item => ({
+                    producto: item.producto,
+                    presentacion: item.presentacion,
+                    cantidad: item.cantidad,
+                    lotes: Array.from(item.lotes),
+                    codigosUnicos: item.codigosUnicos
+                }));
+
+                return { fechaOperacion: fecha, items };
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function renderDailyRows(items) {
             const tbody = document.getElementById('tbl-presentaciones').querySelector('tbody');
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>
-                    <select class="cedit">
-                        <option value="">- Seleccione -</option>
-                        <option value="10 M">10 M</option>
-                        <option value="25 M">25 M</option>
-                        <option value="50 M">50 M</option>
-                        <option value="100 M">100 M</option>
-                        <option value="10M + 1B">10M + 1B</option>
-                    </select>
-                </td>
-                <td><input type="number" class="cedit qty-pres" oninput="calcTotalTeorico()" placeholder="0"></td>
-                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove(); calcTotalTeorico()">x</button></td>
-            `;
-            tbody.appendChild(row);
+            tbody.innerHTML = '';
+
+            if (!Array.isArray(items) || items.length === 0) {
+                const emptyRow = document.createElement('tr');
+                emptyRow.innerHTML = `<td colspan="5" style="text-align:center; color:#7f8c8d;">Sin dosis reportadas para la fecha seleccionada.</td>`;
+                tbody.appendChild(emptyRow);
+                document.getElementById('total-teorico-global').value = 0;
+                calcYield();
+                return;
+            }
+
+            items.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input class="cedit" readonly value="${item.producto || ''}"></td>
+                    <td><input class="cedit" readonly value="${item.presentacion || ''}"></td>
+                    <td><input type="number" class="cedit qty-pres" readonly value="${item.cantidad || 0}"></td>
+                    <td><input class="cedit" readonly value="${(item.lotes || []).join(', ')}"></td>
+                    <td><textarea class="cedit" rows="1" readonly>${(item.codigosUnicos || []).join(', ')}</textarea></td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            calcTotalTeorico();
+        }
+
+        function loadDailyDosificacion() {
+            const fecha = document.getElementById('fecha-dia-29').value;
+            if (!fecha) {
+                Swal.fire({ icon: 'info', title: 'Selecciona una fecha', timer: 1200, showConfirmButton: false });
+                return;
+            }
+
+            const payload = getDailyPayload(fecha);
+            renderDailyRows(payload?.items || []);
+
+            const fechaFab = document.getElementById('fecha-fab');
+            if (fechaFab && !fechaFab.value) {
+                fechaFab.value = fecha;
+                updateProductLogic();
+            }
+
+            if (!payload || !Array.isArray(payload.items) || payload.items.length === 0) {
+                Swal.fire({ icon: 'warning', title: 'No hay datos en FO-LC-24 para esa fecha', timer: 1500, showConfirmButton: false });
+            }
         }
 
         function addCompRow() {
@@ -246,7 +333,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => { 
-            addPresRow();
+            const fechaDia = document.getElementById('fecha-dia-29');
+            if (fechaDia) fechaDia.valueAsDate = new Date();
+            loadDailyDosificacion();
             addCompRow(); 
             addMatRow(); 
             addControlRow(); 

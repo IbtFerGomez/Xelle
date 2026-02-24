@@ -18,8 +18,14 @@ const Core = {
             const currentFormats = Core.Data.get(KEYS.FORMATS) || [];
             const seedFormats = SeedData.formats || [];
 
-            const currentByFile = new Map(currentFormats.map(f => [f.file, f]));
-            const merged = [...currentFormats];
+            const sanitizedCurrent = currentFormats.filter(format => {
+                const code = String(format.code || '').trim().toUpperCase();
+                const file = String(format.file || '').trim();
+                return !(code === 'DGW-TOOL' || file === 'formats/digitalizar-word.html');
+            });
+
+            const currentByFile = new Map(sanitizedCurrent.map(f => [f.file, f]));
+            const merged = [...sanitizedCurrent];
 
             seedFormats.forEach(seedFormat => {
                 if (!currentByFile.has(seedFormat.file)) {
@@ -27,7 +33,7 @@ const Core = {
                 }
             });
 
-            if (merged.length !== currentFormats.length) {
+            if (merged.length !== currentFormats.length || sanitizedCurrent.length !== currentFormats.length) {
                 Core.Data.set(KEYS.FORMATS, merged);
             }
 

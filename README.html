@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XELLE LIMS v11.1 - Sistema de Gestión de Calidad</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #2fa785 0%, #1E3A5F 100%);
+            min-height: 100vh;
+            font-family: 'Manrope', sans-serif;
+            color: #1E3A5F;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-text h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        header h2 {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 30px;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #1E3A5F;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px 5px 5px 0;
+        }
+
+        .badge-primary {
+            background: #2fa785;
+            color: white;
+        }
+
+        .badge-secondary {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: #2fa785;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2a9278;
+            box-shadow: 0 10px 25px rgba(47, 167, 133, 0.3);
+        }
+
+        .btn-white {
+            background: white;
+            color: #2fa785;
+        }
+
+        .btn-white:hover {
+            background: #f5f5f5;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+        }
+
+        .feature-icon {
+            color: #2fa785;
+            font-weight: bold;
+        }
+
+        .cta-section {
+            background: white;
+            border-radius: 15px;
+            padding: 50px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            color: #1E3A5F;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .step-list {
+            text-align: left;
+            background: #f8f8f8;
+            border-left: 4px solid #2fa785;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .step-list ol {
+            padding-left: 20px;
+        }
+
+        .step-list li {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .step-list strong {
+            color: #1E3A5F;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            opacity: 0.8;
+            margin-top: 60px;
+        }
+
+        .account-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .account-table th {
+            background: #f8f8f8;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #1E3A5F;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .account-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .account-table tr:hover {
+            background: #f8f8f8;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <span class="material-symbols-outlined" style="font-size: 40px; color: #2fa785;">biotech</span>
+                </div>
+                <div class="logo-text">
+                    <h1>XELLE LIMS</h1>
+                    <p>v11.1 Enterprise - Sistema de Gestión de Calidad</p>
+                </div>
+            </div>
+            <h2>🎯 Solución Integral FDA 21 CFR Part 11 Compliant</h2>
+        </header>
+
+        <!-- Main Grid -->
+        <div class="grid">
+            <!-- Card 1: Dashboard -->
+            <div class="card">
+                <div class="card-icon" style="background: #2fa785; color: white;">
+                    <span class="material-symbols-outlined">dashboard</span>
+                </div>
+                <h3>📊 Dashboard</h3>
+                <p>Panel de control centralizado con estadísticas en tiempo real de documentos, usuarios y operaciones del sistema.</p>
+                <div class="features-grid">
+                    <span class="badge badge-primary">Estadísticas</span>
+                    <span class="badge badge-secondary">Métricas</span>
+                </div>
+                <a href="sgc-integration/index.html" class="btn btn-primary" style="display: inline-block; margin-top: 15px;">Ir al Dashboard →</a>
+            </div>
+
+            <!-- Card 2: Documentos -->
+            <div class="card">
+                <div class="card-icon" style="background: #3b82f6; color: white;">
+                    <span class="material-symbols-outlined">description</span>
+                </div>
+                <h3>📄 Gestión de Documentos</h3>
+                <p>Sistema completo de gestión documental con control de versiones, workflow de aprobaciones y trazabilidad total.</p>
+                <div class="features-grid">
+                    <span class="badge badge-primary">CRUD</span>
+                    <span class="badge badge-secondary">Versionado</span>
+                </div>
+                <a href="sgc-integration/modules/documents/index.html" class="btn btn-primary" style="display: inline-block; margin-top: 15px;">Gestionar Documentos →</a>
+            </div>
+
+            <!-- Card 3: Usuarios -->
+            <div class="card">
+                <div class="card-icon" style="background: #22c55e; color: white;">
+                    <span class="material-symbols-outlined">people</span>
+                </div>
+                <h3>👥 Gestión de Usuarios</h3>
+                <p>Administración completa de usuarios con asignación de roles, permisos granulares y control de acceso.</p>
+                <div class="features-grid">
+                    <span class="badge badge-primary">RBAC</span>
+                    <span class="badge badge-secondary">Validación</span>
+                </div>
+                <a href="sgc-integration/modules/users/index.html" class="btn btn-primary" style="display: inline-block; margin-top: 15px;">Gestionar Usuarios →</a>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>🚀 Comienza Ahora</h2>
+            <p>Accede al sistema con las credenciales de prueba proporcionadas</p>
+
+            <div style="margin: 30px 0;">
+                <h3 style="color: #1E3A5F; margin-bottom: 15px;">Cuentas de Prueba Disponibles:</h3>
+                <table class="account-table">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Contraseña</th>
+                            <th>Rol</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>👩‍💼 Administrador</strong></td>
+                            <td><code>admin@xelle.com</code></td>
+                            <td><code>password123</code></td>
+                            <td><span class="badge badge-primary">ADMIN</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>✓ Gestor QA</strong></td>
+                            <td><code>quality@xelle.com</code></td>
+                            <td><code>password123</code></td>
+                            <td><span class="badge badge-secondary">Quality Manager</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>📄 Doc Manager</strong></td>
+                            <td><code>doc@xelle.com</code></td>
+                            <td><code>password123</code></td>
+                            <td><span class="badge badge-secondary">Document Manager</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin: 30px 0;">
+                <h3 style="color: #1E3A5F; margin-bottom: 15px;">5 Pasos para Empezar:</h3>
+                <div class="step-list">
+                    <ol>
+                        <li><strong>Accede al Dashboard:</strong> Haz clic en una de las opciones anteriores</li>
+                        <li><strong>Inicia Sesión:</strong> Usa una de las cuentas de prueba o crea un usuario nuevo</li>
+                        <li><strong>Explora los Módulos:</strong> Navega por Documentos, Usuarios, Dashboard</li>
+                        <li><strong>Practica Operaciones:</strong> Crea, edita y elimina registros</li>
+                        <li><strong>Revisa Auditoría:</strong> Abre la consola (F12) para ver los logs</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                <a href="sgc-integration/index.html" class="btn btn-primary">Ir al Dashboard</a>
+                <a href="STARTUP_GUIDE.md" class="btn btn-white">Leer Guía Completa</a>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div style="background: white; border-radius: 15px; padding: 40px; margin-top: 40px;">
+            <h2 style="color: #1E3A5F; margin-bottom: 30px; font-size: 1.8rem;">✨ Características Principales</h2>
+
+            <div class="grid">
+                <div style="padding: 20px;">
+                    <h4 style="color: #2fa785; margin-bottom: 10px;">🔐 Seguridad Robusta</h4>
+                    <p>Autenticación de doble factor, control de acceso basado en roles, audit trail completo y cumplimiento FDA 21 CFR Part 11.</p>
+                </div>
+
+                <div style="padding: 20px;">
+                    <h4 style="color: #2fa785; margin-bottom: 10px;">📊 Análisis Integral</h4>
+                    <p>Estadísticas en tiempo real, dashboards personalizables, reportes detallados y exportación a CSV.</p>
+                </div>
+
+                <div style="padding: 20px;">
+                    <h4 style="color: #2fa785; margin-bottom: 10px;">🔄 Workflow Inteligente</h4>
+                    <p>Documentos con estados configurables, control de versiones automático y aprobación multi-nivel.</p>
+                </div>
+
+                <div style="padding: 20px;">
+                    <h4 style="color: #2fa785; margin-bottom: 10px;">🎨 UI Moderna</h4>
+                    <p>Interfaz responsive, tema claro/oscuro, animaciones fluidas y accesibilidad WCAG completa.</p>
+                </div>
+
+                <div style="padding: 20px;">
+                    <h4 style="color: #2fa785; margin-bottom: 10px;">⚡ Alto Rendimiento</h4>
+                    <p>Almacenamiento local instantáneo, carga rápida, soporte offline y sincronización automática.</p>
+                </div>
+
+                <div style="padding: 20px;">
+                    <h4 style="color: #2fa785; margin-bottom: 10px;">🚀 Escalable</h4>
+                    <p>Arquitectura modular, listo para backend, API preparada, integración con sistemas existentes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Section -->
+        <div style="background: white; border-radius: 15px; padding: 40px; margin-top: 40px;">
+            <h2 style="color: #1E3A5F; margin-bottom: 30px; font-size: 1.8rem;">🛠️ Stack Técnico</h2>
+
+            <div class="grid">
+                <div style="padding: 20px;">
+                    <h4 style="color: #1E3A5F;">Frontend</h4>
+                    <p>HTML5, CSS3, JavaScript ES6+, Tailwind CSS</p>
+                    <span class="badge badge-secondary">Responsive</span>
+                    <span class="badge badge-secondary">Accessible</span>
+                </div>
+
+                <div style="padding: 20px;">
+                    <h4 style="color: #1E3A5F;">Storage</h4>
+                    <p>localStorage API, JSON serialization, indexing automático</p>
+                    <span class="badge badge-secondary">Local</span>
+                    <span class="badge badge-secondary">Fast</span>
+                </div>
+
+                <div style="padding: 20px;">
+                    <h4 style="color: #1E3A5F;">Design System</h4>
+                    <p>Material Symbols, Manrope Font, Custom CSS framework</p>
+                    <span class="badge badge-secondary">Modern</span>
+                    <span class="badge badge-secondary">Consistent</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Commands Section -->
+        <div style="background: white; border-radius: 15px; padding: 40px; margin-top: 40px;">
+            <h2 style="color: #1E3A5F; margin-bottom: 30px; font-size: 1.8rem;">⌨️ Comandos de Consola</h2>
+            <p style="color: #666; margin-bottom: 20px;">Abre la consola del navegador (F12) y ejecuta estos comandos para explorar el sistema:</p>
+
+            <div class="code-block">
+// Ver usuario actual<br>
+sgcAuth.getCurrentUser()
+            </div>
+
+            <div class="code-block">
+// Obtener todos los documentos<br>
+sgcDB.getAllDocuments()
+            </div>
+
+            <div class="code-block">
+// Obtener todos los usuarios<br>
+sgcDB.getAllUsers()
+            </div>
+
+            <div class="code-block">
+// Ver logs de auditoría<br>
+sgcDB.getAuditLogs()
+            </div>
+
+            <div class="code-block">
+// Crear documento manual<br>
+sgcDB.createDocument({ name: "Test", code: "TEST-001", type: "pdf", department: "Prueba" })
+            </div>
+        </div>
+
+        <!-- Documentation Links -->
+        <div style="background: white; border-radius: 15px; padding: 40px; margin-top: 40px;">
+            <h2 style="color: #1E3A5F; margin-bottom: 30px; font-size: 1.8rem;">📚 Documentación</h2>
+
+            <div class="grid">
+                <div class="card">
+                    <h4 style="color: #2fa785; margin-bottom: 10px;">Guía de Inicio Rápido</h4>
+                    <p>Aprende a usar el sistema en 5 minutos con esta guía paso a paso.</p>
+                    <a href="STARTUP_GUIDE.md" class="btn btn-primary" style="display: inline-block; margin-top: 15px;">Leer Guía →</a>
+                </div>
+
+                <div class="card">
+                    <h4 style="color: #2fa785; margin-bottom: 10px;">Estado del Proyecto</h4>
+                    <p>Resumen completo de funcionalidades implementadas y estado general del sistema.</p>
+                    <a href="PROJECT_STATUS.md" class="btn btn-primary" style="display: inline-block; margin-top: 15px;">Ver Estado →</a>
+                </div>
+
+                <div class="card">
+                    <h4 style="color: #2fa785; margin-bottom: 10px;">Configuración del Sistema</h4>
+                    <p>Detalles de configuración, roles, módulos y políticas de seguridad.</p>
+                    <a href="sgc-integration/config.js" class="btn btn-primary" style="display: inline-block; margin-top: 15px;">Ver Config →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Section -->
+        <div style="background: #f8f8f8; border-radius: 15px; padding: 40px; margin-top: 40px; border: 2px solid #e0e0e0;">
+            <h2 style="color: #1E3A5F; margin-bottom: 20px;">❓ ¿Necesitas Ayuda?</h2>
+            <p style="color: #666; margin-bottom: 20px;">Si encuentras problemas o tienes preguntas:</p>
+            <ul style="color: #666; line-height: 2;">
+                <li>✓ Abre la consola del navegador (F12) para ver mensajes de error</li>
+                <li>✓ Revisa los logs de auditoría con: <code style="background: #eee; padding: 2px 6px; border-radius: 3px;">sgcDB.getAuditLogs()</code></li>
+                <li>✓ Reinicia limpiando datos con: <code style="background: #eee; padding: 2px 6px; border-radius: 3px;">localStorage.clear(); location.reload();</code></li>
+                <li>✓ Restaura datos de prueba con: <code style="background: #eee; padding: 2px 6px; border-radius: 3px;">sgcDB.initializeDefaultData(); location.reload();</code></li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px;">
+                    <span class="material-symbols-outlined">verified</span>
+                    <span>FDA 21 CFR Part 11 Compliant</span>
+                </div>
+                <p>© 2024 XELLE LIMS - Todos los derechos reservados</p>
+            </div>
+            <p style="font-size: 0.9rem;">Versión: 11.1 Enterprise | Estado: Production Ready ✅</p>
+        </footer>
+    </div>
+</body>
+</html>

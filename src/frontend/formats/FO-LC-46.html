@@ -3,17 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Documento digitalizado DGW-FOLC46-260218-1810</title>
+<title>...dvsd</title>
+<base href="file:///C:/Users/WINDOWS/Desktop/DriveProgra/Xelle/src/frontend/formats/">
 <link rel="stylesheet" href="format-styles.css">
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="format-app.js"></script>
 <style>
+    
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 12px; margin: 0; padding: 16px; background: #f3f4f6; color: #333; }
+.container { background: #fff; width: 95%; max-width: 1400px; margin: 0 auto; padding: 30px; border-radius: 8px; box-sizing: border-box; }
+.header-top { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #2c3e50; padding-bottom: 8px; margin-bottom: 14px; }
+.header-main { text-align: center; margin-bottom: 14px; border-bottom: 1px solid #d1d5db; padding-bottom: 8px; }
+.header-main h1 { margin: 0; font-size: 18px; color: #2c3e50; text-transform: uppercase; }
+.metadata { margin-top: 4px; font-size: 11px; color: #34495e; }
+.logo-container svg { height: 60px; width: auto; }
+.registry-container { display: flex; flex-direction: column; align-items: flex-end; }
+.registry-wrapper { display: flex; align-items: center; gap: 6px; }
+.registry-prefix { font-weight: 700; color: #2c3e50; }
+.registry-input { width: 80px; text-align: center; }
+.barcode-svg { max-height: 40px; margin-top: 4px; }
+.section { margin-bottom: 14px; border: 1px solid #e5e7eb; border-radius: 6px; padding: 12px; page-break-inside: avoid; }
+.section-title { background: #34495e; color: #fff; font-weight: 700; margin: -12px -12px 10px -12px; padding: 6px 10px; border-radius: 6px 6px 0 0; text-transform: uppercase; font-size: 12px; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 10px; table-layout: fixed; }
+th, td { border: 1px solid #d1d5db; padding: 6px 8px; text-align: left; vertical-align: middle; }
+th { background: #f8f9fa; text-transform: uppercase; font-size: 11px; }
+input:not([type="checkbox"]):not([type="radio"]), select, textarea, .cedit { width: 100%; box-sizing: border-box; border: 1px solid #d1d5db; padding: 6px 8px; border-radius: 4px; font-size: 11px; }
+textarea { resize: vertical; min-height: 30px; }
+.signature-area { display: flex; justify-content: space-around; margin-top: 26px; gap: 20px; }
+.signature-box { width: 40%; text-align: center; }
+.signature-box input { border: none; border-bottom: 1px solid #333; background: transparent; text-align: center; }
+.global-controls { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 1000; background: rgba(255,255,255,.95); padding: 8px 14px; border-radius: 999px; border: 1px solid #ccc; }
+.btn { border: none; border-radius: 6px; color: #fff; padding: 8px 14px; font-size: 12px; cursor: pointer; }
+.btn-success { background: #27ae60; }
+.btn-primary { background: #2c3e50; }
+.btn-danger { background: #e74c3c; }
+.btn-warning { background: #f39c12; }
+.footer { margin-top: 14px; border-top: 1px solid #eee; padding-top: 8px; text-align: center; color: #888; font-size: 10px; }
+.legal-legend { margin-top: 14px; font-size: 10px; color: #444; text-align: center; }
+.print-only-value { display: none; }
+@media print {
+    @page { size: letter; margin: 0.8cm; }
+    body { background: #fff; padding: 0; margin: 0; }
+    .container { width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; border: none !important; }
+    .global-controls, .no-print, button, .footer { display: none !important; }
+    input:not([type="checkbox"]):not([type="radio"]), textarea, .cedit, .registry-date { border: none !important; box-shadow: none !important; background: transparent !important; padding: 0 !important; margin: 0 !important; }
+    select { display: none !important; }
+    .print-only-value { display: inline-block !important; }
+    .section { border: none !important; padding: 0 !important; margin-bottom: 18px !important; }
+    .section-title { margin: 0 0 5px 0 !important; }
+    th, td { white-space: normal !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+}
+
     .word-content table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
     .word-content td, .word-content th { border: 1px solid var(--border-color); padding: 6px; }
     .word-content img { max-width: 100%; height: auto; }
     .dgw-field-wrap { display: flex; flex-direction: column; gap: 4px; }
     .dgw-field-label { font-size: 11px; font-weight: 700; color: var(--secondary-color); }
+    .section .section-title { margin-bottom: 0 !important; }
+    .section.word-content,
+    .section.required-meta { padding-top: 0 !important; }
+    .section.word-content > *:first-child { margin-top: 0 !important; }
+    .section.word-content .section-title + *,
+    .section.required-meta .section-title + * { margin-top: 0 !important; }
+    .section.word-content table,
+    .section.required-meta table { margin-top: 0 !important; }
+    .legal-legend { margin-top: 20px; font-size: 10px; color: #444; text-align: center; }
+    @media print {
+        .word-content table { table-layout: auto !important; width: 100% !important; }
+        .word-content th,
+        .word-content td { white-space: normal !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+        .word-content textarea,
+        .word-content .cedit,
+        .word-content input { white-space: normal !important; }
+    }
 </style>
 </head>
 <body id="doc-digitalizado-word">
@@ -31,30 +94,33 @@
             <div class="registry-container">
                 <label>Código Documento</label>
                 <div class="registry-wrapper">
-                    <input type="text" id="reg-digital" class="registry-input generate-barcode" data-target="barcode-digital" data-prefix="" value="DGW-FOLC46-260218-1810">
+                    <input type="text" id="reg-digital" class="registry-input generate-barcode" data-target="barcode-digital" data-prefix="" value="...cdsc">
                 </div>
-                <input type="date" class="registry-date no-auto-date" value="2026-02-19">
+                <input type="date" class="registry-date no-auto-date" value="2026-02-24">
                 <svg id="barcode-digital" class="barcode-svg"></svg>
             </div>
         </div>
 
         <div class="header-main">
-            <h1>DOCUMENTO DIGITALIZADO DESDE WORD</h1>
-            <div class="metadata">Código: DGW-FOLC46-260218-1810 | Fuente: Word (.docx)</div>
+            <h1>...dvsd</h1>
+            <div class="metadata">Código: ...cdsc | Versión: ...dscsd | Vig: ...csd | Fuente: Word (.docx)</div>
         </div>
 
+        
+
         <div class="section word-content">
+            <div class="section-title">Contenido digitalizado</div>
             <p>
                 <div class="dgw-field-wrap">
-                    <label class="dgw-field-label">FORMATO REGISTRO MUESTREO PRODUCTO BIOLÓGICO</label>
-                    <input class="cedit" name="dgw_field_54" value="FORMATO REGISTRO MUESTREO PRODUCTO BIOLÓGICO" placeholder="Captura aquí">
-                </div>
-            </p><p>
-                <div class="dgw-field-wrap">
                     <label class="dgw-field-label">1. DATOS DE IDENTIFICACIÓN DEL LOTE</label>
-                    <input class="cedit" name="dgw_field_55" value="1. DATOS DE IDENTIFICACIÓN DEL LOTE" placeholder="Captura aquí">
+                    <input class="cedit" name="dgw_field_54" value="1. DATOS DE IDENTIFICACIÓN DEL LOTE" placeholder="Captura aquí">
                 </div>
             </p><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><input class="cedit" name="dgw_field_1" value="Nombre del Producto:" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_2" value="Presentación (Vial/Jeringa):" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_3" value="Número de Lote:" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_4" value="Fecha de Caducidad:" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_5" value="Tamaño del Lote (Unidades totales):" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_6" value="Fecha de Muestreo:" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_7" value="Ubicación (Cámara Fría):" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_8" value="Estado: CUARENTENA +1" placeholder="Captura aquí"></td></tr></tbody></table><p>
+                <div class="dgw-field-wrap">
+                    <label class="dgw-field-label">[observaciones  [Descripcion {CORTA}]]:  lorepipsium</label>
+                    <input class="cedit" name="dgw_field_55" value="[observaciones  [Descripcion {CORTA}]]:  lorepipsium" placeholder="Captura aquí">
+                </div>
+            </p><p>
                 <div class="dgw-field-wrap">
                     <label class="dgw-field-label">2. FASE PREVIA: ACONDICIONAMIENTO Y CADENA DE FRÍO (PCC 1)</label>
                     <input class="cedit" name="dgw_field_56" value="2. FASE PREVIA: ACONDICIONAMIENTO Y CADENA DE FRÍO (PCC 1)" placeholder="Captura aquí">
@@ -162,7 +228,8 @@
             </p><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><input class="cedit" name="dgw_field_48" value="Realizó Muestreo (Inspector de Calidad):" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_49" value="Verificó y Recibió (Analista/Jefe CC):" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_50" value="" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_51" value="" placeholder="Captura aquí"></td></tr><tr><td><input class="cedit" name="dgw_field_52" value="Firma y Fecha" placeholder="Captura aquí"></td><td><input class="cedit" name="dgw_field_53" value="Firma y Fecha" placeholder="Captura aquí"></td></tr></tbody></table>
         </div>
 
-        <div class="footer">Digitalizado automáticamente | DGW-FOLC46-260218-1810</div>
+        <div class="legal-legend">El contenido de este documento es propiedad de “Xelle Scientific”, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">Digitalizado automáticamente | ...cdsc | Versión: ...dscsd | Vig: ...csd</div>
     </div>
 </body>
 </html>

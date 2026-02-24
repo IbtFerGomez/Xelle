@@ -30,7 +30,7 @@ const App = {
             case 'doc-fo-lc-21': this.Docs.FO_LC_21.init(); break;
             case 'doc-fo-lc-22': this.Docs.FO_LC_22.init(); break;
             case 'doc-fo-lc-24': this.Docs.FO_LC_24.init(); break;
-            case 'doc-fo-lc-40': case 'doc-fo-lc-40-b': case 'doc-fo-lc-41': case 'doc-fo-lc-42': case 'doc-fo-lc-43': case 'doc-fo-lc-44': case 'doc-fo-lc-45':
+            case 'doc-fo-lc-40': case 'doc-fo-lc-41': case 'doc-fo-lc-42': case 'doc-fo-lc-43': case 'doc-fo-lc-44': case 'doc-fo-lc-45':
                 this.Docs.FO_Generic.init(docId); break;
         }
     },
@@ -306,19 +306,7 @@ const App = {
                 "Hybrid Ortho": { lotPre: "XHO", pres: ["10M+1B", "25M+2B", "50M+5B", "60M+6B", "100M+10B", "Especial"] },
                 "Exosomas": { lotPre: "EXO", pres: ["3B", "9B", "15B", "30B", "75B", "90B", "Especial"] }
             },
-            init: function () {
-                if (document.querySelectorAll('#tbl-dosis tbody tr').length === 0) this.addDosis();
-                const fechaOperacion = document.getElementById('fecha_operacion');
-                if (fechaOperacion) {
-                    fechaOperacion.addEventListener('change', () => {
-                        document.querySelectorAll('#tbl-dosis tbody tr').forEach(r => {
-                            const prodSelect = r.querySelector('.prod-select');
-                            if (prodSelect && prodSelect.value) this.onProd(prodSelect);
-                        });
-                    });
-                }
-                this.calcInventory();
-            },
+            init: function () { if (document.querySelectorAll('#tbl-dosis tbody tr').length === 0) this.addDosis(); this.calcInventory(); },
             addDosis: function () {
                 const tbody = document.querySelector('#tbl-dosis tbody');
                 const row = document.createElement('tr');
@@ -397,144 +385,6 @@ const App = {
                     }
                 });
                 document.getElementById('tot-stem').value = t["Stem Xelle"]; document.getElementById('tot-hybrid').value = t["Hybrid Xelle"]; document.getElementById('tot-stem-ortho').value = t["Stem Ortho"]; document.getElementById('tot-hybrid-ortho').value = t["Hybrid Ortho"]; document.getElementById('tot-exo').value = t["Exosomas"];
-            },
-            getCustomData: function () {
-                const dosisRows = [];
-                document.querySelectorAll('#tbl-dosis tbody tr').forEach(r => {
-                    const presValue = r.querySelector('.pres-select')?.value || '';
-                    const specialPres = r.querySelector('.special-pres-input')?.value || '';
-                    dosisRows.push({
-                        producto: r.querySelector('.prod-select')?.value || '',
-                        origen: r.querySelector('.origin-input')?.value || '',
-                        caducidad: r.querySelector('td:nth-child(4) input')?.value || '',
-                        lote: r.querySelector('.lote-input')?.value || '',
-                        presentacion: presValue,
-                        presentacionEspecial: specialPres,
-                        numeroCelulas: r.querySelector('.cell-count-input')?.value || '',
-                        codigoVenta: r.querySelector('td:nth-child(8) input')?.value || '',
-                        codigoUnico: r.querySelector('.unique-code')?.value || '',
-                        observaciones: r.querySelector('.obs-input')?.value || ''
-                    });
-                });
-
-                const insumosRows = [];
-                document.querySelectorAll('#tbl-insumos tbody tr').forEach(r => {
-                    insumosRows.push(Array.from(r.querySelectorAll('input')).map(i => i.value));
-                });
-
-                this.persistDailySummary(dosisRows);
-
-                return {
-                    t_dosis: dosisRows,
-                    t_insumos_24: insumosRows
-                };
-            },
-            loadCustomData: function (data) {
-                if (Array.isArray(data.t_insumos_24)) {
-                    const tbodyInsumos = document.querySelector('#tbl-insumos tbody');
-                    if (tbodyInsumos) {
-                        tbodyInsumos.innerHTML = '';
-                        data.t_insumos_24.forEach(rowData => {
-                            if (typeof window.addInsumoRow24 === 'function') window.addInsumoRow24();
-                            const row = tbodyInsumos.lastElementChild;
-                            if (!row) return;
-                            const inputs = row.querySelectorAll('input');
-                            rowData.forEach((value, idx) => {
-                                if (inputs[idx]) inputs[idx].value = value || '';
-                            });
-                        });
-                    }
-                }
-
-                if (Array.isArray(data.t_dosis)) {
-                    const tbodyDosis = document.querySelector('#tbl-dosis tbody');
-                    if (tbodyDosis) {
-                        tbodyDosis.innerHTML = '';
-                        data.t_dosis.forEach(rowData => {
-                            this.addDosis();
-                            const row = tbodyDosis.lastElementChild;
-                            if (!row) return;
-
-                            const prodSelect = row.querySelector('.prod-select');
-                            const presSelect = row.querySelector('.pres-select');
-                            const specialInput = row.querySelector('.special-pres-input');
-
-                            if (prodSelect) {
-                                prodSelect.value = rowData.producto || '';
-                                this.onProd(prodSelect);
-                            }
-
-                            const cadInput = row.querySelector('td:nth-child(4) input');
-                            const ventaInput = row.querySelector('td:nth-child(8) input');
-
-                            if (row.querySelector('.origin-input')) row.querySelector('.origin-input').value = rowData.origen || '';
-                            if (cadInput) cadInput.value = rowData.caducidad || '';
-                            if (row.querySelector('.lote-input')) row.querySelector('.lote-input').value = rowData.lote || '';
-
-                            if (presSelect) {
-                                presSelect.value = rowData.presentacion || '';
-                                this.onPresChange(presSelect);
-                            }
-                            if (specialInput) specialInput.value = rowData.presentacionEspecial || '';
-
-                            if (row.querySelector('.cell-count-input')) row.querySelector('.cell-count-input').value = rowData.numeroCelulas || '';
-                            if (ventaInput) ventaInput.value = rowData.codigoVenta || '';
-                            if (row.querySelector('.unique-code')) row.querySelector('.unique-code').value = rowData.codigoUnico || '';
-                            if (row.querySelector('.obs-input')) row.querySelector('.obs-input').value = rowData.observaciones || '';
-                        });
-                    }
-                }
-
-                this.reindex();
-                this.calcInventory();
-            },
-            persistDailySummary: function (dosisRows) {
-                const fechaOperacion = document.getElementById('fecha_operacion')?.value;
-                if (!fechaOperacion || !Array.isArray(dosisRows)) return;
-
-                const grouped = {};
-                dosisRows.forEach(row => {
-                    if (row.observaciones) return;
-                    const producto = (row.producto || '').trim();
-                    if (!producto) return;
-
-                    const presentacionBase = (row.presentacion || '').trim();
-                    const presentacion = presentacionBase === 'Especial'
-                        ? (`Especial: ${(row.presentacionEspecial || '').trim() || 'Sin especificar'}`)
-                        : (presentacionBase || 'Sin especificar');
-
-                    const key = `${producto}||${presentacion}`;
-                    if (!grouped[key]) {
-                        grouped[key] = {
-                            producto,
-                            presentacion,
-                            cantidad: 0,
-                            lotes: new Set(),
-                            codigosUnicos: []
-                        };
-                    }
-
-                    grouped[key].cantidad += 1;
-                    if (row.lote) grouped[key].lotes.add(row.lote);
-                    if (row.codigoUnico) grouped[key].codigosUnicos.push(row.codigoUnico);
-                });
-
-                const items = Object.values(grouped).map(item => ({
-                    producto: item.producto,
-                    presentacion: item.presentacion,
-                    cantidad: item.cantidad,
-                    lotes: Array.from(item.lotes),
-                    codigosUnicos: item.codigosUnicos
-                }));
-
-                const payload = {
-                    fechaOperacion,
-                    generatedAt: new Date().toISOString(),
-                    items
-                };
-
-                localStorage.setItem(`xelle_fo_lc_24_daily_${fechaOperacion}`, JSON.stringify(payload));
-                localStorage.setItem('xelle_fo_lc_24_daily_latest', JSON.stringify(payload));
             }
         },
 

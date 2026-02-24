@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Panel Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Panel Admin - Test</h1>
+        
+        <!-- Test Controls -->
+        <div class="bg-white p-6 rounded-lg shadow mb-6">
+            <h2 class="text-xl font-bold mb-4">Controles de Test</h2>
+            <button onclick="toggleAdminPanel()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded mr-2">Abrir/Cerrar Panel</button>
+            <button onclick="document.getElementById('debug').innerHTML = 'AdminPanelOpen: ' + adminPanelOpen + '<br>toggleAdminPanel: ' + typeof toggleAdminPanel + '<br>Panel visible: ' + $('#admin-panel').is(':visible')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded">Verificar Estado</button>
+            <button onclick="$('#admin-panel').css('transform', 'translateX(0)');"class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded">Forzar Visible</button>
+            <div id="debug" class="mt-4 p-4 bg-gray-100 rounded font-mono text-sm"></div>
+        </div>
+
+        <!-- Ventana principal con panel -->
+        <div style="position: relative; height: 600px; border: 2px solid #ccc; overflow: hidden; background: white;">
+            <div class="p-8">
+                <h2 class="text-2xl font-bold mb-4">Dashboard Test</h2>
+                <p>Este es el contenido principal. El panel admin debe aparecer sobre esto.</p>
+                <div class="grid grid-cols-3 gap-4 mt-6">
+                    <div class="bg-blue-100 p-4 rounded">Card 1</div>
+                    <div class="bg-green-100 p-4 rounded">Card 2</div>
+                    <div class="bg-yellow-100 p-4 rounded">Card 3</div>
+                </div>
+            </div>
+
+            <!-- PANEL ADMIN IGUAL AL DASHBOARD -->
+            <div id="admin-panel" class="fixed inset-y-0 right-0 w-full md:w-[900px] bg-white shadow-2xl transition-all duration-300 z-50 flex flex-col overflow-hidden" style="transform: translateX(100%); pointer-events: none; position: absolute; inset-y: 0; right: 0; height: 600px;">
+                <!-- Header del panel -->
+                <div class="bg-gradient-to-r from-blue-600 to-green-500 text-white p-6 flex items-center justify-between shrink-0">
+                    <div>
+                        <h2 class="text-2xl font-black">Centro de Administración</h2>
+                        <p class="text-white/70 text-sm mt-1">Gestión integral del sistema</p>
+                    </div>
+                    <button onclick="toggleAdminPanel()" class="size-10 rounded-full hover:bg-white/20 flex items-center justify-center transition-colors">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                <!-- Tabs -->
+                <div class="flex border-b border-slate-200 px-6 pt-4 shrink-0">
+                    <button onclick="switchAdminTab('users')" class="admin-tab-btn active py-3 px-4 border-b-2 border-blue-600 text-blue-600 font-semibold transition-colors" data-tab="users">
+                        <span class="material-symbols-outlined inline mr-2">people_alt</span> Usuarios
+                    </button>
+                    <button onclick="switchAdminTab('docs')" class="admin-tab-btn py-3 px-4 text-slate-600 hover:text-blue-600 transition-colors" data-tab="docs">
+                        <span class="material-symbols-outlined inline mr-2">description</span> Documentos
+                    </button>
+                    <button onclick="switchAdminTab('audit')" class="admin-tab-btn py-3 px-4 text-slate-600 hover:text-blue-600 transition-colors" data-tab="audit">
+                        <span class="material-symbols-outlined inline mr-2">history</span> Auditoría
+                    </button>
+                </div>
+
+                <!-- Content -->
+                <div class="flex-1 overflow-y-auto p-6">
+                    <div id="admin-tab-users" class="admin-tab-content">
+                        <h3 class="text-lg font-bold mb-4">Gestión de Usuarios</h3>
+                        <p class="text-slate-600">Contenido de usuarios...</p>
+                    </div>
+                    <div id="admin-tab-docs" class="admin-tab-content hidden">
+                        <h3 class="text-lg font-bold mb-4">Gestión de Documentos</h3>
+                        <p class="text-slate-600">Contenido de documentos...</p>
+                    </div>
+                    <div id="admin-tab-audit" class="admin-tab-content hidden">
+                        <h3 class="text-lg font-bold mb-4">Auditoría</h3>
+                        <p class="text-slate-600">Contenido de auditoría...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overlay -->
+            <div id="admin-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden transition-opacity duration-300" style="pointer-events: none; position: absolute; inset: 0;" onclick="toggleAdminPanel()"></div>
+        </div>
+    </div>
+
+    <script>
+        let adminPanelOpen = false;
+
+        function toggleAdminPanel() {
+            console.log('=== toggleAdminPanel called ===');
+            console.log('Before: adminPanelOpen =', adminPanelOpen);
+            
+            adminPanelOpen = !adminPanelOpen;
+            console.log('After: adminPanelOpen =', adminPanelOpen);
+            
+            const panel = $('#admin-panel');
+            const overlay = $('#admin-overlay');
+            
+            console.log('Panel elemento:', panel.length > 0 ? 'found' : 'NOT FOUND');
+            console.log('Overlay elemento:', overlay.length > 0 ? 'found' : 'NOT FOUND');
+            
+            if(adminPanelOpen) {
+                console.log('Opening panel...');
+                panel.css({'transform': 'translateX(0)', 'pointer-events': 'auto'});
+                overlay.css('pointer-events', 'auto').removeClass('hidden').stop(true,true).fadeIn(200);
+                console.log('Panel opened, transform:', panel.css('transform'));
+            } else {
+                console.log('Closing panel...');
+                panel.css({'transform': 'translateX(100%)', 'pointer-events': 'none'});
+                overlay.css('pointer-events', 'none').stop(true,true).fadeOut(200, function() {
+                    $(this).addClass('hidden');
+                });
+                console.log('Panel closed, transform:', panel.css('transform'));
+            }
+        }
+
+        function switchAdminTab(tab) {
+            console.log('Switching to tab:', tab);
+            $('.admin-tab-btn').removeClass('active border-b-2 border-blue-600 text-blue-600').addClass('text-slate-600');
+            $('.admin-tab-content').addClass('hidden');
+            $(`button[data-tab="${tab}"]`).addClass('active border-b-2 border-blue-600 text-blue-600').removeClass('text-slate-600');
+            $(`#admin-tab-${tab}`).removeClass('hidden');
+        }
+
+        $(document).ready(function() {
+            console.log('=== TEST PAGE LOADED ===');
+            console.log('jQuery version:', $.fn.jquery);
+            console.log('adminPanelOpen:', adminPanelOpen);
+            console.log('toggleAdminPanel function exists:', typeof toggleAdminPanel);
+        });
+    </script>
+</body>
+</html>
