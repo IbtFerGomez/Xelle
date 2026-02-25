@@ -12,6 +12,11 @@
     const preview = document.getElementById('html-preview');
     const status = document.getElementById('status');
     const modeTemplate = document.getElementById('mode-template');
+    const docTitleInput = document.getElementById('doc-title');
+    const docFileNameInput = document.getElementById('doc-file-name');
+    const docCodeInput = document.getElementById('doc-code');
+    const docVersionInput = document.getElementById('doc-version');
+    const docVigenciaInput = document.getElementById('doc-vigencia');
     const API_URL = '/api';
     const FORMATS_STORAGE_KEY = 'xelle_formats';
     const DIGITALIZED_DOCS_STORAGE_KEY = 'xelle_digitalized_docs';
@@ -19,10 +24,63 @@
     let generatedHtml = '';
     let generatedCode = '';
     let generatedTitle = '';
+    let generatedVersion = '';
+    let generatedVigencia = '';
     let generatedOutputFileName = '';
 
     const setStatus = (text) => {
         status.textContent = text;
+    };
+
+    const setDocumentDefaults = (meta = {}, force = false) => {
+        const title = String(meta.TITULO_FORMATO || '').trim();
+        const code = String(meta.CODIGO_BASE || '').trim();
+        const version = String(meta.VERSION || '').trim();
+        const vigencia = String(meta.VIGENCIA_MES_ANIO || '').trim();
+        const fileName = String(meta.NOMBRE_ARCHIVO_HTML || '').trim() || (code ? `${code}.html` : '');
+
+        if (docTitleInput && (force || !String(docTitleInput.value || '').trim())) docTitleInput.value = title;
+        if (docCodeInput && (force || !String(docCodeInput.value || '').trim())) docCodeInput.value = code;
+        if (docVersionInput && (force || !String(docVersionInput.value || '').trim())) docVersionInput.value = version;
+        if (docVigenciaInput && (force || !String(docVigenciaInput.value || '').trim())) docVigenciaInput.value = vigencia;
+        if (docFileNameInput && (force || !String(docFileNameInput.value || '').trim())) docFileNameInput.value = fileName;
+    };
+
+    const getDocumentMetaFromInputs = (validate = false) => {
+        const title = String(docTitleInput?.value || '').trim();
+        const code = String(docCodeInput?.value || '').trim().toUpperCase();
+        const version = String(docVersionInput?.value || '').trim();
+        const vigencia = String(docVigenciaInput?.value || '').trim();
+        const rawFileName = String(docFileNameInput?.value || '').trim();
+
+        if (validate) {
+            const missing = [];
+            if (!title) missing.push('[TITULO_FORMATO]');
+            if (!code) missing.push('[CODIGO_BASE]');
+            if (!version) missing.push('[VERSION]');
+            if (!vigencia) missing.push('[VIGENCIA_MES_ANIO]');
+
+            if (missing.length) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Datos de documento incompletos',
+                    text: `Completa: ${missing.join(', ')}`
+                });
+                return null;
+            }
+        }
+
+        const fileName = rawFileName
+            ? (rawFileName.toLowerCase().endsWith('.html') ? rawFileName : `${rawFileName}.html`)
+            : (code ? `${code}.html` : '');
+
+        return {
+            TITULO_FORMATO: title,
+            NOMBRE_ARCHIVO_HTML: fileName,
+            CODIGO_BASE: code,
+            VERSION: version,
+            VIGENCIA_MES_ANIO: vigencia
+        };
     };
 
     const escapeHtml = (text) => {
@@ -106,6 +164,11 @@
 
         output.value = generatedHtml;
         preview.innerHTML = extractBodyPreview(generatedHtml);
+        setDocumentDefaults({
+            TITULO_FORMATO: generatedTitle,
+            CODIGO_BASE: generatedCode,
+            NOMBRE_ARCHIVO_HTML: generatedOutputFileName
+        }, true);
         setAcceptDefaults(true);
         if (acceptAreaSelect && found.area) acceptAreaSelect.value = found.area;
 
@@ -233,6 +296,18 @@ textarea { resize: vertical; min-height: 30px; }
             .filter(Boolean);
     };
 
+    const META_KEYS = ['TITULO_FORMATO', 'NOMBRE_ARCHIVO_HTML', 'CODIGO_BASE', 'VERSION', 'VIGENCIA_MES_ANIO'];
+    const isMetaMarkerLine = (text) => /^\*{2,}$/.test(String(text || '').replace(/\s+/g, ' ').trim());
+    const isMetaDataLine = (text) => {
+        const match = String(text || '').replace(/\s+/g, ' ').trim().match(/^\[([A-Z0-9_]+)\]\s*:\s*(.*)$/i);
+        if (!match) return false;
+        return META_KEYS.includes(String(match[1] || '').toUpperCase());
+    };
+    const hasMetaKeyToken = (text) => {
+        const normalized = String(text || '').toUpperCase();
+        return META_KEYS.some((key) => normalized.includes(`[${key}]`));
+    };
+
     const isAsteriskMarker = (text) => /^\*{3,}$/.test(String(text || '').trim());
 
     const serializeNodeHtml = (node) => {
@@ -254,21 +329,33 @@ textarea { resize: vertical; min-height: 30px; }
         const nodes = Array.from(root.childNodes || []);
         let startMarker = -1;
         let endMarker = -1;
+        let inMeta = false;
+        let hasMetaPayload = false;
 
         for (let i = 0; i < nodes.length; i++) {
             const line = (nodes[i].textContent || '').replace(/\s+/g, ' ').trim();
-            if (!isAsteriskMarker(line)) continue;
 
-            if (startMarker === -1) {
-                startMarker = i;
-                continue;
+            if (isAsteriskMarker(line)) {
+                if (!inMeta) {
+                    inMeta = true;
+                    startMarker = i;
+                    continue;
+                }
+
+                if (!hasMetaPayload) {
+                    continue;
+                }
+
+                endMarker = i;
+                break;
             }
 
-            endMarker = i;
-            break;
+            if (inMeta && line) {
+                hasMetaPayload = true;
+            }
         }
 
-        if (startMarker === -1 || endMarker === -1 || endMarker <= startMarker) {
+        if (startMarker === -1 || endMarker === -1 || endMarker <= startMarker || !hasMetaPayload) {
             return { hasMetaBlock: false, meta: {}, contentHtml: rawHtml || '' };
         }
 
@@ -313,20 +400,32 @@ textarea { resize: vertical; min-height: 30px; }
 
         let startMarker = -1;
         let endMarker = -1;
+        let inMeta = false;
+        let hasMetaPayload = false;
 
         for (let i = 0; i < nodes.length; i++) {
             const text = (nodes[i].textContent || '').replace(/\s+/g, ' ').trim();
-            if (/^\*{3,}$/.test(text)) {
-                if (startMarker === -1) {
+            if (isMetaMarkerLine(text)) {
+                if (!inMeta) {
+                    inMeta = true;
                     startMarker = i;
-                } else {
-                    endMarker = i;
-                    break;
+                    continue;
                 }
+
+                if (!hasMetaPayload) {
+                    continue;
+                }
+
+                endMarker = i;
+                break;
+            }
+
+            if (inMeta && text) {
+                hasMetaPayload = true;
             }
         }
 
-        if (startMarker === -1 || endMarker === -1 || endMarker <= startMarker) {
+        if (startMarker === -1 || endMarker === -1 || endMarker <= startMarker || !hasMetaPayload) {
             return { hasMetaBlock: false, meta: {}, contentHtml: rawHtml || '' };
         }
 
@@ -351,6 +450,100 @@ textarea { resize: vertical; min-height: 30px; }
             meta,
             contentHtml: contentHtml || ''
         };
+    };
+
+    const extractMetaFromLinesFallback = (rawHtml) => {
+        const lines = htmlToLines(rawHtml);
+        const meta = {};
+
+        let startMarker = -1;
+        let endMarker = -1;
+        let inMeta = false;
+        let hasMetaPayload = false;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = String(lines[i] || '').trim();
+            if (isMetaMarkerLine(line)) {
+                if (!inMeta) {
+                    inMeta = true;
+                    startMarker = i;
+                    continue;
+                }
+
+                if (!hasMetaPayload) {
+                    continue;
+                }
+
+                endMarker = i;
+                break;
+            }
+
+            if (inMeta && line) {
+                hasMetaPayload = true;
+            }
+        }
+
+        const parseLine = (line) => {
+            const match = String(line || '').match(/^\[([A-Z0-9_]+)\]\s*:\s*(.*)$/i);
+            if (!match) return;
+            const key = String(match[1] || '').toUpperCase();
+            if (!META_KEYS.includes(key)) return;
+            meta[key] = (match[2] || '').trim();
+        };
+
+        if (startMarker !== -1 && endMarker !== -1 && endMarker > startMarker && hasMetaPayload) {
+            lines.slice(startMarker + 1, endMarker).forEach(parseLine);
+            return meta;
+        }
+
+        lines.forEach(parseLine);
+        return meta;
+    };
+
+    const extractLeadingMetaBlock = (rawHtml) => {
+        const lines = htmlToLines(rawHtml);
+        if (!lines.length) return { hasMetaBlock: false, meta: {} };
+
+        let start = -1;
+        for (let i = 0; i < lines.length; i++) {
+            const line = String(lines[i] || '').trim();
+            if (!line) continue;
+            if (isMetaMarkerLine(line)) {
+                start = i;
+            }
+            break;
+        }
+
+        if (start === -1) return { hasMetaBlock: false, meta: {} };
+
+        const meta = {};
+        let hasPayload = false;
+        let end = -1;
+
+        for (let i = start + 1; i < lines.length; i++) {
+            const line = String(lines[i] || '').trim();
+
+            if (isMetaMarkerLine(line)) {
+                if (!hasPayload) {
+                    continue;
+                }
+                end = i;
+                break;
+            }
+
+            if (!line) continue;
+            hasPayload = true;
+
+            const match = line.match(/^\[([A-Z0-9_]+)\]\s*:\s*(.*)$/i);
+            if (!match) continue;
+
+            const key = String(match[1] || '').toUpperCase();
+            if (!META_KEYS.includes(key)) continue;
+            meta[key] = (match[2] || '').trim();
+        }
+
+        const hasMeta = end !== -1 && hasPayload && Object.keys(meta).length > 0;
+        return { hasMetaBlock: hasMeta, meta: hasMeta ? meta : {} };
     };
 
     const parseTemplateData = (rawHtml) => {
@@ -585,11 +778,12 @@ textarea { resize: vertical; min-height: 30px; }
         const vig = (data.VIGENCIA_MES_ANIO || 'Ene2026').trim();
         const title = (data.TITULO_FORMATO || 'FORMATO DIGITALIZADO').trim();
         generatedTitle = title;
+        generatedVersion = version;
+        generatedVigencia = vig;
         const orientation = (data.ORIENTACION || 'Vertical').trim().toLowerCase();
         const builtSections = buildTemplateSectionsHtml(templateInfo.lines, templateInfo.sectionMarkers);
         const autoLandscape = builtSections.maxTableColumns >= 6;
         const orientationCss = (orientation.includes('horiz') || autoLandscape) ? '@page { size: landscape; }' : '@page { size: portrait; }';
-
         const sectionsHtml = builtSections.html;
         const legalLegend = 'El contenido de este documento es propiedad de “Xelle Scientific”, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.';
 
@@ -652,7 +846,6 @@ ${orientationCss}
             <div class="signature-box"><p>Realizó:</p><input type="text"><p>Firma</p></div>
             <div class="signature-box"><p>Verificó:</p><input type="text"><p>Firma</p></div>
         </div>
-
         <div class="legal-legend">${legalLegend}</div>
         <div class="footer">${escapeHtml(codeBase)} | Versión: ${escapeHtml(version)} | Vig: ${escapeHtml(vig)}</div>
     </div>
@@ -668,19 +861,48 @@ ${orientationCss}
 
         if (!root) return '';
 
+        {
+            const nodes = Array.from(root.childNodes || []);
+            let startMarker = -1;
+            let endMarker = -1;
+
+            for (let i = 0; i < nodes.length; i++) {
+                const text = (nodes[i].textContent || '').replace(/\s+/g, ' ').trim();
+                if (isMetaMarkerLine(text)) {
+                    if (startMarker === -1) {
+                        startMarker = i;
+                    } else {
+                        endMarker = i;
+                        break;
+                    }
+                }
+            }
+
+            if (startMarker !== -1 && endMarker !== -1 && endMarker >= startMarker) {
+                for (let i = startMarker; i <= endMarker; i++) {
+                    if (nodes[i]) nodes[i].remove();
+                }
+            }
+        }
+
         root.querySelectorAll('table').forEach((table) => {
             table.querySelectorAll('td').forEach((cell) => {
                 if (cell.querySelector('input, textarea, select')) return;
 
                 const text = cell.textContent.trim();
+                if (isMetaMarkerLine(text) || isMetaDataLine(text) || hasMetaKeyToken(text)) {
+                    cell.innerHTML = '';
+                    return;
+                }
                 const fieldName = `dgw_field_${fieldCounter++}`;
+                const placeholder = escapeHtml(text || 'Captura aquí');
 
                 if (text.length > 40) {
-                    cell.innerHTML = `<textarea class="cedit" name="${fieldName}" rows="2" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}">${escapeHtml(text)}</textarea>`;
+                    cell.innerHTML = `<textarea class="cedit" name="${fieldName}" rows="2" placeholder="${placeholder}" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}"></textarea>`;
                     return;
                 }
 
-                cell.innerHTML = `<input class="cedit" name="${fieldName}" value="${escapeHtml(text)}" placeholder="Captura aquí">`;
+                cell.innerHTML = `<input class="cedit" name="${fieldName}" value="" placeholder="${placeholder}">`;
             });
         });
 
@@ -690,15 +912,20 @@ ${orientationCss}
 
             const text = node.textContent.trim();
             if (!text) return;
+            if (isMetaMarkerLine(text) || isMetaDataLine(text) || hasMetaKeyToken(text)) {
+                node.remove();
+                return;
+            }
 
             const fieldName = `dgw_field_${fieldCounter++}`;
             const label = escapeHtml(text.slice(0, 80));
+            const placeholder = escapeHtml(text || 'Captura aquí');
 
             if (text.length > 80) {
                 node.innerHTML = `
                     <div class="dgw-field-wrap">
                         <label class="dgw-field-label">${label}</label>
-                        <textarea class="cedit" name="${fieldName}" rows="3" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}">${escapeHtml(text)}</textarea>
+                        <textarea class="cedit" name="${fieldName}" rows="3" placeholder="${placeholder}" oninput="if(window.App?.Universal?.autoResize){App.Universal.autoResize(this)}"></textarea>
                     </div>
                 `;
                 return;
@@ -707,7 +934,7 @@ ${orientationCss}
             node.innerHTML = `
                 <div class="dgw-field-wrap">
                     <label class="dgw-field-label">${label}</label>
-                    <input class="cedit" name="${fieldName}" value="${escapeHtml(text)}" placeholder="Captura aquí">
+                    <input class="cedit" name="${fieldName}" value="" placeholder="${placeholder}">
                 </div>
             `;
         });
@@ -738,12 +965,13 @@ ${orientationCss}
         const today = new Date().toISOString().split('T')[0];
         const fillableContent = buildFillableContent(rawHtml);
         const legalLegend = 'El contenido de este documento es propiedad de “Xelle Scientific”, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.';
-        const hasMeta = externalMeta && Object.keys(externalMeta).length > 0;
         const title = (externalMeta.TITULO_FORMATO || 'DOCUMENTO DIGITALIZADO DESDE WORD').trim();
         generatedTitle = title;
         const codeBase = (externalMeta.CODIGO_BASE || docCode).trim();
         const version = (externalMeta.VERSION || '1.0').trim();
         const vig = (externalMeta.VIGENCIA_MES_ANIO || 'Ene2026').trim();
+        generatedVersion = version;
+        generatedVigencia = vig;
         const metaFileName = (externalMeta.NOMBRE_ARCHIVO_HTML || '').trim();
         const outputName = metaFileName || generatedOutputFileName || `documento-digitalizado-${codeBase}.html`;
 
@@ -814,24 +1042,14 @@ ${orientationCss}
             <div class="metadata">Código: ${escapeHtml(codeBase)} | Versión: ${escapeHtml(version)} | Vig: ${escapeHtml(vig)} | Fuente: Word (.docx)</div>
         </div>
 
-        ${hasMeta ? '' : `
-        <div class="section required-meta">
-            <div class="section-title">Datos obligatorios</div>
-            <table>
-                <tbody>
-                    <tr><td width="35%"><strong>[TITULO_FORMATO]</strong></td><td><input class="cedit" name="TITULO_FORMATO" placeholder="Título del formato"></td></tr>
-                    <tr><td width="35%"><strong>[NOMBRE_ARCHIVO_HTML]</strong></td><td><input class="cedit" name="NOMBRE_ARCHIVO_HTML" value="${escapeHtml(outputName)}"></td></tr>
-                    <tr><td width="35%"><strong>[CODIGO_BASE]</strong></td><td><input class="cedit" name="CODIGO_BASE" value="${escapeHtml(codeBase)}"></td></tr>
-                    <tr><td width="35%"><strong>[VERSION]</strong></td><td><input class="cedit" name="VERSION" placeholder="1.0"></td></tr>
-                    <tr><td width="35%"><strong>[VIGENCIA_MES_ANIO]</strong></td><td><input class="cedit" name="VIGENCIA_MES_ANIO" placeholder="Ene2026"></td></tr>
-                </tbody>
-            </table>
-        </div>
-        `}
-
         <div class="section word-content">
             <div class="section-title">Contenido digitalizado</div>
             ${fillableContent || '<p>No se pudo extraer contenido visible.</p>'}
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box"><p>Realizó:</p><input type="text"><p>Firma</p></div>
+            <div class="signature-box"><p>Verificó:</p><input type="text"><p>Firma</p></div>
         </div>
 
         <div class="legal-legend">${legalLegend}</div>
@@ -871,23 +1089,48 @@ ${orientationCss}
             const result = await window.mammoth.convertToHtml({ arrayBuffer: buffer });
             generatedOutputFileName = '';
 
+            const manualMeta = getDocumentMetaFromInputs(true);
+            if (!manualMeta) {
+                setStatus('Completa los datos de documento.');
+                return;
+            }
+
             const extracted = extractExternalMetaBlock(result.value || '');
             const htmlAfterExternal = extracted.hasMetaBlock ? extracted.contentHtml : (result.value || '');
             const inlineExtracted = extractInlineMetaBlock(htmlAfterExternal);
 
             const sourceHtml = inlineExtracted.hasMetaBlock ? inlineExtracted.contentHtml : htmlAfterExternal;
-            const mergedMeta = { ...(inlineExtracted.meta || {}), ...(extracted.meta || {}) };
+            const mergedMeta = { ...(manualMeta || {}) };
 
             const templateInfo = parseTemplateData(sourceHtml);
             const forceTemplateMode = modeTemplate && modeTemplate.value === 'force';
+            const hasTemplateStructure = Boolean(
+                templateInfo?.isTemplate
+                || (Array.isArray(templateInfo?.sectionMarkers) && templateInfo.sectionMarkers.length > 0)
+            );
 
             if (templateInfo.isTemplate || forceTemplateMode) {
+                if (forceTemplateMode && !hasTemplateStructure) {
+                    generatedCode = mergedMeta.CODIGO_BASE || buildDocumentCode(file.name);
+                    generatedOutputFileName = mergedMeta.NOMBRE_ARCHIVO_HTML
+                        ? (mergedMeta.NOMBRE_ARCHIVO_HTML.toLowerCase().endsWith('.html')
+                            ? mergedMeta.NOMBRE_ARCHIVO_HTML
+                            : `${mergedMeta.NOMBRE_ARCHIVO_HTML}.html`)
+                        : `documento-digitalizado-${generatedCode || 'word'}.html`;
+                    generatedHtml = normalizeHtml(sourceHtml, generatedCode, mergedMeta);
+                    output.value = generatedHtml;
+                    preview.innerHTML = buildFillableContent(sourceHtml) || '<p>No se pudo extraer contenido visible.</p>';
+                    setStatus('Modo plantilla sin estructura detectable: se aplicó digitalización completa del documento.');
+                    setAcceptDefaults(true);
+                    return;
+                }
+
                 const autoDetectMetaOverrides = mergedMeta;
                 generatedHtml = buildTemplateDrivenHtml(templateInfo, autoDetectMetaOverrides);
                 output.value = generatedHtml;
                 preview.innerHTML = forceTemplateMode
-                    ? '<p><strong>Modo plantilla forzado:</strong> se aplicó mapeo de plantilla de forma manual.</p>'
-                    : '<p><strong>Modo plantilla detectado:</strong> se aplicó mapeo automático de título, código, versión, vigencia, barcode y secciones.</p>';
+                    ? '<p><strong>Modo plantilla forzado:</strong> se aplicaron reglas de plantilla para construir secciones y campos.</p>'
+                    : '<p><strong>Modo plantilla detectado:</strong> se aplicaron reglas de plantilla para construir secciones y campos.</p>';
 
                 if (result.messages && result.messages.length > 0) {
                     setStatus(`${forceTemplateMode ? 'Plantilla forzada' : 'Plantilla detectada'} y procesada. Código base: ${generatedCode}. Avisos: ${result.messages.length}.`);
@@ -909,9 +1152,9 @@ ${orientationCss}
             preview.innerHTML = buildFillableContent(sourceHtml) || '<p>No se pudo extraer contenido visible.</p>';
 
             if (result.messages && result.messages.length > 0) {
-                setStatus(`Digitalización completada (${generatedCode}) con campos llenables. Avisos: ${result.messages.length}.`);
+                setStatus(`Digitalización completada (${generatedCode}) con campos vacíos generados. Avisos: ${result.messages.length}.`);
             } else {
-                setStatus(`Digitalización completada correctamente. Código: ${generatedCode} con campos llenables.`);
+                setStatus(`Digitalización completada correctamente. Código: ${generatedCode} con campos vacíos generados.`);
             }
             setAcceptDefaults(true);
         } catch (error) {
@@ -977,5 +1220,6 @@ ${orientationCss}
     });
 
     setAcceptDefaults();
+    setDocumentDefaults();
     loadDocumentFromQuery();
 })();

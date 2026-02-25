@@ -492,6 +492,21 @@ const App = {
                 const fechaOperacion = document.getElementById('fecha_operacion')?.value;
                 if (!fechaOperacion || !Array.isArray(dosisRows)) return;
 
+                const reg24Input = document.getElementById('reg-24');
+                let folio = (reg24Input?.value || '').trim();
+                if (!folio) {
+                    const now = new Date();
+                    const hh = String(now.getHours()).padStart(2, '0');
+                    const mm = String(now.getMinutes()).padStart(2, '0');
+                    const ss = String(now.getSeconds()).padStart(2, '0');
+                    folio = `${fechaOperacion.replace(/-/g, '')}${hh}${mm}${ss}`;
+                    if (reg24Input) {
+                        reg24Input.value = folio;
+                        reg24Input.dispatchEvent(new Event('input'));
+                    }
+                }
+                const barcodeCode = `FO-LC-24-${folio}`;
+
                 const grouped = {};
                 dosisRows.forEach(row => {
                     if (row.observaciones) return;
@@ -529,12 +544,38 @@ const App = {
 
                 const payload = {
                     fechaOperacion,
+                    folio,
+                    barcodeCode,
                     generatedAt: new Date().toISOString(),
+                    dosisRows,
                     items
                 };
 
                 localStorage.setItem(`xelle_fo_lc_24_daily_${fechaOperacion}`, JSON.stringify(payload));
+                localStorage.setItem(`xelle_fo_lc_24_daily_${fechaOperacion}_${folio}`, JSON.stringify(payload));
                 localStorage.setItem('xelle_fo_lc_24_daily_latest', JSON.stringify(payload));
+
+                const recordsRaw = localStorage.getItem('xelle_fo_lc_24_records');
+                let records = [];
+                try {
+                    const parsed = JSON.parse(recordsRaw || '[]');
+                    if (Array.isArray(parsed)) records = parsed;
+                } catch (e) { }
+
+                const idx = records.findIndex(r => (r?.barcodeCode || '') === barcodeCode && (r?.fechaOperacion || '') === fechaOperacion);
+                const record = {
+                    fechaOperacion,
+                    folio,
+                    barcodeCode,
+                    savedAt: payload.generatedAt,
+                    dosisRows,
+                    items
+                };
+
+                if (idx >= 0) records[idx] = record;
+                else records.push(record);
+
+                localStorage.setItem('xelle_fo_lc_24_records', JSON.stringify(records));
             }
         },
 

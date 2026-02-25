@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-47 Revisión Calidad Muestreo</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 12px; margin-top: 15px; border-radius: 4px; }
+        .pasa { background-color: #dcfce7; color: #166534; font-weight: bold; }
+        .falla { background-color: #fee2e2; color: #991b1b; font-weight: bold; }
+    </style>
+</head>
+<body id="doc-fo-lc-47">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container"><svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg></div>
+            <div class="registry-container">
+                <label>Folio Revisión</label>
+                <div class="registry-wrapper"><span class="registry-prefix">FO-LC-47-</span><input type="text" id="reg-47" class="registry-input generate-barcode" data-target="barcode-47" data-prefix="FO-LC-47-" placeholder="000"></div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-47" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>REGISTRO REVISIÓN DE CALIDAD DE MUESTREO</h1>
+            <div class="metadata">Código: FO-LC-47 | Versión: 01</div>
+        </div>
+
+        <div class="section-header">1. DATOS DE IDENTIFICACIÓN</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td><strong>Ref. Muestreo (FO-LC-46):</strong></td><td><input class="cedit"></td>
+                    <td><strong>Orden Producción/Compra:</strong></td><td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><strong>Nombre Insumo/Producto:</strong></td><td><input class="cedit"></td>
+                    <td><strong>Proveedor:</strong></td><td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><strong>Lote / Serie:</strong></td><td><input class="cedit"></td>
+                    <td><strong>Fecha Caducidad:</strong></td><td><input type="date" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><strong>Fecha Inspección:</strong></td><td><input type="date" class="cedit"></td>
+                    <td colspan="2"><strong>Hora Inicio:</strong> <input type="time" class="cedit"> <strong>Fin:</strong> <input type="time" class="cedit"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. INSPECCIÓN FÍSICA / VISUAL</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead><tr><th>Categoría</th><th>Atributo a Evaluar</th><th>Especificación</th><th>Conformidad</th></tr></thead>
+                <tbody>
+                    <tr><td rowspan="4" style="background:#f8fafc; font-weight:bold;">ENVASE SECUNDARIO (Caja)</td>
+                        <td>Integridad Empaque</td><td>Sin deformaciones, rasgaduras o humedad</td>
+                        <td><select class="cedit" onchange="colorStatus(this)"><option>PASA</option><option>FALLA</option><option>N/A</option></select></td>
+                    </tr>
+                    <tr><td>Sellos de Seguridad</td><td>Intactos, sin alteraciones</td>
+                        <td><select class="cedit" onchange="colorStatus(this)"><option>PASA</option><option>FALLA</option><option>N/A</option></select></td></tr>
+                    <tr><td>Etiquetado Secundario</td><td>Legible, sin arrugas ni corrimientos</td>
+                        <td><select class="cedit" onchange="colorStatus(this)"><option>PASA</option><option>FALLA</option><option>N/A</option></select></td></tr>
+                    <tr><td>Datos Variables</td><td>Lote/Caducidad concuerdan con Orden</td>
+                        <td><select class="cedit" onchange="colorStatus(this)"><option>PASA</option><option>FALLA</option><option>N/A</option></select></td></tr>
+                    
+                    <tr><td rowspan="3" style="background:#f1f5f9; font-weight:bold;">ENVASE PRIMARIO (Vial)</td>
+                        <td>Integridad Envase</td><td>Sin fisuras, roturas o defectos</td>
+                        <td><select class="cedit" onchange="colorStatus(this)"><option>PASA</option><option>FALLA</option><option>N/A</option></select></td></tr>
+                    <tr><td>Hermeticidad/Cierre</td><td>Sellos fijos, sin fugas ni derrames</td>
+                        <td><select class="cedit" onchange="colorStatus(this)"><option>PASA</option><option>FALLA</option><option>N/A</option></select></td></tr>
+                    <tr><td>Etiquetado Primario</td><td>Firme, Lote/Cad legibles y coincidentes</td>
+                        <td><select class="cedit" onchange="colorStatus(this)"><option>PASA</option><option>FALLA</option><option>N/A</option></select></td></tr>
+
+                    <tr><td rowspan="4" style="background:#e2e8f0; font-weight:bold;">PRODUCTO (Contenido)</td>
+                        <td>Apariencia Física</td><td>Acorde a esp. (líquido, liofilizado)</td>
+                        <td><select class="cedit" onchange="colorStatus(this)"><option>PASA</option><option>FALLA</option><option>N/A</option></select></td></tr>
+                    <tr><td>Coloración</td><td>Característico acorde a certificado</td>
+                        <td><select class="cedit" onchange="colorStatus(this)"><option>PASA</option><option>FALLA</option><option>N/A</option></select></td></tr>
+                    <tr><td>Partículas Extrañas</td><td>Ausencia de fibras, turbidez atípica</td>
+                        <td><select class="cedit" onchange="colorStatus(this)"><option>PASA</option><option>FALLA</option><option>N/A</option></select></td></tr>
+                    <tr><td>Volumen/Llenado</td><td>Consistente visualmente entre muestras</td>
+                        <td><select class="cedit" onchange="colorStatus(this)"><option>PASA</option><option>FALLA</option><option>N/A</option></select></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">3. DICTAMEN DE CALIDAD DEL MUESTREO</div>
+        <div class="section" style="border: 2px solid #1E3A5F; padding:10px; background:#f8fafc; display:flex; justify-content:space-between; align-items:center;">
+            <div style="width:65%;">
+                <label><strong>Observaciones:</strong></label>
+                <textarea class="cedit" rows="2" style="width:100%"></textarea>
+            </div>
+            <div style="width:30%;">
+                <label style="font-weight:bold;">ESTATUS POST-MUESTREO:</label>
+                <select class="cedit" style="font-size:13px; font-weight:bold; width:100%; padding:5px;">
+                    <option>EN CUARENTENA (Espera de Analítica)</option>
+                    <option>RECHAZADO EN MUESTREO (Abrir CAPA)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box"><p>Muestreado por</p><input type="text"><p>Analista / Operador</p></div>
+            <div class="signature-box"><p>Verificado por</p><input type="text"><p>Jefe de Calidad</p></div>
+        </div>
+
+        <div class="footer">FO-LC-47 | Versión: 01 | Revisión Calidad Muestreo | Xelle Scientific</div>
+    </div>
+    <script>
+        function colorStatus(sel) {
+            if(sel.value === 'PASA') { sel.className='cedit pasa'; }
+            else if(sel.value === 'FALLA') { sel.className='cedit falla'; }
+            else { sel.className='cedit'; }
+        }
+    </script>
+</body>
+</html>

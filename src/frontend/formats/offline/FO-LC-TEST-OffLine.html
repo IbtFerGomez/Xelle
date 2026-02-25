@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-TEST</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app-OffLine.js"></script>
+</head>
+
+<body id="doc-fo-lc-test">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <h2>XELLE TEST</h2>
+            </div>
+            <div class="registry-container">
+                <label>Registro Prueba</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-TEST-</span>
+                    <input type="text" id="reg-test" class="registry-input generate-barcode" data-target="barcode-test"
+                        data-prefix="FO-LC-TEST-" placeholder="001">
+                </div>
+                <input type="text" class="registry-date no-auto-date">
+                <svg id="barcode-test" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>FORMATO DE PRUEBA DE PERSISTENCIA</h1>
+            <div class="metadata">Código: FO-LC-TEST | Versión: 1.0</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Datos</div>
+            <table class="no-border-table">
+                <tr>
+                    <td><strong>Nombre:</strong> <input id="test-name" class="cedit"></td>
+                    <td><strong>Fecha:</strong> <input id="test-date" type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Observaciones:</strong> <textarea id="test-notes" class="cedit"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

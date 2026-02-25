@@ -21,7 +21,12 @@ const Core = {
             const sanitizedCurrent = currentFormats.filter(format => {
                 const code = String(format.code || '').trim().toUpperCase();
                 const file = String(format.file || '').trim();
-                return !(code === 'DGW-TOOL' || file === 'formats/digitalizar-word.html');
+                return !(
+                    code === 'DGW-TOOL'
+                    || file === 'formats/digitalizar-word.html'
+                    || code === 'FO-LC-TEST'
+                    || file === 'formats/FO-LC-TEST.html'
+                );
             });
 
             const currentByFile = new Map(sanitizedCurrent.map(f => [f.file, f]));

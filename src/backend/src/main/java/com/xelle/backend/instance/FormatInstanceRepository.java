@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface FormatInstanceRepository extends JpaRepository<FormatInstanceEntity, Long> {
     Optional<FormatInstanceEntity> findByUniqueCode(String uniqueCode);
 
+    List<FormatInstanceEntity> findByFormatTypeIgnoreCase(String formatType);
+
     List<FormatInstanceEntity> findTop500ByOrderByUpdatedAtDesc();
 
     long countByFormatTypeAndCreatedAtBetween(String formatType, OffsetDateTime from, OffsetDateTime to);

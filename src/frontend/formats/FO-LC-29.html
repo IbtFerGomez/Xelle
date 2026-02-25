@@ -1,23 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>FO-LC-29 Registro Diario de Dosificación</title>
+    <title>FO-LC-29 Registro de Lote de Producto Terminado (Celular)</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
-        .section-title { background-color: #2c3e50; color: white; padding: 5px 10px; font-weight: bold; margin-top: 15px; font-size: 12px; }
-        .calc-output { background-color: #f0f4f8; font-weight: bold; color: #333; }
-        .sig-block { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; background: #f9f9f9; }
-        
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 12px;
+        }
+
+        .calc-output {
+            background-color: #f0f4f8;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .sig-block {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+        }
+
         /* Ocultar placeholders al imprimir */
         @media print {
-            input::placeholder, textarea::placeholder { color: transparent !important; opacity: 0 !important; }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
+            }
         }
     </style>
 </head>
+
 <body id="doc-fo-lc-29">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
@@ -28,13 +53,43 @@
     <div class="container">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .svg-logo-titulo {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .svg-logo-subtitulo {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .svg-logo-celula {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
+                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
+                        <path class="svg-logo-celula"
+                            d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z" />
+                    </g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68"
+                        class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35"
+                        font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
             </div>
             <div class="registry-container">
                 <label>Folio Diario</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-29-</span>
-                    <input type="text" id="reg-29" class="registry-input generate-barcode" data-target="barcode-29" placeholder="Lote Final">
+                    <input type="text" id="reg-29" class="registry-input generate-barcode" data-target="barcode-29"
+                        data-prefix="FO-LC-29-" placeholder="Lote Final">
                 </div>
                 <input type="date" class="registry-date no-auto-date">
                 <svg id="barcode-29" class="barcode-svg"></svg>
@@ -42,60 +97,61 @@
         </div>
 
         <div class="header-main">
-            <h1>REGISTRO DIARIO DE DOSIFICACIÓN.</h1>
+            <h1>REGISTRO DE LOTE DE PRODUCTO TERMINADO (CELULAR)</h1>
             <div class="metadata">Código: FO-LC-29 | Versión: 1.0 | Vig: Ene2026</div>
         </div>
 
         <div style="margin-bottom:10px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
             <strong>Fecha de Registro Diario:</strong>
-            <input type="date" id="fecha-dia-29" class="cedit" style="width:170px;" onchange="loadDailyDosificacion()">
-            <button class="btn btn-primary btn-mini no-print" onclick="loadDailyDosificacion()">Cargar desde FO-LC-24</button>
+            <input type="date" id="fecha-dia-29" class="cedit" style="width:170px;">
+            <button class="btn btn-primary btn-mini no-print" onclick="pickFo24RecordAndLoad()">Cargar FO-LC-24</button>
+            <button class="btn btn-success btn-mini no-print" onclick="addManualDosis29()">+ Dosis Manual</button>
         </div>
 
         <div class="section">
-            <div class="section-title">1. INFORMACIÓN GENERAL DEL PRODUCTO</div>
-            <table class="no-border-table">
-                <tr>
-                    <td width="35%"><strong>Nombre del Producto:</strong> 
-                        <select id="prod-select" class="cedit" onchange="updateProductLogic()">
-                            <option value="">- Seleccione -</option>
-                            <option value="STEM">Stem Xelle (Estándar)</option>
-                            <option value="ORTHO">Stem Ortho (Xelle)</option>
-                            <option value="HYBRID">Hybrid Xelle (Estándar)</option>
-                            <option value="HYBRID_ORTHO">Hybrid Ortho</option>
-                        </select>
-                    </td>
-                    <td width="20%"><strong>Conteo (M/mL):</strong> <input type="number" id="cell-conc" class="cedit" oninput="calcTotalCells()" placeholder="M/mL"></td>
-                    <td width="20%"><strong>Volumen Lote (mL):</strong> <input type="number" id="lot-vol" class="cedit" oninput="calcTotalCells()" placeholder="mL"></td>
-                    <td style="background-color:#e8f8f5;"><strong>Total Células (M):</strong> <input id="total-cells" class="cedit calc-output" readonly></td>
-                </tr>
-                <tr>
-                    <td><strong>Número de Lote:</strong> <input class="cedit" id="lote-auto" placeholder="Prefijo + AAMMDD"></td>
-                    <td><strong>Fecha Fabricación:</strong> <input type="date" id="fecha-fab" class="cedit" onchange="updateProductLogic()"></td>
-                    <td><strong>Fecha Vencimiento:</strong> <input type="date" id="fecha-venc" class="cedit"></td>
-                </tr>
+            <div class="section-title">1. DOSIS PREPARADAS (INTERRELACIONADO CON FO-LC-24)</div>
+            <table id="tbl-dosis-29" class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="3%">#</th>
+                        <th width="12%">Producto</th>
+                        <th width="15%">Cód. Origen</th>
+                        <th width="10%">Caducidad</th>
+                        <th width="10%">Lote</th>
+                        <th width="8%">Pres.</th>
+                        <th width="8%">No. Células</th>
+                        <th width="8%">Cód. Venta</th>
+                        <th width="14%">CÓDIGO ÚNICO</th>
+                        <th width="9%">Observaciones</th>
+                        <th width="3%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6" style="text-align:right; font-weight:bold;">TOTAL DOSIS:</td>
+                        <td><input type="number" id="total-dosis-29" class="cedit calc-output" readonly value="0"></td>
+                        <td colspan="4"></td>
+                    </tr>
+                </tfoot>
             </table>
 
-            <div style="margin-top:10px; border-top:1px solid #ddd; padding-top:5px;">
-                <strong>Detalle Diario de Presentaciones (FO-LC-24):</strong>
-                <table id="tbl-presentaciones" class="compact-table" style="margin-top:5px;">
-                    <thead>
-                        <tr>
-                            <th width="22%">Producto</th>
-                            <th width="22%">Presentación</th>
-                            <th width="12%">Cantidad de Dosis</th>
-                            <th width="22%">Lotes Reportados</th>
-                            <th width="22%">Códigos Únicos</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="2" style="text-align:right; font-weight:bold;">TOTAL DOSIS DEL DÍA:</td>
-                            <td><input type="number" id="total-teorico-global" class="cedit calc-output" readonly value="0"></td>
-                            <td colspan="2"></td>
-                        </tr>
-                    </tfoot>
+            <div style="margin-top:10px; border-top:1px solid #ddd; padding-top:8px;">
+                <table class="compact-table">
+                    <tr>
+                        <td><strong>Células Totales:</strong> <input id="cell-total-29" class="cedit calc-output"
+                                readonly></td>
+                        <td><strong>Volumen Total:</strong> <input id="volume-total-29" class="cedit" placeholder="mL">
+                        </td>
+                        <td><strong>Exos Total:</strong> <input id="exo-total-29" class="cedit calc-output" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fecha Fabricación:</strong> <input type="date" id="fecha-fab-29" class="cedit"></td>
+                        <td><strong>Fecha Vencimiento:</strong> <input type="date" id="fecha-venc-29" class="cedit">
+                        </td>
+                        <td></td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -103,7 +159,17 @@
         <div class="section">
             <div class="section-title">2. COMPONENTES DEL PRODUCTO (GRANEL / ORIGEN)</div>
             <table id="tbl-componentes" class="compact-table">
-                <thead><tr><th width="25%">Componente</th><th width="20%">Proveedor / Origen</th><th width="15%">Lote</th><th width="15%">Caducidad</th><th width="10%">Cantidad</th><th width="10%">Unidad</th><th class="no-print" width="5%"></th></tr></thead>
+                <thead>
+                    <tr>
+                        <th width="25%">Componente</th>
+                        <th width="20%">Proveedor / Origen</th>
+                        <th width="15%">Lote</th>
+                        <th width="15%">Caducidad</th>
+                        <th width="10%">Cantidad</th>
+                        <th width="10%">Unidad</th>
+                        <th class="no-print" width="5%"></th>
+                    </tr>
+                </thead>
                 <tbody></tbody>
             </table>
             <button class="btn btn-primary btn-mini no-print" onclick="addCompRow()">+ Agregar Componente</button>
@@ -112,7 +178,16 @@
         <div class="section">
             <div class="section-title">3. MATERIALES DE ACONDICIONAMIENTO</div>
             <table id="tbl-materiales" class="compact-table">
-                <thead><tr><th width="25%">Producto</th><th width="20%">Tipo</th><th width="15%">Lote</th><th width="15%">Caducidad</th><th width="15%">Cantidad</th><th class="no-print" width="5%"></th></tr></thead>
+                <thead>
+                    <tr>
+                        <th width="25%">Producto</th>
+                        <th width="20%">Tipo</th>
+                        <th width="15%">Lote</th>
+                        <th width="15%">Caducidad</th>
+                        <th width="15%">Cantidad</th>
+                        <th class="no-print" width="5%"></th>
+                    </tr>
+                </thead>
                 <tbody></tbody>
             </table>
             <button class="btn btn-primary btn-mini no-print" onclick="addMatRow()">+ Agregar Material</button>
@@ -125,7 +200,18 @@
                 <strong>REF:</strong> <input class="cedit" style="width: 150px;" placeholder="Referencia SOP...">
             </div>
             <table id="tbl-control" class="compact-table">
-                <thead><tr><th width="5%">ID (#)</th><th width="30%">Muestra / Verificación (Parámetro)</th><th width="10%">Código</th><th width="20%">Especificación</th><th width="10%">Resultado</th><th width="15%">Observaciones</th><th width="10%">Responsable</th><th class="no-print"></th></tr></thead>
+                <thead>
+                    <tr>
+                        <th width="5%">ID (#)</th>
+                        <th width="30%">Muestra / Verificación (Parámetro)</th>
+                        <th width="10%">Código</th>
+                        <th width="20%">Especificación</th>
+                        <th width="10%">Resultado</th>
+                        <th width="15%">Observaciones</th>
+                        <th width="10%">Responsable</th>
+                        <th class="no-print"></th>
+                    </tr>
+                </thead>
                 <tbody></tbody>
             </table>
             <button class="btn btn-primary btn-mini no-print" onclick="addControlRow()">+ Control</button>
@@ -134,19 +220,54 @@
         <div class="section">
             <div class="section-title">6. RECONCILIACIÓN DE PRODUCTO</div>
             <table class="compact-table">
-                <tr><td width="40%"><strong>Total Producto Terminado Obtenido (Suma Unidades):</strong></td><td><input type="number" id="cant-real" class="cedit" oninput="calcYield()" placeholder="0"></td></tr>
-                <tr><td><strong>Mermas / Descarte Justificado:</strong></td><td><input type="number" class="cedit" placeholder="0"></td></tr>
-                <tr><td><strong>Causas:</strong></td><td><textarea class="cedit" rows="1" placeholder="Explique las causas..."></textarea></td></tr>
-                <tr><td style="background-color: #e8f6f3;"><strong>% Rendimiento:</strong></td><td style="background-color: #e8f6f3;"><input id="yield-percent" class="cedit calc-output" readonly></td></tr>
+                <tr>
+                    <td width="40%"><strong>Total Producto Terminado Obtenido (Suma Unidades):</strong></td>
+                    <td><input type="number" id="cant-real" class="cedit" oninput="calcYield()" placeholder="0"></td>
+                </tr>
+                <tr>
+                    <td><strong>Mermas / Descarte Justificado:</strong></td>
+                    <td><input type="number" class="cedit" placeholder="0"></td>
+                </tr>
+                <tr>
+                    <td><strong>Causas:</strong></td>
+                    <td><textarea class="cedit" rows="1" placeholder="Explique las causas..."></textarea></td>
+                </tr>
+                <tr>
+                    <td style="background-color: #e8f6f3;"><strong>% Rendimiento:</strong></td>
+                    <td style="background-color: #e8f6f3;"><input id="yield-percent" class="cedit calc-output" readonly>
+                    </td>
+                </tr>
             </table>
-            <div style="margin-top:5px;"><strong>Conclusión:</strong> <label><input type="radio" name="yield_status"> Dentro de límites</label> <label><input type="radio" name="yield_status"> Fuera de límites</label></div>
+            <div style="margin-top:5px;"><strong>Conclusión:</strong> <label><input type="radio" name="yield_status">
+                    Dentro de límites</label> <label><input type="radio" name="yield_status"> Fuera de límites</label>
+            </div>
         </div>
 
         <div class="section">
             <div class="section-title">7. VERIFICACIONES Y APROBACIONES</div>
-            <div class="sig-block"><p><strong>Operador(es):</strong></p><div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text" class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input type="text" class="cedit" style="flex:1" placeholder="Firma"><span style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div></div>
-            <div class="sig-block"><p><strong>Supervisor:</strong> Verificó Proc: <label><input type="checkbox"> Sí</label> <label><input type="checkbox"> No</label></p><div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text" class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input type="text" class="cedit" style="flex:1" placeholder="Firma"><span style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div></div>
-            <div class="sig-block"><p><strong>Calidad (Liberación):</strong> Datos completos/Cumple: <label><input type="checkbox"> Sí</label> <label><input type="checkbox"> No</label></p><div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text" class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input type="text" class="cedit" style="flex:1" placeholder="Firma"><span style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div></div>
+            <div class="sig-block">
+                <p><strong>Operador(es):</strong></p>
+                <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
+                        class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
+                        type="text" class="cedit" style="flex:1" placeholder="Firma"><span
+                        style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div>
+            </div>
+            <div class="sig-block">
+                <p><strong>Supervisor:</strong> Verificó Proc: <label><input type="checkbox"> Sí</label> <label><input
+                            type="checkbox"> No</label></p>
+                <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
+                        class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
+                        type="text" class="cedit" style="flex:1" placeholder="Firma"><span
+                        style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div>
+            </div>
+            <div class="sig-block">
+                <p><strong>Calidad (Liberación):</strong> Datos completos/Cumple: <label><input type="checkbox">
+                        Sí</label> <label><input type="checkbox"> No</label></p>
+                <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
+                        class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
+                        type="text" class="cedit" style="flex:1" placeholder="Firma"><span
+                        style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div>
+            </div>
         </div>
 
         <div class="section">
@@ -154,163 +275,162 @@
             <textarea class="cedit" rows="3" placeholder="Ninguna"></textarea>
         </div>
 
-        <div class="footer">FO-LC-29 | Versión: 1.0 | Vigente a partir de: Enero2026<br>Propiedad de “Xelle Scientific”.</div>
+        <div class="footer">FO-LC-29 | Versión: 1.0 | Vigente a partir de: Enero2026<br>Propiedad de “Xelle Scientific”.
+        </div>
     </div>
 
     <script>
-        const productRules = {
-            'STEM': { prefix: 'XCM', days: 4 }, 'ORTHO': { prefix: 'XOR', days: 4 },
-            'HYBRID': { prefix: 'XHY', days: 4 }, 'HYBRID_ORTHO': { prefix: 'XHO', days: 4 }
-        };
-
-        function updateProductLogic() {
-            const code = document.getElementById('prod-select').value;
-            const dateStr = document.getElementById('fecha-fab').value;
-            if (!code || !productRules[code] || !dateStr) return;
-            
-            const rule = productRules[code];
-            const dateObj = new Date(dateStr);
-            const userTimezoneOffset = dateObj.getTimezoneOffset() * 60000;
-            const localDate = new Date(dateObj.getTime() + userTimezoneOffset);
-
-            if(!document.getElementById('lote-auto').value) {
-                const yy = String(localDate.getFullYear()).slice(2);
-                const mm = String(localDate.getMonth() + 1).padStart(2, '0');
-                const dd = String(localDate.getDate()).padStart(2, '0');
-                document.getElementById('lote-auto').value = `${rule.prefix}${yy}${mm}${dd}`;
-            }
-
-            let expDate = new Date(localDate);
-            expDate.setDate(expDate.getDate() + rule.days);
-            
-            const e_yyyy = expDate.getFullYear();
-            const e_mm = String(expDate.getMonth() + 1).padStart(2, '0');
-            const e_dd = String(expDate.getDate()).padStart(2, '0');
-            document.getElementById('fecha-venc').value = `${e_yyyy}-${e_mm}-${e_dd}`;
-        }
-
-        function calcTotalCells() {
-            const conc = parseFloat(document.getElementById('cell-conc').value) || 0;
-            const vol = parseFloat(document.getElementById('lot-vol').value) || 0;
-            document.getElementById('total-cells').value = (conc * vol).toFixed(2);
-        }
-
-        // Suma total de dosis del día
         function calcTotalTeorico() {
-            let total = 0;
-            document.querySelectorAll('.qty-pres').forEach(input => {
-                total += parseFloat(input.value) || 0;
-            });
-            document.getElementById('total-teorico-global').value = total;
-            if (!document.getElementById('cant-real').value) document.getElementById('cant-real').value = total;
+            const totalDosis = document.querySelectorAll('#tbl-dosis-29 tbody tr').length;
+            document.getElementById('total-dosis-29').value = totalDosis;
+            if (!document.getElementById('cant-real').value) document.getElementById('cant-real').value = totalDosis;
             calcYield();
         }
 
         function calcYield() {
-            const teo = parseFloat(document.getElementById('total-teorico-global').value);
+            const teo = parseFloat(document.getElementById('total-dosis-29').value);
             const real = parseFloat(document.getElementById('cant-real').value);
             const res = (teo > 0 && real >= 0) ? ((real / teo) * 100).toFixed(2) + '%' : '';
             document.getElementById('yield-percent').value = res;
         }
 
-        function getDailyPayload(fecha) {
-            const dailyKey = `xelle_fo_lc_24_daily_${fecha}`;
-            const savedDaily = localStorage.getItem(dailyKey);
-            if (savedDaily) {
-                try {
-                    return JSON.parse(savedDaily);
-                } catch (e) { }
-            }
-
-            const rawFo24 = localStorage.getItem('xelle_doc-fo-lc-24');
-            if (!rawFo24) return null;
-
+        function getFo24RecordsByDate(fecha) {
+            const raw = localStorage.getItem('xelle_fo_lc_24_records');
+            if (!raw) return [];
             try {
-                const source = JSON.parse(rawFo24);
-                if (source.fecha_operacion !== fecha || !Array.isArray(source.t_dosis)) return null;
-
-                const grouped = {};
-                source.t_dosis.forEach(row => {
-                    if ((row.observaciones || '').trim()) return;
-                    const producto = (row.producto || '').trim();
-                    if (!producto) return;
-
-                    const presBase = (row.presentacion || '').trim();
-                    const presentacion = presBase === 'Especial'
-                        ? (`Especial: ${(row.presentacionEspecial || '').trim() || 'Sin especificar'}`)
-                        : (presBase || 'Sin especificar');
-
-                    const key = `${producto}||${presentacion}`;
-                    if (!grouped[key]) {
-                        grouped[key] = { producto, presentacion, cantidad: 0, lotes: new Set(), codigosUnicos: [] };
-                    }
-                    grouped[key].cantidad += 1;
-                    if (row.lote) grouped[key].lotes.add(row.lote);
-                    if (row.codigoUnico) grouped[key].codigosUnicos.push(row.codigoUnico);
-                });
-
-                const items = Object.values(grouped).map(item => ({
-                    producto: item.producto,
-                    presentacion: item.presentacion,
-                    cantidad: item.cantidad,
-                    lotes: Array.from(item.lotes),
-                    codigosUnicos: item.codigosUnicos
-                }));
-
-                return { fechaOperacion: fecha, items };
+                const list = JSON.parse(raw);
+                if (!Array.isArray(list)) return [];
+                return list
+                    .filter(r => r && r.fechaOperacion === fecha)
+                    .sort((a, b) => String(b.savedAt || '').localeCompare(String(a.savedAt || '')));
             } catch (e) {
-                return null;
+                return [];
             }
         }
 
-        function renderDailyRows(items) {
-            const tbody = document.getElementById('tbl-presentaciones').querySelector('tbody');
+        function parseCellNumber(value) {
+            if (!value) return 0;
+            const normalized = String(value).replace(',', '.').replace(/[^0-9.\-]/g, '');
+            return parseFloat(normalized) || 0;
+        }
+
+        function updateResumenDosis(rows, fechaOperacion) {
+            let totalCelulas = 0;
+            let totalExos = 0;
+            let maxCad = '';
+
+            rows.forEach(row => {
+                totalCelulas += parseCellNumber(row.numeroCelulas);
+                if ((row.producto || '').trim() === 'Exosomas') totalExos += 1;
+                if (row.caducidad && (!maxCad || row.caducidad > maxCad)) maxCad = row.caducidad;
+            });
+
+            document.getElementById('cell-total-29').value = totalCelulas ? totalCelulas.toFixed(2) : '0';
+            document.getElementById('exo-total-29').value = totalExos;
+            if (fechaOperacion) document.getElementById('fecha-fab-29').value = fechaOperacion;
+            document.getElementById('fecha-venc-29').value = maxCad || '';
+        }
+
+        function renderDailyRows(rows, fechaOperacion) {
+            const tbody = document.getElementById('tbl-dosis-29').querySelector('tbody');
             tbody.innerHTML = '';
 
-            if (!Array.isArray(items) || items.length === 0) {
-                const emptyRow = document.createElement('tr');
-                emptyRow.innerHTML = `<td colspan="5" style="text-align:center; color:#7f8c8d;">Sin dosis reportadas para la fecha seleccionada.</td>`;
-                tbody.appendChild(emptyRow);
-                document.getElementById('total-teorico-global').value = 0;
+            if (!Array.isArray(rows) || rows.length === 0) {
+                document.getElementById('total-dosis-29').value = 0;
+                document.getElementById('cell-total-29').value = '0';
+                document.getElementById('exo-total-29').value = '0';
                 calcYield();
                 return;
             }
 
-            items.forEach(item => {
+            rows.forEach((rowData, idx) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td><input class="cedit" readonly value="${item.producto || ''}"></td>
-                    <td><input class="cedit" readonly value="${item.presentacion || ''}"></td>
-                    <td><input type="number" class="cedit qty-pres" readonly value="${item.cantidad || 0}"></td>
-                    <td><input class="cedit" readonly value="${(item.lotes || []).join(', ')}"></td>
-                    <td><textarea class="cedit" rows="1" readonly>${(item.codigosUnicos || []).join(', ')}</textarea></td>
+                    <td><input class="cedit" readonly value="${idx + 1}"></td>
+                    <td><input class="cedit" readonly value="${rowData.producto || ''}"></td>
+                    <td><textarea class="cedit" rows="1" readonly>${rowData.origen || ''}</textarea></td>
+                    <td><input class="cedit" readonly value="${rowData.caducidad || ''}"></td>
+                    <td><input class="cedit" readonly value="${rowData.lote || ''}"></td>
+                    <td><input class="cedit" readonly value="${(rowData.presentacion === 'Especial' ? ('Especial: ' + (rowData.presentacionEspecial || 'Sin especificar')) : (rowData.presentacion || ''))}"></td>
+                    <td><input class="cedit" readonly value="${rowData.numeroCelulas || ''}"></td>
+                    <td><input class="cedit" readonly value="${rowData.codigoVenta || ''}"></td>
+                    <td><input class="cedit" readonly value="${rowData.codigoUnico || ''}"></td>
+                    <td><textarea class="cedit" rows="1" readonly>${rowData.observaciones || ''}</textarea></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove(); reindexDosis29(); calcTotalTeorico();">x</button></td>
                 `;
                 tbody.appendChild(row);
             });
 
+            reindexDosis29();
+            calcTotalTeorico();
+            updateResumenDosis(rows, fechaOperacion);
+        }
+
+        function reindexDosis29() {
+            document.querySelectorAll('#tbl-dosis-29 tbody tr').forEach((row, idx) => {
+                const input = row.querySelector('td:first-child input');
+                if (input) input.value = idx + 1;
+            });
+        }
+
+        function addManualDosis29() {
+            const tbody = document.querySelector('#tbl-dosis-29 tbody');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><input class="cedit" value="${tbody.children.length + 1}"></td>
+                <td><input class="cedit" placeholder="Producto"></td>
+                <td><textarea class="cedit" rows="1" placeholder="Cód. Origen"></textarea></td>
+                <td><input type="date" class="cedit"></td>
+                <td><input class="cedit" placeholder="Lote"></td>
+                <td><input class="cedit" placeholder="Presentación"></td>
+                <td><input class="cedit" placeholder="No. Células"></td>
+                <td><input class="cedit" placeholder="Cód. Venta"></td>
+                <td><input class="cedit" placeholder="Código único"></td>
+                <td><textarea class="cedit" rows="1" placeholder="Observaciones"></textarea></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove(); reindexDosis29(); calcTotalTeorico();">x</button></td>
+            `;
+            tbody.appendChild(row);
+            reindexDosis29();
             calcTotalTeorico();
         }
 
-        function loadDailyDosificacion() {
+        function pickFo24RecordAndLoad() {
             const fecha = document.getElementById('fecha-dia-29').value;
             if (!fecha) {
                 Swal.fire({ icon: 'info', title: 'Selecciona una fecha', timer: 1200, showConfirmButton: false });
                 return;
             }
 
-            const payload = getDailyPayload(fecha);
-            renderDailyRows(payload?.items || []);
-
-            const fechaFab = document.getElementById('fecha-fab');
-            if (fechaFab && !fechaFab.value) {
-                fechaFab.value = fecha;
-                updateProductLogic();
+            const records = getFo24RecordsByDate(fecha);
+            if (!records.length) {
+                renderDailyRows([], fecha);
+                Swal.fire({ icon: 'warning', title: 'No hay registros FO-LC-24 para esa fecha', timer: 1500, showConfirmButton: false });
+                return;
             }
 
-            if (!payload || !Array.isArray(payload.items) || payload.items.length === 0) {
-                Swal.fire({ icon: 'warning', title: 'No hay datos en FO-LC-24 para esa fecha', timer: 1500, showConfirmButton: false });
-            }
+            const options = {};
+            records.forEach((record, idx) => {
+                const folio = record.folio || 'SIN-FOLIO';
+                const hora = (record.savedAt || '').replace('T', ' ').substring(0, 16);
+                options[idx] = `${folio} | ${hora}`;
+            });
+
+            Swal.fire({
+                title: 'Selecciona el FO-LC-24',
+                input: 'select',
+                inputOptions: options,
+                inputPlaceholder: 'Selecciona un registro',
+                showCancelButton: true,
+                confirmButtonText: 'Cargar'
+            }).then(result => {
+                if (!result.isConfirmed || result.value === '') return;
+                const selected = records[Number(result.value)];
+                const rows = Array.isArray(selected?.dosisRows) ? selected.dosisRows : [];
+                renderDailyRows(rows, selected?.fechaOperacion || fecha);
+            });
         }
+
+        window.loadDailyDosificacion = pickFo24RecordAndLoad;
 
         function addCompRow() {
             const tbody = document.getElementById('tbl-componentes').querySelector('tbody');
@@ -332,14 +452,14 @@
             tbody.appendChild(row);
         }
 
-        document.addEventListener('DOMContentLoaded', () => { 
+        document.addEventListener('DOMContentLoaded', () => {
             const fechaDia = document.getElementById('fecha-dia-29');
             if (fechaDia) fechaDia.valueAsDate = new Date();
-            loadDailyDosificacion();
-            addCompRow(); 
-            addMatRow(); 
-            addControlRow(); 
+            addCompRow();
+            addMatRow();
+            addControlRow();
         });
     </script>
 </body>
+
 </html>

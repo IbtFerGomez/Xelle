@@ -4,8 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xelle.backend.format.FormatMetadataEntity;
 import com.xelle.backend.format.FormatMetadataRepository;
+import com.xelle.backend.instance.FormatInstanceEntity;
+import com.xelle.backend.instance.FormatInstanceRepository;
+import com.xelle.backend.record.FormatRecordEntity;
+import com.xelle.backend.record.FormatRecordRepository;
 import com.xelle.backend.user.UserEntity;
 import com.xelle.backend.user.UserRepository;
+import java.time.OffsetDateTime;
 import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -15,14 +20,20 @@ public class DataInitializer implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final FormatMetadataRepository formatRepository;
+    private final FormatInstanceRepository instanceRepository;
+    private final FormatRecordRepository recordRepository;
     private final ObjectMapper objectMapper;
 
     public DataInitializer(
             UserRepository userRepository,
             FormatMetadataRepository formatRepository,
+            FormatInstanceRepository instanceRepository,
+            FormatRecordRepository recordRepository,
             ObjectMapper objectMapper) {
         this.userRepository = userRepository;
         this.formatRepository = formatRepository;
+        this.instanceRepository = instanceRepository;
+        this.recordRepository = recordRepository;
         this.objectMapper = objectMapper;
     }
 
@@ -34,7 +45,32 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void cleanupDeprecatedFormats() {
+        migrateLegacyFormatCode("FO-OP-12", "FO-LC-12");
         formatRepository.findByCodeIgnoreCase("FO-LC-40-A").ifPresent(formatRepository::delete);
+        formatRepository.findByCodeIgnoreCase("FO-LC-31").ifPresent(formatRepository::delete);
+        formatRepository.findByCodeIgnoreCase("FO-OP-12").ifPresent(formatRepository::delete);
+    }
+
+    private void migrateLegacyFormatCode(String oldCode, String newCode) {
+        OffsetDateTime now = OffsetDateTime.now();
+
+        List<FormatInstanceEntity> instances = instanceRepository.findByFormatTypeIgnoreCase(oldCode);
+        if (!instances.isEmpty()) {
+            for (FormatInstanceEntity instance : instances) {
+                instance.setFormatType(newCode);
+                instance.setUpdatedAt(now);
+            }
+            instanceRepository.saveAll(instances);
+        }
+
+        List<FormatRecordEntity> records = recordRepository.findByFormatCodeIgnoreCase(oldCode);
+        if (!records.isEmpty()) {
+            for (FormatRecordEntity record : records) {
+                record.setFormatCode(newCode);
+                record.setUpdatedAt(now);
+            }
+            recordRepository.saveAll(records);
+        }
     }
 
     private void ensureDefaultUsers() {
@@ -75,9 +111,8 @@ public class DataInitializer implements CommandLineRunner {
         upsertFormat("FO-LC-26", "Bitácora de Autoclave", "calidad", "formats/FO-LC-26.html");
         upsertFormat("FO-LC-27", "Control de Equipos", "calidad", "formats/FO-LC-27.html");
         upsertFormat("FO-LC-28", "Uso de Equipos", "calidad", "formats/FO-LC-28.html");
-        upsertFormat("FO-LC-29", "Hoja Prod. Lote Celular", "banco", "formats/FO-LC-29.html");
+        upsertFormat("FO-LC-29", "REGISTRO DE LOTE DE PRODUCTO TERMINADO (CELULAR)", "banco", "formats/FO-LC-29.html");
         upsertFormat("FO-LC-30", "Hoja Prod. Lote Acelular", "banco", "formats/FO-LC-30.html");
-        upsertFormat("FO-LC-31", "Acondicionamiento Final", "almacen", "formats/FO-LC-31.html");
         upsertFormat("FO-LC-32", "Desviaciones (CAPA)", "sgc", "formats/FO-LC-32.html");
         upsertFormat("FO-LC-40", "Prep. Soluciones (Gral)", "calidad", "formats/FO-LC-40.html");
         upsertFormat("FO-LC-40-B", "Prep. Soluciones (Alterno B)", "calidad", "formats/FO-LC-40-B.html");
@@ -89,7 +124,7 @@ public class DataInitializer implements CommandLineRunner {
         upsertFormat("FO-LC-50", "Manifiesto de Destrucción", "calidad", "formats/FO-LC-50.html");
         upsertFormat("FO-LC-51", "Registro de Desviaciones", "sgc", "formats/FO-LC-51.html");
         upsertFormat("FO-LC-TEST", "Formato de Prueba", "sgc", "formats/FO-LC-TEST.html");
-        upsertFormat("FO-OP-12", "Dictamen Técnico de Concesión", "almacen", "formats/FO-OP-12.html");
+        upsertFormat("FO-LC-12", "Dictamen Técnico de Concesión (FO-LC-12)", "almacen", "formats/FO-LC-12.html");
         upsertFormat("FO-OP-13", "Lista Verificación Recepción MP", "almacen", "formats/FO-OP-13.html");
         upsertFormat("FO-OP-15", "Pedido Maestro (Ventas)", "almacen", "formats/FO-OP-15.html");
         upsertFormat("FO-OP-16", "Orden de Surtido (Picking)", "almacen", "formats/FO-OP-16.html");

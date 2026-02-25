@@ -38,7 +38,7 @@ window.SeedData = {
         { code: 'FO-LC-22', title: 'Mapa de Crio-Conservación', area: 'banco', file: 'formats/FO-LC-22.html' },
         { code: 'FO-LC-23', title: 'Bitácora Movimientos Banco', area: 'banco', file: 'formats/FO-LC-23.html' },
         { code: 'FO-LC-24', title: 'Inventario Prod. Terminado', area: 'banco', file: 'formats/FO-LC-24.html' },
-        { code: 'FO-LC-29', title: 'REGISTRO DIARIO DE DOSIFICACIÓN.', area: 'banco', file: 'formats/FO-LC-29.html' },
+        { code: 'FO-LC-29', title: 'REGISTRO DE LOTE DE PRODUCTO TERMINADO (CELULAR)', area: 'banco', file: 'formats/FO-LC-29.html' },
         { code: 'FO-LC-30', title: 'Hoja Prod. Lote Acelular', area: 'banco', file: 'formats/FO-LC-30.html' },
         { code: 'FO-LC-42', title: 'Liofilización Placenta', area: 'banco', file: 'formats/FO-LC-42.html' },
         { code: 'FO-LC-43', title: 'Liofilización Medio Cond.', area: 'banco', file: 'formats/FO-LC-43.html' },
@@ -54,13 +54,14 @@ window.SeedData = {
         { code: 'FO-LC-40', title: 'Prep. Soluciones (Gral)', area: 'calidad', file: 'formats/FO-LC-40.html' },
         { code: 'FO-LC-41', title: 'Control Microbiológico', area: 'calidad', file: 'formats/FO-LC-41.html' },
         { code: 'FO-LC-44', title: 'Lib. Micro Flasks/Viales', area: 'calidad', file: 'formats/FO-LC-44.html' },
+        { code: 'FO-LC-47', title: 'Revisión Calidad Muestreo', area: 'calidad', file: 'formats/FO-LC-47.html' },
+        { code: 'FO-LC-48', title: 'Resultados y Dictamen de Lote', area: 'calidad', file: 'formats/FO-LC-48.html' },
 
         // --- ALMACÉN Y COMERCIAL (Acceso: comercial) ---
         { code: 'FO-OP-15', title: 'Pedido Maestro (Ventas)', area: 'almacen', file: 'formats/FO-OP-15.html' },
         { code: 'FO-OP-16', title: 'Orden de Surtido (Picking)', area: 'almacen', file: 'formats/FO-OP-16.html' },
         { code: 'FO-OP-17', title: 'Nota de Remisión', area: 'almacen', file: 'formats/FO-OP-17.html' },
         { code: 'FO-OP-20', title: 'Liberación a Almacén', area: 'almacen', file: 'formats/FO-OP-20.html' },
-        { code: 'FO-LC-31', title: 'Acondicionamiento Final', area: 'almacen', file: 'formats/FO-LC-31.html' },
         { code: 'FO-LC-45', title: 'Envío a Esterilización', area: 'almacen', file: 'formats/FO-LC-45.html' },
 
         // --- SISTEMA DE GESTIÓN (Acceso: documentacion) ---

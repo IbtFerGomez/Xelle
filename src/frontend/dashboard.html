@@ -344,7 +344,7 @@
                         </div>
                         <button onclick="openFormatModal()"
                             class="bg-white border border-slate-200 hover:bg-slate-50 text-navy px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 transition-transform active:scale-95">
-                            <span class="material-symbols-outlined text-lg">add_circle</span> Nuevo Formato
+                            <span class="material-symbols-outlined text-lg">add_circle</span> Crear Tarjeta
                         </button>
                     </div>
                     <div class="p-5 border-b border-slate-100 bg-white">
@@ -385,6 +385,7 @@
                                     <th class="px-6 py-4">Área</th>
                                     <th class="px-6 py-4">Archivo</th>
                                     <th class="px-6 py-4">Visibilidad</th>
+                                    <th class="px-6 py-4">Mover módulo</th>
                                     <th class="px-6 py-4 text-right">Acciones</th>
                                 </tr>
                             </thead>
@@ -599,6 +600,7 @@
 
             const normalizedSession = {
                 ...sess,
+                id: sess.id ?? sess.userId ?? sess.user_id ?? null,
                 name: sess.name || sess.fullName || sess.username || sess.user || 'Usuario',
                 access: Array.isArray(sess.access)
                     ? sess.access
@@ -639,6 +641,13 @@
                 .catch(() => Core.UI.renderDashboard());
         });
 
+        function getActorUserId() {
+            const rawId = currentSession?.id ?? currentSession?.userId ?? currentSession?.user_id ?? null;
+            if (rawId === null || rawId === undefined || String(rawId).trim() === '') return null;
+            const parsed = Number(rawId);
+            return Number.isFinite(parsed) ? parsed : null;
+        }
+
         // --- NAVIGATION ---
         function switchTab(id) {
             $('.tab-content').addClass('hidden');
@@ -673,8 +682,9 @@
 
         // --- DATA LOADERS ---
         function loadHistory() {
-            if (!isAdminUser || !currentSession?.id) return;
-            fetch(`${API_URL}/history?actor_user_id=${encodeURIComponent(currentSession.id)}`).then(r => r.json()).then(d => {
+            const actorUserId = getActorUserId();
+            if (!isAdminUser || !actorUserId) return;
+            fetch(`${API_URL}/history?actor_user_id=${encodeURIComponent(actorUserId)}`).then(r => r.json()).then(d => {
                 let h = ''; d.forEach(r => {
                     h += `<tr class="hover:bg-slate-50 transition-colors">
                         <td class="px-6 py-4 font-mono text-xs text-slate-400">#${r.id}</td>
@@ -701,8 +711,9 @@
         }
 
         function loadUsers() {
-            if (!isAdminUser || !currentSession?.id) return;
-            fetch(`${API_URL}/users?actor_user_id=${encodeURIComponent(currentSession.id)}`).then(r => r.json()).then(d => {
+            const actorUserId = getActorUserId();
+            if (!isAdminUser || !actorUserId) return;
+            fetch(`${API_URL}/users?actor_user_id=${encodeURIComponent(actorUserId)}`).then(r => r.json()).then(d => {
                 let h = ''; d.forEach(u => {
                     const badge = u.active ? '<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Activo</span>' : '<span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Inactivo</span>';
                     const areas = Array.isArray(u.module_access) ? u.module_access.join(', ') : u.module_access;
@@ -728,11 +739,29 @@
         }
 
         function loadFormats() {
-            if (!isAdminUser || !currentSession?.id) return;
-            fetch(`${API_URL}/formats_admin?actor_user_id=${encodeURIComponent(currentSession.id)}`).then(r => r.json()).then(d => {
-                formatCatalogCache = Array.isArray(d) ? d : [];
-                renderFormatsCatalog();
-            });
+            const actorUserId = getActorUserId();
+            if (!isAdminUser || !actorUserId) return;
+            fetch(`${API_URL}/formats_admin?actor_user_id=${encodeURIComponent(actorUserId)}`)
+                .then(r => {
+                    if (!r.ok) throw new Error('admin_formats_failed');
+                    return r.json();
+                })
+                .then(d => {
+                    formatCatalogCache = Array.isArray(d) ? d : [];
+                    renderFormatsCatalog();
+                })
+                .catch(() => {
+                    fetch(`${API_URL}/formats`)
+                        .then(r => r.json())
+                        .then(d => {
+                            formatCatalogCache = Array.isArray(d) ? d : [];
+                            renderFormatsCatalog();
+                        })
+                        .catch(() => {
+                            formatCatalogCache = [];
+                            renderFormatsCatalog();
+                        });
+                });
         }
 
         function renderFormatsCatalog() {
@@ -769,6 +798,15 @@
                     <td class="px-6 py-4"><span class="text-[10px] font-bold uppercase bg-slate-100 px-2 py-1 rounded text-slate-500">${f.area}</span></td>
                     <td class="px-6 py-4 font-mono text-xs text-slate-400">${f.file_path}</td>
                     <td class="px-6 py-4">${visibilityBadge}</td>
+                    <td class="px-6 py-4">
+                        <select onchange="moveFormatToArea(${f.id}, this.value)"
+                            class="w-full min-w-[150px] px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold text-navy focus:ring-2 focus:ring-primary">
+                            <option value="banco" ${f.area === 'banco' ? 'selected' : ''}>Banco</option>
+                            <option value="calidad" ${f.area === 'calidad' ? 'selected' : ''}>Calidad</option>
+                            <option value="almacen" ${f.area === 'almacen' ? 'selected' : ''}>Almacén</option>
+                            <option value="sgc" ${f.area === 'sgc' ? 'selected' : ''}>SGC</option>
+                        </select>
+                    </td>
                     <td class="px-6 py-4 text-right flex justify-end gap-2">
                         <button onclick="openFormatModalFromData(${fData})" class="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
                         <button title="Cambiar visibilidad" onclick="toggleApi('formats', ${f.id}, loadFormats, true)" class="p-2 text-slate-400 hover:text-sky hover:bg-sky/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
@@ -777,12 +815,55 @@
                 </tr>`;
             });
 
-            tbody.innerHTML = h || '<tr><td colspan="6" class="p-6 text-center text-slate-400">Sin formatos con esos filtros.</td></tr>';
+            tbody.innerHTML = h || '<tr><td colspan="7" class="p-6 text-center text-slate-400">Sin formatos con esos filtros.</td></tr>';
+        }
+
+        function moveFormatToArea(formatId, newArea) {
+            const actorUserId = getActorUserId();
+            if (!actorUserId) {
+                alert('Sesión inválida. Cierra sesión e inicia nuevamente para administrar formatos.');
+                return;
+            }
+
+            const format = formatCatalogCache.find(f => Number(f.id) === Number(formatId));
+            if (!format) {
+                alert('No se encontró la tarjeta seleccionada.');
+                loadFormats();
+                return;
+            }
+            if ((format.area || '') === newArea) return;
+
+            const payload = {
+                code: format.code,
+                title: format.title,
+                area: newArea,
+                file_path: format.file_path,
+                actor_user_id: actorUserId
+            };
+
+            fetch(`${API_URL}/formats/${formatId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(async r => {
+                    if (!r.ok) {
+                        const err = await r.json().catch(() => ({}));
+                        throw new Error(err.msg || 'No se pudo mover la tarjeta de módulo.');
+                    }
+                    refreshDashboardFormats();
+                    loadFormats();
+                })
+                .catch(e => {
+                    alert(e.message || 'No se pudo mover la tarjeta de módulo.');
+                    loadFormats();
+                });
         }
 
         function loadInstances() {
-            if (!isAdminUser || !currentSession?.id) return;
-            fetch(`${API_URL}/format-instances?actor_user_id=${encodeURIComponent(currentSession.id)}`).then(r => r.json()).then(d => {
+            const actorUserId = getActorUserId();
+            if (!isAdminUser || !actorUserId) return;
+            fetch(`${API_URL}/format-instances?actor_user_id=${encodeURIComponent(actorUserId)}`).then(r => r.json()).then(d => {
                 instanceCache = Array.isArray(d) ? d : [];
                 let h = ''; d.forEach(inst => {
                     const status = (inst.status || '').toUpperCase();
@@ -887,7 +968,12 @@
 
         function deleteInstance(uniqueCode) {
             if (!confirm(`¿Eliminar la tarjeta ${uniqueCode}?`)) return;
-            fetch(`${API_URL}/format-instances/${encodeURIComponent(uniqueCode)}`, { method: 'DELETE' })
+            const actorUserId = getActorUserId();
+            if (!actorUserId) {
+                alert('Sesión inválida. Cierra sesión e inicia nuevamente.');
+                return;
+            }
+            fetch(`${API_URL}/format-instances/${encodeURIComponent(uniqueCode)}?actor_user_id=${encodeURIComponent(actorUserId)}`, { method: 'DELETE' })
                 .then(async r => {
                     if (!r.ok) {
                         const err = await r.json().catch(() => ({}));
@@ -974,6 +1060,11 @@
 
         function saveUser() {
             const id = $('#user-id').val();
+            const actorUserId = getActorUserId();
+            if (!actorUserId) {
+                alert('Sesión inválida. Cierra sesión e inicia nuevamente para administrar usuarios.');
+                return;
+            }
 
             const selectedAccess = [];
             $('.access-checkbox:checked').each(function () {
@@ -987,7 +1078,7 @@
                 password: $('#user-pass').val(),
                 moduleAccess: selectedAccess,
                 active: $('#user-active').is(':checked'),
-                actor_user_id: currentSession?.id
+                actor_user_id: actorUserId
             };
 
             const method = id ? 'PUT' : 'POST';
@@ -1020,24 +1111,41 @@
 
         function saveFormat() {
             const id = $('#fmt-id').val();
+            const actorUserId = getActorUserId();
+            if (!actorUserId) {
+                alert('Sesión inválida. Cierra sesión e inicia nuevamente para crear o editar tarjetas.');
+                return;
+            }
+
+            const code = ($('#fmt-code').val() || '').trim();
+            const title = ($('#fmt-title').val() || '').trim();
+            const area = ($('#fmt-area').val() || '').trim();
+            const filePath = ($('#fmt-file').val() || '').trim();
+
+            if (!code || !title || !area || !filePath) {
+                alert('Completa todos los campos: código, título, área y ruta del archivo.');
+                return;
+            }
+
             const payload = {
-                code: $('#fmt-code').val(),
-                title: $('#fmt-title').val(),
-                area: $('#fmt-area').val(),
-                file_path: $('#fmt-file').val(),
-                actor_user_id: currentSession?.id
+                code,
+                title,
+                area,
+                file_path: filePath,
+                actor_user_id: actorUserId
             };
             const method = id ? 'PUT' : 'POST';
             const url = id ? `${API_URL}/formats/${id}` : `${API_URL}/formats`;
 
             fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-                .then(r => {
+                .then(async r => {
                     if (r.ok) {
                         closeModal('modal-format');
                         refreshDashboardFormats();
                         loadFormats();
                     } else {
-                        alert('Error');
+                        const err = await r.json().catch(() => ({}));
+                        alert(err.msg || 'No se pudo guardar la tarjeta.');
                     }
                 });
         }
@@ -1056,7 +1164,12 @@
 
         function toggleApi(ep, id, cb, refreshBoard = false) {
             if (!confirm("¿Cambiar estado?")) return;
-            fetch(`${API_URL}/${ep}/${id}?actor_user_id=${encodeURIComponent(currentSession?.id || '')}`, { method: 'DELETE' })
+            const actorUserId = getActorUserId();
+            if (!actorUserId) {
+                alert('Sesión inválida. Cierra sesión e inicia nuevamente.');
+                return;
+            }
+            fetch(`${API_URL}/${ep}/${id}?actor_user_id=${encodeURIComponent(actorUserId)}`, { method: 'DELETE' })
                 .then(r => {
                     if (!r.ok) throw new Error('toggle_failed');
                     cb();
@@ -1067,7 +1180,12 @@
 
         function deleteApi(ep, id, cb, label = 'registro', refreshBoard = false) {
             if (!confirm(`¿Eliminar ${label} de forma permanente?`)) return;
-            fetch(`${API_URL}/${ep}/${id}/permanent?actor_user_id=${encodeURIComponent(currentSession?.id || '')}`, { method: 'DELETE' })
+            const actorUserId = getActorUserId();
+            if (!actorUserId) {
+                alert('Sesión inválida. Cierra sesión e inicia nuevamente.');
+                return;
+            }
+            fetch(`${API_URL}/${ep}/${id}/permanent?actor_user_id=${encodeURIComponent(actorUserId)}`, { method: 'DELETE' })
                 .then(async r => {
                     if (!r.ok) {
                         const err = await r.json().catch(() => ({}));
