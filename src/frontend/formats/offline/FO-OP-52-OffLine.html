@@ -1,52 +1,273 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-52 Reporte de MPNC</title>
+    <title>FO-OP-52 Reporte de MPNC (OFFLINE)</title>
     <link rel="stylesheet" href="format-styles-OffLine.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app-OffLine.js"></script>
-</head>
-<body id="doc-fo-op-52">
-    <div class="global-controls no-print"><button class="btn btn-success" onclick="saveForm()">Guardar</button><button class="btn btn-primary" onclick="window.print()">Imprimir</button></div>
-    <div class="container">
-        <div class="header-top"><div class="logo-container"><svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg></div><div class="registry-container"><label>Folio NC</label><div class="registry-wrapper"><span class="registry-prefix">MPNC-</span><input type="text" class="registry-input generate-barcode" data-target="barcode-52" data-prefix="MPNC-"></div><svg id="barcode-52" class="barcode-svg"></svg></div></div>
-        
-        <div class="header-main"><h1>REPORTE DE MATERIA PRIMA NO CONFORME (MPNC)</h1><div class="metadata">Código: FO-OP-52 | Ref: PR-OP-25</div></div>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
 
-        <div class="section-header">1. DETALLES DEL RECHAZO</div>
+        .compact-table td {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-52">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio NC</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-52-</span>
+                    <input type="text" id="reg-52" class="registry-input generate-barcode" data-target="barcode-52"
+                        data-prefix="FO-OP-52-" placeholder="000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-52" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>REPORTE Y MANIFIESTO DE MATERIA PRIMA NO CONFORME (MPNC)</h1>
+            <div class="metadata">Código: FO-OP-52 | Versión: 1.0-OFF | Vig: Mar2026</div>
+        </div>
+
+        <div class="section-header">1. DATOS DE IDENTIFICACIÓN Y TRAZABILIDAD</div>
         <div class="section">
             <table class="no-border-table">
-                <tr><td><strong>ID Tejido / Lote:</strong> <input class="cedit"></td><td><strong>Fecha Detección:</strong> <input type="date" class="cedit"></td></tr>
-                <tr><td><strong>Proveedor (Hospital):</strong> <input class="cedit"></td><td><strong>Detectado por:</strong> <input class="cedit"></td></tr>
+                <tr>
+                    <td width="20%"><strong>ID Materia Prima / Lote:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="Ej. Lote/Folio"></td>
+                    <td width="20%"><strong>Tipo de Tejido:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="Ej. Placenta"></td>
+                </tr>
+                <tr>
+                    <td><strong>ID Donante:</strong></td>
+                    <td><input class="cedit" placeholder="Nombre o Clave"></td>
+                    <td><strong>Proveedor (Hospital / Origen):</strong></td>
+                    <td><input class="cedit" placeholder="Hospital o Clínica"></td>
+                </tr>
+                <tr>
+                    <td><strong>Fecha Recepción original:</strong></td>
+                    <td><input type="date" class="cedit"></td>
+                    <td><strong>Fecha Detección defecto:</strong></td>
+                    <td><input type="date" class="cedit"></td>
+                </tr>
             </table>
-            <label style="margin-top:10px; display:block;"><strong>Descripción de la No Conformidad (Falla):</strong></label>
-            <textarea class="cedit" rows="4" style="width:100%" placeholder="Ej. Bolsa rota con derrame de fluido, temperatura de llegada 15°C..."></textarea>
         </div>
 
-        <div class="section-header">2. ACCIÓN INMEDIATA (SEGREGACIÓN)</div>
+        <div class="section-header">2. DETALLES DEL RECHAZO (DETECCIÓN)</div>
         <div class="section">
+            <table class="no-border-table" style="margin-bottom: 10px;">
+                <tr>
+                    <td width="25%"><strong>Fase de Detección:</strong></td>
+                    <td><input class="cedit" placeholder="Fase 1 / Fase 2 / Fase 3"></td>
+                </tr>
+                <tr>
+                    <td><strong>Detectado por (Nombre y Cargo):</strong></td>
+                    <td><input class="cedit" placeholder="Nombre Completo"></td>
+                </tr>
+            </table>
+
+            <label style="font-weight:bold; font-size:11px;">Descripción Detallada de la No Conformidad / Falla:</label>
+            <textarea class="cedit" rows="3" style="width:100%; border: 1px solid #ccc;"
+                placeholder="Explique claramente el motivo del rechazo..."></textarea>
+
+            <table class="no-border-table" style="margin-top: 10px;">
+                <tr>
+                    <td width="30%"><strong>Referencia a CAPA o Desviación (Si aplica):</strong></td>
+                    <td><input class="cedit" placeholder="Ej. NC-001"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">3. ACCIÓN INMEDIATA (SEGREGACIÓN)</div>
+        <div class="section">
+            <p style="font-size:10px; color:#666;">Confirmación de contención inicial tras el reporte.</p>
             <table class="compact-table">
-                <tr><td>¿Material Segregado Físicamente?</td><td><input class="cedit" type="text"></td></tr>
-                <tr><td>¿Etiqueta Roja Colocada?</td><td><input class="cedit" type="text"></td></tr>
-                <tr><td>¿Bloqueo en Inventario (Sistema)?</td><td><input class="cedit" type="text"></td></tr>
+                <thead>
+                    <tr>
+                        <th width="40%">Acción de Contención</th>
+                        <th width="20%">Confirmación</th>
+                        <th width="40%">Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>¿Material Segregado Físicamente en cuarentena/rechazo?</td>
+                        <td><input class="cedit" type="text" placeholder="Sí / No"></td>
+                        <td><input class="cedit" placeholder="Lugar de resguardo"></td>
+                    </tr>
+                    <tr>
+                        <td>¿Etiqueta Roja (Rechazo) colocada en el envase?</td>
+                        <td><input class="cedit" type="text" placeholder="Sí / No"></td>
+                        <td><input class="cedit" placeholder="..."></td>
+                    </tr>
+                    <tr>
+                        <td>¿Bloqueo en Inventario / Sistema ERP realizado?</td>
+                        <td><input class="cedit" type="text" placeholder="Sí / No"></td>
+                        <td><input class="cedit" placeholder="..."></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
 
-        <div class="section-header">3. DISPOSICIÓN FINAL</div>
+        <div class="section-header">4. DISPOSICIÓN FINAL Y MÉTODO DE DESTRUCCIÓN</div>
         <div class="section">
-            <label><strong>Decisión Técnica:</strong></label>
-            <input class="cedit" style="width:100%; margin-bottom:10px;" type="text">
-            <label><strong>Justificación:</strong></label>
-            <textarea class="cedit" rows="2" style="width:100%"></textarea>
+            <div
+                style="margin-bottom: 10px; padding: 10px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px;">
+                <label style="font-weight:bold; font-size:11px; display:block; margin-bottom:5px;">Decisión
+                    Técnica:</label>
+                <input class="cedit" type="text" style="width:100%;" placeholder="CONCESIÓN / DESTRUCCIÓN">
+                <label style="font-weight:bold; font-size:11px; display:block; margin-top:10px;">Justificación de la
+                    decisión:</label>
+                <textarea class="cedit" rows="2" style="width:100%; border: 1px solid #ccc;"
+                    placeholder="Explique la base técnica para esta disposición..."></textarea>
+            </div>
+
+            <p style="font-size:10px; font-weight:bold;">Si la decisión es DESTRUCCIÓN, indique el tratamiento aplicado
+                para garantizar su inutilización biológica:</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="40%">Método Utilizado</th>
+                        <th width="60%">Parámetros Aplicados / Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit" type="text" placeholder="Inactivación Química (Sí/No)"></td>
+                        <td><input class="cedit" style="width:98%" placeholder="Concentración / Tiempo"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" type="text" placeholder="Inactivación Térmica (Sí/No)"></td>
+                        <td>Temp: <input class="cedit" style="width:80px" placeholder="°C"> | Tiempo: <input
+                                class="cedit" style="width:80px" placeholder="min"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" type="text" placeholder="Clasificación como RPBI (Sí/No)"></td>
+                        <td><input class="cedit" style="width:98%"
+                                placeholder="Entregado a proveedor autorizado / referencia"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="no-border-table" style="margin-top: 10px;">
+                <tr>
+                    <td width="20%"><strong>Evidencia Adjunta:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="Fotos / Ticket / Manifiesto externo"></td>
+                    <td width="20%"><strong>Fecha Destrucción:</strong></td>
+                    <td width="30%"><input type="date" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td><strong>Peso final destruido/desechado (g):</strong></td>
+                    <td><input type="number" class="cedit" placeholder="0"></td>
+                </tr>
+            </table>
         </div>
 
-        <div class="signature-area">
-            <div class="signature-box"><p>Reportó</p><input type="text"><p>Almacén / Calidad</p></div>
-            <div class="signature-box"><p>Autorizó Disposición</p><input type="text"><p>Responsable Sanitario</p></div>
+        <div class="section-header">5. DECLARACIÓN Y FIRMAS DE AUTORIZACIÓN</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; text-align:justify; margin-bottom:10px;">Los abajo firmantes certifican
+                la veracidad del reporte, la disposición aprobada y, en su caso, que la materia prima identificada ha
+                sido destruida e inutilizada de acuerdo con los procedimientos operativos estándar.</p>
+
+            <table class="no-border-table" style="margin-bottom: 20px;">
+                <tr>
+                    <td width="50%" style="padding-right: 10px;">
+                        <p style="font-weight:bold; font-size:10px; margin-bottom:20px;">Reportó (Almacén / Calidad):
+                        </p>
+                        <div style="border-bottom: 1px solid black; margin-bottom: 5px;"><input type="text"
+                                class="cedit" style="width:100%; border:none;" placeholder="Nombre y Firma"></div>
+                        <p style="font-size:9px; text-align:center;">Nombre, Firma y Fecha</p>
+                    </td>
+                    <td width="50%" style="padding-left: 10px;">
+                        <p style="font-weight:bold; font-size:10px; margin-bottom:20px;">Testigo de Calidad
+                            (Verificación):</p>
+                        <div style="border-bottom: 1px solid black; margin-bottom: 5px;"><input type="text"
+                                class="cedit" style="width:100%; border:none;" placeholder="Nombre y Firma"></div>
+                        <p style="font-size:9px; text-align:center;">Nombre, Firma y Fecha</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" style="padding-right: 10px; padding-top: 15px;">
+                        <p style="font-weight:bold; font-size:10px; margin-bottom:20px;">Ejecutó Destrucción (Si
+                            aplica):</p>
+                        <div style="border-bottom: 1px solid black; margin-bottom: 5px;"><input type="text"
+                                class="cedit" style="width:100%; border:none;" placeholder="Nombre y Firma"></div>
+                        <p style="font-size:9px; text-align:center;">Nombre, Firma y Fecha</p>
+                    </td>
+                    <td width="50%" style="padding-left: 10px; padding-top: 15px;">
+                        <p style="font-weight:bold; font-size:10px; margin-bottom:20px;">Dirección Operativa:</p>
+                        <div style="border-bottom: 1px solid black; margin-bottom: 5px;"><input type="text"
+                                class="cedit" style="width:100%; border:none;" placeholder="Nombre y Firma"></div>
+                        <p style="font-size:9px; text-align:center;">Nombre, Firma y Fecha</p>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="width: 60%; margin: 0 auto; text-align: center; margin-top: 20px;">
+                <p style="font-weight:bold; font-size:10px; margin-bottom:30px;">Autorizó Disposición Final:</p>
+                <div style="border-bottom: 1px solid black; margin-bottom: 5px;"><input type="text" class="cedit"
+                        style="width:100%; border:none; text-align:center;" placeholder="Nombre y Firma"></div>
+                <p style="font-size:9px;">Nombre, Firma y Fecha (Responsable Sanitario)</p>
+            </div>
         </div>
-        <div class="footer">FO-OP-52 | Reporte de MPNC | Xelle Scientific</div>
+
+        <div class="footer">FO-OP-52 | Versión: 1.0-OFF | Reporte y Manifiesto MPNC | Xelle Scientific</div>
     </div>
 </body>
+
 </html>

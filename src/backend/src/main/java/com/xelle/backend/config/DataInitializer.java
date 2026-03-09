@@ -11,8 +11,13 @@ import com.xelle.backend.record.FormatRecordRepository;
 import com.xelle.backend.user.UserEntity;
 import com.xelle.backend.user.UserRepository;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,6 +28,9 @@ public class DataInitializer implements CommandLineRunner {
     private final FormatInstanceRepository instanceRepository;
     private final FormatRecordRepository recordRepository;
     private final ObjectMapper objectMapper;
+
+    @Value("${xelle.reset-format-records-on-start:false}")
+    private boolean resetFormatRecordsOnStart;
 
     public DataInitializer(
             UserRepository userRepository,
@@ -39,15 +47,117 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        migrateLegacyOperationsData();
+        resetPreviousFormatRecordsIfNeeded();
         ensureDefaultUsers();
         cleanupDeprecatedFormats();
         ensureDefaultFormats();
     }
 
+    private void migrateLegacyOperationsData() {
+        List<FormatMetadataEntity> formats = formatRepository.findAll();
+        for (FormatMetadataEntity format : formats) {
+            boolean changed = false;
+            String area = normalizeArea(format.getArea());
+            if (!area.equals(format.getArea())) {
+                format.setArea(area);
+                changed = true;
+            }
+
+            String code = normalizeCode(format.getCode());
+            if ("FO-OP-15".equals(code) && String.valueOf(format.getTitle()).contains("Ventas")) {
+                format.setTitle("Pedido Maestro");
+                changed = true;
+            }
+            if ("FO-OP-20".equals(code) && String.valueOf(format.getTitle()).contains("Almacén")) {
+                format.setTitle("Liberación a Operaciones");
+                changed = true;
+            }
+
+            if (changed) {
+                formatRepository.save(format);
+            }
+        }
+
+        List<UserEntity> users = userRepository.findAll();
+        for (UserEntity user : users) {
+            boolean changed = false;
+            List<String> access = parseAccess(user.getModuleAccess());
+            List<String> migrated = migrateAccess(access);
+            if (!migrated.equals(access)) {
+                user.setModuleAccess(toJson(migrated));
+                changed = true;
+            }
+
+            if ("Ejecutivo Comercial".equals(user.getFullName())) {
+                user.setFullName("Ejecutivo de Operaciones");
+                changed = true;
+            }
+
+            if (changed) {
+                userRepository.save(user);
+            }
+        }
+    }
+
+    private void resetPreviousFormatRecordsIfNeeded() {
+        if (!resetFormatRecordsOnStart) {
+            return;
+        }
+
+        recordRepository.deleteAll();
+        instanceRepository.deleteAll();
+    }
+
+    private String normalizeArea(String area) {
+        String value = String.valueOf(area == null ? "" : area).trim().toLowerCase(Locale.ROOT);
+        if ("almacen".equals(value) || "comercial".equals(value)) {
+            return "operaciones";
+        }
+        return value;
+    }
+
+    private String normalizeCode(String code) {
+        return String.valueOf(code == null ? "" : code).trim().toUpperCase(Locale.ROOT);
+    }
+
+    private List<String> parseAccess(String raw) {
+        if (raw == null || raw.isBlank()) {
+            return List.of();
+        }
+        try {
+            return objectMapper.readValue(raw,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, String.class));
+        } catch (Exception ex) {
+            return List.of();
+        }
+    }
+
+    private List<String> migrateAccess(List<String> original) {
+        if (original == null || original.isEmpty()) {
+            return List.of();
+        }
+
+        Set<String> normalized = new LinkedHashSet<>();
+        for (String token : original) {
+            String value = String.valueOf(token == null ? "" : token).trim().toLowerCase(Locale.ROOT);
+            if (value.isBlank()) {
+                continue;
+            }
+            if ("almacen".equals(value) || "comercial".equals(value)) {
+                normalized.add("operaciones");
+            } else {
+                normalized.add(value);
+            }
+        }
+        return new ArrayList<>(normalized);
+    }
+
     private void cleanupDeprecatedFormats() {
         migrateLegacyFormatCode("FO-OP-12", "FO-LC-12");
+        migrateLegacyFormatCode("FO-LC-30", "FO-LC-31");
         formatRepository.findByCodeIgnoreCase("FO-LC-40-A").ifPresent(formatRepository::delete);
-        formatRepository.findByCodeIgnoreCase("FO-LC-31").ifPresent(formatRepository::delete);
+        formatRepository.findByCodeIgnoreCase("FO-LC-30").ifPresent(formatRepository::delete);
         formatRepository.findByCodeIgnoreCase("FO-OP-12").ifPresent(formatRepository::delete);
     }
 
@@ -77,10 +187,11 @@ public class DataInitializer implements CommandLineRunner {
         if (userRepository.count() > 0) {
             return;
         }
-        userRepository.save(buildUser("Xelle_Fer", "123", "Luis Fernando Gómez", "super_admin", List.of("all"), true));
+        userRepository.save(buildUser("Xelle_Fer", "123", "Luis Fernando Gómez", "superadmin", List.of("all"), true));
         userRepository.save(
                 buildUser("calidad", "123", "Gerente de Calidad", "quality_manager", List.of("calidad", "sgc"), true));
-        userRepository.save(buildUser("ventas", "123", "Ejecutivo Comercial", "sales", List.of("almacen"), true));
+        userRepository
+                .save(buildUser("ventas", "123", "Ejecutivo de Operaciones", "sales", List.of("operaciones"), true));
     }
 
     private UserEntity buildUser(String username, String pass, String fullName, String role, List<String> access,
@@ -112,7 +223,7 @@ public class DataInitializer implements CommandLineRunner {
         upsertFormat("FO-LC-27", "Control de Equipos", "calidad", "formats/FO-LC-27.html");
         upsertFormat("FO-LC-28", "Uso de Equipos", "calidad", "formats/FO-LC-28.html");
         upsertFormat("FO-LC-29", "REGISTRO DE LOTE DE PRODUCTO TERMINADO (CELULAR)", "banco", "formats/FO-LC-29.html");
-        upsertFormat("FO-LC-30", "Hoja Prod. Lote Acelular", "banco", "formats/FO-LC-30.html");
+        upsertFormat("FO-LC-31", "Hoja Prod. Lote Acelular", "banco", "formats/FO-LC-31.html");
         upsertFormat("FO-LC-32", "Desviaciones (CAPA)", "sgc", "formats/FO-LC-32.html");
         upsertFormat("FO-LC-40", "Prep. Soluciones (Gral)", "calidad", "formats/FO-LC-40.html");
         upsertFormat("FO-LC-40-B", "Prep. Soluciones (Alterno B)", "calidad", "formats/FO-LC-40-B.html");
@@ -120,18 +231,18 @@ public class DataInitializer implements CommandLineRunner {
         upsertFormat("FO-LC-42", "Liofilización Placenta", "banco", "formats/FO-LC-42.html");
         upsertFormat("FO-LC-43", "Liofilización Medio Cond.", "banco", "formats/FO-LC-43.html");
         upsertFormat("FO-LC-44", "Lib. Micro Flasks/Viales", "calidad", "formats/FO-LC-44.html");
-        upsertFormat("FO-LC-45", "Envío a Esterilización", "almacen", "formats/FO-LC-45.html");
+        upsertFormat("FO-LC-45", "Envío a Esterilización", "operaciones", "formats/FO-LC-45.html");
         upsertFormat("FO-LC-50", "Manifiesto de Destrucción", "calidad", "formats/FO-LC-50.html");
-        upsertFormat("FO-LC-51", "Registro de Desviaciones", "sgc", "formats/FO-LC-51.html");
+        upsertFormat("FO-LC-51", "Registro de Desviaciones", "sgc", "formats/FO-OP-51.html");
         upsertFormat("FO-LC-TEST", "Formato de Prueba", "sgc", "formats/FO-LC-TEST.html");
-        upsertFormat("FO-LC-12", "Dictamen Técnico de Concesión (FO-LC-12)", "almacen", "formats/FO-LC-12.html");
-        upsertFormat("FO-OP-13", "Lista Verificación Recepción MP", "almacen", "formats/FO-OP-13.html");
-        upsertFormat("FO-OP-15", "Pedido Maestro (Ventas)", "almacen", "formats/FO-OP-15.html");
-        upsertFormat("FO-OP-16", "Orden de Surtido (Picking)", "almacen", "formats/FO-OP-16.html");
-        upsertFormat("FO-OP-17", "Nota de Remisión", "almacen", "formats/FO-OP-17.html");
-        upsertFormat("FO-OP-20", "Liberación a Almacén", "almacen", "formats/FO-OP-20.html");
-        upsertFormat("FO-OP-52", "Reporte de MPNC", "almacen", "formats/FO-OP-52.html");
-        upsertFormat("FO-OP-OP-01", "Formato Operativo OP-01", "almacen", "formats/FO-OP-OP-01.html");
+        upsertFormat("FO-LC-12", "Dictamen Técnico de Concesión (FO-LC-12)", "operaciones", "formats/FO-LC-12.html");
+        upsertFormat("FO-OP-13", "Lista Verificación Recepción MP", "operaciones", "formats/FO-OP-13.html");
+        upsertFormat("FO-OP-15", "Pedido Maestro", "operaciones", "formats/FO-OP-15.html");
+        upsertFormat("FO-OP-16", "Orden de Surtido (Picking)", "operaciones", "formats/FO-OP-16.html");
+        upsertFormat("FO-OP-17", "Nota de Remisión", "operaciones", "formats/FO-OP-17.html");
+        upsertFormat("FO-OP-20", "Liberación a Operaciones", "operaciones", "formats/FO-OP-20.html");
+        upsertFormat("FO-OP-52", "Reporte de MPNC", "operaciones", "formats/FO-OP-52.html");
+        upsertFormat("FO-OP-OP-01", "Formato Operativo OP-01", "operaciones", "formats/FO-OP-OP-01.html");
     }
 
     private void upsertFormat(String code, String title, String area, String path) {

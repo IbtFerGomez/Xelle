@@ -1,12 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-OP-17 Remisión</title>
-    <link rel="stylesheet" href="format-styles-comercial.css">
+    <link rel="stylesheet" id="op-styles" href="format-styles-operaciones.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="format-app-comercial.js"></script>
+    <script>
+        (function () {
+            const styleEl = document.getElementById('op-styles');
+            const styleCandidates = [
+                'format-styles-operaciones.css',
+                '/formats/format-styles-operaciones.css'
+            ];
+            let styleIndex = 0;
+
+            styleEl.addEventListener('error', function () {
+                styleIndex += 1;
+                if (styleIndex < styleCandidates.length) {
+                    styleEl.href = styleCandidates[styleIndex];
+                }
+            });
+
+            const scriptCandidates = [
+                'format-app-operaciones.js',
+                '/formats/format-app-operaciones.js'
+            ];
+            let scriptIndex = 0;
+
+            const loadScript = function () {
+                if (scriptIndex >= scriptCandidates.length) return;
+                const script = document.createElement('script');
+                script.src = scriptCandidates[scriptIndex++];
+                script.onerror = loadScript;
+                document.head.appendChild(script);
+            };
+
+            loadScript();
+        })();
+    </script>
     <style>
         /* Estilo para fijar el footer al final de la hoja en impresión */
         @media print {
@@ -22,11 +55,18 @@
                 font-size: 9px !important;
                 color: #000 !important;
             }
-            body { padding-bottom: 50px; }
-            .no-print { display: none !important; }
+
+            body {
+                padding-bottom: 50px;
+            }
+
+            .no-print {
+                display: none !important;
+            }
         }
     </style>
 </head>
+
 <body id="doc-fo-op-17">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
@@ -37,19 +77,45 @@
     <div class="container">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .svg-logo-titulo {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .svg-logo-subtitulo {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .svg-logo-celula {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
+                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
+                        <path class="svg-logo-celula"
+                            d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z" />
+                    </g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68"
+                        class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35"
+                        font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
             </div>
             <div class="registry-container">
                 <label>Folio Remisión</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-OP-17-</span>
-                    <input type="text" id="reg-op-17" 
-                           class="registry-input generate-barcode" 
-                           data-target="barcode-op-17" 
-                           data-prefix="FO-OP-17-" 
-                           placeholder="001">
+                    <input type="text" id="reg-op-17" class="registry-input generate-barcode"
+                        data-target="barcode-op-17" data-prefix="FO-OP-17-" name="folio_remision" placeholder="001">
                 </div>
-                <input type="date" class="registry-date no-auto-date">
+                <input type="date" class="registry-date no-auto-date" name="fecha_folio_remision">
                 <svg id="barcode-op-17" class="barcode-svg"></svg>
             </div>
         </div>
@@ -63,16 +129,16 @@
             <div class="section-title">1. Datos del Cliente y Referencias</div>
             <table class="no-border-table">
                 <tr>
-                    <td><strong>Cliente:</strong> <input class="cedit"></td>
-                    <td><strong>Fecha Envío:</strong> <input type="date" class="cedit"></td>
+                    <td><strong>Cliente:</strong> <input class="cedit" name="cliente"></td>
+                    <td><strong>Fecha Envío:</strong> <input type="date" class="cedit" name="fecha_envio"></td>
                 </tr>
                 <tr>
-                    <td><strong>Dirección Entrega:</strong> <input class="cedit"></td>
-                    <td><strong>Ref. Pedido (PV):</strong> <input class="cedit"></td>
+                    <td><strong>Dirección Entrega:</strong> <input class="cedit" name="direccion_entrega"></td>
+                    <td><strong>Ref. Pedido (PV):</strong> <input class="cedit" name="ref_pedido_pv"></td>
                 </tr>
                 <tr>
-                    <td><strong>Atención a:</strong> <input class="cedit"></td>
-                    <td><strong>Ref. Orden Compra (OC):</strong> <input class="cedit"></td>
+                    <td><strong>Atención a:</strong> <input class="cedit" name="atencion_a"></td>
+                    <td><strong>Ref. Orden Compra (OC):</strong> <input class="cedit" name="ref_orden_compra_oc"></td>
                 </tr>
             </table>
         </div>
@@ -99,20 +165,25 @@
             <div class="section-title">3. Acuse de Recibo</div>
             <div style="border: 1px solid #ddd; padding: 15px; background-color: #fcfcfc;">
                 <p style="font-size:10px; text-align:justify; margin-bottom:15px;">
-                    Por medio de la presente, acuso recibo de los productos descritos anteriormente, validando que el empaque se encuentra íntegro, sellado y manteniendo las condiciones de temperatura requeridas para su conservación.
+                    Por medio de la presente, acuso recibo de los productos descritos anteriormente, validando que el
+                    empaque se encuentra íntegro, sellado y manteniendo las condiciones de temperatura requeridas para
+                    su conservación.
                 </p>
                 <div style="display:flex; justify-content:space-between; align-items:flex-end;">
                     <div style="width:30%">
-                        <strong>Fecha Recepción:</strong> <input type="date" class="cedit">
+                        <strong>Fecha Recepción:</strong> <input type="date" class="cedit" name="fecha_recepcion">
                     </div>
                     <div style="width:30%">
-                        <strong>Hora:</strong> <input type="time" class="cedit">
+                        <strong>Hora:</strong> <input type="time" class="cedit" name="hora_recepcion">
                     </div>
                     <div style="width:30%">
-                        <strong>Temp. Recepción:</strong> <input class="cedit" style="width:60px; text-align:center;"> °C
+                        <strong>Temp. Recepción:</strong> <input class="cedit" name="temperatura_recepcion"
+                            style="width:60px; text-align:center;">
+                        °C
                     </div>
                 </div>
-                <div style="margin-top:40px; border-top:1px solid #333; width:60%; margin-left:auto; margin-right:auto; text-align:center; padding-top:5px;">
+                <div
+                    style="margin-top:40px; border-top:1px solid #333; width:60%; margin-left:auto; margin-right:auto; text-align:center; padding-top:5px;">
                     Nombre y Firma de Conformidad
                 </div>
             </div>
@@ -124,4 +195,5 @@
         </div>
     </div>
 </body>
+
 </html>

@@ -1,0 +1,86 @@
+{
+  "success": true,
+  "executedAt": "2026-03-02T18:23:02.3375754-06:00",
+  "apiBaseUrl": "http://localhost:8000/api",
+  "formatType": "FO-LC-12",
+  "allFormats": false,
+  "totalTests": 15,
+  "passedTests": 15,
+  "tests": [
+    {
+      "test": "login_admin",
+      "passed": true,
+      "detail": "admin_id=1"
+    },
+    {
+      "test": "create_user",
+      "passed": true,
+      "detail": "qa_persist_20260302182300"
+    },
+    {
+      "test": "find_user",
+      "passed": true,
+      "detail": "user_id=11"
+    },
+    {
+      "test": "update_user",
+      "passed": true,
+      "detail": "ok"
+    },
+    {
+      "test": "toggle_user_off",
+      "passed": true,
+      "detail": "ok"
+    },
+    {
+      "test": "login_inactive_user",
+      "passed": true,
+      "detail": "Usuario inactivo"
+    },
+    {
+      "test": "toggle_user_on",
+      "passed": true,
+      "detail": "ok"
+    },
+    {
+      "test": "generate_unique_code::FO-LC-12",
+      "passed": true,
+      "detail": "FO-LC-12-20260303-002"
+    },
+    {
+      "test": "create_instance::FO-LC-12",
+      "passed": true,
+      "detail": "ok"
+    },
+    {
+      "test": "get_instance::FO-LC-12",
+      "passed": true,
+      "detail": "payload_ok"
+    },
+    {
+      "test": "update_instance::FO-LC-12",
+      "passed": true,
+      "detail": "ok"
+    },
+    {
+      "test": "duplicate_unique_code::FO-LC-12",
+      "passed": true,
+      "detail": "{\"msg\":\"Código único ya existe\"}"
+    },
+    {
+      "test": "delete_instance::FO-LC-12",
+      "passed": true,
+      "detail": "ok"
+    },
+    {
+      "test": "audit_trace",
+      "passed": true,
+      "detail": "INSTANCE_CREATE encontrado"
+    },
+    {
+      "test": "delete_user_permanent",
+      "passed": true,
+      "detail": "ok"
+    }
+  ]
+}

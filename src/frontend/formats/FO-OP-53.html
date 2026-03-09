@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-53 Acción Correctiva y Preventiva (CAPA)</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 12px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        .cbx-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+        .cbx-group label { font-size: 11px; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .acr-box { background-color: #f1f5f9; border-left: 4px solid #1E3A5F; padding: 10px; margin-top: 5px; }
+        .why-row { display: flex; align-items: center; margin-bottom: 5px; font-size: 11px; }
+        .why-num { font-weight: bold; color: #1E3A5F; width: 80px; }
+        
+        @media print {
+            .global-controls, .no-print { display:none !important; }
+            ::-webkit-input-placeholder { color: transparent !important; }
+            :-moz-placeholder { color: transparent !important; }
+            ::-moz-placeholder { color: transparent !important; }
+            :-ms-input-placeholder { color: transparent !important; }
+            ::placeholder { color: transparent !important; }
+        }
+    </style>
+</head>
+<body id="doc-fo-op-53">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio CAPA</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-53-</span>
+                    <input type="text" id="reg-53" class="registry-input generate-barcode" data-target="barcode-53" data-prefix="FO-OP-53-" placeholder="000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-53" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>ACCIÓN CORRECTIVA Y PREVENTIVA (CAPA)</h1>
+            <div class="metadata">Código: FO-OP-53 | Versión: 1.0 | Vig: Ene 2026 | Área: Aseguramiento de Calidad</div>
+        </div>
+
+        <div class="section-header">1. IDENTIFICACIÓN DE LA NO CONFORMIDAD</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="50%"><strong>Clasificación:</strong> 
+                        <label style="margin-left:10px;"><input type="radio" name="class" class="cedit"> Crítica</label>
+                        <label style="margin-left:10px;"><input type="radio" name="class" class="cedit"> Mayor</label>
+                        <label style="margin-left:10px;"><input type="radio" name="class" class="cedit"> Menor</label>
+                    </td>
+                    <td width="50%"><strong>Fecha de Apertura:</strong> <input type="date" class="cedit"></td>
+                </tr>
+            </table>
+            <div style="margin-top:10px;">
+                <strong>Origen del Hallazgo:</strong>
+                <div class="cbx-group">
+                    <label><input type="checkbox" class="cedit"> Auditoría Interna</label>
+                    <label><input type="checkbox" class="cedit"> Queja de Cliente</label>
+                    <label><input type="checkbox" class="cedit"> Desviación de Proceso</label>
+                    <label><input type="checkbox" class="cedit"> Producto No Conforme (PNC)</label>
+                </div>
+            </div>
+            <label style="display:block; margin-top:10px; font-weight:bold;">Descripción Detallada del Evento:</label>
+            <textarea class="cedit" rows="3" style="width:100%;" placeholder="Describa el hallazgo, evidencia detectada y el impacto potencial..."></textarea>
+        </div>
+
+        <div class="section-header">2. ANÁLISIS DE CAUSA RAÍZ (ACR) - Metodología 5 Porqués</div>
+        <div class="section">
+            <div class="acr-box">
+                <div class="why-row"><span class="why-num">1. ¿Por qué?</span><input class="cedit" placeholder="Ocurrió el evento descrito..."></div>
+                <div class="why-row"><span class="why-num">2. ¿Por qué?</span><input class="cedit" placeholder="Ocurrió lo anterior..."></div>
+                <div class="why-row"><span class="why-num">3. ¿Por qué?</span><input class="cedit" placeholder="Ocurrió lo anterior..."></div>
+                <div class="why-row"><span class="why-num">4. ¿Por qué?</span><input class="cedit" placeholder="Ocurrió lo anterior..."></div>
+                <div class="why-row"><span class="why-num">5. ¿Por qué?</span><input class="cedit" placeholder="Ocurrió lo anterior (Causa última)..."></div>
+            </div>
+            <label style="display:block; margin-top:10px; font-weight:bold;">Causa Raíz Determinada:</label>
+            <textarea class="cedit" rows="2" style="width:100%; border:1px solid #1E3A5F;" placeholder="Defina la causa raíz final que será atacada con el plan de acción..."></textarea>
+        </div>
+
+        <div class="section-header">3. PLAN DE ACCIÓN</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-capa-actions">
+                <thead>
+                    <tr>
+                        <th width="40%">Acción Definida (Correctiva o Preventiva)</th>
+                        <th width="20%">Responsable Ejecución</th>
+                        <th width="15%">Fecha Compromiso</th>
+                        <th width="20%">Evidencia de Cierre</th>
+                        <th width="5%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><textarea class="cedit" rows="2" placeholder="Describa la acción..."></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Puesto"></td>
+                        <td><input class="cedit" type="date"></td>
+                        <td><input class="cedit" placeholder="Ej. Registro, Manual"></td>
+                        <td class="no-print"><span onclick="delRow(this)" style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-add no-print" onclick="addRow('tbl-capa-actions')" style="width:100%; margin-top:5px; background:#e2e8f0; border:1px dashed #999;">+ AGREGAR ACCIÓN</button>
+        </div>
+
+        <div class="section-header">4. VERIFICACIÓN DE EFICACIA (SEGUIMIENTO)</div>
+        <div class="section" style="background-color: #f8fafc; border: 1px solid #cbd5e1;">
+            <table class="no-border-table">
+                <tr>
+                    <td width="60%"><strong>Periodo de Evaluación:</strong> Del <input type="date" class="cedit" style="width:120px;"> al <input type="date" class="cedit" style="width:120px;"></td>
+                    <td width="40%"><strong>Resultado:</strong> 
+                        <label style="margin-left:10px;"><input type="radio" name="eff" class="cedit"> Eficaz (Cierre)</label>
+                        <label style="margin-left:10px;"><input type="radio" name="eff" class="cedit"> No Eficaz</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Justificación de Eficacia:</strong><br>
+                        <textarea class="cedit" rows="2" style="width:100%;" placeholder="Explique por qué se considera que el problema no ha vuelto a ocurrir..."></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box">
+                <p>Responsable de Implementación</p>
+                <input type="text" placeholder="Nombre y Firma">
+            </div>
+            <div class="signature-box">
+                <p>Aseguramiento de Calidad (QA)</p>
+                <input type="text" placeholder="Nombre y Firma">
+            </div>
+        </div>
+        
+        <div style="width: 50%; margin: 20px auto; text-align: center;">
+            <p style="font-weight:bold; font-size:11px;">AUTORIZACIÓN FINAL (RESPONSABLE SANITARIO)</p>
+            <div style="border-bottom: 1px solid black; margin-top:30px;"></div>
+            <p style="font-size:10px;">Nombre, Firma y Fecha</p>
+        </div>
+
+        <div class="footer">FO-OP-53 | Versión: 1.0 | Acción Correctiva y Preventiva (CAPA) | Xelle Scientific</div>
+    </div>
+
+    <script>
+        function addRow(id){
+            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
+            let r = t.rows[0].cloneNode(true);
+            r.querySelectorAll('input, textarea').forEach(i => i.value = '');
+            t.appendChild(r);
+        }
+        function delRow(btn){
+            let row = btn.parentNode.parentNode;
+            if(row.parentNode.rows.length > 1) { row.parentNode.removeChild(row); }
+        }
+    </script>
+</body>
+</html>

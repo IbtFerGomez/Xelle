@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Identificación Visual y Trazabilidad - Xelle Scientific</title>
+    <style>
+        :root {
+            --navy-900: #0b1f3a;
+            --navy-800: #12325a;
+            --navy-700: #1a4a80;
+            --navy-100: #e9eff7;
+            --navy-050: #f3f7fc;
+            --text-main: #23313f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            background-color: var(--navy-050);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--navy-900), var(--navy-700));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--navy-700);
+            color: var(--navy-800);
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--navy-100);
+            color: var(--navy-900);
+            font-weight: bold;
+        }
+
+        .status-box {
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .amarillo {
+            background-color: #ffcc00;
+            color: #333;
+        }
+
+        .verde {
+            background-color: #28a745;
+        }
+
+        .rojo {
+            background-color: #dc3545;
+        }
+
+        .naranja {
+            background-color: #fd7e14;
+        }
+
+        .highlight {
+            background-color: var(--navy-100);
+            color: var(--navy-800);
+            font-weight: bold;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .pcc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pcc-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .pcc-list li::before {
+            content: '⚠️';
+            position: absolute;
+            left: 0;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8em;
+            text-align: center;
+            color: var(--navy-700);
+            border-top: 1px solid var(--navy-100);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>XELLE SCIENTIFIC</h1>
+        <p>Manual de Identificación Visual y Trazabilidad de Lotes</p>
+    </header>
+
+    <div class="container">
+
+        <h2>1. Semáforo de Estatus de Lotes (Identificación Física)</h2>
+        <p>Todo material en almacén o laboratorio debe portar una de las siguientes etiquetas según su fase:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Color</th>
+                    <th>Estatus</th>
+                    <th>Código</th>
+                    <th>Uso Normativo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="status-box amarillo">Cuarentena</div>
+                    </td>
+                    <td><strong>PENDIENTE</strong></td>
+                    <td>ET-LC-03</td>
+                    <td>Material recién recibido o producto terminado esperando resultados de laboratorio (Fase 3).</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="status-box verde">Liberado</div>
+                    </td>
+                    <td><strong>APROBADO</strong></td>
+                    <td>ET-LC-02</td>
+                    <td>Producto que cumplió todas las especificaciones. Listo para distribución y uso clínico.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="status-box rojo">Rechazado</div>
+                    </td>
+                    <td><strong>NO CONFORME</strong></td>
+                    <td>ET-LC-04</td>
+                    <td>Material con fallas técnicas, contaminación o excursión térmica. Segregar para destrucción.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="status-box naranja">Muestreado</div>
+                    </td>
+                    <td><strong>CONTROL</strong></td>
+                    <td>ET-LC-01</td>
+                    <td>Sello de seguridad que indica que la caja fue abierta por Calidad para inspección.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>2. Gestión de Residuos (RPBI - NOM-087)</h2>
+        <ul>
+            <li><span class="highlight">ET-RPBI-01 (ROJO):</span> Punzocortantes, cultivos, cepas y residuos no
+                anatómicos[cite: 3, 4].</li>
+            <li><span class="highlight">ET-RPBI-02 (AMARILLO):</span> <strong>Placentas</strong> y residuos patológicos
+                (tejidos anatómicos)[cite: 1, 3, 4].</li>
+        </ul>
+
+        <h2>3. Flujo Documental y Puntos Críticos de Control (PCC)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fase del Proceso</th>
+                    <th>Formato Obligatorio</th>
+                    <th>Punto Crítico de Control (PCC)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1. Recepción</td>
+                    <td>FO-LC-17 / 17B</td>
+                    <td>Integridad de embalaje y temperatura (2°C a 8°C).</td>
+                </tr>
+                <tr>
+                    <td>2. Procesamiento</td>
+                    <td>FO-LC-18 / 18B</td>
+                    <td>Peso neto, apariencia visual y asepsia de cabina.</td>
+                </tr>
+                <tr>
+                    <td>Muestreo</td>
+                    <td>FO-LC-34 [cite: 3]</td>
+                    <td>Toma estratificada y registro de cantidad volumétrica[cite: 3, 4].</td>
+                </tr>
+                <tr>
+                    <td>3. Calidad</td>
+                    <td>FO-LC-19 / 19B</td>
+                    <td>Serología, esterilidad y endotoxinas.</td>
+                </tr>
+                <tr>
+                    <td>Liberación</td>
+                    <td>FO-LC-16 (Cover)</td>
+                    <td>Dictamen final firmado por Responsable Sanitario.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>4. Reglas de Oro de Xelle Scientific</h2>
+        <ul class="pcc-list">
+            <li><strong>Cadena de Frío:</strong> Rango mandatorio de <strong>2°C a 8°C</strong>. Cualquier desviación
+                invalida el lote inmediatamente.</li>
+            <li><strong>Prevención de Congelación:</strong> Uso obligatorio de separadores físicos. El vial jamás debe
+                tocar el gel congelado.</li>
+            <li><strong>Trazabilidad:</strong> La resta entre fecha de ingreso y salida en bitácora jamás debe exceder
+                los límites legales (NOM-087).</li>
+            <li><strong>Identificación de Origen:</strong> Registrar siempre el área o proceso de donde emergió el
+                residuo para detectar sobre-generación[cite: 4].</li>
+        </ul>
+
+        <div class="footer">
+            <p>Propiedad de Xelle Scientific © 2026 | Aseguramiento de Calidad | Versión 1.0</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

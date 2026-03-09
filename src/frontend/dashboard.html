@@ -283,7 +283,22 @@
 
             <div id="view-admin" class="tab-content hidden animate-fadeIn space-y-8">
 
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                        <button onclick="switchAdminPanel('users')" id="admin-tab-users"
+                            class="admin-panel-tab px-4 py-2 rounded-xl text-sm font-bold bg-primary text-white">Usuarios</button>
+                        <button onclick="switchAdminPanel('digitalizer')" id="admin-tab-digitalizer"
+                            class="admin-panel-tab px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">Digitalizador</button>
+                        <button onclick="switchAdminPanel('formats')" id="admin-tab-formats"
+                            class="admin-panel-tab px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">Catálogo</button>
+                        <button onclick="switchAdminPanel('instances')" id="admin-tab-instances"
+                            class="admin-panel-tab px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">Tarjetas
+                            Guardadas</button>
+                    </div>
+                </div>
+
+                <div class="admin-panel bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"
+                    data-admin-panel="users">
                     <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-navy/5">
                         <div class="flex items-center gap-3">
                             <div class="bg-navy p-2 rounded-lg text-white"><span
@@ -315,7 +330,8 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="admin-panel bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hidden"
+                    data-admin-panel="digitalizer">
                     <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-violet-50">
                         <div class="flex items-center gap-3">
                             <div class="bg-violet-600 p-2 rounded-lg text-white"><span
@@ -332,7 +348,8 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="admin-panel bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hidden"
+                    data-admin-panel="formats">
                     <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-sky/5">
                         <div class="flex items-center gap-3">
                             <div class="bg-sky p-2 rounded-lg text-white"><span
@@ -348,7 +365,7 @@
                         </button>
                     </div>
                     <div class="p-5 border-b border-slate-100 bg-white">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
                             <div>
                                 <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Buscar</label>
                                 <input id="admin-format-search" type="text" placeholder="Código, título o archivo..."
@@ -361,7 +378,7 @@
                                     <option value="">Todas</option>
                                     <option value="banco">Banco</option>
                                     <option value="calidad">Calidad</option>
-                                    <option value="almacen">Almacén</option>
+                                    <option value="operaciones">Operaciones</option>
                                     <option value="sgc">SGC</option>
                                 </select>
                             </div>
@@ -373,6 +390,20 @@
                                     <option value="visible">Visible</option>
                                     <option value="oculto">Oculto</option>
                                 </select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Herramienta</label>
+                                <div class="flex gap-2">
+                                    <button onclick="applyAdminCatalogSearch()"
+                                        class="flex-1 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-transform active:scale-95">
+                                        <span class="material-symbols-outlined text-lg">search</span> Buscar
+                                    </button>
+                                    <button onclick="clearAdminCatalogFilters()"
+                                        class="bg-white border border-slate-200 hover:bg-slate-50 text-navy px-3 py-2 rounded-xl font-bold text-sm flex items-center justify-center transition-transform active:scale-95"
+                                        title="Limpiar filtros">
+                                        <span class="material-symbols-outlined text-lg">ink_eraser</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -394,7 +425,8 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="admin-panel bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hidden"
+                    data-admin-panel="instances">
                     <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-emerald-50">
                         <div class="flex items-center gap-3">
                             <div class="bg-emerald-600 p-2 rounded-lg text-white"><span
@@ -467,7 +499,7 @@
                         class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-bold text-navy">
                         <option value="super_admin">Administrador Total</option>
                         <option value="quality_manager">Gerencia de Calidad</option>
-                        <option value="sales">Ventas / Comercial</option>
+                        <option value="sales">Operaciones</option>
                         <option value="banco">Operador Técnico</option>
                     </select>
                 </div>
@@ -493,8 +525,8 @@
                             class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
                             <input type="checkbox"
                                 class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5"
-                                value="almacen">
-                            <span class="text-sm font-bold text-slate-600">Almacén</span>
+                                value="operaciones">
+                            <span class="text-sm font-bold text-slate-600">Operaciones</span>
                         </label>
                         <label
                             class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
@@ -552,7 +584,7 @@
                             class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-bold text-navy">
                             <option value="banco">Banco (Verde)</option>
                             <option value="calidad">Calidad (Azul)</option>
-                            <option value="almacen">Almacén (Naranja)</option>
+                            <option value="operaciones">Operaciones (Naranja)</option>
                             <option value="sgc">SGC (Gris)</option>
                         </select>
                     </div>
@@ -589,6 +621,71 @@
         let formatCatalogCache = [];
         let currentSession = null;
         let isAdminUser = false;
+        const EXCLUDED_FORMAT_CODES = ['FO-OP-OP-01'];
+
+        function isExcludedFormat(format) {
+            const code = String(format?.code || '').trim().toUpperCase();
+            const filePath = String(format?.file_path || format?.file || '').trim().toLowerCase();
+            const excludedByCode = EXCLUDED_FORMAT_CODES.includes(code) || code === 'FO-OP-01';
+            const excludedByPath = filePath.includes('fo-op-op-01.html');
+            return excludedByCode || excludedByPath;
+        }
+
+        async function parseJsonResponse(response) {
+            const contentType = String(response.headers.get('content-type') || '').toLowerCase();
+            if (!response.ok) {
+                throw new Error(`HTTP_${response.status}`);
+            }
+            if (!contentType.includes('application/json')) {
+                throw new Error('NON_JSON_RESPONSE');
+            }
+            return response.json();
+        }
+
+        function getFormatOrderMap() {
+            try {
+                const parsed = JSON.parse(localStorage.getItem(FORMAT_ORDER_KEY) || '{}');
+                return parsed && typeof parsed === 'object' ? parsed : {};
+            } catch {
+                return {};
+            }
+        }
+
+        function getFormatOrderValue(formatCode) {
+            const code = String(formatCode || '').trim().toUpperCase();
+            const orderMap = getFormatOrderMap();
+            const rawValue = orderMap[code];
+            const numericValue = Number(rawValue);
+            return Number.isFinite(numericValue) ? numericValue : '';
+        }
+
+        function getSortOrderForFormat(formatCode) {
+            const value = getFormatOrderValue(formatCode);
+            return value === '' ? Number.MAX_SAFE_INTEGER : Number(value);
+        }
+
+        function updateFormatPresentationOrder(formatCode, rawValue) {
+            const code = String(formatCode || '').trim().toUpperCase();
+            if (!code) return;
+
+            const orderMap = getFormatOrderMap();
+            const normalized = String(rawValue ?? '').trim();
+
+            if (!normalized) {
+                delete orderMap[code];
+            } else {
+                const numericValue = Number(normalized);
+                if (!Number.isFinite(numericValue) || numericValue < 1) {
+                    alert('El orden debe ser un número mayor o igual a 1.');
+                    return;
+                }
+                orderMap[code] = Math.floor(numericValue);
+            }
+
+            localStorage.setItem(FORMAT_ORDER_KEY, JSON.stringify(orderMap));
+            renderFormatsCatalog();
+            Core.UI.renderDashboard();
+        }
 
         // --- INIT ---
         $(document).ready(function () {
@@ -607,18 +704,31 @@
                     : (Array.isArray(sess.moduleAccess) ? sess.moduleAccess : [])
             };
 
-            if (!sess.name || !Array.isArray(sess.access)) {
-                Core.Data.set(KEYS.SESSION, normalizedSession);
+            const normalizedUsername = String(normalizedSession.username || normalizedSession.user || '').trim().toLowerCase();
+            const rawRole = String(normalizedSession.role || '').trim().toLowerCase();
+            if (normalizedUsername === 'xelle_fer') {
+                normalizedSession.role = 'superadmin';
+                if (!Array.isArray(normalizedSession.access) || normalizedSession.access.length === 0) {
+                    normalizedSession.access = ['all'];
+                }
+            } else if (rawRole === 'super_admin') {
+                normalizedSession.role = 'superadmin';
             }
+
+            Core.Data.set(KEYS.SESSION, normalizedSession);
 
             currentSession = normalizedSession;
             isAdminUser = String(normalizedSession.role || '').toLowerCase().includes('admin')
                 || normalizedSession.access.includes('all');
 
+            const displayName = String(normalizedSession.name || normalizedSession.username || normalizedSession.user || 'Usuario');
+            const displayRole = String(normalizedSession.role || 'user');
+            const initial = displayName.trim().charAt(0).toUpperCase() || 'U';
+
             // UI Update
-            $('#u-name').text(normalizedSession.name);
-            $('#u-role').text(normalizedSession.role || 'user');
-            $('#u-initial').text(normalizedSession.name.charAt(0).toUpperCase());
+            $('#u-name').text(displayName);
+            $('#u-role').text(displayRole);
+            $('#u-initial').text(initial);
 
             // Admin Permission
             if (isAdminUser) {
@@ -628,17 +738,36 @@
                 $('#btn-tab-history').addClass('hidden');
             }
 
+            Core.UI.renderDashboard();
+
             // Load Formats
             fetch(`${API_URL}/formats`)
-                .then(r => r.json())
+                .then(parseJsonResponse)
                 .then(data => {
-                    if (data.length > 0) {
-                        const dbFormats = data.map(f => ({ code: f.code, title: f.title, area: f.area, file: f.file_path }));
+                    const dbFormats = (Array.isArray(data) ? data : [])
+                        .filter(f => !isExcludedFormat(f))
+                        .map(f => ({
+                            code: f.code,
+                            title: f.title,
+                            area: f.area,
+                            file: f.file_path
+                        }));
+                    if (dbFormats.length === 0) {
+                        localStorage.removeItem(KEYS.FORMATS);
+                        Core.Formats.syncWithSeed();
+                    } else {
                         Core.Data.set(KEYS.FORMATS, dbFormats);
                     }
                     Core.UI.renderDashboard();
                 })
-                .catch(() => Core.UI.renderDashboard());
+                .catch(() => {
+                    const cachedFormats = Core.Data.get(KEYS.FORMATS) || [];
+                    if (!Array.isArray(cachedFormats) || cachedFormats.length === 0) {
+                        localStorage.removeItem(KEYS.FORMATS);
+                        Core.Formats.syncWithSeed();
+                    }
+                    Core.UI.renderDashboard();
+                });
         });
 
         function getActorUserId() {
@@ -646,6 +775,102 @@
             if (rawId === null || rawId === undefined || String(rawId).trim() === '') return null;
             const parsed = Number(rawId);
             return Number.isFinite(parsed) ? parsed : null;
+        }
+
+        function normalizeText(value) {
+            return String(value || '')
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .trim();
+        }
+
+        function normalizeFormatPath(rawPath) {
+            const path = String(rawPath || '').trim().replace(/\\/g, '/');
+            if (!path) return '';
+
+            const splitIndex = path.indexOf('?');
+            const basePath = splitIndex >= 0 ? path.slice(0, splitIndex) : path;
+            const query = splitIndex >= 0 ? path.slice(splitIndex) : '';
+
+            if (/^https?:\/\//i.test(basePath) || basePath.startsWith('/') || basePath.startsWith('./') || basePath.startsWith('../')) {
+                return `${basePath}${query}`;
+            }
+
+            let normalizedBase = basePath;
+            if (!normalizedBase.toLowerCase().includes('/')) {
+                if (!normalizedBase.toLowerCase().endsWith('.html')) {
+                    normalizedBase += '.html';
+                }
+                normalizedBase = `formats/${normalizedBase}`;
+            }
+
+            return `${normalizedBase}${query}`;
+        }
+
+        function applyOperationSearch(rawValue) {
+            const query = normalizeText(rawValue);
+            const workspace = document.getElementById('workspace');
+            if (!workspace) return;
+
+            const sections = workspace.querySelectorAll('[data-area]');
+            sections.forEach(section => {
+                const cards = section.querySelectorAll('button');
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const cardText = normalizeText(card.textContent || '');
+                    const visible = !query || cardText.includes(query);
+                    card.classList.toggle('hidden', !visible);
+                    if (visible) visibleCount += 1;
+                });
+
+                section.classList.toggle('hidden', visibleCount === 0);
+            });
+        }
+
+        function applyGlobalSearch(rawValue) {
+            const value = String(rawValue || '');
+            const activeView = document.querySelector('.tab-content:not(.hidden)')?.id || '';
+
+            if (activeView === 'view-operation') {
+                applyOperationSearch(value);
+                return;
+            }
+
+            if (activeView === 'view-library') {
+                const input = document.getElementById('library-search');
+                if (input) input.value = value;
+                renderLibraryInstances();
+                return;
+            }
+
+            if (activeView === 'view-admin') {
+                const activePanel = document.querySelector('.admin-panel:not(.hidden)')?.dataset?.adminPanel || '';
+                if (activePanel === 'formats') {
+                    const input = document.getElementById('admin-format-search');
+                    if (input) input.value = value;
+                    renderFormatsCatalog();
+                }
+            }
+        }
+
+        function switchAdminPanel(panelId) {
+            const tabs = document.querySelectorAll('.admin-panel-tab');
+            const panels = document.querySelectorAll('.admin-panel');
+
+            tabs.forEach(tab => {
+                const isActive = tab.id === `admin-tab-${panelId}`;
+                tab.classList.toggle('bg-primary', isActive);
+                tab.classList.toggle('text-white', isActive);
+                tab.classList.toggle('bg-slate-100', !isActive);
+                tab.classList.toggle('text-slate-600', !isActive);
+            });
+
+            panels.forEach(panel => {
+                const matches = panel.dataset.adminPanel === panelId;
+                panel.classList.toggle('hidden', !matches);
+            });
         }
 
         // --- NAVIGATION ---
@@ -677,7 +902,12 @@
             if (id === 'operation') $('#sidebar-filters').fadeIn(); else $('#sidebar-filters').fadeOut();
             if (id === 'library') loadLibraryInstances();
             if (id === 'history') loadHistory();
-            if (id === 'admin') { loadUsers(); loadFormats(); loadInstances(); }
+            if (id === 'admin') {
+                switchAdminPanel('users');
+                loadUsers();
+                loadFormats();
+                loadInstances();
+            }
         }
 
         // --- DATA LOADERS ---
@@ -743,18 +973,17 @@
             if (!isAdminUser || !actorUserId) return;
             fetch(`${API_URL}/formats_admin?actor_user_id=${encodeURIComponent(actorUserId)}`)
                 .then(r => {
-                    if (!r.ok) throw new Error('admin_formats_failed');
-                    return r.json();
+                    return parseJsonResponse(r);
                 })
                 .then(d => {
-                    formatCatalogCache = Array.isArray(d) ? d : [];
+                    formatCatalogCache = (Array.isArray(d) ? d : []).filter(f => !isExcludedFormat(f));
                     renderFormatsCatalog();
                 })
                 .catch(() => {
                     fetch(`${API_URL}/formats`)
-                        .then(r => r.json())
+                        .then(parseJsonResponse)
                         .then(d => {
-                            formatCatalogCache = Array.isArray(d) ? d : [];
+                            formatCatalogCache = (Array.isArray(d) ? d : []).filter(f => !isExcludedFormat(f));
                             renderFormatsCatalog();
                         })
                         .catch(() => {
@@ -768,14 +997,14 @@
             const tbody = document.getElementById('formats-body');
             if (!tbody) return;
 
-            const search = (document.getElementById('admin-format-search')?.value || '').toLowerCase().trim();
+            const search = normalizeText(document.getElementById('admin-format-search')?.value || '');
             const areaFilter = (document.getElementById('admin-format-area-filter')?.value || '').trim();
             const visibilityFilter = (document.getElementById('admin-format-visibility-filter')?.value || '').trim();
 
             const rows = formatCatalogCache.filter(f => {
-                const code = (f.code || '').toLowerCase();
-                const title = (f.title || '').toLowerCase();
-                const filePath = (f.file_path || '').toLowerCase();
+                const code = normalizeText(f.code || '');
+                const title = normalizeText(f.title || '');
+                const filePath = normalizeText((f.file_path || f.file || ''));
                 const area = (f.area || '').trim();
                 const visibility = f.active ? 'visible' : 'oculto';
 
@@ -786,12 +1015,23 @@
                 return passSearch && passArea && passVisibility;
             });
 
+            rows.sort((a, b) => {
+                const orderA = getSortOrderForFormat(a.code);
+                const orderB = getSortOrderForFormat(b.code);
+                if (orderA !== orderB) return orderA - orderB;
+
+                const codeA = String(a.code || '');
+                const codeB = String(b.code || '');
+                return codeA.localeCompare(codeB, 'es', { numeric: true, sensitivity: 'base' });
+            });
+
             let h = '';
             rows.forEach(f => {
                 const visibilityBadge = f.active
                     ? '<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Visible</span>'
                     : '<span class="bg-slate-200 text-slate-500 px-2 py-1 rounded-full text-[10px] font-bold uppercase">Oculto</span>';
                 const fData = JSON.stringify(f).replace(/"/g, '&quot;');
+                const fPath = JSON.stringify(f.file_path || f.file || '');
                 h += `<tr class="hover:bg-slate-50 transition-colors border-b border-slate-50">
                     <td class="px-6 py-4 font-bold text-navy">${f.code}</td>
                     <td class="px-6 py-4 text-slate-600">${f.title}</td>
@@ -799,23 +1039,44 @@
                     <td class="px-6 py-4 font-mono text-xs text-slate-400">${f.file_path}</td>
                     <td class="px-6 py-4">${visibilityBadge}</td>
                     <td class="px-6 py-4">
+                        <input type="number" min="1" value="${getFormatOrderValue(f.code)}" onchange="updateFormatPresentationOrder('${String(f.code || '').replace(/'/g, "\\'")}', this.value)" class="w-24 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold text-navy focus:ring-2 focus:ring-primary" placeholder="Auto">
+                    </td>
+                    <td class="px-6 py-4">
                         <select onchange="moveFormatToArea(${f.id}, this.value)"
                             class="w-full min-w-[150px] px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold text-navy focus:ring-2 focus:ring-primary">
                             <option value="banco" ${f.area === 'banco' ? 'selected' : ''}>Banco</option>
                             <option value="calidad" ${f.area === 'calidad' ? 'selected' : ''}>Calidad</option>
-                            <option value="almacen" ${f.area === 'almacen' ? 'selected' : ''}>Almacén</option>
+                            <option value="operaciones" ${(f.area === 'operaciones' || f.area === 'almacen') ? 'selected' : ''}>Operaciones</option>
                             <option value="sgc" ${f.area === 'sgc' ? 'selected' : ''}>SGC</option>
                         </select>
                     </td>
                     <td class="px-6 py-4 text-right flex justify-end gap-2">
-                        <button onclick="openFormatModalFromData(${fData})" class="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
+                        <button title="Modificar formato" onclick='openFormatFile(${fPath})' class="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">open_in_new</span></button>
+                        <button title="Modificar tarjeta" onclick="openFormatModalFromData(${fData})" class="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
                         <button title="Cambiar visibilidad" onclick="toggleApi('formats', ${f.id}, loadFormats, true)" class="p-2 text-slate-400 hover:text-sky hover:bg-sky/5 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
                         <button title="Eliminar formato" onclick="deleteApi('formats', ${f.id}, loadFormats, 'formato', true)" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
                     </td>
                 </tr>`;
             });
 
-            tbody.innerHTML = h || '<tr><td colspan="7" class="p-6 text-center text-slate-400">Sin formatos con esos filtros.</td></tr>';
+            tbody.innerHTML = h || '<tr><td colspan="8" class="p-6 text-center text-slate-400">Sin formatos con esos filtros.</td></tr>';
+        }
+
+        function applyAdminCatalogSearch() {
+            renderFormatsCatalog();
+        }
+
+        function clearAdminCatalogFilters() {
+            const searchInput = document.getElementById('admin-format-search');
+            const areaSelect = document.getElementById('admin-format-area-filter');
+            const visibilitySelect = document.getElementById('admin-format-visibility-filter');
+
+            if (searchInput) searchInput.value = '';
+            if (areaSelect) areaSelect.value = '';
+            if (visibilitySelect) visibilitySelect.value = '';
+
+            renderFormatsCatalog();
+            if (searchInput) searchInput.focus();
         }
 
         function moveFormatToArea(formatId, newArea) {
@@ -915,13 +1176,13 @@
             const tbody = document.getElementById('library-instances-body');
             if (!tbody) return;
 
-            const search = (document.getElementById('library-search')?.value || '').toLowerCase().trim();
+            const search = normalizeText(document.getElementById('library-search')?.value || '');
             const formatFilter = (document.getElementById('library-format-filter')?.value || '').trim();
             const statusFilter = (document.getElementById('library-status-filter')?.value || '').trim();
 
             const rows = instanceCache.filter(inst => {
-                const code = (inst.unique_code || '').toLowerCase();
-                const formatType = (inst.format_type || '').toLowerCase();
+                const code = normalizeText(inst.unique_code || '');
+                const formatType = normalizeText(inst.format_type || '');
                 const status = (inst.status || '').toUpperCase();
 
                 const passSearch = !search || code.includes(search) || formatType.includes(search);
@@ -956,13 +1217,23 @@
             tbody.innerHTML = html || '<tr><td colspan="5" class="p-6 text-center text-slate-400">Sin archivos creados con esos filtros.</td></tr>';
         }
 
+        function openFormatFile(filePath) {
+            const path = normalizeFormatPath(filePath);
+            if (!path) {
+                alert('Esta tarjeta no tiene ruta de formato configurada.');
+                return;
+            }
+            window.open(path, '_blank');
+        }
+
         function openSavedInstance(filePath, uniqueCode) {
-            if (!filePath) {
+            const normalizedPath = normalizeFormatPath(filePath);
+            if (!normalizedPath) {
                 alert('Este formato no tiene ruta configurada.');
                 return;
             }
-            const separator = filePath.includes('?') ? '&' : '?';
-            const target = `${filePath}${separator}instance=${encodeURIComponent(uniqueCode)}`;
+            const separator = normalizedPath.includes('?') ? '&' : '?';
+            const target = `${normalizedPath}${separator}instance=${encodeURIComponent(uniqueCode)}`;
             window.open(target, '_blank');
         }
 
@@ -1011,16 +1282,26 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            const globalSearch = document.getElementById('searchBox');
             const librarySearch = document.getElementById('library-search');
             const libraryFormat = document.getElementById('library-format-filter');
             const libraryStatus = document.getElementById('library-status-filter');
             const adminFormatSearch = document.getElementById('admin-format-search');
             const adminFormatArea = document.getElementById('admin-format-area-filter');
             const adminFormatVisibility = document.getElementById('admin-format-visibility-filter');
+            if (globalSearch) globalSearch.addEventListener('input', (e) => applyGlobalSearch(e.target.value));
             if (librarySearch) librarySearch.addEventListener('input', renderLibraryInstances);
             if (libraryFormat) libraryFormat.addEventListener('change', renderLibraryInstances);
             if (libraryStatus) libraryStatus.addEventListener('change', renderLibraryInstances);
             if (adminFormatSearch) adminFormatSearch.addEventListener('input', renderFormatsCatalog);
+            if (adminFormatSearch) {
+                adminFormatSearch.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        applyAdminCatalogSearch();
+                    }
+                });
+            }
             if (adminFormatArea) adminFormatArea.addEventListener('change', renderFormatsCatalog);
             if (adminFormatVisibility) adminFormatVisibility.addEventListener('change', renderFormatsCatalog);
         });
@@ -1120,12 +1401,14 @@
             const code = ($('#fmt-code').val() || '').trim();
             const title = ($('#fmt-title').val() || '').trim();
             const area = ($('#fmt-area').val() || '').trim();
-            const filePath = ($('#fmt-file').val() || '').trim();
+            const filePath = normalizeFormatPath(($('#fmt-file').val() || '').trim());
 
             if (!code || !title || !area || !filePath) {
                 alert('Completa todos los campos: código, título, área y ruta del archivo.');
                 return;
             }
+
+            $('#fmt-file').val(filePath);
 
             const payload = {
                 code,
@@ -1152,10 +1435,25 @@
 
         function refreshDashboardFormats() {
             fetch(`${API_URL}/formats`)
-                .then(r => r.json())
+                .then(parseJsonResponse)
                 .then(data => {
-                    const dbFormats = data.map(f => ({ code: f.code, title: f.title, area: f.area, file: f.file_path }));
-                    Core.Data.set(KEYS.FORMATS, dbFormats);
+                    const dbFormats = (Array.isArray(data) ? data : [])
+                        .filter(f => !isExcludedFormat(f))
+                        .map(f => ({ code: f.code, title: f.title, area: f.area, file: f.file_path }));
+                    if (dbFormats.length === 0) {
+                        localStorage.removeItem(KEYS.FORMATS);
+                        Core.Formats.syncWithSeed();
+                    } else {
+                        Core.Data.set(KEYS.FORMATS, dbFormats);
+                    }
+                    Core.UI.renderDashboard();
+                })
+                .catch(() => {
+                    const cachedFormats = Core.Data.get(KEYS.FORMATS) || [];
+                    if (!Array.isArray(cachedFormats) || cachedFormats.length === 0) {
+                        localStorage.removeItem(KEYS.FORMATS);
+                        Core.Formats.syncWithSeed();
+                    }
                     Core.UI.renderDashboard();
                 });
         }

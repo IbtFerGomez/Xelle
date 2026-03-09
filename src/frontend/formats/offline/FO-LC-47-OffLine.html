@@ -17,6 +17,22 @@
             margin-top: 15px;
             border-radius: 4px;
         }
+
+        .print-input-value {
+            display: none;
+        }
+
+        @media print {
+            .print-field-cell input {
+                display: none !important;
+            }
+
+            .print-field-cell .print-input-value {
+                display: inline-block !important;
+                font-weight: 500;
+                color: #000;
+            }
+        }
     </style>
 </head>
 
@@ -85,7 +101,10 @@
                 </tr>
                 <tr>
                     <td><strong>Nombre Insumo/Producto:</strong></td>
-                    <td><input class="cedit"></td>
+                    <td class="print-field-cell">
+                        <input id="nombre-insumo-producto-47" class="cedit" autocomplete="off">
+                        <span class="print-input-value"></span>
+                    </td>
                     <td><strong>Proveedor:</strong></td>
                     <td><input class="cedit"></td>
                 </tr>
@@ -207,6 +226,22 @@
 
         <div class="footer">FO-LC-47 | Versión: 01 | Revisión Calidad Muestreo | Xelle Scientific</div>
     </div>
+    <script>
+        (function setupPrintNombreInsumo() {
+            const input = document.getElementById('nombre-insumo-producto-47');
+            const span = document.querySelector('.print-field-cell .print-input-value');
+            if (!input || !span) return;
+
+            const syncPrintValue = () => {
+                span.textContent = input.value || '';
+            };
+
+            input.addEventListener('input', syncPrintValue);
+            input.addEventListener('change', syncPrintValue);
+            window.addEventListener('beforeprint', syncPrintValue);
+            syncPrintValue();
+        })();
+    </script>
 </body>
 
 </html>

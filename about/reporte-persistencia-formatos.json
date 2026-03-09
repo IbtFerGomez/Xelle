@@ -1,0 +1,432 @@
+[
+  {
+    "file": "digitalizar-word.html",
+    "controls": 11,
+    "withIdOrName": 11,
+    "missingIdName": 0,
+    "barcodeInputs": 0,
+    "saveButtons": 0,
+    "isEmpty": false,
+    "risk": "ALTO"
+  },
+  {
+    "file": "FO-LC-12.html",
+    "controls": 16,
+    "withIdOrName": 1,
+    "missingIdName": 15,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-14.html",
+    "controls": 9,
+    "withIdOrName": 1,
+    "missingIdName": 8,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-15.html",
+    "controls": 9,
+    "withIdOrName": 1,
+    "missingIdName": 8,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-16.html",
+    "controls": 27,
+    "withIdOrName": 1,
+    "missingIdName": 26,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-LC-17.html",
+    "controls": 26,
+    "withIdOrName": 19,
+    "missingIdName": 7,
+    "barcodeInputs": 2,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-18.html",
+    "controls": 20,
+    "withIdOrName": 11,
+    "missingIdName": 9,
+    "barcodeInputs": 2,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-19.html",
+    "controls": 35,
+    "withIdOrName": 2,
+    "missingIdName": 33,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-LC-20.html",
+    "controls": 32,
+    "withIdOrName": 8,
+    "missingIdName": 24,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-LC-21.html",
+    "controls": 47,
+    "withIdOrName": 1,
+    "missingIdName": 46,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-LC-22.html",
+    "controls": 22,
+    "withIdOrName": 6,
+    "missingIdName": 16,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-23.html",
+    "controls": 15,
+    "withIdOrName": 1,
+    "missingIdName": 14,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-24.html",
+    "controls": 23,
+    "withIdOrName": 15,
+    "missingIdName": 8,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-25.html",
+    "controls": 12,
+    "withIdOrName": 1,
+    "missingIdName": 11,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-26.html",
+    "controls": 13,
+    "withIdOrName": 1,
+    "missingIdName": 12,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-27.html",
+    "controls": 12,
+    "withIdOrName": 1,
+    "missingIdName": 11,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-28.html",
+    "controls": 14,
+    "withIdOrName": 1,
+    "missingIdName": 13,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-29.html",
+    "controls": 69,
+    "withIdOrName": 12,
+    "missingIdName": 57,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-LC-31.html",
+    "controls": 47,
+    "withIdOrName": 10,
+    "missingIdName": 37,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-LC-32.html",
+    "controls": 48,
+    "withIdOrName": 1,
+    "missingIdName": 47,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-LC-40-B.html",
+    "controls": 17,
+    "withIdOrName": 1,
+    "missingIdName": 16,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-40.html",
+    "controls": 10,
+    "withIdOrName": 1,
+    "missingIdName": 9,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-41.html",
+    "controls": 5,
+    "withIdOrName": 2,
+    "missingIdName": 3,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-42.html",
+    "controls": 52,
+    "withIdOrName": 1,
+    "missingIdName": 51,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-LC-43.html",
+    "controls": 12,
+    "withIdOrName": 1,
+    "missingIdName": 11,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-44.html",
+    "controls": 16,
+    "withIdOrName": 3,
+    "missingIdName": 13,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-45.html",
+    "controls": 20,
+    "withIdOrName": 1,
+    "missingIdName": 19,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-46.html",
+    "controls": 40,
+    "withIdOrName": 3,
+    "missingIdName": 37,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-LC-47.html",
+    "controls": 26,
+    "withIdOrName": 1,
+    "missingIdName": 25,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-LC-48.html",
+    "controls": 19,
+    "withIdOrName": 1,
+    "missingIdName": 18,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-50.html",
+    "controls": 11,
+    "withIdOrName": 1,
+    "missingIdName": 10,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-LC-51.html",
+    "controls": 0,
+    "withIdOrName": 0,
+    "missingIdName": 0,
+    "barcodeInputs": 0,
+    "saveButtons": 0,
+    "isEmpty": true,
+    "risk": "CRITICO"
+  },
+  {
+    "file": "FO-OP-13.html",
+    "controls": 24,
+    "withIdOrName": 1,
+    "missingIdName": 23,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-OP-15.html",
+    "controls": 13,
+    "withIdOrName": 1,
+    "missingIdName": 12,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-OP-16.html",
+    "controls": 16,
+    "withIdOrName": 1,
+    "missingIdName": 15,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-OP-17.html",
+    "controls": 11,
+    "withIdOrName": 11,
+    "missingIdName": 0,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-OP-20.html",
+    "controls": 13,
+    "withIdOrName": 1,
+    "missingIdName": 12,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-OP-49.html",
+    "controls": 14,
+    "withIdOrName": 1,
+    "missingIdName": 13,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-OP-50.html",
+    "controls": 41,
+    "withIdOrName": 1,
+    "missingIdName": 40,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-OP-51.html",
+    "controls": 30,
+    "withIdOrName": 6,
+    "missingIdName": 24,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-OP-52.html",
+    "controls": 38,
+    "withIdOrName": 6,
+    "missingIdName": 32,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "MEDIO"
+  },
+  {
+    "file": "FO-SGC-01.html",
+    "controls": 11,
+    "withIdOrName": 1,
+    "missingIdName": 10,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  },
+  {
+    "file": "FO-SGC-02.html",
+    "controls": 11,
+    "withIdOrName": 1,
+    "missingIdName": 10,
+    "barcodeInputs": 1,
+    "saveButtons": 1,
+    "isEmpty": false,
+    "risk": "BAJO"
+  }
+]

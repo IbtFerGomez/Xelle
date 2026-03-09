@@ -6,6 +6,8 @@
  * - Lógica FO-20: Fix toggle congelación.
  */
 
+const API_URL = '/api';
+
 const App = {
     config: {
         recipientTypes: [
@@ -21,7 +23,6 @@ const App = {
 
         this.Universal.setupDateInputs();
         this.Universal.setupBarcodes();
-        this.Universal.loadData(docId);
         this.Universal.setupPrintHandler();
 
         switch (docId) {
@@ -30,12 +31,215 @@ const App = {
             case 'doc-fo-lc-21': this.Docs.FO_LC_21.init(); break;
             case 'doc-fo-lc-22': this.Docs.FO_LC_22.init(); break;
             case 'doc-fo-lc-24': this.Docs.FO_LC_24.init(); break;
+            case 'doc-fo-lc-31': this.Docs.FO_LC_31.init(); break;
             case 'doc-fo-lc-40': case 'doc-fo-lc-40-b': case 'doc-fo-lc-41': case 'doc-fo-lc-42': case 'doc-fo-lc-43': case 'doc-fo-lc-44': case 'doc-fo-lc-45':
                 this.Docs.FO_Generic.init(docId); break;
         }
+
+        setTimeout(() => this.Universal.loadData(docId), 0);
     },
 
     Universal: {
+        getDocHandler: function (docId) {
+            const key = String(docId || '')
+                .replace(/^doc-/, '')
+                .replace(/-/g, '_')
+                .toUpperCase();
+            return App.Docs[key] || null;
+        },
+        getInstanceCode: function () {
+            const params = new URLSearchParams(window.location.search);
+            return (params.get('instance') || '').trim();
+        },
+        isNewMode: function () {
+            const params = new URLSearchParams(window.location.search);
+            const value = String(params.get('new') || '').trim().toLowerCase();
+            return value === '1' || value === 'true' || value === 'yes';
+        },
+        setInstanceCode: function (instanceCode) {
+            if (!instanceCode) return;
+            const url = new URL(window.location.href);
+            url.searchParams.set('instance', instanceCode);
+            window.history.replaceState({}, '', url.toString());
+        },
+        getStorageKey: function (docId, instanceCode = '') {
+            const code = String(instanceCode || this.getInstanceCode() || '').trim();
+            return code ? `xelle_${docId}_${code}` : `xelle_${docId}`;
+        },
+        getSession: function () {
+            try {
+                return JSON.parse(localStorage.getItem('xelle_session') || 'null') || null;
+            } catch (e) {
+                return null;
+            }
+        },
+        getCurrentUserId: function () {
+            const session = this.getSession();
+            const raw = session?.id ?? session?.userId ?? session?.user_id ?? null;
+            const parsed = Number(raw);
+            return Number.isFinite(parsed) ? parsed : null;
+        },
+        getFormatType: function (docId) {
+            const barcodeInput = document.querySelector('.generate-barcode');
+            const prefix = (barcodeInput?.dataset?.prefix || '').trim();
+            if (prefix) return prefix.replace(/-$/, '');
+            return String(docId || '').replace(/^doc-/, '').toUpperCase();
+        },
+        getFieldKey: function (el, index) {
+            if (el.id) return `id:${el.id}`;
+            if (el.name) return `name:${el.name}`;
+            return `idx:${index}`;
+        },
+        collectData: function () {
+            const data = {};
+            const fields = Array.from(document.querySelectorAll('input, select, textarea'))
+                .filter(el => el.type !== 'submit');
+
+            fields.forEach((el, index) => {
+                const key = this.getFieldKey(el, index);
+                if (el.type === 'checkbox') {
+                    data[key] = el.checked;
+                } else if (el.type === 'radio') {
+                    if (el.checked) data[key] = el.value;
+                } else {
+                    data[key] = el.value;
+                }
+            });
+
+            return data;
+        },
+        applyDataToForm: function (data) {
+            if (!data || typeof data !== 'object') return;
+            const fields = Array.from(document.querySelectorAll('input, select, textarea'))
+                .filter(el => el.type !== 'submit');
+
+            fields.forEach((el, index) => {
+                const key = this.getFieldKey(el, index);
+                if (!(key in data)) return;
+                const value = data[key];
+
+                if (el.type === 'checkbox') {
+                    el.checked = Boolean(value);
+                } else if (el.type === 'radio') {
+                    el.checked = String(el.value) === String(value);
+                } else {
+                    el.value = value ?? '';
+                }
+
+                el.dispatchEvent(new Event('input'));
+                el.dispatchEvent(new Event('change'));
+            });
+        },
+        ensureBarcodeValueFromCode: function (instanceCode) {
+            const barcodeInput = document.querySelector('.generate-barcode');
+            if (!barcodeInput || !instanceCode) return;
+
+            const prefix = barcodeInput.dataset.prefix || '';
+            let raw = instanceCode;
+            if (prefix && instanceCode.startsWith(prefix)) {
+                raw = instanceCode.slice(prefix.length);
+            }
+            barcodeInput.value = raw;
+            barcodeInput.dispatchEvent(new Event('input'));
+        },
+        resolveOrCreateInstanceCode: async function (docId) {
+            const fromQuery = this.getInstanceCode();
+            if (fromQuery) return fromQuery;
+
+            const barcodeInput = document.querySelector('.generate-barcode');
+            const prefix = barcodeInput?.dataset?.prefix || '';
+            const barcodeValue = String(barcodeInput?.value || '').trim();
+            if (barcodeValue) return `${prefix}${barcodeValue}`;
+
+            const formatType = this.getFormatType(docId);
+            const response = await fetch(`${API_URL}/formats/generate-unique-code`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ format_type: formatType })
+            });
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok || !payload.unique_code) {
+                throw new Error(payload.msg || 'No se pudo generar código único');
+            }
+            return String(payload.unique_code).trim();
+        },
+        persistInstance: async function (docId, data) {
+            const barcodeInput = document.querySelector('.generate-barcode');
+            const prefix = barcodeInput?.dataset?.prefix || '';
+            const manualRaw = String(barcodeInput?.value || '').trim();
+            const hasManualCode = Boolean(manualRaw);
+            const manualUniqueCode = hasManualCode ? `${prefix}${manualRaw}` : '';
+            const queryInstanceCode = this.getInstanceCode();
+            const shouldUpdateExisting = Boolean(queryInstanceCode)
+                && (!hasManualCode || manualUniqueCode === queryInstanceCode);
+            let uniqueCode = queryInstanceCode || manualUniqueCode;
+            if (!uniqueCode) {
+                uniqueCode = await this.resolveOrCreateInstanceCode(docId);
+            }
+            const userId = this.getCurrentUserId();
+            const formatType = this.getFormatType(docId);
+
+            const payload = {
+                unique_code: uniqueCode,
+                format_type: formatType,
+                status: 'DRAFT',
+                data_payload: data,
+                user_id: userId,
+                notes: ''
+            };
+
+            let response;
+            if (shouldUpdateExisting) {
+                response = await fetch(`${API_URL}/format-instances/${encodeURIComponent(queryInstanceCode)}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'DRAFT', data_payload: data, user_id: userId })
+                });
+
+                if (!response.ok) {
+                    response = await fetch(`${API_URL}/format-instances`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                }
+            } else {
+                response = await fetch(`${API_URL}/format-instances`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    if (!hasManualCode) {
+                        uniqueCode = await this.resolveOrCreateInstanceCode(docId);
+                        response = await fetch(`${API_URL}/format-instances`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                unique_code: uniqueCode,
+                                format_type: formatType,
+                                status: 'DRAFT',
+                                data_payload: data,
+                                user_id: userId,
+                                notes: ''
+                            })
+                        });
+                    } else {
+                        throw new Error('El código único ya existe. Usa otro folio para guardar.');
+                    }
+                }
+            }
+
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(result.msg || 'No se pudo guardar en servidor');
+            }
+
+            this.setInstanceCode(uniqueCode);
+            this.ensureBarcodeValueFromCode(uniqueCode);
+            return uniqueCode;
+        },
         setupDateInputs: function () {
             document.querySelectorAll('input[type="date"]').forEach(input => {
                 // Autollenar solo si no es fecha de registro (clase no-auto-date)
@@ -74,47 +278,69 @@ const App = {
             textarea.style.height = 'auto';
             textarea.style.height = textarea.scrollHeight + 'px';
         },
-        saveData: function () {
+        saveData: async function () {
             const docId = document.body.id;
-            const data = {};
-            document.querySelectorAll('input, select, textarea').forEach(el => {
-                if ((el.id || el.name) && el.type !== 'submit' && !el.closest('tr')) {
-                    if (el.type === 'checkbox') data[el.id || el.name] = el.checked;
-                    else if (el.type === 'radio') { if (el.checked) data[el.name] = el.value; }
-                    else data[el.id || el.name] = el.value;
-                }
-            });
-            if (App.Docs[docId.replace(/-/g, '_').toUpperCase()]?.getCustomData) {
-                Object.assign(data, App.Docs[docId.replace(/-/g, '_').toUpperCase()].getCustomData());
+            const data = this.collectData();
+            const docHandler = this.getDocHandler(docId);
+            if (docHandler?.getCustomData) {
+                Object.assign(data, docHandler.getCustomData());
             }
-            localStorage.setItem(`xelle_${docId}`, JSON.stringify(data));
-            Swal.fire({ icon: 'success', title: 'Guardado', timer: 1000, showConfirmButton: false });
+
+            const draftKey = this.getStorageKey(docId);
+            localStorage.setItem(draftKey, JSON.stringify(data));
+
+            try {
+                const instanceCode = await this.persistInstance(docId, data);
+                const instanceKey = this.getStorageKey(docId, instanceCode);
+                localStorage.setItem(instanceKey, JSON.stringify(data));
+                Swal.fire({ icon: 'success', title: 'Guardado', timer: 1100, showConfirmButton: false });
+            } catch (e) {
+                Swal.fire({ icon: 'warning', title: 'Guardado local', text: e.message || 'No se pudo sincronizar con servidor', timer: 1800, showConfirmButton: false });
+            }
         },
-        loadData: function (docId) {
-            const saved = localStorage.getItem(`xelle_${docId}`);
-            if (!saved) return;
-            const data = JSON.parse(saved);
-            for (const [key, value] of Object.entries(data)) {
-                let el = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
-                if (el && !el.closest('tr')) {
-                    if (el.type === 'checkbox') el.checked = value;
-                    else if (el.type === 'radio') {
-                        const r = document.querySelector(`input[name="${key}"][value="${value}"]`);
-                        if (r) r.checked = true;
-                    } else el.value = value;
-                    el.dispatchEvent(new Event('input'));
-                    el.dispatchEvent(new Event('change'));
+        loadData: async function (docId) {
+            let data = null;
+            const instanceCode = this.getInstanceCode();
+            const isNewMode = this.isNewMode();
+
+            if (instanceCode) {
+                try {
+                    const response = await fetch(`${API_URL}/format-instances/${encodeURIComponent(instanceCode)}`);
+                    const payload = await response.json().catch(() => ({}));
+                    if (response.ok && payload && payload.data_payload && typeof payload.data_payload === 'object') {
+                        data = payload.data_payload;
+                        this.ensureBarcodeValueFromCode(instanceCode);
+                        localStorage.setItem(this.getStorageKey(docId, instanceCode), JSON.stringify(data));
+                    }
+                } catch (e) { }
+            }
+
+            if (!data && !isNewMode) {
+                const saved = localStorage.getItem(this.getStorageKey(docId, instanceCode))
+                    || localStorage.getItem(`xelle_${docId}`);
+                if (saved) {
+                    try {
+                        data = JSON.parse(saved);
+                    } catch (e) {
+                        data = null;
+                    }
                 }
             }
-            const docHandler = App.Docs[docId.replace(/-/g, '_').toUpperCase()];
+
+            if (!data) return;
+
+            const docHandler = this.getDocHandler(docId);
             if (docHandler?.loadCustomData) docHandler.loadCustomData(data);
+            this.applyDataToForm(data);
         },
         clearForm: function () {
             Swal.fire({
                 title: '¿Limpiar todo?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'Sí'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    localStorage.removeItem(`xelle_${document.body.id}`);
+                    const docId = document.body.id;
+                    localStorage.removeItem(this.getStorageKey(docId));
+                    localStorage.removeItem(`xelle_${docId}`);
                     location.reload();
                 }
             });
@@ -299,6 +525,17 @@ const App = {
 
         // --- FO-LC-24: DOSIS (ACTUALIZADO) ---
         FO_LC_24: {
+            manualGrandTotals: {
+                vials: false,
+                cells: false
+            },
+            inventoryManualOverride: {
+                "Stem Xelle": false,
+                "Hybrid Xelle": false,
+                "Stem Ortho": false,
+                "Hybrid Ortho": false,
+                "Exosomas": false
+            },
             productsDB: {
                 "Stem Xelle": { lotPre: "XCM", pres: ["10M", "25M", "50M", "100M", "Especial"] },
                 "Hybrid Xelle": { lotPre: "XHY", pres: ["10M+1B", "25M+2B", "50M+5B", "60M+6B", "100M+10B", "Especial"] },
@@ -318,6 +555,73 @@ const App = {
                     });
                 }
                 this.calcInventory();
+            },
+            productToFieldId: function (product) {
+                switch (product) {
+                    case 'Stem Xelle': return 'cell-stem';
+                    case 'Hybrid Xelle': return 'cell-hybrid';
+                    case 'Stem Ortho': return 'cell-stem-ortho';
+                    case 'Hybrid Ortho': return 'cell-hybrid-ortho';
+                    case 'Exosomas': return 'cell-exo';
+                    default: return '';
+                }
+            },
+            onCellSummaryInput: function (inputEl) {
+                const fieldToProduct = {
+                    'cell-stem': 'Stem Xelle',
+                    'cell-hybrid': 'Hybrid Xelle',
+                    'cell-stem-ortho': 'Stem Ortho',
+                    'cell-hybrid-ortho': 'Hybrid Ortho',
+                    'cell-exo': 'Exosomas'
+                };
+
+                const product = fieldToProduct[inputEl?.id || ''];
+                if (!product) return;
+
+                const valueMillions = this.parseMillions(inputEl.value);
+                if (valueMillions === null || valueMillions <= 0) {
+                    this.inventoryManualOverride[product] = false;
+                    inputEl.value = '0';
+                } else {
+                    this.inventoryManualOverride[product] = true;
+                    inputEl.value = this.formatCellsDisplay(this.normalizeMillions(valueMillions, product));
+                }
+
+                this.updateGrandTotalCellsFromSummary();
+            },
+            onGrandTotalVialsInput: function (inputEl) {
+                const n = Number(inputEl?.value);
+                if (!Number.isFinite(n) || n < 0) {
+                    this.manualGrandTotals.vials = false;
+                    this.calcInventory();
+                    return;
+                }
+
+                this.manualGrandTotals.vials = true;
+                inputEl.value = String(Math.floor(n));
+            },
+            onGrandTotalCellsInput: function (inputEl) {
+                const millions = this.parseMillions(inputEl?.value || '');
+                if (millions === null || millions <= 0) {
+                    this.manualGrandTotals.cells = false;
+                    this.calcInventory();
+                    return;
+                }
+
+                this.manualGrandTotals.cells = true;
+                inputEl.value = this.formatCellsDisplay(millions);
+            },
+            updateGrandTotalCellsFromSummary: function () {
+                const ids = ['cell-stem', 'cell-hybrid', 'cell-stem-ortho', 'cell-hybrid-ortho', 'cell-exo'];
+                const total = ids.reduce((acc, id) => {
+                    const el = document.getElementById(id);
+                    const val = this.parseMillions(el?.value || '0') || 0;
+                    return acc + val;
+                }, 0);
+
+                if (!this.manualGrandTotals.cells) {
+                    document.getElementById('grand-tot-cells').value = this.formatCellsDisplay(total);
+                }
             },
             addDosis: function () {
                 const tbody = document.querySelector('#tbl-dosis tbody');
@@ -341,12 +645,12 @@ const App = {
         <select class="cedit pres-select" onchange="App.Docs.FO_LC_24.onPresChange(this)">
             <option>-</option>
         </select>
-        <input type="text" class="cedit special-pres-input" style="display:none; margin-top:2px; border:1px solid #2e9d82;" placeholder="¿Cuál?">
+        <input type="text" class="cedit special-pres-input" style="display:none; margin-top:2px; border:1px solid #2e9d82;" placeholder="¿Cuál?" oninput="App.Docs.FO_LC_24.syncRowCellCount(this.closest('tr')); App.Docs.FO_LC_24.calcInventory()">
     </td>
-    <td><input class="cedit cell-count-input" placeholder="No."></td>
+    <td><input class="cedit cell-count-input" placeholder="No." oninput="App.Docs.FO_LC_24.calcInventory()"></td>
     <td><input class="cedit" placeholder="Venta"></td>
     <td><input class="cedit unique-code" readonly style="font-weight:bold;color:#2980b9"></td>
-    <td><input class="cedit obs-input" placeholder="Obs"></td>
+    <td><input class="cedit obs-input" placeholder="Obs" oninput="App.Docs.FO_LC_24.calcInventory()"></td>
     <td class="no-print"><button class="btn-danger btn-mini" onclick="App.Docs.FO_LC_24.handleDelete(this)">X</button></td>`;
                 tbody.appendChild(row);
             },
@@ -370,6 +674,89 @@ const App = {
                     specialInput.style.display = "none";
                     specialInput.value = "";
                 }
+                this.syncRowCellCount(r);
+                this.calcInventory();
+            },
+            parseMillions: function (rawValue) {
+                const raw = String(rawValue || '').trim();
+                if (!raw) return null;
+
+                const clean = raw.replace(',', '.');
+
+                let match = clean.match(/(\d+(?:\.\d+)?)\s*[xX]\s*10\s*[eE]?\s*6/);
+                if (match) return Number(match[1]);
+
+                match = clean.match(/(\d+(?:\.\d+)?)\s*[mM]\b/);
+                if (match) return Number(match[1]);
+
+                const numeric = Number(clean.replace(/[^0-9.\-]/g, ''));
+                if (!Number.isFinite(numeric) || numeric <= 0) return null;
+
+                if (numeric >= 1000000) {
+                    return numeric / 1000000;
+                }
+
+                return numeric;
+            },
+            parseMillionsFromPresentation: function (presentationValue, specialValue) {
+                const base = String(presentationValue || '').trim();
+                if (!base) return null;
+
+                if (base === 'Especial') {
+                    return this.parseMillions(specialValue);
+                }
+
+                const millionPart = base.split('+')[0];
+                return this.parseMillions(millionPart);
+            },
+            normalizeMillions: function (millions, product) {
+                if (!Number.isFinite(millions) || millions <= 0) return 0;
+                if (product === 'Exosomas') return millions;
+                return Math.max(10, millions);
+            },
+            formatMillionsValue: function (millions) {
+                if (!Number.isFinite(millions) || millions <= 0) return '0';
+                if (Number.isInteger(millions)) return String(millions);
+                return millions.toFixed(2).replace(/\.00$/, '').replace(/(\.\d*[1-9])0+$/, '$1');
+            },
+            syncRowCellCount: function (row) {
+                const product = row.querySelector('.prod-select')?.value || '';
+                if (!product || product === 'Exosomas') return;
+
+                const cellInput = row.querySelector('.cell-count-input');
+                const presValue = row.querySelector('.pres-select')?.value || '';
+                const specialPres = row.querySelector('.special-pres-input')?.value || '';
+
+                const inputMillions = this.parseMillions(cellInput?.value || '');
+                const presMillions = this.parseMillionsFromPresentation(presValue, specialPres);
+                const normalized = this.normalizeMillions(inputMillions ?? presMillions ?? 0, product);
+
+                if (cellInput && normalized > 0) {
+                    cellInput.value = `${this.formatMillionsValue(normalized)}M`;
+                }
+            },
+            getRowMillions: function (row) {
+                const product = row.querySelector('.prod-select')?.value || '';
+                if (!product) return 0;
+
+                const cellInput = row.querySelector('.cell-count-input');
+                const presValue = row.querySelector('.pres-select')?.value || '';
+                const specialPres = row.querySelector('.special-pres-input')?.value || '';
+
+                const inputMillions = this.parseMillions(cellInput?.value || '');
+                const presMillions = this.parseMillionsFromPresentation(presValue, specialPres);
+                const rawMillions = inputMillions ?? presMillions ?? 0;
+                const normalized = this.normalizeMillions(rawMillions, product);
+
+                if (cellInput && normalized > 0 && product !== 'Exosomas') {
+                    cellInput.value = `${this.formatMillionsValue(normalized)}M`;
+                }
+
+                return normalized;
+            },
+            formatCellsDisplay: function (millions) {
+                if (!Number.isFinite(millions) || millions <= 0) return '0';
+                return `${this.formatMillionsValue(millions)}x10E6`;
             },
             updateCode: function (r) {
                 const l = r.querySelector('.lote-input').value; const n = r.querySelector('.row-num').innerText.padStart(3, '0');
@@ -389,14 +776,55 @@ const App = {
             reindex: function () { document.querySelectorAll('#tbl-dosis tbody tr').forEach((r, i) => { r.querySelector('.row-num').innerText = i + 1; this.updateCode(r); }); },
             calcInventory: function () {
                 const t = { "Stem Xelle": 0, "Hybrid Xelle": 0, "Stem Ortho": 0, "Hybrid Ortho": 0, "Exosomas": 0 };
+                const c = { "Stem Xelle": 0, "Hybrid Xelle": 0, "Stem Ortho": 0, "Hybrid Ortho": 0, "Exosomas": 0 };
                 document.querySelectorAll('#tbl-dosis tbody tr').forEach(r => {
                     const obs = r.querySelector('.obs-input').value;
                     if (!obs) {
                         const p = r.querySelector('.prod-select').value;
-                        if (t[p] !== undefined) t[p]++;
+                        if (t[p] !== undefined) {
+                            t[p]++;
+                            c[p] += this.getRowMillions(r);
+                        }
                     }
                 });
-                document.getElementById('tot-stem').value = t["Stem Xelle"]; document.getElementById('tot-hybrid').value = t["Hybrid Xelle"]; document.getElementById('tot-stem-ortho').value = t["Stem Ortho"]; document.getElementById('tot-hybrid-ortho').value = t["Hybrid Ortho"]; document.getElementById('tot-exo').value = t["Exosomas"];
+
+                const totalVials = t["Stem Xelle"] + t["Hybrid Xelle"] + t["Stem Ortho"] + t["Hybrid Ortho"] + t["Exosomas"];
+                const totalCells = c["Stem Xelle"] + c["Hybrid Xelle"] + c["Stem Ortho"] + c["Hybrid Ortho"] + c["Exosomas"];
+
+                document.getElementById('tot-stem').value = t["Stem Xelle"];
+                document.getElementById('tot-hybrid').value = t["Hybrid Xelle"];
+                document.getElementById('tot-stem-ortho').value = t["Stem Ortho"];
+                document.getElementById('tot-hybrid-ortho').value = t["Hybrid Ortho"];
+                document.getElementById('tot-exo').value = t["Exosomas"];
+                if (!this.manualGrandTotals.vials) {
+                    document.getElementById('grand-tot-vials').value = totalVials;
+                }
+
+                ["Stem Xelle", "Hybrid Xelle", "Stem Ortho", "Hybrid Ortho", "Exosomas"].forEach(product => {
+                    const fieldId = this.productToFieldId(product);
+                    if (!fieldId) return;
+                    const fieldEl = document.getElementById(fieldId);
+                    if (!fieldEl) return;
+
+                    if (!this.inventoryManualOverride[product]) {
+                        fieldEl.value = this.formatCellsDisplay(c[product]);
+                    }
+                });
+
+                const hasManual = Object.values(this.inventoryManualOverride).some(Boolean);
+                const computedGrandCells = hasManual
+                    ? this.formatCellsDisplay(
+                        (this.parseMillions(document.getElementById('cell-stem')?.value || '0') || 0)
+                        + (this.parseMillions(document.getElementById('cell-hybrid')?.value || '0') || 0)
+                        + (this.parseMillions(document.getElementById('cell-stem-ortho')?.value || '0') || 0)
+                        + (this.parseMillions(document.getElementById('cell-hybrid-ortho')?.value || '0') || 0)
+                        + (this.parseMillions(document.getElementById('cell-exo')?.value || '0') || 0)
+                    )
+                    : this.formatCellsDisplay(totalCells);
+
+                if (!this.manualGrandTotals.cells) {
+                    document.getElementById('grand-tot-cells').value = computedGrandCells;
+                }
             },
             getCustomData: function () {
                 const dosisRows = [];
@@ -487,6 +915,7 @@ const App = {
 
                 this.reindex();
                 this.calcInventory();
+                this.updateGrandTotalCellsFromSummary();
             },
             persistDailySummary: function (dosisRows) {
                 const fechaOperacion = document.getElementById('fecha_operacion')?.value;
@@ -576,6 +1005,57 @@ const App = {
                 else records.push(record);
 
                 localStorage.setItem('xelle_fo_lc_24_records', JSON.stringify(records));
+            }
+        },
+
+        FO_LC_31: {
+            init: function () { },
+            scrapeRow: function (row) {
+                return Array.from(row.querySelectorAll('input, select, textarea')).map(el => {
+                    if (el.type === 'checkbox') return el.checked;
+                    return el.value;
+                });
+            },
+            fillRow: function (row, data) {
+                const fields = row.querySelectorAll('input, select, textarea');
+                (data || []).forEach((value, idx) => {
+                    const el = fields[idx];
+                    if (!el) return;
+                    if (el.type === 'checkbox') el.checked = Boolean(value);
+                    else el.value = value ?? '';
+                    el.dispatchEvent(new Event('input'));
+                    el.dispatchEvent(new Event('change'));
+                });
+            },
+            rebuildTable: function (tableSelector, rowsData, addRowFnName) {
+                const tbody = document.querySelector(`${tableSelector} tbody`);
+                if (!tbody || !Array.isArray(rowsData)) return;
+                tbody.innerHTML = '';
+                rowsData.forEach(rowData => {
+                    if (typeof window[addRowFnName] === 'function') {
+                        window[addRowFnName]();
+                        const row = tbody.lastElementChild;
+                        if (row) this.fillRow(row, rowData);
+                    }
+                });
+            },
+            getCustomData: function () {
+                const componentes = Array.from(document.querySelectorAll('#tbl-componentes tbody tr')).map(r => this.scrapeRow(r));
+                const materiales = Array.from(document.querySelectorAll('#tbl-materiales tbody tr')).map(r => this.scrapeRow(r));
+                const controles = Array.from(document.querySelectorAll('#tbl-control tbody tr')).map(r => this.scrapeRow(r));
+                return {
+                    t_comp_30: componentes,
+                    t_mat_30: materiales,
+                    t_control_30: controles
+                };
+            },
+            loadCustomData: function (data) {
+                if (Array.isArray(data?.t_comp_30)) this.rebuildTable('#tbl-componentes', data.t_comp_30, 'addCompRow');
+                if (Array.isArray(data?.t_mat_30)) this.rebuildTable('#tbl-materiales', data.t_mat_30, 'addMatRow');
+                if (Array.isArray(data?.t_control_30)) this.rebuildTable('#tbl-control', data.t_control_30, 'addControlRow');
+
+                if (typeof window.updateProductLogic === 'function') window.updateProductLogic();
+                if (typeof window.calcYield === 'function') window.calcYield();
             }
         },
 

@@ -108,4 +108,10 @@ th {
         border-top: 1px solid #000;
     }
     .cedit { border: none !important; }
+
+    ::-webkit-input-placeholder { color: transparent !important; }
+    :-moz-placeholder { color: transparent !important; }
+    ::-moz-placeholder { color: transparent !important; }
+    :-ms-input-placeholder { color: transparent !important; }
+    ::placeholder { color: transparent !important; }
 }

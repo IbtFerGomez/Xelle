@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>05 - MP Placenta</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; padding: 20px; background-color: #f4f4f4; }
+        .etiqueta-container {
+            width: 100mm; height: 100mm; background-color: #ffffff; border: 2px solid #000;
+            padding: 5mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .logo-area { text-align: center; margin-bottom: 5px; }
+        .logo-area svg { width: 30px; height: 30px; vertical-align: middle; }
+        .logo-text { font-size: 12px; font-weight: bold; vertical-align: middle; margin-left: 5px; color: #2E9D82; }
+        .titulo-alerta { text-align: center; font-size: 14px; font-weight: 900; letter-spacing: 1px; margin: 0 0 2px 0; background-color: #e2e3e5; color: #383d41; padding: 3px; border: 1px solid #d6d8db; }
+        .subtitulo { text-align: center; font-size: 8px; font-weight: bold; margin-bottom: 8px; text-decoration: underline; color: #383d41; }
+        .campo { display: flex; align-items: flex-end; margin-bottom: 6px; font-size: 9px; }
+        .campo label { font-weight: bold; white-space: nowrap; margin-right: 5px; }
+        .linea { flex-grow: 1; border-bottom: 1px solid #000; height: 12px; }
+        .fila-doble { display: flex; justify-content: space-between; gap: 5px; }
+        .fila-doble .campo { flex: 1; }
+        .caja-estatus { border: 1px solid #000; padding: 4px; margin-top: 2px; font-size: 9px; font-weight: bold; text-align: center; background-color: #fafafa; }
+        .firma-area { margin-top: 10px; text-align: center; }
+        .linea-firma { width: 80%; border-bottom: 1px solid #000; margin: 0 auto 3px auto; height: 15px; }
+        .firma-label { font-size: 9px; font-weight: bold; }
+        .footer-bottom { margin-top: 5px; font-size: 7px; text-align: right; color: #777; border-top: 1px solid #ccc; padding-top: 3px; }
+        @media print { @page { margin: 0; } body { margin: 0; padding: 0; background: #fff; } .etiqueta-container { border: none; } }
+    </style>
+</head>
+<body>
+    <div class="etiqueta-container">
+        <div>
+            <div class="logo-area">
+                <svg viewBox="10 10 80 80" xmlns="http://www.w3.org/2000/svg">
+                  <g><circle fill="#2E9D82" cx="25" cy="25" r="13" /><circle fill="#2E9D82" cx="75" cy="75" r="13" /><path fill="#2E9D82" d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" /></g>
+                </svg>
+                <span class="logo-text">XELLE SCIENTIFIC</span>
+            </div>
+            <div class="titulo-alerta">📦 MATERIA PRIMA (MP) - PLACENTA</div>
+            <div class="subtitulo">IDENTIFICACIÓN DE RECEPCIÓN Y LOGÍSTICA</div>
+            
+            <div class="campo"><label>ID Materia Prima:</label><div class="linea"></div></div>
+            <div class="campo"><label>ID Donante / Nombre Madre:</label><div class="linea"></div></div>
+            <div class="campo"><label>Hospital de Origen:</label><div class="linea"></div></div>
+            
+            <div class="fila-doble">
+                <div class="campo"><label>Fecha Recolección:</label><div class="linea" style="text-align:center; color:#777;">DD/MM/AA</div></div>
+                <div class="campo" style="max-width:35%;"><label>Hora:</label><div class="linea"></div><span style="margin-left:2px;">hrs.</span></div>
+            </div>
+            <div class="fila-doble">
+                <div class="campo"><label>Fecha Recepción:</label><div class="linea" style="text-align:center; color:#777;">DD/MM/AA</div></div>
+                <div class="campo" style="max-width:35%;"><label>Hora:</label><div class="linea"></div><span style="margin-left:2px;">hrs.</span></div>
+            </div>
+
+            <div class="caja-estatus">
+                Estatus Inicial:<br>
+                <span style="font-weight:normal; font-size:8px;">☐ EN CUARENTENA (Pendiente Fase 1) &nbsp;&nbsp;&nbsp; ☐ ACEPTADA PARA FASE 2</span>
+            </div>
+        </div>
+        <div>
+            <div class="firma-area">
+                <div class="linea-firma"></div>
+                <div class="firma-label">Recibió (Nombre y Firma)</div>
+            </div>
+            <div class="footer-bottom">Código: ET-MP-01 | Versión: 1.0</div>
+        </div>
+    </div>
+</body>
+</html>

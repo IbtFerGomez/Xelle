@@ -207,8 +207,14 @@ public class ApiController {
         }
 
         String code = str(body.get("code"));
+        String title = str(body.get("title"));
+        String area = str(body.get("area"));
+        String filePath = str(body.get("file_path"));
         if (code.isBlank()) {
             return ResponseEntity.badRequest().body(Map.of("msg", "code requerido"));
+        }
+        if (title.isBlank() || area.isBlank() || filePath.isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("msg", "title, area y file_path son requeridos"));
         }
         if (formatRepository.findByCodeIgnoreCase(code).isPresent()) {
             return ResponseEntity.badRequest().body(Map.of("msg", "Formato existente"));
@@ -232,6 +238,22 @@ public class ApiController {
         if (opt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+
+        String code = str(body.get("code"));
+        String title = str(body.get("title"));
+        String area = str(body.get("area"));
+        String filePath = str(body.get("file_path"));
+        if (code.isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("msg", "code requerido"));
+        }
+        if (title.isBlank() || area.isBlank() || filePath.isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("msg", "title, area y file_path son requeridos"));
+        }
+        Optional<FormatMetadataEntity> duplicate = formatRepository.findByCodeIgnoreCase(code);
+        if (duplicate.isPresent() && !duplicate.get().getId().equals(id)) {
+            return ResponseEntity.badRequest().body(Map.of("msg", "Formato existente"));
+        }
+
         FormatMetadataEntity format = opt.get();
         applyFormatPayload(format, body, false);
         formatRepository.save(format);
@@ -502,7 +524,7 @@ public class ApiController {
     }
 
     private void applyFormatPayload(FormatMetadataEntity format, Map<String, Object> body, boolean creating) {
-        if (creating) {
+        if (creating || body.containsKey("code")) {
             format.setCode(str(body.get("code")));
         }
         if (body.containsKey("title")) {

@@ -6,6 +6,8 @@ const KEYS = {
     FORMATS: 'xelle_formats'
 };
 
+const FORMAT_ORDER_KEY = 'xelle_format_order_map';
+
 const Core = {
     Data: {
         get: (k) => JSON.parse(localStorage.getItem(k) || '[]'),
@@ -15,34 +17,67 @@ const Core = {
 
     Formats: {
         syncWithSeed: function () {
-            const currentFormats = Core.Data.get(KEYS.FORMATS) || [];
             const seedFormats = SeedData.formats || [];
+            const hasStoredFormats = localStorage.getItem(KEYS.FORMATS) !== null;
+            const currentFormats = hasStoredFormats ? (Core.Data.get(KEYS.FORMATS) || []) : [];
 
             const sanitizedCurrent = currentFormats.filter(format => {
                 const code = String(format.code || '').trim().toUpperCase();
                 const file = String(format.file || '').trim();
+                const normalizedFile = file.toLowerCase();
+                const isInvalidFoLc46 = code === 'FO-LC-46' && normalizedFile !== 'formats/fo-lc-46.html';
                 return !(
                     code === 'DGW-TOOL'
                     || file === 'formats/digitalizar-word.html'
                     || code === 'FO-LC-TEST'
                     || file === 'formats/FO-LC-TEST.html'
+                    || code === 'FO-LC-13'
+                    || file === 'formats/FO-LC-13.html'
+                    || normalizedFile.includes('fo-lc-13.html')
+                    || code === 'FO-LC-51'
+                    || file === 'formats/FO-LC-51.html'
+                    || normalizedFile.includes('fo-lc-51.html')
+                    || code === 'FO-OP-OP-01'
+                    || code === 'FO-OP-01'
+                    || normalizedFile.includes('fo-op-op-01.html')
+                    || isInvalidFoLc46
                 );
             });
 
-            const currentByFile = new Map(sanitizedCurrent.map(f => [f.file, f]));
-            const merged = [...sanitizedCurrent];
-
-            seedFormats.forEach(seedFormat => {
-                if (!currentByFile.has(seedFormat.file)) {
-                    merged.push(seedFormat);
+            if (hasStoredFormats) {
+                if (sanitizedCurrent.length === 0 && seedFormats.length > 0) {
+                    Core.Data.set(KEYS.FORMATS, seedFormats);
+                    return seedFormats;
                 }
-            });
 
-            if (merged.length !== currentFormats.length || sanitizedCurrent.length !== currentFormats.length) {
-                Core.Data.set(KEYS.FORMATS, merged);
+                const toKey = (format) => {
+                    const code = String(format?.code || '').trim().toUpperCase();
+                    const file = String(format?.file || format?.file_path || '').trim().toLowerCase();
+                    return `${code}::${file}`;
+                };
+
+                const mergedFormats = [...sanitizedCurrent];
+                const existingKeys = new Set(mergedFormats.map(toKey));
+
+                seedFormats.forEach(seedFormat => {
+                    const key = toKey(seedFormat);
+                    if (!existingKeys.has(key)) {
+                        mergedFormats.push(seedFormat);
+                        existingKeys.add(key);
+                    }
+                });
+
+                if (mergedFormats.length !== currentFormats.length) {
+                    Core.Data.set(KEYS.FORMATS, mergedFormats);
+                } else if (sanitizedCurrent.length !== currentFormats.length) {
+                    Core.Data.set(KEYS.FORMATS, mergedFormats);
+                }
+
+                return mergedFormats;
             }
 
-            return merged;
+            Core.Data.set(KEYS.FORMATS, seedFormats);
+            return seedFormats;
         }
     },
 
@@ -87,6 +122,12 @@ const Core = {
             const userAccess = Array.isArray(sess.access)
                 ? sess.access
                 : (Array.isArray(sess.moduleAccess) ? sess.moduleAccess : []);
+            const normalizeArea = (value) => {
+                const area = String(value || '').trim().toLowerCase();
+                if (area === 'almacen' || area === 'comercial') return 'operaciones';
+                return area;
+            };
+            const normalizedUserAccess = Array.from(new Set(userAccess.map(normalizeArea)));
 
             // Renderizar tarjetas de formatos
             const workspace = document.getElementById('workspace');
@@ -94,28 +135,56 @@ const Core = {
 
             const areas = {};
             formats.forEach(f => {
-                if (!areas[f.area]) areas[f.area] = [];
-                areas[f.area].push(f);
+                const normalizedArea = normalizeArea(f.area);
+                if (!areas[normalizedArea]) areas[normalizedArea] = [];
+                areas[normalizedArea].push({ ...f, area: normalizedArea });
+            });
+
+            let orderMap = {};
+            try {
+                const parsed = JSON.parse(localStorage.getItem(FORMAT_ORDER_KEY) || '{}');
+                orderMap = parsed && typeof parsed === 'object' ? parsed : {};
+            } catch {
+                orderMap = {};
+            }
+
+            const getSortOrder = (code) => {
+                const key = String(code || '').trim().toUpperCase();
+                const rawValue = orderMap[key];
+                const numericValue = Number(rawValue);
+                return Number.isFinite(numericValue) ? numericValue : Number.MAX_SAFE_INTEGER;
+            };
+
+            Object.keys(areas).forEach(area => {
+                areas[area].sort((a, b) => {
+                    const orderA = getSortOrder(a.code);
+                    const orderB = getSortOrder(b.code);
+                    if (orderA !== orderB) return orderA - orderB;
+
+                    const codeA = String(a.code || '');
+                    const codeB = String(b.code || '');
+                    return codeA.localeCompare(codeB, 'es', { numeric: true, sensitivity: 'base' });
+                });
             });
 
             const areaLabels = {
                 banco: 'Banco de Células',
                 calidad: 'Laboratorio de Calidad',
-                almacen: 'Almacén & Comercial',
+                operaciones: 'Operaciones',
                 sgc: 'Sistema de Gestión'
             };
 
             const areaColors = {
                 banco: 'bg-emerald-50 border-emerald-200',
                 calidad: 'bg-blue-50 border-blue-200',
-                almacen: 'bg-orange-50 border-orange-200',
+                operaciones: 'bg-orange-50 border-orange-200',
                 sgc: 'bg-slate-50 border-slate-200'
             };
 
             const areaBadgeColors = {
                 banco: 'bg-emerald-100 text-emerald-700',
                 calidad: 'bg-blue-100 text-blue-700',
-                almacen: 'bg-orange-100 text-orange-700',
+                operaciones: 'bg-orange-100 text-orange-700',
                 sgc: 'bg-slate-100 text-slate-700'
             };
 
@@ -161,7 +230,7 @@ const Core = {
             if (filterContainer) {
                 let filterHtml = '';
                 Object.keys(areas).forEach(area => {
-                    if (userAccess.includes('all') || userAccess.includes(area)) {
+                    if (normalizedUserAccess.includes('all') || normalizedUserAccess.includes(area)) {
                         filterHtml += `
                             <button class="area-filter w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-bold" data-area="${area}">
                                 ${areaLabels[area] || area}
@@ -195,7 +264,38 @@ const Core = {
         },
 
         openFormat: function (file) {
-            window.open(file, '_blank');
+            const rawPath = String(file || '').trim().replace(/\\/g, '/');
+            if (!rawPath) {
+                alert('Esta tarjeta no tiene ruta de formato configurada.');
+                return;
+            }
+
+            const splitIndex = rawPath.indexOf('?');
+            const basePath = splitIndex >= 0 ? rawPath.slice(0, splitIndex) : rawPath;
+            const query = splitIndex >= 0 ? rawPath.slice(splitIndex + 1) : '';
+
+            let targetPath = rawPath;
+            if (!/^https?:\/\//i.test(basePath) && !basePath.startsWith('/') && !basePath.startsWith('./') && !basePath.startsWith('../')) {
+                if (!basePath.toLowerCase().includes('/')) {
+                    const withExtension = basePath.toLowerCase().endsWith('.html') ? basePath : `${basePath}.html`;
+                    targetPath = `formats/${withExtension}`;
+                }
+            }
+
+            try {
+                const urlObj = new URL(targetPath, window.location.href);
+                if (query) {
+                    const incomingParams = new URLSearchParams(query);
+                    incomingParams.forEach((value, key) => urlObj.searchParams.set(key, value));
+                }
+                urlObj.searchParams.set('new', '1');
+                targetPath = urlObj.pathname.replace(/^\//, '') + urlObj.search;
+            } catch (e) {
+                const separator = targetPath.includes('?') ? '&' : '?';
+                targetPath = `${targetPath}${separator}new=1`;
+            }
+
+            window.open(targetPath, '_blank');
         }
     }
 };

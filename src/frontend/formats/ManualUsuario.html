@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Usuario: Registro y Trazabilidad - Xelle Scientific</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --navy: #1E3A5F;
+            --primary: #2fa785;
+            --sky: #64C4ED;
+            --bg-light: #f3f7f5;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Manrope', sans-serif; 
+            line-height: 1.6; 
+            color: var(--navy); 
+            background-color: var(--bg-light);
+            background-image: radial-gradient(at 0% 0%, rgba(47, 167, 133, 0.05) 0px, transparent 50%), 
+                              radial-gradient(at 100% 100%, rgba(30, 58, 95, 0.05) 0px, transparent 50%);
+            padding: 20px;
+        }
+        
+        .document-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(30, 58, 95, 0.15);
+            overflow: hidden;
+        }
+        
+        .document-header {
+            background: linear-gradient(135deg, var(--navy) 0%, #2d5580 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary);
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo-svg {
+            width: 240px;
+            height: auto;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+        
+        .svg-title {
+            font-family: 'Arial Black', sans-serif;
+            font-weight: 900;
+            fill: #FFF;
+        }
+        
+        .svg-sub {
+            font-family: 'Arial', sans-serif;
+            font-weight: 700;
+            fill: #FFF;
+            letter-spacing: 2px;
+        }
+        
+        .svg-cell {
+            fill: var(--primary);
+        }
+        
+        .document-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin: 15px 0 8px 0;
+            letter-spacing: 0.5px;
+        }
+        
+        .document-subtitle {
+            font-size: 0.95em;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        
+        .document-meta {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .content-wrapper {
+            padding: 40px;
+        }
+        
+        .card { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 12px rgba(30, 58, 95, 0.08);
+            margin-bottom: 25px; 
+            border: 1px solid rgba(30, 58, 95, 0.08);
+        }
+        
+        h2 { 
+            color: var(--navy); 
+            border-left: 5px solid var(--primary); 
+            padding-left: 15px; 
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 1.4em;
+        }
+        
+        .step { 
+            display: flex; 
+            align-items: flex-start; 
+            margin-bottom: 20px; 
+            background: var(--bg-light); 
+            padding: 18px; 
+            border-radius: 10px; 
+            border-left: 4px solid var(--primary);
+        }
+        
+        .step-number { 
+            background: var(--primary); 
+            color: white; 
+            border-radius: 50%; 
+            width: 32px; 
+            height: 32px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin-right: 15px; 
+            flex-shrink: 0; 
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+        
+        .info-box { 
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+            border: 2px solid #ffd966; 
+            padding: 18px; 
+            border-radius: 10px; 
+            margin: 20px 0;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .normative { 
+            font-size: 0.9em; 
+            color: #546e7a; 
+            font-style: italic; 
+            display: block; 
+            margin-top: 8px; 
+        }
+        
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 15px 0; 
+            font-size: 0.9em;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(30, 58, 95, 0.08);
+        }
+        
+        th, td { 
+            border: 1px solid rgba(30, 58, 95, 0.1); 
+            padding: 14px; 
+            text-align: left; 
+        }
+        
+        th { 
+            background: var(--navy); 
+            color: white;
+            font-weight: 600;
+        }
+        
+        td {
+            background: white;
+        }
+        
+        tbody tr:nth-child(even) td {
+            background: var(--bg-light);
+        }
+        
+        .badge { 
+            padding: 6px 10px; 
+            border-radius: 6px; 
+            font-weight: 700; 
+            font-size: 0.8em;
+            display: inline-block;
+        }
+        
+        .obligatorio { 
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            color: #c62828;
+            border: 1px solid #ef5350;
+        }
+        
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        
+        ul li {
+            margin-bottom: 12px;
+            color: var(--navy);
+        }
+        
+        ul li strong {
+            color: var(--primary);
+        }
+        
+        footer {
+            background: var(--navy);
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 25px;
+            font-size: 0.85em;
+        }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            .document-wrapper { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="document-wrapper">
+    <header class="document-header">
+        <div class="logo-container">
+            <svg viewBox="0 0 320 80" class="logo-svg">
+                <g transform="translate(0, -2) scale(0.85)">
+                    <circle class="svg-cell" cx="25" cy="25" r="13" />
+                    <circle class="svg-cell" cx="75" cy="75" r="13" />
+                    <path class="svg-cell" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                </g>
+                <text x="90" y="42" class="svg-title" font-size="34">XELLE</text>
+                <text x="91" y="68" class="svg-sub" font-size="19">SCIENTIFIC</text>
+                <text x="215" y="35" font-family="Arial" font-size="10" fill="#FFF">®</text>
+            </svg>
+        </div>
+        <h1 class="document-title">Manual de Capacitación</h1>
+        <p class="document-subtitle">Llenado de Bitácoras y Formatos</p>
+        <span class="document-meta">VERSIÓN 1.0 • 2026</span>
+    </header>
+
+<div class="content-wrapper">
+
+<div class="card">
+    <h2>Instrucciones para la Bitácora de Almacenamiento (Art. 71)</h2>
+    <p>Para cumplir con la legislación ambiental y superar verificaciones, siga estos pasos estrictos[cite: 2]:</p>
+
+    <div class="step">
+        <div class="step-number">1</div>
+        <div>
+            <strong>Identificación Técnica:</strong> Use estrictamente la taxonomía de la NOM-087-SEMARNAT-SSA1-2002[cite: 4].
+            <span class="normative">Ejemplos: "Punzocortantes", "Sangre líquida" o "Residuos patológicos"[cite: 4].</span>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="step-number">2</div>
+        <div>
+            <strong>Registro de Cantidad:</strong> Exprese la magnitud invariablemente en kilogramos o toneladas métricas usando básculas calibradas[cite: 4].
+            <span class="normative">Este dato determina si somos Micro, Pequeño o Grande Generador[cite: 4].</span>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="step-number">3</div>
+        <div>
+            <strong>Control de Tiempos:</strong> Registre la fecha de ingreso y la de salida (recolección externa)[cite: 4].
+            <span class="normative">La estancia no debe exceder los límites legales (7, 15 o 30 días según el nivel)[cite: 4].</span>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <strong>⚠️ IMPORTANTE:</strong> Toda bitácora debe ser inalterable, foliada o protegida contra alteraciones extemporáneas[cite: 2]. Cada movimiento debe incluir la firma del Responsable Técnico oficial[cite: 4].
+    </div>
+</div>
+
+<div class="card">
+    <h2>Guía de Campos Obligatorios</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Campo Normativo</th>
+                <th>Requerimiento de Llenado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="badge obligatorio">ORIGEN</span></td>
+                <td>Señalar el área física exacta (ej. "Quirófano 3", "Laboratorio Hematología")[cite: 4].</td>
+            </tr>
+            <tr>
+                <td><span class="badge obligatorio">PELIGROSIDAD</span></td>
+                <td>Indicar leyenda "Biológico-Infeccioso" o el código "B" del sistema CRETIB[cite: 4].</td>
+            </tr>
+            <tr>
+                <td><span class="badge obligatorio">DESTINO</span></td>
+                <td>Especificar si va a "Incineración", "Esterilización" o "Confinamiento"[cite: 4].</td>
+            </tr>
+            <tr>
+                <td><span class="badge obligatorio">PRESTADOR</span></td>
+                <td>Nombre de la empresa y su Número de Autorización SEMARNAT vigente[cite: 4].</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="card">
+    <h2>Procedimiento de Seguridad en Transporte (Cadena de Frío)</h2>
+    <p>El manejo de muestras y productos terminados requiere vigilancia constante:</p>
+    <ul>
+        <li><strong>Acondicionamiento:</strong> Pre-enfríe el contenedor 10 minutos antes del muestreo.</li>
+        <li><strong>Protección:</strong> Nunca permita el contacto directo del vial con el gel refrigerante; use separadores de burbuja o cartón.</li>
+        <li><strong>Trazabilidad:</strong> El delta de tiempo entre ingreso y salida es objeto de sanciones económicas si se incumple[cite: 4].</li>
+    </ul>
+</div>
+
+</div><!-- end content-wrapper -->
+
+<footer>
+    &copy; 2026 Xelle Scientific - Departamento de Aseguramiento de Calidad. Todos los derechos reservados.
+</footer>
+
+</div><!-- end document-wrapper -->
+
+</body>
+</html>

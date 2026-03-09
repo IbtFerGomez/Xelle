@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-SGC-01 Matriz de Responsabilidades por Módulo</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+    <style>
+        @page {
+            size: landscape;
+            margin: 0.5cm;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+        }
+
+        .compact-table input {
+            font-size: 10px;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-sgc-01">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Registro Matriz</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-SGC-01-</span>
+                    <input type="text" id="reg-matriz" class="registry-input generate-barcode"
+                        data-target="barcode-matriz" data-prefix="FO-SGC-01-" placeholder="000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-matriz" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>MATRIZ DE RESPONSABILIDADES Y FIRMAS POR MÓDULO</h1>
+            <div class="metadata">Código: FO-SGC-01 | Versión: 0.9 | Vig: Feb2026</div>
+        </div>
+
+        <div class="section-header">1. CONTROL DE FIRMAS POR MÓDULO Y FORMATO</div>
+        <div class="section">
+            <p style="font-size:10px; color:#666; margin-bottom:10px;">Versión por módulo de la matriz SGC para definir
+                puestos autorizados en Ejecución, Verificación y Autorización Final para todos los formatos activos.</p>
+
+            <table class="compact-table" id="tbl-matriz">
+                <thead>
+                    <tr>
+                        <th width="20%">Módulo / Proceso Principal</th>
+                        <th width="25%">Formato (Código y Nombre)</th>
+                        <th width="18%">Ejecución<br>(Quien hace el trabajo)</th>
+                        <th width="18%">Verificación<br>(Quien revisa)</th>
+                        <th width="19%">Autorización Final<br>(Quien aprueba/libera)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="10" style="font-weight:bold; background:#f1f5f9;">OPERACIONES</td>
+                        <td><strong>FO-OP-13</strong> Lista Verificación Recepción MP</td>
+                        <td>Personal de Logística / Recepción</td>
+                        <td>Supervisor de Almacén / Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A (Control operativo)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-15</strong> Pedido Maestro</td>
+                        <td>Ejecutivo de Operaciones</td>
+                        <td>Coordinación de Operaciones</td>
+                        <td>Gerencia de Operaciones</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-16</strong> Orden de Surtido (Picking)</td>
+                        <td>Auxiliar de Almacén</td>
+                        <td>Supervisor de Almacén</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-17</strong> Nota de Remisión</td>
+                        <td>Almacén / Logística</td>
+                        <td>Coordinación de Embarques</td>
+                        <td>Gerencia de Operaciones</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-20</strong> Liberación a Almacén</td>
+                        <td>Almacén</td>
+                        <td>Control de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-45</strong> Envío a Esterilización</td>
+                        <td>Operador de Producción / Almacén</td>
+                        <td>Control de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-12</strong> Dictamen Técnico de Concesión</td>
+                        <td>Gerencia de Calidad</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-49</strong> Bitácora de Almacenamiento Temporal RPBI</td>
+                        <td>Almacén / Responsable de RPBI</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-50</strong> Manifiesto de Residuos Peligrosos</td>
+                        <td>Almacén / Responsable de Residuos</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-52</strong> Reporte de MPNC</td>
+                        <td>Almacén / Calidad (Área que detecta)</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+
+                    <tr>
+                        <td rowspan="11" style="font-weight:bold; background:#f1f5f9;">BANCO DE CÉLULAS Y PRODUCCIÓN
+                        </td>
+                        <td><strong>FO-LC-16</strong> Cover Sheet (Resumen Lote)</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Dirección Operativa</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-20</strong> Procesamiento de Tejido</td>
+                        <td>Técnico de Procesamiento</td>
+                        <td>Supervisor de Banco</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-21</strong> Bitácora de Cultivo Celular</td>
+                        <td>Especialista de Cultivo Celular</td>
+                        <td>Jefe de Laboratorio</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-22</strong> Mapa de Crio-Conservación</td>
+                        <td>Operador de Banco Celular</td>
+                        <td>Supervisor de Banco / Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-23</strong> Bitácora Movimientos Banco</td>
+                        <td>Operador de Banco Celular</td>
+                        <td>Supervisor de Banco</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-24</strong> Inventario Prod. Terminado</td>
+                        <td>Almacén de Producto Terminado</td>
+                        <td>Control de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-29</strong> Registro de Lote de Producto Terminado (Celular)</td>
+                        <td>Operador de Banco</td>
+                        <td>Supervisor de Producción / Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-31</strong> Hoja Producción Lote Acelular</td>
+                        <td>Operador de Producción</td>
+                        <td>Supervisor de Producción</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-13</strong> Registro de Aislamiento (PR-LC-13)</td>
+                        <td>Técnico de Laboratorio / Procesamiento</td>
+                        <td>Supervisor de Banco / Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-42</strong> Liofilización Placenta</td>
+                        <td>Operador de Producción</td>
+                        <td>Supervisor de Producción / Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-43</strong> Liofilización Medio Condicionado</td>
+                        <td>Operador de Producción</td>
+                        <td>Supervisor de Producción / Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+
+                    <tr>
+                        <td rowspan="15" style="font-weight:bold; background:#f1f5f9;">LABORATORIO DE CALIDAD Y
+                            LIBERACIÓN</td>
+                        <td><strong>FO-LC-17</strong> Recepción Muestras (MP)</td>
+                        <td>Recepción de Muestras / Laboratorio</td>
+                        <td>Calidad (Supervisor de Turno)</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-18</strong> Evaluación Macroscópica</td>
+                        <td>Técnico de Laboratorio</td>
+                        <td>Calidad (Supervisor en sitio)</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-19</strong> Liberación MP (Serología)</td>
+                        <td>Analista de Laboratorio</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-25</strong> Preparación de Medios</td>
+                        <td>Técnico de Laboratorio</td>
+                        <td>Jefe de Laboratorio</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-26</strong> Bitácora de Autoclave</td>
+                        <td>Técnico de Esterilización</td>
+                        <td>Jefe de Laboratorio</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-27</strong> Control de Equipos</td>
+                        <td>Usuario Responsable del Equipo</td>
+                        <td>Calidad / Metrología</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-28</strong> Uso de Equipos</td>
+                        <td>Analista / Operador</td>
+                        <td>Jefe de Laboratorio</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-40</strong> Prep. Soluciones (Gral)</td>
+                        <td>Técnico de Laboratorio</td>
+                        <td>Jefe de Laboratorio</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-40-B</strong> Prep. Soluciones (Alterno B)</td>
+                        <td>Técnico de Laboratorio</td>
+                        <td>Jefe de Laboratorio</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-41</strong> Control Microbiológico</td>
+                        <td>Analista Microbiología</td>
+                        <td>Jefe de Laboratorio / Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-44</strong> Lib. Micro Flasks/Viales</td>
+                        <td>Analista Microbiología</td>
+                        <td>Control de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-46</strong> Registro Muestreo Producto Biológico</td>
+                        <td>Inspector de Calidad</td>
+                        <td>Analista de Laboratorio / Jefe CC</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-47</strong> Revisión Calidad Muestreo</td>
+                        <td>Analista / Operador</td>
+                        <td>Jefe de Laboratorio / Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-48</strong> Resultados y Dictamen de Lote</td>
+                        <td>Analista de Laboratorio</td>
+                        <td>Jefe de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-50</strong> Manifiesto de Destrucción</td>
+                        <td>Entrega: Xelle Scientific</td>
+                        <td>Recibe: Proveedor RPBI</td>
+                        <td style="color:#666; text-align:center;">N/A (Evidencia legal)</td>
+                    </tr>
+
+                    <tr>
+                        <td rowspan="6" style="font-weight:bold; background:#f1f5f9;">SGC DOCUMENTAL Y MEJORA</td>
+                        <td><strong>FO-LC-14</strong> Histórico de Placentas</td>
+                        <td>Coordinación SGC</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-15</strong> Histórico de Líneas</td>
+                        <td>Coordinación SGC</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-51</strong> Producto No Conforme (Desviaciones)</td>
+                        <td>Supervisor del Área Afectada</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-32</strong> Desviaciones (CAPA)</td>
+                        <td>Responsable del Área Afectada</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-SGC-01</strong> Matriz de Responsabilidades y Firmas por Módulo</td>
+                        <td>Coordinación SGC</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-SGC-02</strong> Matriz de Responsabilidades y Firmas del SGC</td>
+                        <td>Coordinación SGC</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Sanitario</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button class="btn-add no-print" onclick="addRow()">+ AGREGAR NUEVO FORMATO A LA MATRIZ</button>
+        </div>
+
+        <div class="signature-area" style="margin-top: 30px;">
+            <div class="signature-box">
+                <p>Elaboró / Actualizó</p>
+                <input type="text" placeholder="Coordinador SGC">
+                <p>Fecha: <input type="date" class="cedit"></p>
+            </div>
+            <div class="signature-box">
+                <p>Aprobó Matriz Oficial</p>
+                <input type="text" placeholder="Responsable Sanitario">
+                <p>Fecha: <input type="date" class="cedit"></p>
+            </div>
+        </div>
+
+        <div class="footer">FO-SGC-01 | Versión: 0.9 | Matriz por Módulo SGC | Xelle Scientific</div>
+    </div>
+
+    <script>
+        function addRow() {
+            const tbody = document.getElementById('tbl-matriz').getElementsByTagName('tbody')[0];
+            const newRow = document.createElement('tr');
+
+            newRow.innerHTML = `
+                <td><input class="cedit" placeholder="Módulo / Proceso" style="font-weight:bold;"></td>
+                <td><input class="cedit" placeholder="FO-XX-XX Nombre"></td>
+                <td><input class="cedit" placeholder="Puesto Ejecutor"></td>
+                <td><input class="cedit" placeholder="Puesto Verificador"></td>
+                <td><input class="cedit" placeholder="Puesto Autorizador"></td>
+            `;
+            tbody.appendChild(newRow);
+        }
+    </script>
+</body>
+
+</html>

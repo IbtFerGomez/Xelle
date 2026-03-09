@@ -157,23 +157,35 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: u, password: p })
                 })
-                    .then(res => res.json())
+                    .then(async (res) => {
+                        const contentType = (res.headers.get('content-type') || '').toLowerCase();
+                        if (contentType.includes('application/json')) {
+                            return res.json();
+                        }
+
+                        const rawBody = await res.text().catch(() => '');
+                        if (!res.ok) {
+                            throw new Error(`No fue posible conectar con el backend (HTTP ${res.status}).`);
+                        }
+
+                        throw new Error(rawBody.trim()
+                            ? 'Respuesta no válida del backend. Intenta de nuevo en unos segundos.'
+                            : 'No fue posible conectar con el backend.');
+                    })
                     .then(data => {
                         if (data.success) {
                             Core.Data.set(KEYS.SESSION, data.user);
                             window.location.href = 'dashboard.html';
-                        } else { throw new Error(data.msg); }
+                            return;
+                        }
+                        $('#errorText').text(data.msg || 'Credenciales inválidas');
+                        $err.removeClass('hidden');
+                        $btn.prop('disabled', false).removeClass('opacity-75');
                     })
                     .catch(err => {
-                        // Fallback Local
-                        console.log("Intentando login local...");
-                        const res = Core.Auth.login(u, p);
-                        if (res.success) window.location.href = 'dashboard.html';
-                        else {
-                            $('#errorText').text(err.message || res.msg);
-                            $err.removeClass('hidden');
-                            $btn.prop('disabled', false).removeClass('opacity-75');
-                        }
+                        $('#errorText').text(err.message || 'No fue posible conectar con el backend.');
+                        $err.removeClass('hidden');
+                        $btn.prop('disabled', false).removeClass('opacity-75');
                     });
             });
         });
