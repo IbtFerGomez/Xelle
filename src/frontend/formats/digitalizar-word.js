@@ -135,7 +135,7 @@
             acceptTitleInput.value = suggestCardTitle();
         }
         if (acceptAreaSelect && !acceptAreaSelect.value) {
-            acceptAreaSelect.value = 'sgc';
+            acceptAreaSelect.value = 'biblioteca';
         }
     };
 
@@ -180,7 +180,7 @@
 
         const code = String(acceptCodeInput?.value || generatedCode || '').trim().toUpperCase();
         const title = String(acceptTitleInput?.value || suggestCardTitle()).trim();
-        const area = String(acceptAreaSelect?.value || 'sgc').trim();
+        const area = String(acceptAreaSelect?.value || 'biblioteca').trim();
 
         if (!code || !title) {
             Swal.fire({ icon: 'warning', title: 'Datos incompletos', text: 'Captura código y título para crear la tarjeta.' });

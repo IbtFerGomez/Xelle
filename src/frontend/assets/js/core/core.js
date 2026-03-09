@@ -124,7 +124,7 @@ const Core = {
                 : (Array.isArray(sess.moduleAccess) ? sess.moduleAccess : []);
             const normalizeArea = (value) => {
                 const area = String(value || '').trim().toLowerCase();
-                if (area === 'almacen' || area === 'comercial') return 'operaciones';
+                // Mantener los nuevos módulos sin normalización
                 return area;
             };
             const normalizedUserAccess = Array.from(new Set(userAccess.map(normalizeArea)));
@@ -168,54 +168,67 @@ const Core = {
             });
 
             const areaLabels = {
-                banco: 'Banco de Células',
-                calidad: 'Laboratorio de Calidad',
-                operaciones: 'Operaciones',
-                sgc: 'Sistema de Gestión'
+                administracion: 'Administración',
+                almacen: 'Almacén',
+                banco: 'Banco celular',
+                biblioteca: 'Biblioteca SGC',
+                comercial: 'Comercial',
+                calidad: 'Lab Calidad'
             };
 
             const areaColors = {
+                administracion: 'bg-purple-50 border-purple-200',
+                almacen: 'bg-yellow-50 border-yellow-200',
                 banco: 'bg-emerald-50 border-emerald-200',
-                calidad: 'bg-blue-50 border-blue-200',
-                operaciones: 'bg-orange-50 border-orange-200',
-                sgc: 'bg-slate-50 border-slate-200'
+                biblioteca: 'bg-slate-50 border-slate-200',
+                comercial: 'bg-orange-50 border-orange-200',
+                calidad: 'bg-blue-50 border-blue-200'
             };
 
             const areaBadgeColors = {
+                administracion: 'bg-purple-100 text-purple-700',
+                almacen: 'bg-yellow-100 text-yellow-700',
                 banco: 'bg-emerald-100 text-emerald-700',
-                calidad: 'bg-blue-100 text-blue-700',
-                operaciones: 'bg-orange-100 text-orange-700',
-                sgc: 'bg-slate-100 text-slate-700'
+                biblioteca: 'bg-slate-100 text-slate-700',
+                comercial: 'bg-orange-100 text-orange-700',
+                calidad: 'bg-blue-100 text-blue-700'
             };
 
             const renderWorkspace = function (selectedArea = null) {
                 let html = '';
-                const areasToRender = selectedArea && areas[selectedArea]
+                // Renderizar TODAS las áreas aunque no tengan formatos
+                const allAreas = ['administracion', 'almacen', 'banco', 'biblioteca', 'comercial', 'calidad'];
+                const areasToRender = selectedArea 
                     ? [selectedArea]
-                    : Object.keys(areas);
+                    : allAreas;
 
                 areasToRender.forEach(area => {
+                    const areaFormats = areas[area] || [];
                     html += `
                     <div class="mb-8" data-area="${area}">
                         <div class="flex items-center gap-2 mb-4">
                             <h3 class="text-lg font-black text-navy">${areaLabels[area] || area}</h3>
-                            <span class="px-2 py-1 rounded text-xs font-bold ${areaBadgeColors[area]}">${areas[area].length} tarjetas</span>
+                            <span class="px-2 py-1 rounded text-xs font-bold ${areaBadgeColors[area]}">${areaFormats.length} tarjetas</span>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     `;
 
-                    areas[area].forEach(f => {
-                        html += `
-                            <button onclick="Core.UI.openFormat('${f.file}')" class="p-4 rounded-xl border-2 transition-all ${areaColors[area]} hover:shadow-lg hover:scale-105 text-left group">
-                                <div class="text-xs uppercase font-bold text-slate-500 mb-1 group-hover:text-primary">${f.code}</div>
-                                <div class="text-sm font-bold text-navy mb-3 line-clamp-2 group-hover:text-primary">${f.title}</div>
-                                <div class="flex items-center gap-2 text-slate-400 group-hover:text-primary transition-colors">
-                                    <span class="material-symbols-outlined text-lg">open_in_new</span>
-                                    <span class="text-xs font-bold">Abrir</span>
-                                </div>
-                            </button>
-                        `;
-                    });
+                    if (areaFormats.length > 0) {
+                        areaFormats.forEach(f => {
+                            html += `
+                                <button onclick="Core.UI.openFormat('${f.file}')" class="p-4 rounded-xl border-2 transition-all ${areaColors[area]} hover:shadow-lg hover:scale-105 text-left group">
+                                    <div class="text-xs uppercase font-bold text-slate-500 mb-1 group-hover:text-primary">${f.code}</div>
+                                    <div class="text-sm font-bold text-navy mb-3 line-clamp-2 group-hover:text-primary">${f.title}</div>
+                                    <div class="flex items-center gap-2 text-slate-400 group-hover:text-primary transition-colors">
+                                        <span class="material-symbols-outlined text-lg">open_in_new</span>
+                                        <span class="text-xs font-bold">Abrir</span>
+                                    </div>
+                                </button>
+                            `;
+                        });
+                    } else {
+                        html += `<p class="text-slate-400 text-sm italic col-span-full">No hay formatos disponibles en este módulo</p>`;
+                    }
 
                     html += `</div></div>`;
                 });
@@ -225,23 +238,17 @@ const Core = {
 
             renderWorkspace();
 
-            // Renderizar filtros en sidebar
+            // Aplicar visibilidad y eventos a los filtros en sidebar
             const filterContainer = document.getElementById('filter-container');
             if (filterContainer) {
-                let filterHtml = '';
-                Object.keys(areas).forEach(area => {
-                    if (normalizedUserAccess.includes('all') || normalizedUserAccess.includes(area)) {
-                        filterHtml += `
-                            <button class="area-filter w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-bold" data-area="${area}">
-                                ${areaLabels[area] || area}
-                            </button>
-                        `;
-                    }
+                const filterButtons = filterContainer.querySelectorAll('.area-filter');
+
+                // Mostrar TODOS los módulos siempre (sin filtrar por permisos)
+                filterButtons.forEach(btn => {
+                    btn.style.display = '';
                 });
-                filterContainer.innerHTML = filterHtml;
 
                 let selectedArea = null;
-                const filterButtons = document.querySelectorAll('.area-filter');
 
                 const updateFilterStyles = () => {
                     filterButtons.forEach(button => {
@@ -251,6 +258,9 @@ const Core = {
                         button.classList.toggle('text-white/70', !isActive);
                     });
                 };
+
+                // Inicializar estilos (todos inactivos al inicio)
+                updateFilterStyles();
 
                 filterButtons.forEach(btn => {
                     btn.addEventListener('click', () => {

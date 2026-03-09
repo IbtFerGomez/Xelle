@@ -17,33 +17,72 @@ window.SeedData = {
             pass: "123",
             fullName: "Gerente de Calidad",
             role: "quality_manager",
-            moduleAccess: ["lab-calidad", "documentacion"]
+            moduleAccess: ["calidad", "banco", "biblioteca"]
         },
         {
             id: 3,
             username: "ventas",
             pass: "123",
-            fullName: "Ejecutivo de Operaciones",
-            role: "sales",
-            moduleAccess: ["operaciones"]
+            fullName: "Ejecutivo Comercial",
+            role: "comercial",
+            moduleAccess: ["comercial", "almacen"]
+        },
+        {
+            id: 4,
+            username: "almacen",
+            pass: "123",
+            fullName: "Coordinador de Almacén",
+            role: "almacenista",
+            moduleAccess: ["almacen", "comercial"]
         }
     ],
 
     // 2. LISTADO MAESTRO DE FORMATOS (AQUÍ ESTÁN TUS TARJETAS)
     formats: [
-        // --- BANCO DE CÉLULAS (Acceso: lab-calidad) ---
+        // --- ADMINISTRACIÓN ---
+        { code: 'FO-LC-12', title: 'Dictamen Técnico de Concesión', area: 'administracion', file: 'formats/FO-LC-12.html' },
+        { code: 'FO-SGC-01', title: 'Matriz de Responsabilidades por Módulo', area: 'administracion', file: 'formats/FO-SGC-01.html' },
+        { code: 'FO-SGC-02', title: 'Matriz de Responsabilidades', area: 'administracion', file: 'formats/FO-SGC-02.html' },
+
+        // --- ALMACEN ---
+        { code: 'FO-OP-13', title: 'Lista Verificación Recepción MP', area: 'almacen', file: 'formats/FO-OP-13.html' },
+        { code: 'FO-OP-20', title: 'Liberación a Operaciones', area: 'almacen', file: 'formats/FO-OP-20.html' },
+        { code: 'FO-LC-45', title: 'Envío a Esterilización', area: 'almacen', file: 'formats/FO-LC-45.html' },
+        { code: 'FO-OP-49', title: 'Bitácora de Almacenamiento Temporal RPBI', area: 'almacen', file: 'formats/FO-OP-49.html' },
+        { code: 'FO-OP-50', title: 'Manifiesto de Residuos Peligrosos', area: 'almacen', file: 'formats/FO-OP-50.html' },
+        { code: 'FO-OP-52', title: 'Reporte de MPNC', area: 'almacen', file: 'formats/FO-OP-52.html' },
+        { code: 'FO-OP-54', title: 'Bitácora de Muestreo y Cadena de Frío', area: 'almacen', file: 'formats/FO-OP-54.html' },
+
+        // --- BANCO CELULAR ---
         { code: 'FO-LC-16', title: 'Cover Sheet (Resumen Lote)', area: 'banco', file: 'formats/FO-LC-16.html' },
         { code: 'FO-LC-20', title: 'Procesamiento de Tejido', area: 'banco', file: 'formats/FO-LC-20.html' },
         { code: 'FO-LC-21', title: 'Bitácora de Cultivo Celular', area: 'banco', file: 'formats/FO-LC-21.html' },
         { code: 'FO-LC-22', title: 'Mapa de Crio-Conservación', area: 'banco', file: 'formats/FO-LC-22.html' },
         { code: 'FO-LC-23', title: 'Bitácora Movimientos Banco', area: 'banco', file: 'formats/FO-LC-23.html' },
-        { code: 'FO-LC-24', title: 'FORMATO REGISTRO DIARIO DE DOSIFICACIÓN.', area: 'banco', file: 'formats/FO-LC-24.html' },
-        { code: 'FO-LC-29', title: 'REGISTRO DE LOTE DE PRODUCTO TERMINADO (CELULAR)', area: 'banco', file: 'formats/FO-LC-29.html' },
+        { code: 'FO-LC-24', title: 'Registro Diario de Dosificación', area: 'banco', file: 'formats/FO-LC-24.html' },
+        { code: 'FO-LC-29', title: 'Registro de Lote (Producto Celular)', area: 'banco', file: 'formats/FO-LC-29.html' },
         { code: 'FO-LC-31', title: 'Hoja Prod. Lote Acelular', area: 'banco', file: 'formats/FO-LC-31.html' },
+        { code: 'FO-LC-33', title: 'Bitácora de Muestras de Retención', area: 'banco', file: 'formats/FO-LC-33.html' },
+        { code: 'FO-LC-34', title: 'Bitácora de Muestreos', area: 'banco', file: 'formats/FO-LC-34.html' },
+        { code: 'FO-LC-35', title: 'Bitácora de Disposición de Lotes', area: 'banco', file: 'formats/FO-LC-35.html' },
         { code: 'FO-LC-42', title: 'Liofilización Placenta', area: 'banco', file: 'formats/FO-LC-42.html' },
         { code: 'FO-LC-43', title: 'Liofilización Medio Cond.', area: 'banco', file: 'formats/FO-LC-43.html' },
 
-        // --- LABORATORIO DE CALIDAD (Acceso: lab-calidad) ---
+        // --- BIBLIOTECA SGC ---
+        { code: 'FO-LC-14', title: 'Histórico de Placentas', area: 'biblioteca', file: 'formats/FO-LC-14.html' },
+        { code: 'FO-LC-15', title: 'Histórico de Líneas', area: 'biblioteca', file: 'formats/FO-LC-15.html' },
+        { code: 'FO-LC-32', title: 'Desviaciones (CAPA)', area: 'biblioteca', file: 'formats/FO-LC-32.html' },
+        { code: 'FO-OP-39', title: 'Lista de Verificación de Auditoría', area: 'biblioteca', file: 'formats/FO-OP-39.html' },
+        { code: 'FO-OP-51', title: 'Producto No Conforme (Desviaciones)', area: 'biblioteca', file: 'formats/FO-OP-51.html' },
+        { code: 'FO-OP-53', title: 'Acción Correctiva y Preventiva (CAPA)', area: 'biblioteca', file: 'formats/FO-OP-53.html' },
+
+        // --- COMERCIAL ---
+        { code: 'FO-LG-05', title: 'Orden de Envío y Distribución', area: 'comercial', file: 'formats/FO-LG-05.html' },
+        { code: 'FO-OP-15', title: 'Pedido Maestro', area: 'comercial', file: 'formats/FO-OP-15.html' },
+        { code: 'FO-OP-16', title: 'Orden de Surtido (Picking)', area: 'comercial', file: 'formats/FO-OP-16.html' },
+        { code: 'FO-OP-17', title: 'Nota de Remisión', area: 'comercial', file: 'formats/FO-OP-17.html' },
+
+        // --- LAB CALIDAD ---
         { code: 'FO-LC-17', title: 'Recepción Muestras (MP)', area: 'calidad', file: 'formats/FO-LC-17.html' },
         { code: 'FO-LC-18', title: 'Evaluación Macroscópica', area: 'calidad', file: 'formats/FO-LC-18.html' },
         { code: 'FO-LC-19', title: 'Liberación MP (Serología)', area: 'calidad', file: 'formats/FO-LC-19.html' },
@@ -58,27 +97,7 @@ window.SeedData = {
         { code: 'FO-LC-46', title: 'Registro FO-LC-46', area: 'calidad', file: 'formats/FO-LC-46.html' },
         { code: 'FO-LC-47', title: 'Revisión Calidad Muestreo', area: 'calidad', file: 'formats/FO-LC-47.html' },
         { code: 'FO-LC-48', title: 'Resultados y Dictamen de Lote', area: 'calidad', file: 'formats/FO-LC-48.html' },
-        { code: 'FO-LC-50', title: 'Manifiesto de Destrucción', area: 'calidad', file: 'formats/FO-LC-50.html' },
-
-        // --- OPERACIONES (Acceso: operaciones) ---
-        { code: 'FO-LC-12', title: 'Dictamen Técnico de Concesión (FO-LC-12)', area: 'operaciones', file: 'formats/FO-LC-12.html' },
-        { code: 'FO-OP-13', title: 'Lista Verificación Recepción MP', area: 'operaciones', file: 'formats/FO-OP-13.html' },
-        { code: 'FO-OP-15', title: 'Pedido Maestro', area: 'operaciones', file: 'formats/FO-OP-15.html' },
-        { code: 'FO-OP-16', title: 'Orden de Surtido (Picking)', area: 'operaciones', file: 'formats/FO-OP-16.html' },
-        { code: 'FO-OP-17', title: 'Nota de Remisión', area: 'operaciones', file: 'formats/FO-OP-17.html' },
-        { code: 'FO-OP-20', title: 'Liberación a Operaciones', area: 'operaciones', file: 'formats/FO-OP-20.html' },
-        { code: 'FO-OP-49', title: 'Bitácora de Almacenamiento Temporal RPBI', area: 'operaciones', file: 'formats/FO-OP-49.html' },
-        { code: 'FO-OP-50', title: 'Manifiesto de Residuos Peligrosos', area: 'operaciones', file: 'formats/FO-OP-50.html' },
-        { code: 'FO-OP-52', title: 'Reporte de MPNC', area: 'operaciones', file: 'formats/FO-OP-52.html' },
-        { code: 'FO-LC-45', title: 'Envío a Esterilización', area: 'operaciones', file: 'formats/FO-LC-45.html' },
-
-        // --- SISTEMA DE GESTIÓN (Acceso: documentacion) ---
-        { code: 'FO-LC-14', title: 'Histórico de Placentas', area: 'sgc', file: 'formats/FO-LC-14.html' },
-        { code: 'FO-LC-15', title: 'Histórico de Líneas', area: 'sgc', file: 'formats/FO-LC-15.html' },
-        { code: 'FO-OP-51', title: 'Producto No Conforme (Desviaciones)', area: 'sgc', file: 'formats/FO-OP-51.html' },
-        { code: 'FO-LC-32', title: 'Desviaciones (CAPA)', area: 'sgc', file: 'formats/FO-LC-32.html' },
-        { code: 'FO-SGC-01', title: 'Matriz de Responsabilidades por Módulo', area: 'sgc', file: 'formats/FO-SGC-01.html' },
-        { code: 'FO-SGC-02', title: 'Matriz de Responsabilidades', area: 'sgc', file: 'formats/FO-SGC-02.html' }
+        { code: 'FO-LC-50', title: 'Manifiesto de Destrucción', area: 'calidad', file: 'formats/FO-LC-50.html' }
     ],
 
     LOGO_SVG: `<svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">

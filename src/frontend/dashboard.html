@@ -134,16 +134,46 @@
                 <button onclick="switchTab('admin')"
                     class="w-full flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-xl transition-all group text-left tab-trigger"
                     id="btn-tab-admin">
-                    <span
-                        class="material-symbols-outlined group-hover:text-primary transition-colors">admin_panel_settings</span>
-                    <span class="text-sm font-semibold">Administración</span>
+                    <span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+                    <span class="text-sm font-semibold">Configuración</span>
                 </button>
             </div>
 
             <div id="sidebar-filters" class="pt-6 pb-2">
                 <div class="border-t border-white/10 mx-2 mb-4"></div>
-                <p class="px-4 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Filtros de Área</p>
-                <div id="filter-container" class="space-y-1"></div>
+                <p class="px-4 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Módulos</p>
+                <div id="filter-container" class="space-y-1">
+                    <button
+                        class="area-filter w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-bold"
+                        data-area="administracion">
+                        <span class="inline-block w-2 h-2 rounded-full bg-purple-400 mr-2"></span>Administración
+                    </button>
+                    <button
+                        class="area-filter w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-bold"
+                        data-area="almacen">
+                        <span class="inline-block w-2 h-2 rounded-full bg-yellow-400 mr-2"></span>Almacén
+                    </button>
+                    <button
+                        class="area-filter w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-bold"
+                        data-area="banco">
+                        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-2"></span>Banco celular
+                    </button>
+                    <button
+                        class="area-filter w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-bold"
+                        data-area="biblioteca">
+                        <span class="inline-block w-2 h-2 rounded-full bg-slate-400 mr-2"></span>Biblioteca SGC
+                    </button>
+                    <button
+                        class="area-filter w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-bold"
+                        data-area="comercial">
+                        <span class="inline-block w-2 h-2 rounded-full bg-orange-400 mr-2"></span>Comercial
+                    </button>
+                    <button
+                        class="area-filter w-full text-left px-3 py-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-bold"
+                        data-area="calidad">
+                        <span class="inline-block w-2 h-2 rounded-full bg-blue-400 mr-2"></span>Lab Calidad
+                    </button>
+                </div>
             </div>
         </nav>
 
@@ -169,7 +199,7 @@
                 <div class="relative hidden md:block">
                     <span
                         class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
-                    <input id="searchBox" type="text"
+                    <input id="searchBox" type="text" autocomplete="off" value=""
                         class="pl-10 pr-4 py-2 w-64 bg-slate-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-primary placeholder-slate-400 font-medium transition-all"
                         placeholder="Buscar formato, lote...">
                 </div>
@@ -376,10 +406,12 @@
                                 <select id="admin-format-area-filter"
                                     class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-medium text-slate-700">
                                     <option value="">Todas</option>
-                                    <option value="banco">Banco</option>
-                                    <option value="calidad">Calidad</option>
-                                    <option value="operaciones">Operaciones</option>
-                                    <option value="sgc">SGC</option>
+                                    <option value="administracion">Administración</option>
+                                    <option value="almacen">Almacén</option>
+                                    <option value="banco">Banco celular</option>
+                                    <option value="biblioteca">Biblioteca SGC</option>
+                                    <option value="comercial">Comercial</option>
+                                    <option value="calidad">Lab Calidad</option>
                                 </select>
                             </div>
                             <div>
@@ -499,8 +531,9 @@
                         class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-bold text-navy">
                         <option value="super_admin">Administrador Total</option>
                         <option value="quality_manager">Gerencia de Calidad</option>
-                        <option value="sales">Operaciones</option>
-                        <option value="banco">Operador Técnico</option>
+                        <option value="comercial">Comercial</option>
+                        <option value="almacenista">Almacenista</option>
+                        <option value="operador">Operador Técnico</option>
                     </select>
                 </div>
                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
@@ -511,29 +544,43 @@
                             class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
                             <input type="checkbox"
                                 class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5"
+                                value="administracion">
+                            <span class="text-sm font-bold text-slate-600">Administración</span>
+                        </label>
+                        <label
+                            class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+                            <input type="checkbox"
+                                class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5"
+                                value="almacen">
+                            <span class="text-sm font-bold text-slate-600">Almacen</span>
+                        </label>
+                        <label
+                            class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+                            <input type="checkbox"
+                                class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5"
                                 value="banco">
-                            <span class="text-sm font-bold text-slate-600">Banco de Células</span>
+                            <span class="text-sm font-bold text-slate-600">Banco celular</span>
+                        </label>
+                        <label
+                            class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+                            <input type="checkbox"
+                                class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5"
+                                value="biblioteca">
+                            <span class="text-sm font-bold text-slate-600">Biblioteca SGC</span>
+                        </label>
+                        <label
+                            class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+                            <input type="checkbox"
+                                class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5"
+                                value="comercial">
+                            <span class="text-sm font-bold text-slate-600">Comercial</span>
                         </label>
                         <label
                             class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
                             <input type="checkbox"
                                 class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5"
                                 value="calidad">
-                            <span class="text-sm font-bold text-slate-600">Lab. Calidad</span>
-                        </label>
-                        <label
-                            class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
-                            <input type="checkbox"
-                                class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5"
-                                value="operaciones">
-                            <span class="text-sm font-bold text-slate-600">Operaciones</span>
-                        </label>
-                        <label
-                            class="flex items-center gap-3 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
-                            <input type="checkbox"
-                                class="access-checkbox form-checkbox text-primary rounded focus:ring-primary h-5 w-5"
-                                value="sgc">
-                            <span class="text-sm font-bold text-slate-600">SGC / Documentos</span>
+                            <span class="text-sm font-bold text-slate-600">Lab Calidad</span>
                         </label>
                     </div>
                 </div>
@@ -582,10 +629,12 @@
                         <label class="text-[10px] uppercase font-bold text-slate-400 ml-1">Área</label>
                         <select id="fmt-area"
                             class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary text-sm font-bold text-navy">
-                            <option value="banco">Banco (Verde)</option>
-                            <option value="calidad">Calidad (Azul)</option>
-                            <option value="operaciones">Operaciones (Naranja)</option>
-                            <option value="sgc">SGC (Gris)</option>
+                            <option value="administracion">Administración (Púrpura)</option>
+                            <option value="almacen">Almacén (Amarillo)</option>
+                            <option value="banco">Banco celular (Verde)</option>
+                            <option value="biblioteca">Biblioteca SGC (Gris)</option>
+                            <option value="comercial">Comercial (Naranja)</option>
+                            <option value="calidad">Lab Calidad (Azul)</option>
                         </select>
                     </div>
                 </div>
@@ -1044,10 +1093,12 @@
                     <td class="px-6 py-4">
                         <select onchange="moveFormatToArea(${f.id}, this.value)"
                             class="w-full min-w-[150px] px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold text-navy focus:ring-2 focus:ring-primary">
-                            <option value="banco" ${f.area === 'banco' ? 'selected' : ''}>Banco</option>
-                            <option value="calidad" ${f.area === 'calidad' ? 'selected' : ''}>Calidad</option>
-                            <option value="operaciones" ${(f.area === 'operaciones' || f.area === 'almacen') ? 'selected' : ''}>Operaciones</option>
-                            <option value="sgc" ${f.area === 'sgc' ? 'selected' : ''}>SGC</option>
+                            <option value="administracion" ${f.area === 'administracion' ? 'selected' : ''}>Administración</option>
+                            <option value="almacen" ${f.area === 'almacen' ? 'selected' : ''}>Almacén</option>
+                            <option value="banco" ${f.area === 'banco' ? 'selected' : ''}>Banco celular</option>
+                            <option value="biblioteca" ${f.area === 'biblioteca' ? 'selected' : ''}>Biblioteca SGC</option>
+                            <option value="comercial" ${f.area === 'comercial' ? 'selected' : ''}>Comercial</option>
+                            <option value="calidad" ${f.area === 'calidad' ? 'selected' : ''}>Lab Calidad</option>
                         </select>
                     </td>
                     <td class="px-6 py-4 text-right flex justify-end gap-2">
@@ -1289,7 +1340,13 @@
             const adminFormatSearch = document.getElementById('admin-format-search');
             const adminFormatArea = document.getElementById('admin-format-area-filter');
             const adminFormatVisibility = document.getElementById('admin-format-visibility-filter');
-            if (globalSearch) globalSearch.addEventListener('input', (e) => applyGlobalSearch(e.target.value));
+
+            // Limpiar searchBox al inicio (evitar autocompletado del navegador)
+            if (globalSearch) {
+                globalSearch.value = '';
+                globalSearch.addEventListener('input', (e) => applyGlobalSearch(e.target.value));
+            }
+
             if (librarySearch) librarySearch.addEventListener('input', renderLibraryInstances);
             if (libraryFormat) libraryFormat.addEventListener('change', renderLibraryInstances);
             if (libraryStatus) libraryStatus.addEventListener('change', renderLibraryInstances);

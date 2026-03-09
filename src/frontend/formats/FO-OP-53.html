@@ -2,25 +2,26 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-53 Acción Correctiva y Preventiva (CAPA)</title>
+    <title>FO-OP-53 CAPA - Metodología AMFE</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
         .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 12px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
-        .cbx-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
-        .cbx-group label { font-size: 11px; display: flex; align-items: center; gap: 5px; cursor: pointer; }
-        .acr-box { background-color: #f1f5f9; border-left: 4px solid #1E3A5F; padding: 10px; margin-top: 5px; }
-        .why-row { display: flex; align-items: center; margin-bottom: 5px; font-size: 11px; }
-        .why-num { font-weight: bold; color: #1E3A5F; width: 80px; }
+        .risk-table th { background-color: #1E3A5F; color: white; font-size: 10px; padding: 5px; }
+        .risk-table td { text-align: center; padding: 5px; }
+        .risk-table input { text-align: center; font-weight: bold; width: 100%; }
         
+        .pcc-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; background: #f8fafc; padding: 10px; border-radius: 4px; margin-top: 5px; }
+        .pcc-item { font-size: 10px; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        
+        .status-critical { background-color: #fee2e2; color: #991b1b; }
+        .status-low { background-color: #dcfce7; color: #166534; }
+
         @media print {
             .global-controls, .no-print { display:none !important; }
             ::-webkit-input-placeholder { color: transparent !important; }
-            :-moz-placeholder { color: transparent !important; }
-            ::-moz-placeholder { color: transparent !important; }
-            :-ms-input-placeholder { color: transparent !important; }
             ::placeholder { color: transparent !important; }
         }
     </style>
@@ -49,121 +50,149 @@
         </div>
 
         <div class="header-main">
-            <h1>ACCIÓN CORRECTIVA Y PREVENTIVA (CAPA)</h1>
-            <div class="metadata">Código: FO-OP-53 | Versión: 1.0 | Vig: Ene 2026 | Área: Aseguramiento de Calidad</div>
+            <h1>ACCIÓN CORRECTIVA Y PREVENTIVA (CAPA) - GESTIÓN AMFE</h1>
+            <div class="metadata">Código: FO-OP-53 | Versión: 2.0 | Vig: Mar 2026 | Área: Calidad / Laboratorio</div>
         </div>
 
-        <div class="section-header">1. IDENTIFICACIÓN DE LA NO CONFORMIDAD</div>
+        <div class="section-header">1. IDENTIFICACIÓN DE LA NO CONFORMIDAD / FALLA POTENCIAL</div>
         <div class="section">
             <table class="no-border-table">
                 <tr>
-                    <td width="50%"><strong>Clasificación:</strong> 
-                        <label style="margin-left:10px;"><input type="radio" name="class" class="cedit"> Crítica</label>
-                        <label style="margin-left:10px;"><input type="radio" name="class" class="cedit"> Mayor</label>
-                        <label style="margin-left:10px;"><input type="radio" name="class" class="cedit"> Menor</label>
+                    <td colspan="2"><strong>Origen:</strong> 
+                        <label><input type="checkbox" class="cedit"> Auditoría</label>
+                        <label><input type="checkbox" class="cedit"> Queja</label>
+                        <label><input type="checkbox" class="cedit"> Desviación</label>
+                        <label><input type="checkbox" class="cedit"> Riesgo Crítico (IPR > 27)</label>
                     </td>
-                    <td width="50%"><strong>Fecha de Apertura:</strong> <input type="date" class="cedit"></td>
                 </tr>
             </table>
             <div style="margin-top:10px;">
-                <strong>Origen del Hallazgo:</strong>
-                <div class="cbx-group">
-                    <label><input type="checkbox" class="cedit"> Auditoría Interna</label>
-                    <label><input type="checkbox" class="cedit"> Queja de Cliente</label>
-                    <label><input type="checkbox" class="cedit"> Desviación de Proceso</label>
-                    <label><input type="checkbox" class="cedit"> Producto No Conforme (PNC)</label>
+                <strong>Etapa del Proceso afectada:</strong>
+                <div class="pcc-group">
+                    <label class="pcc-item"><input type="radio" name="etapa"> Recepción / Cuarentena</label>
+                    <label class="pcc-item"><input type="radio" name="etapa"> Selección de Cultivo</label>
+                    <label class="pcc-item"><input type="radio" name="etapa"> Medio de Criopreservación</label>
+                    <label class="pcc-item"><input type="radio" name="etapa"> Cosecha / Concentración</label>
+                    <label class="pcc-item"><input type="radio" name="etapa"> Congelación Controlada</label>
+                    <label class="pcc-item"><input type="radio" name="etapa"> Gestión de Inventario</label>
                 </div>
             </div>
-            <label style="display:block; margin-top:10px; font-weight:bold;">Descripción Detallada del Evento:</label>
-            <textarea class="cedit" rows="3" style="width:100%;" placeholder="Describa el hallazgo, evidencia detectada y el impacto potencial..."></textarea>
+            <textarea class="cedit" rows="3" style="width:100%; margin-top:10px;" placeholder="Descripción Detallada del Evento..."></textarea>
         </div>
 
-        <div class="section-header">2. ANÁLISIS DE CAUSA RAÍZ (ACR) - Metodología 5 Porqués</div>
+        <div class="section-header">2. EVALUACIÓN DE RIESGO INICIAL (AMFE)</div>
         <div class="section">
-            <div class="acr-box">
-                <div class="why-row"><span class="why-num">1. ¿Por qué?</span><input class="cedit" placeholder="Ocurrió el evento descrito..."></div>
-                <div class="why-row"><span class="why-num">2. ¿Por qué?</span><input class="cedit" placeholder="Ocurrió lo anterior..."></div>
-                <div class="why-row"><span class="why-num">3. ¿Por qué?</span><input class="cedit" placeholder="Ocurrió lo anterior..."></div>
-                <div class="why-row"><span class="why-num">4. ¿Por qué?</span><input class="cedit" placeholder="Ocurrió lo anterior..."></div>
-                <div class="why-row"><span class="why-num">5. ¿Por qué?</span><input class="cedit" placeholder="Ocurrió lo anterior (Causa última)..."></div>
-            </div>
-            <label style="display:block; margin-top:10px; font-weight:bold;">Causa Raíz Determinada:</label>
-            <textarea class="cedit" rows="2" style="width:100%; border:1px solid #1E3A5F;" placeholder="Defina la causa raíz final que será atacada con el plan de acción..."></textarea>
-        </div>
-
-        <div class="section-header">3. PLAN DE ACCIÓN</div>
-        <div class="section">
-            <table class="compact-table" id="tbl-capa-actions">
+            <table class="compact-table risk-table">
                 <thead>
                     <tr>
-                        <th width="40%">Acción Definida (Correctiva o Preventiva)</th>
-                        <th width="20%">Responsable Ejecución</th>
-                        <th width="15%">Fecha Compromiso</th>
-                        <th width="20%">Evidencia de Cierre</th>
-                        <th width="5%" class="no-print"></th>
+                        <th width="40%">Modo de Falla (Falla Potencial)</th>
+                        <th width="15%">Severidad (S)</th>
+                        <th width="15%">Ocurrencia (O)</th>
+                        <th width="15%">Detección (D)</th>
+                        <th width="15%">IPR Inicial</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><textarea class="cedit" rows="2" placeholder="Describa la acción..."></textarea></td>
-                        <td><input class="cedit" placeholder="Nombre/Puesto"></td>
-                        <td><input class="cedit" type="date"></td>
-                        <td><input class="cedit" placeholder="Ej. Registro, Manual"></td>
-                        <td class="no-print"><span onclick="delRow(this)" style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                        <td><input class="cedit" placeholder="Describa la falla..."></td>
+                        <td><input type="number" id="s1" class="cedit" min="1" max="5" onchange="calcRisk('1')"></td>
+                        <td><input type="number" id="o1" class="cedit" min="1" max="5" onchange="calcRisk('1')"></td>
+                        <td><input type="number" id="d1" class="cedit" min="1" max="5" onchange="calcRisk('1')"></td>
+                        <td><input id="ipr1" class="cedit" readonly></td>
                     </tr>
                 </tbody>
             </table>
-            <button class="btn btn-add no-print" onclick="addRow('tbl-capa-actions')" style="width:100%; margin-top:5px; background:#e2e8f0; border:1px dashed #999;">+ AGREGAR ACCIÓN</button>
         </div>
 
-        <div class="section-header">4. VERIFICACIÓN DE EFICACIA (SEGUIMIENTO)</div>
-        <div class="section" style="background-color: #f8fafc; border: 1px solid #cbd5e1;">
+        <div class="section-header">3. ANÁLISIS DE CAUSA RAÍZ (5 PORQUÉS)</div>
+        <div class="section">
             <table class="no-border-table">
-                <tr>
-                    <td width="60%"><strong>Periodo de Evaluación:</strong> Del <input type="date" class="cedit" style="width:120px;"> al <input type="date" class="cedit" style="width:120px;"></td>
-                    <td width="40%"><strong>Resultado:</strong> 
-                        <label style="margin-left:10px;"><input type="radio" name="eff" class="cedit"> Eficaz (Cierre)</label>
-                        <label style="margin-left:10px;"><input type="radio" name="eff" class="cedit"> No Eficaz</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2"><strong>Justificación de Eficacia:</strong><br>
-                        <textarea class="cedit" rows="2" style="width:100%;" placeholder="Explique por qué se considera que el problema no ha vuelto a ocurrir..."></textarea>
-                    </td>
-                </tr>
+                <tr><td width="20%"><strong>Falla observada:</strong></td><td><input class="cedit"></td></tr>
+                <tr><td><strong>Causa inmediata:</strong></td><td><input class="cedit"></td></tr>
+                <tr><td><strong>Causa intermedia:</strong></td><td><input class="cedit"></td></tr>
+                <tr><td><strong>Causa subyacente:</strong></td><td><input class="cedit"></td></tr>
+                <tr><td><strong>CAUSA RAÍZ:</strong></td><td><input class="cedit" style="border: 2px solid #1E3A5F; font-weight:bold;"></td></tr>
             </table>
         </div>
 
-        <div class="signature-area">
-            <div class="signature-box">
-                <p>Responsable de Implementación</p>
-                <input type="text" placeholder="Nombre y Firma">
-            </div>
-            <div class="signature-box">
-                <p>Aseguramiento de Calidad (QA)</p>
-                <input type="text" placeholder="Nombre y Firma">
-            </div>
-        </div>
-        
-        <div style="width: 50%; margin: 20px auto; text-align: center;">
-            <p style="font-weight:bold; font-size:11px;">AUTORIZACIÓN FINAL (RESPONSABLE SANITARIO)</p>
-            <div style="border-bottom: 1px solid black; margin-top:30px;"></div>
-            <p style="font-size:10px;">Nombre, Firma y Fecha</p>
+        <div class="section-header">4. PLAN DE ACCIÓN Y MITIGACIÓN (Enfoque PCC)</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="40%">Acción (Correctiva / Preventiva)</th>
+                        <th width="30%">PCC Asociado (MR-LC-17)</th>
+                        <th width="15%">Responsable</th>
+                        <th width="15%">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><textarea class="cedit" rows="2"></textarea></td>
+                        <td>
+                            <div style="text-align:left; font-size:9px;">
+                                <label><input type="checkbox"> PCC 1: Enfriamiento</label><br>
+                                <label><input type="checkbox"> PCC 2: Viabilidad</label><br>
+                                <label><input type="checkbox"> PCC 3: Esterilidad</label>
+                            </div>
+                        </td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <div class="footer">FO-OP-53 | Versión: 1.0 | Acción Correctiva y Preventiva (CAPA) | Xelle Scientific</div>
+        <div class="section-header">5. VERIFICACIÓN DE EFICACIA Y RIESGO RESIDUAL</div>
+        <div class="section">
+            <table class="compact-table risk-table">
+                <thead>
+                    <tr>
+                        <th width="15%">S Residual</th>
+                        <th width="15%">O Residual</th>
+                        <th width="15%">D Residual</th>
+                        <th width="15%">IPR RESIDUAL</th>
+                        <th width="40%">¿Eficacia Aceptable?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="number" id="s2" class="cedit" onchange="calcRisk('2')"></td>
+                        <td><input type="number" id="o2" class="cedit" onchange="calcRisk('2')"></td>
+                        <td><input type="number" id="d2" class="cedit" onchange="calcRisk('2')"></td>
+                        <td><input id="ipr2" class="cedit" readonly></td>
+                        <td>
+                            <label><input type="radio" name="eff"> SÍ</label>
+                            <label style="margin-left:10px;"><input type="radio" name="eff"> NO</label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="margin-top:10px;">
+                <strong>Evidencia de cumplimiento:</strong> <input class="cedit" style="width:70%" placeholder="Folio de registro, fotos, bitácora...">
+            </div>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box"><p>Elaboró</p><input type="text"><p>Firma y Fecha</p></div>
+            <div class="signature-box"><p>Revisó (Dir. Operaciones)</p><input type="text"><p>Firma y Fecha</p></div>
+            <div class="signature-box"><p>Autorizó (Resp. Sanitario)</p><input type="text"><p>Firma y Fecha</p></div>
+        </div>
+
+        <div class="footer">FO-OP-53 | Acción Correctiva y Preventiva (CAPA AMFE) | Xelle Scientific</div>
     </div>
 
     <script>
-        function addRow(id){
-            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
-            let r = t.rows[0].cloneNode(true);
-            r.querySelectorAll('input, textarea').forEach(i => i.value = '');
-            t.appendChild(r);
-        }
-        function delRow(btn){
-            let row = btn.parentNode.parentNode;
-            if(row.parentNode.rows.length > 1) { row.parentNode.removeChild(row); }
+        function calcRisk(suffix) {
+            const s = parseInt(document.getElementById('s' + suffix).value) || 0;
+            const o = parseInt(document.getElementById('o' + suffix).value) || 0;
+            const d = parseInt(document.getElementById('d' + suffix).value) || 0;
+            const ipr = s * o * d;
+            const el = document.getElementById('ipr' + suffix);
+            el.value = ipr;
+            
+            if(ipr >= 27) { el.className = 'cedit status-critical'; }
+            else if(ipr > 0) { el.className = 'cedit status-low'; }
         }
     </script>
 </body>

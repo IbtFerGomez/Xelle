@@ -111,9 +111,7 @@ public class DataInitializer implements CommandLineRunner {
 
     private String normalizeArea(String area) {
         String value = String.valueOf(area == null ? "" : area).trim().toLowerCase(Locale.ROOT);
-        if ("almacen".equals(value) || "comercial".equals(value)) {
-            return "operaciones";
-        }
+        // Mantener los nuevos módulos sin normalización
         return value;
     }
 
@@ -144,11 +142,8 @@ public class DataInitializer implements CommandLineRunner {
             if (value.isBlank()) {
                 continue;
             }
-            if ("almacen".equals(value) || "comercial".equals(value)) {
-                normalized.add("operaciones");
-            } else {
-                normalized.add(value);
-            }
+            // Mantener los nuevos módulos sin migración
+            normalized.add(value);
         }
         return new ArrayList<>(normalized);
     }
@@ -189,9 +184,14 @@ public class DataInitializer implements CommandLineRunner {
         }
         userRepository.save(buildUser("Xelle_Fer", "123", "Luis Fernando Gómez", "superadmin", List.of("all"), true));
         userRepository.save(
-                buildUser("calidad", "123", "Gerente de Calidad", "quality_manager", List.of("calidad", "sgc"), true));
+                buildUser("calidad", "123", "Gerente de Calidad", "quality_manager",
+                        List.of("calidad", "banco", "biblioteca"), true));
         userRepository
-                .save(buildUser("ventas", "123", "Ejecutivo de Operaciones", "sales", List.of("operaciones"), true));
+                .save(buildUser("ventas", "123", "Ejecutivo Comercial", "comercial", List.of("comercial", "almacen"),
+                        true));
+        userRepository
+                .save(buildUser("almacen", "123", "Coordinador de Almacén", "almacenista",
+                        List.of("almacen", "comercial"), true));
     }
 
     private UserEntity buildUser(String username, String pass, String fullName, String role, List<String> access,
@@ -207,42 +207,64 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void ensureDefaultFormats() {
-        upsertFormat("FO-LC-14", "Histórico de Placentas", "sgc", "formats/FO-LC-14.html");
-        upsertFormat("FO-LC-15", "Histórico de Líneas", "sgc", "formats/FO-LC-15.html");
+        // --- ADMINISTRACIÓN ---
+        upsertFormat("FO-LC-12", "Dictamen Técnico de Concesión", "administracion", "formats/FO-LC-12.html");
+        upsertFormat("FO-SGC-01", "Matriz de Responsabilidades por Módulo", "administracion", "formats/FO-SGC-01.html");
+        upsertFormat("FO-SGC-02", "Matriz de Responsabilidades", "administracion", "formats/FO-SGC-02.html");
+
+        // --- ALMACEN ---
+        upsertFormat("FO-OP-13", "Lista Verificación Recepción MP", "almacen", "formats/FO-OP-13.html");
+        upsertFormat("FO-OP-20", "Liberación a Operaciones", "almacen", "formats/FO-OP-20.html");
+        upsertFormat("FO-LC-45", "Envío a Esterilización", "almacen", "formats/FO-LC-45.html");
+        upsertFormat("FO-OP-49", "Bitácora de Almacenamiento Temporal RPBI", "almacen", "formats/FO-OP-49.html");
+        upsertFormat("FO-OP-50", "Manifiesto de Residuos Peligrosos", "almacen", "formats/FO-OP-50.html");
+        upsertFormat("FO-OP-52", "Reporte de MPNC", "almacen", "formats/FO-OP-52.html");
+        upsertFormat("FO-OP-54", "Bitácora de Muestreo y Cadena de Frío", "almacen", "formats/FO-OP-54.html");
+
+        // --- BANCO CELULAR ---
         upsertFormat("FO-LC-16", "Cover Sheet (Resumen Lote)", "banco", "formats/FO-LC-16.html");
-        upsertFormat("FO-LC-17", "Recepción Muestras (MP)", "calidad", "formats/FO-LC-17.html");
-        upsertFormat("FO-LC-18", "Evaluación Macroscópica", "calidad", "formats/FO-LC-18.html");
-        upsertFormat("FO-LC-19", "Liberación MP (Serología)", "calidad", "formats/FO-LC-19.html");
         upsertFormat("FO-LC-20", "Procesamiento de Tejido", "banco", "formats/FO-LC-20.html");
         upsertFormat("FO-LC-21", "Bitácora de Cultivo Celular", "banco", "formats/FO-LC-21.html");
         upsertFormat("FO-LC-22", "Mapa de Crio-Conservación", "banco", "formats/FO-LC-22.html");
         upsertFormat("FO-LC-23", "Bitácora Movimientos Banco", "banco", "formats/FO-LC-23.html");
-        upsertFormat("FO-LC-24", "Inventario Prod. Terminado", "banco", "formats/FO-LC-24.html");
+        upsertFormat("FO-LC-24", "Registro Diario de Dosificación", "banco", "formats/FO-LC-24.html");
+        upsertFormat("FO-LC-29", "Registro de Lote (Producto Celular)", "banco", "formats/FO-LC-29.html");
+        upsertFormat("FO-LC-31", "Hoja Prod. Lote Acelular", "banco", "formats/FO-LC-31.html");
+        upsertFormat("FO-LC-33", "Bitácora de Muestras de Retención", "banco", "formats/FO-LC-33.html");
+        upsertFormat("FO-LC-34", "Bitácora de Muestreos", "banco", "formats/FO-LC-34.html");
+        upsertFormat("FO-LC-35", "Bitácora de Disposición de Lotes", "banco", "formats/FO-LC-35.html");
+        upsertFormat("FO-LC-42", "Liofilización Placenta", "banco", "formats/FO-LC-42.html");
+        upsertFormat("FO-LC-43", "Liofilización Medio Cond.", "banco", "formats/FO-LC-43.html");
+
+        // --- BIBLIOTECA SGC ---
+        upsertFormat("FO-LC-14", "Histórico de Placentas", "biblioteca", "formats/FO-LC-14.html");
+        upsertFormat("FO-LC-15", "Histórico de Líneas", "biblioteca", "formats/FO-LC-15.html");
+        upsertFormat("FO-LC-32", "Desviaciones (CAPA)", "biblioteca", "formats/FO-LC-32.html");
+        upsertFormat("FO-OP-39", "Lista de Verificación de Auditoría", "biblioteca", "formats/FO-OP-39.html");
+        upsertFormat("FO-OP-51", "Producto No Conforme (Desviaciones)", "biblioteca", "formats/FO-OP-51.html");
+        upsertFormat("FO-OP-53", "Acción Correctiva y Preventiva (CAPA)", "biblioteca", "formats/FO-OP-53.html");
+        upsertFormat("FO-LC-51", "Registro de Desviaciones", "biblioteca", "formats/FO-OP-51.html");
+        upsertFormat("FO-LC-TEST", "Formato de Prueba", "biblioteca", "formats/FO-LC-TEST.html");
+
+        // --- COMERCIAL ---
+        upsertFormat("FO-LG-05", "Orden de Envío y Distribución", "comercial", "formats/FO-LG-05.html");
+        upsertFormat("FO-OP-15", "Pedido Maestro", "comercial", "formats/FO-OP-15.html");
+        upsertFormat("FO-OP-16", "Orden de Surtido (Picking)", "comercial", "formats/FO-OP-16.html");
+        upsertFormat("FO-OP-17", "Nota de Remisión", "comercial", "formats/FO-OP-17.html");
+
+        // --- LAB CALIDAD ---
+        upsertFormat("FO-LC-17", "Recepción Muestras (MP)", "calidad", "formats/FO-LC-17.html");
+        upsertFormat("FO-LC-18", "Evaluación Macroscópica", "calidad", "formats/FO-LC-18.html");
+        upsertFormat("FO-LC-19", "Liberación MP (Serología)", "calidad", "formats/FO-LC-19.html");
         upsertFormat("FO-LC-25", "Preparación de Medios", "calidad", "formats/FO-LC-25.html");
         upsertFormat("FO-LC-26", "Bitácora de Autoclave", "calidad", "formats/FO-LC-26.html");
         upsertFormat("FO-LC-27", "Control de Equipos", "calidad", "formats/FO-LC-27.html");
         upsertFormat("FO-LC-28", "Uso de Equipos", "calidad", "formats/FO-LC-28.html");
-        upsertFormat("FO-LC-29", "REGISTRO DE LOTE DE PRODUCTO TERMINADO (CELULAR)", "banco", "formats/FO-LC-29.html");
-        upsertFormat("FO-LC-31", "Hoja Prod. Lote Acelular", "banco", "formats/FO-LC-31.html");
-        upsertFormat("FO-LC-32", "Desviaciones (CAPA)", "sgc", "formats/FO-LC-32.html");
         upsertFormat("FO-LC-40", "Prep. Soluciones (Gral)", "calidad", "formats/FO-LC-40.html");
         upsertFormat("FO-LC-40-B", "Prep. Soluciones (Alterno B)", "calidad", "formats/FO-LC-40-B.html");
         upsertFormat("FO-LC-41", "Control Microbiológico", "calidad", "formats/FO-LC-41.html");
-        upsertFormat("FO-LC-42", "Liofilización Placenta", "banco", "formats/FO-LC-42.html");
-        upsertFormat("FO-LC-43", "Liofilización Medio Cond.", "banco", "formats/FO-LC-43.html");
         upsertFormat("FO-LC-44", "Lib. Micro Flasks/Viales", "calidad", "formats/FO-LC-44.html");
-        upsertFormat("FO-LC-45", "Envío a Esterilización", "operaciones", "formats/FO-LC-45.html");
         upsertFormat("FO-LC-50", "Manifiesto de Destrucción", "calidad", "formats/FO-LC-50.html");
-        upsertFormat("FO-LC-51", "Registro de Desviaciones", "sgc", "formats/FO-OP-51.html");
-        upsertFormat("FO-LC-TEST", "Formato de Prueba", "sgc", "formats/FO-LC-TEST.html");
-        upsertFormat("FO-LC-12", "Dictamen Técnico de Concesión (FO-LC-12)", "operaciones", "formats/FO-LC-12.html");
-        upsertFormat("FO-OP-13", "Lista Verificación Recepción MP", "operaciones", "formats/FO-OP-13.html");
-        upsertFormat("FO-OP-15", "Pedido Maestro", "operaciones", "formats/FO-OP-15.html");
-        upsertFormat("FO-OP-16", "Orden de Surtido (Picking)", "operaciones", "formats/FO-OP-16.html");
-        upsertFormat("FO-OP-17", "Nota de Remisión", "operaciones", "formats/FO-OP-17.html");
-        upsertFormat("FO-OP-20", "Liberación a Operaciones", "operaciones", "formats/FO-OP-20.html");
-        upsertFormat("FO-OP-52", "Reporte de MPNC", "operaciones", "formats/FO-OP-52.html");
-        upsertFormat("FO-OP-OP-01", "Formato Operativo OP-01", "operaciones", "formats/FO-OP-OP-01.html");
     }
 
     private void upsertFormat(String code, String title, String area, String path) {
