@@ -194,11 +194,20 @@ const Core = {
                 calidad: 'bg-blue-100 text-blue-700'
             };
 
+            const areaIcons = {
+                administracion: 'assets/icons/Administracion.ico',
+                almacen: 'assets/icons/Almacen.ico',
+                banco: 'assets/icons/BancoCelulas.ico',
+                biblioteca: 'assets/icons/BibliotecaSGC.ico',
+                comercial: 'assets/icons/Comercial.ico',
+                calidad: 'assets/icons/LabCalidad.ico'
+            };
+
             const renderWorkspace = function (selectedArea = null) {
                 let html = '';
                 // Renderizar TODAS las áreas aunque no tengan formatos
                 const allAreas = ['administracion', 'almacen', 'banco', 'biblioteca', 'comercial', 'calidad'];
-                const areasToRender = selectedArea 
+                const areasToRender = selectedArea
                     ? [selectedArea]
                     : allAreas;
 
@@ -215,9 +224,13 @@ const Core = {
 
                     if (areaFormats.length > 0) {
                         areaFormats.forEach(f => {
+                            const iconSrc = areaIcons[area] || '';
                             html += `
                                 <button onclick="Core.UI.openFormat('${f.file}')" class="p-4 rounded-xl border-2 transition-all ${areaColors[area]} hover:shadow-lg hover:scale-105 text-left group">
-                                    <div class="text-xs uppercase font-bold text-slate-500 mb-1 group-hover:text-primary">${f.code}</div>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        ${iconSrc ? `<img src="${iconSrc}" alt="" class="w-5 h-5 opacity-70 group-hover:opacity-100 transition-opacity">` : ''}
+                                        <div class="text-xs uppercase font-bold text-slate-500 group-hover:text-primary">${f.code}</div>
+                                    </div>
                                     <div class="text-sm font-bold text-navy mb-3 line-clamp-2 group-hover:text-primary">${f.title}</div>
                                     <div class="flex items-center gap-2 text-slate-400 group-hover:text-primary transition-colors">
                                         <span class="material-symbols-outlined text-lg">open_in_new</span>

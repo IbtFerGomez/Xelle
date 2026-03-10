@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-LC-48 Resultados y Dictamen de Lote</title>
@@ -7,22 +8,61 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app.js"></script>
     <style>
-        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 12px; margin-top: 15px; border-radius: 4px; }
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
     </style>
 </head>
+
 <body id="doc-fo-lc-48">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
 
     <div class="container">
         <div class="header-top">
-            <div class="logo-container"><svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg></div>
+            <div class="logo-container"><svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg></div>
             <div class="registry-container">
                 <label>Certificado/Dictamen</label>
-                <div class="registry-wrapper"><span class="registry-prefix">FO-LC-48-</span><input type="text" id="reg-48" class="registry-input generate-barcode" data-target="barcode-48" data-prefix="FO-LC-48-" placeholder="000"></div>
+                <div class="registry-wrapper"><span class="registry-prefix">FO-LC-48-</span><input type="text"
+                        id="reg-48" class="registry-input generate-barcode" data-target="barcode-48"
+                        data-prefix="FO-LC-48-" placeholder="000"></div>
                 <input type="date" class="registry-date">
                 <svg id="barcode-48" class="barcode-svg"></svg>
             </div>
@@ -37,15 +77,31 @@
         <div class="section">
             <table class="no-border-table">
                 <tr>
-                    <td><strong>Producto / Insumo:</strong></td><td><input class="cedit" style="font-weight:bold;"></td>
-                    <td><strong>Lote / Serie:</strong></td><td><input class="cedit" style="font-weight:bold;"></td>
+                    <td><strong>Producto / Insumo:</strong></td>
+                    <td><input class="cedit" style="font-weight:bold;"></td>
+                    <td><strong>Lote / Serie:</strong></td>
+                    <td><input class="cedit" style="font-weight:bold;"></td>
                 </tr>
             </table>
             <table class="compact-table" style="margin-top:10px;">
-                <thead><tr><th>Referencia Documental Previa</th><th>No. Folio</th><th>Fecha Ejecución</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th>Referencia Documental Previa</th>
+                        <th>No. Folio</th>
+                        <th>Fecha Ejecución</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr><td>Registro de Muestreo (FO-LC-46)</td><td><input class="cedit"></td><td><input type="date" class="cedit"></td></tr>
-                    <tr><td>Revisión de Calidad Física (FO-LC-47)</td><td><input class="cedit"></td><td><input type="date" class="cedit"></td></tr>
+                    <tr>
+                        <td>Registro de Muestreo (FO-LC-46)</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Revisión de Calidad Física (FO-LC-47)</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -54,15 +110,39 @@
         <div class="section">
             <p style="font-size:10px; color:#666; margin-bottom:5px;">Evidencias base en formato FO-LC-41</p>
             <table class="compact-table">
-                <thead><tr><th width="30%">Referencia (Folio FO-LC-41)</th><th width="15%">Ingreso</th><th width="15%">TGL</th><th width="15%">AST</th><th width="15%">ADS</th><th width="10%">Global</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th width="30%">Referencia (Folio FO-LC-41)</th>
+                        <th width="15%">Ingreso</th>
+                        <th width="15%">TGL</th>
+                        <th width="15%">AST</th>
+                        <th width="15%">ADS</th>
+                        <th width="10%">Global</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <td><input class="cedit"></td>
-                        <td><select class="cedit"><option>PASA</option><option>FALLA</option></select></td>
-                        <td><select class="cedit"><option>PASA</option><option>FALLA</option></select></td>
-                        <td><select class="cedit"><option>PASA</option><option>FALLA</option></select></td>
-                        <td><select class="cedit"><option>PASA</option><option>FALLA</option></select></td>
-                        <td><select class="cedit" style="font-weight:bold;"><option>PASA</option><option>FALLA</option></select></td>
+                        <td><select class="cedit">
+                                <option>PASA</option>
+                                <option>FALLA</option>
+                            </select></td>
+                        <td><select class="cedit">
+                                <option>PASA</option>
+                                <option>FALLA</option>
+                            </select></td>
+                        <td><select class="cedit">
+                                <option>PASA</option>
+                                <option>FALLA</option>
+                            </select></td>
+                        <td><select class="cedit">
+                                <option>PASA</option>
+                                <option>FALLA</option>
+                            </select></td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option>PASA</option>
+                                <option>FALLA</option>
+                            </select></td>
                     </tr>
                 </tbody>
             </table>
@@ -73,33 +153,48 @@
             <div style="display:flex; justify-content:space-between;">
                 <div style="width:60%;">
                     <label><strong>Observaciones / Resultados Fuera de Especificación (OOS):</strong></label>
-                    <textarea class="cedit" rows="3" style="width:100%" placeholder="(Si el lote se rechaza, indicar el parámetro que falló y folio NC)"></textarea>
+                    <textarea class="cedit" rows="3" style="width:100%"
+                        placeholder="(Si el lote se rechaza, indicar el parámetro que falló y folio NC)"></textarea>
                 </div>
                 <div style="width:35%; text-align:center;">
                     <label style="font-weight:bold; display:block;">ESTATUS ASIGNADO:</label>
-                    <select class="cedit" style="font-size:16px; font-weight:bold; padding:10px; width:100%; border:2px solid #ccc; margin-top:5px;" onchange="col(this)">
+                    <select class="cedit"
+                        style="font-size:16px; font-weight:bold; padding:10px; width:100%; border:2px solid #ccc; margin-top:5px;"
+                        onchange="col(this)">
                         <option value="">- SELECCIONAR -</option>
                         <option value="A">LIBERADO / APROBADO</option>
                         <option value="R">RECHAZADO (NO CONFORME)</option>
                     </select>
                 </div>
             </div>
-            <p style="font-size:9px; margin-top:5px; color:#555;">* Liberado: Cumple especificaciones. Uso en producción o almacén definitivo.<br>* Rechazado: Riesgo Crítico. Segregación física, etiqueta roja e iniciar Reporte NC.</p>
+            <p style="font-size:9px; margin-top:5px; color:#555;">* Liberado: Cumple especificaciones. Uso en producción
+                o almacén definitivo.<br>* Rechazado: Riesgo Crítico. Segregación física, etiqueta roja e iniciar
+                Reporte NC.</p>
         </div>
 
         <div class="signature-area">
-            <div class="signature-box"><p>Analista de Laboratorio</p><input type="text"><p>Ejecutor de Pruebas</p></div>
-            <div class="signature-box"><p>Jefe de Calidad</p><input type="text"><p>Revisión Resultados</p></div>
-            <div class="signature-box"><p>Responsable Sanitario</p><input type="text"><p>Autorización Legal</p></div>
+            <div class="signature-box">
+                <p>Analista de Laboratorio</p><input type="text">
+                <p>Ejecutor de Pruebas</p>
+            </div>
+            <div class="signature-box">
+                <p>Jefe de Calidad</p><input type="text">
+                <p>Revisión Resultados</p>
+            </div>
+            <div class="signature-box">
+                <p>Responsable dirección</p><input type="text">
+                <p>Autorizacion</p>
+            </div>
         </div>
         <div class="footer">FO-LC-48 | Versión: 01 | Resultados Analíticos y Dictamen | Xelle Scientific</div>
     </div>
     <script>
-        function col(sel){
-            if(sel.value==='A') { sel.style.background='#dcfce7'; sel.style.color='#166534'; }
-            else if(sel.value==='R') { sel.style.background='#fee2e2'; sel.style.color='#991b1b'; }
-            else { sel.style.background='white'; sel.style.color='black'; }
+        function col(sel) {
+            if (sel.value === 'A') { sel.style.background = '#dcfce7'; sel.style.color = '#166534'; }
+            else if (sel.value === 'R') { sel.style.background = '#fee2e2'; sel.style.color = '#991b1b'; }
+            else { sel.style.background = 'white'; sel.style.color = 'black'; }
         }
     </script>
 </body>
+
 </html>

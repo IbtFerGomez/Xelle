@@ -109,3 +109,4 @@ Estado actual del backend:
 - `IMPLEMENTATION_SUMMARY.txt`: resumen técnico actualizado del estado actual del sistema.
 - `GUIA_RAPIDA_FLUJOGRAMA_FORMATOS.md`: guía de flujo de formatos.
 - `FLUJOGRAMA_FORMATOS_MERMAID.md`: diagrama fuente en Mermaid.
+# Xelle

@@ -11,6 +11,7 @@
 body {
     font-family: 'Arial', sans-serif;
     font-size: 11px;
+    line-height: 1.25;
     margin: 0; padding: 20px;
     background-color: var(--bg-color);
     display: flex; justify-content: center;
@@ -45,7 +46,7 @@ body {
 
 /* TABLAS */
 table { width: 100%; border-collapse: collapse; margin-bottom: 10px; table-layout: fixed; }
-th, td { border: 1px solid var(--border-color); padding: 4px; }
+th, td { border: 1px solid var(--border-color); padding: 4px; vertical-align: top; word-break: break-word; }
 th { 
     background-color: #f8f9fa !important; 
     font-weight: bold; font-size: 9px; 
@@ -54,6 +55,7 @@ th {
 }
 
 .cedit { width: 100%; border: 1px solid #eee; padding: 2px; border-radius: 2px; font-size: 9.5px; text-align: center; outline: none; background: transparent; }
+textarea.cedit { resize: none; min-height: 24px; }
 
 /* SECCIONES */
 .section { margin-bottom: 12px; border: 1px solid #eee; padding: 10px; border-radius: 4px; page-break-inside: avoid; }
@@ -95,15 +97,15 @@ th {
 .btn-mini { padding: 2px 6px; font-size: 8px; border-radius: 3px; }
 
 @media print {
+    @page { margin: 0.5cm; }
     body { background: white; padding: 0; }
     .container { 
         box-shadow: none; border: none; width: 100%; padding: 0; 
-        min-height: 250mm;
+        min-height: auto;
     }
     .global-controls, .no-print { display: none !important; }
     .footer { 
-        position: absolute; 
-        bottom: 0; 
+        position: static; 
         width: 100%;
         border-top: 1px solid #000;
     }
