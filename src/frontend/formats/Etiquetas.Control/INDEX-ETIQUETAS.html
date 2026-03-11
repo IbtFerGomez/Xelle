@@ -1,106 +1,459 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Etiquetas - Xelle Scientific</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { primary: "#2fa785", navy: "#1E3A5F", sky: "#64C4ED", "bg-light": "#f3f7f5" },
+                    fontFamily: { display: ["Manrope", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 40px; color: #333; }
-        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        
-        header { text-align: center; border-bottom: 2px solid #2E9D82; padding-bottom: 20px; margin-bottom: 30px; }
-        header svg { width: 60px; height: 60px; }
-        h1 { color: #2E9D82; margin: 10px 0 5px 0; font-size: 24px; }
-        p.subtitle { color: #666; font-size: 14px; margin: 0; }
+        .card {
+            transition: all 0.3s ease;
+        }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        
-        .card { border: 1px solid #e1e4e8; border-radius: 8px; padding: 15px; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
-        .card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); border-color: #2E9D82; }
-        
-        .card-code { font-size: 11px; font-weight: bold; color: #777; margin-bottom: 5px; }
-        .card-title { font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #2c3e50; }
-        
-        .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase; align-self: flex-start; }
-        .bg-yellow { background: #fff3cd; color: #856404; }
-        .bg-green { background: #d4edda; color: #155724; }
-        .bg-red { background: #f8d7da; color: #721c24; }
-        .bg-gray { background: #e2e3e5; color: #383d41; }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(47, 167, 133, 0.15);
+            border-color: #2E9D82;
+        }
 
-        .footer { margin-top: 40px; text-align: center; font-size: 12px; color: #aaa; }
+        .badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .bg-yellow {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .bg-green {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .bg-red {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .bg-gray {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .bg-blue {
+            background: #e3f2fd;
+            color: #01579b;
+        }
+
+        .bg-purple {
+            background: #f3e5f5;
+            color: #4a148c;
+        }
+
+        .bg-orange {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .bg-pink {
+            background: #fce4ec;
+            color: #880e4f;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
-<body>
 
-<div class="container">
-    <header>
-        <svg viewBox="10 10 80 80" xmlns="http://www.w3.org/2000/svg">
-            <g><circle fill="#2E9D82" cx="25" cy="25" r="13" /><circle fill="#2E9D82" cx="75" cy="75" r="13" /><path fill="#2E9D82" d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" /></g>
-        </svg>
-        <h1>XELLE SCIENTIFIC</h1>
-        <p class="subtitle">Gestor de Formatos de Etiquetado v1.0</p>
-    </header>
+<body class="bg-bg-light font-display text-slate-800 h-screen flex overflow-hidden">
 
-    <div class="grid">
-        <a href="ET-LC-01.html" class="card">
-            <span class="card-code">ET-LC-01</span>
-            <span class="card-title">Muestreado</span>
-            <span class="badge bg-yellow">Control de Calidad</span>
-        </a>
+    <!-- Sidebar -->
+    <aside class="w-72 bg-navy text-white flex flex-col shrink-0 transition-all duration-300 relative z-20">
+        <!-- Logo Area -->
+        <div class="p-6 flex flex-col items-center border-b border-white/10 shrink-0">
+            <div class="w-40 mb-2">
+                <svg viewBox="0 0 320 80" class="w-full h-auto">
+                    <defs>
+                        <style>
+                            .svg-title {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #FFF;
+                            }
 
-        <a href="ET-LC-02.html" class="card">
-            <span class="card-code">ET-LC-02</span>
-            <span class="card-title">Liberado</span>
-            <span class="badge bg-green">Aprobado</span>
-        </a>
+                            .svg-sub {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #FFF;
+                                letter-spacing: 2px;
+                            }
 
-        <a href="ET-LC-03.html" class="card">
-            <span class="card-code">ET-LC-03</span>
-            <span class="card-title">Cuarentena</span>
-            <span class="badge bg-yellow">Pendiente Dictamen</span>
-        </a>
+                            .svg-cell {
+                                fill: #2fa785;
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle class="svg-cell" cx="25" cy="25" r="13" />
+                        <circle class="svg-cell" cx="75" cy="75" r="13" />
+                        <path class="svg-cell"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="svg-title" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="svg-sub" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <span class="text-[10px] font-bold text-sky uppercase tracking-widest bg-white/10 px-2 py-0.5 rounded">v1.0
+                Stable</span>
+        </div>
 
-        <a href="ET-LC-04.html" class="card">
-            <span class="card-code">ET-LC-04</span>
-            <span class="card-title">Rechazado</span>
-            <span class="badge bg-red">No Conforme</span>
-        </a>
+        <!-- Navigation -->
+        <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar">
+            <p class="px-4 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Navegación</p>
 
-        <a href="ET-LC-05.html" class="card">
-            <span class="card-code">ET-MP-01</span>
-            <span class="card-title">MP Placenta - Recepción</span>
-            <span class="badge bg-gray">Logística</span>
-        </a>
+            <a href="../../dashboard.html"
+                class="w-full flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 hover:text-white rounded-xl transition-all group text-left">
+                <span class="material-symbols-outlined group-hover:text-primary transition-colors">arrow_back</span>
+                <span class="text-sm font-semibold">Volver al Dashboard</span>
+            </a>
 
-        <a href="ET-LC-06.html" class="card">
-            <span class="card-code">ET-MPNC-01</span>
-            <span class="card-title">MPNC Placenta - Rechazo</span>
-            <span class="badge bg-red">Biológico</span>
-        </a>
+            <div class="border-t border-white/10 mx-2 my-4"></div>
 
-        <a href="ET-LC-07.html" class="card">
-            <span class="card-code">ET-PNC-02</span>
-            <span class="card-title">PNC (No Placenta) - Rechazo</span>
-            <span class="badge bg-red">Proceso / QA</span>
-        </a>
+            <!-- Filtros -->
+            <div class="pt-2 pb-2">
+                <p class="px-4 text-[10px] font-bold text-white/40 uppercase tracking-widest mb-3">Filtros</p>
 
-        <a href="ET-RPBI-01.html" class="card">
-            <span class="card-code">ET-RPBI-01</span>
-            <span class="card-title">RPBI General</span>
-            <span class="badge bg-red">Peligro</span>
-        </a>
+                <div class="px-3 space-y-3">
+                    <!-- Búsqueda por código -->
+                    <div>
+                        <label class="text-[9px] uppercase font-bold text-white/50 ml-1 block mb-1">Buscar
+                            Código</label>
+                        <input id="filter-code" type="text" placeholder="ET-LC-01..."
+                            class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-primary text-sm text-white placeholder:text-white/40"
+                            onkeyup="filterCards()">
+                    </div>
 
-        <a href="ET-RPBI-02.html" class="card">
-            <span class="card-code">ET-RPBI-02</span>
-            <span class="card-title">RPBI Patológicos</span>
-            <span class="badge bg-red">Peligro</span>
-        </a>
-    </div>
+                    <!-- Filtro por categoría -->
+                    <div>
+                        <label class="text-[9px] uppercase font-bold text-white/50 ml-1 block mb-1">Categoría</label>
+                        <select id="filter-category"
+                            class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-primary text-sm text-white"
+                            onchange="filterCards()">
+                            <option value="">Todas</option>
+                            <option value="control">Control de Calidad</option>
+                            <option value="aprobado">Aprobado</option>
+                            <option value="rechazo">Rechazo/No Conforme</option>
+                            <option value="retencion">Retención</option>
+                            <option value="proceso">Proceso</option>
+                            <option value="rpbi">RPBI</option>
+                        </select>
+                    </div>
 
-    <div class="footer">
-        © 2026 Xelle Scientific - Sistema Interno de Calidad.
-    </div>
-</div>
+                    <!-- Filtro por estado -->
+                    <div>
+                        <label class="text-[9px] uppercase font-bold text-white/50 ml-1 block mb-1">Estado</label>
+                        <select id="filter-status"
+                            class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg focus:ring-2 focus:ring-primary text-sm text-white"
+                            onchange="filterCards()">
+                            <option value="">Todos</option>
+                            <option value="green">Aprobado</option>
+                            <option value="yellow">Pendiente</option>
+                            <option value="red">Rechazado</option>
+                            <option value="blue">En Proceso</option>
+                            <option value="gray">Logística</option>
+                        </select>
+                    </div>
+
+                    <!-- Botón limpiar filtros -->
+                    <button onclick="clearFilters()"
+                        class="w-full px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/20 rounded-lg text-xs font-bold text-white/70 hover:text-white transition-colors flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-sm">restart_alt</span>
+                        Limpiar Filtros
+                    </button>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 mx-2 my-4"></div>
+
+            <!-- Estadísticas -->
+            <div class="px-3 py-3 bg-white/5 rounded-xl mx-2">
+                <p class="text-[9px] uppercase font-bold text-white/50 mb-2">Estadísticas</p>
+                <div class="space-y-1 text-xs">
+                    <div class="flex justify-between items-center">
+                        <span class="text-white/70">Total Etiquetas:</span>
+                        <span class="font-bold text-primary" id="total-count">17</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-white/70">Visibles:</span>
+                        <span class="font-bold text-white" id="visible-count">17</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Footer del sidebar -->
+        <div class="p-4 border-t border-white/10 shrink-0 bg-navy">
+            <div class="text-center text-[10px] text-white/40 font-semibold">
+                Sistema de Etiquetas v1.0
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col min-w-0 bg-bg-light overflow-hidden">
+
+        <!-- Header -->
+        <header class="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-8 shrink-0 z-10">
+            <div class="flex flex-col">
+                <h2 class="text-2xl font-black text-navy tracking-tight">Sistema de Etiquetas</h2>
+                <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Gestión de Formatos de
+                    Etiquetado</p>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <p class="text-sm font-bold text-navy leading-none">Etiquetas Activas</p>
+                    <p class="text-[10px] text-primary font-bold uppercase tracking-tight mt-1">Control de Calidad</p>
+                </div>
+                <div
+                    class="h-10 w-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined">label</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="flex-1 overflow-y-auto p-8">
+            <div id="etiquetas-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+                <!-- ET-LC-01 -->
+                <a href="ET-LC-01.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="control" data-status="yellow" data-code="ET-LC-01">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-01</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">Muestreado</span>
+                    <span class="badge bg-yellow inline-block self-start">Control de Calidad</span>
+                </a>
+
+                <!-- ET-LC-02 -->
+                <a href="ET-LC-02.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="aprobado" data-status="green" data-code="ET-LC-02">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-02</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">Liberado</span>
+                    <span class="badge bg-green inline-block self-start">Aprobado</span>
+                </a>
+
+                <!-- ET-LC-03 -->
+                <a href="ET-LC-03.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="control" data-status="yellow" data-code="ET-LC-03">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-03</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">Cuarentena</span>
+                    <span class="badge bg-yellow inline-block self-start">Pendiente Dictamen</span>
+                </a>
+
+                <!-- ET-LC-04 -->
+                <a href="ET-LC-04.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="rechazo" data-status="red" data-code="ET-LC-04">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-04</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">Rechazado</span>
+                    <span class="badge bg-red inline-block self-start">No Conforme</span>
+                </a>
+
+                <!-- ET-LC-05 -->
+                <a href="ET-LC-05.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="control" data-status="gray" data-code="ET-LC-05">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-05</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">MP Placenta - Recepción</span>
+                    <span class="badge bg-gray inline-block self-start">Logística</span>
+                </a>
+
+                <!-- ET-LC-06 -->
+                <a href="ET-LC-06.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="rechazo" data-status="red" data-code="ET-LC-06">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-06</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">MPNC Placenta - Rechazo</span>
+                    <span class="badge bg-red inline-block self-start">Biológico</span>
+                </a>
+
+                <!-- ET-LC-07 -->
+                <a href="ET-LC-07.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="rechazo" data-status="red" data-code="ET-LC-07">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-07</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">PNC (No Placenta) - Rechazo</span>
+                    <span class="badge bg-red inline-block self-start">Proceso / QA</span>
+                </a>
+
+                <!-- ET-LC-08 -->
+                <a href="ET-LC-08.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="aprobado" data-status="green" data-code="ET-LC-08">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-08</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">Insumo Aprobado</span>
+                    <span class="badge bg-green inline-block self-start">Aprobado</span>
+                </a>
+
+                <!-- ET-LC-09 -->
+                <a href="ET-LC-09.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="retencion" data-status="blue" data-code="ET-LC-09">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-09</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">Contramuestra</span>
+                    <span class="badge bg-blue inline-block self-start">Retención</span>
+                </a>
+
+                <!-- ET-LC-10 -->
+                <a href="ET-LC-10.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="retencion" data-status="pink" data-code="ET-LC-10">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-10</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">Contenedor Retenciones</span>
+                    <span class="badge bg-pink inline-block self-start">Custodia</span>
+                </a>
+
+                <!-- ET-LC-11 -->
+                <a href="ET-LC-11.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="proceso" data-status="green" data-code="ET-LC-11">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-11</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">Muestra en Análisis</span>
+                    <span class="badge bg-green inline-block self-start">En Proceso</span>
+                </a>
+
+                <!-- ET-LC-12 -->
+                <a href="ET-LC-12.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="proceso" data-status="blue" data-code="ET-LC-12">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-12</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">Medio Condicionado</span>
+                    <span class="badge bg-blue inline-block self-start">Proceso</span>
+                </a>
+
+                <!-- ET-LC-13 -->
+                <a href="ET-LC-13.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="proceso" data-status="purple" data-code="ET-LC-13">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-13</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">Exosomas</span>
+                    <span class="badge bg-purple inline-block self-start">Especializado</span>
+                </a>
+
+                <!-- ET-LC-14 -->
+                <a href="ET-LC-14.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="proceso" data-status="orange" data-code="ET-LC-14">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-14</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">Medio Preparado</span>
+                    <span class="badge bg-orange inline-block self-start">Uso Inmediato</span>
+                </a>
+
+                <!-- ET-LC-15 -->
+                <a href="ET-LC-15.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="proceso" data-status="blue" data-code="ET-LC-15">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-LC-15</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">Medio Liofilizado</span>
+                    <span class="badge bg-blue inline-block self-start">Polvo</span>
+                </a>
+
+                <!-- ET-RPBI-01 -->
+                <a href="ET-RPBI-01.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="rpbi" data-status="red" data-code="ET-RPBI-01">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-RPBI-01</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">RPBI General</span>
+                    <span class="badge bg-red inline-block self-start">Peligro Biológico</span>
+                </a>
+
+                <!-- ET-RPBI-02 -->
+                <a href="ET-RPBI-02.html" class="card bg-white border-2 border-slate-200 rounded-xl p-5 flex flex-col"
+                    data-category="rpbi" data-status="red" data-code="ET-RPBI-02">
+                    <span class="text-xs font-extrabold text-navy/50 mb-2 tracking-wider">ET-RPBI-02</span>
+                    <span class="text-lg font-bold text-navy mb-3 leading-tight">RPBI Patológicos</span>
+                    <span class="badge bg-red inline-block self-start">Peligro Biológico</span>
+                </a>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="mt-12 text-center text-sm text-slate-500 font-semibold">
+                © 2026 Xelle Scientific - Sistema Interno de Calidad
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Función para filtrar las tarjetas
+        function filterCards() {
+            const codeFilter = document.getElementById('filter-code').value.toUpperCase();
+            const categoryFilter = document.getElementById('filter-category').value.toLowerCase();
+            const statusFilter = document.getElementById('filter-status').value.toLowerCase();
+
+            const cards = document.querySelectorAll('.card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const code = card.getAttribute('data-code');
+                const category = card.getAttribute('data-category');
+                const status = card.getAttribute('data-status');
+
+                const matchesCode = code.includes(codeFilter);
+                const matchesCategory = !categoryFilter || category === categoryFilter;
+                const matchesStatus = !statusFilter || status === statusFilter;
+
+                if (matchesCode && matchesCategory && matchesStatus) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('visible-count').textContent = visibleCount;
+        }
+
+        // Función para limpiar filtros
+        function clearFilters() {
+            document.getElementById('filter-code').value = '';
+            document.getElementById('filter-category').value = '';
+            document.getElementById('filter-status').value = '';
+            filterCards();
+        }
+
+        // Inicializar contador al cargar la página
+        document.addEventListener('DOMContentLoaded', function () {
+            const totalCards = document.querySelectorAll('.card').length;
+            document.getElementById('total-count').textContent = totalCards;
+            document.getElementById('visible-count').textContent = totalCards;
+        });
+    </script>
 
 </body>
+
 </html>

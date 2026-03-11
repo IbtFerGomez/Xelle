@@ -19,6 +19,31 @@
             ::-moz-placeholder { color: transparent !important; }
             :-ms-input-placeholder { color: transparent !important; }
             ::placeholder { color: transparent !important; }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section { 
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+            
+            table, .compact-table { 
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+            
+            thead { 
+                display: table-header-group !important;
+            }
+            
+            tr, tbody tr { 
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+            
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
         }
     </style>
 </head>

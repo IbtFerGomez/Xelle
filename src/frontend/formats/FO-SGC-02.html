@@ -82,6 +82,33 @@
             ::placeholder {
                 color: transparent !important;
             }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
         }
     </style>
 </head>
@@ -90,7 +117,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container" style="max-width:100%; width:100%;">
         <div class="header-top">
@@ -161,7 +188,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td rowspan="7" style="font-weight:bold; background:#f1f5f9;">OPERACIONES</td>
+                        <td rowspan="9" style="font-weight:bold; background:#f1f5f9;">OPERACIONES</td>
                         <td><strong>FO-OP-15</strong> Pedido Maestro</td>
                         <td>Ejecutivo de Operaciones</td>
                         <td>Coordinación de Operaciones</td>
@@ -189,7 +216,19 @@
                         <td><strong>FO-OP-20</strong> Liberación a Almacén</td>
                         <td>Almacén</td>
                         <td>Control de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-39</strong> Lista Verificación Auditoría</td>
+                        <td>Auditor Interno / Externo</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LG-05</strong> Orden de Envío y Distribución</td>
+                        <td>Coordinador Logística</td>
+                        <td>Gerencia de Operaciones</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-LC-17</strong> Recepción Muestras (MP)</td>
@@ -276,13 +315,13 @@
                         <td><strong>FO-LC-29</strong> Registro de Lote de Producto Terminado (Celular)</td>
                         <td>Operador de Banco</td>
                         <td>Supervisor de Producción / Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-LC-31</strong> Hoja Producción Lote Acelular</td>
                         <td>Operador de Producción</td>
                         <td>Supervisor de Producción</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-LC-42</strong> Liofilización Placenta</td>
@@ -300,11 +339,11 @@
                         <td><strong>FO-LC-45</strong> Envío a Esterilización</td>
                         <td>Operador de Producción / Almacén</td>
                         <td>Control de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
 
                     <tr>
-                        <td rowspan="9" style="font-weight:bold; background:#f1f5f9;">FLUJO 3: CONTROL, MUESTREO Y
+                        <td rowspan="12" style="font-weight:bold; background:#f1f5f9;">FLUJO 3: CONTROL, MUESTREO Y
                             LIBERACIÓN</td>
                         <td><strong>FO-LC-46</strong> Registro Muestreo Producto Biológico</td>
                         <td>Inspector de Calidad</td>
@@ -321,7 +360,7 @@
                         <td><strong>FO-LC-19</strong> Liberación MP (Serología)</td>
                         <td>Analista de Laboratorio</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-LC-41</strong> Control Microbiológico</td>
@@ -333,64 +372,94 @@
                         <td><strong>FO-LC-44</strong> Lib. Micro Flasks/Viales</td>
                         <td>Analista Microbiología</td>
                         <td>Control de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-LC-48</strong> Resultados y Dictamen de Lote</td>
                         <td>Analista de Laboratorio</td>
                         <td>Jefe de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-LC-16</strong> Cover Sheet (Resumen Lote)</td>
                         <td>Aseguramiento de Calidad</td>
                         <td>Dirección Operativa</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-LC-24</strong> Inventario Prod. Terminado</td>
                         <td>Almacén de Producto Terminado</td>
                         <td>Control de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-LC-32</strong> Desviaciones (CAPA)</td>
                         <td>Responsable del Área Afectada</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-33</strong> Bitácora Muestras Retención</td>
+                        <td>Analista de Laboratorio</td>
+                        <td>Jefe de Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-34</strong> Bitácora de Muestreos</td>
+                        <td>Inspector de Calidad</td>
+                        <td>Jefe de Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-35</strong> Bitácora Disposición de Lotes</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Dirección Operativa</td>
+                        <td>Responsable Dirección</td>
                     </tr>
 
                     <tr>
-                        <td rowspan="6" style="font-weight:bold; background:#f1f5f9;">FLUJO 4: NO CONFORME Y DISPOSICIÓN
+                        <td rowspan="9" style="font-weight:bold; background:#f1f5f9;">FLUJO 4: NO CONFORME Y DISPOSICIÓN
                             FINAL</td>
                         <td><strong>FO-OP-51</strong> Producto No Conforme (Desviaciones)</td>
                         <td>Supervisor del Área Afectada</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-OP-52</strong> Reporte de MPNC</td>
                         <td>Almacén / Calidad (Área que detecta)</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-53</strong> CAPA - Metodología AMFE</td>
+                        <td>Responsable del Área Afectada</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-54</strong> Bitácora Muestreo y Cadena Frío</td>
+                        <td>Inspector Calidad / Logística</td>
+                        <td>Jefe de Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
                     </tr>
                     <tr>
                         <td><strong>FO-LC-12</strong> Dictamen Técnico de Concesión</td>
                         <td>Gerencia de Calidad</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-OP-49</strong> Bitácora de Almacenamiento Temporal RPBI</td>
                         <td>Almacén / Responsable de RPBI</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-OP-50</strong> Manifiesto de Residuos Peligrosos</td>
                         <td>Almacén / Responsable de Residuos</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-LC-50</strong> Manifiesto de Destrucción</td>
@@ -405,25 +474,25 @@
                         <td><strong>FO-LC-14</strong> Histórico de Placentas</td>
                         <td>Coordinación SGC</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-LC-15</strong> Histórico de Líneas</td>
                         <td>Coordinación SGC</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-SGC-01</strong> Matriz de Responsabilidades y Firmas por Módulo</td>
                         <td>Coordinación SGC</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                     <tr>
                         <td><strong>FO-SGC-02</strong> Matriz de Responsabilidades y Firmas del SGC</td>
                         <td>Coordinación SGC</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Sanitario</td>
+                        <td>Responsable Dirección</td>
                     </tr>
                 </tbody>
             </table>
@@ -439,7 +508,7 @@
             </div>
             <div class="signature-box">
                 <p>Aprobó Matriz Oficial</p>
-                <input type="text" placeholder="Responsable Sanitario">
+                <input type="text" placeholder="Responsable Dirección">
                 <p>Fecha: <input type="date" class="cedit"></p>
             </div>
         </div>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-10 Certificado de Calidad de Lote (CoA)</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 12px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 5px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .liberado-box {
+            border: 2px solid #166534;
+            background-color: #dcfce7;
+            color: #166534;
+            padding: 10px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-qa-10">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio CoA</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-10-</span>
+                    <input type="text" id="reg-qa10" class="registry-input generate-barcode" data-target="barcode-qa10"
+                        data-prefix="FO-QA-10-" placeholder="LOTE000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-qa10" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>CERTIFICADO DE CALIDAD DE PRODUCTO DE LOTE (CoA)</h1>
+            <div class="metadata">Código: FO-QA-10 | Versión: 1.0 | Vig: Mar 2026 | Ref: FO-LC-31, 46, 47, 48</div>
+        </div>
+
+        <div class="section-header">1. DATOS DE IDENTIFICACIÓN DEL LOTE</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Información base para la trazabilidad completa del
+                producto terminado.</p>
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Nombre Producto:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="EJ. X-EXOSOMES HA"></td>
+                    <td width="20%"><strong>Número de Lote:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="[CÓDIGO-LOTE]" style="font-weight:bold;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Fecha Manufactura:</strong></td>
+                    <td><input type="date" class="cedit"></td>
+                    <td><strong>Fecha Caducidad:</strong></td>
+                    <td><input type="date" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><strong>Tamaño del Lote:</strong></td>
+                    <td colspan="3"><input class="cedit" placeholder="[CANTIDAD UNIDADES]" style="width:150px;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. RESULTADOS ANALÍTICOS (INTEGRACIÓN DE CONTROLES CRÍTICOS)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:10px;">Este apartado consolida los resultados obtenidos
+                en las fases de análisis microbiológico y fisicoquímico.</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="25%">Parámetro Analítico</th>
+                        <th width="20%">Método / Referencia</th>
+                        <th width="35%">Especificación</th>
+                        <th width="20%">Resultado Obtenido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>I. Serología Viral (FO-LC-46)</td>
+                        <td>ELISA / PCR</td>
+                        <td>Negativo (VIH, VHB, VHC, Sífilis)</td>
+                        <td><input class="cedit" value="CONFORME"></td>
+                    </tr>
+                    <tr>
+                        <td>II. Esterilidad (FO-LC-47)</td>
+                        <td>Caldo Tioglicolato / TSB</td>
+                        <td>Ausencia de crecimiento (14 días)</td>
+                        <td><input class="cedit" value="NEGATIVO"></td>
+                    </tr>
+                    <tr>
+                        <td>III. Endotoxinas (FO-LC-48)</td>
+                        <td>Gel Clot (LAL)</td>
+                        <td>&lt; 0.5 EU/mL</td>
+                        <td><input class="cedit" value="CONFORME"></td>
+                    </tr>
+                    <tr>
+                        <td>IV. Micoplasma (FO-LC-31)</td>
+                        <td>PCR / Cultivo</td>
+                        <td>Ausencia</td>
+                        <td><input class="cedit" value="NEGATIVO"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">3. ATRIBUTOS FÍSICOS Y DE POTENCIA</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Verificación de identidad y funcionalidad según el
+                expediente maestro del producto.</p>
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Apariencia Visual:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="EJ. LÍQUIDO TRASLÚCIDO"></td>
+                    <td width="20%"><strong>Concentración:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="EJ. 1.0 x 10^11 / mL"></td>
+                </tr>
+                <tr>
+                    <td><strong>pH Final:</strong></td>
+                    <td><input class="cedit" placeholder="[7.2 - 7.4]"></td>
+                    <td><strong>Integridad Envase:</strong></td>
+                    <td><input class="cedit" value="CONFORME"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">4. DICTAMEN FINAL DE ASEGURAMIENTO DE CALIDAD</div>
+        <div class="section" style="text-align:justify; font-size:10px;">
+            Se certifica que el lote arriba mencionado ha sido fabricado y analizado bajo el Sistema de Gestión de
+            Calidad de Xelle Scientific, cumpliendo satisfactoriamente con todos los Puntos Críticos de Calidad (PCC)
+            establecidos. Las bitácoras de control de temperatura y procesos de manufactura están disponibles para
+            revisión auditada.
+
+            <div class="liberado-box">
+                DECISIÓN FINAL: ✅ PRODUCTO LIBERADO PARA DISTRIBUCIÓN
+            </div>
+        </div>
+
+        <div class="signature-area" style="margin-top: 20px;">
+            <div class="signature-box">
+                <p>Analista de Control de Calidad</p>
+                <input type="text" placeholder="Nombre y Firma">
+            </div>
+            <div class="signature-box">
+                <p>Responsable Dirección / QA</p>
+                <input type="text" placeholder="Nombre y Firma">
+            </div>
+        </div>
+
+        <div class="footer">FO-QA-10 | Versión: 1.0 | Certificado de Calidad de Producto de Lote | Xelle Scientific
+        </div>
+    </div>
+</body>
+
+</html>

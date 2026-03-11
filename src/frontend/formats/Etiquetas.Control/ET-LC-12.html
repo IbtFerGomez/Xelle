@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>ET-LC-12 - Medio Condicionado</title>
+    <title>ET-LC-12 - Medio Condicionado V1.1</title>
     <style>
         body { font-family: Arial, sans-serif; display: flex; justify-content: center; padding: 20px; background-color: #f4f4f4; }
         .etiqueta-container {
@@ -18,18 +18,20 @@
             margin: 0 0 2px 0; background-color: #e1f5fe; color: #01579b; 
             padding: 4px; border: 1px solid #03a9f4; 
         }
+        .subtitulo { text-align: center; font-size: 8.5px; font-weight: bold; margin-bottom: 8px; color: #0277bd; text-transform: uppercase; }
         
-        .campo { display: flex; align-items: flex-end; margin-bottom: 10px; font-size: 10px; }
+        .campo { display: flex; align-items: flex-end; margin-bottom: 8px; font-size: 9.5px; }
         .campo label { font-weight: bold; white-space: nowrap; margin-right: 5px; }
         .linea { flex-grow: 1; border-bottom: 1px solid #000; height: 12px; }
         
-        .fila-doble { display: flex; justify-content: space-between; gap: 10px; }
-        .fila-doble .campo { flex: 1; }
+        .fila-triple { display: flex; justify-content: space-between; gap: 8px; }
+        .fila-triple .campo { flex: 1; }
 
-        .estatus-caja { 
-            border: 1px solid #ccc; padding: 6px; margin: 8px 0; 
-            font-size: 10px; display: flex; justify-content: space-around; background-color: #fcfcfc;
+        .caja-estatus { 
+            border: 1px solid #ccc; padding: 5px; margin: 4px 0; 
+            font-size: 9px; background-color: #fcfcfc;
         }
+        .check-group { display: flex; justify-content: space-around; margin-top: 3px; }
 
         .footer-bottom { margin-top: 5px; font-size: 8px; text-align: center; color: #777; border-top: 1px solid #ccc; padding-top: 4px; }
         
@@ -50,27 +52,42 @@
                 <span class="logo-text">XELLE SCIENTIFIC</span>
             </div>
             <div class="titulo-alerta">🧪 MEDIO CONDICIONADO RECUPERADO</div>
+            <div class="subtitulo">TRAZABILIDAD DE SUBPRODUCTO CELULAR</div>
             
-            <div class="campo" style="margin-top:10px;"><label>ID Lote de Origen:</label><div class="linea"></div></div>
-            <div class="campo"><label>Tipo Celular:</label><div class="linea"></div></div>
+            <div class="campo" style="margin-top:5px;"><label>ID Lote de Origen:</label><div class="linea"></div></div>
             
-            <div class="campo"><label>Fecha de Recolección:</label><div class="linea" style="text-align:center; color:#777;">DD / MM / AA</div></div>
+            <div class="fila-triple">
+                <div class="campo" style="flex: 2;"><label>Tipo Celular:</label><div class="linea"></div></div>
+                <div class="campo"><label>Pasaje (P):</label><div class="linea"></div></div>
+            </div>
             
-            <div class="fila-doble">
-                <div class="campo"><label>Volumen:</label><div class="linea"></div><span style="margin-left:3px;">mL</span></div>
-                <div class="campo"><label>Pase (P):</label><div class="linea"></div></div>
+            <div class="fila-triple">
+                <div class="campo" style="flex: 2;"><label>Fecha Recolección:</label><div class="linea" style="text-align:center; color:#777;">//____</div></div>
+                <div class="campo"><label>Volumen:</label><div class="linea"></div><span style="margin-left:2px;">mL</span></div>
             </div>
 
-            <div class="estatus-caja">
+            <div class="campo"><label>ID Recipiente:</label><div class="linea"></div></div>
+
+            <div class="caja-estatus">
                 <strong>Estatus:</strong>
-                <span>☐ En Evaluación</span>
-                <span>☐ Uso en Investigación</span>
+                <div class="check-group">
+                    <span>☐ En Evaluación</span>
+                    <span>☐ Uso en Investigación</span>
+                </div>
+            </div>
+
+            <div class="caja-estatus" style="border-style: dashed;">
+                <strong>Almacenamiento:</strong>
+                <div class="check-group">
+                    <span>☐ 2°C a 8°C</span>
+                    <span>☐ -20°C</span>
+                </div>
             </div>
         </div>
 
         <div>
-            <div class="campo"><label>Responsable:</label><div class="linea"></div></div>
-            <div class="footer-bottom">Código: ET-LC-21 | Versión: 1.0</div>
+            <div class="campo"><label>Operador que recupera:</label><div class="linea"></div></div>
+            <div class="footer-bottom">Código: ET-LC-21-REV | Versión: 1.1</div>
         </div>
     </div>
 </body>

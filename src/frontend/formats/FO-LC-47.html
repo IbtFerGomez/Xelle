@@ -6,6 +6,7 @@
     <title>FO-LC-47 Revisión Calidad Muestreo</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
         .section-header {
@@ -44,6 +45,33 @@
                 font-weight: 500;
                 color: #000;
             }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
         }
     </style>
 </head>
@@ -52,7 +80,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
@@ -127,7 +155,8 @@
                     <td><strong>Fecha Inspección:</strong></td>
                     <td><input type="date" class="cedit"></td>
                     <td colspan="2"><strong>Hora Inicio:</strong> <input type="time" class="cedit">
-                        <strong>Fin:</strong> <input type="time" class="cedit"></td>
+                        <strong>Fin:</strong> <input type="time" class="cedit">
+                    </td>
                 </tr>
             </table>
         </div>

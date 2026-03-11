@@ -213,19 +213,20 @@ const App = {
 
             // El uniqueCode es el barcode completo (prefix + valor)
             const uniqueCode = `${prefix}${barcodeValue}`;
+            const urlInstanceCode = this.getInstanceCode();
             const userId = this.getCurrentUserId();
             const formatType = this.getFormatType(docId);
 
-            // Primero verificar si ya existe este formato
-            let existingFormat = null;
-            try {
-                const checkResponse = await fetch(`${API_URL}/format-instances/${encodeURIComponent(uniqueCode)}`);
-                if (checkResponse.ok) {
-                    existingFormat = await checkResponse.json();
-                }
-            } catch (e) {
-                // No existe, continuamos
-            }
+            console.log('💾 Guardando:', {
+                inputValue: barcodeValue,
+                uniqueCode: uniqueCode,
+                urlCode: urlInstanceCode,
+                isUpdate: uniqueCode === urlInstanceCode
+            });
+
+            // Determinar si es actualización o creación nueva
+            // Solo es actualización si el código del input coincide con el de la URL
+            const isUpdate = urlInstanceCode && uniqueCode === urlInstanceCode;
 
             const payload = {
                 unique_code: uniqueCode,
@@ -238,8 +239,9 @@ const App = {
 
             let response;
 
-            // Si existe, actualizamos (sobrescribir campos excepto el barcode)
-            if (existingFormat) {
+            if (isUpdate) {
+                // Actualizar documento existente
+                console.log('📝 Actualizando documento:', uniqueCode);
                 response = await fetch(`${API_URL}/format-instances/${encodeURIComponent(uniqueCode)}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
@@ -250,7 +252,8 @@ const App = {
                     })
                 });
             } else {
-                // Si no existe, creamos nuevo
+                // Crear nuevo documento
+                console.log('🆕 Creando nuevo documento:', uniqueCode);
                 response = await fetch(`${API_URL}/format-instances`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -263,7 +266,7 @@ const App = {
                 throw new Error(result.msg || 'No se pudo guardar en servidor');
             }
 
-            // Actualizar la URL con el código de instancia
+            // Actualizar la URL con el nuevo código de instancia
             this.setInstanceCode(uniqueCode);
             return uniqueCode;
         },
@@ -282,10 +285,30 @@ const App = {
                         JsBarcode(`#${input.dataset.target}`, prefix + val, { format: "CODE128", height: 30, displayValue: true, fontSize: 10, margin: 0 });
                     } catch (e) { }
                 }
+
+                // Verificar si el código cambió respecto al de la URL
+                const urlInstanceCode = this.getInstanceCode();
+                const currentCode = `${prefix}${val}`.trim();
+                if (urlInstanceCode && currentCode && urlInstanceCode !== currentCode) {
+                    // El código cambió - se creará un nuevo documento
+                    if (!input.dataset.warningShown) {
+                        input.dataset.warningShown = 'true';
+                        const indicator = document.createElement('span');
+                        indicator.className = 'code-changed-indicator';
+                        indicator.textContent = '🆕 Nuevo documento';
+                        indicator.style.cssText = 'color: #28a745; font-weight: bold; font-size: 11px; margin-left: 10px;';
+                        input.parentElement.appendChild(indicator);
+
+                        setTimeout(() => {
+                            indicator.remove();
+                            delete input.dataset.warningShown;
+                        }, 3000);
+                    }
+                }
             };
             document.querySelectorAll('.generate-barcode').forEach(i => {
-                i.addEventListener('input', (e) => process(e.target));
-                if (i.value) process(i);
+                i.addEventListener('input', (e) => process.call(this, e.target));
+                if (i.value) process.call(this, i);
             });
         },
         setupPrintHandler: function () {
@@ -332,11 +355,18 @@ const App = {
                 const instanceCode = await this.persistInstance(docId, data);
                 const instanceKey = this.getStorageKey(docId, instanceCode);
                 localStorage.setItem(instanceKey, JSON.stringify(data));
+
+                // Determinar si fue creación o actualización
+                const urlCode = new URLSearchParams(window.location.search).get('instance');
+                const wasUpdate = urlCode && urlCode === instanceCode;
+
                 Swal.fire({
                     icon: 'success',
-                    title: 'Guardado Exitoso',
-                    text: `Formato guardado con código: ${instanceCode}`,
-                    timer: 2000,
+                    title: wasUpdate ? 'Actualizado' : 'Documento Creado',
+                    text: wasUpdate
+                        ? `Formato actualizado: ${instanceCode}`
+                        : `Nuevo documento guardado: ${instanceCode}`,
+                    timer: 2500,
                     showConfirmButton: false
                 });
             } catch (e) {

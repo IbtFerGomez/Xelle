@@ -1,45 +1,155 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-OP-39 Lista de Verificación de Auditoría</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
-        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 12px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
-        .compact-table th { background-color: #1E3A5F; color: white; font-size: 10px; padding: 6px; text-align: center; }
-        .compact-table td { font-size: 10px; padding: 6px; vertical-align: top; }
-        .group-header td { background-color: #f1f5f9; font-weight: bold; color: #1e3a5f; font-size: 11px; }
-        .status-select { font-weight: bold; text-align: center; }
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 6px;
+            vertical-align: top;
+        }
+
+        .group-header td {
+            background-color: #f1f5f9;
+            font-weight: bold;
+            color: #1e3a5f;
+            font-size: 11px;
+        }
+
+        .status-select {
+            font-weight: bold;
+            text-align: center;
+        }
 
         /* REGLA ESTRICTA: Placeholders invisibles al imprimir */
         @media print {
-            .global-controls, .no-print { display:none !important; }
-            ::-webkit-input-placeholder { color: transparent !important; }
-            :-moz-placeholder { color: transparent !important; }
-            ::-moz-placeholder { color: transparent !important; }
-            :-ms-input-placeholder { color: transparent !important; }
-            ::placeholder { color: transparent !important; }
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
         }
     </style>
 </head>
+
 <body id="doc-fo-op-39">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        </div>
-    
+    </div>
+
     <div class="container">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
             </div>
             <div class="registry-container">
                 <label>Folio Auditoría</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-OP-39-</span>
-                    <input type="text" id="reg-39" class="registry-input generate-barcode" data-target="barcode-39" data-prefix="FO-OP-39-" placeholder="000">
+                    <input type="text" id="reg-39" class="registry-input generate-barcode" data-target="barcode-39"
+                        data-prefix="FO-OP-39-" placeholder="000">
                 </div>
                 <input type="date" class="registry-date">
                 <svg id="barcode-39" class="barcode-svg"></svg>
@@ -55,12 +165,16 @@
         <div class="section">
             <table class="no-border-table">
                 <tr>
-                    <td width="20%"><strong>Auditor:</strong></td><td width="30%"><input class="cedit" placeholder="Nombre completo"></td>
-                    <td width="20%"><strong>Área Auditada:</strong></td><td width="30%"><input class="cedit" placeholder="Ej. Laboratorio / Almacén"></td>
+                    <td width="20%"><strong>Auditor:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="Nombre completo"></td>
+                    <td width="20%"><strong>Área Auditada:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="Ej. Laboratorio / Almacén"></td>
                 </tr>
                 <tr>
-                    <td><strong>Auditado:</strong></td><td><input class="cedit" placeholder="Nombre y Cargo"></td>
-                    <td><strong>Fecha:</strong></td><td><input type="date" class="cedit"></td>
+                    <td><strong>Auditado:</strong></td>
+                    <td><input class="cedit" placeholder="Nombre y Cargo"></td>
+                    <td><strong>Fecha:</strong></td>
+                    <td><input type="date" class="cedit"></td>
                 </tr>
             </table>
         </div>
@@ -76,51 +190,101 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="group-header"><td colspan="3">TRAZABILIDAD Y LIBERACIÓN</td></tr>
-                    <tr>
-                        <td><strong>Trazabilidad de Lote:</strong> ¿El FO-LC-16 (Cover Sheet) coincide con los resultados de Fase 3 y analíticos del FO-LC-48?</td>
-                        <td><select class="cedit status-select"><option>SÍ</option><option>NO</option><option>N/A</option></select></td>
-                        <td><textarea class="cedit" rows="2" placeholder="Referenciar Folios revisados..."></textarea></td>
+                    <tr class="group-header">
+                        <td colspan="3">TRAZABILIDAD Y LIBERACIÓN</td>
                     </tr>
                     <tr>
-                        <td><strong>Liberación Legal:</strong> ¿Los lotes liberados cuentan con la firma del Responsable Sanitario en el CoA (FO-LC-49)?</td>
-                        <td><select class="cedit status-select"><option>SÍ</option><option>NO</option><option>N/A</option></select></td>
+                        <td><strong>Trazabilidad de Lote:</strong> ¿El FO-LC-16 (Cover Sheet) coincide con los
+                            resultados de Fase 3 y analíticos del FO-LC-48?</td>
+                        <td><select class="cedit status-select">
+                                <option>SÍ</option>
+                                <option>NO</option>
+                                <option>N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit" rows="2" placeholder="Referenciar Folios revisados..."></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Liberación Legal:</strong> ¿Los lotes liberados cuentan con la firma del Responsable
+                            Sanitario en el CoA (FO-LC-49)?</td>
+                        <td><select class="cedit status-select">
+                                <option>SÍ</option>
+                                <option>NO</option>
+                                <option>N/A</option>
+                            </select></td>
                         <td><textarea class="cedit" rows="2"></textarea></td>
                     </tr>
 
-                    <tr class="group-header"><td colspan="3">CADENA DE FRÍO Y MUESTREO</td></tr>
-                    <tr>
-                        <td><strong>Cadena de Frío:</strong> ¿Las temperaturas se mantuvieron entre 2°C y 8°C durante el transporte?</td>
-                        <td><select class="cedit status-select"><option>SÍ</option><option>NO</option><option>N/A</option></select></td>
-                        <td><textarea class="cedit" rows="2" placeholder="Verificar registros de datalogger..."></textarea></td>
+                    <tr class="group-header">
+                        <td colspan="3">CADENA DE FRÍO Y MUESTREO</td>
                     </tr>
                     <tr>
-                        <td><strong>Muestreo Estratificado:</strong> ¿Se evidencia toma de muestra en tres niveles (Superior, Media e Inferior) según PNO?</td>
-                        <td><select class="cedit status-select"><option>SÍ</option><option>NO</option><option>N/A</option></select></td>
+                        <td><strong>Cadena de Frío:</strong> ¿Las temperaturas se mantuvieron entre 2°C y 8°C durante el
+                            transporte?</td>
+                        <td><select class="cedit status-select">
+                                <option>SÍ</option>
+                                <option>NO</option>
+                                <option>N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit" rows="2"
+                                placeholder="Verificar registros de datalogger..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Muestreo Estratificado:</strong> ¿Se evidencia toma de muestra en tres niveles
+                            (Superior, Media e Inferior) según PNO?</td>
+                        <td><select class="cedit status-select">
+                                <option>SÍ</option>
+                                <option>NO</option>
+                                <option>N/A</option>
+                            </select></td>
                         <td><textarea class="cedit" rows="2"></textarea></td>
                     </tr>
 
-                    <tr class="group-header"><td colspan="3">BIOSEGURIDAD Y RESIDUOS (RPBI)</td></tr>
+                    <tr class="group-header">
+                        <td colspan="3">BIOSEGURIDAD Y RESIDUOS (RPBI)</td>
+                    </tr>
                     <tr>
-                        <td><strong>Identificación RPBI:</strong> ¿Los recipientes y bolsas tienen la etiqueta ET-RPBI vigente y están al 80% de su capacidad?</td>
-                        <td><select class="cedit status-select"><option>SÍ</option><option>NO</option><option>N/A</option></select></td>
+                        <td><strong>Identificación RPBI:</strong> ¿Los recipientes y bolsas tienen la etiqueta ET-RPBI
+                            vigente y están al 80% de su capacidad?</td>
+                        <td><select class="cedit status-select">
+                                <option>SÍ</option>
+                                <option>NO</option>
+                                <option>N/A</option>
+                            </select></td>
                         <td><textarea class="cedit" rows="2"></textarea></td>
                     </tr>
                     <tr>
-                        <td><strong>Segregación de PNC:</strong> ¿El material rechazado está en área aislada y porta la etiqueta roja ET-LC-07?</td>
-                        <td><select class="cedit status-select"><option>SÍ</option><option>NO</option><option>N/A</option></select></td>
+                        <td><strong>Segregación de PNC:</strong> ¿El material rechazado está en área aislada y porta la
+                            etiqueta roja ET-LC-07?</td>
+                        <td><select class="cedit status-select">
+                                <option>SÍ</option>
+                                <option>NO</option>
+                                <option>N/A</option>
+                            </select></td>
                         <td><textarea class="cedit" rows="2"></textarea></td>
                     </tr>
 
-                    <tr class="group-header"><td colspan="3">INSTALACIONES Y DOCUMENTACIÓN</td></tr>
+                    <tr class="group-header">
+                        <td colspan="3">INSTALACIONES Y DOCUMENTACIÓN</td>
+                    </tr>
                     <tr>
-                        <td><strong>Bitácoras de Limpieza:</strong> ¿Los registros de sanitización de áreas críticas están actualizados al día de hoy?</td>
-                        <td><select class="cedit status-select"><option>SÍ</option><option>NO</option><option>N/A</option></select></td>
+                        <td><strong>Bitácoras de Limpieza:</strong> ¿Los registros de sanitización de áreas críticas
+                            están actualizados al día de hoy?</td>
+                        <td><select class="cedit status-select">
+                                <option>SÍ</option>
+                                <option>NO</option>
+                                <option>N/A</option>
+                            </select></td>
                         <td><textarea class="cedit" rows="2"></textarea></td>
                     </tr>
                     <tr>
-                        <td><strong>Gestión de Riesgos:</strong> ¿Las desviaciones con IPR ≥ 27 tienen una CAPA (FO-LC-53) abierta y en curso?</td>
-                        <td><select class="cedit status-select"><option>SÍ</option><option>NO</option><option>N/A</option></select></td>
+                        <td><strong>Gestión de Riesgos:</strong> ¿Las desviaciones con IPR ≥ 27 tienen una CAPA
+                            (FO-LC-53) abierta y en curso?</td>
+                        <td><select class="cedit status-select">
+                                <option>SÍ</option>
+                                <option>NO</option>
+                                <option>N/A</option>
+                            </select></td>
                         <td><textarea class="cedit" rows="2"></textarea></td>
                     </tr>
                 </tbody>
@@ -132,7 +296,8 @@
             <table class="no-border-table">
                 <tr>
                     <td colspan="2"><strong>Resumen de No Conformidades Detectadas:</strong><br>
-                        <textarea class="cedit" rows="3" style="width:100%; border:1px solid #ccc;" placeholder="Describa brevemente las desviaciones mayores encontradas..."></textarea>
+                        <textarea class="cedit" rows="3" style="width:100%; border:1px solid #ccc;"
+                            placeholder="Describa brevemente las desviaciones mayores encontradas..."></textarea>
                     </td>
                 </tr>
             </table>
@@ -154,4 +319,5 @@
         <div class="footer">FO-OP-39 | Versión: 1.0 | Lista de Verificación de Auditoría | Xelle Scientific</div>
     </div>
 </body>
+
 </html>

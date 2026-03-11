@@ -54,8 +54,9 @@ const AppCom = {
 
     init: function () {
         const docId = document.body.id;
-        console.log("Iniciando App Operaciones V2.2 para:", docId);
+        console.log("Iniciando App Operaciones V2.3 para:", docId);
 
+        this.Universal.ensureFieldIds(docId);
         this.Universal.setupDateInputs();
         this.Universal.setupBarcodes();
         this.Universal.loadData(docId);
@@ -70,9 +71,39 @@ const AppCom = {
     },
 
     Universal: {
+        ensureFieldIds: function (docId) {
+            const formatPrefix = String(docId || '').replace(/^doc-/, '').replace(/-/g, '_');
+            const fields = Array.from(document.querySelectorAll('input, select, textarea'))
+                .filter(el => el.type !== 'submit' && el.type !== 'button');
+
+            fields.forEach((el, index) => {
+                if (!el.id) {
+                    let generatedId = '';
+                    if (el.name) {
+                        generatedId = `${formatPrefix}_${el.name}`;
+                    } else if (el.placeholder) {
+                        const cleanPlaceholder = el.placeholder
+                            .toLowerCase()
+                            .replace(/[^a-z0-9]/g, '_')
+                            .substring(0, 30);
+                        generatedId = `${formatPrefix}_${cleanPlaceholder}_${index}`;
+                    } else {
+                        const fieldType = el.tagName.toLowerCase();
+                        generatedId = `${formatPrefix}_${fieldType}_${index}`;
+                    }
+                    el.id = generatedId;
+                }
+            });
+            console.log(`✓ IDs únicos asignados a ${fields.length} campos en ${docId}`);
+        },
         getInstanceCode: function () {
             const params = new URLSearchParams(window.location.search);
             return (params.get('instance') || '').trim();
+        },
+        isNewMode: function () {
+            const params = new URLSearchParams(window.location.search);
+            const value = String(params.get('new') || '').trim().toLowerCase();
+            return value === '1' || value === 'true' || value === 'yes';
         },
         setInstanceCode: function (instanceCode) {
             if (!instanceCode) return;
@@ -163,65 +194,64 @@ const AppCom = {
         },
         persistInstance: async function (docId, data) {
             const barcodeInput = document.querySelector('.generate-barcode');
-            const hasManualCode = Boolean(String(barcodeInput?.value || '').trim());
-            let uniqueCode = await this.resolveOrCreateInstanceCode(docId);
+            const prefix = barcodeInput?.dataset?.prefix || '';
+            const barcodeValue = String(barcodeInput?.value || '').trim();
+
+            if (!barcodeValue) {
+                throw new Error('Debe ingresar un código de folio único');
+            }
+
+            const uniqueCode = `${prefix}${barcodeValue}`;
+            const urlInstanceCode = this.getInstanceCode();
             const userId = this.getCurrentUserId();
             const formatType = this.getFormatType(docId);
 
+            console.log('💾 Guardando:', {
+                inputValue: barcodeValue,
+                uniqueCode: uniqueCode,
+                urlCode: urlInstanceCode,
+                isUpdate: uniqueCode === urlInstanceCode
+            });
+
+            const isUpdate = urlInstanceCode && uniqueCode === urlInstanceCode;
+
+            const payload = {
+                unique_code: uniqueCode,
+                format_type: formatType,
+                status: 'DRAFT',
+                data_payload: data,
+                user_id: userId,
+                notes: ''
+            };
+
             let response;
-            if (this.getInstanceCode()) {
+
+            if (isUpdate) {
+                console.log('📝 Actualizando documento:', uniqueCode);
                 response = await fetch(`${API_URL}/format-instances/${encodeURIComponent(uniqueCode)}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: 'DRAFT', data_payload: data, user_id: userId })
+                    body: JSON.stringify({
+                        status: 'DRAFT',
+                        data_payload: data,
+                        user_id: userId
+                    })
                 });
             } else {
+                console.log('🆕 Creando nuevo documento:', uniqueCode);
                 response = await fetch(`${API_URL}/format-instances`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        unique_code: uniqueCode,
-                        format_type: formatType,
-                        status: 'DRAFT',
-                        data_payload: data,
-                        user_id: userId,
-                        notes: ''
-                    })
+                    body: JSON.stringify(payload)
                 });
-
-                if (!response.ok) {
-                    if (hasManualCode) {
-                        const existing = await fetch(`${API_URL}/format-instances/${encodeURIComponent(uniqueCode)}`);
-                        if (existing.ok) {
-                            response = await fetch(`${API_URL}/format-instances/${encodeURIComponent(uniqueCode)}`, {
-                                method: 'PUT',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ status: 'DRAFT', data_payload: data, user_id: userId })
-                            });
-                        }
-                    } else {
-                        uniqueCode = await this.resolveOrCreateInstanceCode(docId);
-                        response = await fetch(`${API_URL}/format-instances`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                unique_code: uniqueCode,
-                                format_type: formatType,
-                                status: 'DRAFT',
-                                data_payload: data,
-                                user_id: userId,
-                                notes: ''
-                            })
-                        });
-                    }
-                }
             }
 
             const result = await response.json().catch(() => ({}));
-            if (!response.ok) throw new Error(result.msg || 'No se pudo guardar en servidor');
+            if (!response.ok) {
+                throw new Error(result.msg || 'No se pudo guardar en servidor');
+            }
 
             this.setInstanceCode(uniqueCode);
-            this.ensureBarcodeValueFromCode(uniqueCode);
             return uniqueCode;
         },
         setupDateInputs: function () {
@@ -238,7 +268,6 @@ const AppCom = {
                 const val = input.value;
                 if (val && window.JsBarcode) {
                     try {
-                        // Genera código concatenado: Prefijo + Valor (Ej: FO-OP-15-001)
                         JsBarcode(`#${input.dataset.target}`, prefix + val, {
                             format: "CODE128",
                             height: 30,
@@ -248,10 +277,28 @@ const AppCom = {
                         });
                     } catch (e) { }
                 }
+
+                const urlInstanceCode = this.getInstanceCode();
+                const currentCode = `${prefix}${val}`.trim();
+                if (urlInstanceCode && currentCode && urlInstanceCode !== currentCode) {
+                    if (!input.dataset.warningShown) {
+                        input.dataset.warningShown = 'true';
+                        const indicator = document.createElement('span');
+                        indicator.className = 'code-changed-indicator';
+                        indicator.textContent = '🆕 Nuevo documento';
+                        indicator.style.cssText = 'color: #28a745; font-weight: bold; font-size: 11px; margin-left: 10px;';
+                        input.parentElement.appendChild(indicator);
+
+                        setTimeout(() => {
+                            indicator.remove();
+                            delete input.dataset.warningShown;
+                        }, 3000);
+                    }
+                }
             };
             document.querySelectorAll('.generate-barcode').forEach(i => {
-                i.addEventListener('input', (e) => process(e.target));
-                if (i.value) process(i);
+                i.addEventListener('input', (e) => process.call(this, e.target));
+                if (i.value) process.call(this, i);
             });
         },
         setupPrintHandler: function () {
@@ -270,37 +317,62 @@ const AppCom = {
         },
         saveData: async function () {
             const docId = document.body.id;
+
+            const barcodeInput = document.querySelector('.generate-barcode');
+            const barcodeValue = String(barcodeInput?.value || '').trim();
+
+            if (!barcodeValue) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Debe ingresar un código de folio único antes de guardar',
+                    confirmButtonText: 'Entendido'
+                });
+                return;
+            }
+
             const data = this.collectData();
 
-            // Guardar inputs básicos
-            document.querySelectorAll('input, select, textarea').forEach(el => {
-                if ((el.id || el.name) && el.type !== 'submit' && !el.closest('tr')) {
-                    if (el.type === 'checkbox') data[el.id || el.name] = el.checked;
-                    else if (el.type === 'radio') { if (el.checked) data[el.name] = el.value; }
-                    else data[el.id || el.name] = el.value;
-                }
-            });
-
-            // Guardar tablas dinámicas
             const modName = docId.replace(/-/g, '_').toUpperCase().replace('DOC_', '');
             if (AppCom[modName] && AppCom[modName].getCustomData) {
                 Object.assign(data, AppCom[modName].getCustomData());
             }
 
-            // Persistencia Local (borrador)
-            localStorage.setItem(this.getStorageKey(docId), JSON.stringify(data));
-
             try {
                 const instanceCode = await this.persistInstance(docId, data);
-                localStorage.setItem(this.getStorageKey(docId, instanceCode), JSON.stringify(data));
-                Swal.fire({ icon: 'success', title: 'Guardado', timer: 1000, showConfirmButton: false });
+                const instanceKey = this.getStorageKey(docId, instanceCode);
+                localStorage.setItem(instanceKey, JSON.stringify(data));
+
+                const urlCode = new URLSearchParams(window.location.search).get('instance');
+                const wasUpdate = urlCode && urlCode === instanceCode;
+
+                Swal.fire({
+                    icon: 'success',
+                    title: wasUpdate ? 'Actualizado' : 'Documento Creado',
+                    text: wasUpdate
+                        ? `Formato actualizado: ${instanceCode}`
+                        : `Nuevo documento guardado: ${instanceCode}`,
+                    timer: 2500,
+                    showConfirmButton: false
+                });
             } catch (e) {
-                Swal.fire({ icon: 'warning', title: 'Guardado local', text: e.message || 'No se pudo sincronizar', timer: 1800, showConfirmButton: false });
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al Guardar',
+                    text: e.message || 'No se pudo guardar el formato',
+                    confirmButtonText: 'Entendido'
+                });
             }
         },
         loadData: async function (docId) {
             let data = null;
             const instanceCode = this.getInstanceCode();
+            const isNewMode = this.isNewMode();
+
+            if (isNewMode) {
+                console.log('Modo nuevo: Cargando documento en blanco');
+                return;
+            }
 
             if (instanceCode) {
                 try {
@@ -311,19 +383,20 @@ const AppCom = {
                         this.ensureBarcodeValueFromCode(instanceCode);
                         localStorage.setItem(this.getStorageKey(docId, instanceCode), JSON.stringify(data));
                     }
-                } catch (e) { }
+                } catch (e) {
+                    console.error('Error cargando formato desde servidor:', e);
+                }
             }
 
-            if (!data) {
-                const saved = localStorage.getItem(this.getStorageKey(docId, instanceCode))
-                    || localStorage.getItem(`xelle_operaciones_${docId}`)
-                    || localStorage.getItem(`xelle_comercial_${docId}`);
-                if (!saved) return;
-                try { data = JSON.parse(saved); } catch (e) { data = null; }
+            if (!data && instanceCode) {
+                const saved = localStorage.getItem(this.getStorageKey(docId, instanceCode));
+                if (saved) {
+                    try { data = JSON.parse(saved); } catch (e) { data = null; }
+                }
             }
+
             if (!data) return;
 
-            // Cargar inputs básicos
             for (const [key, value] of Object.entries(data)) {
                 let el = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
                 if (el && !el.closest('tr')) {
@@ -337,7 +410,6 @@ const AppCom = {
                 }
             }
 
-            // Cargar tablas dinámicas
             const modName = docId.replace(/-/g, '_').toUpperCase().replace('DOC_', '');
             if (AppCom[modName] && AppCom[modName].loadCustomData) {
                 AppCom[modName].loadCustomData(data);
