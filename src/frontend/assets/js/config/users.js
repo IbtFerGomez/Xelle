@@ -47,6 +47,7 @@ window.SeedData = {
         // --- ALMACEN ---
         { code: 'FO-OP-13', title: 'Lista Verificación Recepción MP', area: 'almacen', file: 'formats/FO-OP-13.html' },
         { code: 'FO-OP-20', title: 'Liberación a Operaciones', area: 'almacen', file: 'formats/FO-OP-20.html' },
+        { code: 'FO-OP-40', title: 'Formato de Operaciones', area: 'almacen', file: 'formats/FO-OP-40.html' },
         { code: 'FO-LC-45', title: 'Envío a Esterilización', area: 'almacen', file: 'formats/FO-LC-45.html' },
         { code: 'FO-OP-49', title: 'Bitácora de Almacenamiento Temporal RPBI', area: 'almacen', file: 'formats/FO-OP-49.html' },
         { code: 'FO-OP-50', title: 'Manifiesto de Residuos Peligrosos', area: 'almacen', file: 'formats/FO-OP-50.html' },
@@ -61,6 +62,7 @@ window.SeedData = {
         { code: 'FO-LC-23', title: 'Bitácora Movimientos Banco', area: 'banco', file: 'formats/FO-LC-23.html' },
         { code: 'FO-LC-24', title: 'Registro Diario de Dosificación', area: 'banco', file: 'formats/FO-LC-24.html' },
         { code: 'FO-LC-29', title: 'Registro de Lote (Producto Celular)', area: 'banco', file: 'formats/FO-LC-29.html' },
+        { code: 'FO-LC-30', title: 'Bitácora de Recolección de Medios Condicionados', area: 'banco', file: 'formats/FO-LC-30.html' },
         { code: 'FO-LC-31', title: 'Hoja Prod. Lote Acelular', area: 'banco', file: 'formats/FO-LC-31.html' },
         { code: 'FO-LC-33', title: 'Bitácora de Muestras de Retención', area: 'banco', file: 'formats/FO-LC-33.html' },
         { code: 'FO-LC-34', title: 'Bitácora de Muestreos', area: 'banco', file: 'formats/FO-LC-34.html' },
@@ -97,7 +99,9 @@ window.SeedData = {
         { code: 'FO-LC-46', title: 'Registro FO-LC-46', area: 'calidad', file: 'formats/FO-LC-46.html' },
         { code: 'FO-LC-47', title: 'Revisión Calidad Muestreo', area: 'calidad', file: 'formats/FO-LC-47.html' },
         { code: 'FO-LC-48', title: 'Resultados y Dictamen de Lote', area: 'calidad', file: 'formats/FO-LC-48.html' },
-        { code: 'FO-LC-50', title: 'Manifiesto de Destrucción', area: 'calidad', file: 'formats/FO-LC-50.html' }
+        { code: 'FO-LC-49', title: 'Formato Control Laboratorio', area: 'calidad', file: 'formats/FO-LC-49.html' },
+        { code: 'FO-LC-50', title: 'Manifiesto de Destrucción', area: 'calidad', file: 'formats/FO-LC-50.html' },
+        { code: 'FO-QA-10', title: 'Certificado de Calidad de Lote (CoA)', area: 'calidad', file: 'formats/FO-QA-10.html' }
     ],
 
     LOGO_SVG: `<svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">

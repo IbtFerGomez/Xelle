@@ -118,6 +118,7 @@ public class ApiController {
         return ResponseEntity.ok(Map.of("status", "ok"));
     }
 
+    @SuppressWarnings("null")
     @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> body) {
         Long actorUserId = asLong(body.get("actor_user_id"));
@@ -138,6 +139,7 @@ public class ApiController {
         return ResponseEntity.ok(Map.of("status", "updated"));
     }
 
+    @SuppressWarnings("null")
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> toggleUser(@PathVariable Long id,
             @RequestParam(name = "actor_user_id", required = false) Long actorUserId) {
@@ -157,6 +159,7 @@ public class ApiController {
         return ResponseEntity.ok(Map.of("status", "toggled"));
     }
 
+    @SuppressWarnings("null")
     @DeleteMapping("/users/{id}/permanent")
     public ResponseEntity<?> deleteUser(@PathVariable Long id,
             @RequestParam(name = "actor_user_id", required = false) Long actorUserId) {
@@ -227,6 +230,7 @@ public class ApiController {
         return ResponseEntity.ok(Map.of("status", "ok"));
     }
 
+    @SuppressWarnings("null")
     @PutMapping("/formats/{id}")
     public ResponseEntity<?> updateFormat(@PathVariable Long id, @RequestBody Map<String, Object> body) {
         Long actorUserId = asLong(body.get("actor_user_id"));
@@ -262,6 +266,7 @@ public class ApiController {
         return ResponseEntity.ok(Map.of("status", "updated"));
     }
 
+    @SuppressWarnings("null")
     @DeleteMapping("/formats/{id}")
     public ResponseEntity<?> toggleFormat(@PathVariable Long id,
             @RequestParam(name = "actor_user_id", required = false) Long actorUserId) {
@@ -281,6 +286,7 @@ public class ApiController {
         return ResponseEntity.ok(Map.of("status", "toggled"));
     }
 
+    @SuppressWarnings("null")
     @DeleteMapping("/formats/{id}/permanent")
     public ResponseEntity<?> deleteFormat(@PathVariable Long id,
             @RequestParam(name = "actor_user_id", required = false) Long actorUserId) {
@@ -441,6 +447,7 @@ public class ApiController {
                 .ok(Map.of("success", true, "unique_code", instance.getUniqueCode(), "status", instance.getStatus()));
     }
 
+    @SuppressWarnings("null")
     @DeleteMapping("/format-instances/{uniqueCode}")
     public ResponseEntity<?> deleteFormatInstance(@PathVariable String uniqueCode,
             @RequestParam(name = "actor_user_id", required = false) Long actorUserId) {

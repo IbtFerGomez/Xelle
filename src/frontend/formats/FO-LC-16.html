@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Resumen Ejecutivo de Lote</title>
@@ -18,8 +19,17 @@
             text-transform: uppercase;
             margin-top: 10px;
         }
-        .status-ok { color: #27ae60; font-weight: bold; }
-        .status-fail { color: #c0392b; font-weight: bold; }
+
+        .status-ok {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .status-fail {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
         .big-decision-box {
             border: 2px solid #333;
             background-color: #f4f4f4;
@@ -27,6 +37,7 @@
             text-align: center;
             margin-top: 10px;
         }
+
         .big-decision-select {
             font-size: 16px;
             font-weight: 900;
@@ -37,27 +48,53 @@
         }
     </style>
 </head>
+
 <body id="doc-fo-lc-resumen">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .svg-logo-titulo {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .svg-logo-subtitulo {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .svg-logo-celula {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
+                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
+                        <path class="svg-logo-celula"
+                            d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z" />
+                    </g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68"
+                        class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35"
+                        font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
             </div>
             <div class="registry-container">
                 <label>Lote Asignado</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-16-</span>
-                    <input type="text" id="lote-final" 
-                           class="registry-input generate-barcode" 
-                           data-target="barcode-res" 
-                           data-prefix="FO-LC-16-"
-                           style="width:120px; font-size:14px;"
-                           placeholder="001">
+                    <input type="text" id="lote-final" class="registry-input generate-barcode" data-target="barcode-res"
+                        data-prefix="FO-LC-16-" style="width:120px; font-size:14px;" placeholder="001">
                 </div>
                 <input type="date" class="registry-date no-auto-date">
                 <svg id="barcode-res" class="barcode-svg"></svg>
@@ -79,9 +116,13 @@
                     <td><strong>Fecha Recolección:</strong> <input type="date" class="cedit"></td>
                 </tr>
                 <tr>
-                    <td><strong>Nombre Madre:</strong> <input class="cedit"></td>
-                    <td><strong>Hospital/Origen:</strong> <input class="cedit"></td>
-                    <td><strong>Tipo Tejido:</strong> <select class="cedit"><option>Placenta</option><option>Cordón</option><option>Adiposo</option></select></td>
+                    <td width="40%"><strong>Nombre Madre:</strong> <input class="cedit"></td>
+                    <td width="35%"><strong>Hospital/Origen:</strong> <input class="cedit"></td>
+                    <td width="25%"><strong>Tipo Tejido:</strong> <select class="cedit">
+                            <option>Placenta</option>
+                            <option>Cordón</option>
+                            <option>Adiposo</option>
+                        </select></td>
                 </tr>
             </table>
         </div>
@@ -99,11 +140,23 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><select class="cedit"><option>Integro/Sellado</option><option>Dañado/Abierto</option></select></td>
+                    <td><select class="cedit">
+                            <option>Integro/Sellado</option>
+                            <option>Dañado/Abierto</option>
+                        </select></td>
                     <td><input class="cedit" placeholder="°C" style="width:60px; text-align:center;"></td>
-                    <td><select class="cedit"><option>Completa (Consent+Hist)</option><option>Incompleta</option></select></td>
-                    <td><select class="cedit"><option>Si</option><option>No</option></select></td>
-                    <td><select class="cedit" style="font-weight:bold;"><option>ACEPTADO</option><option>RECHAZADO</option></select></td>
+                    <td><select class="cedit">
+                            <option>Completa (Consent+Hist)</option>
+                            <option>Incompleta</option>
+                        </select></td>
+                    <td><select class="cedit">
+                            <option>Si</option>
+                            <option>No</option>
+                        </select></td>
+                    <td><select class="cedit" style="font-weight:bold;">
+                            <option>ACEPTADO</option>
+                            <option>RECHAZADO</option>
+                        </select></td>
                 </tr>
             </tbody>
         </table>
@@ -122,10 +175,22 @@
             <tbody>
                 <tr>
                     <td><input class="cedit" style="text-align:center;"></td>
-                    <td><select class="cedit"><option>Normal</option><option>Anormal/Calcif</option></select></td>
-                    <td><select class="cedit"><option>Íntegras</option><option>Laceradas</option></select></td>
-                    <td><select class="cedit"><option>Ninguna</option><option>Sí (Ver obs)</option></select></td>
-                    <td><select class="cedit" style="font-weight:bold;"><option>APTO PARA PROCESO</option><option>NO APTO</option></select></td>
+                    <td><select class="cedit">
+                            <option>Normal</option>
+                            <option>Anormal/Calcif</option>
+                        </select></td>
+                    <td><select class="cedit">
+                            <option>Íntegras</option>
+                            <option>Laceradas</option>
+                        </select></td>
+                    <td><select class="cedit">
+                            <option>Ninguna</option>
+                            <option>Sí (Ver obs)</option>
+                        </select></td>
+                    <td><select class="cedit" style="font-weight:bold;">
+                            <option>APTO PARA PROCESO</option>
+                            <option>NO APTO</option>
+                        </select></td>
                 </tr>
             </tbody>
         </table>
@@ -143,18 +208,39 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><select class="cedit"><option>NEGATIVO (Pasa)</option><option>POSITIVO (Falla)</option><option>Pendiente</option></select></td>
-                    <td><select class="cedit"><option>NEGATIVO</option><option>POSITIVO</option><option>Pendiente</option></select></td>
-                    <td><select class="cedit"><option>NEGATIVO</option><option>POSITIVO</option><option>Pendiente</option></select></td>
-                    <td><select class="cedit"><option>NEGATIVO</option><option>POSITIVO</option><option>Pendiente</option></select></td>
-                    <td><select class="cedit"><option>CUMPLE</option><option>NO CUMPLE</option><option>NA</option></select></td>
+                    <td><select class="cedit">
+                            <option>NEGATIVO (Pasa)</option>
+                            <option>POSITIVO (Falla)</option>
+                            <option>Pendiente</option>
+                        </select></td>
+                    <td><select class="cedit">
+                            <option>NEGATIVO</option>
+                            <option>POSITIVO</option>
+                            <option>Pendiente</option>
+                        </select></td>
+                    <td><select class="cedit">
+                            <option>NEGATIVO</option>
+                            <option>POSITIVO</option>
+                            <option>Pendiente</option>
+                        </select></td>
+                    <td><select class="cedit">
+                            <option>NEGATIVO</option>
+                            <option>POSITIVO</option>
+                            <option>Pendiente</option>
+                        </select></td>
+                    <td><select class="cedit">
+                            <option>CUMPLE</option>
+                            <option>NO CUMPLE</option>
+                            <option>NA</option>
+                        </select></td>
                 </tr>
             </tbody>
         </table>
 
         <div class="section big-decision-box">
-            <h3 style="margin:0 0 10px 0; border-bottom:1px solid #ccc; padding-bottom:5px;">DICTAMEN FINAL DEL LOTE</h3>
-            
+            <h3 style="margin:0 0 10px 0; border-bottom:1px solid #ccc; padding-bottom:5px;">DICTAMEN FINAL DEL LOTE
+            </h3>
+
             <div style="display:flex; justify-content:space-between; align-items: flex-start; text-align:left;">
                 <div style="width: 55%;">
                     <label><strong>Observaciones Finales / Desviaciones / CAPA:</strong></label>
@@ -162,13 +248,15 @@
                 </div>
                 <div style="width: 40%; text-align:center;">
                     <label style="display:block; margin-bottom:5px; color:#555;">Decisión de Calidad:</label>
-                    <select class="cedit big-decision-select" onchange="this.style.backgroundColor = (this.value=='LIBERADO') ? '#d4efdf' : (this.value=='RECHAZADO' ? '#fadbd8' : '#fcf3cf')">
+                    <select class="cedit big-decision-select"
+                        onchange="this.style.backgroundColor = (this.value=='LIBERADO') ? '#d4efdf' : (this.value=='RECHAZADO' ? '#fadbd8' : '#fcf3cf')">
                         <option value="">- SELECCIONAR -</option>
                         <option value="LIBERADO">LIBERADO</option>
                         <option value="CUARENTENA">CUARENTENA / RETENIDO</option>
                         <option value="RECHAZADO">RECHAZADO / DESTRUCCIÓN</option>
                     </select>
-                    <p style="font-size:10px; color:#777; margin-top:5px;">Esta firma libera el producto para su distribución o uso final.</p>
+                    <p style="font-size:10px; color:#777; margin-top:5px;">Esta firma libera el producto para su
+                        distribución o uso final.</p>
                 </div>
             </div>
         </div>
@@ -189,4 +277,5 @@
         <div class="footer">FO-LC-RESUMEN | Revisión Final de Expediente | Uso Exclusivo Xelle Scientific</div>
     </div>
 </body>
+
 </html>

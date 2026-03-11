@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-LC-46 Registro Muestreo Producto Biológico</title>
@@ -8,26 +9,70 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
-        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 12px; margin-top: 15px; border-radius: 4px; }
-        .cbx-group { display: flex; gap: 15px; align-items: center; }
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+
+        .cbx-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
     </style>
 </head>
+
 <body id="doc-fo-lc-46">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
             </div>
             <div class="registry-container">
                 <label>Folio Muestreo</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-46-</span>
-                    <input type="text" id="reg-46" class="registry-input generate-barcode" data-target="barcode-46" data-prefix="FO-LC-46-" placeholder="000">
+                    <input type="text" id="reg-46" class="registry-input generate-barcode" data-target="barcode-46"
+                        data-prefix="FO-LC-46-" placeholder="000">
                 </div>
                 <input type="date" class="registry-date">
                 <svg id="barcode-46" class="barcode-svg"></svg>
@@ -55,20 +100,24 @@
                     <td><input type="date" class="cedit"></td>
                 </tr>
                 <tr>
-                    <td><strong>Tamaño Lote (Unid.):</strong></td>
-                    <td><input class="cedit" type="number"></td>
+                    <td><strong>Referencia de Orden Maestra:</strong></td>
+                    <td><input class="cedit" placeholder="Orden Maestra"></td>
                     <td><strong>Fecha de Muestreo:</strong></td>
                     <td><input type="date" class="cedit"></td>
                 </tr>
                 <tr>
+                    <td><strong>Tamaño Lote (Unid.):</strong></td>
+                    <td><input class="cedit" type="number"></td>
                     <td><strong>Ubicación:</strong></td>
                     <td><input class="cedit"></td>
-                    <td><strong>Estado Actual:</strong></td>
-                    <td><span style="font-weight:bold; color:#d97706; background-color:#fef3c7; padding:2px 5px; border-radius:4px;">CUARENTENA</span></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><strong>Condiciones Almacenamiento (Extracción):</strong></td>
-                    <td colspan="2"><input class="cedit" placeholder="Ej. Cámara Fría 2-8°C"></td>
+                    <td><strong>Estado Actual:</strong></td>
+                    <td><span
+                            style="font-weight:bold; color:#d97706; background-color:#fef3c7; padding:2px 5px; border-radius:4px;">CUARENTENA</span>
+                    </td>
+                    <td colspan="2"><strong>Condiciones Almacenamiento:</strong> <input class="cedit"
+                            placeholder="Ej. Cámara Fría 2-8°C"></td>
                 </tr>
             </table>
         </div>
@@ -80,7 +129,7 @@
                 <label><input type="radio" name="criterio" value="ansi"> Tabla Estándar (ANSI/ASQ Z1.4)</label>
                 <label><input type="radio" name="criterio" value="raiz"> Fórmula √N (FDA)</label>
             </div>
-            
+
             <table class="compact-table" style="margin-bottom:10px;">
                 <tr>
                     <td>Tamaño Lote (N): <input class="cedit" style="width:60px"></td>
@@ -92,11 +141,25 @@
             </table>
 
             <table class="compact-table">
-                <thead><tr><th width="70%">Cálculo de Muestra</th><th width="30%">Cantidad</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th width="70%">Cálculo de Muestra</th>
+                        <th width="30%">Cantidad</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr><td>Cantidad Análisis (Fisicoquímico + Micro + Bio):</td><td><input class="cedit" type="number"> unid.</td></tr>
-                    <tr><td>Cantidad Retención Legal (Contramuestra):</td><td><input class="cedit" type="number"> unid.</td></tr>
-                    <tr><td style="font-weight:bold; background:#f1f5f9;">TOTAL A MUESTREAR:</td><td><input class="cedit" type="number" style="font-weight:bold; background:#e2e8f0;"> unid.</td></tr>
+                    <tr>
+                        <td>Cantidad Análisis (Fisicoquímico + Micro + Bio):</td>
+                        <td><input class="cedit" type="number"> unid.</td>
+                    </tr>
+                    <tr>
+                        <td>Cantidad Retención Legal (Contramuestra):</td>
+                        <td><input class="cedit" type="number"> unid.</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold; background:#f1f5f9;">TOTAL A MUESTREAR:</td>
+                        <td><input class="cedit" type="number" style="font-weight:bold; background:#e2e8f0;"> unid.</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -104,13 +167,53 @@
         <div class="section-header">3. CONDICIONES DEL ÁREA DE MUESTREO (BIOSEGURIDAD)</div>
         <div class="section">
             <table class="compact-table">
-                <thead><tr><th width="60%">Condición a Verificar</th><th width="40%">Cumplimiento</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th width="60%">Condición a Verificar</th>
+                        <th width="40%">Cumplimiento</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr><td>Despeje de Línea (Libre material anterior)</td><td><select class="cedit"><option>CUMPLE</option><option>NO CUMPLE</option><option>N/A</option></select></td></tr>
-                    <tr><td>Clasificación (Cabina Bioseguridad)</td><td><select class="cedit"><option>CUMPLE</option><option>NO CUMPLE</option><option>N/A</option></select></td></tr>
-                    <tr><td>Sanitización Previa (Limpieza Cabina/Envases)</td><td><select class="cedit"><option>CUMPLE</option><option>NO CUMPLE</option><option>N/A</option></select></td></tr>
-                    <tr><td>Uso EPP Estéril</td><td><select class="cedit"><option>CUMPLE</option><option>NO CUMPLE</option><option>N/A</option></select></td></tr>
-                    <tr><td>Utensilios Estériles y Único Uso</td><td><select class="cedit"><option>CUMPLE</option><option>NO CUMPLE</option><option>N/A</option></select></td></tr>
+                    <tr>
+                        <td>Despeje de Línea (Libre material anterior)</td>
+                        <td><select class="cedit">
+                                <option>CUMPLE</option>
+                                <option>NO CUMPLE</option>
+                                <option>N/A</option>
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Clasificación (Cabina Bioseguridad)</td>
+                        <td><select class="cedit">
+                                <option>CUMPLE</option>
+                                <option>NO CUMPLE</option>
+                                <option>N/A</option>
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Sanitización Previa (Limpieza Cabina/Envases)</td>
+                        <td><select class="cedit">
+                                <option>CUMPLE</option>
+                                <option>NO CUMPLE</option>
+                                <option>N/A</option>
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Uso EPP Estéril</td>
+                        <td><select class="cedit">
+                                <option>CUMPLE</option>
+                                <option>NO CUMPLE</option>
+                                <option>N/A</option>
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Utensilios Estériles y Único Uso</td>
+                        <td><select class="cedit">
+                                <option>CUMPLE</option>
+                                <option>NO CUMPLE</option>
+                                <option>N/A</option>
+                            </select></td>
+                    </tr>
                 </tbody>
             </table>
             <div style="margin-top:5px; font-size:11px; display:flex; gap:20px;">
@@ -123,30 +226,61 @@
         <div class="section-header">4. DISTRIBUCIÓN DE LA MUESTRA</div>
         <div class="section">
             <table class="compact-table">
-                <thead><tr><th>Destino / Laboratorio</th><th>Cant.</th><th>Pruebas Solicitadas</th><th>Recibe (Firma)</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th>Destino / Laboratorio</th>
+                        <th>Cant.</th>
+                        <th>Pruebas Solicitadas</th>
+                        <th>Recibe (Firma)</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr><td>Microbiología</td><td><input class="cedit" style="width:50px"></td><td><input class="cedit" placeholder="Esterilidad, LAL"></td><td><input class="cedit"></td></tr>
-                    <tr><td>Fisicoquímicos / CC</td><td><input class="cedit" style="width:50px"></td><td><input class="cedit" placeholder="Viabilidad, Aspecto"></td><td><input class="cedit"></td></tr>
-                    <tr><td>Retención</td><td><input class="cedit" style="width:50px"></td><td>Archivo a largo plazo</td><td><input class="cedit"></td></tr>
+                    <tr>
+                        <td>Microbiología</td>
+                        <td><input class="cedit" style="width:50px"></td>
+                        <td><input class="cedit" placeholder="Esterilidad, LAL"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Fisicoquímicos / CC</td>
+                        <td><input class="cedit" style="width:50px"></td>
+                        <td><input class="cedit" placeholder="Viabilidad, Aspecto"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Retención</td>
+                        <td><input class="cedit" style="width:50px"></td>
+                        <td>Archivo a largo plazo</td>
+                        <td><input class="cedit"></td>
+                    </tr>
                 </tbody>
             </table>
             <div style="margin-top:5px; font-size:11px;">
-                <strong>Condición de Traslado/Temp:</strong> <input class="cedit" style="width:200px" placeholder="Hielera 2-8°C">
+                <strong>Condición de Traslado/Temp:</strong> <input class="cedit" style="width:200px"
+                    placeholder="Hielera 2-8°C">
             </div>
         </div>
 
         <div class="section-header">5. OBSERVACIONES / RIESGOS</div>
         <div class="section">
             <textarea class="cedit" rows="2" style="width:100%" placeholder="Desviaciones detectadas..."></textarea>
-            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-top:2px;">En caso de riesgo crítico (IPR ≥ 27), abrir CAPA inmediatamente.</p>
+            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-top:2px;">En caso de riesgo crítico (IPR ≥
+                27), abrir CAPA inmediatamente.</p>
         </div>
 
         <div class="signature-area">
-            <div class="signature-box"><p>Realizó Muestreo</p><input type="text"><p>Firma y Fecha</p></div>
-            <div class="signature-box"><p>Verificó / CC</p><input type="text"><p>Firma y Fecha</p></div>
+            <div class="signature-box">
+                <p>Realizó Muestreo</p><input type="text">
+                <p>Firma y Fecha</p>
+            </div>
+            <div class="signature-box">
+                <p>Verificó / CC</p><input type="text">
+                <p>Firma y Fecha</p>
+            </div>
         </div>
 
         <div class="footer">FO-LC-46 | Versión: 01 | Registro Muestreo | Xelle Scientific</div>
     </div>
 </body>
+
 </html>

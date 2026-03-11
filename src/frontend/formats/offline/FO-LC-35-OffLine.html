@@ -1,0 +1,320 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-35 Bitácora de Disposición de Lotes</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app-OffLine.js"></script>
+    <style>
+        /* Impresión Horizontal para tablas anchas */
+        @page {
+            size: landscape;
+            margin: 0.5cm;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 4px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 2px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .compact-table input,
+        .compact-table select {
+            font-size: 10px;
+            padding: 2px;
+            text-align: center;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        /* Colores para Estatus */
+        .status-liberado {
+            background-color: #dcfce7;
+            color: #166534;
+            font-weight: bold;
+        }
+
+        .status-cuarentena {
+            background-color: #fef9c3;
+            color: #854d0e;
+            font-weight: bold;
+        }
+
+        .status-rechazado {
+            background-color: #fee2e2;
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .status-devuelto {
+            background-color: #ffedd5;
+            color: #c2410c;
+            font-weight: bold;
+        }
+
+        .status-retirado {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: bold;
+            text-decoration: line-through;
+        }
+
+        /* REGLA ESTRICTA: Placeholders invisibles al imprimir */
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-lc-35">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Registro</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-35-</span>
+                    <input type="text" id="reg-35" class="registry-input generate-barcode" data-target="barcode-35"
+                        data-prefix="FO-LC-35-" placeholder="0000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-35" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>BITÁCORA MAESTRA DE DISPOSICIÓN Y ESTATUS DE LOTES</h1>
+            <div class="metadata">Código: FO-LC-35 | Versión: 1.0 | Vig: Mar2026 | Área: Aseguramiento de Calidad</div>
+        </div>
+
+        <div class="section-header">1. INSTRUCCIONES DE LLENADO</div>
+        <div class="section"
+            style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; font-size: 10px; text-align: justify; border-radius: 4px; margin-bottom: 10px;">
+            <ul style="margin: 0; padding-left: 20px; color: #334155;">
+                <li style="margin-bottom: 5px;"><strong>Estatus Permitidos:</strong> Utilizar únicamente los siguientes
+                    términos: <strong>CUARENTENA</strong> (A la espera de resultados), <strong>LIBERADO</strong>
+                    (Aprobado para uso), <strong>RECHAZADO</strong> (No cumple especificaciones),
+                    <strong>DEVUELTO</strong> (Regresado por el cliente/hospital), <strong>RETIRADO</strong> (Recall).
+                </li>
+                <li><strong>Trazabilidad:</strong> Para lotes liberados o devueltos, es obligatorio registrar el
+                    hospital o médico destino para garantizar el seguimiento de biovigilancia.</li>
+            </ul>
+        </div>
+
+        <div class="section-header">2. REGISTRO DE ESTATUS DE LOTE</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-lotes">
+                <thead>
+                    <tr>
+                        <th width="8%">1. Fecha de Registro</th>
+                        <th width="14%">2. Producto / Tipo de Tejido</th>
+                        <th width="10%">3. Lote</th>
+                        <th width="8%">4. Cantidad<br><span
+                                style="font-weight:normal; font-size:8px;">(Viales/Pzas)</span></th>
+                        <th width="12%">5. Estatus Actual</th>
+                        <th width="12%">6. Doc. Referencia<br><span style="font-weight:normal; font-size:8px;">(CoA,
+                                CAPA, Reporte)</span></th>
+                        <th width="15%">7. Destino<br><span style="font-weight:normal; font-size:8px;">(Médico /
+                                Hospital / Almacén)</span></th>
+                        <th width="12%">8. Motivo<br><span style="font-weight:normal; font-size:8px;">(Devolución /
+                                Rechazo)</span></th>
+                        <th width="8%">9. Firma QA</th>
+                        <th width="1%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit" type="date"></td>
+                        <td><input class="cedit" placeholder="Ej. Células Madre"></td>
+                        <td><input class="cedit" placeholder="Ej. L-102" style="font-weight:bold;"></td>
+                        <td><input class="cedit" type="number" placeholder="pzas"></td>
+                        <td>
+                            <input type="text" class="cedit" onchange="colorStatus(this)" style="width:100%">
+                        </td>
+                        <td><input class="cedit" placeholder="Ej. CoA-102"></td>
+                        <td><input class="cedit" placeholder="Hospital / Interno"></td>
+                        <td><input class="cedit" placeholder="N/A o Razón"></td>
+                        <td><input class="cedit" placeholder="Firma"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:14px;">×</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-lotes')">+ Agregar Lote (Fila)</button>
+        </div>
+
+        <div class="section-header">3. REGLAS NORMATIVAS DE DISPOSICIÓN</div>
+        <div class="section"
+            style="background-color: #f1f5f9; border: 1px solid #cbd5e1; padding: 10px; font-size: 10px; text-align: justify; border-radius: 4px;">
+            <ul style="margin: 0; padding-left: 20px; color: #334155;">
+                <li style="margin-bottom: 5px;"><strong>Lotes Retenidos (Cuarentena):</strong> Físicamente deben estar
+                    en un área segregada o bajo llave (física o electrónica en el ERP) hasta que el Responsable
+                    Sanitario firme el Certificado Analítico (CoA).</li>
+                <li style="margin-bottom: 5px;"><strong>Devoluciones:</strong> Todo producto devuelto por un cliente
+                    pierde su estatus de "Liberado" e ingresa automáticamente a "Cuarentena/Rechazo" hasta que Calidad
+                    evalúe si la cadena de frío se mantuvo intacta y si el producto puede reintegrarse al inventario o
+                    debe destruirse.</li>
+                <li><strong>Auditoría de Reconciliación:</strong> La cantidad registrada en la Columna 4 debe coincidir
+                    exactamente con la suma de las unidades distribuidas, las muestras de retención (contramuestras) y
+                    las destruidas.</li>
+            </ul>
+        </div>
+
+        <div class="footer">FO-LC-35 | Versión: 1.0 | Bitácora Maestra de Disposición y Estatus de Lotes | Xelle
+            Scientific</div>
+    </div>
+
+    <script>
+        function colorStatus(sel) {
+            sel.className = 'cedit'; // Reset
+            if (sel.value === 'LIBERADO') sel.classList.add('status-liberado');
+            else if (sel.value === 'CUARENTENA') sel.classList.add('status-cuarentena');
+            else if (sel.value === 'RECHAZADO') sel.classList.add('status-rechazado');
+            else if (sel.value === 'DEVUELTO') sel.classList.add('status-devuelto');
+            else if (sel.value === 'RETIRADO') sel.classList.add('status-retirado');
+        }
+
+        function addRow(id) {
+            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
+            let r = t.rows[0].cloneNode(true);
+
+            // Limpiar inputs y resetear colores
+            r.querySelectorAll('input').forEach(i => i.value = '');
+            r.querySelectorAll('select').forEach(s => {
+                s.selectedIndex = 0;
+                s.className = 'cedit';
+            });
+
+            t.appendChild(r);
+        }
+
+        function delRow(btn) {
+            let row = btn.parentNode.parentNode;
+            if (row.parentNode.rows.length > 1) {
+                row.parentNode.removeChild(row);
+            }
+        }
+    </script>
+</body>
+
+</html>

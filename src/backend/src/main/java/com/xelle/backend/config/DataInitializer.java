@@ -178,6 +178,7 @@ public class DataInitializer implements CommandLineRunner {
         }
     }
 
+    @SuppressWarnings("null")
     private void ensureDefaultUsers() {
         if (userRepository.count() > 0) {
             return;
