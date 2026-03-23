@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-52 Manifiesto de Destrucción de PNC</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+        }
+
+        .cbx-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 5px;
+            font-size: 10px;
+        }
+
+        .cbx-group-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+            font-size: 10px;
+        }
+
+        .inline-input {
+            width: 40px;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            /* Permitir que las tablas se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title,
+            .section-header {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-lc-52">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Manifiesto</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-52-</span>
+                    <input type="text" id="reg-52" class="registry-input generate-barcode" data-target="barcode-52"
+                        data-prefix="FO-LC-52-" placeholder="000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-52" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>MANIFIESTO DE DESTRUCCIÓN DE PRODUCTO NO CONFORME (PNC)</h1>
+            <div class="metadata">Código: FO-LC-52 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. IDENTIFICACIÓN DEL PRODUCTO A DESTRUIR</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Detalle exacto del lote de Producto Terminado que
+                será eliminado definitivamente del inventario.</p>
+            <table class="no-border-table">
+                <tr>
+                    <td width="25%"><strong>Nombre del Producto:</strong></td>
+                    <td width="25%"><input class="cedit"></td>
+                    <td width="25%"><strong>Número de Lote (PNC):</strong></td>
+                    <td width="25%"><input class="cedit" style="font-weight:bold;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Presentación / Tamaño:</strong></td>
+                    <td><input class="cedit" placeholder="Ej. Vial 10ml"></td>
+                    <td><strong>Cantidad a Destruir:</strong></td>
+                    <td><input type="number" class="cedit" placeholder="(Viales / Unidades)"></td>
+                </tr>
+                <tr>
+                    <td><strong>Área que ejecutó la Segregación:</strong></td>
+                    <td><input class="cedit"></td>
+                    <td><strong>Fecha de Ingreso a Cuarentena:</strong></td>
+                    <td><input type="date" class="cedit"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. JUSTIFICACIÓN DEL RECHAZO (RAZÓN DE DESTRUCCIÓN)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Todo producto terminado destruido debe estar
+                amparado por una investigación oficial de Aseguramiento de Calidad.</p>
+
+            <div style="margin-top:10px;">
+                <strong>Motivo de la No Conformidad:</strong>
+                <div class="cbx-group">
+                    <label><input type="checkbox" class="cedit"> Positivo en prueba de Esterilidad / Micoplasma
+                        (FO-LC-47 / FO-LC-31)</label>
+                    <label><input type="checkbox" class="cedit"> Falla en prueba de Endotoxinas (FO-LC-48)</label>
+                    <label><input type="checkbox" class="cedit"> Excursión térmica crítica durante el
+                        almacenamiento</label>
+                    <label><input type="checkbox" class="cedit"> Vencimiento de Caducidad (Muestras de
+                        Retención)</label>
+                    <label><input type="checkbox" class="cedit"> Defecto crítico de empaque / sellado</label>
+                    <label style="display:flex; align-items:center;">
+                        <input type="checkbox" class="cedit"> Otro: <input class="cedit"
+                            style="flex:1; margin-left:5px; border-bottom:1px solid #ccc;">
+                    </label>
+                </div>
+            </div>
+
+            <div
+                style="margin-top:15px; padding:10px; background-color:#f8fafc; border:1px solid #cbd5e1; border-radius:4px;">
+                <strong>Trazabilidad Documental (Obligatorio):</strong>
+                <table class="no-border-table" style="margin-top:5px;">
+                    <tr>
+                        <td width="50%">Folio de Reporte de Desviación / OOS: <input class="cedit inline-input"
+                                style="width:120px;" placeholder="FO-LC-51-..."></td>
+                        <td width="50%">Folio de CAPA Asociada (FO-OP-53): <input class="cedit inline-input"
+                                style="width:120px;" placeholder="FO-OP-53-..."></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-header">3. MÉTODO DE INACTIVACIÓN Y DISPOSICIÓN FINAL (NOM-087)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Procedimiento ejecutado para neutralizar el riesgo
+                biológico e inhabilitar el producto para su uso comercial.</p>
+
+            <div style="margin-bottom:10px;">
+                <strong>A. Inactivación en Sitio (Si aplica por riesgo biológico):</strong>
+                <div class="cbx-group" style="margin-top:5px;">
+                    <label>
+                        <input type="checkbox" class="cedit"> Química (Inmersión en Hipoclorito de sodio al <input
+                            type="number" class="cedit inline-input" placeholder="%"> % por <input type="number"
+                            class="cedit inline-input" placeholder="min"> min).
+                    </label>
+                    <label>
+                        <input type="checkbox" class="cedit"> Térmica (Esterilización en Autoclave a 121°C por <input
+                            type="number" class="cedit inline-input" placeholder="min"> min). Ciclo No. <input
+                            class="cedit inline-input" style="width:80px;">
+                    </label>
+                    <label><input type="checkbox" class="cedit"> No aplica inactivación previa (Envío directo a
+                        contenedor de RPBI).</label>
+                    <label><input type="checkbox" class="cedit"> Destrucción mecánica (Ruptura de viales/empaques para
+                        evitar falsificación).</label>
+                </div>
+            </div>
+
+            <div style="padding-top:10px; border-top:1px solid #e2e8f0;">
+                <strong>B. Transferencia a Almacén Temporal de RPBI:</strong>
+                <table class="no-border-table" style="margin-top:5px;">
+                    <tr>
+                        <td width="40%">
+                            <strong>Tipo de Contenedor:</strong><br>
+                            <div class="cbx-group-row">
+                                <label><input type="radio" name="cont" class="cedit"> Bolsa Roja</label>
+                                <label><input type="radio" name="cont" class="cedit"> Recipiente Rígido Rojo</label>
+                                <label><input type="radio" name="cont" class="cedit"> Bolsa Amarilla</label>
+                            </div>
+                        </td>
+                        <td width="25%">
+                            <strong>Peso Total del Residuo:</strong><br>
+                            <input type="number" step="0.01" class="cedit inline-input" style="width:60px;"> kg.
+                        </td>
+                        <td width="35%">
+                            <strong>Etiqueta Colocada:</strong><br>
+                            <div class="cbx-group-row">
+                                <label><input type="radio" name="etiq" class="cedit"> ET-RPBI-01 (Rojo)</label>
+                                <label><input type="radio" name="etiq" class="cedit"> ET-RPBI-02 (Amarillo)</label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-header">4. DECLARACIÓN JURADA Y FIRMAS DE TESTIGOS</div>
+        <div class="section">
+            <p style="font-size:10px; text-align:justify; margin-bottom:10px; line-height:1.4;">Hacemos constar que el
+                producto descrito en este documento fue destruido e inactivado en nuestra presencia, imposibilitando su
+                uso para fines comerciales, clínicos o de investigación, siendo dispuesto estrictamente conforme a la
+                normatividad ambiental y sanitaria vigente.</p>
+
+            <p style="font-size:10px; font-weight:bold;">Fecha y Hora de la Destrucción Física: <input type="date"
+                    class="cedit"> a las <input type="time" class="cedit"> hrs.</p>
+
+            <div class="signature-area" style="margin-top: 25px;">
+                <div class="signature-box">
+                    <p>Ejecutó la Destrucción (Operaciones)</p>
+                    <input type="text" placeholder="Nombre y Firma" class="cedit">
+                </div>
+                <div class="signature-box">
+                    <p>Testigo de Verificación (Calidad)</p>
+                    <input type="text" placeholder="Nombre y Firma" class="cedit">
+                </div>
+                <div class="signature-box">
+                    <p>Autorizó (Responsable Dirección)</p>
+                    <input type="text" placeholder="Nombre y Firma" class="cedit">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">FO-LC-52 | MANIFIESTO DE DESTRUCCIÓN DE PNC | Versión: 1.0<br>El contenido de este documento
+            es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de
+            autor, por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+</body>
+
+</html>

@@ -46,6 +46,61 @@
             text-align-last: center;
             border: 2px solid #2c3e50;
         }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+        }
     </style>
 </head>
 
@@ -103,8 +158,7 @@
 
         <div class="header-main">
             <h1>FORMATO RESUMEN EJECUTIVO DE RECEPCIÓN LOTE (COVER SHEET)</h1>
-            <div class="metadata">Consolidado de formatos FO-LC-17, 18 y 19</div>
-            <div class="metadata">Código: FO-OP-16 | Versión: 1.0 | Vig: Ene2026</div>
+            <div class="metadata">Código: FO-LC-16 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section">
@@ -274,7 +328,7 @@
             </div>
         </div>
 
-        <div class="footer">FO-LC-RESUMEN | Revisión Final de Expediente | Uso Exclusivo Xelle Scientific</div>
+        <div class="footer">FO-LC-16 | RESUMEN EJECUTIVO DE LOTE | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
 

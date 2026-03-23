@@ -63,6 +63,10 @@
 </head>
 
 <body id="doc-digitalizar-word">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="window.print()">Imprimir</button>
+    </div>
+
     <div class="container digitalizer-wrap">
         <div class="header-main">
             <h1>DIGITALIZAR WORD</h1>
@@ -110,7 +114,7 @@
                 </div>
                 <div style="min-width:180px;">
                     <label class="file-label" for="doc-vigencia">[VIGENCIA_MES_ANIO]</label>
-                    <input id="doc-vigencia" type="text" style="width:100%;" placeholder="Mar2026">
+                    <input id="doc-vigencia" type="text" style="width:100%;" placeholder="ENE2026">
                 </div>
             </div>
             <div class="hint">Estos datos se usarán en ambos modos (AutoDetect y Plantilla) para encabezado, código y

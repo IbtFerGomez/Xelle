@@ -65,25 +65,27 @@
             }
 
             /* Permitir que las tablas y secciones se partan entre páginas */
-            .section { 
+            .section {
                 page-break-inside: auto !important;
                 break-inside: auto !important;
             }
-            
-            table, .compact-table { 
+
+            table,
+            .compact-table {
                 page-break-inside: auto !important;
                 break-inside: auto !important;
             }
-            
-            thead { 
+
+            thead {
                 display: table-header-group !important;
             }
-            
-            tr, tbody tr { 
+
+            tr,
+            tbody tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
-            
+
             .section-title {
                 page-break-after: avoid !important;
                 break-after: avoid !important;
@@ -96,7 +98,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
@@ -146,7 +148,7 @@
 
         <div class="header-main">
             <h1>NOTA DE REMISIÓN Y ENTREGA</h1>
-            <div class="metadata">Código: FO-OP-17 | Versión: 1.0 | Vig: Ene2026</div>
+            <div class="metadata">Código: FO-OP-17 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section">
@@ -213,10 +215,22 @@
             </div>
         </div>
 
-        <div class="footer">
-            FO-OP-17 | Versión: 1.0 | Vigente a partir de: Enero2026<br>
-            El contenido de este documento es propiedad de “Xelle Scientific”.
+        <div class="signature-area" style="margin-top: 30px;">
+            <div class="signature-box">
+                <p>Elaboró (Almacén / Logística):</p><input type="text">
+                <p>Firma</p>
+            </div>
+            <div class="signature-box">
+                <p>Revisó (Coordinación de Embarques):</p><input type="text">
+                <p>Firma</p>
+            </div>
+            <div class="signature-box">
+                <p>Autorizó (Gerencia de Operaciones):</p><input type="text">
+                <p>Firma</p>
+            </div>
         </div>
+
+        <div class="footer">FO-OP-17 | REMISIÓN | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
 

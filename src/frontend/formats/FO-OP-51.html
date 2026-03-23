@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-LC-51 Producto No Conforme (Desviaciones)</title>
@@ -8,39 +9,79 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
-        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 12px; margin-top: 15px; border-radius: 4px; }
-        .risk-table td, .risk-table th { text-align: center; vertical-align: middle; }
-        .risk-table input { text-align: center; }
-        .cbx-group label { display: block; margin-bottom: 5px; font-size: 11px; }
-        
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+
+        .risk-table td,
+        .risk-table th {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .risk-table input {
+            text-align: center;
+        }
+
+        .cbx-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 11px;
+        }
+
         @media print {
-            .no-print { display: none !important; }
-            ::-webkit-input-placeholder { color: transparent !important; }
-            :-moz-placeholder { color: transparent !important; }
-            ::-moz-placeholder { color: transparent !important; }
-            :-ms-input-placeholder { color: transparent !important; }
-            ::placeholder { color: transparent !important; }
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
 
             /* Permitir que las tablas y secciones se partan entre páginas */
-            .section { 
+            .section {
                 page-break-inside: auto !important;
                 break-inside: auto !important;
             }
-            
-            table, .compact-table { 
+
+            table,
+            .compact-table {
                 page-break-inside: auto !important;
                 break-inside: auto !important;
             }
-            
-            thead { 
+
+            thead {
                 display: table-header-group !important;
             }
-            
-            tr, tbody tr { 
+
+            tr,
+            tbody tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
-            
+
             .section-title {
                 page-break-after: avoid !important;
                 break-after: avoid !important;
@@ -48,22 +89,53 @@
         }
     </style>
 </head>
+
 <body id="doc-fo-lc-51">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        </div>
-    
+    </div>
+
     <div class="container">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
             </div>
             <div class="registry-container">
                 <label>Folio Desviación</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-51-</span>
-                    <input type="text" id="reg-51" class="registry-input generate-barcode" data-target="barcode-51" data-prefix="FO-LC-51-" placeholder="000">
+                    <input type="text" id="reg-51" class="registry-input generate-barcode" data-target="barcode-51"
+                        data-prefix="FO-LC-51-" placeholder="000">
                 </div>
                 <input type="date" class="registry-date">
                 <svg id="barcode-51" class="barcode-svg"></svg>
@@ -72,33 +144,42 @@
 
         <div class="header-main">
             <h1>REPORTE DE PRODUCTO NO CONFORME (DESVIACIONES)</h1>
-            <div class="metadata">Código: FO-LC-51 | Versión: 1.0 | Vig: Mar2026</div>
+            <div class="metadata">Código: FO-OP-51 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section-header">1. DATOS DE IDENTIFICACIÓN DE LA DESVIACIÓN</div>
         <div class="section">
             <table class="no-border-table">
                 <tr>
-                    <td width="20%"><strong>Proceso Afectado:</strong></td><td width="30%"><input class="cedit" placeholder="Ej. Aislamiento CMM"></td>
-                    <td width="20%"><strong>Fecha de Ocurrencia:</strong></td><td width="30%"><input type="date" class="cedit"></td>
+                    <td width="20%"><strong>Proceso Afectado:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="Ej. Aislamiento CMM"></td>
+                    <td width="20%"><strong>Fecha de Ocurrencia:</strong></td>
+                    <td width="30%"><input type="date" class="cedit"></td>
                 </tr>
                 <tr>
-                    <td><strong>Lote / Producto:</strong></td><td><input class="cedit" placeholder="Lote o ID"></td>
-                    <td><strong>Área / Equipo:</strong></td><td><input class="cedit" placeholder="Ej. Cabina Bioseguridad 2"></td>
+                    <td><strong>Lote / Producto:</strong></td>
+                    <td><input class="cedit" placeholder="Lote o ID"></td>
+                    <td><strong>Área / Equipo:</strong></td>
+                    <td><input class="cedit" placeholder="Ej. Cabina Bioseguridad 2"></td>
                 </tr>
                 <tr>
-                    <td><strong>Detectado por:</strong></td><td><input class="cedit" placeholder="Nombre Operador"></td>
-                    <td><strong>Reportado a:</strong></td><td><input class="cedit" placeholder="Nombre Supervisor/Calidad"></td>
+                    <td><strong>Detectado por:</strong></td>
+                    <td><input class="cedit" placeholder="Nombre Operador"></td>
+                    <td><strong>Reportado a:</strong></td>
+                    <td><input class="cedit" placeholder="Nombre Supervisor/Calidad"></td>
                 </tr>
             </table>
-            
-            <label style="margin-top:10px; display:block; font-weight:bold;">Descripción Detallada de la Falla o No Conformidad:</label>
-            <textarea class="cedit" rows="4" style="width:100%; border:1px solid #ccc;" placeholder="Describa claramente qué sucedió, cómo se detectó y cuál es el estado actual del producto..."></textarea>
+
+            <label style="margin-top:10px; display:block; font-weight:bold;">Descripción Detallada de la Falla o No
+                Conformidad:</label>
+            <textarea class="cedit" rows="4" style="width:100%; border:1px solid #ccc;"
+                placeholder="Describa claramente qué sucedió, cómo se detectó y cuál es el estado actual del producto..."></textarea>
         </div>
 
         <div class="section-header">2. EVALUACIÓN DE RIESGO E IMPACTO (SEGÚN MATRIZ MR)</div>
         <div class="section">
-            <p style="font-size:10px; color:#666; margin-bottom:5px;">Calcule el Índice de Prioridad de Riesgo (IPR) basado en la Matriz de Riesgos del proceso correspondiente.</p>
+            <p style="font-size:10px; color:#666; margin-bottom:5px;">Calcule el Índice de Prioridad de Riesgo (IPR)
+                basado en la Matriz de Riesgos del proceso correspondiente.</p>
             <table class="compact-table risk-table">
                 <thead>
                     <tr>
@@ -111,11 +192,16 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input class="cedit" type="number" id="val-s" min="1" max="5" placeholder="1-5" oninput="calcIPR()"></td>
-                        <td><input class="cedit" type="number" id="val-o" min="1" max="5" placeholder="1-5" oninput="calcIPR()"></td>
-                        <td><input class="cedit" type="number" id="val-d" min="1" max="5" placeholder="1-5" oninput="calcIPR()"></td>
-                        <td><input class="cedit" id="val-ipr" readonly placeholder="Auto" style="background:#f1f5f9; font-weight:bold; font-size:14px;"></td>
-                        <td><input class="cedit" id="val-nivel" readonly placeholder="Auto" style="border:none; font-weight:bold; font-size:12px;"></td>
+                        <td><input class="cedit" type="number" id="val-s" min="1" max="5" placeholder="1-5"
+                                oninput="calcIPR()"></td>
+                        <td><input class="cedit" type="number" id="val-o" min="1" max="5" placeholder="1-5"
+                                oninput="calcIPR()"></td>
+                        <td><input class="cedit" type="number" id="val-d" min="1" max="5" placeholder="1-5"
+                                oninput="calcIPR()"></td>
+                        <td><input class="cedit" id="val-ipr" readonly placeholder="Auto"
+                                style="background:#f1f5f9; font-weight:bold; font-size:14px;"></td>
+                        <td><input class="cedit" id="val-nivel" readonly placeholder="Auto"
+                                style="border:none; font-weight:bold; font-size:12px;"></td>
                     </tr>
                 </tbody>
             </table>
@@ -134,13 +220,16 @@
         <div class="section-header">3. ANÁLISIS DE CAUSA RAÍZ Y PLAN DE ACCIÓN (CAPA)</div>
         <div class="section">
             <label style="font-weight:bold; font-size:11px;">Análisis de Causa Raíz (Resumen):</label>
-            <textarea class="cedit" rows="2" style="width:100%; border:1px solid #ccc; margin-bottom:10px;" placeholder="Ej. 5 Porqués, Ishikawa... Indique la causa principal encontrada."></textarea>
-            
+            <textarea class="cedit" rows="2" style="width:100%; border:1px solid #ccc; margin-bottom:10px;"
+                placeholder="Ej. 5 Porqués, Ishikawa... Indique la causa principal encontrada."></textarea>
+
             <label style="font-weight:bold; font-size:11px;">Acción Inmediata (Corrección / Contención):</label>
-            <textarea class="cedit" rows="2" style="width:100%; border:1px solid #ccc; margin-bottom:10px;" placeholder="¿Qué se hizo de inmediato con el producto afectado? Ej. Segregación, contención."></textarea>
-            
+            <textarea class="cedit" rows="2" style="width:100%; border:1px solid #ccc; margin-bottom:10px;"
+                placeholder="¿Qué se hizo de inmediato con el producto afectado? Ej. Segregación, contención."></textarea>
+
             <label style="font-weight:bold; font-size:11px;">Acción Correctiva / Preventiva (Largo Plazo):</label>
-            <textarea class="cedit" rows="2" style="width:100%; border:1px solid #ccc;" placeholder="Medidas implementadas para evitar que vuelva a ocurrir."></textarea>
+            <textarea class="cedit" rows="2" style="width:100%; border:1px solid #ccc;"
+                placeholder="Medidas implementadas para evitar que vuelva a ocurrir."></textarea>
         </div>
 
         <div class="section-header">4. DICTAMEN DE DISPOSICIÓN FINAL DEL PRODUCTO</div>
@@ -148,7 +237,8 @@
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <div style="width:60%;">
                     <label style="font-weight:bold; font-size:11px;">Justificación Técnica del Dictamen:</label>
-                    <textarea class="cedit" rows="2" style="width:100%;" placeholder="Justifique brevemente la decisión tomada..."></textarea>
+                    <textarea class="cedit" rows="2" style="width:100%;"
+                        placeholder="Justifique brevemente la decisión tomada..."></textarea>
                 </div>
                 <div style="width:35%; text-align:center;">
                     <label style="font-weight:bold; display:block; margin-bottom:5px;">DECISIÓN FINAL:</label>
@@ -174,13 +264,13 @@
                 <p>Fecha: <input type="date" class="cedit"></p>
             </div>
             <div class="signature-box">
-                <p>Autorizó Disposición (Resp. Sanitario)</p>
+                <p>Autorizó Disposición (Responsable Dirección)</p>
                 <input type="text" placeholder="Nombre y Firma">
                 <p>Fecha: <input type="date" class="cedit"></p>
             </div>
         </div>
 
-        <div class="footer">FO-LC-51 | Versión: 1.0 | Reporte de Producto No Conforme (Desviaciones) | Xelle Scientific</div>
+        <div class="footer">FO-OP-51 | PRODUCTO NO CONFORME (DESVIACIONES) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 
     <script>
@@ -189,21 +279,21 @@
             const o = parseInt(document.getElementById('val-o').value) || 0;
             const d = parseInt(document.getElementById('val-d').value) || 0;
             const ipr = s * o * d;
-            
+
             document.getElementById('val-ipr').value = ipr > 0 ? ipr : '';
-            
+
             const nivelEl = document.getElementById('val-nivel');
-            if (ipr >= 27) { 
-                nivelEl.value = 'CRÍTICO (CAPA)'; 
-                nivelEl.style.color = '#991b1b'; 
+            if (ipr >= 27) {
+                nivelEl.value = 'CRÍTICO (CAPA)';
+                nivelEl.style.color = '#991b1b';
                 nivelEl.style.backgroundColor = '#fee2e2';
-            } else if (ipr >= 10) { 
-                nivelEl.value = 'ALTO (Plan Prev.)'; 
-                nivelEl.style.color = '#854d0e'; 
+            } else if (ipr >= 10) {
+                nivelEl.value = 'ALTO (Plan Prev.)';
+                nivelEl.style.color = '#854d0e';
                 nivelEl.style.backgroundColor = '#fef9c3';
-            } else if (ipr > 0) { 
-                nivelEl.value = 'BAJO (Monitoreo)'; 
-                nivelEl.style.color = '#166534'; 
+            } else if (ipr > 0) {
+                nivelEl.value = 'BAJO (Monitoreo)';
+                nivelEl.style.color = '#166534';
                 nivelEl.style.backgroundColor = '#dcfce7';
             } else {
                 nivelEl.value = '';
@@ -212,4 +302,5 @@
         }
     </script>
 </body>
+
 </html>

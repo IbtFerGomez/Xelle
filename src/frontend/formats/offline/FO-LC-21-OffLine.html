@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-LC-21 Bitácora Cultivo (OFF)</title>
@@ -10,39 +11,87 @@
     <style>
         /* REGLAS DE IMPRESIÓN COMPACTA */
         @media print {
-            @page { 
-                size: letter; 
-                margin: 0.5cm; /* Márgenes mínimos para aprovechar la hoja */
+            @page {
+                size: letter;
+                margin: 0.5cm;
+                /* Márgenes mínimos para aprovechar la hoja */
             }
-            body, .container {
+
+            body,
+            .container {
                 margin: 0 !important;
-                padding: 5px 15px !important; /* Padding interno reducido */
+                padding: 5px 15px !important;
+                /* Padding interno reducido */
                 background: white !important;
-                min-height: auto !important; /* Evitar forzar altura */
+                min-height: auto !important;
+                /* Evitar forzar altura */
             }
-            input::placeholder, textarea::placeholder {
+
+            input::placeholder,
+            textarea::placeholder {
                 color: transparent !important;
                 opacity: 0 !important;
             }
-            table, th, td {
+
+            table,
+            th,
+            td {
                 border: 1px solid #000 !important;
                 border-collapse: collapse !important;
             }
+
             /* Filas más delgadas para ahorrar espacio */
-            td { height: 22px !important; padding: 0 !important; }
-            
-            input.cedit { border: none !important; }
-            .section-title { margin-top: 5px !important; margin-bottom: 2px !important; font-size: 10px !important; }
-            .header-top { margin-bottom: 5px !important; }
-            .signature-area { margin-top: 10px !important; margin-bottom: 5px !important; }
-            .no-print { display: none !important; }
+            td {
+                height: 22px !important;
+                padding: 0 !important;
+            }
+
+            input.cedit {
+                border: none !important;
+            }
+
+            .section-title {
+                margin-top: 5px !important;
+                margin-bottom: 2px !important;
+                font-size: 10px !important;
+            }
+
+            .header-top {
+                margin-bottom: 5px !important;
+            }
+
+            .signature-area {
+                margin-top: 10px !important;
+                margin-bottom: 5px !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
         }
 
         /* Estilos visuales */
-        .log-table th { background: #f0f0f0; font-size: 9px; text-align: center; vertical-align: middle; padding: 2px; }
-        .log-table td { padding: 0; }
-        .log-table input { width: 98%; text-align: center; border: none; outline: none; background: transparent; font-size: 10px; }
-        
+        .log-table th {
+            background: #f0f0f0;
+            font-size: 9px;
+            text-align: center;
+            vertical-align: middle;
+            padding: 2px;
+        }
+
+        .log-table td {
+            padding: 0;
+        }
+
+        .log-table input {
+            width: 98%;
+            text-align: center;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 10px;
+        }
+
         .header-info-box {
             border: 1px solid #000;
             padding: 4px;
@@ -51,22 +100,53 @@
         }
     </style>
 </head>
+
 <body id="doc-fo-lc-21">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .svg-logo-titulo {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .svg-logo-subtitulo {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .svg-logo-celula {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
+                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
+                        <path class="svg-logo-celula"
+                            d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z" />
+                    </g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68"
+                        class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35"
+                        font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
             </div>
             <div class="registry-container">
                 <label>No. Registro / Folio</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-21-</span>
-                    <input type="text" id="reg-21" class="registry-input generate-barcode" data-target="barcode-21" data-prefix="FO-LC-21-" placeholder="0001">
+                    <input type="text" id="reg-21" class="registry-input generate-barcode" data-target="barcode-21"
+                        data-prefix="FO-LC-21-" placeholder="0001">
                 </div>
                 <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
                 <svg id="barcode-21" class="barcode-svg"></svg>
@@ -75,7 +155,7 @@
 
         <div class="header-main">
             <h1>BITÁCORA DE MANTENIMIENTO Y CULTIVO CELULAR</h1>
-            <div class="metadata">Código: FO-LC-21 | Versión: 1.0-OFF | Vigencia: Ene 2026</div>
+            <div class="metadata">Código: FO-LC-21 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section">
@@ -84,25 +164,26 @@
                 <table class="no-border-table">
                     <tr>
                         <td style="width: 60%;">
-                            <strong>ID Lote Celular (TPL):</strong> 
-                            <input class="cedit" style="font-weight:bold; font-size:14px;" placeholder="Ej: TPL-DG-P1-001">
+                            <strong>ID Lote Celular (TPL):</strong>
+                            <input class="cedit" style="font-weight:bold; font-size:14px;"
+                                placeholder="Ej: TPL-DG-P1-001">
                         </td>
                         <td style="width: 20%;">
-                            <strong>Pase Actual:</strong> 
+                            <strong>Pase Actual:</strong>
                             <input class="cedit" style="text-align:center; font-weight:bold;" placeholder="P#">
                         </td>
                         <td style="width: 20%;">
-                            <strong>Tipo Flask:</strong> 
+                            <strong>Tipo Flask:</strong>
                             <input class="cedit" placeholder="T75 / T175">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <strong>ID Parental (Origen):</strong> 
+                            <strong>ID Parental (Origen):</strong>
                             <input class="cedit" placeholder="Lote anterior (Pase previo)">
                         </td>
                         <td colspan="2">
-                            <strong>Fecha Inicio Pase:</strong> 
+                            <strong>Fecha Inicio Pase:</strong>
                             <input class="cedit" placeholder="DD/MM/AA">
                         </td>
                     </tr>
@@ -127,16 +208,116 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
                 </tbody>
             </table>
             <p style="font-size: 8px; margin-top: 2px;">* CM: Cambio Medio | P: Pase | C: Cosecha | F: Foto</p>
@@ -181,9 +362,8 @@
             </div>
         </div>
 
-        <div class="footer">
-            FO-LC-21 | Versión: 1.0-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.
-        </div>
+        <div class="footer">FO-LC-21-O | BITÁCORA CULTIVO (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
+
 </html>

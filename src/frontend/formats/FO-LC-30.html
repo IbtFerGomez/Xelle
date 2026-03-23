@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-LC-30 Bitácora de Recolección de Medios Condicionados</title>
@@ -7,39 +8,160 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app.js"></script>
     <style>
-        @page { size: landscape; margin: 0.5cm; }
-        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 12px; border-radius: 4px; text-transform: uppercase; }
-        .compact-table th { background-color: #1E3A5F; color: white; font-size: 9px; padding: 4px; text-align: center; }
-        .compact-table td { font-size: 9px; padding: 3px; vertical-align: middle; text-align: center; }
-        .compact-table input { font-size: 9px; text-align: center; width: 100%; border: none; }
-        
-        .status-badge { font-weight: bold; padding: 2px 4px; border-radius: 3px; font-size: 8px; }
-        .pcc-alert { color: #991b1b; background: #fee2e2; }
+        @page {
+            size: landscape;
+            margin: 0.5cm;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 12px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 4px;
+            text-align: center;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 3px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .compact-table input {
+            font-size: 9px;
+            text-align: center;
+            width: 100%;
+            border: none;
+        }
+
+        .status-badge {
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 8px;
+        }
+
+        .pcc-alert {
+            color: #991b1b;
+            background: #fee2e2;
+        }
 
         @media print {
-            .global-controls, .no-print { display:none !important; }
-            ::-webkit-input-placeholder { color: transparent !important; }
-            ::placeholder { color: transparent !important; }
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
         }
     </style>
 </head>
+
 <body id="doc-fo-lc-30">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
-    
+
     <div class="container" style="max-width:100%; width:100%;">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
             </div>
             <div class="registry-container">
                 <label>Folio Recolección</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-30-</span>
-                    <input type="text" id="reg-30" class="registry-input generate-barcode" data-target="barcode-30" data-prefix="FO-LC-30-" placeholder="REC000">
+                    <input type="text" id="reg-30" class="registry-input generate-barcode" data-target="barcode-30"
+                        data-prefix="FO-LC-30-" placeholder="REC000">
                 </div>
                 <input type="date" class="registry-date">
                 <svg id="barcode-30" class="barcode-svg"></svg>
@@ -48,7 +170,7 @@
 
         <div class="header-main">
             <h1>BITÁCORA DE RECOLECCIÓN DE MEDIOS CONDICIONADOS</h1>
-            <div class="metadata">Código: FO-LC-30 | Versión: 1.0 | Vig: Mar 2026 | Proceso: Control de Materia Prima</div>
+            <div class="metadata">Código: FO-LC-30 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section-header">1. REGISTRO DE RECOLECCIÓN DE MEDIO (HARVEST)</div>
@@ -85,7 +207,9 @@
                     </tr>
                 </tbody>
             </table>
-            <button class="btn-add no-print" onclick="addRow('tbl-harvest')" style="width:100%; margin-top:5px; background:#e2e8f0; border:1px dashed #999; font-size:10px; cursor:pointer;">+ AGREGAR FILA DE RECOLECCIÓN</button>
+            <button class="btn-add no-print" onclick="addRow('tbl-harvest')"
+                style="width:100%; margin-top:5px; background:#e2e8f0; border:1px dashed #999; font-size:10px; cursor:pointer;">+
+                AGREGAR FILA DE RECOLECCIÓN</button>
         </div>
 
         <div class="section-header">2. ALMACENAMIENTO TEMPORAL Y TRASLADO</div>
@@ -129,16 +253,18 @@
             </div>
         </div>
 
-        div class="footer">FO-LC-30 | Versión: 1.0 | Bitácora de Recolección de Medios Condicionados | Xelle Scientific</div>
+        <div class="footer">FO-LC-30 | BITÁCORA DE RECOLECCIÓN DE MEDIOS CONDICIONADOS | Versión: 1.0<br>El contenido de
+            este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los
+            derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
-<
-    <script>
+    < <script>
         function addRow(id){
-            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
-            let r = t.rows[0].cloneNode(true);
-            r.querySelectorAll('input').forEach(i => i.value = '');
-            t.appendChild(r);
+        let t = document.getElementById(id).getElementsByTagName('tbody')[0];
+        let r = t.rows[0].cloneNode(true);
+        r.querySelectorAll('input').forEach(i => i.value = '');
+        t.appendChild(r);
         }
-    </script>
+        </script>
 </body>
+
 </html>

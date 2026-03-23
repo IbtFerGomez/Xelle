@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT-OP-01 - Manual Completo de Identificación Visual y Trazabilidad - Xelle Scientific</title>
+    <style>
+        :root {
+            --navy-900: #0b1f3a;
+            --navy-800: #12325a;
+            --navy-700: #1a4a80;
+            --navy-100: #e9eff7;
+            --navy-050: #f3f7fc;
+            --text-main: #23313f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            background-color: var(--navy-050);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--navy-900), var(--navy-700));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--navy-700);
+            color: var(--navy-800);
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--navy-100);
+            color: var(--navy-900);
+            font-weight: bold;
+        }
+
+        .status-box {
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .amarillo {
+            background-color: #ffcc00;
+            color: #333;
+        }
+
+        .verde {
+            background-color: #28a745;
+        }
+
+        .rojo {
+            background-color: #dc3545;
+        }
+
+        .naranja {
+            background-color: #fd7e14;
+        }
+
+        .highlight {
+            background-color: var(--navy-100);
+            color: var(--navy-800);
+            font-weight: bold;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .pcc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pcc-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .pcc-list li::before {
+            content: '⚠️';
+            position: absolute;
+            left: 0;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8em;
+            text-align: center;
+            color: var(--navy-700);
+            border-top: 1px solid var(--navy-100);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="global-controls"
+        style="position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 1000; background: rgba(255, 255, 255, 0.95); padding: 15px 12px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25); border: 2px solid #3498db; cursor: move; user-select: none; min-width: 130px;">
+        <button onclick="window.print()"
+            style="padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; color: white; font-size: 13px; width: 100%; transition: all 0.2s ease; text-align: center; background-color: #2c3e50;">Imprimir</button>
+    </div>
+
+    <header>
+        <h1>XELLE SCIENTIFIC</h1>
+        <p>Manual Completo de Identificación Visual y Trazabilidad de Lotes</p>
+        <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">IT-OP-01 - Sistema Integral de Etiquetado</p>
+    </header>
+
+    <div class="container">
+
+        <h2>1. Semáforo de Estatus de Lotes (Identificación Física Principal)</h2>
+        <p>Todo material en almacén o laboratorio debe portar una de las siguientes etiquetas según su fase:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Color</th>
+                    <th>Estatus</th>
+                    <th>Código</th>
+                    <th>Uso Normativo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="status-box amarillo">Cuarentena</div>
+                    </td>
+                    <td><strong>PENDIENTE</strong></td>
+                    <td>ET-LC-03</td>
+                    <td>Material recién recibido o producto terminado esperando resultados de laboratorio (Fase 3).</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="status-box verde">Liberado</div>
+                    </td>
+                    <td><strong>APROBADO</strong></td>
+                    <td>ET-LC-02</td>
+                    <td>Producto que cumplió todas las especificaciones. Listo para distribución y uso clínico.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="status-box rojo">Rechazado</div>
+                    </td>
+                    <td><strong>NO CONFORME</strong></td>
+                    <td>ET-LC-04</td>
+                    <td>Material con fallas técnicas, contaminación o excursión térmica. Segregar para destrucción.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="status-box naranja">Muestreado</div>
+                    </td>
+                    <td><strong>CONTROL</strong></td>
+                    <td>ET-LC-01</td>
+                    <td>Sello de seguridad que indica que la caja fue abierta por Calidad para inspección.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>2. Etiquetas de Materia Prima y Recepción</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Descripción y Uso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="highlight">ET-LC-05<br>(ET-MP-01)</span></td>
+                    <td><strong>MP Placenta</strong></td>
+                    <td>Identificación de materia prima - placenta. Se aplica en recepción logística incluyendo ID de
+                        donante, hospital origen, fecha/hora de recolección y recepción. Indica estatus inicial:
+                        Cuarentena o Aceptada.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-06<br>(ET-MPNC-01)</span></td>
+                    <td><strong>MPNC Placenta</strong></td>
+                    <td>Materia Prima No Conforme - Rechazo de placenta. Indica motivo (logístico, macroscópico o
+                        biológico). Referencia manifiesto de destrucción (FO-LC-20). <strong>Papel ROJO.</strong></td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-08</span></td>
+                    <td><strong>Insumo Aprobado</strong></td>
+                    <td>Control de inventarios para insumos aprobados. Incluye lote de proveedor, fecha de
+                        recepción/caducidad y requisitos de cadena de frío.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>3. Etiquetas de Control de Calidad</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Descripción y Uso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="highlight">ET-LC-09<br>(ET-LC-12)</span></td>
+                    <td><strong>Contramuestra</strong></td>
+                    <td>Muestra de retención - Prohibida su venta. Se utiliza para retención de producto. Debe
+                        mantenerse Caducidad + 1 año. Estatus: Análisis CC o Retención Legal.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-10<br>(ET-LC-13)</span></td>
+                    <td><strong>Contenedor Retenciones</strong></td>
+                    <td>Identificación de contenedor para custodia de muestras de retención en Control de Calidad.
+                        Indica rango de temperatura (2-8°C, -20°C, -80°C) y fecha de depuración.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-11<br>(ET-LC-15)</span></td>
+                    <td><strong>Muestra en Análisis</strong></td>
+                    <td>Control de Calidad - No manipular. Identifica muestras bajo análisis (Esterilidad, Endotoxinas,
+                        Serología, etc.). Incluye fecha de inicio y analista responsable.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>4. Etiquetas de Productos No Conformes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Descripción y Uso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="highlight">ET-LC-07</span></td>
+                    <td><strong>PNC - Rechazo General</strong></td>
+                    <td>Producto No Conforme (no placenta). Indica fase del rechazo (Manufactura/Expansión, Control
+                        Calidad, Devolución). Referencia reporte de desviación (FO-QA-03). Disposición: Destrucción o
+                        Retención CAPA.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-06<br>(ET-MPNC-01)</span></td>
+                    <td><strong>MPNC Placenta</strong></td>
+                    <td>Específica para materia prima placenta no conforme. Ver sección 2.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>5. Etiquetas de Productos Especiales y Subproductos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Descripción y Uso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="highlight">ET-LC-12<br>(ET-LC-21-REV)</span></td>
+                    <td><strong>Medio Condicionado</strong></td>
+                    <td>Medio recuperado de cultivo celular. Trazabilidad de subproducto celular. Incluye ID lote
+                        origen, tipo celular, pasaje (P), volumen y condiciones de almacenamiento.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-13<br>(ET-LC-22)</span></td>
+                    <td><strong>Exosomas Recuperados</strong></td>
+                    <td>Concentrado celular - Manejo en frío. Incluye método de aislamiento, concentración estimada y
+                        almacenamiento recomendado (-20°C o -80°C).</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-15<br>(ET-LC-24)</span></td>
+                    <td><strong>Medio Liofilizado</strong></td>
+                    <td>Insumo en polvo - Frágil. Control de humedad. Incluye peso neto, factor de reconstitución y
+                        advertencia de sello de vacío.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>6. Gestión de Residuos (RPBI - NOM-087-SEMARNAT-SSA1-2002)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Color</th>
+                    <th>Contenido Autorizado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="highlight">ET-RPBI-01</span></td>
+                    <td><strong style="color: #dc3545;">ROJO</strong></td>
+                    <td>Punzocortantes, cultivos, cepas y residuos no anatómicos.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-RPBI-02</span></td>
+                    <td><strong style="color: #ffcc00;">AMARILLO</strong></td>
+                    <td>Placentas y residuos patológicos (tejidos anatómicos).</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>7. Flujo Documental y Puntos Críticos de Control (PCC)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fase del Proceso</th>
+                    <th>Formato Obligatorio</th>
+                    <th>Etiquetas Asociadas</th>
+                    <th>Punto Crítico de Control (PCC)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1. Recepción</td>
+                    <td>FO-LC-17</td>
+                    <td>ET-LC-05 (MP-01)</td>
+                    <td>Integridad de embalaje y temperatura (2°C a 8°C).</td>
+                </tr>
+                <tr>
+                    <td>2. Procesamiento</td>
+                    <td>FO-LC-18</td>
+                    <td>ET-LC-03</td>
+                    <td>Peso neto, apariencia visual y asepsia de cabina.</td>
+                </tr>
+                <tr>
+                    <td>3. Muestreo</td>
+                    <td>FO-LC-34</td>
+                    <td>ET-LC-01, ET-LC-09</td>
+                    <td>Toma estratificada y registro de cantidad volumétrica.</td>
+                </tr>
+                <tr>
+                    <td>4. Calidad</td>
+                    <td>FO-LC-19</td>
+                    <td>ET-LC-03, ET-LC-11</td>
+                    <td>Serología, esterilidad y endotoxinas.</td>
+                </tr>
+                <tr>
+                    <td>5. Liberación</td>
+                    <td>FO-LC-16 (Cover)</td>
+                    <td>ET-LC-02</td>
+                    <td>Dictamen final firmado por Responsable Dirección.</td>
+                </tr>
+                <tr>
+                    <td>6. Rechazo y segregación</td>
+                    <td>FO-LC-51, FO-LC-52</td>
+                    <td>ET-LC-04, ET-LC-06, ET-LC-07</td>
+                    <td>Identificación, generación registro de PNC/MPNC, segregación física y documental.</td>
+                </tr>
+                <tr>
+                    <td>7. Retención/Contramuestra</td>
+                    <td>F-CAL-05</td>
+                    <td>ET-LC-10, ET-LC-09</td>
+                    <td>Custodia por Caducidad + 1 año, control de temperatura.</td>
+                </tr>
+                <tr>
+                    <td>8. Gestión RPBI</td>
+                    <td>FO-LC-20</td>
+                    <td>ET-RPBI-01, ET-RPBI-02</td>
+                    <td>Segregación por tipo de residuo según NOM-087.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>8. Resumen de Códigos de Etiquetas</h2>
+        <ul class="pcc-list">
+            <li><strong>ET-LC-01:</strong> Muestreado (Naranja) - Sello de Control de Calidad</li>
+            <li><strong>ET-LC-02:</strong> Liberado (Verde) - Producto Aprobado</li>
+            <li><strong>ET-LC-03:</strong> Cuarentena (Amarillo) - Pendiente de Análisis</li>
+            <li><strong>ET-LC-04:</strong> Rechazado (Rojo) - No Conforme</li>
+            <li><strong>ET-LC-05 (ET-MP-01):</strong> Materia Prima - Placenta</li>
+            <li><strong>ET-LC-06 (ET-MPNC-01):</strong> Materia Prima No Conforme - Placenta</li>
+            <li><strong>ET-LC-07:</strong> Producto No Conforme (General)</li>
+            <li><strong>ET-LC-08:</strong> Insumo Aprobado - Inventarios</li>
+            <li><strong>ET-LC-09 (ET-LC-12):</strong> Contramuestra - Retención</li>
+            <li><strong>ET-LC-10 (ET-LC-13):</strong> Contenedor de Retenciones</li>
+            <li><strong>ET-LC-11 (ET-LC-15):</strong> Muestra en Análisis</li>
+            <li><strong>ET-LC-12 (ET-LC-21-REV):</strong> Medio Condicionado Recuperado</li>
+            <li><strong>ET-LC-13 (ET-LC-22):</strong> Exosomas Recuperados</li>
+            <li><strong>ET-LC-15 (ET-LC-24):</strong> Medio Liofilizado</li>
+            <li><strong>ET-RPBI-01:</strong> RPBI Rojo - Punzocortantes y cultivos</li>
+            <li><strong>ET-RPBI-02:</strong> RPBI Amarillo - Tejidos anatómicos</li>
+        </ul>
+
+        <div class="signature-area" style="margin-top: 30px;">
+            <div class="signature-box">
+                <p>Elaboró (Coordinación SGC / Operaciones):</p><input type="text">
+                <p>Firma</p>
+            </div>
+            <div class="signature-box">
+                <p>Revisó (Aseguramiento de Calidad):</p><input type="text">
+                <p>Firma</p>
+            </div>
+            <div class="signature-box">
+                <p>Autorizó (Responsable Dirección):</p><input type="text">
+                <p>Firma</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>IT-OP-01</strong> - Manual de Identificación Visual y Trazabilidad de Lotes</p>
+            <p>Propiedad de Xelle Scientific © 2026 | Aseguramiento de Calidad | Versión 2.0 - Completo</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Este manual incluye 16 etiquetas del sistema integral de
+                trazabilidad</p>
+        </div>
+    </div>
+    <script>
+        // Hacer la barra de controles draggable
+        (function () {
+            const controlBar = document.querySelector('.global-controls');
+            if (!controlBar) return;
+
+            let isDragging = false;
+            let currentX, currentY, initialX, initialY;
+            let xOffset = 0, yOffset = 0;
+
+            controlBar.addEventListener('mousedown', dragStart);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+            controlBar.addEventListener('touchstart', dragStart);
+            document.addEventListener('touchmove', drag);
+            document.addEventListener('touchend', dragEnd);
+
+            function dragStart(e) {
+                if (e.target.tagName === 'BUTTON') return;
+                if (e.type === 'touchstart') {
+                    initialX = e.touches[0].clientX - xOffset;
+                    initialY = e.touches[0].clientY - yOffset;
+                } else {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                }
+                isDragging = true;
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                if (e.type === 'touchmove') {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+                xOffset = currentX;
+                yOffset = currentY;
+                controlBar.style.transform = `translate(${currentX}px, calc(-50% + ${currentY}px))`;
+            }
+
+            function dragEnd() {
+                isDragging = false;
+            }
+        })();
+    </script>
+
+</body>
+
+</html>

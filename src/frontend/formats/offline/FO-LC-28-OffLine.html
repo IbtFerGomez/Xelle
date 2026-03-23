@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-LC-28 Uso Equipos (OFF)</title>
@@ -10,11 +11,13 @@
     <style>
         /* REGLAS DE IMPRESIÓN HORIZONTAL */
         @media print {
-            @page { 
-                size: landscape; 
-                margin: 0.5cm; 
+            @page {
+                size: landscape;
+                margin: 0.5cm;
             }
-            body, .container {
+
+            body,
+            .container {
                 margin: 0 !important;
                 padding: 10px !important;
                 background: white !important;
@@ -23,24 +26,57 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
-            .no-print { display: none !important; }
-            input::placeholder { color: transparent !important; }
-            
-            table, th, td {
+
+            .no-print {
+                display: none !important;
+            }
+
+            input::placeholder {
+                color: transparent !important;
+            }
+
+            table,
+            th,
+            td {
                 border: 1px solid #000 !important;
                 border-collapse: collapse !important;
             }
-            input.cedit { border: none !important; }
-            
+
+            input.cedit {
+                border: none !important;
+            }
+
             /* Altura de filas para llenado manual cómodo */
-            .row-tall td { height: 32px !important; }
+            .row-tall td {
+                height: 32px !important;
+            }
         }
 
         /* Estilos de Tabla */
-        .log-table th { background: #f0f0f0; font-size: 10px; padding: 4px; border: 1px solid #999; vertical-align: middle; text-align: center; }
-        .log-table td { border: 1px solid #999; padding: 2px; vertical-align: middle; }
-        .log-table input { width: 98%; border: none; outline: none; background: transparent; font-size: 11px; text-align: center; }
-        
+        .log-table th {
+            background: #f0f0f0;
+            font-size: 10px;
+            padding: 4px;
+            border: 1px solid #999;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .log-table td {
+            border: 1px solid #999;
+            padding: 2px;
+            vertical-align: middle;
+        }
+
+        .log-table input {
+            width: 98%;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 11px;
+            text-align: center;
+        }
+
         /* Sección de Info del Equipo */
         .equip-info {
             display: grid;
@@ -52,25 +88,65 @@
             background: #fafafa;
             font-size: 10px;
         }
-        .equip-info label { font-weight: bold; }
-        .equip-info input { border: none; border-bottom: 1px solid #ccc; width: 70%; background: transparent; }
+
+        .equip-info label {
+            font-weight: bold;
+        }
+
+        .equip-info input {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            width: 70%;
+            background: transparent;
+        }
     </style>
 </head>
+
 <body id="doc-fo-lc-28">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .svg-logo-titulo {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .svg-logo-subtitulo {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .svg-logo-celula {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
+                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
+                        <path class="svg-logo-celula"
+                            d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z" />
+                    </g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68"
+                        class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35"
+                        font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
             </div>
             <div class="registry-container">
                 <label>Mes / Año</label>
                 <div class="registry-wrapper">
-                    <input type="text" class="registry-input generate-barcode" style="text-align:center;" placeholder="MM / AAAA" data-target="barcode-fo-lc-28-offline-html" data-prefix="FO-LC-28-OffLine.html-">
+                    <input type="text" class="registry-input generate-barcode" style="text-align:center;"
+                        placeholder="MM / AAAA" data-target="barcode-fo-lc-28-offline-html" data-prefix="FO-LC-28-">
                 </div>
                 <input type="text" class="registry-date" placeholder="ID Equipo">
                 <svg id=\"barcode-fo-lc-28-offline-html\" class=\"barcode-svg\"></svg>
@@ -79,7 +155,7 @@
 
         <div class="header-main">
             <h1>BITÁCORA DE USO, LIMPIEZA Y MANTENIMIENTO DE EQUIPOS</h1>
-            <div class="metadata">Código: FO-LC-28 | Versión: 1.0-OFF | Vigencia: Ene 2026</div>
+            <div class="metadata">Código: FO-LC-28 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="equip-info">
@@ -114,25 +190,152 @@
                         <td><input class="cedit" placeholder="Ninguna"></td>
                         <td><input class="cedit"></td>
                     </tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr class="row-tall"><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="row-tall">
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
                 </tbody>
             </table>
-            
+
             <div style="font-size: 9px; margin-top: 5px; color: #333;">
-                <strong>*Clave de Actividad:</strong> (U) Uso / Proceso | (L) Limpieza y Sanitización | (M) Mantenimiento Prev/Corr | (C) Calibración/Verificación
+                <strong>*Clave de Actividad:</strong> (U) Uso / Proceso | (L) Limpieza y Sanitización | (M)
+                Mantenimiento Prev/Corr | (C) Calibración/Verificación
             </div>
         </div>
 
@@ -149,9 +352,8 @@
             </div>
         </div>
 
-        <div class="footer">
-            FO-LC-28 | Versión: 1.0-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.
-        </div>
+        <div class="footer">FO-LC-28-O | USO EQUIPOS (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
+
 </html>

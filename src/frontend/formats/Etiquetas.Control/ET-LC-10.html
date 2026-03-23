@@ -1,52 +1,182 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>ET-LC-10 - Contenedor Retenciones</title>
     <style>
-        body { font-family: Arial, sans-serif; display: flex; justify-content: center; padding: 20px; background-color: #f4f4f4; }
-        .etiqueta-container {
-            width: 100mm; height: 100mm; background-color: #ffffff; border: 2px solid #000;
-            padding: 5mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
-        .logo-area { text-align: center; margin-bottom: 5px; }
-        .logo-area svg { width: 30px; height: 30px; vertical-align: middle; }
-        .logo-text { font-size: 12px; font-weight: bold; vertical-align: middle; margin-left: 5px; color: #2c3e50; }
-        .titulo-alerta { text-align: center; font-size: 15px; font-weight: 900; letter-spacing: 0.5px; margin: 0 0 2px 0; background-color: #fce4ec; color: #880e4f; padding: 4px; border: 1px solid #ad1457; }
-        .subtitulo { text-align: center; font-size: 9px; font-weight: bold; margin-bottom: 10px; text-decoration: underline; }
-        .campo { display: flex; align-items: flex-end; margin-bottom: 8px; font-size: 10px; }
-        .campo label { font-weight: bold; white-space: nowrap; margin-right: 5px; }
-        .linea { flex-grow: 1; border-bottom: 1px solid #000; height: 12px; }
-        .caja-temp { border: 1px solid #000; padding: 5px; margin: 5px 0; font-size: 9px; background-color: #f3f3f3; }
-        .caja-temp strong { display: block; margin-bottom: 3px; }
-        .check-inline { display: inline-block; margin-right: 12px; }
-        .advertencia { text-align: center; font-size: 8.5px; font-weight: bold; color: #d32f2f; border: 1px dashed #d32f2f; padding: 3px; margin-top: 5px; }
-        .footer-bottom { margin-top: 5px; font-size: 8px; text-align: center; color: #777; border-top: 1px solid #ccc; padding-top: 4px; }
-        @media print { @page { margin: 0; } body { margin: 0; padding: 0; background: #fff; } .etiqueta-container { border: none; } }
+
+        .etiqueta-container {
+            width: 100mm;
+            height: 100mm;
+            background-color: #ffffff;
+            border: 2px solid #000;
+            padding: 5mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo-area {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .logo-area svg {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+        }
+
+        .logo-text {
+            font-size: 12px;
+            font-weight: bold;
+            vertical-align: middle;
+            margin-left: 5px;
+            color: #2c3e50;
+        }
+
+        .titulo-alerta {
+            text-align: center;
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            margin: 0 0 2px 0;
+            background-color: #fce4ec;
+            color: #880e4f;
+            padding: 4px;
+            border: 1px solid #ad1457;
+        }
+
+        .subtitulo {
+            text-align: center;
+            font-size: 9px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+
+        .campo {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 8px;
+            font-size: 10px;
+        }
+
+        .campo label {
+            font-weight: bold;
+            white-space: nowrap;
+            margin-right: 5px;
+        }
+
+        .linea {
+            flex-grow: 1;
+            border-bottom: 1px solid #000;
+            height: 12px;
+        }
+
+        .caja-temp {
+            border: 1px solid #000;
+            padding: 5px;
+            margin: 5px 0;
+            font-size: 9px;
+            background-color: #f3f3f3;
+        }
+
+        .caja-temp strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .check-inline {
+            display: inline-block;
+            margin-right: 12px;
+        }
+
+        .advertencia {
+            text-align: center;
+            font-size: 8.5px;
+            font-weight: bold;
+            color: #d32f2f;
+            border: 1px dashed #d32f2f;
+            padding: 3px;
+            margin-top: 5px;
+        }
+
+        .footer-bottom {
+            margin-top: 5px;
+            font-size: 8px;
+            text-align: center;
+            color: #777;
+            border-top: 1px solid #ccc;
+            padding-top: 4px;
+        }
+
+        @media print {
+            @page {
+                margin: 0;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background: #fff;
+            }
+
+            .etiqueta-container {
+                border: none;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="etiqueta-container">
         <div>
             <div class="logo-area">
-                <svg viewBox="10 10 80 80" xmlns="http://www.w3.org/2000/svg"><g><circle fill="#2E9D82" cx="25" cy="25" r="13" /><circle fill="#2E9D82" cx="75" cy="75" r="13" /><path fill="#2E9D82" d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" /></g></svg>
+                <svg viewBox="10 10 80 80" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                        <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                        <path fill="#2E9D82"
+                            d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                    </g>
+                </svg>
                 <span class="logo-text">XELLE SCIENTIFIC</span>
             </div>
             <div class="titulo-alerta">📦 CONTENEDOR DE RETENCIONES 📦</div>
             <div class="subtitulo">ÁREA DE CUSTODIA DE CONTROL DE CALIDAD</div>
-            <div class="campo"><label>Contenido (Lotes):</label><div class="linea"></div></div>
+            <div class="campo"><label>Contenido (Lotes):</label>
+                <div class="linea"></div>
+            </div>
             <div class="caja-temp">
                 <strong>Rango de Temperatura:</strong>
-                <span class="check-inline">☐ 2°C a 8°C</span> <span class="check-inline">☐ -20°C</span> <span class="check-inline">☐ -80°C</span>
+                <span class="check-inline">☐ 2°C a 8°C</span> <span class="check-inline">☐ -20°C</span> <span
+                    class="check-inline">☐ -80°C</span>
             </div>
-            <div class="campo"><label>Fecha de Próxima Depuración:</label><div class="linea" style="text-align:center; color:#777;">DD / MM / AA</div></div>
-            <div class="campo"><label>Ubicación:</label><div class="linea"></div></div>
+            <div class="campo"><label>Fecha de Próxima Depuración:</label>
+                <div class="linea" style="text-align:center; color:#777;">DD / MM / AA</div>
+            </div>
+            <div class="campo"><label>Ubicación:</label>
+                <div class="linea"></div>
+            </div>
         </div>
         <div>
-            <div class="campo"><label>Responsable de Custodia:</label><div class="linea"></div></div>
+            <div class="campo"><label>Responsable de Custodia:</label>
+                <div class="linea"></div>
+            </div>
             <div class="advertencia">ADVERTENCIA: NO remover unidades sin registro en Bitácora F-CAL-05.</div>
-            <div class="footer-bottom">Código: ET-LC-13 | Versión: 1.0</div>
+            <div class="footer-bottom">Código: ET-LC-10 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
     </div>
 </body>
+
 </html>

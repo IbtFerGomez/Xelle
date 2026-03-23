@@ -29,7 +29,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
@@ -72,14 +72,14 @@
                     <input type="text" id="reg-52" class="registry-input generate-barcode" data-target="barcode-52"
                         data-prefix="FO-OP-52-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date" placeholder="YYYY-MM-DD">
                 <svg id="barcode-52" class="barcode-svg"></svg>
             </div>
         </div>
 
         <div class="header-main">
             <h1>REPORTE Y MANIFIESTO DE MATERIA PRIMA NO CONFORME (MPNC)</h1>
-            <div class="metadata">Código: FO-OP-52 | Versión: 1.0-OFF | Vig: Mar2026</div>
+            <div class="metadata">Código: FO-OP-52 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section-header">1. DATOS DE IDENTIFICACIÓN Y TRAZABILIDAD</div>
@@ -99,9 +99,9 @@
                 </tr>
                 <tr>
                     <td><strong>Fecha Recepción original:</strong></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit" placeholder="YYYY-MM-DD"></td>
                     <td><strong>Fecha Detección defecto:</strong></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit" placeholder="YYYY-MM-DD"></td>
                 </tr>
             </table>
         </div>
@@ -207,7 +207,7 @@
                     <td width="20%"><strong>Evidencia Adjunta:</strong></td>
                     <td width="30%"><input class="cedit" placeholder="Fotos / Ticket / Manifiesto externo"></td>
                     <td width="20%"><strong>Fecha Destrucción:</strong></td>
-                    <td width="30%"><input type="date" class="cedit"></td>
+                    <td width="30%"><input type="text" class="cedit" placeholder="YYYY-MM-DD"></td>
                 </tr>
                 <tr>
                     <td colspan="2"></td>
@@ -265,7 +265,7 @@
             </div>
         </div>
 
-        <div class="footer">FO-OP-52 | Versión: 1.0-OFF | Reporte y Manifiesto MPNC | Xelle Scientific</div>
+        <div class="footer">FO-OP-52-O | REPORTE DE MPNC (OFFLINE) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
 

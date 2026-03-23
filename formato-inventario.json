@@ -1,0 +1,488 @@
+[
+  {
+    "Codigo": "FO-LC-12",
+    "Nombre": "FO-LC-12 Dictamen de Concesión",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-14",
+    "Nombre": "FO-LC-14 Histórico Placentas",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "FO-LC-18 / FO-OP-13",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-15",
+    "Nombre": "FO-LC-15 Histórico Líneas",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "FO-LC-16 (Cover Sheet)",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-16",
+    "Nombre": "Resumen Ejecutivo de Lote",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-17",
+    "Nombre": "FO-LC-17 Recepción",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-18",
+    "Nombre": "FO-LC-18 Macro",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-19",
+    "Nombre": "FO-LC-19 Calidad",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-20",
+    "Nombre": "FO-LC-20 Procesamiento",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-21",
+    "Nombre": "FO-LC-21 Bitácora",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-22",
+    "Nombre": "FO-LC-22 Crio Banco",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-23",
+    "Nombre": "FO-LC-23 Bitácora Crio",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-24",
+    "Nombre": "FO-LC-24 Dosificación",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-25",
+    "Nombre": "FO-LC-25 Prep Medios",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-26",
+    "Nombre": "FO-LC-26 Esterilización",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-27",
+    "Nombre": "FO-LC-27 Control Equipos",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-28",
+    "Nombre": "FO-LC-28 Uso Equipos",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-29",
+    "Nombre": "FO-LC-29 Registro de Lote de Producto Terminado (Celular)",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-30",
+    "Nombre": "FO-LC-30 Bitácora de Recolección de Medios Condicionados",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-31",
+    "Nombre": "FO-LC-31 Lote Acelular",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-32",
+    "Nombre": "FO-LC-32 Liberación QC",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-33",
+    "Nombre": "FO-LC-33 Bitácora de Muestras de Retención",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": "Control de Calidad"
+  },
+  {
+    "Codigo": "FO-LC-34",
+    "Nombre": "FO-LC-34 Bitácora de Muestreos",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "CAL-MUE-002",
+    "Responsable": "Control de Calidad / Almacén"
+  },
+  {
+    "Codigo": "FO-LC-35",
+    "Nombre": "FO-LC-35 Bitácora de Disposición de Lotes",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": "Aseguramiento de Calidad"
+  },
+  {
+    "Codigo": "FO-LC-40",
+    "Nombre": "FO-LC-40-B Prep Medios",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-40",
+    "Nombre": "FO-LC-40 Prep Medios",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-41",
+    "Nombre": "FO-LC-41 Micro",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-42",
+    "Nombre": "FO-LC-42 Liof Placenta",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-43",
+    "Nombre": "FO-LC-43 Liof MC",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-44",
+    "Nombre": "FO-LC-44 Lib Flasks",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-45",
+    "Nombre": "FO-LC-45 Embalaje",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-46",
+    "Nombre": "FO-LC-46 Registro Muestreo Producto Biológico",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-47",
+    "Nombre": "FO-LC-47 Revisión Calidad Muestreo",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-48",
+    "Nombre": "FO-LC-48 Resultados y Dictamen de Lote",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-49",
+    "Nombre": "FO-LC-49 Bitácora Maestra de Estatus de Lotes",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "PR-LC-17",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-50",
+    "Nombre": "FO-LC-50 Manifiesto de Destrucción",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-087-ECOL-SSA1-2002",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-50",
+    "Nombre": "FO-LC-50 FORMATO MANIFIESTO DE ENTREGA, TRANSPORTE Y RECEPCIÓN DE RESIDUOS PELIGROSOS (GENERADOR)",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-51",
+    "Nombre": "FO-LC-51 Bitácora Maestra de Estatus (No Celulares)",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1 / NOM-087-ECOL",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-51",
+    "Nombre": "FO-LC-51 Producto No Conforme (Desviaciones)",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LC-52",
+    "Nombre": "FO-LC-52 Manifiesto de Destrucción de PNC",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241 / NOM-087",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-LG-05",
+    "Nombre": "FO-LG-05 Orden de Envío y Distribución",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-241-SSA1",
+    "DocumentoRelacionado": "CoA Asociado",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-OP-13",
+    "Nombre": "FO-OP-13 Lista de Verificación Recepción MP",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-OP-15",
+    "Nombre": "FO-OP-15 Pedido Maestro",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-OP-16",
+    "Nombre": "FO-OP-16 Surtido",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-OP-17",
+    "Nombre": "FO-OP-17 Remisión",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-OP-20",
+    "Nombre": "FO-OP-20 Liberación Alm",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-OP-39",
+    "Nombre": "FO-OP-39 Lista de Verificación de Auditoría",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": "Calidad"
+  },
+  {
+    "Codigo": "FO-OP-40",
+    "Nombre": "FO-OP-40 Orden Maestra de Producción (XHA)",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "IT-OP-01",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-OP-49",
+    "Nombre": "FO-OP-49 Bitácora Temporal RPBI",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-OP-52",
+    "Nombre": "FO-OP-52 Reporte de MPNC",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-OP-53",
+    "Nombre": "FO-OP-53 CAPA - Metodología AMFE",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": "Calidad / Laboratorio"
+  },
+  {
+    "Codigo": "FO-OP-54",
+    "Nombre": "FO-OP-54 Bitácora de Muestreo y Cadena de Frío",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "CAL-MUE-002",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-QA-10",
+    "Nombre": "FO-QA-10 Certificado de Calidad de Lote (CoA)",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "ISO 9001 / ISO 13485",
+    "DocumentoRelacionado": "FO-LC-31, 46, 47, 48",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-SGC-01",
+    "Nombre": "FO-SGC-01 Matriz de Responsabilidades por Módulo",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "ISO 9001",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-SGC-02",
+    "Nombre": "FO-SGC-02 Matriz de Responsabilidades",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "ISO 9001",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  }
+]

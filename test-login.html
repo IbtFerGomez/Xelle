@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Login - XELLE</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -15,27 +21,32 @@
             align-items: center;
             padding: 20px;
         }
+
         .container {
             background: white;
             padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             max-width: 500px;
             width: 100%;
         }
+
         h1 {
             color: #333;
             margin-bottom: 10px;
             font-size: 24px;
         }
+
         p {
             color: #666;
             margin-bottom: 30px;
             font-size: 14px;
         }
+
         .form-group {
             margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 8px;
@@ -43,6 +54,7 @@
             font-weight: bold;
             font-size: 14px;
         }
+
         input {
             width: 100%;
             padding: 12px;
@@ -51,10 +63,12 @@
             font-size: 14px;
             transition: border-color 0.3s;
         }
+
         input:focus {
             outline: none;
             border-color: #667eea;
         }
+
         button {
             width: 100%;
             padding: 14px;
@@ -67,13 +81,16 @@
             cursor: pointer;
             transition: background 0.3s;
         }
+
         button:hover {
             background: #5568d3;
         }
+
         button:disabled {
             background: #ccc;
             cursor: not-allowed;
         }
+
         .result {
             margin-top: 20px;
             padding: 15px;
@@ -81,16 +98,19 @@
             display: none;
             word-wrap: break-word;
         }
+
         .success {
             background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
+
         .error {
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+
         .info {
             background: #e7f3ff;
             color: #004085;
@@ -100,10 +120,12 @@
             margin-bottom: 20px;
             font-size: 13px;
         }
+
         .info strong {
             display: block;
             margin-bottom: 5px;
         }
+
         pre {
             margin-top: 10px;
             background: #f4f4f4;
@@ -114,6 +136,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>🔍 Test de Login - XELLE LIMS</h1>
@@ -143,20 +166,20 @@
     </div>
 
     <script>
-        document.getElementById('testForm').addEventListener('submit', async function(e) {
+        document.getElementById('testForm').addEventListener('submit', async function (e) {
             e.preventDefault();
-            
+
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const resultDiv = document.getElementById('result');
             const btnTest = document.getElementById('btnTest');
-            
+
             // Limpiar resultado anterior
             resultDiv.style.display = 'none';
             resultDiv.className = 'result';
             btnTest.disabled = true;
             btnTest.textContent = 'Probando...';
-            
+
             try {
                 const response = await fetch('/api/login', {
                     method: 'POST',
@@ -165,11 +188,11 @@
                     },
                     body: JSON.stringify({ username, password })
                 });
-                
+
                 const data = await response.json();
-                
+
                 resultDiv.style.display = 'block';
-                
+
                 if (data.success) {
                     resultDiv.className = 'result success';
                     resultDiv.innerHTML = `
@@ -189,7 +212,7 @@
                         <pre>${JSON.stringify(data, null, 2)}</pre>
                     `;
                 }
-                
+
             } catch (error) {
                 resultDiv.style.display = 'block';
                 resultDiv.className = 'result error';
@@ -214,4 +237,5 @@
         });
     </script>
 </body>
+
 </html>

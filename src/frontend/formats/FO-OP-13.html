@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-OP-13 Lista de Verificación Recepción MP</title>
@@ -8,38 +9,82 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
-        @page { size: landscape; margin: 0.5cm; }
-        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 12px; margin-top: 15px; border-radius: 4px; }
-        .status-ok{background:#dcfce7;color:#166534; font-weight:bold;}
-        .status-fail{background:#fee2e2;color:#991b1b; font-weight:bold;}
+        @page {
+            size: landscape;
+            margin: 0.5cm;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+
+        .status-ok {
+            background: #dcfce7;
+            color: #166534;
+            font-weight: bold;
+        }
+
+        .status-fail {
+            background: #fee2e2;
+            color: #991b1b;
+            font-weight: bold;
+        }
+
         @media print {
-            .global-controls, .no-print { display:none !important; }
-            ::-webkit-input-placeholder { color: transparent !important; }
-            :-moz-placeholder { color: transparent !important; }
-            ::-moz-placeholder { color: transparent !important; }
-            :-ms-input-placeholder { color: transparent !important; }
-            ::placeholder { color: transparent !important; }
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
 
             /* Permitir que las tablas y secciones se partan entre páginas */
-            .section { 
+            .section {
                 page-break-inside: auto !important;
                 break-inside: auto !important;
             }
-            
-            table, .compact-table { 
+
+            table,
+            .compact-table {
                 page-break-inside: auto !important;
                 break-inside: auto !important;
             }
-            
-            thead { 
+
+            thead {
                 display: table-header-group !important;
             }
-            
-            tr, tbody tr { 
+
+            tr,
+            tbody tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
-            
+
             .section-title {
                 page-break-after: avoid !important;
                 break-after: avoid !important;
@@ -47,51 +92,90 @@
         }
     </style>
 </head>
+
 <body id="doc-fo-op-13">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        </div>
-    
+    </div>
+
     <div class="container" style="max-width:100%; width:100%;">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
             </div>
             <div class="registry-container">
                 <label>Folio Recepción</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-OP-13-</span>
-                    <input type="text" id="reg-13" class="registry-input generate-barcode" data-target="barcode-13" data-prefix="FO-OP-13-" placeholder="000">
+                    <input type="text" id="reg-13" class="registry-input generate-barcode" data-target="barcode-13"
+                        data-prefix="FO-OP-13-" placeholder="000">
                 </div>
                 <input type="date" class="registry-date">
                 <svg id="barcode-13" class="barcode-svg"></svg>
             </div>
         </div>
-        
+
         <div class="header-main">
             <h1>LISTA DE VERIFICACIÓN E INSPECCIÓN DE RECIBO DE MATERIA PRIMA (CHECK-LIST)</h1>
-            <div class="metadata">Código: FO-OP-13 | Versión: 1.0 | Vig: Mar2026</div>
+            <div class="metadata">Código: FO-OP-13 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section-header">1. IDENTIFICACIÓN Y TRAZABILIDAD DE LA MATERIA PRIMA</div>
         <div class="section">
             <table class="no-border-table">
                 <tr>
-                    <td width="20%"><strong>ID Materia Prima:</strong></td><td width="30%"><input class="cedit"></td>
-                    <td width="20%"><strong>Tipo de Tejido:</strong></td><td width="30%"><input class="cedit" placeholder="(Especifique)"></td>
+                    <td width="20%"><strong>ID Materia Prima:</strong></td>
+                    <td width="30%"><input class="cedit"></td>
+                    <td width="20%"><strong>Tipo de Tejido:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="(Especifique)"></td>
                 </tr>
                 <tr>
-                    <td><strong>ID Donante / Paciente:</strong></td><td><input class="cedit"></td>
-                    <td><strong>Hospital / Clínica Origen:</strong></td><td><input class="cedit"></td>
+                    <td><strong>ID Donante / Paciente:</strong></td>
+                    <td><input class="cedit"></td>
+                    <td><strong>Hospital / Clínica Origen:</strong></td>
+                    <td><input class="cedit"></td>
                 </tr>
                 <tr>
-                    <td><strong>Nombre del Donante:</strong></td><td><input class="cedit"></td>
-                    <td><strong>Fecha de Recolección:</strong></td><td><input type="date" class="cedit"></td>
+                    <td><strong>Nombre del Donante:</strong></td>
+                    <td><input class="cedit"></td>
+                    <td><strong>Fecha de Recolección:</strong></td>
+                    <td><input type="date" class="cedit"></td>
                 </tr>
                 <tr>
-                    <td><strong>Fecha de Recepción:</strong></td><td><input type="date" class="cedit"></td>
-                    <td><strong>Hora de Recepción:</strong></td><td><input type="time" class="cedit"></td>
+                    <td><strong>Fecha de Recepción:</strong></td>
+                    <td><input type="date" class="cedit"></td>
+                    <td><strong>Hora de Recepción:</strong></td>
+                    <td><input type="time" class="cedit"></td>
                 </tr>
             </table>
         </div>
@@ -99,36 +183,63 @@
         <div class="section-header">2. INSPECCIÓN LOGÍSTICA Y LLEGADA (FASE 1)</div>
         <div class="section">
             <table class="compact-table">
-                <thead><tr><th width="25%">Parámetro Evaluado</th><th width="45%">Criterio de Aceptación</th><th width="15%">Verificación</th><th width="15%">Valores / Observaciones</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th width="25%">Parámetro Evaluado</th>
+                        <th width="45%">Criterio de Aceptación</th>
+                        <th width="15%">Verificación</th>
+                        <th width="15%">Valores / Observaciones</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <td>A. Integridad del Embalaje</td>
                         <td>Contenedor primario y secundario sin daños, derrames o rupturas</td>
-                        <td><select class="cedit" onchange="checkStatus(this)"><option>CUMPLE</option><option>NO CUMPLE</option><option>N/A</option></select></td>
+                        <td><select class="cedit" onchange="checkStatus(this)">
+                                <option>CUMPLE</option>
+                                <option>NO CUMPLE</option>
+                                <option>N/A</option>
+                            </select></td>
                         <td><input class="cedit" placeholder="Condición visual..."></td>
                     </tr>
                     <tr>
                         <td>B. Temperatura de Llegada</td>
                         <td>Verificación de cadena de frío aplicable al tipo de tejido</td>
-                        <td><select class="cedit" onchange="checkStatus(this)"><option>CUMPLE</option><option>NO CUMPLE</option><option>N/A</option></select></td>
+                        <td><select class="cedit" onchange="checkStatus(this)">
+                                <option>CUMPLE</option>
+                                <option>NO CUMPLE</option>
+                                <option>N/A</option>
+                            </select></td>
                         <td><input class="cedit" type="number" placeholder="°C" style="width:60px"></td>
                     </tr>
                     <tr>
                         <td>C. Documentación Legal</td>
                         <td>Consentimiento informado, responsiva médica, historia clínica</td>
-                        <td><select class="cedit" onchange="checkStatus(this)"><option>CUMPLE</option><option>NO CUMPLE</option><option>N/A</option></select></td>
+                        <td><select class="cedit" onchange="checkStatus(this)">
+                                <option>CUMPLE</option>
+                                <option>NO CUMPLE</option>
+                                <option>N/A</option>
+                            </select></td>
                         <td><input class="cedit" placeholder="Faltantes..."></td>
                     </tr>
                     <tr>
                         <td>D. Muestra Sanguínea / Tubos</td>
                         <td>Recepción de muestras para serología viral u otros estudios</td>
-                        <td><select class="cedit" onchange="checkStatus(this)"><option>CUMPLE</option><option>NO CUMPLE</option><option>N/A</option></select></td>
+                        <td><select class="cedit" onchange="checkStatus(this)">
+                                <option>CUMPLE</option>
+                                <option>NO CUMPLE</option>
+                                <option>N/A</option>
+                            </select></td>
                         <td><input class="cedit" placeholder="Cant. / Tipo"></td>
                     </tr>
                     <tr>
                         <td>E. Solución de Transporte</td>
                         <td>Volumen adecuado, coloración normal, sin turbidez extrema</td>
-                        <td><select class="cedit" onchange="checkStatus(this)"><option>CUMPLE</option><option>NO CUMPLE</option><option>N/A</option></select></td>
+                        <td><select class="cedit" onchange="checkStatus(this)">
+                                <option>CUMPLE</option>
+                                <option>NO CUMPLE</option>
+                                <option>N/A</option>
+                            </select></td>
                         <td><input class="cedit" placeholder="Aspecto..."></td>
                     </tr>
                 </tbody>
@@ -137,18 +248,24 @@
 
         <div class="section-header">3. DESVIACIONES Y OBSERVACIONES ESPECÍFICAS</div>
         <div class="section">
-            <textarea class="cedit" rows="3" style="width:100%" placeholder="Describa cualquier anomalía (ej. coágulos excesivos, tiempo de traslado prolongado, falta de etiquetado en el envase primario)..."></textarea>
+            <textarea class="cedit" rows="3" style="width:100%"
+                placeholder="Describa cualquier anomalía (ej. coágulos excesivos, tiempo de traslado prolongado, falta de etiquetado en el envase primario)..."></textarea>
         </div>
 
         <div class="section-header">4. DICTAMEN DE RECEPCIÓN (ESTATUS FASE 1)</div>
         <div class="section" style="border:2px solid #1E3A5F; padding:15px; background:#f8fafc;">
             <div style="display:flex;justify-content:space-between;align-items:center;">
                 <div style="width:100%;text-align:center;">
-                    <label style="font-weight:bold;display:block; margin-bottom:5px;">DECISIÓN DE RECEPCIÓN DE CALIDAD:</label>
-                    <select class="cedit" style="font-size:14px;padding:8px;width:70%;font-weight:bold;text-align:center;">
-                        <option value="ACEPTADO">ACEPTADO: Cumple con todos los criterios. Liberado para procesamiento (Fase 2).</option>
-                        <option value="RECHAZADO">RECHAZADO: No cumple criterios. Requiere formato de destrucción.</option>
-                        <option value="CUARENTENA">EN CUARENTENA: Pendiente de resolución de desviaciones documentales.</option>
+                    <label style="font-weight:bold;display:block; margin-bottom:5px;">DECISIÓN DE RECEPCIÓN DE
+                        CALIDAD:</label>
+                    <select class="cedit"
+                        style="font-size:14px;padding:8px;width:70%;font-weight:bold;text-align:center;">
+                        <option value="ACEPTADO">ACEPTADO: Cumple con todos los criterios. Liberado para procesamiento
+                            (Fase 2).</option>
+                        <option value="RECHAZADO">RECHAZADO: No cumple criterios. Requiere formato de destrucción.
+                        </option>
+                        <option value="CUARENTENA">EN CUARENTENA: Pendiente de resolución de desviaciones documentales.
+                        </option>
                     </select>
                 </div>
             </div>
@@ -166,14 +283,15 @@
                 <p>Nombre, Firma y Fecha</p>
             </div>
         </div>
-        <div class="footer">FO-OP-13 | Check-list Recepción MP | Xelle Scientific</div>
+        <div class="footer">FO-OP-13 | LISTA DE VERIFICACIÓN RECEPCIÓN MP | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
     <script>
-        function checkStatus(e){
-            if (e.value === 'CUMPLE') { e.className = 'cedit status-ok'; } 
-            else if (e.value === 'NO CUMPLE') { e.className = 'cedit status-fail'; } 
+        function checkStatus(e) {
+            if (e.value === 'CUMPLE') { e.className = 'cedit status-ok'; }
+            else if (e.value === 'NO CUMPLE') { e.className = 'cedit status-fail'; }
             else { e.className = 'cedit'; }
         }
     </script>
 </body>
+
 </html>

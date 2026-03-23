@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-SGC-03 Matriz de Formatos Activos</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+    <style>
+        @page {
+            size: landscape;
+            margin: 0.5cm;
+        }
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9px;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 6px 4px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 4px;
+            border: 1px solid #ddd;
+            vertical-align: middle;
+        }
+
+        .compact-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .compact-table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .stats-box {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            gap: 10px;
+        }
+
+        .stat-item {
+            background: #f1f5f9;
+            border-left: 4px solid #2E9D82;
+            padding: 10px 15px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1E3A5F;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            /* Permitir que las tablas se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            /* Solo evitar partir filas individuales */
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                page-break-after: auto !important;
+            }
+
+            /* Evitar separar títulos de sección del contenido siguiente */
+            .section-header,
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            .stats-box {
+                page-break-after: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-sgc-03">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-secondary" onclick="exportToCSV()">Exportar CSV</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Registro Matriz</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-SGC-03-</span>
+                    <input type="text" id="reg-matriz" class="registry-input generate-barcode"
+                        data-target="barcode-matriz" data-prefix="FO-SGC-03-" placeholder="000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-matriz" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>MATRIZ DE FORMATOS ACTIVOS DEL SISTEMA DE GESTIÓN DE CALIDAD</h1>
+            <div class="metadata">Código: FO-SGC-03 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="stats-box no-print">
+            <div class="stat-item">
+                <div class="stat-number">57</div>
+                <div class="stat-label">Formatos Activos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Familias (LC, OP, LG, QA, SGC)</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1.0</div>
+                <div class="stat-label">Versión Estandarizada</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">ENE 2026</div>
+                <div class="stat-label">Vigencia Actual</div>
+            </div>
+        </div>
+
+        <div class="section-header">1. INVENTARIO DE FORMATOS ACTIVOS</div>
+        <div class="section">
+            <p style="font-size:10px; color:#666; margin-bottom:10px;">
+                Inventario completo de 57 formatos del Sistema de Gestión de Calidad de Xelle Scientific.
+                Todos los formatos están estandarizados a versión 1.0, vigencia ENE 2026.
+            </p>
+
+            <table class="compact-table" id="tbl-formatos">
+                <thead>
+                    <tr>
+                        <th width="9%">Código</th>
+                        <th width="32%">Nombre</th>
+                        <th width="5%">Versión</th>
+                        <th width="8%">Vigencia</th>
+                        <th width="20%">Cumplimiento</th>
+                        <th width="14%">Documento Relacionado</th>
+                        <th width="12%">Responsable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- LABORATORIO Y CONTROL (FO-LC) -->
+                    <tr>
+                        <td><strong>FO-LC-12</strong></td>
+                        <td>Dictamen Técnico de Concesión</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-14</strong></td>
+                        <td>Registro Histórico de Placentas Liberadas para Producción</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021</td>
+                        <td>FO-LC-18 / FO-OP-13</td>
+                        <td>SGC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-15</strong></td>
+                        <td>Registro Histórico de Líneas Liberadas para Producción</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td>FO-LC-16 (Cover Sheet)</td>
+                        <td>SGC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-16</strong></td>
+                        <td>Formato Resumen Ejecutivo de Recepción Lote (Cover Sheet)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-17</strong></td>
+                        <td>Formato Recepción de Muestras y Datos Clínicos</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Laboratorio</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-18</strong></td>
+                        <td>Formato Evaluación Macroscópica de Tejido</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021</td>
+                        <td></td>
+                        <td>Laboratorio</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-19</strong></td>
+                        <td>Formato Liberación y Control de Calidad de Placentas</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-20</strong></td>
+                        <td>Formato Procesamiento de Placenta y Cultivo Inicial</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Producción</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-21</strong></td>
+                        <td>Formato Bitácora de Cultivo y Mantenimiento Celular</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021</td>
+                        <td></td>
+                        <td>Laboratorio</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-22</strong></td>
+                        <td>Formato de Registro de Criopreservación Banco Celular</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Producción</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-23</strong></td>
+                        <td>Bitácora de Criopreservación</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Producción</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-24</strong></td>
+                        <td>Formato Registro Diario de Dosificación</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Almacén</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-25</strong></td>
+                        <td>Formato Bitácora de Preparación de Medios y Soluciones</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Laboratorio</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-26</strong></td>
+                        <td>Bitácora de Esterilización</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Laboratorio</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-27</strong></td>
+                        <td>Bitácora de Registro de Control de Equipos</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / ISO 13485:2016</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-28</strong></td>
+                        <td>Bitácora de Registro de Uso de Equipos</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Laboratorio</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-29</strong></td>
+                        <td>Registro de Lote de Producto Terminado (Celular)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-059-SSA1-2015 / NOM-241-SSA1-2021</td>
+                        <td></td>
+                        <td>Producción</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-30</strong></td>
+                        <td>Bitácora de Recolección de Medios Condicionados</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Producción</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-31</strong></td>
+                        <td>Registro de Lote de Producto Terminado (Acelular)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021</td>
+                        <td></td>
+                        <td>Producción</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-32</strong></td>
+                        <td>Formato de Control de Calidad para Liberación de Lotes (Celulares)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-33</strong></td>
+                        <td>Bitácora de Control de Muestras de Retención (Contramuestras)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021</td>
+                        <td></td>
+                        <td>Control de Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-34</strong></td>
+                        <td>Bitácora de Muestreos de Producto Terminado</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td>CAL-MUE-002</td>
+                        <td>Control de Calidad / Almacén</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-35</strong></td>
+                        <td>Bitácora Maestra de Disposición y Estatus de Lotes</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Aseguramiento de Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-40-B</strong></td>
+                        <td>Formato Bitácora de Preparación de Medios y Soluciones</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Laboratorio</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-40</strong></td>
+                        <td>Formato Bitácora de Preparación de Medios y Soluciones</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Laboratorio</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-41</strong></td>
+                        <td>Formato Control Microbiológico de Muestras</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Laboratorio</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-42</strong></td>
+                        <td>Formato Bitácora de Liofilización de Placenta</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Producción</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-43</strong></td>
+                        <td>Formato Liofilización de Medio Condicionado (MC)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Producción</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-44</strong></td>
+                        <td>Formato Liberación Microbiológica Flasks y Crioviales</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-45</strong></td>
+                        <td>Formato Embalaje y Envío a Esterilización</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Producción</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-46</strong></td>
+                        <td>Registro Muestreo Producto Biológico</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-47</strong></td>
+                        <td>Registro Revisión de Calidad de Muestreo</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-48</strong></td>
+                        <td>Registro de Resultados Analíticos y Dictamen de Lote</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-49</strong></td>
+                        <td>Bitácora Maestra de Estatus de Lotes</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td>PR-LC-17</td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-50</strong></td>
+                        <td>Manifiesto de Destrucción MPNC</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-51</strong></td>
+                        <td>Bitácora Maestra de Estatus (No Celulares)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021 / NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-52</strong></td>
+                        <td>Manifiesto de Destrucción de Producto No Conforme (PNC)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-087-SEMARNAT-SSA1-2002 / NOM-241-SSA1-2021</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+
+                    <!-- LOGÍSTICA (FO-LG) -->
+                    <tr>
+                        <td><strong>FO-LG-05</strong></td>
+                        <td>Orden de Envío y Distribución</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-241-SSA1-2021</td>
+                        <td>CoA Asociado</td>
+                        <td>Logística</td>
+                    </tr>
+
+                    <!-- OPERACIONES (FO-OP) -->
+                    <tr>
+                        <td><strong>FO-OP-13</strong></td>
+                        <td>Lista de Verificación e Inspección de Recibo de Materia Prima (Check-List)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-241-SSA1-2021</td>
+                        <td></td>
+                        <td>Almacén</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-15</strong></td>
+                        <td>Registro Maestro de Pedido (Operaciones)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-059-SSA1-2015</td>
+                        <td></td>
+                        <td>Operaciones</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-16</strong></td>
+                        <td>Orden de Surtido y Empaque (Operaciones)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-059-SSA1-2015</td>
+                        <td></td>
+                        <td>Almacén</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-17</strong></td>
+                        <td>Nota de Remisión y Entrega</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-059-SSA1-2015</td>
+                        <td></td>
+                        <td>Operaciones</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-20</strong></td>
+                        <td>Liberación Lote para Almacén</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-059-SSA1-2015</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-39</strong></td>
+                        <td>Lista de Verificación de Auditoría</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-059-SSA1-2015</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-40</strong></td>
+                        <td>Orden Maestra de Producción (XHA)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-059-SSA1-2015</td>
+                        <td>IT-OP-01</td>
+                        <td>Producción</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-41</strong></td>
+                        <td>Recepción y Aprobación de Materias Primas e Insumos (Individual)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-241-SSA1-2021</td>
+                        <td></td>
+                        <td>Almacén</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-42</strong></td>
+                        <td>Recepción de Insumos (Múltiple)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-241-SSA1-2021</td>
+                        <td></td>
+                        <td>Almacén</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-49</strong></td>
+                        <td>Bitácora de Almacenamiento Temporal de RPBI</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Almacén</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-50</strong></td>
+                        <td>Manifiesto de Entrega, Transporte y Recepción de Residuos Peligrosos</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>NOM-087-SEMARNAT-SSA1-2002</td>
+                        <td></td>
+                        <td>Almacén</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-51</strong></td>
+                        <td>Reporte de Producto No Conforme (Desviaciones)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-241-SSA1-2021</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-52</strong></td>
+                        <td>Reporte y Manifiesto de Materia Prima No Conforme (MPNC)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-059-SSA1-2015</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-53</strong></td>
+                        <td>Acción Correctiva y Preventiva (CAPA) - Gestión AMFE</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-059-SSA1-2015</td>
+                        <td></td>
+                        <td>Calidad / Laboratorio</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-54</strong></td>
+                        <td>Bitácora de Muestreo y Cadena de Frío</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 13485:2016 / NOM-059-SSA1-2015</td>
+                        <td>CAL-MUE-002</td>
+                        <td>Calidad</td>
+                    </tr>
+
+                    <!-- CALIDAD (FO-QA) -->
+                    <tr>
+                        <td><strong>FO-QA-10</strong></td>
+                        <td>Certificado de Calidad de Producto de Lote (CoA)</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 9001 / ISO 13485</td>
+                        <td>FO-LC-31, 46, 47, 48</td>
+                        <td>Calidad</td>
+                    </tr>
+
+                    <!-- SISTEMA DE GESTIÓN DE CALIDAD (FO-SGC) -->
+                    <tr>
+                        <td><strong>FO-SGC-01</strong></td>
+                        <td>Matriz de Responsabilidades y Firmas por Módulo</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 9001</td>
+                        <td></td>
+                        <td>SGC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-SGC-02</strong></td>
+                        <td>Matriz de Responsabilidades y Firmas del Sistema de Gestión de Calidad</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 9001</td>
+                        <td></td>
+                        <td>SGC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-SGC-03</strong></td>
+                        <td>Matriz de Formatos Activos</td>
+                        <td>1.0</td>
+                        <td>ENE 2026</td>
+                        <td>ISO 9001:2015</td>
+                        <td>FO-SGC-01, FO-SGC-02</td>
+                        <td>SGC</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">2. FIRMAS Y APROBACIONES</div>
+        <div class="section">
+            <table class="compact-table" style="margin-top:15px;">
+                <thead>
+                    <tr>
+                        <th>Elaboró</th>
+                        <th>Revisó</th>
+                        <th>Autorizó</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="height:60px;">
+                        <td style="text-align:center; vertical-align:bottom;">
+                            <div style="border-bottom:1px solid #000; width:80%; margin:0 auto 5px;"></div>
+                            Sistema de Gestión de Calidad
+                        </td>
+                        <td style="text-align:center; vertical-align:bottom;">
+                            <div style="border-bottom:1px solid #000; width:80%; margin:0 auto 5px;"></div>
+                            Aseguramiento de Calidad
+                        </td>
+                        <td style="text-align:center; vertical-align:bottom;">
+                            <div style="border-bottom:1px solid #000; width:80%; margin:0 auto 5px;"></div>
+                            Responsable Dirección
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function exportToCSV() {
+            const table = document.getElementById('tbl-formatos');
+            const rows = table.querySelectorAll('tr');
+            let csv = [];
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = [], cols = rows[i].querySelectorAll('td, th');
+                for (let j = 0; j < cols.length; j++) {
+                    let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, '').replace(/"/g, '""');
+                    row.push('"' + data + '"');
+                }
+                csv.push(row.join(','));
+            }
+
+            const csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
+            const downloadLink = document.createElement('a');
+            downloadLink.download = 'FO-SGC-03_Matriz_Formatos_' + new Date().toISOString().slice(0, 10) + '.csv';
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = 'none';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,52 +1,192 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>07 - PNC Rechazo</title>
     <style>
-        body { font-family: Arial, sans-serif; display: flex; justify-content: center; padding: 20px; background-color: #f4f4f4; }
-        .etiqueta-container {
-            width: 100mm; height: 100mm; background-color: #ffffff; border: 2px solid #000;
-            padding: 5mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
-        .logo-area { text-align: center; margin-bottom: 3px; }
-        .logo-area svg { width: 25px; height: 25px; vertical-align: middle; }
-        .logo-text { font-size: 11px; font-weight: bold; vertical-align: middle; margin-left: 5px; color: #721c24; }
-        .titulo-alerta { text-align: center; font-size: 14px; font-weight: 900; letter-spacing: 1px; margin: 0 0 2px 0; background-color: #f8d7da; color: #721c24; padding: 2px; border: 1px solid #f5c6cb; }
-        .subtitulo { text-align: center; font-size: 8px; font-weight: bold; margin-bottom: 6px; text-decoration: underline; color: #721c24; }
-        .campo { display: flex; align-items: flex-end; margin-bottom: 5px; font-size: 9px; }
-        .campo label { font-weight: bold; white-space: nowrap; margin-right: 5px; }
-        .linea { flex-grow: 1; border-bottom: 1px solid #000; height: 10px; }
-        .fila-doble { display: flex; justify-content: space-between; gap: 5px; }
-        .fila-doble .campo { flex: 1; }
-        .caja-motivo { border: 1px solid #721c24; padding: 4px; margin-bottom: 4px; font-size: 8px; background-color: #fff3f3; }
-        .caja-motivo strong { display: block; margin-bottom: 3px; color: #721c24; }
-        .checkbox-inline { display: inline-block; margin-right: 8px; margin-bottom: 3px; }
-        .firma-area { margin-top: 6px; text-align: center; }
-        .linea-firma { width: 80%; border-bottom: 1px solid #000; margin: 0 auto 2px auto; height: 12px; }
-        .firma-label { font-size: 9px; font-weight: bold; }
-        .footer-bottom { margin-top: 3px; font-size: 7px; text-align: center; color: #777; border-top: 1px solid #ccc; padding-top: 2px; }
-        @media print { @page { margin: 0; } body { margin: 0; padding: 0; background: #fff; } .etiqueta-container { border: none; } }
+
+        .etiqueta-container {
+            width: 100mm;
+            height: 100mm;
+            background-color: #ffffff;
+            border: 2px solid #000;
+            padding: 5mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo-area {
+            text-align: center;
+            margin-bottom: 3px;
+        }
+
+        .logo-area svg {
+            width: 25px;
+            height: 25px;
+            vertical-align: middle;
+        }
+
+        .logo-text {
+            font-size: 11px;
+            font-weight: bold;
+            vertical-align: middle;
+            margin-left: 5px;
+            color: #721c24;
+        }
+
+        .titulo-alerta {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin: 0 0 2px 0;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 2px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .subtitulo {
+            text-align: center;
+            font-size: 8px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            text-decoration: underline;
+            color: #721c24;
+        }
+
+        .campo {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 5px;
+            font-size: 9px;
+        }
+
+        .campo label {
+            font-weight: bold;
+            white-space: nowrap;
+            margin-right: 5px;
+        }
+
+        .linea {
+            flex-grow: 1;
+            border-bottom: 1px solid #000;
+            height: 10px;
+        }
+
+        .fila-doble {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+        }
+
+        .fila-doble .campo {
+            flex: 1;
+        }
+
+        .caja-motivo {
+            border: 1px solid #721c24;
+            padding: 4px;
+            margin-bottom: 4px;
+            font-size: 8px;
+            background-color: #fff3f3;
+        }
+
+        .caja-motivo strong {
+            display: block;
+            margin-bottom: 3px;
+            color: #721c24;
+        }
+
+        .checkbox-inline {
+            display: inline-block;
+            margin-right: 8px;
+            margin-bottom: 3px;
+        }
+
+        .firma-area {
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        .linea-firma {
+            width: 80%;
+            border-bottom: 1px solid #000;
+            margin: 0 auto 2px auto;
+            height: 12px;
+        }
+
+        .firma-label {
+            font-size: 9px;
+            font-weight: bold;
+        }
+
+        .footer-bottom {
+            margin-top: 3px;
+            font-size: 7px;
+            text-align: center;
+            color: #777;
+            border-top: 1px solid #ccc;
+            padding-top: 2px;
+        }
+
+        @media print {
+            @page {
+                margin: 0;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background: #fff;
+            }
+
+            .etiqueta-container {
+                border: none;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="etiqueta-container">
         <div>
             <div class="logo-area">
                 <svg viewBox="10 10 80 80" xmlns="http://www.w3.org/2000/svg">
-                  <g><circle fill="#2E9D82" cx="25" cy="25" r="13" /><circle fill="#2E9D82" cx="75" cy="75" r="13" /><path fill="#2E9D82" d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" /></g>
+                    <g>
+                        <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                        <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                        <path fill="#2E9D82"
+                            d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                    </g>
                 </svg>
                 <span class="logo-text">XELLE SCIENTIFIC</span>
             </div>
             <div class="titulo-alerta">🛑 P N C 🛑</div>
             <div class="subtitulo">PRODUCTO NO CONFORME (NO PLACENTA) - RECHAZO</div>
-            
-            <div class="campo"><label>Producto / Tipo de Tejido:</label><div class="linea"></div></div>
-            <div class="fila-doble">
-                <div class="campo"><label>Lote Único:</label><div class="linea"></div></div>
-                <div class="campo"><label>Línea/Pase:</label><div class="linea"></div></div>
+
+            <div class="campo"><label>Producto / Tipo de Tejido:</label>
+                <div class="linea"></div>
             </div>
-            
+            <div class="fila-doble">
+                <div class="campo"><label>Lote Único:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Línea/Pase:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+
             <div class="caja-motivo">
                 <strong>Fase del Rechazo:</strong>
                 <div class="checkbox-inline">☐ Manufactura/Expansión</div>
@@ -54,9 +194,13 @@
                 <div class="checkbox-inline">☐ Devolución</div>
             </div>
 
-            <div class="campo"><label>Causa (No Conformidad):</label><div class="linea"></div></div>
-            <div class="campo"><label>Ref. Reporte Desviación (FO-QA-03):</label><div class="linea"></div></div>
-            
+            <div class="campo"><label>Causa (No Conformidad):</label>
+                <div class="linea"></div>
+            </div>
+            <div class="campo"><label>Ref. Reporte Desviación (FO-QA-03):</label>
+                <div class="linea"></div>
+            </div>
+
             <div class="caja-motivo" style="background-color: transparent; border-color: #000; margin-top: 2px;">
                 <strong style="color: #000;">Disposición:</strong>
                 <div class="checkbox-inline">☐ Destrucción Total</div>
@@ -68,8 +212,9 @@
                 <div class="linea-firma"></div>
                 <div class="firma-label">Segregado por (Aseguramiento de Calidad)</div>
             </div>
-            <div class="footer-bottom">Código: ET-PNC-02 | Versión: 1.0 | Papel ROJO</div>
+            <div class="footer-bottom">Código: ET-LC-07 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
     </div>
 </body>
+
 </html>

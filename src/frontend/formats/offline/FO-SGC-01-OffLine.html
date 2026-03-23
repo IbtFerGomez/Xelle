@@ -88,7 +88,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container" style="max-width:100%; width:100%;">
         <div class="header-top">
@@ -131,14 +131,14 @@
                     <input type="text" id="reg-matriz" class="registry-input generate-barcode"
                         data-target="barcode-matriz" data-prefix="FO-SGC-01-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date" placeholder="YYYY-MM-DD">
                 <svg id="barcode-matriz" class="barcode-svg"></svg>
             </div>
         </div>
 
         <div class="header-main">
             <h1>MATRIZ DE RESPONSABILIDADES Y FIRMAS POR MÓDULO</h1>
-            <div class="metadata">Código: FO-SGC-01 | Versión: 0.9 | Vig: Feb2026</div>
+            <div class="metadata">Código: FO-SGC-01 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section-header">1. CONTROL DE FIRMAS POR MÓDULO Y FORMATO</div>
@@ -422,16 +422,16 @@
             <div class="signature-box">
                 <p>Elaboró / Actualizó</p>
                 <input type="text" placeholder="Coordinador SGC">
-                <p>Fecha: <input type="date" class="cedit"></p>
+                <p>Fecha: <input type="text" class="cedit" placeholder="YYYY-MM-DD"></p>
             </div>
             <div class="signature-box">
                 <p>Aprobó Matriz Oficial</p>
                 <input type="text" placeholder="Responsable Dirección">
-                <p>Fecha: <input type="date" class="cedit"></p>
+                <p>Fecha: <input type="text" class="cedit" placeholder="YYYY-MM-DD"></p>
             </div>
         </div>
 
-        <div class="footer">FO-SGC-01 | Versión: 0.9 | Matriz por Módulo SGC | Xelle Scientific</div>
+        <div class="footer">FO-SGC-01-O | MATRIZ DE RESPONSABILIDADES POR MÓDULO | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 
     <script>

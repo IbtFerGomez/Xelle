@@ -18,6 +18,62 @@
             margin-top: 15px;
             border-radius: 4px;
         }
+
+        /* Reglas de impresión para paginación correcta */
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+        }
     </style>
 </head>
 
@@ -25,7 +81,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
@@ -75,7 +131,7 @@
 
         <div class="header-main">
             <h1>DICTAMEN TÉCNICO DE CONCESIÓN</h1>
-            <div class="metadata">Código: FO-LC-12 | Versión: 1.0</div>
+            <div class="metadata">Código: FO-LC-12 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section-header">1. REFERENCIA DE NO CONFORMIDAD</div>
@@ -142,7 +198,7 @@
         <div class="section"
             style="border:2px solid #1E3A5F; padding:15px; text-align:center; background-color:#f8fafc;">
             <label style="font-weight:bold; display:block; margin-bottom:5px;">DECISIÓN DEL RESPONSABLE
-                SANITARIO:</label>
+                DIRECCIÓN:</label>
             <select class="cedit" style="font-size:16px; font-weight:bold; padding:5px;">
                 <option value="">- SELECCIONAR -</option>
                 <option value="APROBADO">AUTORIZAR USO BAJO CONCESIÓN</option>
@@ -162,7 +218,9 @@
                 <p>Firma Obligatoria</p>
             </div>
         </div>
-        <div class="footer">FO-LC-12 | Dictamen de Concesión | Xelle Scientific</div>
+        <div class="footer">FO-LC-12 | DICTAMEN DE CONCESIÓN | Versión: 1.0<br>El contenido de este documento es
+            propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor,
+            por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
 

@@ -41,25 +41,27 @@
             }
 
             /* Permitir que las tablas y secciones se partan entre páginas */
-            .section { 
+            .section {
                 page-break-inside: auto !important;
                 break-inside: auto !important;
             }
-            
-            table, .compact-table { 
+
+            table,
+            .compact-table {
                 page-break-inside: auto !important;
                 break-inside: auto !important;
             }
-            
-            thead { 
+
+            thead {
                 display: table-header-group !important;
             }
-            
-            tr, tbody tr { 
+
+            tr,
+            tbody tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
-            
+
             .section-title {
                 page-break-after: avoid !important;
                 break-after: avoid !important;
@@ -72,7 +74,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
@@ -122,7 +124,7 @@
 
         <div class="header-main">
             <h1>REGISTRO DE LOTE DE PRODUCTO TERMINADO (CELULAR)</h1>
-            <div class="metadata">Código: FO-LC-29 | Versión: 1.0 | Vig: Ene2026</div>
+            <div class="metadata">Código: FO-LC-29 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div style="margin-bottom:10px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
@@ -292,6 +294,13 @@
                         type="text" class="cedit" style="flex:1" placeholder="Firma"><span
                         style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div>
             </div>
+            <div class="sig-block">
+                <p><strong>Responsable Dirección (Autorización Final):</strong></p>
+                <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
+                        class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
+                        type="text" class="cedit" style="flex:1" placeholder="Firma"><span
+                        style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div>
+            </div>
         </div>
 
         <div class="section">
@@ -299,8 +308,9 @@
             <textarea class="cedit" rows="3" placeholder="Ninguna"></textarea>
         </div>
 
-        <div class="footer">FO-LC-29 | Versión: 1.0 | Vigente a partir de: Enero2026<br>Propiedad de “Xelle Scientific”.
-        </div>
+        <div class="footer">FO-LC-29 | REGISTRO DE LOTE DE PRODUCTO TERMINADO (CELULAR) | Versión: 1.0<br>El contenido
+            de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los
+            derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 
     <script>

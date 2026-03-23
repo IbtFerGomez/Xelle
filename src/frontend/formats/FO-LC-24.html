@@ -8,13 +8,69 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
+    <style>
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+        }
+    </style>
 </head>
 
 <body id="doc-fo-lc-24">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
@@ -64,7 +120,7 @@
 
         <div class="header-main">
             <h1>FORMATO REGISTRO DIARIO DE DOSIFICACIÓN.</h1>
-            <div class="metadata">Código: FO-LC-24 | Versión: 1.0 | Vig: Ene2026</div>
+            <div class="metadata">Código: FO-LC-24 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div style="margin-bottom:10px;">
@@ -137,7 +193,8 @@
                         <td><input id="tot-hybrid-ortho" type="number" class="cedit" value="0" readonly></td>
                         <td><input id="tot-exo" type="number" class="cedit" value="0" readonly></td>
                         <td style="background-color:#e8f8f5;"><input id="grand-tot-vials" type="number" class="cedit"
-                            value="0" oninput="App.Docs.FO_LC_24.onGrandTotalVialsInput(this)" style="font-weight:bold;"></td>
+                                value="0" oninput="App.Docs.FO_LC_24.onGrandTotalVialsInput(this)"
+                                style="font-weight:bold;"></td>
                     </tr>
                     <tr>
                         <td><strong>Células</strong></td>
@@ -152,7 +209,8 @@
                         <td><input id="cell-exo" type="text" class="cedit" value="0"
                                 oninput="App.Docs.FO_LC_24.onCellSummaryInput(this)"></td>
                         <td style="background-color:#e8f8f5;"><input id="grand-tot-cells" type="text" class="cedit"
-                            value="0" oninput="App.Docs.FO_LC_24.onGrandTotalCellsInput(this)" style="font-weight:bold;"></td>
+                                value="0" oninput="App.Docs.FO_LC_24.onGrandTotalCellsInput(this)"
+                                style="font-weight:bold;"></td>
                     </tr>
                 </tbody>
             </table>
@@ -166,14 +224,17 @@
                 <p>Firma</p>
             </div>
             <div class="signature-box">
-                <p>Revisó:</p><input type="text">
+                <p>Revisó (Calidad):</p><input type="text">
+                <p>Firma</p>
+            </div>
+            <div class="signature-box">
+                <p>Autorizó (Responsable Dirección):</p><input type="text">
                 <p>Firma</p>
             </div>
         </div>
-        <div class="footer">FO-LC-24 | Versión: 1.0 | Vigente a partir de: Enero2026<br>El contenido de este documento
-            es propiedad
-            de “Xelle Scientific”, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está
-            prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-LC-24 | DOSIFICACIÓN | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
 
     <script>

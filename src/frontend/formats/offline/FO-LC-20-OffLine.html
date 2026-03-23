@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-LC-20 Procesamiento (OFF)</title>
@@ -10,56 +11,122 @@
     <style>
         /* REGLAS DE IMPRESIÓN FORZADA */
         @media print {
+
             /* 1. Ocultar placeholders (textos grises) */
-            input::placeholder, textarea::placeholder {
+            input::placeholder,
+            textarea::placeholder {
                 color: transparent !important;
                 opacity: 0 !important;
             }
-            
+
             /* 2. Forzar bordes negros en la tabla */
-            table, th, td {
+            table,
+            th,
+            td {
                 border: 1px solid #000 !important;
                 border-collapse: collapse !important;
             }
 
             /* 3. Ajuste de celdas */
-            td { height: 30px !important; }
-            input.cedit { border: none !important; }
+            td {
+                height: 30px !important;
+            }
+
+            input.cedit {
+                border: none !important;
+            }
 
             /* 4. Colores de fondo (si hubiera) */
-            body, .container {
+            body,
+            .container {
                 background: white !important;
                 color: black !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            .no-print { display: none !important; }
+
+            .no-print {
+                display: none !important;
+            }
         }
 
         /* Estilos visuales en pantalla */
-        .seeding-table th { background: #f0f0f0; font-size: 10px; text-align: center; vertical-align: middle; border: 1px solid #999; }
-        .seeding-table td { border: 1px solid #999; padding: 0; }
-        .seeding-table input { width: 98%; text-align: center; border: none; outline: none; background: transparent; }
-        
-        .method-box { border: 1px solid #333; padding: 10px; margin-bottom: 10px; background: #fafafa; }
+        .seeding-table th {
+            background: #f0f0f0;
+            font-size: 10px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #999;
+        }
+
+        .seeding-table td {
+            border: 1px solid #999;
+            padding: 0;
+        }
+
+        .seeding-table input {
+            width: 98%;
+            text-align: center;
+            border: none;
+            outline: none;
+            background: transparent;
+        }
+
+        .method-box {
+            border: 1px solid #333;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #fafafa;
+        }
     </style>
 </head>
+
 <body id="doc-fo-lc-20">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .svg-logo-titulo {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .svg-logo-subtitulo {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .svg-logo-celula {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
+                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
+                        <path class="svg-logo-celula"
+                            d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z" />
+                    </g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68"
+                        class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35"
+                        font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
             </div>
             <div class="registry-container">
                 <label>No. Registro / Folio</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-20-</span>
-                    <input type="text" id="reg-20" class="registry-input generate-barcode" data-target="barcode-20" data-prefix="FO-LC-20-" placeholder="0001">
+                    <input type="text" id="reg-20" class="registry-input generate-barcode" data-target="barcode-20"
+                        data-prefix="FO-LC-20-" placeholder="0001">
                 </div>
                 <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
                 <svg id="barcode-20" class="barcode-svg"></svg>
@@ -68,23 +135,26 @@
 
         <div class="header-main">
             <h1>PROCESAMIENTO DE TEJIDO E INICIO DE CULTIVO (P0)</h1>
-            <div class="metadata">Código: FO-LC-20 | Versión: 1.0-OFF | Vigencia: Ene 2026</div>
+            <div class="metadata">Código: FO-LC-20 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section">
             <div class="section-title">1. Trazabilidad de Origen</div>
             <table class="no-border-table">
                 <tr>
-                    <td style="width: 70%;"><strong>ID Placenta (MP):</strong> <input class="cedit" placeholder="Escanea etiqueta PL-..."></td>
-                    <td style="width: 30%;"><strong>Fecha Proceso:</strong> <input class="cedit" placeholder="DD/MM/AA"></td>
+                    <td style="width: 70%;"><strong>ID Placenta (MP):</strong> <input class="cedit"
+                            placeholder="Escanea etiqueta PL-..."></td>
+                    <td style="width: 30%;"><strong>Fecha Proceso:</strong> <input class="cedit" placeholder="DD/MM/AA">
+                    </td>
                 </tr>
             </table>
-            
+
             <div style="border: 2px dashed #000; padding: 10px; margin-top: 10px; display: flex; align-items: center;">
                 <div style="width: 60%;">
                     <strong>Asignación ID Lote Cultivo (TPL):</strong><br>
                     <span style="font-size: 9px; color: #666;">(Generar nuevo código único para este cultivo)</span>
-                    <input type="text" class="cedit generate-barcode" data-target="bc_tpl" style="font-weight: bold; font-size: 14px; margin-top: 5px;" placeholder="Ej: TPL-001-26">
+                    <input type="text" class="cedit generate-barcode" data-target="bc_tpl"
+                        style="font-weight: bold; font-size: 14px; margin-top: 5px;" placeholder="Ej: TPL-001-26">
                 </div>
                 <div style="width: 40%; text-align: center;">
                     <svg id="bc_tpl" class="barcode-svg" style="height: 40px;"></svg>
@@ -97,15 +167,20 @@
             <div class="method-box">
                 <div style="display: flex; gap: 40px; margin-bottom: 10px;">
                     <strong>Método Seleccionado:</strong>
-                    <label style="display:flex; align-items:center; gap:5px;"><input type="text"> Digestión Enzimática (DG)</label>
+                    <label style="display:flex; align-items:center; gap:5px;"><input type="text"> Digestión Enzimática
+                        (DG)</label>
                     <label style="display:flex; align-items:center; gap:5px;"><input type="text"> Explante (EX)</label>
                 </div>
                 <table class="no-border-table">
                     <tr>
-                        <td><strong>Hora Inicio:</strong> <input class="cedit" style="width: 80px;" placeholder="HH:MM"></td>
-                        <td><strong>Hora Término:</strong> <input class="cedit" style="width: 80px;" placeholder="HH:MM"></td>
-                        <td><strong>Op 1:</strong> <input class="cedit" placeholder="Iniciales" style="width:60px;"></td>
-                        <td><strong>Op 2:</strong> <input class="cedit" placeholder="Iniciales" style="width:60px;"></td>
+                        <td><strong>Hora Inicio:</strong> <input class="cedit" style="width: 80px;" placeholder="HH:MM">
+                        </td>
+                        <td><strong>Hora Término:</strong> <input class="cedit" style="width: 80px;"
+                                placeholder="HH:MM"></td>
+                        <td><strong>Op 1:</strong> <input class="cedit" placeholder="Iniciales" style="width:60px;">
+                        </td>
+                        <td><strong>Op 2:</strong> <input class="cedit" placeholder="Iniciales" style="width:60px;">
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="2"><strong>Lote Colagenasa / Reactivos:</strong> <input class="cedit"></td>
@@ -129,27 +204,133 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td>1</td><td><input class="cedit" placeholder="Ej. T75"></td><td><input class="cedit" placeholder="Ej. TPL-DG-P0-1"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>2</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>3</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>4</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>5</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>6</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>7</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>8</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>9</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>10</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>11</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>12</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>13</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>14</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
-                    <tr><td>15</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr>
+                        <td>1</td>
+                        <td><input class="cedit" placeholder="Ej. T75"></td>
+                        <td><input class="cedit" placeholder="Ej. TPL-DG-P0-1"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
                 </tbody>
             </table>
-            
+
             <div style="margin-top: 10px; display: flex; justify-content: flex-end;">
                 <div style="border: 1px solid #000; padding: 5px 15px; background: #eee;">
-                    <strong>Total Unidades:</strong> <input type="text" class="cedit" style="width: 50px; text-align: center; font-weight: bold;">
+                    <strong>Total Unidades:</strong> <input type="text" class="cedit"
+                        style="width: 50px; text-align: center; font-weight: bold;">
                 </div>
             </div>
         </div>
@@ -195,9 +376,8 @@
             </div>
         </div>
 
-        <div class="footer">
-            FO-LC-20 | Versión: 1.0-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.
-        </div>
+        <div class="footer">FO-LC-20-O | PROCESAMIENTO (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
+
 </html>

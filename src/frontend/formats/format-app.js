@@ -25,6 +25,7 @@ const App = {
         this.Universal.setupDateInputs();
         this.Universal.setupBarcodes();
         this.Universal.setupPrintHandler();
+        this.Universal.setupDraggableControls();
 
         switch (docId) {
             case 'doc-fo-lc-ResumenRecepcion': case 'doc-fo-lc-17': case 'doc-fo-lc-18': case 'doc-fo-lc-19': case 'doc-fo-lc-23': break;
@@ -323,6 +324,68 @@ const App = {
                     span.textContent = sel.options[sel.selectedIndex]?.text || '';
                 });
             });
+        },
+        setupDraggableControls: function () {
+            const controlBar = document.querySelector('.global-controls');
+            if (!controlBar) return;
+
+            let isDragging = false;
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+            let xOffset = 0;
+            let yOffset = 0;
+
+            controlBar.addEventListener('mousedown', dragStart);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+
+            // Touch events para dispositivos móviles
+            controlBar.addEventListener('touchstart', dragStart);
+            document.addEventListener('touchmove', drag);
+            document.addEventListener('touchend', dragEnd);
+
+            function dragStart(e) {
+                // No iniciar drag si se hace clic en un botón
+                if (e.target.tagName === 'BUTTON') return;
+
+                if (e.type === 'touchstart') {
+                    initialX = e.touches[0].clientX - xOffset;
+                    initialY = e.touches[0].clientY - yOffset;
+                } else {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                }
+
+                isDragging = true;
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+
+                if (e.type === 'touchmove') {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+
+                xOffset = currentX;
+                yOffset = currentY;
+
+                setTranslate(currentX, currentY, controlBar);
+            }
+
+            function dragEnd() {
+                isDragging = false;
+            }
+
+            function setTranslate(xPos, yPos, el) {
+                el.style.transform = `translate(${xPos}px, calc(-50% + ${yPos}px))`;
+            }
         },
         autoResize: function (textarea) {
             textarea.style.height = 'auto';

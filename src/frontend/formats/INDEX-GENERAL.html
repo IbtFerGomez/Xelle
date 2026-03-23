@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Índice General - Sistema Documental Xelle Scientific</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { primary: "#2fa785", navy: "#1E3A5F", sky: "#64C4ED", "bg-light": "#f3f7f5" },
+                    fontFamily: { display: ["Manrope", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .card {
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(47, 167, 133, 0.15);
+            border-color: #2E9D82;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-lc {
+            background: #e3f2fd;
+            color: #0277bd;
+        }
+
+        .badge-op {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .badge-qa {
+            background: #f3e5f5;
+            color: #6a1b9a;
+        }
+
+        .badge-lg {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .badge-sgc {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .badge-et {
+            background: #fff9c4;
+            color: #f57f17;
+        }
+
+        .badge-it {
+            background: #e0f2f1;
+            color: #00695c;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #1E3A5F 0%, #2fa785 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .doc-link:hover {
+            background-color: rgba(47, 167, 133, 0.05);
+        }
+
+        .search-box {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-button {
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .tab-button:hover {
+            background-color: rgba(47, 167, 133, 0.1);
+        }
+
+        .tab-button.active {
+            background-color: #2fa785;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <div class="global-controls no-print"
+        style="position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 1000; background: rgba(255, 255, 255, 0.95); padding: 15px 12px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25); border: 2px solid #3498db; cursor: move; user-select: none; min-width: 130px;">
+        <button class="btn btn-primary" onclick="window.print()"
+            style="padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; color: white; font-size: 13px; width: 100%; transition: all 0.2s ease; text-align: center; background-color: #2c3e50;">Imprimir</button>
+    </div>
+
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-navy to-primary text-white py-8 px-6 shadow-lg">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">📚 Sistema Documental</h1>
+                    <p class="text-lg opacity-90">Xelle Scientific - Gestión Integral de Calidad</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm opacity-75">Versión 2.0</div>
+                    <div class="text-sm opacity-75">Marzo 2026</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-box">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex gap-4">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar por código, nombre o descripción..."
+                    class="flex-1 px-6 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-lg">
+                <button onclick="clearSearch()"
+                    class="px-6 py-3 bg-gray-200 hover:bg-gray-300 rounded-lg font-semibold transition">
+                    Limpiar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="max-w-7xl mx-auto px-6 py-6">
+        <div class="flex gap-4 mb-6">
+            <button onclick="showTab('formatos')" id="tab-formatos" class="tab-button active">📄 Formatos (54)</button>
+            <button onclick="showTab('offline')" id="tab-offline" class="tab-button">💾 Formatos Offline (56)</button>
+            <button onclick="showTab('etiquetas')" id="tab-etiquetas" class="tab-button">🏷️ Etiquetas (16)</button>
+        </div>
+
+        <!-- SECCIÓN: FORMATOS -->
+        <div id="section-formatos" class="tab-content">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold">📄 Formatos Digitales</h2>
+                <p class="opacity-90">Documentos de proceso y control en formato interactivo</p>
+            </div>
+
+            <!-- Laboratorio Celular -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-navy mb-4 flex items-center gap-2">
+                    <span class="badge badge-lc">LC</span> Laboratorio Celular (37 documentos)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="formatos-lc">
+                    <!-- FO-LC -->
+                    <a href="FO-LC-12.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-12</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Registro de Elaboración</div>
+                    </a>
+
+                    <a href="FO-LC-14.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-14</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Control de Proceso</div>
+                    </a>
+
+                    <a href="FO-LC-15.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-15</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Orden de Producción</div>
+                    </a>
+
+                    <a href="FO-LC-16.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-16</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Cover/Portada Lote</div>
+                    </a>
+
+                    <a href="FO-LC-17.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-17</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Recepción de Placenta</div>
+                    </a>
+
+                    <a href="FO-LC-18.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-18</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Procesamiento Primario</div>
+                    </a>
+
+                    <a href="FO-LC-19.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-19</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Control de Calidad</div>
+                    </a>
+
+                    <a href="FO-LC-20.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-20</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Destrucción RPBI</div>
+                    </a>
+
+                    <a href="FO-LC-21.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-21</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Expansión Celular</div>
+                    </a>
+
+                    <a href="FO-LC-22.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-22</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Cosecha Celular</div>
+                    </a>
+
+                    <a href="FO-LC-23.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-23</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Formulación Final</div>
+                    </a>
+
+                    <a href="FO-LC-24.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-24</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Envasado y Etiquetado</div>
+                    </a>
+
+                    <a href="FO-LC-25.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-25</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Criopreservación</div>
+                    </a>
+
+                    <a href="FO-LC-26.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-26</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Descongelación</div>
+                    </a>
+
+                    <a href="FO-LC-27.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-27</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Control Microbiológico</div>
+                    </a>
+
+                    <a href="FO-LC-28.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-28</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Viabilidad Celular</div>
+                    </a>
+
+                    <a href="FO-LC-29.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-29</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Caracterización Celular</div>
+                    </a>
+
+                    <a href="FO-LC-30.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-30</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Banco de Trabajo</div>
+                    </a>
+
+                    <a href="FO-LC-31.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-31</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Cuarentena</div>
+                    </a>
+
+                    <a href="FO-LC-32.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-32</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Liberación</div>
+                    </a>
+
+                    <a href="FO-LC-33.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-33</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Rechazo</div>
+                    </a>
+
+                    <a href="FO-LC-34.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-34</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Muestreo</div>
+                    </a>
+
+                    <a href="FO-LC-35.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-35</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Retención de Muestras</div>
+                    </a>
+
+                    <a href="FO-LC-40.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-40</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Limpieza y Sanitización</div>
+                    </a>
+
+                    <a href="FO-LC-40-B.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-40-B</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Limpieza Cabinas</div>
+                    </a>
+
+                    <a href="FO-LC-41.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-41</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Calibración de Equipos</div>
+                    </a>
+
+                    <a href="FO-LC-42.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-42</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Mantenimiento Preventivo</div>
+                    </a>
+
+                    <a href="FO-LC-43.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-43</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Temperatura y Humedad</div>
+                    </a>
+
+                    <a href="FO-LC-44.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-44</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Capacitación de Personal</div>
+                    </a>
+
+                    <a href="FO-LC-45.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-45</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Incidencias y Desviaciones</div>
+                    </a>
+
+                    <a href="FO-LC-46.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-46</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Acciones Correctivas</div>
+                    </a>
+
+                    <a href="FO-LC-47.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-47</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Auditorías Internas</div>
+                    </a>
+
+                    <a href="FO-LC-48.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-48</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Revisión de Dirección</div>
+                    </a>
+
+                    <a href="FO-LC-49.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-49</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Mejora Continua</div>
+                    </a>
+
+                    <a href="FO-LC-50.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-50</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Control de Documentos</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Operaciones -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-navy mb-4 flex items-center gap-2">
+                    <span class="badge badge-op">OP</span> Operaciones (12 documentos)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="FO-OP-13.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-13</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-13</div>
+                    </a>
+
+                    <a href="FO-OP-15.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-15</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-15</div>
+                    </a>
+
+                    <a href="FO-OP-16.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-16</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-16</div>
+                    </a>
+
+                    <a href="FO-OP-17.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-17</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-17</div>
+                    </a>
+
+                    <a href="FO-OP-20.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-20</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-20</div>
+                    </a>
+
+                    <a href="FO-OP-39.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-39</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-39</div>
+                    </a>
+
+                    <a href="FO-OP-40.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-40</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-40</div>
+                    </a>
+
+                    <a href="FO-OP-49.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-49</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-49</div>
+                    </a>
+
+                    <a href="FO-OP-50.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-50</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-50</div>
+                    </a>
+
+                    <a href="FO-OP-51.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-51</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-51</div>
+                    </a>
+
+                    <a href="FO-OP-52.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-52</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-52</div>
+                    </a>
+
+                    <a href="FO-OP-53.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-53</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-53</div>
+                    </a>
+
+                    <a href="FO-OP-54.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-54</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-54</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Calidad y Otros -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-navy mb-4 flex items-center gap-2">
+                    <span class="badge badge-qa">Otros</span> Calidad, Logística y SGC (5 documentos)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="FO-QA-10.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-qa">FO-QA-10</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Aseguramiento de Calidad</div>
+                    </a>
+
+                    <a href="FO-LG-05.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lg">FO-LG-05</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Logística</div>
+                    </a>
+
+                    <a href="FO-SGC-01.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-sgc">FO-SGC-01</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Sistema de Gestión de Calidad</div>
+                    </a>
+
+                    <a href="FO-SGC-02.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-sgc">FO-SGC-02</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">SGC - Documento 02</div>
+                    </a>
+
+                    <a href="IT-OP-01.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-it">IT-OP-01</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Manual de Identificación y Trazabilidad</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: FORMATOS OFFLINE -->
+        <div id="section-offline" class="tab-content hidden">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold">💾 Formatos Offline</h2>
+                <p class="opacity-90">Versiones sin conexión para uso en áreas sin internet</p>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-navy mb-4">📦 Formatos Offline Disponibles</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="offLine/FO-LC-12-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-12</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Registro de Elaboración</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-14-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-14</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Control de Proceso</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-15-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-15</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Orden de Producción</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-16-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-16</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Cover/Portada Lote</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-17-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-17</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Recepción de Placenta</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-18-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-18</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Procesamiento Primario</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-19-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-19</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Control de Calidad</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-20-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-20</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Destrucción RPBI</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-21-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-21</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Expansión Celular</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-22-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-22</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Cosecha Celular</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-23-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-23</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Formulación Final</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-24-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-24</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Envasado y Etiquetado</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-25-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-25</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Criopreservación</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-26-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-26</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Descongelación</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-27-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-27</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Control Microbiológico</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-28-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-28</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Viabilidad Celular</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-29-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-29</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Caracterización Celular</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-30-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-30</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Banco de Trabajo</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-31-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-31</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Cuarentena</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-32-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-32</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Liberación</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-33-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-33</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Rechazo</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-34-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-34</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Muestreo</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-35-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-35</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Retención de Muestras</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-40-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-40</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Limpieza y Sanitización</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-40-B-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-40-B</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Limpieza Cabinas</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-41-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-41</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Calibración de Equipos</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-42-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-42</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Mantenimiento Preventivo</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-43-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-43</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Temperatura y Humedad</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-44-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-44</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Capacitación de Personal</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-45-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-45</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Incidencias y Desviaciones</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-46-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-46</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Acciones Correctivas</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-47-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-47</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Auditorías Internas</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-48-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-48</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Revisión de Dirección</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-49-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-49</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Mejora Continua</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-50-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-50</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Control de Documentos</div>
+                    </a>
+
+                    <a href="offLine/FO-LC-51-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lc">FO-LC-51</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">LC-51 Offline</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-13-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-13</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-13</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-15-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-15</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-15</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-16-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-16</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-16</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-17-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-17</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-17</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-20-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-20</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-20</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-39-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-39</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-39</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-40-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-40</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-40</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-49-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-49</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-49</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-50-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-50</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-50</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-51-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-51</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-51</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-52-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-52</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-52</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-53-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-53</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-53</div>
+                    </a>
+
+                    <a href="offLine/FO-OP-54-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-op">FO-OP-54</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Operaciones - OP-54</div>
+                    </a>
+
+                    <a href="offLine/FO-LG-05-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-lg">FO-LG-05</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Logística</div>
+                    </a>
+
+                    <a href="offLine/FO-QA-10-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-qa">FO-QA-10</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Aseguramiento de Calidad</div>
+                    </a>
+
+                    <a href="offLine/FO-SGC-01-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-sgc">FO-SGC-01</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Sistema de Gestión de Calidad</div>
+                    </a>
+
+                    <a href="offLine/FO-SGC-02-OffLine.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-sgc">FO-SGC-02</span>
+                            <span class="text-xs text-gray-500">Offline</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">SGC - Documento 02</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: ETIQUETAS -->
+        <div id="section-etiquetas" class="tab-content hidden">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold">🏷️ Sistema de Etiquetas</h2>
+                <p class="opacity-90">Etiquetas de identificación visual y trazabilidad</p>
+            </div>
+
+            <!-- Etiquetas Principales -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-navy mb-4 flex items-center gap-2">
+                    🚦 Semáforo de Estatus (4 etiquetas)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <a href="Etiquetas.Control/ET-LC-01.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-yellow-400">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-orange">ET-LC-01</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Muestreado</div>
+                        <div class="text-xs text-gray-500 mt-2">Naranja - Control de Calidad</div>
+                    </a>
+
+                    <a href="Etiquetas.Control/ET-LC-02.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-green-400">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-green">ET-LC-02</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Liberado</div>
+                        <div class="text-xs text-gray-500 mt-2">Verde - Producto Aprobado</div>
+                    </a>
+
+                    <a href="Etiquetas.Control/ET-LC-03.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-yellow-300">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-yellow">ET-LC-03</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Cuarentena</div>
+                        <div class="text-xs text-gray-500 mt-2">Amarillo - En Análisis</div>
+                    </a>
+
+                    <a href="Etiquetas.Control/ET-LC-04.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-red-400">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-red">ET-LC-04</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Rechazado</div>
+                        <div class="text-xs text-gray-500 mt-2">Rojo - No Conforme</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Etiquetas de Materia Prima -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-navy mb-4 flex items-center gap-2">
+                    📦 Materia Prima y Recepción (3 etiquetas)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="Etiquetas.Control/ET-LC-05.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-gray-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge badge-et">ET-LC-05</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">MP Placenta</div>
+                        <div class="text-xs text-gray-500 mt-2">Materia Prima - Recepción</div>
+                    </a>
+
+                    <a href="Etiquetas.Control/ET-LC-06.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-red-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-red">ET-LC-06</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">MPNC Placenta</div>
+                        <div class="text-xs text-gray-500 mt-2">Materia Prima No Conforme</div>
+                    </a>
+
+                    <a href="Etiquetas.Control/ET-LC-08.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-green-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-green">ET-LC-08</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Insumo Aprobado</div>
+                        <div class="text-xs text-gray-500 mt-2">Control de Inventarios</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Etiquetas de Control de Calidad -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-navy mb-4 flex items-center gap-2">
+                    🔬 Control de Calidad (3 etiquetas)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="Etiquetas.Control/ET-LC-09.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-blue-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-blue">ET-LC-09</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Contramuestra</div>
+                        <div class="text-xs text-gray-500 mt-2">Retención de Muestras</div>
+                    </a>
+
+                    <a href="Etiquetas.Control/ET-LC-10.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-pink-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-pink">ET-LC-10</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Contenedor Retenciones</div>
+                        <div class="text-xs text-gray-500 mt-2">Custodia de Muestras</div>
+                    </a>
+
+                    <a href="Etiquetas.Control/ET-LC-11.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-green-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-green">ET-LC-11</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Muestra en Análisis</div>
+                        <div class="text-xs text-gray-500 mt-2">No Manipular</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Etiquetas de Productos Especiales -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-navy mb-4 flex items-center gap-2">
+                    🧬 Productos Especiales (4 etiquetas)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <a href="Etiquetas.Control/ET-LC-07.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-red-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-red">ET-LC-07</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">PNC General</div>
+                        <div class="text-xs text-gray-500 mt-2">Producto No Conforme</div>
+                    </a>
+
+                    <a href="Etiquetas.Control/ET-LC-12.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-blue-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-blue">ET-LC-12</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Medio Condicionado</div>
+                        <div class="text-xs text-gray-500 mt-2">Subproducto Celular</div>
+                    </a>
+
+                    <a href="Etiquetas.Control/ET-LC-13.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-purple-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-purple">ET-LC-13</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Exosomas</div>
+                        <div class="text-xs text-gray-500 mt-2">Concentrado Celular</div>
+                    </a>
+
+                    <a href="Etiquetas.Control/ET-LC-15.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-blue-200">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-blue">ET-LC-15</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">Medio Liofilizado</div>
+                        <div class="text-xs text-gray-500 mt-2">Polvo - Control de Humedad</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Etiquetas RPBI -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-navy mb-4 flex items-center gap-2">
+                    ☢️ Residuos RPBI - NOM-087 (2 etiquetas)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="Etiquetas.Control/ET-RPBI-01.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-red-400">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-red">ET-RPBI-01</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">RPBI ROJO</div>
+                        <div class="text-xs text-gray-500 mt-2">Punzocortantes, cultivos, cepas y residuos no anatómicos
+                        </div>
+                    </a>
+
+                    <a href="Etiquetas.Control/ET-RPBI-02.html"
+                        class="card doc-link block p-4 bg-white rounded-lg border-2 border-yellow-400">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="badge bg-yellow">ET-RPBI-02</span>
+                        </div>
+                        <div class="font-semibold text-gray-800">RPBI AMARILLO</div>
+                        <div class="text-xs text-gray-500 mt-2">Placentas y tejidos anatómicos</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Link al índice completo de etiquetas -->
+            <div class="bg-blue-50 border-l-4 border-primary p-6 rounded-lg">
+                <h4 class="font-bold text-lg mb-2">📋 Ver Índice Completo de Etiquetas</h4>
+                <p class="text-gray-700 mb-4">Accede al sistema completo de etiquetas con filtrado y búsqueda avanzada
+                </p>
+                <a href="Etiquetas.Control/INDEX-ETIQUETAS.html"
+                    class="inline-block bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition">
+                    Ir al Índice de Etiquetas →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="bg-gradient-to-r from-navy to-primary text-white py-8 px-6 mt-12">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-sm opacity-90">© 2026 Xelle Scientific - Sistema de Gestión Documental</p>
+            <p class="text-xs opacity-75 mt-2">All rights reserved | Versión 2.0</p>
+        </div>
+    </div>
+
+    <script>
+        // Función para cambiar entre tabs
+        function showTab(tabName) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.tab-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Remover clase active de todos los botones
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Mostrar la sección seleccionada
+            document.getElementById('section-' + tabName).classList.remove('hidden');
+
+            // Activar el botón correspondiente
+            document.getElementById('tab-' + tabName).classList.add('active');
+
+            // Guardar en localStorage
+            localStorage.setItem('activeTab', tabName);
+        }
+
+        // Búsqueda en tiempo real
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function (e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const allCards = document.querySelectorAll('.doc-link');
+
+            allCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Función para limpiar búsqueda
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.querySelectorAll('.doc-link').forEach(card => {
+                card.style.display = 'block';
+            });
+        }
+
+        // Restaurar tab activo al cargar
+        window.addEventListener('DOMContentLoaded', function () {
+            const activeTab = localStorage.getItem('activeTab') || 'formatos';
+            showTab(activeTab);
+        });
+    </script>
+
+<script>
+// Hacer la barra de controles draggable
+(function() {
+    const controlBar = document.querySelector('.global-controls');
+    if (!controlBar) return;
+
+    let isDragging = false;
+    let currentX, currentY, initialX, initialY;
+    let xOffset = 0, yOffset = 0;
+
+    controlBar.addEventListener('mousedown', dragStart);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', dragEnd);
+    controlBar.addEventListener('touchstart', dragStart);
+    document.addEventListener('touchmove', drag);
+    document.addEventListener('touchend', dragEnd);
+
+    function dragStart(e) {
+        if (e.target.tagName === 'BUTTON') return;
+        if (e.type === 'touchstart') {
+            initialX = e.touches[0].clientX - xOffset;
+            initialY = e.touches[0].clientY - yOffset;
+        } else {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+        }
+        isDragging = true;
+    }
+
+    function drag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        if (e.type === 'touchmove') {
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+        } else {
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+        }
+        xOffset = currentX;
+        yOffset = currentY;
+        controlBar.style.transform = `translate(${currentX}px, calc(-50% + ${currentY}px))`;
+    }
+
+    function dragEnd() {
+        isDragging = false;
+    }
+})();
+</script>
+</body>
+
+</html>

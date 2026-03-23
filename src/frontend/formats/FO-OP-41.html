@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-41 Recepción de Insumos (Individual)</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 10px; padding: 6px; text-align: center; }
+        .compact-table td { font-size: 10px; padding: 5px; vertical-align: middle; }
+        .radio-group { display: flex; justify-content: center; gap: 15px; }
+        .cbx-group { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 5px; }
+        
+        @media print {
+            .global-controls, .no-print { display:none !important; }
+            ::-webkit-input-placeholder { color: transparent !important; }
+            :-moz-placeholder { color: transparent !important; }
+            ::-moz-placeholder { color: transparent !important; }
+            :-ms-input-placeholder { color: transparent !important; }
+            ::placeholder { color: transparent !important; }
+        }
+    </style>
+</head>
+<body id="doc-fo-op-41">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Recepción</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-41-</span>
+                    <input type="text" id="reg-41" class="registry-input generate-barcode" data-target="barcode-41" data-prefix="FO-OP-41-" placeholder="000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-41" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>RECEPCIÓN Y APROBACIÓN DE MATERIAS PRIMAS E INSUMOS</h1>
+            <div class="metadata">Código: FO-OP-41 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. DATOS GENERALES Y DE RECEPCIÓN (ALMACÉN)</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Fecha de Recepción:</strong></td><td width="30%"><input type="date" class="cedit"></td>
+                    <td width="20%"><strong>Hora:</strong></td><td width="30%"><input type="time" class="cedit"> hrs.</td>
+                </tr>
+                <tr>
+                    <td><strong>Proveedor / Fabricante:</strong></td><td><input class="cedit"></td>
+                    <td><strong>Transportista:</strong></td><td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><strong>No. Factura / OC:</strong></td><td colspan="3"><input class="cedit" style="width:100%;"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="border-top: 1px solid #cbd5e1; padding-top: 10px; margin-top: 5px;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Nombre del Insumo:</strong></td><td colspan="3"><input class="cedit" style="width:100%;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Lote (Proveedor):</strong></td><td><input class="cedit"></td>
+                    <td><strong>Lote Interno Asignado:</strong></td><td><input class="cedit" style="font-weight:bold;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Cantidad Recibida:</strong></td><td><input class="cedit" placeholder="(Kg / L / Pzas)"></td>
+                    <td><strong>No. de Bultos/Cajas:</strong></td><td><input type="number" class="cedit"></td>
+                </tr>
+            </table>
+            
+            <div style="margin-top:10px;">
+                <strong>Condiciones de Entrega:</strong>
+                <div class="cbx-group">
+                    <label><input type="radio" name="cond_entrega" class="cedit"> Ambiente</label>
+                    <label><input type="radio" name="cond_entrega" class="cedit"> Refrigeración (2-8°C)</label>
+                    <label><input type="radio" name="cond_entrega" class="cedit"> Congelación (&lt;-20°C)</label>
+                </div>
+            </div>
+            <div style="margin-top:10px;">
+                <strong>Temperatura registrada al recibir (Si aplica):</strong> <input type="number" step="0.1" class="cedit" style="width:60px; text-align:center; border-bottom:1px solid #ccc;"> °C
+            </div>
+        </div>
+
+        <div class="section-header">2. INSPECCIÓN FÍSICA Y DOCUMENTAL (ALMACÉN / CALIDAD)</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="30%">Parámetro a Evaluar</th>
+                        <th width="40%">Criterio de Aceptación</th>
+                        <th width="15%">Cumple</th>
+                        <th width="15%">No Cumple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Condiciones de Transporte</strong></td>
+                        <td>Vehículo limpio, sin olores extraños, plagas ni humedad.</td>
+                        <td><input type="radio" name="chk_1" class="cedit" style="width:100%;"></td>
+                        <td><input type="radio" name="chk_1" class="cedit" style="width:100%;"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Integridad del Empaque</strong></td>
+                        <td>Sin rasgaduras, derrames, humedad ni daños visibles.</td>
+                        <td><input type="radio" name="chk_2" class="cedit" style="width:100%;"></td>
+                        <td><input type="radio" name="chk_2" class="cedit" style="width:100%;"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Etiquetado del Proveedor</strong></td>
+                        <td>Legible, con nombre, lote y caducidad claramente indicados.</td>
+                        <td><input type="radio" name="chk_3" class="cedit" style="width:100%;"></td>
+                        <td><input type="radio" name="chk_3" class="cedit" style="width:100%;"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fecha de Caducidad</strong></td>
+                        <td>Vigencia mínima aceptable según política interna.</td>
+                        <td><input type="radio" name="chk_4" class="cedit" style="width:100%;"></td>
+                        <td><input type="radio" name="chk_4" class="cedit" style="width:100%;"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Certificado de Análisis (CoA)</strong></td>
+                        <td>Anexo, corresponde al lote y cumple especificaciones.</td>
+                        <td><input type="radio" name="chk_5" class="cedit" style="width:100%;"></td>
+                        <td><input type="radio" name="chk_5" class="cedit" style="width:100%;"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-top:5px;">Nota: Si algún parámetro "No Cumple", el material debe segregarse inmediatamente y notificarse a QA.</p>
+        </div>
+
+        <div class="section-header">3. DICTAMEN FINAL Y OBSERVACIONES</div>
+        <div class="section">
+            <div style="border: 2px solid #1E3A5F; padding: 10px; background-color: #f8fafc; border-radius: 4px;">
+                <strong style="font-size:11px;">DICTAMEN:</strong>
+                <div class="cbx-group" style="flex-direction: column; gap: 8px; margin-top: 5px;">
+                    <label style="color:#166534; font-weight:bold;"><input type="radio" name="dictamen" class="cedit"> APROBADO (LIBERADO PARA USO): Etiqueta VERDE (ET-AL-05).</label>
+                    <label style="color:#991b1b; font-weight:bold;"><input type="radio" name="dictamen" class="cedit"> RECHAZADO (PNC): Etiqueta ROJA (ET-PNC-02) y segregar.</label>
+                    <label style="color:#b45309; font-weight:bold;"><input type="radio" name="dictamen" class="cedit"> EN CUARENTENA: Pendiente de análisis interno. Etiqueta AMARILLA (ET-LC-03).</label>
+                </div>
+            </div>
+            <div style="margin-top: 10px;">
+                <strong>Observaciones / Referencia a Desviación:</strong><br>
+                <textarea class="cedit" rows="2" style="width:100%; border:1px solid #ccc;"></textarea>
+            </div>
+        </div>
+
+        <div class="section-header">4. FIRMAS DE RESPONSABILIDAD</div>
+        <div class="signature-area" style="margin-top: 20px;">
+            <div class="signature-box">
+                <p>Recibió e Inspeccionó (Almacén)</p>
+                <input type="text" placeholder="Nombre y Firma" class="cedit">
+            </div>
+            <div class="signature-box">
+                <p>Revisó y Dictaminó (Calidad)</p>
+                <input type="text" placeholder="Nombre y Firma" class="cedit">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

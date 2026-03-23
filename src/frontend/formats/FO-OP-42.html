@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-42 Recepción de Insumos (Múltiple)</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        @page {
+            size: landscape;
+            margin: 0.5cm;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 4px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 3px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .compact-table input {
+            font-size: 9px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+        }
+
+        .radio-group {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .cbx-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-42">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Recepción</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-42-</span>
+                    <input type="text" id="reg-42" class="registry-input generate-barcode" data-target="barcode-42"
+                        data-prefix="FO-OP-42-" placeholder="000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-42" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>RECEPCIÓN Y APROBACIÓN DE MATERIAS PRIMAS E INSUMOS MULTIPLES</h1>
+            <div class="metadata">Código: FO-OP-42 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. DATOS GENERALES Y CONDICIÓN DE TRANSPORTE</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Fecha de Recepción:</strong></td>
+                    <td width="30%"><input type="date" class="cedit"></td>
+                    <td width="20%"><strong>Hora de Ingreso:</strong></td>
+                    <td width="30%"><input type="time" class="cedit"> hrs.</td>
+                </tr>
+                <tr>
+                    <td><strong>Proveedor(es):</strong></td>
+                    <td><input class="cedit" style="width:100%;"></td>
+                    <td><strong>Transportista:</strong></td>
+                    <td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><strong>No. Factura / OC:</strong></td>
+                    <td colspan="3"><input class="cedit"></td>
+                </tr>
+            </table>
+            <div style="margin-top:5px; padding:5px; background-color:#f8fafc; border:1px solid #cbd5e1;">
+                <strong>Condición del Transporte:</strong>
+                <label style="margin-left:10px;"><input type="radio" name="transporte" class="cedit"> Limpio y
+                    Conforme</label>
+                <label style="margin-left:10px;"><input type="radio" name="transporte" class="cedit"> No Conforme
+                    (Rechazar Lote)</label>
+            </div>
+        </div>
+
+        <div class="section-header">2. REGISTRO, INSPECCIÓN Y DICTAMEN POR PARTIDA (INSUMO)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Evalúe cada partida. <strong>(Física =
+                    Empaque/Etiqueta OK | CoA = Anexo/Conforme)</strong>. Estatus: A=Aprobado | R=Rechazado |
+                C=Cuarentena.</p>
+
+            <table class="compact-table" id="tbl-partidas">
+                <thead>
+                    <tr>
+                        <th width="3%">No.</th>
+                        <th width="18%">Insumo / Material</th>
+                        <th width="14%">Lote (Prov / Interno)</th>
+                        <th width="12%">Cant. / Bultos</th>
+                        <th width="9%">Temp (°C) / Cond.</th>
+                        <th width="9%">Caducidad</th>
+                        <th width="11%">Insp. Física<br>(C / NC)</th>
+                        <th width="11%">CoA Anexo/Conf.<br>(C / NC)</th>
+                        <th width="11%">Dictamen<br>(A / R / C)</th>
+                        <th width="2%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">1</td>
+                        <td><input class="cedit" placeholder="Descripción"></td>
+                        <td><input class="cedit" placeholder="Prov:"><br><input class="cedit" placeholder="Int:"
+                                style="font-weight:bold;"></td>
+                        <td><input class="cedit" placeholder="Cant:"><br><input class="cedit" placeholder="Bultos:">
+                        </td>
+                        <td><input type="number" step="0.1" class="cedit" placeholder="°C"><br>
+                            <select class="cedit" style="font-size:8px;">
+                                <option>Ambiente</option>
+                                <option>Refri</option>
+                                <option>Congel.</option>
+                            </select>
+                        </td>
+                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
+                        <td>
+                            <div class="radio-group">
+                                <label><input type="radio" class="cedit"> C</label>
+                                <label><input type="radio" class="cedit"> NC</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio-group">
+                                <label><input type="radio" class="cedit"> C</label>
+                                <label><input type="radio" class="cedit"> NC</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio-group">
+                                <label style="color:#166534;"><input type="radio" class="cedit"> A</label>
+                                <label style="color:#991b1b;"><input type="radio" class="cedit"> R</label>
+                                <label style="color:#b45309;"><input type="radio" class="cedit"> C</label>
+                            </div>
+                        </td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-partidas')">+ AGREGAR PARTIDA</button>
+        </div>
+
+        <div class="section-header">3. OBSERVACIONES Y DESVIACIONES</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Especifique el motivo de cualquier partida marcada
+                como "NC", "Rechazada (R)" o "En Cuarentena (C)".</p>
+            <table class="no-border-table">
+                <tr>
+                    <td width="15%"><strong>Partida No. <input class="cedit"
+                                style="width:30px; border-bottom:1px solid #ccc; text-align:center;"> :</strong></td>
+                    <td width="85%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Partida No. <input class="cedit"
+                                style="width:30px; border-bottom:1px solid #ccc; text-align:center;"> :</strong></td>
+                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">4. FIRMAS DE RESPONSABILIDAD Y LIBERACIÓN</div>
+        <div class="signature-area" style="margin-top: 15px;">
+            <div class="signature-box">
+                <p>Recibió y Verificó (Almacén)</p>
+                <input type="text" placeholder="Nombre y Firma" class="cedit">
+            </div>
+            <div class="signature-box">
+                <p>Dictaminó y Liberó (Calidad)</p>
+                <input type="text" placeholder="Nombre y Firma" class="cedit">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateRowNumbers(tableId) {
+            let t = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+            for (let i = 0; i < t.rows.length; i++) {
+                t.rows[i].querySelector('.row-num').innerText = i + 1;
+            }
+        }
+
+        function addRow(id) {
+            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
+            let r = t.rows[0].cloneNode(true);
+
+            // Limpiar inputs y selects
+            r.querySelectorAll('input').forEach(i => {
+                if (i.type === 'radio' || i.type === 'checkbox') {
+                    i.checked = false;
+                    // Asignar nombres únicos a los radios de la nueva fila
+                    if (i.name) {
+                        i.name = i.name + "_" + new Date().getTime();
+                    }
+                } else {
+                    i.value = '';
+                }
+            });
+            r.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+
+            t.appendChild(r);
+            updateRowNumbers(id);
+
+            // Re-asignar names a los radios de la nueva fila para agruparlos correctamente
+            let rowCount = t.rows.length;
+            let radios = r.querySelectorAll('input[type="radio"]');
+            let groups = ['fisica', 'coa', 'dictamen'];
+            let gIndex = 0;
+            let currentGroupCount = 0;
+
+            for (let i = 0; i < radios.length; i++) {
+                let groupName = groups[gIndex] + "_" + rowCount;
+                radios[i].name = groupName;
+                currentGroupCount++;
+
+                // Las primeras dos columnas tienen 2 radios, la tercera tiene 3
+                if ((gIndex < 2 && currentGroupCount === 2) || (gIndex === 2 && currentGroupCount === 3)) {
+                    gIndex++;
+                    currentGroupCount = 0;
+                }
+            }
+        }
+
+        function delRow(btn) {
+            let row = btn.parentNode.parentNode;
+            let tableId = row.closest('table').id;
+            if (row.parentNode.rows.length > 1) {
+                row.parentNode.removeChild(row);
+                updateRowNumbers(tableId);
+            }
+        }
+
+        // Asignar names únicos a los radios iniciales
+        window.onload = function () {
+            let t = document.getElementById('tbl-partidas').getElementsByTagName('tbody')[0];
+            let radios = t.rows[0].querySelectorAll('input[type="radio"]');
+            let groups = ['fisica', 'coa', 'dictamen'];
+            let gIndex = 0;
+            let currentGroupCount = 0;
+
+            for (let i = 0; i < radios.length; i++) {
+                let groupName = groups[gIndex] + "_0";
+                radios[i].name = groupName;
+                currentGroupCount++;
+
+                if ((gIndex < 2 && currentGroupCount === 2) || (gIndex === 2 && currentGroupCount === 3)) {
+                    gIndex++;
+                    currentGroupCount = 0;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

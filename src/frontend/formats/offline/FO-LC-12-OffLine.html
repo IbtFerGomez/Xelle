@@ -25,7 +25,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
@@ -68,14 +68,14 @@
                     <input type="text" id="reg-12" class="registry-input generate-barcode" data-target="barcode-12"
                         data-prefix="FO-LC-12-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date" placeholder="YYYY-MM-DD">
                 <svg id="barcode-12" class="barcode-svg"></svg>
             </div>
         </div>
 
         <div class="header-main">
             <h1>DICTAMEN TÉCNICO DE CONCESIÓN</h1>
-            <div class="metadata">Código: FO-LC-12 | Versión: 1.0</div>
+            <div class="metadata">Código: FO-LC-12 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section-header">1. REFERENCIA DE NO CONFORMIDAD</div>
@@ -83,7 +83,8 @@
             <table class="no-border-table">
                 <tr>
                     <td><strong>Folio MPNC Asociado:</strong> <input class="cedit" placeholder="Ref. FO-OP-52"></td>
-                    <td><strong>Fecha Solicitud:</strong> <input type="date" class="cedit"></td>
+                    <td><strong>Fecha Solicitud:</strong> <input type="text" class="cedit" placeholder="YYYY-MM-DD">
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>ID Material / Lote:</strong> <input class="cedit"></td>
@@ -133,7 +134,7 @@
         <div class="section"
             style="border:2px solid #1E3A5F; padding:15px; text-align:center; background-color:#f8fafc;">
             <label style="font-weight:bold; display:block; margin-bottom:5px;">DECISIÓN DEL RESPONSABLE
-                SANITARIO:</label>
+                DIRECCIÓN:</label>
             <input class="cedit" style="font-size:16px; font-weight:bold; padding:5px;" type="text">
         </div>
 
@@ -149,7 +150,7 @@
                 <p>Firma Obligatoria</p>
             </div>
         </div>
-        <div class="footer">FO-LC-12 | Dictamen de Concesión | Xelle Scientific</div>
+        <div class="footer">FO-LC-12-O | DICTAMEN DE CONCESIÓN | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
 

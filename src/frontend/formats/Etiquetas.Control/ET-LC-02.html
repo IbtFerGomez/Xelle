@@ -1,62 +1,201 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>02 - Liberado</title>
     <style>
-        body { font-family: Arial, sans-serif; display: flex; justify-content: center; padding: 20px; background-color: #f4f4f4; }
-        .etiqueta-container {
-            width: 100mm; height: 100mm; background-color: #ffffff; border: 2px solid #000;
-            padding: 5mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
-        .logo-area { text-align: center; margin-bottom: 5px; }
-        .logo-area svg { width: 30px; height: 30px; vertical-align: middle; }
-        .logo-text { font-size: 12px; font-weight: bold; vertical-align: middle; margin-left: 5px; color: #2E9D82; }
-        .titulo-alerta { text-align: center; font-size: 16px; font-weight: 900; letter-spacing: 1px; margin: 0 0 2px 0; background-color: #d4edda; color: #155724; padding: 3px; border: 1px solid #28a745; }
-        .subtitulo { text-align: center; font-size: 9px; font-weight: bold; margin-bottom: 10px; text-decoration: underline; color: #155724; }
-        .campo { display: flex; align-items: flex-end; margin-bottom: 7px; font-size: 10px; }
-        .campo label { font-weight: bold; white-space: nowrap; margin-right: 5px; }
-        .linea { flex-grow: 1; border-bottom: 1px solid #000; height: 12px; }
-        .fila-doble { display: flex; justify-content: space-between; gap: 10px; }
-        .fila-doble .campo { flex: 1; }
-        .nota-almacen { font-size: 8px; font-style: italic; text-align: center; margin-bottom: 5px; color: #555; }
-        .firma-area { margin-top: 10px; text-align: center; }
-        .linea-firma { width: 80%; border-bottom: 1px solid #000; margin: 0 auto 3px auto; height: 15px; }
-        .firma-label { font-size: 10px; font-weight: bold; }
-        .footer-bottom { margin-top: 5px; font-size: 7px; text-align: center; color: #777; border-top: 1px solid #ccc; padding-top: 3px; }
-        @media print { @page { margin: 0; } body { margin: 0; padding: 0; background: #fff; } .etiqueta-container { border: none; } }
+
+        .etiqueta-container {
+            width: 100mm;
+            height: 100mm;
+            background-color: #ffffff;
+            border: 2px solid #000;
+            padding: 5mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo-area {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .logo-area svg {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+        }
+
+        .logo-text {
+            font-size: 12px;
+            font-weight: bold;
+            vertical-align: middle;
+            margin-left: 5px;
+            color: #2E9D82;
+        }
+
+        .titulo-alerta {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin: 0 0 2px 0;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 3px;
+            border: 1px solid #28a745;
+        }
+
+        .subtitulo {
+            text-align: center;
+            font-size: 9px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            color: #155724;
+        }
+
+        .campo {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 7px;
+            font-size: 10px;
+        }
+
+        .campo label {
+            font-weight: bold;
+            white-space: nowrap;
+            margin-right: 5px;
+        }
+
+        .linea {
+            flex-grow: 1;
+            border-bottom: 1px solid #000;
+            height: 12px;
+        }
+
+        .fila-doble {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .fila-doble .campo {
+            flex: 1;
+        }
+
+        .nota-almacen {
+            font-size: 8px;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .firma-area {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .linea-firma {
+            width: 80%;
+            border-bottom: 1px solid #000;
+            margin: 0 auto 3px auto;
+            height: 15px;
+        }
+
+        .firma-label {
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .footer-bottom {
+            margin-top: 5px;
+            font-size: 7px;
+            text-align: center;
+            color: #777;
+            border-top: 1px solid #ccc;
+            padding-top: 3px;
+        }
+
+        @media print {
+            @page {
+                margin: 0;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background: #fff;
+            }
+
+            .etiqueta-container {
+                border: none;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="etiqueta-container">
         <div>
             <div class="logo-area">
                 <svg viewBox="10 10 80 80" xmlns="http://www.w3.org/2000/svg">
-                  <g><circle fill="#2E9D82" cx="25" cy="25" r="13" /><circle fill="#2E9D82" cx="75" cy="75" r="13" /><path fill="#2E9D82" d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" /></g>
+                    <g>
+                        <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                        <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                        <path fill="#2E9D82"
+                            d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                    </g>
                 </svg>
                 <span class="logo-text">XELLE SCIENTIFIC</span>
             </div>
             <div class="titulo-alerta">✅ L I B E R A D O ✅</div>
             <div class="subtitulo">APROBADO PARA DISTRIBUCIÓN Y USO CLÍNICO</div>
-            <div class="campo"><label>Producto / Tejido:</label><div class="linea"></div></div>
-            <div class="fila-doble">
-                <div class="campo"><label>Número de Lote:</label><div class="linea"></div></div>
-                <div class="campo"><label>Caducidad:</label><div class="linea" style="text-align:center; color:#777;">DD/MM/AA</div></div>
+            <div class="campo"><label>Producto / Tejido:</label>
+                <div class="linea"></div>
             </div>
-            <div class="campo"><label>Cantidad Autorizada (empaque):</label><div class="linea"></div><span style="font-size:9px; margin-left:3px;">unidades</span></div>
-            <div class="nota-almacen">(Nota para Almacén: Verificar que la cantidad física coincida con este dictamen).</div>
             <div class="fila-doble">
-                <div class="campo"><label>Ref. Liberación (CoA):</label><div class="linea"></div></div>
-                <div class="campo"><label>Fecha:</label><div class="linea" style="text-align:center; color:#777;">DD/MM/AA</div></div>
+                <div class="campo"><label>Número de Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Caducidad:</label>
+                    <div class="linea" style="text-align:center; color:#777;">DD/MM/AA</div>
+                </div>
+            </div>
+            <div class="campo"><label>Cantidad Autorizada (empaque):</label>
+                <div class="linea"></div><span style="font-size:9px; margin-left:3px;">unidades</span>
+            </div>
+            <div class="nota-almacen">(Nota para Almacén: Verificar que la cantidad física coincida con este dictamen).
+            </div>
+            <div class="fila-doble">
+                <div class="campo"><label>Ref. Liberación (CoA):</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha:</label>
+                    <div class="linea" style="text-align:center; color:#777;">DD/MM/AA</div>
+                </div>
             </div>
         </div>
         <div>
             <div class="firma-area">
                 <div class="linea-firma"></div>
-                <div class="firma-label">Autorizado por (Aseguramiento de Calidad)<br><span style="font-weight:normal; font-size:9px;">Nombre y Firma</span></div>
+                <div class="firma-label">Autorizado por (Aseguramiento de Calidad)<br><span
+                        style="font-weight:normal; font-size:9px;">Nombre y Firma</span></div>
             </div>
-            <div class="footer-bottom">Código: ET-LC-02 | Versión: 1.0 | Utilizar preferentemente papel VERDE</div>
+            <div class="footer-bottom">Código: ET-LC-02 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
     </div>
 </body>
+
 </html>

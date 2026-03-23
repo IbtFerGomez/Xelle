@@ -73,6 +73,33 @@
             ::placeholder {
                 color: transparent !important;
             }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
         }
     </style>
 </head>
@@ -132,7 +159,7 @@
 
         <div class="header-main">
             <h1>CERTIFICADO DE CALIDAD DE PRODUCTO DE LOTE (CoA)</h1>
-            <div class="metadata">Código: FO-QA-10 | Versión: 1.0 | Vig: Mar 2026 | Ref: FO-LC-31, 46, 47, 48</div>
+            <div class="metadata">Código: FO-QA-10 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section-header">1. DATOS DE IDENTIFICACIÓN DEL LOTE</div>
@@ -174,25 +201,25 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>I. Serología Viral (FO-LC-46)</td>
+                        <td>I. Serología Viral </td>
                         <td>ELISA / PCR</td>
                         <td>Negativo (VIH, VHB, VHC, Sífilis)</td>
                         <td><input class="cedit" value="CONFORME"></td>
                     </tr>
                     <tr>
-                        <td>II. Esterilidad (FO-LC-47)</td>
+                        <td>II. Esterilidad </td>
                         <td>Caldo Tioglicolato / TSB</td>
                         <td>Ausencia de crecimiento (14 días)</td>
                         <td><input class="cedit" value="NEGATIVO"></td>
                     </tr>
                     <tr>
-                        <td>III. Endotoxinas (FO-LC-48)</td>
+                        <td>III. Endotoxinas </td>
                         <td>Gel Clot (LAL)</td>
                         <td>&lt; 0.5 EU/mL</td>
                         <td><input class="cedit" value="CONFORME"></td>
                     </tr>
                     <tr>
-                        <td>IV. Micoplasma (FO-LC-31)</td>
+                        <td>IV. Micoplasma </td>
                         <td>PCR / Cultivo</td>
                         <td>Ausencia</td>
                         <td><input class="cedit" value="NEGATIVO"></td>
@@ -244,8 +271,9 @@
             </div>
         </div>
 
-        <div class="footer">FO-QA-10 | Versión: 1.0 | Certificado de Calidad de Producto de Lote | Xelle Scientific
-        </div>
+        <div class="footer">FO-QA-10 | CERTIFICADO DE CALIDAD DE LOTE (COA) | Versión: 1.0<br>El contenido de este
+            documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los
+            derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
 

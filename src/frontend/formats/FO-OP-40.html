@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-40 Orden Maestra de Producción (XHA)</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 12px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 4px;
+            text-align: center;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 3px;
+            vertical-align: middle;
+        }
+
+        .compact-table input {
+            font-size: 9px;
+            text-align: center;
+            width: 100%;
+            border: none;
+        }
+
+        .formula-table th {
+            background-color: #475569;
+        }
+
+        .instruction-box {
+            font-size: 9px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 8px;
+            border-radius: 4px;
+            line-height: 1.4;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-40">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio OMP</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-40-</span>
+                    <input type="text" id="reg-40" class="registry-input generate-barcode" data-target="barcode-40"
+                        data-prefix="FO-OP-40-" placeholder="XHA000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-40" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>ORDEN MAESTRA DE PRODUCCIÓN (OMP)</h1>
+            <div class="metadata">Código: FO-OP-40 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. IDENTIFICACIÓN GENERAL DEL LOTE</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Nombre Producto:</strong></td>
+                    <td width="30%"><input class="cedit"></td>
+                    <td width="20%"><strong>Código Producto:</strong></td>
+                    <td width="30%"><input class="cedit" value="XHA "></td>
+                </tr>
+                <tr>
+                    <td><strong>Forma Cosmética:</strong></td>
+                    <td><input class="cedit" value="Gel"></td>
+                    <td><strong>Tamaño Lote:</strong></td>
+                    <td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><strong>Número de Lote:</strong></td>
+                    <td><input class="cedit" style="font-weight:bold;"></td>
+                    <td><strong>No. de OP:</strong></td>
+                    <td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><strong>Fecha Caducidad:</strong></td>
+                    <td><input type="date" class="cedit"></td>
+                    <td><strong>Fecha Obj. Entrega:</strong></td>
+                    <td><input type="date" class="cedit"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. AUTORIZACIÓN Y ENTREGA DE MATERIALES</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="40%">Actividad</th>
+                        <th width="30%">Fecha y Hora</th>
+                        <th width="30%">Responsable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Autorización de Producción</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Entrega de MP y Materiales de Acondicionamiento</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="compact-table" style="margin-top:5px;">
+                <thead>
+                    <tr>
+                        <th width="25%">Equipo</th>
+                        <th width="15%">No. Serie</th>
+                        <th width="15%">Fecha Uso</th>
+                        <th width="30%">Insumo / Material</th>
+                        <th width="15%">Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Báscula Analítica</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit"></td>
+                        <td>Frasco Vidrio 2 L</td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Autoclave</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit"></td>
+                        <td>Espátula Acero Inox.</td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Campana Flujo Laminar</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit"></td>
+                        <td>Sistema Filtración 0.22 μm</td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Llenadora Semiautomática</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit"></td>
+                        <td>Frasco Recolección Estéril</td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Bomba de Vacío</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">3. PREPARACIÓN Y PESAJE (PROCESO 1 Y 2)</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="40%">Actividad</th>
+                        <th width="30%">Fecha y Hora</th>
+                        <th width="30%">Responsable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Revisión de Limpieza de Área</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Limpieza de Campana de Flujo Laminar</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Revisión, Funcionamiento y Calibración de Pesaje</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Inicio de Producción (Pesaje de MP)</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="compact-table formula-table" style="margin-top:5px;">
+                <thead>
+                    <tr>
+                        <th width="5%">Fase</th>
+                        <th width="35%">Materia Prima</th>
+                        <th width="10%">%</th>
+                        <th width="15%">Teórica (g)</th>
+                        <th width="15%">Real (g)</th>
+                        <th width="20%">Lote MP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Ácido Hialurónico Grado Médico</td>
+                        <td>0.42%</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Solución Salina Fisiológica</td>
+                        <td>50%</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Medio Condicionado Liofilizado</td>
+                        <td>0.66%</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Solución Salina Fisiológica</td>
+                        <td>48.92%</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">4. PREPARACIÓN DE MEZCLA (PROCESO 3)</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="5%">Fase</th>
+                        <th width="60%">Instrucciones Críticas de Manufactura</th>
+                        <th width="35%">Control de Calidad y Resultado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td class="instruction-box">Irradiar báscula 15 min. Disolver AH en NaCl 0.9%. Esterilizar
+                            121°C/20 min. Reposo en refrigeración 24h (sin grumos).</td>
+                        <td>Aspecto: Gel | Color: Translúcido | Consist: Viscosa | pH: <input class="cedit"
+                                style="width:40px"> <label><input type="checkbox"> Cumple</label></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="instruction-box">Pesar M.C. Liofilizado en campana. Disolver en NaCl 0.9%.
+                            Esterilizar por filtración 0.22 μm.</td>
+                        <td>Aspecto: Líquido | Color: Rosado Translúcido | pH: <input class="cedit" style="width:40px">
+                            <label><input type="checkbox"> Cumple</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td class="instruction-box">Mezclar Fase 1 y 2. Agitar vigorosamente. Toma de muestra
+                            microbiológica.</td>
+                        <td>Rendimiento: 100% | Aerob/Anaerob: 0 UFC | Patóg/Hongos: 0 UFC <label><input
+                                    type="checkbox"> Cumple</label></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">5. ENVASADO Y SELLADO (PROCESO 4)</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="40%">Actividad</th>
+                        <th width="30%">Fecha y Hora</th>
+                        <th width="30%">Responsable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Limpieza y preparado de zona de acondicionado</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Esterilización de viales (Horno) y sellos (Autoclave)</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Inicio de envasado y sellado</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="instruction-box" style="margin-top:5px;">
+                <strong>Controles de Acondicionamiento:</strong><br>
+                <strong>Primario:</strong> Vial borosilicato 10 ml, tapón bromobutilo 20 mm, casquillo Flip Off azul
+                claro.<br>
+                <strong>Validación de Sellado:</strong> Casquillo sin hendiduras, ajuste correcto sin movimiento.<br>
+                <strong>Secundario:</strong> Etiquetado centrado, loteado claro (Lote: XHA AAMMDD) y empaque al vacío.
+            </div>
+        </div>
+
+        <div class="section-header">6. ENTREGA Y LIBERACIÓN (PROCESO 5 Y 6)</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="30%">Especificación Final</th>
+                        <th width="30%">Parámetro</th>
+                        <th width="40%">Resultado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Color / Apariencia</td>
+                        <td>Conforme a especificaciones de PT</td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Consistencia / Peso PT</td>
+                        <td>Conforme a especificaciones de PT</td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>Integridad Envase / Empaque</td>
+                        <td>Conforme a especificaciones de PT</td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="compact-table" style="margin-top:5px;">
+                <thead>
+                    <tr>
+                        <th>Fecha Entrega</th>
+                        <th>Cantidad Piezas</th>
+                        <th>Responsable Entrega</th>
+                        <th>Responsable Recepción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="date" class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">7. CIERRE DE ORDEN</div>
+        <div class="signature-area">
+            <div class="signature-box">
+                <p>Entrega de OP (Fecha/Responsable)</p>
+                <div style="border-bottom: 1px solid black; margin-top:20px;"></div>
+            </div>
+            <div class="signature-box">
+                <p>Liberación de OP (Fecha/Responsable)</p>
+                <div style="border-bottom: 1px solid black; margin-top:20px;"></div>
+            </div>
+        </div>
+
+        <div class="footer">FO-OP-40 | ORDEN MAESTRA DE PRODUCCIÓN (XHA) | Versión: 1.0<br>El contenido de este
+            documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los
+            derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+</body>
+
+</html>

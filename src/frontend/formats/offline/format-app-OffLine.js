@@ -8,6 +8,7 @@ const App = {
         this.Universal.setupBarcodes();
         this.Universal.loadData(docId);
         this.Universal.setupPrintHandler();
+        this.Universal.setupDraggableControls();
 
         // Inicialización de filas vacías por documento
         if (docId === 'doc-fo-lc-40') {
@@ -35,8 +36,8 @@ const App = {
                 const val = input.value;
                 if (val && window.JsBarcode) {
                     try {
-                        JsBarcode(`#${targetId}`, prefix + val, { 
-                            format: "CODE128", height: 30, displayValue: true, fontSize: 10, margin: 0 
+                        JsBarcode(`#${targetId}`, prefix + val, {
+                            format: "CODE128", height: 30, displayValue: true, fontSize: 10, margin: 0
                         });
                     } catch (e) { console.warn("Barcode error"); }
                 }
@@ -61,10 +62,73 @@ const App = {
             });
         },
 
+        setupDraggableControls: function () {
+            const controlBar = document.querySelector('.global-controls');
+            if (!controlBar) return;
+
+            let isDragging = false;
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+            let xOffset = 0;
+            let yOffset = 0;
+
+            controlBar.addEventListener('mousedown', dragStart);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+
+            // Touch events para dispositivos móviles
+            controlBar.addEventListener('touchstart', dragStart);
+            document.addEventListener('touchmove', drag);
+            document.addEventListener('touchend', dragEnd);
+
+            function dragStart(e) {
+                // No iniciar drag si se hace clic en un botón
+                if (e.target.tagName === 'BUTTON') return;
+
+                if (e.type === 'touchstart') {
+                    initialX = e.touches[0].clientX - xOffset;
+                    initialY = e.touches[0].clientY - yOffset;
+                } else {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                }
+
+                isDragging = true;
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+
+                if (e.type === 'touchmove') {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+
+                xOffset = currentX;
+                yOffset = currentY;
+
+                setTranslate(currentX, currentY, controlBar);
+            }
+
+            function dragEnd() {
+                isDragging = false;
+            }
+
+            function setTranslate(xPos, yPos, el) {
+                el.style.transform = `translate(${xPos}px, calc(-50% + ${yPos}px))`;
+            }
+        },
+
         saveData: function () {
             const docId = document.body.id;
             const data = { inputs: {}, tables: {}, checks: {} };
-            
+
             document.querySelectorAll('input[type="text"], textarea').forEach(el => {
                 if (el.id && !el.closest('tr')) data.inputs[el.id] = el.value;
             });
@@ -90,7 +154,7 @@ const App = {
             const saved = localStorage.getItem(`xelle_off_v1_${docId}`);
             if (!saved) return;
             const data = JSON.parse(saved);
-            
+
             for (const id in data.inputs) {
                 const el = document.getElementById(id);
                 if (el) { el.value = data.inputs[id]; el.dispatchEvent(new Event('input')); }
@@ -114,7 +178,7 @@ const App = {
                     else if (tableId === 'tbl-mc') window.addLote43();
                     else if (tableId === 'tbl-flask') window.addMuestra44();
                     else if (tableId === 'tbl-emb') window.addProduct45();
-                    
+
                     const lastRow = tbody.lastElementChild;
                     const inputs = lastRow.querySelectorAll('input, textarea');
                     rowData.forEach((val, i) => { if (inputs[i]) inputs[i].value = val; });

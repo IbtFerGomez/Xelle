@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-LC-19 Calidad (OFF)</title>
@@ -10,33 +11,79 @@
     <style>
         /* Ocultar placeholders al imprimir */
         @media print {
-            input::placeholder, textarea::placeholder {
+
+            input::placeholder,
+            textarea::placeholder {
                 color: transparent !important;
                 opacity: 0 !important;
             }
         }
+
         /* Ajuste de columnas para la tabla de serología */
-        .sero-table th { background: #f0f0f0; font-size: 10px; text-align: center; }
-        .sero-table td { padding: 4px; }
-        .row-header { font-weight: bold; font-size: 10px; background: #fafafa; }
+        .sero-table th {
+            background: #f0f0f0;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .sero-table td {
+            padding: 4px;
+        }
+
+        .row-header {
+            font-weight: bold;
+            font-size: 10px;
+            background: #fafafa;
+        }
     </style>
 </head>
+
 <body id="doc-fo-lc-19">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        </div>
+    </div>
 
     <div class="container">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.svg-logo-titulo{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.svg-logo-subtitulo{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.svg-logo-celula{fill:#2E9D82}</style></defs><g transform="translate(0, -2) scale(0.85)"><circle class="svg-logo-celula" cx="25" cy="25" r="13"/><circle class="svg-logo-celula" cx="75" cy="75" r="13"/><path class="svg-logo-celula" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z"/></g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .svg-logo-titulo {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .svg-logo-subtitulo {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .svg-logo-celula {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
+                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
+                        <path class="svg-logo-celula"
+                            d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z" />
+                    </g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68"
+                        class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35"
+                        font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
             </div>
             <div class="registry-container">
                 <label>No. Registro / Folio</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-19-</span>
-                    <input type="text" id="reg-19" class="registry-input generate-barcode" data-target="barcode-19" data-prefix="FO-LC-19-" placeholder="0001">
+                    <input type="text" id="reg-19" class="registry-input generate-barcode" data-target="barcode-19"
+                        data-prefix="FO-LC-19-" placeholder="0001">
                 </div>
                 <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
                 <svg id="barcode-19" class="barcode-svg"></svg>
@@ -45,7 +92,7 @@
 
         <div class="header-main">
             <h1>CONTROL DE CALIDAD Y SEROLOGÍA (PLACENTA)</h1>
-            <div class="metadata">Código: FO-LC-19 | Versión: 1.0-OFF | Vigencia: Ene 2026</div>
+            <div class="metadata">Código: FO-LC-19 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section">
@@ -56,12 +103,13 @@
                     <td><strong>Laboratorio Externo:</strong> <input class="cedit" placeholder="Nombre Lab"></td>
                 </tr>
             </table>
-            
+
             <div style="border: 2px dashed #ccc; padding: 10px; margin-top: 10px; display: flex; align-items: center;">
                 <div style="width: 50%;">
                     <strong>ID Placenta / Lote:</strong><br>
                     <span style="font-size: 9px; color: #666;">(Escanear o escribir código generado en FO-LC-18)</span>
-                    <input type="text" class="cedit generate-barcode" data-target="bc_lote" style="font-weight: bold; font-size: 14px; margin-top: 5px;" placeholder="Ej: PL-XELLE-001">
+                    <input type="text" class="cedit generate-barcode" data-target="bc_lote"
+                        style="font-weight: bold; font-size: 14px; margin-top: 5px;" placeholder="Ej: PL-XELLE-001">
                 </div>
                 <div style="width: 50%; text-align: center;">
                     <svg id="bc_lote" class="barcode-svg" style="height: 40px;"></svg>
@@ -118,7 +166,8 @@
                         <td><input class="cedit"></td>
                     </tr>
                     <tr>
-                        <td class="row-header"><input class="cedit" placeholder="Otra (Específica)..." style="font-weight:bold;"></td>
+                        <td class="row-header"><input class="cedit" placeholder="Otra (Específica)..."
+                                style="font-weight:bold;"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
@@ -132,7 +181,8 @@
             <div style="display:flex; gap:15px; margin-top:5px;">
                 <div style="width:50%; border:1px solid #eee; padding:5px;">
                     <strong>Química Sanguínea:</strong>
-                    <textarea class="cedit" rows="4" placeholder="Describir valores fuera de rango o 'Dentro de límites normales'..."></textarea>
+                    <textarea class="cedit" rows="4"
+                        placeholder="Describir valores fuera de rango o 'Dentro de límites normales'..."></textarea>
                 </div>
                 <div style="width:50%; border:1px solid #eee; padding:5px;">
                     <strong>Biometría Hemática:</strong>
@@ -147,8 +197,9 @@
                 <strong>Comentarios Finales:</strong>
                 <textarea class="cedit" rows="2" style="border-bottom: 1px solid #ccc;"></textarea>
             </div>
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; border: 2px solid #333; padding: 15px; background: #f9f9f9;">
+
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; border: 2px solid #333; padding: 15px; background: #f9f9f9;">
                 <div style="font-weight:bold; font-size:14px;">ESTADO DEL LOTE:</div>
                 <label style="font-weight: bold; font-size: 13px; color: #27ae60;">
                     <input type="text"> LIBERADO
@@ -175,9 +226,8 @@
             </div>
         </div>
 
-        <div class="footer">
-            FO-LC-19 | Versión: 1.0-OFF | Documento Controlado | Xelle Scientific S.A.P.I de C.V.
-        </div>
+        <div class="footer">FO-LC-19-O | CALIDAD (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
+
 </html>
