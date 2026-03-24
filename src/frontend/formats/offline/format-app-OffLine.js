@@ -125,6 +125,11 @@ const App = {
             }
         },
 
+        autoResize: function (textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        },
+
         saveData: function () {
             const docId = document.body.id;
             const data = { inputs: {}, tables: {}, checks: {} };

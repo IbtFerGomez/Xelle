@@ -42,6 +42,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
 
     <div class="container">
@@ -83,7 +84,7 @@
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-19-</span>
                     <input type="text" id="reg-19" class="registry-input generate-barcode" data-target="barcode-19"
-                        data-prefix="FO-LC-19-" placeholder="0001">
+                        data-prefix="FO-LC-19-" placeholder="">
                 </div>
                 <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
                 <svg id="barcode-19" class="barcode-svg"></svg>
@@ -154,6 +155,12 @@
                         <td><input class="cedit"></td>
                     </tr>
                     <tr>
+                        <td class="row-header">Micoplasma</td>
+                        <td><input class="cedit" placeholder="NEGATIVO"></td>
+                        <td><input class="cedit" placeholder="DD/MM/AA"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
                         <td class="row-header">Chagas (T. cruzi)</td>
                         <td><input class="cedit" placeholder="NEGATIVO"></td>
                         <td><input class="cedit" placeholder="DD/MM/AA"></td>
@@ -181,12 +188,14 @@
             <div style="display:flex; gap:15px; margin-top:5px;">
                 <div style="width:50%; border:1px solid #eee; padding:5px;">
                     <strong>Química Sanguínea:</strong>
-                    <textarea class="cedit" rows="4"
-                        placeholder="Describir valores fuera de rango o 'Dentro de límites normales'..."></textarea>
+                    <textarea class="cedit" rows="3"
+                        placeholder="Describir valores fuera de rango o 'Dentro de límites normales'..."
+                        oninput="App.Universal.autoResize(this)"></textarea>
                 </div>
                 <div style="width:50%; border:1px solid #eee; padding:5px;">
                     <strong>Biometría Hemática:</strong>
-                    <textarea class="cedit" rows="4" placeholder="Describir leucocitos, plaquetas, etc..."></textarea>
+                    <textarea class="cedit" rows="3" placeholder="Describir leucocitos, plaquetas, etc..."
+                        oninput="App.Universal.autoResize(this)"></textarea>
                 </div>
             </div>
         </div>
@@ -195,7 +204,8 @@
             <div class="section-title">4. Dictamen Final de Calidad</div>
             <div style="margin-bottom: 10px;">
                 <strong>Comentarios Finales:</strong>
-                <textarea class="cedit" rows="2" style="border-bottom: 1px solid #ccc;"></textarea>
+                <textarea class="cedit" rows="2" style="border-bottom: 1px solid #ccc;"
+                    oninput="App.Universal.autoResize(this)"></textarea>
             </div>
 
             <div
@@ -215,7 +225,7 @@
 
         <div class="signature-area">
             <div class="signature-box">
-                <p>Registró (QFB):</p>
+                <p>Registró:</p>
                 <input type="text" placeholder="Nombre y Firma">
                 <p>Fecha</p>
             </div>
@@ -226,7 +236,9 @@
             </div>
         </div>
 
-        <div class="footer">FO-LC-19-O | CALIDAD (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-LC-19-O | CALIDAD (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
 

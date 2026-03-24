@@ -55,6 +55,87 @@
             margin-top: 5px;
         }
 
+        .row-actions {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-row-action {
+            padding: 2px 6px;
+            font-size: 9px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-edit {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #2563eb;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        .btn-save {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: #059669;
+        }
+
+        .btn-cancel {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background: #4b5563;
+        }
+
+        .drag-handle {
+            cursor: move;
+            padding: 2px 6px;
+            font-size: 11px;
+            color: #6b7280;
+            user-select: none;
+        }
+
+        .drag-handle:hover {
+            color: #1e3a5f;
+        }
+
+        .dragging {
+            opacity: 0.5;
+            background: #fef3c7;
+        }
+
+        .drag-over {
+            border-top: 2px solid #2E9D82;
+        }
+
+        tbody tr {
+            transition: background-color 0.2s;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
         /* REGLA ESTRICTA: Placeholders invisibles al imprimir */
         @media print {
 
@@ -179,11 +260,13 @@
             <table class="compact-table" id="tbl-matriz">
                 <thead>
                     <tr>
-                        <th width="20%">Fase / Proceso Principal</th>
-                        <th width="25%">Formato (Código y Nombre)</th>
-                        <th width="18%">Ejecución<br>(Quien hace el trabajo)</th>
-                        <th width="18%">Verificación<br>(Quien revisa)</th>
-                        <th width="19%">Autorización Final<br>(Quien aprueba/libera)</th>
+                        <th width="3%">⋮⋮</th>
+                        <th width="18%">Fase / Proceso Principal</th>
+                        <th width="23%">Formato (Código y Nombre)</th>
+                        <th width="17%">Ejecución<br>(Quien hace el trabajo)</th>
+                        <th width="17%">Verificación<br>(Quien revisa)</th>
+                        <th width="17%">Autorización Final<br>(Quien aprueba/libera)</th>
+                        <th width="5%" class="no-print">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -648,22 +731,275 @@
             </div>
         </div>
 
-        <div class="footer">FO-SGC-02 | MATRIZ DE RESPONSABILIDADES | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-SGC-02 | MATRIZ DE RESPONSABILIDADES | Versión: 1.0<br>El contenido de este documento es
+            propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor,
+            por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 
     <script>
-        function addRow() {
-            const tbody = document.getElementById('tbl-matriz').getElementsByTagName('tbody')[0];
-            const newRow = document.createElement('tr');
+        // Inicialización cuando se carga el documento
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeTable();
+        });
 
-            newRow.innerHTML = `
-                <td><input class="cedit" placeholder="Fase / Proceso" style="font-weight:bold;"></td>
-                <td><input class="cedit" placeholder="FO-XX-XX Nombre"></td>
-                <td><input class="cedit" placeholder="Puesto Ejecutor"></td>
-                <td><input class="cedit" placeholder="Puesto Verificador"></td>
-                <td><input class="cedit" placeholder="Puesto Autorizador"></td>
+        function initializeTable() {
+            const tbody = document.getElementById('tbl-matriz').getElementsByTagName('tbody')[0];
+            const rows = tbody.getElementsByTagName('tr');
+
+            // Agregar controles de acción a cada fila existente
+            for (let i = 0; i < rows.length; i++) {
+                addRowControls(rows[i]);
+            }
+        }
+
+        function addRowControls(row) {
+            // Si ya tiene controles, no agregar de nuevo
+            if (row.querySelector('.row-actions')) return;
+
+            // Agregar handle de arrastre al inicio
+            const handleCell = document.createElement('td');
+            handleCell.className = 'drag-handle no-print';
+            handleCell.innerHTML = '⋮⋮';
+            handleCell.draggable = false;
+            row.insertBefore(handleCell, row.firstChild);
+
+            // Agregar celda de acciones al final
+            const actionsCell = document.createElement('td');
+            actionsCell.className = 'no-print';
+            actionsCell.innerHTML = `
+                <div class="row-actions">
+                    <button class="btn-row-action btn-edit" onclick="editRow(this)" title="Editar">✎</button>
+                    <button class="btn-row-action btn-delete" onclick="deleteRow(this)" title="Eliminar">🗑</button>
+                </div>
             `;
-            tbody.appendChild(newRow);
+            row.appendChild(actionsCell);
+
+            // Configurar drag and drop
+            row.draggable = true;
+            row.addEventListener('dragstart', handleDragStart);
+            row.addEventListener('dragover', handleDragOver);
+            row.addEventListener('drop', handleDrop);
+            row.addEventListener('dragend', handleDragEnd);
+        }
+
+        function addRow() {
+            Swal.fire({
+                title: 'Agregar Nuevo Registro',
+                html: `
+                    <div style="text-align: left; padding: 10px;">
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Fase / Proceso:</label>
+                        <input type="text" id="input-fase" class="swal2-input" placeholder="Ej: OPERACIONES" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Formato (Código y Nombre):</label>
+                        <input type="text" id="input-formato" class="swal2-input" placeholder="Ej: FO-XX-XX Nombre" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Ejecución:</label>
+                        <input type="text" id="input-ejecucion" class="swal2-input" placeholder="Puesto ejecutor" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Verificación:</label>
+                        <input type="text" id="input-verificacion" class="swal2-input" placeholder="Puesto verificador" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Autorización Final:</label>
+                        <input type="text" id="input-autorizacion" class="swal2-input" placeholder="Puesto autorizador" style="width:90%; margin:0 0 15px 0;">
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Agregar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#10b981',
+                cancelButtonColor: '#6b7280',
+                width: '600px',
+                preConfirm: () => {
+                    const fase = document.getElementById('input-fase').value;
+                    const formato = document.getElementById('input-formato').value;
+                    const ejecucion = document.getElementById('input-ejecucion').value;
+                    const verificacion = document.getElementById('input-verificacion').value;
+                    const autorizacion = document.getElementById('input-autorizacion').value;
+
+                    if (!fase || !formato) {
+                        Swal.showValidationMessage('Fase y Formato son obligatorios');
+                        return false;
+                    }
+
+                    return { fase, formato, ejecucion, verificacion, autorizacion };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const data = result.value;
+                    const tbody = document.getElementById('tbl-matriz').getElementsByTagName('tbody')[0];
+                    const newRow = document.createElement('tr');
+
+                    newRow.innerHTML = `
+                        <td></td>
+                        <td style="font-weight:bold; background:#f1f5f9;">${data.fase}</td>
+                        <td>${data.formato}</td>
+                        <td>${data.ejecucion}</td>
+                        <td>${data.verificacion}</td>
+                        <td>${data.autorizacion}</td>
+                        <td class="no-print"></td>
+                    `;
+
+                    tbody.appendChild(newRow);
+                    addRowControls(newRow);
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registro agregado',
+                        text: 'El nuevo registro ha sido agregado exitosamente',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        }
+
+        function editRow(btn) {
+            const row = btn.closest('tr');
+            const cells = row.getElementsByTagName('td');
+
+            // Índices: 0=drag, 1=fase, 2=formato, 3=ejecución, 4=verificación, 5=autorización, 6=acciones
+            const currentData = {
+                fase: cells[1].textContent.trim(),
+                formato: cells[2].textContent.trim(),
+                ejecucion: cells[3].textContent.trim(),
+                verificacion: cells[4].textContent.trim(),
+                autorizacion: cells[5].textContent.trim()
+            };
+
+            Swal.fire({
+                title: 'Editar Registro',
+                html: `
+                    <div style="text-align: left; padding: 10px;">
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Fase / Proceso:</label>
+                        <input type="text" id="edit-fase" class="swal2-input" value="${currentData.fase}" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Formato (Código y Nombre):</label>
+                        <input type="text" id="edit-formato" class="swal2-input" value="${currentData.formato}" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Ejecución:</label>
+                        <input type="text" id="edit-ejecucion" class="swal2-input" value="${currentData.ejecucion}" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Verificación:</label>
+                        <input type="text" id="edit-verificacion" class="swal2-input" value="${currentData.verificacion}" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Autorización Final:</label>
+                        <input type="text" id="edit-autorizacion" class="swal2-input" value="${currentData.autorizacion}" style="width:90%; margin:0 0 15px 0;">
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Guardar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#10b981',
+                cancelButtonColor: '#6b7280',
+                width: '600px',
+                preConfirm: () => {
+                    return {
+                        fase: document.getElementById('edit-fase').value,
+                        formato: document.getElementById('edit-formato').value,
+                        ejecucion: document.getElementById('edit-ejecucion').value,
+                        verificacion: document.getElementById('edit-verificacion').value,
+                        autorizacion: document.getElementById('edit-autorizacion').value
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const data = result.value;
+                    cells[1].textContent = data.fase;
+                    cells[2].textContent = data.formato;
+                    cells[3].textContent = data.ejecucion;
+                    cells[4].textContent = data.verificacion;
+                    cells[5].textContent = data.autorizacion;
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registro actualizado',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        }
+
+        function deleteRow(btn) {
+            const row = btn.closest('tr');
+            const formato = row.getElementsByTagName('td')[2].textContent.trim();
+
+            Swal.fire({
+                title: '¿Eliminar registro?',
+                html: `¿Está seguro de eliminar:<br><strong>${formato}</strong>?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    row.remove();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registro eliminado',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        }
+
+        // Variables para drag and drop
+        let draggedRow = null;
+
+        function handleDragStart(e) {
+            draggedRow = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+
+            const target = e.target.closest('tr');
+            if (target && target !== draggedRow) {
+                target.classList.add('drag-over');
+            }
+
+            return false;
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+
+            const target = e.target.closest('tr');
+            if (draggedRow !== target && target) {
+                const tbody = target.parentNode;
+                const allRows = Array.from(tbody.getElementsByTagName('tr'));
+                const draggedIndex = allRows.indexOf(draggedRow);
+                const targetIndex = allRows.indexOf(target);
+
+                if (draggedIndex < targetIndex) {
+                    target.parentNode.insertBefore(draggedRow, target.nextSibling);
+                } else {
+                    target.parentNode.insertBefore(draggedRow, target);
+                }
+            }
+
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+
+            // Remover indicadores visuales de todos los renglones
+            const rows = document.querySelectorAll('#tbl-matriz tbody tr');
+            rows.forEach(row => {
+                row.classList.remove('drag-over');
+            });
         }
     </script>
 </body>

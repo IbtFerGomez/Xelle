@@ -83,6 +83,76 @@
             text-transform: uppercase;
         }
 
+        .row-actions {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-row-action {
+            padding: 2px 6px;
+            font-size: 9px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-edit {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #2563eb;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-add:hover {
+            background: #cbd5e1;
+        }
+
+        .drag-handle {
+            cursor: move;
+            padding: 2px 6px;
+            font-size: 11px;
+            color: #6b7280;
+            user-select: none;
+        }
+
+        .drag-handle:hover {
+            color: #1e3a5f;
+        }
+
+        .dragging {
+            opacity: 0.5;
+            background: #fef3c7;
+        }
+
+        .drag-over {
+            border-top: 2px solid #2E9D82;
+        }
+
         @media print {
 
             .global-controls,
@@ -235,13 +305,15 @@
             <table class="compact-table" id="tbl-formatos">
                 <thead>
                     <tr>
-                        <th width="9%">Código</th>
-                        <th width="32%">Nombre</th>
+                        <th width="2%">⋮⋮</th>
+                        <th width="8%">Código</th>
+                        <th width="30%">Nombre</th>
                         <th width="5%">Versión</th>
-                        <th width="8%">Vigencia</th>
-                        <th width="20%">Cumplimiento</th>
-                        <th width="14%">Documento Relacionado</th>
-                        <th width="12%">Responsable</th>
+                        <th width="7%">Vigencia</th>
+                        <th width="18%">Cumplimiento</th>
+                        <th width="13%">Documento Relacionado</th>
+                        <th width="11%">Responsable</th>
+                        <th width="6%" class="no-print">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -798,10 +870,315 @@
                     </tr>
                 </tbody>
             </table>
+            <button class="btn-add no-print" onclick="addRow()">+ AGREGAR NUEVO FORMATO</button>
         </div>
     </div>
 
     <script>
+        // Inicialización cuando se carga el documento
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeTable();
+            updateStats();
+        });
+
+        function initializeTable() {
+            const tbody = document.getElementById('tbl-formatos').getElementsByTagName('tbody')[0];
+            const rows = tbody.getElementsByTagName('tr');
+
+            // Agregar controles de acción a cada fila existente
+            for (let i = 0; i < rows.length; i++) {
+                if (rows[i].cells.length > 0 && !rows[i].classList.contains('comment-row')) {
+                    addRowControls(rows[i]);
+                }
+            }
+        }
+
+        function addRowControls(row) {
+            // Si ya tiene controles, no agregar de nuevo
+            if (row.querySelector('.row-actions')) return;
+
+            // Agregar handle de arrastre al inicio
+            const handleCell = document.createElement('td');
+            handleCell.className = 'drag-handle no-print';
+            handleCell.innerHTML = '⋮⋮';
+            handleCell.draggable = false;
+            row.insertBefore(handleCell, row.firstChild);
+
+            // Agregar celda de acciones al final
+            const actionsCell = document.createElement('td');
+            actionsCell.className = 'no-print';
+            actionsCell.innerHTML = `
+                <div class="row-actions">
+                    <button class="btn-row-action btn-edit" onclick="editRow(this)" title="Editar">✎</button>
+                    <button class="btn-row-action btn-delete" onclick="deleteRow(this)" title="Eliminar">🗑</button>
+                </div>
+            `;
+            row.appendChild(actionsCell);
+
+            // Configurar drag and drop
+            row.draggable = true;
+            row.addEventListener('dragstart', handleDragStart);
+            row.addEventListener('dragover', handleDragOver);
+            row.addEventListener('drop', handleDrop);
+            row.addEventListener('dragend', handleDragEnd);
+        }
+
+        function addRow() {
+            Swal.fire({
+                title: 'Agregar Nuevo Formato',
+                html: `
+                    <div style="text-align: left; padding: 10px;">
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Código:</label>
+                        <input type="text" id="input-codigo" class="swal2-input" placeholder="Ej: FO-XX-XX" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Nombre:</label>
+                        <input type="text" id="input-nombre" class="swal2-input" placeholder="Nombre del formato" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Versión:</label>
+                        <input type="text" id="input-version" class="swal2-input" placeholder="1.0" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Vigencia:</label>
+                        <input type="text" id="input-vigencia" class="swal2-input" placeholder="ENE 2026" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Cumplimiento:</label>
+                        <input type="text" id="input-cumplimiento" class="swal2-input" placeholder="Normas aplicables" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Documento Relacionado:</label>
+                        <input type="text" id="input-documento" class="swal2-input" placeholder="Opcional" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Responsable:</label>
+                        <input type="text" id="input-responsable" class="swal2-input" placeholder="Área responsable" style="width:90%; margin:0 0 15px 0;">
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Agregar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#10b981',
+                cancelButtonColor: '#6b7280',
+                width: '600px',
+                preConfirm: () => {
+                    const codigo = document.getElementById('input-codigo').value;
+                    const nombre = document.getElementById('input-nombre').value;
+                    const version = document.getElementById('input-version').value || '1.0';
+                    const vigencia = document.getElementById('input-vigencia').value || 'ENE 2026';
+                    const cumplimiento = document.getElementById('input-cumplimiento').value;
+                    const documento = document.getElementById('input-documento').value;
+                    const responsable = document.getElementById('input-responsable').value;
+
+                    if (!codigo || !nombre) {
+                        Swal.showValidationMessage('Código y Nombre son obligatorios');
+                        return false;
+                    }
+
+                    return { codigo, nombre, version, vigencia, cumplimiento, documento, responsable };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const data = result.value;
+                    const tbody = document.getElementById('tbl-formatos').getElementsByTagName('tbody')[0];
+                    const newRow = document.createElement('tr');
+
+                    newRow.innerHTML = `
+                        <td></td>
+                        <td><strong>${data.codigo}</strong></td>
+                        <td>${data.nombre}</td>
+                        <td>${data.version}</td>
+                        <td>${data.vigencia}</td>
+                        <td>${data.cumplimiento}</td>
+                        <td>${data.documento}</td>
+                        <td>${data.responsable}</td>
+                        <td class="no-print"></td>
+                    `;
+
+                    tbody.appendChild(newRow);
+                    addRowControls(newRow);
+                    updateStats();
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Formato agregado',
+                        text: 'El nuevo formato ha sido agregado exitosamente',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        }
+
+        function editRow(btn) {
+            const row = btn.closest('tr');
+            const cells = row.getElementsByTagName('td');
+
+            // Índices: 0=drag, 1=código, 2=nombre, 3=versión, 4=vigencia, 5=cumplimiento, 6=documento, 7=responsable, 8=acciones
+            const currentData = {
+                codigo: cells[1].textContent.trim(),
+                nombre: cells[2].textContent.trim(),
+                version: cells[3].textContent.trim(),
+                vigencia: cells[4].textContent.trim(),
+                cumplimiento: cells[5].textContent.trim(),
+                documento: cells[6].textContent.trim(),
+                responsable: cells[7].textContent.trim()
+            };
+
+            Swal.fire({
+                title: 'Editar Formato',
+                html: `
+                    <div style="text-align: left; padding: 10px;">
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Código:</label>
+                        <input type="text" id="edit-codigo" class="swal2-input" value="${currentData.codigo}" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Nombre:</label>
+                        <input type="text" id="edit-nombre" class="swal2-input" value="${currentData.nombre}" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Versión:</label>
+                        <input type="text" id="edit-version" class="swal2-input" value="${currentData.version}" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Vigencia:</label>
+                        <input type="text" id="edit-vigencia" class="swal2-input" value="${currentData.vigencia}" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Cumplimiento:</label>
+                        <input type="text" id="edit-cumplimiento" class="swal2-input" value="${currentData.cumplimiento}" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Documento Relacionado:</label>
+                        <input type="text" id="edit-documento" class="swal2-input" value="${currentData.documento}" style="width:90%; margin:0 0 15px 0;">
+                        
+                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Responsable:</label>
+                        <input type="text" id="edit-responsable" class="swal2-input" value="${currentData.responsable}" style="width:90%; margin:0 0 15px 0;">
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Guardar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#10b981',
+                cancelButtonColor: '#6b7280',
+                width: '600px',
+                preConfirm: () => {
+                    return {
+                        codigo: document.getElementById('edit-codigo').value,
+                        nombre: document.getElementById('edit-nombre').value,
+                        version: document.getElementById('edit-version').value,
+                        vigencia: document.getElementById('edit-vigencia').value,
+                        cumplimiento: document.getElementById('edit-cumplimiento').value,
+                        documento: document.getElementById('edit-documento').value,
+                        responsable: document.getElementById('edit-responsable').value
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const data = result.value;
+                    cells[1].innerHTML = `<strong>${data.codigo}</strong>`;
+                    cells[2].textContent = data.nombre;
+                    cells[3].textContent = data.version;
+                    cells[4].textContent = data.vigencia;
+                    cells[5].textContent = data.cumplimiento;
+                    cells[6].textContent = data.documento;
+                    cells[7].textContent = data.responsable;
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Formato actualizado',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        }
+
+        function deleteRow(btn) {
+            const row = btn.closest('tr');
+            const codigo = row.getElementsByTagName('td')[1].textContent.trim();
+
+            Swal.fire({
+                title: '¿Eliminar formato?',
+                html: `¿Está seguro de eliminar:<br><strong>${codigo}</strong>?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    row.remove();
+                    updateStats();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Formato eliminado',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        }
+
+        function updateStats() {
+            const tbody = document.getElementById('tbl-formatos').getElementsByTagName('tbody')[0];
+            const rows = tbody.querySelectorAll('tr:not(.comment-row)');
+            const count = rows.length;
+
+            // Actualizar el contador de formatos activos
+            const statNumber = document.querySelector('.stat-number');
+            if (statNumber) {
+                statNumber.textContent = count;
+            }
+        }
+
+        // Variables para drag and drop
+        let draggedRow = null;
+
+        function handleDragStart(e) {
+            draggedRow = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+
+            const target = e.target.closest('tr');
+            if (target && target !== draggedRow) {
+                target.classList.add('drag-over');
+            }
+
+            return false;
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+
+            const target = e.target.closest('tr');
+            if (draggedRow !== target && target) {
+                const tbody = target.parentNode;
+                const allRows = Array.from(tbody.getElementsByTagName('tr'));
+                const draggedIndex = allRows.indexOf(draggedRow);
+                const targetIndex = allRows.indexOf(target);
+
+                if (draggedIndex < targetIndex) {
+                    target.parentNode.insertBefore(draggedRow, target.nextSibling);
+                } else {
+                    target.parentNode.insertBefore(draggedRow, target);
+                }
+            }
+
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+
+            // Remover indicadores visuales de todos los renglones
+            const rows = document.querySelectorAll('#tbl-formatos tbody tr');
+            rows.forEach(row => {
+                row.classList.remove('drag-over');
+            });
+        }
+
         function exportToCSV() {
             const table = document.getElementById('tbl-formatos');
             const rows = table.querySelectorAll('tr');
@@ -809,11 +1186,14 @@
 
             for (let i = 0; i < rows.length; i++) {
                 const row = [], cols = rows[i].querySelectorAll('td, th');
-                for (let j = 0; j < cols.length; j++) {
+                // Saltar la primera columna (drag handle) y la última (acciones)
+                for (let j = 1; j < cols.length - 1; j++) {
                     let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, '').replace(/"/g, '""');
                     row.push('"' + data + '"');
                 }
-                csv.push(row.join(','));
+                if (row.length > 0) {
+                    csv.push(row.join(','));
+                }
             }
 
             const csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });

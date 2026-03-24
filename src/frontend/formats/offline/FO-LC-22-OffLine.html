@@ -9,17 +9,36 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app-OffLine.js"></script>
     <style>
+        /* Reducir espacio entre código de barras y título */
+        .header-top {
+            margin-bottom: 5px !important;
+            padding-bottom: 5px !important;
+        }
+
+        .header-main {
+            margin-bottom: 8px !important;
+        }
+
+        .barcode-svg {
+            max-height: 28px !important;
+            margin-top: 3px !important;
+        }
+
+        .section {
+            margin-bottom: 8px !important;
+        }
+
         /* REGLAS DE IMPRESIÓN EXACTA */
         @media print {
             @page {
                 size: letter;
-                margin: 0.5cm;
+                margin: 0.4cm;
             }
 
             body,
             .container {
                 margin: 0 !important;
-                padding: 10px !important;
+                padding: 8px !important;
                 background: white !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -42,18 +61,18 @@
         .cryo-wrapper {
             display: flex;
             justify-content: center;
-            margin: 0px 0;
+            margin: 5px 0;
         }
 
         .cryo-board {
             display: grid;
-            grid-template-columns: 25px repeat(10, 42px);
-            grid-template-rows: 25px repeat(10, 42px);
-            gap: 2px;
+            grid-template-columns: 22px repeat(10, 38px);
+            grid-template-rows: 22px repeat(10, 38px);
+            gap: 1px;
             background: #f0f0f0;
-            padding: 10px;
+            padding: 6px;
             border: 2px solid #333;
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
         .axis-cell {
@@ -61,13 +80,13 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 11px;
             color: #333;
         }
 
         .cryo-cell {
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             border: 1px solid #ccc;
             border-radius: 50%;
             background-color: white;
@@ -164,25 +183,62 @@
         .legend-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 5px;
+            gap: 3px;
             margin-top: 5px;
             border: 1px solid #ccc;
-            padding: 5px;
+            padding: 3px;
             background: #fafafa;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 5px;
-            font-size: 10px;
+            gap: 3px;
+            font-size: 9px;
         }
 
         .legend-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             border: 1px solid #999;
+        }
+
+        /* Reducir área de firmas */
+        .signature-area {
+            margin-top: 8px !important;
+            margin-bottom: 5px !important;
+        }
+
+        .signature-box {
+            padding: 5px !important;
+        }
+
+        .signature-box p {
+            margin: 3px 0 !important;
+            font-size: 10px !important;
+        }
+
+        .signature-box input {
+            height: 18px !important;
+            font-size: 10px !important;
+        }
+
+        .footer {
+            margin-top: 5px !important;
+            padding: 3px 0 !important;
+            font-size: 9px !important;
+            line-height: 1.3 !important;
+        }
+
+        .header-main h1 {
+            font-size: 14px !important;
+            margin: 4px 0 !important;
+        }
+
+        .metadata {
+            font-size: 9px !important;
+            margin: 2px 0 !important;
         }
     </style>
 </head>
@@ -191,6 +247,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
 
     <div class="container">
@@ -232,10 +289,10 @@
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-22-</span>
                     <input type="text" id="reg-22" class="registry-input generate-barcode" placeholder="001"
-                        data-target="barcode-fo-lc-22-offline-html" data-prefix="FO-LC-22-">
+                        data-target="barcode-22" data-prefix="FO-LC-22-">
                 </div>
                 <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
-                <svg id=\"barcode-fo-lc-22-offline-html\" class=\"barcode-svg\"></svg>
+                <svg id="barcode-22" class="barcode-svg"></svg>
             </div>
         </div>
 
@@ -245,7 +302,7 @@
         </div>
 
         <div class="section">
-            <table class="no-border-table" style="border: 1px solid #000; padding: 5px;">
+            <table class="no-border-table" style="border: 1px solid #000; padding: 3px;">
                 <tr>
                     <td><strong>ID Tanque:</strong> <input class="cedit" placeholder="T-01"></td>
                     <td><strong>ID Rack:</strong> <input class="cedit" placeholder="R-01"></td>
@@ -315,7 +372,9 @@
             </div>
         </div>
 
-        <div class="footer">FO-LC-22-O | CRIO BANCO (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-LC-22-O | CRIO BANCO (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad
+            de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
 
     <script>
