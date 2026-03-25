@@ -13,13 +13,13 @@
         @media print {
             @page {
                 size: landscape;
-                margin: 0.5cm;
+                margin: 0.4cm;
             }
 
             body,
             .container {
                 margin: 0 !important;
-                padding: 10px !important;
+                padding: 8px !important;
                 background: white !important;
                 width: 100% !important;
                 max-width: 100% !important;
@@ -36,6 +36,26 @@
                 color: transparent !important;
             }
 
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
             table,
             th,
             td {
@@ -45,15 +65,101 @@
 
             input.cedit {
                 border: none !important;
+                background: transparent !important;
+                font-size: 10px !important;
+            }
+
+            textarea.cedit {
+                border: none !important;
+                background: transparent !important;
+                font-size: 9px !important;
             }
 
             /* Ajuste de altura para que quepa en una hoja */
             .row-tall td {
-                height: 35px !important;
+                height: 32px !important;
+                padding: 1px !important;
             }
 
             .container {
                 min-height: auto !important;
+            }
+
+            /* Eliminar espacios en blanco innecesarios */
+            .header-top {
+                margin-bottom: 3px !important;
+            }
+
+            .header-main {
+                margin-bottom: 4px !important;
+            }
+
+            .header-main h1 {
+                font-size: 13px !important;
+                margin: 3px 0 !important;
+            }
+
+            .metadata {
+                font-size: 8px !important;
+                margin: 2px 0 !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            /* Reducir sección de firmas */
+            .signature-area {
+                margin-top: 8px !important;
+                margin-bottom: 5px !important;
+            }
+
+            .signature-box {
+                padding: 3px !important;
+            }
+
+            .signature-box p {
+                font-size: 9px !important;
+                margin: 2px 0 !important;
+            }
+
+            .signature-box input {
+                font-size: 9px !important;
+                padding: 2px !important;
+            }
+
+            .validation-box {
+                margin-top: 5px !important;
+                margin-bottom: 5px !important;
+                padding: 3px 8px !important;
+                font-size: 9px !important;
+            }
+
+            .footer {
+                font-size: 7px !important;
+                margin-top: 5px !important;
             }
         }
 
@@ -121,8 +227,9 @@
     </div>
 
     <div class="container">
-        <div class="header-top">
-            <div class="logo-container">
+        <div class="header-top"
+            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+            <div class="logo-container" style="flex: 0 0 280px;">
                 <svg viewBox="0 0 320 80">
                     <defs>
                         <style>
@@ -154,24 +261,24 @@
                         font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
                 </svg>
             </div>
-            <div class="registry-container">
-                <label>Mes / Año</label>
+            <div class="header-main" style="flex: 1; text-align: center; padding: 0 10px;">
+                <h1 style="margin: 10px 0 5px 0;">BITÁCORA DE PREPARACIÓN DE MEDIOS Y SOLUCIONES</h1>
+                <div class="metadata">Código: FO-LC-25 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            </div>
+            <div class="registry-container" style="flex: 0 0 220px;">
+                <label>Folio Bitácora</label>
                 <div class="registry-wrapper">
-                    <input type="text" class="registry-input generate-barcode" style="text-align:center;"
-                        placeholder="MM / AAAA" data-target="barcode-fo-lc-25-offline-html" data-prefix="FO-LC-25-">
+                    <span class="registry-prefix">FO-LC-25-</span>
+                    <input type="text" id="reg-25" class="registry-input generate-barcode" data-target="barcode-25"
+                        data-prefix="FO-LC-25-">
                 </div>
-                <input type="text" class="registry-date" placeholder="Área / Lab">
-                <svg id=\"barcode-fo-lc-25-offline-html\" class=\"barcode-svg\"></svg>
+                <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
+                <svg id="barcode-25" class="barcode-svg"></svg>
             </div>
         </div>
 
-        <div class="header-main">
-            <h1>BITÁCORA DE PREPARACIÓN DE MEDIOS Y SOLUCIONES</h1>
-            <div class="metadata">Código: FO-LC-25 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
-        </div>
-
         <div class="section">
-            <table class="compact-table media-table">
+            <table class="compact-table media-table" id="tabla-medios">
                 <thead>
                     <tr>
                         <th style="width: 7%;">Fecha</th>
@@ -181,6 +288,7 @@
                         <th style="width: 7%;">Vol. Final</th>
                         <th style="width: 8%;">Caducidad</th>
                         <th style="width: 15%;">Realizó</th>
+                        <th style="width: 8%;" class="no-print">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -194,6 +302,8 @@
                         <td><input class="cedit" style="text-align:center;"></td>
                         <td><input class="cedit" style="text-align:center;"></td>
                         <td><input class="cedit" style="margin-top:5px;"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">✕</button></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -203,6 +313,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">✕</button></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -212,6 +324,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">✕</button></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -221,6 +335,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">✕</button></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -230,6 +346,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">✕</button></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -239,6 +357,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">✕</button></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -248,6 +368,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">✕</button></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -257,9 +379,13 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">✕</button></td>
                     </tr>
                 </tbody>
             </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addRowMedios()" style="margin-top:5px;">+ Agregar
+                Medio</button>
         </div>
 
         <div class="validation-box">
@@ -270,7 +396,7 @@
             <label><input type="text"> Envase Íntegro</label>
         </div>
 
-        <div class="signature-area" style="margin-top:15px; margin-bottom:10px;">
+        <div class="signature-area" style="margin-top:8px; margin-bottom:6px;">
             <div class="signature-box">
                 <p>Preparó (Operativo):</p>
                 <input type="text" placeholder="Nombre y Firma">
@@ -292,6 +418,26 @@
             de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
             está prohibida su reproducción total o parcial.</div>
     </div>
+
+    <script>
+        // Función para agregar fila en tabla de medios
+        function addRowMedios() {
+            const tbody = document.querySelector('#tabla-medios tbody');
+            const row = document.createElement('tr');
+            row.className = 'row-tall';
+            row.innerHTML = `
+                <td><input class="cedit" placeholder="DD/MM"></td>
+                <td><textarea class="cedit" rows="2" placeholder="Nombre del medio..."></textarea></td>
+                <td><input class="cedit" style="text-align:center; font-weight:bold;" placeholder="Lote..."></td>
+                <td><textarea class="cedit" rows="3" placeholder="Ingredientes..."></textarea></td>
+                <td><input class="cedit" style="text-align:center;"></td>
+                <td><input class="cedit" style="text-align:center;"></td>
+                <td><input class="cedit"></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">✕</button></td>
+            `;
+            tbody.appendChild(row);
+        }
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-23 Bitácora Crio (OFF)</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app-OffLine.js"></script>
+    <style>
+        /* REGLAS DE IMPRESIÓN EXACTA */
+        @media print {
+            @page {
+                size: letter landscape;
+                margin: 0.4cm;
+            }
+
+            body,
+            .container {
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            input::placeholder {
+                color: transparent !important;
+            }
+
+            /* Bordes Negros Forzados */
+            table,
+            th,
+            td {
+                border: 1px solid #000 !important;
+                border-collapse: collapse !important;
+            }
+
+            td {
+                height: 23px !important;
+            }
+
+            input.cedit {
+                border: none !important;
+            }
+
+            /* Permitir que la tabla se rompa naturalmente entre páginas */
+            .log-table {
+                page-break-inside: auto !important;
+            }
+
+            .log-table tbody tr {
+                page-break-inside: avoid !important;
+                page-break-after: auto !important;
+            }
+
+            /* Repetir encabezado en cada página */
+            .header-top,
+            .header-main,
+            .nomenclatura {
+                page-break-inside: avoid !important;
+                page-break-after: avoid !important;
+            }
+
+            .log-table thead {
+                display: table-header-group !important;
+            }
+
+            /* Evitar página en blanco al inicio */
+            .section {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+            }
+        }
+
+        .code-textarea {
+            min-height: 22px;
+            line-height: 1.2;
+            resize: none;
+            overflow: hidden;
+            white-space: pre-wrap;
+            word-break: break-word;
+            text-align: left;
+        }
+
+        /* Estilos de Tabla */
+        .log-table th {
+            background: #f0f0f0;
+            font-size: 10px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #999;
+        }
+
+        .log-table td {
+            border: 1px solid #999;
+            padding: 0;
+        }
+
+        .log-table input {
+            width: 98%;
+            text-align: center;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 11px;
+        }
+
+        .log-table th:nth-child(4),
+        .log-table td:nth-child(4) {
+            width: 30% !important;
+        }
+
+        .log-table th:nth-child(6),
+        .log-table td:nth-child(6) {
+            width: 18% !important;
+        }
+
+        /* Botón de eliminar fila */
+        .btn-delete-row {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 2px 8px;
+            cursor: pointer;
+            font-size: 10px;
+            border-radius: 3px;
+        }
+
+        .btn-delete-row:hover {
+            background-color: #c82333;
+        }
+
+        /* Botón de agregar fila */
+        .btn-add-row {
+            background-color: #2E9D82;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 12px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .btn-add-row:hover {
+            background-color: #257d68;
+        }
+
+        @media print {
+
+            .btn-delete-row,
+            .btn-add-row {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-lc-23">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .svg-logo-titulo {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .svg-logo-subtitulo {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .svg-logo-celula {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
+                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
+                        <path class="svg-logo-celula"
+                            d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z" />
+                    </g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68"
+                        class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35"
+                        font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>No. Registro / Folio</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-23-</span>
+                    <input type="text" id="reg-23" class="registry-input generate-barcode" data-target="barcode-23"
+                        data-prefix="FO-LC-23-" placeholder="0001">
+                </div>
+                <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
+                <svg id="barcode-23" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>BITÁCORA DE MOVIMIENTOS EN BANCO (CRIO-PRESERVACIÓN)</h1>
+            <div class="metadata">Código: FO-LC-23 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section" style="border:1px solid #000; padding:5px; font-size:10px; background:#f9f9f9;"
+            class="nomenclatura">
+            <strong>Nomenclatura Movimiento:</strong> (E) Entrada / (S) Salida |
+            <strong>Ubicación:</strong> T(Tanque) - R(Rack) - C(Caja) - Pos(Posición) |
+            <strong>Ejemplo:</strong> T1-R2-C5-A1
+        </div>
+
+        <div class="section">
+            <table class="compact-table log-table" id="mainTable">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Fecha</th>
+                        <th style="width: 8%;">Hora</th>
+                        <th style="width: 5%;">Mov (E/S)</th>
+                        <th style="width: 23%;">Descripción Muestra / ID Lote</th>
+                        <th style="width: 7%;">Cant.</th>
+                        <th style="width: 14%;">Ubicación (Destino/Origen)</th>
+                        <th style="width: 14%;">Realizó</th>
+                        <th style="width: 13%;">Observaciones</th>
+                        <th class="no-print" style="width: 6%;">Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="no-print" style="text-align: center;">
+                <button class="btn-add-row" onclick="addNewRow()">➕ Agregar Fila</button>
+            </div>
+        </div>
+
+        <div class="signature-area">
+            <div class="signature-box">
+                <p>Revisión Semanal (Responsable Banco):</p>
+                <input type="text" placeholder="Nombre y Firma">
+                <p>Fecha de Corte</p>
+            </div>
+            <div class="signature-box">
+                <p>Visto Bueno (Dirección/Calidad):</p>
+                <input type="text" placeholder="Nombre y Firma">
+                <p>Fecha</p>
+            </div>
+        </div>
+
+        <div class="footer">FO-LC-23-O | BITÁCORA CRIO (OFF) | Versión: 1.0<br>El contenido de este documento es
+            propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor,
+            por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+
+    <script>
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = `${textarea.scrollHeight}px`;
+        }
+
+        function addNewRow() {
+            const tableBody = document.getElementById('tableBody');
+            const newRow = document.createElement('tr');
+
+            newRow.innerHTML = `
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td class="no-print"><button class="btn-delete-row" onclick="deleteRow(this)">✕</button></td>
+            `;
+
+            tableBody.appendChild(newRow);
+
+            // Convertir los inputs en textareas para las columnas correspondientes
+            const row = tableBody.lastElementChild;
+            [3, 5].forEach((cellIndex) => {
+                const cell = row.cells[cellIndex];
+                if (!cell) return;
+
+                const input = cell.querySelector('input.cedit');
+                if (!input) return;
+
+                const textarea = document.createElement('textarea');
+                textarea.className = `${input.className} code-textarea`;
+                textarea.rows = 1;
+                textarea.value = input.value || '';
+                textarea.oninput = () => autoResizeTextarea(textarea);
+
+                cell.innerHTML = '';
+                cell.appendChild(textarea);
+                autoResizeTextarea(textarea);
+            });
+        }
+
+        function deleteRow(button) {
+            const row = button.closest('tr');
+            const tableBody = document.getElementById('tableBody');
+
+            // No permitir eliminar si solo queda una fila
+            if (tableBody.rows.length <= 1) {
+                alert('Debe mantener al menos una fila en la tabla.');
+                return;
+            }
+
+            row.remove();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const rows = document.querySelectorAll('.log-table tbody tr');
+
+            rows.forEach((row) => {
+                [3, 5].forEach((cellIndex) => {
+                    const cell = row.cells[cellIndex];
+                    if (!cell) return;
+
+                    const input = cell.querySelector('input.cedit');
+                    if (!input) return;
+
+                    const textarea = document.createElement('textarea');
+                    textarea.className = `${input.className} code-textarea`;
+                    textarea.rows = 1;
+                    textarea.value = input.value || '';
+                    textarea.oninput = () => autoResizeTextarea(textarea);
+
+                    cell.innerHTML = '';
+                    cell.appendChild(textarea);
+                    autoResizeTextarea(textarea);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

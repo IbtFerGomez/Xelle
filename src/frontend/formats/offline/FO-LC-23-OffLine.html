@@ -3,13 +3,79 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-LC-23 Bitácora Crio (OFF)</title>
+    <title>FO-LC-23 Bitácora Crio</title>
     <link rel="stylesheet" href="format-styles-OffLine.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app-OffLine.js"></script>
     <style>
-        /* REGLAS DE IMPRESIÓN EXACTA */
+        .header-top {
+            margin-bottom: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .header-top .logo-container {
+            flex: 0 0 auto;
+        }
+
+        .header-top .title-container {
+            flex: 1;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .header-top .title-container h1 {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+
+        .header-top .title-container .metadata {
+            font-size: 9px;
+            margin: 2px 0;
+        }
+
+        .header-top .registry-container {
+            flex: 0 0 auto;
+        }
+
+        .barcode-svg {
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+
+        .signature-area {
+            margin-top: 8px;
+            padding: 8px 0;
+        }
+
+        .signature-box {
+            padding: 4px;
+        }
+
+        .signature-box p {
+            margin: 2px 0;
+            font-size: 10px;
+        }
+
+        /* Estilos para encabezados agrupados */
+        .group-header {
+            background-color: #f0f4f8;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 2px solid #ccc !important;
+        }
+
+        .sub-header th {
+            font-size: 9px;
+            background-color: #fafafa;
+            vertical-align: middle !important;
+            padding: 2px 4px;
+            /* Reducir padding para ajustar anchos */
+        }
+
         @media print {
             @page {
                 size: letter landscape;
@@ -20,20 +86,112 @@
             .container {
                 margin: 0 !important;
                 padding: 10px !important;
-                background: white !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
             }
 
             .no-print {
                 display: none !important;
             }
 
-            input::placeholder {
-                color: transparent !important;
+            /* Reducir espacios en impresión */
+            .header-top {
+                margin-bottom: 0 !important;
+                padding-bottom: 0 !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: flex-start !important;
             }
 
-            /* Bordes Negros Forzados */
+            .header-top .logo-container {
+                flex: 0 0 auto !important;
+            }
+
+            .header-top .title-container {
+                flex: 1 !important;
+                text-align: center !important;
+                padding: 0 10px !important;
+            }
+
+            .header-top .title-container h1 {
+                margin: 5px 0 2px 0 !important;
+                padding: 0 !important;
+                font-size: 18px !important;
+            }
+
+            .header-top .title-container .metadata {
+                font-size: 9px !important;
+                margin: 2px 0 !important;
+            }
+
+            .header-top .registry-container {
+                flex: 0 0 auto !important;
+            }
+
+            .barcode-svg {
+                margin-bottom: 0 !important;
+                margin-top: 0 !important;
+                padding: 0 !important;
+            }
+
+            .registry-container {
+                margin-bottom: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            .registry-date {
+                margin-bottom: 0 !important;
+            }
+
+            /* Reducir espacio de firmas */
+            .signature-area {
+                margin-top: 5px !important;
+                padding: 5px 0 !important;
+            }
+
+            .signature-box {
+                padding: 3px !important;
+            }
+
+            .signature-box p {
+                margin: 1px 0 !important;
+                font-size: 9px !important;
+            }
+
+            .signature-box input {
+                height: 30px !important;
+                margin: 2px 0 !important;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            tbody {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
             table,
             th,
             td {
@@ -41,56 +199,21 @@
                 border-collapse: collapse !important;
             }
 
-            td {
-                height: 25px !important;
+            /* Mantener diseño de tabla */
+            .group-header {
+                background-color: #f0f4f8 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
 
-            input.cedit {
+            input {
                 border: none !important;
+                background: transparent !important;
             }
-        }
 
-        .code-textarea {
-            min-height: 22px;
-            line-height: 1.2;
-            resize: none;
-            overflow: hidden;
-            white-space: pre-wrap;
-            word-break: break-word;
-            text-align: left;
-        }
-
-        /* Estilos de Tabla */
-        .log-table th {
-            background: #f0f0f0;
-            font-size: 10px;
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #999;
-        }
-
-        .log-table td {
-            border: 1px solid #999;
-            padding: 0;
-        }
-
-        .log-table input {
-            width: 98%;
-            text-align: center;
-            border: none;
-            outline: none;
-            background: transparent;
-            font-size: 11px;
-        }
-
-        .log-table th:nth-child(4),
-        .log-table td:nth-child(4) {
-            width: 30% !important;
-        }
-
-        .log-table th:nth-child(6),
-        .log-table td:nth-child(6) {
-            width: 18% !important;
+            input::placeholder {
+                color: transparent !important;
+            }
         }
     </style>
 </head>
@@ -136,294 +259,126 @@
                         font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
                 </svg>
             </div>
+            <div class="title-container">
+                <h1>BITÁCORA DE CRIOPRESERVACIÓN</h1>
+                <div class="metadata">Código: FO-LC-23 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            </div>
             <div class="registry-container">
-                <label>No. Registro / Folio</label>
+                <label>No. Folio</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-23-</span>
-                    <input type="text" id="reg-23" class="registry-input generate-barcode" data-target="barcode-23"
-                        data-prefix="FO-LC-23-" placeholder="0001">
+                    <input type="text" class="registry-input generate-barcode" data-target="barcode-fo-lc-23"
+                        data-prefix="FO-LC-23-">
                 </div>
                 <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
-                <svg id="barcode-23" class="barcode-svg"></svg>
+                <svg id="barcode-fo-lc-23" class="barcode-svg"></svg>
             </div>
         </div>
 
-        <div class="header-main">
-            <h1>BITÁCORA DE MOVIMIENTOS EN BANCO (CRIO-PRESERVACIÓN)</h1>
-            <div class="metadata">Código: FO-LC-23 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
-        </div>
-
-        <div class="section" style="border:1px solid #000; padding:5px; font-size:10px; background:#f9f9f9;">
-            <strong>Nomenclatura Movimiento:</strong> (E) Entrada / (S) Salida |
-            <strong>Ubicación:</strong> T(Tanque) - R(Rack) - C(Caja) - Pos(Posición) |
-            <strong>Ejemplo:</strong> T1-R2-C5-A1
-        </div>
-
         <div class="section">
-            <table class="compact-table log-table">
+            <table id="tbl-bitacora" class="compact-table">
                 <thead>
                     <tr>
-                        <th style="width: 10%;">Fecha</th>
-                        <th style="width: 8%;">Hora</th>
-                        <th style="width: 5%;">Mov (E/S)</th>
-                        <th style="width: 25%;">Descripción Muestra / ID Lote</th>
-                        <th style="width: 8%;">Cant.</th>
-                        <th style="width: 15%;">Ubicación (Destino/Origen)</th>
-                        <th style="width: 15%;">Realizó</th>
-                        <th style="width: 14%;">Observaciones</th>
+                        <th colspan="7" class="group-header" style="background-color: #e8f6f3;">ENTRADA</th>
+                        <th colspan="3" class="group-header" style="background-color: #fdedec;">SALIDA</th>
+                        <th rowspan="2" class="no-print" width="2%"></th>
+                    </tr>
+                    <tr class="sub-header">
+                        <th width="9%">Código CV</th>
+                        <th width="9%">Origen</th>
+                        <th width="4%">Pas.</th>
+                        <th width="9%">F. Proceso</th>
+                        <th width="9%">F. Almacén</th>
+                        <th width="8%">ID Ubicación</th>
+                        <th width="9%">Responsable</th>
+
+                        <th width="9%">F. Salida</th>
+                        <th width="12%">Destino / Motivo</th>
+                        <th width="9%">Responsable</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                </tbody>
+                <tbody id="tbody-bitacora"></tbody>
             </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addCryoRow()">+ Agregar Fila</button>
         </div>
 
         <div class="signature-area">
             <div class="signature-box">
-                <p>Revisión Semanal (Responsable Banco):</p>
-                <input type="text" placeholder="Nombre y Firma">
-                <p>Fecha de Corte</p>
+                <p>Revisó (Calidad):</p><input type="text">
+                <p>Firma</p>
             </div>
             <div class="signature-box">
-                <p>Visto Bueno (Dirección/Calidad):</p>
-                <input type="text" placeholder="Nombre y Firma">
-                <p>Fecha</p>
+                <p>Supervisó (Producción):</p><input type="text">
+                <p>Firma</p>
             </div>
         </div>
-
-        <div class="footer">FO-LC-23-O | BITÁCORA CRIO (OFF) | Versión: 1.0<br>El contenido de este documento es
-            propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor,
-            por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-LC-23 | BITÁCORA CRIO | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
 
     <script>
-        function autoResizeTextarea(textarea) {
-            textarea.style.height = 'auto';
-            textarea.style.height = `${textarea.scrollHeight}px`;
+        function addCryoRow() {
+            const tbody = document.getElementById('tbody-bitacora');
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td><input class="cedit" placeholder="CV..."></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit" style="text-align:center;"></td>
+                <td><input type="text" class="cedit date-proc" placeholder="DD/MM/AAAA" onchange="calcStorageDate(this)"></td>
+                <td><input type="text" class="cedit date-store" placeholder="DD/MM/AAAA"></td>
+                <td><input class="cedit" placeholder="Tanque/Caja"></td>
+                <td><input class="cedit" placeholder="Firma/Nom"></td>
+                
+                <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                <td><input class="cedit" placeholder="Destino/Motivo"></td>
+                <td><input class="cedit" placeholder="Firma/Nom"></td>
+                
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+            tbody.appendChild(row);
         }
 
+        // Calcular Fecha Almacenamiento (Fecha Proceso + 1 día)
+        function calcStorageDate(inputDate) {
+            const row = inputDate.closest('tr');
+            const val = inputDate.value;
+            if (!val) return;
+
+            // Intentar parsear formato DD/MM/AAAA
+            const parts = val.split('/');
+            if (parts.length !== 3) return;
+
+            const day = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10) - 1; // Los meses en JS son 0-indexados
+            const year = parseInt(parts[2], 10);
+
+            if (isNaN(day) || isNaN(month) || isNaN(year)) return;
+
+            const dateObj = new Date(year, month, day);
+            // Sumar 1 día
+            dateObj.setDate(dateObj.getDate() + 1);
+
+            // Formatear a DD/MM/AAAA
+            const dd = String(dateObj.getDate()).padStart(2, '0');
+            const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const yyyy = dateObj.getFullYear();
+
+            const nextDay = `${dd}/${mm}/${yyyy}`;
+
+            // Asignar solo si está vacío para respetar manuales
+            const storeInput = row.querySelector('.date-store');
+            if (!storeInput.value) {
+                storeInput.value = nextDay;
+            }
+        }
+
+        // Inicializar
         document.addEventListener('DOMContentLoaded', () => {
-            const rows = document.querySelectorAll('.log-table tbody tr');
-
-            rows.forEach((row) => {
-                [3, 5].forEach((cellIndex) => {
-                    const cell = row.cells[cellIndex];
-                    if (!cell) return;
-
-                    const input = cell.querySelector('input.cedit');
-                    if (!input) return;
-
-                    const textarea = document.createElement('textarea');
-                    textarea.className = `${input.className} code-textarea`;
-                    textarea.rows = 1;
-                    textarea.value = input.value || '';
-                    textarea.oninput = () => autoResizeTextarea(textarea);
-
-                    cell.innerHTML = '';
-                    cell.appendChild(textarea);
-                    autoResizeTextarea(textarea);
-                });
-            });
+            if (document.getElementById('tbody-bitacora').children.length === 0) {
+                addCryoRow();
+            }
         });
     </script>
 </body>

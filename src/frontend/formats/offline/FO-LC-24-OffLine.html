@@ -9,10 +9,45 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app-OffLine.js"></script>
     <style>
+        .header-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 0;
+        }
+
+        .header-center {
+            flex: 1;
+            text-align: center;
+            padding: 0 2px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section {
+            margin-top: 0;
+            padding-top: 0;
+        }
+
+        .header-center h1 {
+            margin: 5px 0 0px 0;
+            font-size: 16px;
+        }
+
+        .header-center .metadata {
+            font-size: 10px;
+            margin: 0;
+        }
+
+        .barcode-svg {
+            margin-bottom: 0;
+        }
+
         /* REGLAS DE IMPRESIÓN FORZADA */
         @media print {
             @page {
-                size: letter;
+                size: letter landscape;
                 margin: 0.5cm;
             }
 
@@ -31,6 +66,79 @@
 
             input::placeholder {
                 color: transparent !important;
+            }
+
+            /* Hacer header horizontal en impresión */
+            .header-top {
+                display: flex !important;
+                align-items: flex-start !important;
+                justify-content: space-between !important;
+                margin-bottom: 0 !important;
+            }
+
+            .section {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+            }
+
+            .header-center {
+                flex: 1 !important;
+                text-align: center !important;
+                padding: 0 5px !important;
+            }
+
+            .header-center h1 {
+                font-size: 13px !important;
+                margin: 3px 0 5px 0 !important;
+            }
+
+            .header-center .metadata {
+                font-size: 7px !important;
+                margin: 0 !important;
+            }
+
+            /* Reducir área de firmas */
+            .signature-area {
+                margin-top: 2px !important;
+                margin-bottom: 2px !important;
+                padding: 5px 0 !important;
+            }
+
+            .signature-box {
+                padding: 3px !important;
+            }
+
+            .signature-box p {
+                margin-bottom: 3px !important;
+                font-size: 9px !important;
+            }
+
+            .signature-box input {
+                padding: 2px !important;
+                font-size: 9px !important;
+            }
+
+            /* Permitir que la tabla se rompa entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table,
+            .inv-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
             }
 
             /* Bordes Negros */
@@ -141,6 +249,10 @@
                         font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
                 </svg>
             </div>
+            <div class="header-center">
+                <h1>CONTROL DIARIO DE INVENTARIO Y DOSIFICACIÓN</h1>
+                <div class="metadata">Código: FO-LC-24 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            </div>
             <div class="registry-container">
                 <label>Fecha de Corte</label>
                 <div class="registry-wrapper">
@@ -152,182 +264,25 @@
             </div>
         </div>
 
-        <div class="header-main">
-            <h1>CONTROL DIARIO DE INVENTARIO Y DOSIFICACIÓN</h1>
-            <div class="metadata">Código: FO-LC-24 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
-        </div>
-
         <div class="section">
-            <table class="compact-table inv-table">
+            <table class="compact-table inv-table" id="tbl-inventario">
                 <thead>
                     <tr>
-                        <th style="width: 22%;">Producto / Presentación</th>
+                        <th style="width: 20%;">Producto / Presentación</th>
                         <th style="width: 12%;">Lote(s)</th>
                         <th style="width: 8%;">Stock</th>
                         <th style="width: 8%;">Salidas</th>
                         <th style="width: 8%;">Reproceso</th>
                         <th style="width: 10%;" class="col-total">Total Salidas</th>
-                        <th style="width: 16%;" class="col-bio">Células Usadas (M)</th>
-                        <th style="width: 16%;" class="col-bio">Exos Usados (B)</th>
+                        <th style="width: 14%;" class="col-bio">Células Usadas (M)</th>
+                        <th style="width: 14%;" class="col-bio">Exos Usados (B)</th>
+                        <th class="no-print" style="width: 3%;">—</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="8" style="background:#ddd; font-weight:bold; font-size:9px; padding-left:5px;">
-                            LÍNEA: STEM XELLE (MSC)</td>
-                    </tr>
-                    <tr>
-                        <td class="product-label">Stem Xelle - 10 Millones</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit" value="N/A" disabled></td>
-                    </tr>
-                    <tr>
-                        <td class="product-label">Stem Xelle - 25 Millones</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit" value="N/A" disabled></td>
-                    </tr>
-                    <tr>
-                        <td class="product-label">Stem Xelle - 50 Millones</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit" value="N/A" disabled></td>
-                    </tr>
-                    <tr>
-                        <td class="product-label">Stem Xelle - 100 Millones</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit" value="N/A" disabled></td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="8" style="background:#ddd; font-weight:bold; font-size:9px; padding-left:5px;">
-                            LÍNEA: HYBRID XELLE (MSC + EXOSOMAS)</td>
-                    </tr>
-                    <tr>
-                        <td class="product-label">Hybrid - 10M + 1B</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td class="product-label">Hybrid - 25M + 2B</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td class="product-label">Hybrid - 50M + 5B</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="8" style="background:#ddd; font-weight:bold; font-size:9px; padding-left:5px;">
-                            LÍNEA: ORTHO BIOLOGICS</td>
-                    </tr>
-                    <tr>
-                        <td class="product-label">Stem Ortho (Vial)</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit" value="N/A" disabled></td>
-                    </tr>
-                    <tr>
-                        <td class="product-label">Hybrid Ortho (Kit)</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="8" style="background:#ddd; font-weight:bold; font-size:9px; padding-left:5px;">
-                            LÍNEA: X-EXOSOMES / BREATH</td>
-                    </tr>
-                    <tr>
-                        <td class="product-label">X-Exosomes (Vial)</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit" value="N/A" disabled></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td class="product-label">X-Breath (Nebulización)</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit" value="N/A" disabled></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="8" style="background:#ddd; font-weight:bold; font-size:9px; padding-left:5px;">
-                            OTROS / ESPECIALES</td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit" placeholder="Producto..."></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit" placeholder="Producto..."></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="col-total"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                        <td class="col-bio"><input class="cedit"></td>
-                    </tr>
+                <tbody id="tbody-inventario">
                 </tbody>
             </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addInventoryRow()">+ Agregar Fila</button>
         </div>
 
         <div class="section">
@@ -361,6 +316,37 @@
             de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
             está prohibida su reproducción total o parcial.</div>
     </div>
+
+    <script>
+        function addInventoryRow() {
+            const tbody = document.getElementById('tbody-inventario');
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td><input class="cedit" placeholder="Producto / Presentación..."></td>
+                <td><input class="cedit" placeholder="Lote(s)"></td>
+                <td><input class="cedit" placeholder="Stock"></td>
+                <td><input class="cedit" placeholder="Salidas"></td>
+                <td><input class="cedit" placeholder="Reproceso"></td>
+                <td class="col-total"><input class="cedit" placeholder="Total"></td>
+                <td class="col-bio"><input class="cedit" placeholder="Células (M)"></td>
+                <td class="col-bio"><input class="cedit" placeholder="Exos (B)"></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">×</button></td>
+            `;
+
+            tbody.appendChild(row);
+        }
+
+        // Inicializar con 5 filas vacías
+        document.addEventListener('DOMContentLoaded', () => {
+            const tbody = document.getElementById('tbody-inventario');
+            if (tbody.children.length === 0) {
+                for (let i = 0; i < 5; i++) {
+                    addInventoryRow();
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
