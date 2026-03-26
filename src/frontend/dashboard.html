@@ -211,9 +211,8 @@
                 <div class="relative hidden md:block">
                     <span
                         class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
-                    <input id="searchBox" type="text" autocomplete="off" value=""
-                        class="pl-10 pr-4 py-2 w-64 bg-slate-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-primary placeholder-slate-400 font-medium transition-all"
-                        placeholder="Buscar formato, lote...">
+                    <input id="searchBox" type="text" autocomplete="off"
+                        class="pl-10 pr-4 py-2 w-64 bg-slate-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-primary font-medium transition-all">
                 </div>
 
                 <div class="h-8 w-px bg-slate-200"></div>
@@ -750,6 +749,14 @@
 
         // --- INIT ---
         $(document).ready(function () {
+            // Verificar que Core esté disponible
+            if (typeof Core === 'undefined') {
+                console.error('[CRITICAL] Core no está definido. Verifica que core.js se haya cargado correctamente.');
+                alert('Error crítico: El sistema no pudo inicializarse. Recarga la página.');
+                return;
+            }
+
+            console.log('[Dashboard] Inicializando dashboard...');
             const sess = Core.Auth.check();
             if (!sess) {
                 window.location.href = 'index.html';

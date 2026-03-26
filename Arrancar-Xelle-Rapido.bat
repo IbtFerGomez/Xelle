@@ -55,7 +55,11 @@ timeout /t 2 /nobreak >nul
 goto wait_docker
 
 :docker_ready
-echo [4/5] Levantando servicios Xelle (compose up -d)...
+echo [4/6] Deteniendo contenedores previos...
+docker compose down --remove-orphans >nul 2>&1
+docker rm -f xelle_postgres xelle_backend xelle_nginx >nul 2>&1
+
+echo [5/6] Levantando servicios Xelle (compose up -d)...
 docker compose up -d
 if errorlevel 1 (
   echo [ERROR] Fallo al iniciar servicios con docker compose.
@@ -63,7 +67,7 @@ if errorlevel 1 (
   exit /b 1
 )
 
-echo [5/5] Abriendo aplicacion en navegador...
+echo [6/6] Abriendo aplicacion en navegador...
 start "" "http://localhost"
 echo.
 echo Xelle iniciado correctamente (modo rapido).

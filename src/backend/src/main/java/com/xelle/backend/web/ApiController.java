@@ -4,18 +4,21 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xelle.backend.audit.AuditLogEntity;
 import com.xelle.backend.audit.AuditLogRepository;
+import com.xelle.backend.dto.ApiResponse;
+import com.xelle.backend.dto.LoginRequest;
+import com.xelle.backend.exception.BadRequestException;
+import com.xelle.backend.exception.ForbiddenException;
 import com.xelle.backend.format.FormatMetadataEntity;
 import com.xelle.backend.format.FormatMetadataRepository;
 import com.xelle.backend.instance.FormatInstanceEntity;
 import com.xelle.backend.instance.FormatInstanceRepository;
 import com.xelle.backend.record.FormatRecordEntity;
 import com.xelle.backend.record.FormatRecordRepository;
+import com.xelle.backend.service.AuthService;
 import com.xelle.backend.user.UserEntity;
 import com.xelle.backend.user.UserRepository;
-import java.time.LocalDate;
+import jakarta.validation.Valid;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +27,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +48,8 @@ public class ApiController {
     private final FormatInstanceRepository instanceRepository;
     private final AuditLogRepository auditLogRepository;
     private final ObjectMapper objectMapper;
+    private final AuthService authService;
+    private final PasswordEncoder passwordEncoder;
 
     public ApiController(
             UserRepository userRepository,
@@ -51,39 +57,30 @@ public class ApiController {
             FormatRecordRepository recordRepository,
             FormatInstanceRepository instanceRepository,
             AuditLogRepository auditLogRepository,
-            ObjectMapper objectMapper) {
+            ObjectMapper objectMapper,
+            AuthService authService,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.formatRepository = formatRepository;
         this.recordRepository = recordRepository;
         this.instanceRepository = instanceRepository;
         this.auditLogRepository = auditLogRepository;
         this.objectMapper = objectMapper;
+        this.authService = authService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody Map<String, Object> body) {
-        String username = str(body.get("username"));
-        String password = str(body.get("password"));
-
-        Optional<UserEntity> userOpt = userRepository.findByUsernameIgnoreCase(username);
-        if (userOpt.isEmpty()) {
-            return Map.of("success", false, "msg", "Datos incorrectos");
+    public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
+        try {
+            Map<String, Object> userSession = authService.login(loginRequest);
+            return ResponseEntity.ok(
+                    ApiResponse.success("Login exitoso")
+                            .addData("user", userSession));
+        } catch (Exception e) {
+            // Las excepciones se manejan en GlobalExceptionHandler
+            throw e;
         }
-
-        UserEntity user = userOpt.get();
-        if (!user.isActive()) {
-            logAudit("LOGIN_FAILED", "AUTH", username, null, Map.of("reason", "inactive"));
-            return Map.of("success", false, "msg", "Usuario inactivo");
-        }
-
-        if (!str(user.getPasswordHash()).equals(password)) {
-            logAudit("LOGIN_FAILED", "AUTH", username, null, Map.of("reason", "bad_credentials"));
-            return Map.of("success", false, "msg", "Datos incorrectos");
-        }
-
-        logAudit("LOGIN_SUCCESS", "AUTH", username, user.getId(), Map.of("role", defaultIfBlank(user.getRole(), "")));
-
-        return Map.of("success", true, "user", mapUserSession(user));
     }
 
     @GetMapping("/users")
@@ -474,19 +471,41 @@ public class ApiController {
     }
 
     private String nextUniqueCode(String formatType) {
-        LocalDate today = LocalDate.now(ZoneOffset.UTC);
-        OffsetDateTime from = today.atStartOfDay().atOffset(ZoneOffset.UTC);
-        OffsetDateTime to = from.plusDays(1).minusNanos(1);
+        // Obtener todos los códigos existentes para este tipo de formato
+        List<FormatInstanceEntity> existingInstances = instanceRepository.findByFormatTypeIgnoreCase(formatType);
 
-        long count = instanceRepository.countByFormatTypeAndCreatedAtBetween(formatType, from, to);
-        long seq = count + 1;
-        String datePart = today.format(DateTimeFormatter.BASIC_ISO_DATE);
+        // Extraer los números de secuencia de los códigos existentes
+        long maxSeq = 0;
+        String prefix = formatType + "-";
 
-        String candidate = formatType + "-" + datePart + "-" + String.format("%03d", seq);
-        while (instanceRepository.findByUniqueCode(candidate).isPresent()) {
-            seq += 1;
-            candidate = formatType + "-" + datePart + "-" + String.format("%03d", seq);
+        for (FormatInstanceEntity instance : existingInstances) {
+            String code = defaultIfBlank(instance.getUniqueCode(), "");
+            if (code.startsWith(prefix)) {
+                // Extraer el último segmento numérico (ej: "FO-LC-21-001" -> "001")
+                String[] parts = code.split("-");
+                if (parts.length > 0) {
+                    try {
+                        long num = Long.parseLong(parts[parts.length - 1]);
+                        if (num > maxSeq) {
+                            maxSeq = num;
+                        }
+                    } catch (NumberFormatException e) {
+                        // Ignorar códigos que no terminen en número
+                    }
+                }
+            }
         }
+
+        // Generar el siguiente código secuencial
+        long nextSeq = maxSeq + 1;
+        String candidate = formatType + "-" + String.format("%03d", nextSeq);
+
+        // Verificar que no exista (por seguridad)
+        while (instanceRepository.findByUniqueCode(candidate).isPresent()) {
+            nextSeq += 1;
+            candidate = formatType + "-" + String.format("%03d", nextSeq);
+        }
+
         return candidate;
     }
 
@@ -521,9 +540,11 @@ public class ApiController {
         if (body.containsKey("active")) {
             user.setActive(Boolean.TRUE.equals(body.get("active")));
         }
+        // Encriptar contraseña con BCrypt
         String pass = str(body.get("password"));
         if (creating || !pass.isBlank()) {
-            user.setPasswordHash(pass.isBlank() ? "123" : pass);
+            String rawPassword = pass.isBlank() ? "123" : pass;
+            user.setPasswordHash(passwordEncoder.encode(rawPassword));
         }
         if (user.getModuleAccess() == null || user.getModuleAccess().isBlank()) {
             user.setModuleAccess("[]");

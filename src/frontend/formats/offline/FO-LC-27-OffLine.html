@@ -9,66 +9,58 @@
     <script src="format-app-OffLine.js"></script>
     <style>
         @media print {
-            @page {
-                size: letter;
-                margin: 0.5cm;
-            }
 
-            body {
-                background: white;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
+            .global-controls,
             .no-print {
                 display: none !important;
             }
 
-            input::placeholder {
+            ::-webkit-input-placeholder {
                 color: transparent !important;
             }
 
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
             table,
-            th,
-            td {
-                border-color: #000 !important;
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
             }
 
-            input.cedit {
-                border: none !important;
-                text-align: left !important;
-                padding-left: 5px !important;
+            thead {
+                display: table-header-group !important;
             }
-        }
 
-        .data-table th {
-            background: #f0f0f0 !important;
-            font-size: 9px;
-            padding: 5px;
-            border: 1px solid #000;
-            text-align: center;
-        }
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
 
-        .data-table td {
-            border: 1px solid #000;
-            padding: 0;
-            height: 30px;
-        }
-
-        .data-table input {
-            width: 100%;
-            height: 100%;
-            border: none;
-            outline: none;
-            background: transparent;
-            font-size: 10px;
-        }
-
-        .instructions {
-            font-size: 9px;
-            color: #444;
-            margin-bottom: 10px;
-            font-style: italic;
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
         }
     </style>
 </head>
@@ -112,37 +104,35 @@
                         font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
                 </svg>
             </div>
+            <div class="header-main">
+                <h1>BITÁCORA DE REGISTRO DE CONTROL DE EQUIPOS</h1>
+                <div class="metadata">Código: FO-LC-27 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            </div>
             <div class="registry-container">
-                <label>Registro de Bitácora</label>
+                <label>No. Registro</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-27-</span>
                     <input type="text" id="reg-27" class="registry-input generate-barcode" data-target="barcode-27"
-                        data-prefix="FO-LC-27-" placeholder="001">
+                        data-prefix="FO-LC-27-">
                 </div>
-                <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
+                <input type="date" class="registry-date no-auto-date">
                 <svg id="barcode-27" class="barcode-svg"></svg>
             </div>
         </div>
 
-        <div class="header-main">
-            <h1>BITÁCORA DE REGISTRO DE CONTROL DE EQUIPOS</h1>
-            <div class="metadata">Código: FO-LC-27 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
-        </div>
+        <div class="section-title">SECCIÓN 1: CONTROL DE EQUIPOS</div>
 
-        <p class="instructions">Registre diariamente las condiciones de operación de los equipos y cualquier actividad
-            de mantenimiento realizada.</p>
-
-        <div class="section" style="padding: 0; border: none;">
-            <table class="data-table" id="tbl-equipos-off">
+        <div class="section">
+            <table id="tbl-equipos" class="compact-table">
                 <thead>
                     <tr>
-                        <th width="18%">Equipo</th>
-                        <th width="12%">N° Serie</th>
-                        <th width="10%">Temp. (°C)</th>
-                        <th width="10%">Presión</th>
-                        <th width="30%">Mantenimiento / Actividad Realizada</th>
-                        <th width="10%">Fecha</th>
-                        <th width="10%">Firma</th>
+                        <th width="20%">Equipo</th>
+                        <th width="15%">N° Serie</th>
+                        <th width="15%">Temperatura Registrada</th>
+                        <th width="15%">Presión Registrada</th>
+                        <th width="20%">Mantenimiento Realizado</th>
+                        <th width="12%">Firma del Operador</th>
+                        <th width="3%" class="no-print"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -153,7 +143,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">×</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -162,7 +153,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">×</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -171,7 +163,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">×</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -180,7 +173,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">×</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -189,7 +183,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">×</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -198,7 +193,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">×</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -207,7 +203,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">×</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -216,7 +213,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">×</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -225,7 +223,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">×</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -234,7 +233,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">×</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -243,7 +243,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">×</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -252,25 +253,55 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">×</button></td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-
-        <div class="signature-area">
-            <div class="signature-box">
-                <p>Responsable del Área:</p>
-                <input type="text" placeholder="Nombre y Firma">
-            </div>
-            <div class="signature-box">
-                <p>Verificación (Calidad):</p>
-                <input type="text" placeholder="Nombre y Firma">
+            <div class="no-print" style="margin-top: 10px;">
+                <button class="btn btn-primary btn-mini" onclick="addEquipoRow()">+ Agregar Línea</button>
             </div>
         </div>
 
-        <div class="footer">FO-LC-27-O | CONTROL EQUIPOS (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="signature-area" style="margin-top: 40px;">
+            <div class="signature-box">
+                <p>Operador:</p>
+                <input type="text" style="width: 100%;">
+                <p>Fecha: <input type="text" class="cedit"
+                        style="width: 120px; border:none; border-bottom:1px solid #000; text-align:center;"
+                        placeholder="DD/MM/AAAA"></p>
+            </div>
+            <div class="signature-box">
+                <p>Supervisor:</p>
+                <input type="text" style="width: 100%;">
+                <p>Fecha: <input type="text" class="cedit"
+                        style="width: 120px; border:none; border-bottom:1px solid #000; text-align:center;"
+                        placeholder="DD/MM/AAAA"></p>
+            </div>
+        </div>
+
+        <div class="footer">FO-LC-27 | CONTROL EQUIPOS | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
+
+    <script>
+        function addEquipoRow() {
+            const tbody = document.getElementById('tbl-equipos').querySelector('tbody');
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td><input class="cedit" placeholder="Nombre del Equipo"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">×</button></td>
+            `;
+            tbody.appendChild(row);
+        }
+    </script>
 </body>
 
 </html>

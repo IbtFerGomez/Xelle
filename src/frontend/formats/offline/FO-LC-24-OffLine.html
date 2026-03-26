@@ -13,35 +13,60 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-            margin-bottom: 0;
+            margin-bottom: 5px;
         }
 
-        .header-center {
-            flex: 1;
+        .header-main {
             text-align: center;
-            padding: 0 2px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            margin-bottom: 10px;
         }
 
-        .section {
-            margin-top: 0;
-            padding-top: 0;
-        }
-
-        .header-center h1 {
-            margin: 5px 0 0px 0;
+        .header-main h1 {
+            margin: 0 0 5px 0;
             font-size: 16px;
         }
 
-        .header-center .metadata {
+        .header-main .metadata {
             font-size: 10px;
             margin: 0;
         }
 
         .barcode-svg {
             margin-bottom: 0;
+        }
+
+        .registry-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .registry-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .registry-prefix {
+            padding: 4px 6px;
+            background-color: #f0f0f0;
+            border: 1px solid #999;
+            border-right: none;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .registry-input {
+            width: 100px;
+            padding: 4px;
+            border: 1px solid #999;
+            font-size: 11px;
+        }
+
+        .registry-date {
+            margin-top: 3px;
+            padding: 3px;
+            border: 1px solid #999;
+            font-size: 10px;
         }
 
         /* REGLAS DE IMPRESIÓN FORZADA */
@@ -73,48 +98,41 @@
                 display: flex !important;
                 align-items: flex-start !important;
                 justify-content: space-between !important;
-                margin-bottom: 0 !important;
+                margin-bottom: 5px !important;
             }
 
-            .section {
-                margin-top: 0 !important;
-                padding-top: 0 !important;
-            }
-
-            .header-center {
-                flex: 1 !important;
+            .header-main {
                 text-align: center !important;
-                padding: 0 5px !important;
+                margin-bottom: 10px !important;
             }
 
-            .header-center h1 {
-                font-size: 13px !important;
-                margin: 3px 0 5px 0 !important;
+            .header-main h1 {
+                font-size: 14px !important;
+                margin: 0 0 5px 0 !important;
             }
 
-            .header-center .metadata {
-                font-size: 7px !important;
+            .header-main .metadata {
+                font-size: 8px !important;
                 margin: 0 !important;
             }
 
             /* Reducir área de firmas */
             .signature-area {
-                margin-top: 2px !important;
-                margin-bottom: 2px !important;
-                padding: 5px 0 !important;
+                margin-top: 10px !important;
+                margin-bottom: 5px !important;
             }
 
             .signature-box {
-                padding: 3px !important;
+                padding: 5px !important;
             }
 
             .signature-box p {
-                margin-bottom: 3px !important;
+                margin: 2px 0 !important;
                 font-size: 9px !important;
             }
 
             .signature-box input {
-                padding: 2px !important;
+                padding: 3px !important;
                 font-size: 9px !important;
             }
 
@@ -212,7 +230,6 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
 
     <div class="container">
@@ -249,19 +266,21 @@
                         font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
                 </svg>
             </div>
-            <div class="header-center">
-                <h1>CONTROL DIARIO DE INVENTARIO Y DOSIFICACIÓN</h1>
-                <div class="metadata">Código: FO-LC-24 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
-            </div>
             <div class="registry-container">
-                <label>Fecha de Corte</label>
+                <label>Folio Inventario</label>
                 <div class="registry-wrapper">
-                    <input type="text" class="registry-input generate-barcode" style="text-align: center;"
-                        placeholder="DD/MM/AAAA" data-target="barcode-fo-lc-24-offline-html" data-prefix="FO-LC-24-">
+                    <span class="registry-prefix">FO-LC-24-</span>
+                    <input type="text" id="reg-24-off" class="registry-input generate-barcode"
+                        data-target="barcode-24-off" data-prefix="FO-LC-24-">
                 </div>
-                <input type="text" class="registry-date" placeholder="Hora Corte: HH:MM">
-                <svg id=\"barcode-fo-lc-24-offline-html\" class=\"barcode-svg\"></svg>
+                <input type="date" class="registry-date no-auto-date">
+                <svg id="barcode-24-off" class="barcode-svg"></svg>
             </div>
+        </div>
+
+        <div class="header-main">
+            <h1>CONTROL DIARIO DE INVENTARIO Y DOSIFICACIÓN (OFFLINE)</h1>
+            <div class="metadata">Código: FO-LC-24 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section">
@@ -303,12 +322,16 @@
 
         <div class="signature-area">
             <div class="signature-box">
-                <p>Realizó Inventario:</p>
-                <input type="text" placeholder="Nombre y Firma">
+                <p>Elaboró:</p><input type="text">
+                <p>Firma</p>
             </div>
             <div class="signature-box">
-                <p>Validó (Gerencia):</p>
-                <input type="text" placeholder="Nombre y Firma">
+                <p>Revisó (Calidad):</p><input type="text">
+                <p>Firma</p>
+            </div>
+            <div class="signature-box">
+                <p>Autorizó (Responsable Dirección):</p><input type="text">
+                <p>Firma</p>
             </div>
         </div>
 
@@ -345,6 +368,36 @@
                     addInventoryRow();
                 }
             }
+
+            // Inicializar generadores de código de barras
+            const barcodeInputs = document.querySelectorAll('.generate-barcode');
+            barcodeInputs.forEach(input => {
+                const targetId = input.getAttribute('data-target');
+                const prefix = input.getAttribute('data-prefix') || '';
+
+                input.addEventListener('input', function () {
+                    const value = this.value.trim();
+                    const fullCode = prefix + value;
+                    const svgElement = document.getElementById(targetId);
+
+                    if (value && svgElement) {
+                        try {
+                            JsBarcode(svgElement, fullCode, {
+                                format: "CODE128",
+                                width: 1.5,
+                                height: 35,
+                                displayValue: true,
+                                fontSize: 10,
+                                margin: 2
+                            });
+                        } catch (e) {
+                            console.error('Error generando código de barras:', e);
+                        }
+                    } else if (svgElement) {
+                        svgElement.innerHTML = '';
+                    }
+                });
+            });
         });
     </script>
 </body>

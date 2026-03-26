@@ -9,101 +9,59 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app-OffLine.js"></script>
     <style>
-        /* REGLAS DE IMPRESIÓN HORIZONTAL */
         @media print {
-            @page {
-                size: landscape;
-                margin: 0.5cm;
-            }
 
-            body,
-            .container {
-                margin: 0 !important;
-                padding: 10px !important;
-                background: white !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
+            .global-controls,
             .no-print {
                 display: none !important;
             }
 
-            input::placeholder,
-            textarea::placeholder {
+            ::-webkit-input-placeholder {
                 color: transparent !important;
             }
 
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
             table,
-            th,
-            td {
-                border: 1px solid #000 !important;
-                border-collapse: collapse !important;
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
             }
 
-            input.cedit {
-                border: none !important;
+            thead {
+                display: table-header-group !important;
             }
 
-            /* Ajuste de altura */
-            .row-tall td {
-                height: 35px !important;
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
             }
-        }
 
-        /* Estilos de Tabla */
-        .ster-table th {
-            background: #f0f0f0;
-            font-size: 10px;
-            padding: 4px;
-            border: 1px solid #999;
-            vertical-align: middle;
-            text-align: center;
-        }
-
-        .ster-table td {
-            border: 1px solid #999;
-            padding: 2px;
-            vertical-align: middle;
-        }
-
-        .ster-table input {
-            width: 98%;
-            border: none;
-            outline: none;
-            background: transparent;
-            font-size: 11px;
-            text-align: center;
-        }
-
-        .ster-table textarea {
-            width: 98%;
-            border: none;
-            outline: none;
-            resize: none;
-            font-family: inherit;
-            font-size: 10px;
-            overflow: hidden;
-            background: transparent;
-        }
-
-        .row-tall td {
-            height: 40px;
-        }
-
-        /* Sección de Validación */
-        .validation-box {
-            border: 1px solid #000;
-            padding: 5px 10px;
-            margin-top: 10px;
-            margin-bottom: 5px;
-            background-color: #f9f9f9;
-            font-size: 10px;
-            display: flex;
-            gap: 20px;
-            align-items: center;
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
         }
     </style>
 </head>
@@ -112,7 +70,6 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
 
     <div class="container">
@@ -149,177 +106,132 @@
                         font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
                 </svg>
             </div>
-            <div class="registry-container">
-                <label>Mes / Año</label>
-                <div class="registry-wrapper">
-                    <input type="text" class="registry-input generate-barcode" style="text-align:center;"
-                        placeholder="MM / AAAA" data-target="barcode-fo-lc-26-offline-html" data-prefix="FO-LC-26-">
-                </div>
-                <input type="text" class="registry-date" placeholder="Equipo (ID)">
-                <svg id=\"barcode-fo-lc-26-offline-html\" class=\"barcode-svg\"></svg>
+            <div class="header-main">
+                <h1>BITÁCORA DE ESTERILIZACIÓN (OFFLINE)</h1>
+                <div class="metadata">Código: FO-LC-26 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
             </div>
-        </div>
-
-        <div class="header-main">
-            <h1>BITÁCORA DE ESTERILIZACIÓN (AUTOCLAVE)</h1>
-            <div class="metadata">Código: FO-LC-26 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <div class="registry-container">
+                <label>No. Registro</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-26-</span>
+                    <input type="text" id="reg-26-off" class="registry-input generate-barcode"
+                        data-target="barcode-26-off" data-prefix="FO-LC-26-">
+                </div>
+                <input type="text" class="registry-date no-auto-date" placeholder="DD/MM/AAAA">
+                <svg id="barcode-26-off" class="barcode-svg"></svg>
+            </div>
         </div>
 
         <div class="section">
-            <table class="compact-table ster-table">
+            <div class="section-title">SECCIÓN 1: BITÁCORA REGISTRO PROCESO ESTERILIZACIÓN</div>
+            <table id="tbl-esterilizacion" class="compact-table">
                 <thead>
                     <tr>
-                        <th style="width: 8%;">Fecha</th>
-                        <th style="width: 6%;">No. Ciclo</th>
-                        <th style="width: 25%;">Descripción de la Carga (Material)</th>
-                        <th style="width: 8%;">Temp (°C)</th>
-                        <th style="width: 8%;">Tiempo (min)</th>
-                        <th style="width: 8%;">Presión (psi)</th>
-                        <th style="width: 10%;">Ind. Químico (Viraje)</th>
-                        <th style="width: 12%;">Ind. Biológico (Resultado)</th>
-                        <th style="width: 15%;">Operador (Iniciales)</th>
+                        <th width="3%">No.</th>
+                        <th width="20%">Material Esterilizado</th>
+                        <th width="8%">Cantidad</th>
+                        <th width="10%">Operador</th>
+                        <th width="8%">Metodo*</th>
+                        <th width="12%">Condiciones (Temp/tiempo)</th>
+                        <th width="10%">Fecha</th>
+                        <th width="8%">Resultado**</th>
+                        <th width="10%">Código</th>
+                        <th width="11%">Observaciones</th>
+                        <th width="3%" class="no-print"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="row-tall">
-                        <td><input class="cedit" placeholder="DD/MM"></td>
-                        <td><input class="cedit" placeholder="#"></td>
-                        <td><textarea class="cedit" rows="2" placeholder="Ej. Ropa, Instrumental..."></textarea></td>
-                        <td><input class="cedit" placeholder="121°C"></td>
-                        <td><input class="cedit" placeholder="20 min"></td>
-                        <td><input class="cedit" placeholder="15 psi"></td>
-                        <td><input class="cedit" placeholder="SI / NO"></td>
-                        <td><input class="cedit" placeholder="NEG / POS"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr class="row-tall">
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr class="row-tall">
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr class="row-tall">
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr class="row-tall">
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr class="row-tall">
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr class="row-tall">
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr class="row-tall">
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr class="row-tall">
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr class="row-tall">
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
-        </div>
-
-        <div class="validation-box">
-            <div style="font-weight:bold;">CRITERIOS DE LIBERACIÓN DE CARGA:</div>
-            <label><input type="text"> Viraje Correcto (Cinta Testigo)</label>
-            <label><input type="text"> Ampolleta Biológica (Lectura Negativa 24/48h)</label>
-            <label><input type="text"> Paquetes Secos e Íntegros</label>
-            <label><input type="text"> Parámetros de Ciclo Cumplidos</label>
-        </div>
-
-        <div class="signature-area" style="margin-top:20px; margin-bottom:10px;">
-            <div class="signature-box">
-                <p>Responsable Dirección (Revisión):</p>
-                <input type="text" placeholder="Nombre y Firma">
-                <p>Fecha</p>
-            </div>
-            <div class="signature-box">
-                <p>Jefe de Laboratorio (Visto Bueno):</p>
-                <input type="text" placeholder="Nombre y Firma">
-                <p>Fecha</p>
+            <button class="btn btn-primary btn-mini no-print" onclick="addSterilizationRow()">+ Agregar
+                Registro</button>
+            <div style="font-size: 10px; margin-top: 5px; color: #555;">
+                *Metodo: <strong>CS</strong> Calor seco, <strong>CH</strong> Calor húmedo.<br>
+                **Resultado: <strong>ST</strong> Satisfactorio, <strong>NS</strong> No satisfactorio.
             </div>
         </div>
 
-        <div class="footer">FO-LC-26-O | ESTERILIZACIÓN (OFF) | Versión: 1.0<br>El contenido de este documento es
-            propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor,
-            por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="signature-area">
+            <div class="signature-box">
+                <p>Revisó (Calidad):</p><input type="text">
+                <p>Firma</p>
+            </div>
+            <div class="signature-box">
+                <p>Supervisó (Producción):</p><input type="text">
+                <p>Firma</p>
+            </div>
+        </div>
+
+        <div class="footer">FO-LC-26 | ESTERILIZACIÓN | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
+
+    <script>
+        function addSterilizationRow() {
+            const tbody = document.getElementById('tbl-esterilizacion').querySelector('tbody');
+            const rowCount = tbody.children.length + 1;
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td style="text-align:center;">${rowCount}</td>
+                <td><input class="cedit"></td>
+                <td><input type="number" class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit" placeholder="CS/CH"></td>
+                <td><input class="cedit" placeholder="Ej. 121°C/15min"></td>
+                <td><input class="cedit" placeholder="DD/MM/AAAA"></td>
+                <td><input class="cedit" placeholder="ST/NS"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="removeSterilizationRow(this)">x</button></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        function removeSterilizationRow(btn) {
+            const tbody = btn.closest('tbody');
+            btn.closest('tr').remove();
+            Array.from(tbody.children).forEach((row, index) => {
+                row.cells[0].textContent = index + 1;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (document.querySelector('#tbl-esterilizacion tbody').children.length === 0) {
+                for (let i = 0; i < 4; i++) addSterilizationRow();
+            }
+
+            // Inicializar generadores de código de barras
+            const barcodeInputs = document.querySelectorAll('.generate-barcode');
+            barcodeInputs.forEach(input => {
+                const targetId = input.getAttribute('data-target');
+                const prefix = input.getAttribute('data-prefix') || '';
+
+                input.addEventListener('input', function () {
+                    const value = this.value.trim();
+                    const fullCode = prefix + value;
+                    const svgElement = document.getElementById(targetId);
+
+                    if (value && svgElement) {
+                        try {
+                            JsBarcode(svgElement, fullCode, {
+                                format: "CODE128",
+                                width: 1.5,
+                                height: 35,
+                                displayValue: true,
+                                fontSize: 10,
+                                margin: 2
+                            });
+                        } catch (e) {
+                            console.error('Error generando código de barras:', e);
+                        }
+                    } else if (svgElement) {
+                        svgElement.innerHTML = '';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

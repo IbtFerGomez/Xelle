@@ -119,6 +119,8 @@ const Core = {
             if (!sess) return;
 
             const formats = Core.Formats.syncWithSeed();
+            console.log('[renderDashboard] Formatos cargados:', formats.length);
+
             const userAccess = Array.isArray(sess.access)
                 ? sess.access
                 : (Array.isArray(sess.moduleAccess) ? sess.moduleAccess : []);
@@ -225,18 +227,31 @@ const Core = {
                     if (areaFormats.length > 0) {
                         areaFormats.forEach(f => {
                             const iconSrc = areaIcons[area] || '';
+                            const escapedFile = String(f.file || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                            const escapedCode = String(f.code || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                            const escapedTitle = String(f.title || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+                            // Generar link a versión offline
+                            const formatCode = String(f.code || '').trim().toUpperCase();
+                            const offlineFile = `formats/offLine/${formatCode}-OffLine.html`;
+
                             html += `
-                                <button onclick="Core.UI.openFormat('${f.file}')" class="p-4 rounded-xl border-2 transition-all ${areaColors[area]} hover:shadow-lg hover:scale-105 text-left group">
+                                <div class="p-4 rounded-xl border-2 transition-all ${areaColors[area]} hover:shadow-lg group">
                                     <div class="flex items-center gap-2 mb-2">
                                         ${iconSrc ? `<img src="${iconSrc}" alt="" class="w-5 h-5 opacity-70 group-hover:opacity-100 transition-opacity">` : ''}
-                                        <div class="text-xs uppercase font-bold text-slate-500 group-hover:text-primary">${f.code}</div>
+                                        <div class="text-xs uppercase font-bold text-slate-500 group-hover:text-primary">${escapedCode}</div>
                                     </div>
-                                    <div class="text-sm font-bold text-navy mb-3 line-clamp-2 group-hover:text-primary">${f.title}</div>
-                                    <div class="flex items-center gap-2 text-slate-400 group-hover:text-primary transition-colors">
-                                        <span class="material-symbols-outlined text-lg">open_in_new</span>
-                                        <span class="text-xs font-bold">Abrir</span>
+                                    <div class="text-sm font-bold text-navy mb-3 line-clamp-2 group-hover:text-primary">${escapedTitle}</div>
+                                    <div class="flex gap-2">
+                                        <button onclick="Core.UI.openFormat('${escapedFile}')" class="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg text-xs font-bold transition-all">
+                                            <span class="material-symbols-outlined text-base">open_in_new</span>
+                                            <span>Abrir</span>
+                                        </button>
+                                        <button onclick="window.open('${offlineFile}', '_blank')" title="Versión offline sin persistencia" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg transition-all">
+                                            <span class="material-symbols-outlined text-base">description</span>
+                                        </button>
                                     </div>
-                                </button>
+                                </div>
                             `;
                         });
                     } else {
@@ -289,6 +304,7 @@ const Core = {
         openFormat: function (file) {
             const rawPath = String(file || '').trim().replace(/\\/g, '/');
             if (!rawPath) {
+                console.error('[openFormat] Ruta de formato vacía');
                 alert('Esta tarjeta no tiene ruta de formato configurada.');
                 return;
             }
@@ -314,11 +330,20 @@ const Core = {
                 urlObj.searchParams.set('new', '1');
                 targetPath = urlObj.pathname.replace(/^\//, '') + urlObj.search;
             } catch (e) {
+                console.error('[openFormat] Error al construir URL:', e);
                 const separator = targetPath.includes('?') ? '&' : '?';
                 targetPath = `${targetPath}${separator}new=1`;
             }
 
-            window.open(targetPath, '_blank');
+            console.log('[openFormat] Abriendo formato:', targetPath);
+            const newWindow = window.open(targetPath, '_blank');
+
+            if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+                console.warn('[openFormat] Bloqueador de ventanas emergentes detectado');
+                alert('Por favor, permite ventanas emergentes en tu navegador para abrir formatos.');
+                // Intentar abrir en la misma ventana como fallback
+                window.location.href = targetPath;
+            }
         }
     }
 };

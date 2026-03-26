@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ET-OP-01 Etiqueta de Equipo Calibrado</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .label-container { border: 4px solid #166534; border-radius: 8px; max-width: 500px; margin: 30px auto; padding: 20px; font-family: Arial, sans-serif; background-color: #f0fdf4; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .label-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #166534; padding-bottom: 10px; margin-bottom: 15px; }
+        .label-title { color: #166534; font-size: 16px; font-weight: bold; text-align: center; width: 100%; letter-spacing: 1px; }
+        .label-status { background-color: #166534; color: white; text-align: center; font-size: 18px; font-weight: bold; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
+        .label-row { display: flex; margin-bottom: 12px; font-size: 12px; align-items: center; }
+        .label-row label { font-weight: bold; color: #1e293b; width: 40%; }
+        .label-row .input-wrapper { width: 60%; }
+        .label-input { width: 100%; border: none; border-bottom: 1px solid #166534; background: transparent; font-size: 12px; padding: 2px; font-weight: bold; color: #0f172a; }
+        .label-footer { font-size: 8px; text-align: center; color: #64748b; margin-top: 20px; font-weight: bold; border-top: 1px dashed #cbd5e1; padding-top: 10px; }
+        .radio-group { display: flex; gap: 10px; align-items: center; }
+        
+        @media print {
+            .global-controls, .no-print, .header-top, .header-main { display:none !important; }
+            .label-container { box-shadow: none; margin: 0; max-width: 100%; border-width: 2px; page-break-inside: avoid; }
+            ::-webkit-input-placeholder { color: transparent !important; }
+            ::placeholder { color: transparent !important; }
+        }
+    </style>
+</head>
+<body id="doc-et-op-01">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Etiqueta</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top no-print">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Registro Etiqueta</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">ET-OP-01-</span>
+                    <input type="text" id="reg-et01" class="registry-input generate-barcode" data-target="barcode-et01" data-prefix="ET-OP-01-" placeholder="000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-et01" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main no-print">
+            <h1>CONTROL DE METROLOGÍA - ETIQUETA CALIBRADO</h1>
+            <div class="metadata">Código: ET-OP-01 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="label-container">
+            <div class="label-header">
+                <div style="width:100px;">
+                    <svg viewBox="0 0 320 80" style="width:100%; height:auto;"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#166534}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text></svg>
+                </div>
+                <div class="label-title">CONTROL DE METROLOGÍA</div>
+            </div>
+            
+            <div class="label-status">✅ EQUIPO CALIBRADO / VERIFICADO</div>
+
+            <div class="label-row">
+                <label>ID del Equipo:</label>
+                <div class="input-wrapper"><input type="text" class="cedit label-input" placeholder="EQ-000"></div>
+            </div>
+            <div class="label-row">
+                <label>Fecha de Calibración:</label>
+                <div class="input-wrapper"><input type="date" class="cedit label-input"></div>
+            </div>
+            <div class="label-row">
+                <label>Próxima Calibración:</label>
+                <div class="input-wrapper"><input type="date" class="cedit label-input"></div>
+            </div>
+            <div class="label-row">
+                <label>Realizado por:</label>
+                <div class="input-wrapper radio-group">
+                    <label style="width:auto; font-weight:normal;"><input type="radio" name="realizado" class="cedit"> Interno</label>
+                    <label style="width:auto; font-weight:normal; display:flex; align-items:center;">
+                        <input type="radio" name="realizado" class="cedit"> Externo: 
+                        <input type="text" class="cedit label-input" style="width:80px; margin-left:5px;">
+                    </label>
+                </div>
+            </div>
+            <div class="label-row" style="margin-top: 20px;">
+                <label>Firma Responsable:</label>
+                <div class="input-wrapper"><input type="text" class="cedit label-input" placeholder="Nombre y Firma"></div>
+            </div>
+
+            <div class="label-footer">
+                ^(Código: ET-OP-01 | NO REMOVER DEL EQUIPO)
+            </div>
+        </div>
+    </div>
+</body>
+</html>

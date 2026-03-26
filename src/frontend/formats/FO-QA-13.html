@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-43 Bitácora de Monitoreo Ambiental</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 10px; padding: 6px; text-align: center; vertical-align: middle; }
+        .compact-table td { font-size: 10px; padding: 5px; vertical-align: middle; text-align: center; }
+        .compact-table input { font-size: 10px; text-align: center; width: 100%; border: none; background: transparent; }
+        
+        .radio-group { display: flex; justify-content: center; gap: 8px; font-size: 10px; }
+        .cbx-group { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 5px; font-size: 10px; }
+        
+        .limit-col { background-color: #f1f5f9; font-weight: bold; font-size: 9px; }
+
+        /* REGLA ESTRICTA: Placeholders invisibles al imprimir */
+        @media print {
+            .global-controls, .no-print { display:none !important; }
+            ::-webkit-input-placeholder { color: transparent !important; }
+            :-moz-placeholder { color: transparent !important; }
+            ::-moz-placeholder { color: transparent !important; }
+            :-ms-input-placeholder { color: transparent !important; }
+            ::placeholder { color: transparent !important; }
+        }
+    </style>
+</head>
+<body id="doc-fo-qa-43">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Monitoreo</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-43-</span>
+                    <input type="text" id="reg-qa43" class="registry-input generate-barcode" data-target="barcode-qa43" data-prefix="FO-QA-43-" placeholder="000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-qa43" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>BITÁCORA DE MONITOREO AMBIENTAL (PARTÍCULAS Y MICROBIOLOGÍA)</h1>
+            <div class="metadata">Código: FO-QA-43 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. DATOS DEL ÁREA Y EQUIPO</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Fecha de Muestreo:</strong></td><td width="30%"><input type="date" class="cedit"></td>
+                    <td width="20%"><strong>Hora de Inicio:</strong></td><td width="30%"><input type="time" class="cedit"> hrs.</td>
+                </tr>
+                <tr>
+                    <td><strong>Área Evaluada:</strong></td>
+                    <td colspan="3">
+                        <div class="cbx-group">
+                            <label><input type="radio" name="area" class="cedit"> Cabina Flujo Laminar (Clase A / ISO 5)</label>
+                            <label><input type="radio" name="area" class="cedit"> Cuarto Limpio (Clase B / ISO 7)</label>
+                            <label><input type="radio" name="area" class="cedit"> Cuarto Limpio (Clase C / ISO 8)</label>
+                            <label style="display:flex; align-items:center;">
+                                <input type="radio" name="area" class="cedit"> Otro: <input class="cedit" style="flex:1; margin-left:5px; border-bottom:1px solid #ccc;">
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Estado del Ára:</strong></td>
+                    <td colspan="3">
+                        <div class="cbx-group">
+                            <label><input type="radio" name="estado" class="cedit"> En Reposo (Sin personal/operación)</label>
+                            <label><input type="radio" name="estado" class="cedit"> En Operación (Durante manufactura)</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Contador Partículas ID:</strong></td><td><input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td><strong>Vigencia Calibración:</strong></td><td><input type="date" class="cedit"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. MONITOREO FÍSICO (CONTEO DE PARTÍCULAS NO VIABLES)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Registre las lecturas del contador de partículas en los puntos críticos predefinidos del área (Resultados por m³).</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="20%">Punto de Muestreo</th>
+                        <th width="15%" class="limit-col">Límite<br>(≥ 0.5 µm)</th>
+                        <th width="15%">Resultado<br>(≥ 0.5 µm)</th>
+                        <th width="15%" class="limit-col">Límite<br>(≥ 5.0 µm)</th>
+                        <th width="15%">Resultado<br>(≥ 5.0 µm)</th>
+                        <th width="20%">¿Cumple? (Sí/No)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:left; padding-left:10px;">1. Centro de Cabina</td>
+                        <td class="limit-col"><input class="cedit limit-col" placeholder="Ej. 3,520"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td class="limit-col"><input class="cedit limit-col" placeholder="Ej. 20"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td>
+                            <div class="radio-group">
+                                <label style="color:#166534;"><input type="radio" name="pnv_1" class="cedit"> Sí</label>
+                                <label style="color:#991b1b;"><input type="radio" name="pnv_1" class="cedit"> No</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left; padding-left:10px;">2. Lateral Izquierdo</td>
+                        <td class="limit-col"><input class="cedit limit-col"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td class="limit-col"><input class="cedit limit-col"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td>
+                            <div class="radio-group">
+                                <label style="color:#166534;"><input type="radio" name="pnv_2" class="cedit"> Sí</label>
+                                <label style="color:#991b1b;"><input type="radio" name="pnv_2" class="cedit"> No</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left; padding-left:10px;">3. Lateral Derecho</td>
+                        <td class="limit-col"><input class="cedit limit-col"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td class="limit-col"><input class="cedit limit-col"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td>
+                            <div class="radio-group">
+                                <label style="color:#166534;"><input type="radio" name="pnv_3" class="cedit"> Sí</label>
+                                <label style="color:#991b1b;"><input type="radio" name="pnv_3" class="cedit"> No</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left; padding-left:10px;">4. Centro de Habitación</td>
+                        <td class="limit-col"><input class="cedit limit-col"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td class="limit-col"><input class="cedit limit-col"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td>
+                            <div class="radio-group">
+                                <label style="color:#166534;"><input type="radio" name="pnv_4" class="cedit"> Sí</label>
+                                <label style="color:#991b1b;"><input type="radio" name="pnv_4" class="cedit"> No</label>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">3. MONITOREO MICROBIOLÓGICO (PARTÍCULAS VIABLES)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Registro de exposición de placas de agar (TSA/SDA) para aire, superficies y guantes del personal.</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="15%">Punto de Muestreo</th>
+                        <th width="12%">Tipo de Muestra</th>
+                        <th width="12%">Lote de Medio</th>
+                        <th width="18%">Fecha/Hora de Incubación</th>
+                        <th width="15%">Fecha de Lectura<br>(48-72h)</th>
+                        <th width="13%">Resultado<br>(UFC/placa)</th>
+                        <th width="15%">¿Cumple Límite?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit" placeholder="ID Placa"></td>
+                        <td>Aire (Sedimentación)</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit" style="width:45%; font-size:8px;"> <input type="time" class="cedit" style="width:45%;"></td>
+                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td>
+                            <div class="radio-group">
+                                <label style="color:#166534;"><input type="radio" name="pv_1" class="cedit"> Sí</label>
+                                <label style="color:#991b1b;"><input type="radio" name="pv_1" class="cedit"> No</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" placeholder="ID Placa"></td>
+                        <td>Aire (Sedimentación)</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit" style="width:45%; font-size:8px;"> <input type="time" class="cedit" style="width:45%;"></td>
+                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td>
+                            <div class="radio-group">
+                                <label style="color:#166534;"><input type="radio" name="pv_2" class="cedit"> Sí</label>
+                                <label style="color:#991b1b;"><input type="radio" name="pv_2" class="cedit"> No</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" placeholder="ID Placa"></td>
+                        <td>Superficie (Contacto)</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit" style="width:45%; font-size:8px;"> <input type="time" class="cedit" style="width:45%;"></td>
+                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td>
+                            <div class="radio-group">
+                                <label style="color:#166534;"><input type="radio" name="pv_3" class="cedit"> Sí</label>
+                                <label style="color:#991b1b;"><input type="radio" name="pv_3" class="cedit"> No</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" placeholder="ID Placa"></td>
+                        <td>Superficie (Contacto)</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit" style="width:45%; font-size:8px;"> <input type="time" class="cedit" style="width:45%;"></td>
+                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td>
+                            <div class="radio-group">
+                                <label style="color:#166534;"><input type="radio" name="pv_4" class="cedit"> Sí</label>
+                                <label style="color:#991b1b;"><input type="radio" name="pv_4" class="cedit"> No</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" placeholder="Operador"></td>
+                        <td>Personal (Guante Der)</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit" style="width:45%; font-size:8px;"> <input type="time" class="cedit" style="width:45%;"></td>
+                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td>
+                            <div class="radio-group">
+                                <label style="color:#166534;"><input type="radio" name="pv_5" class="cedit"> Sí</label>
+                                <label style="color:#991b1b;"><input type="radio" name="pv_5" class="cedit"> No</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" placeholder="Operador"></td>
+                        <td>Personal (Guante Izq)</td>
+                        <td><input class="cedit"></td>
+                        <td><input type="date" class="cedit" style="width:45%; font-size:8px;"> <input type="time" class="cedit" style="width:45%;"></td>
+                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td>
+                            <div class="radio-group">
+                                <label style="color:#166534;"><input type="radio" name="pv_6" class="cedit"> Sí</label>
+                                <label style="color:#991b1b;"><input type="radio" name="pv_6" class="cedit"> No</label>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-top:5px;">(Nota: UFC = Unidades Formadoras de Colonias. Los límites de alerta y acción dependen de la clasificación del área según la NOM-241).</p>
+        </div>
+
+        <div class="section-header">4. OBSERVACIONES Y DESVIACIONES</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Si algún punto excede los límites de alerta o acción, anote inmediatamente el folio del reporte de desviación o CAPA abierto.</p>
+            <div style="margin-top: 5px;">
+                <strong>Folio Desviación / CAPA (Si aplica):</strong> <input class="cedit" style="width:200px; border-bottom:1px solid #ccc;">
+            </div>
+            <textarea class="cedit" rows="2" style="width:100%; border:1px solid #ccc; margin-top:5px;" placeholder="Notas adicionales..."></textarea>
+        </div>
+
+        <div class="section-header">5. REVISIÓN Y DICTAMEN FINAL DEL ÁREA</div>
+        <div class="signature-area" style="margin-top: 20px;">
+            <div class="signature-box">
+                <p>Muestreo Realizado por</p>
+                <input type="text" placeholder="Nombre y Firma" class="cedit">
+                <p>Fecha: <input type="date" class="cedit"></p>
+            </div>
+            <div class="signature-box">
+                <p>Lectura Microbiológica por</p>
+                <input type="text" placeholder="Nombre y Firma" class="cedit">
+                <p>Fecha: <input type="date" class="cedit"></p>
+            </div>
+            <div class="signature-box">
+                <p>Dictamen y Liberación de Área (QA)</p>
+                <input type="text" placeholder="Nombre y Firma" class="cedit">
+                <p>Fecha: <input type="date" class="cedit"></p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

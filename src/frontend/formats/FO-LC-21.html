@@ -84,8 +84,9 @@
 
 <body id="doc-fo-lc-21">
     <div class="global-controls no-print">
-        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
-        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-success" onclick="App.Universal.saveData()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="App.Universal.clearForm()">Limpiar</button>
     </div>
 
     <div class="container">
@@ -267,6 +268,9 @@
     </div>
 
     <script>
+        // ==================== FO-LC-21 SCRIPT COMPLETO ====================
+        const FORM_ID_LC21 = 'doc-fo-lc-21';
+
         // Opciones de recipiente compartidas
         const recipientOptions = `
             <option value="T-25">T-25</option>
@@ -356,10 +360,10 @@
             const row = el.closest('tr');
             if (!row) return;
 
-            const linea = row.querySelector('.linea-input').value.trim();
-            const pase = row.querySelector('.pase-input').value.trim();
-            const num = row.querySelector('.num-input').value.trim();
-            const recip = row.querySelector('.recip-select').value;
+            const linea = row.querySelector('.linea-input')?.value.trim() || '';
+            const pase = row.querySelector('.pase-input')?.value.trim() || '';
+            const num = row.querySelector('.num-input')?.value.trim() || '';
+            const recip = row.querySelector('.recip-select')?.value || '';
 
             let code = "";
             if (linea && pase && num) {
@@ -370,10 +374,34 @@
             if (codeField) codeField.value = code.toUpperCase();
         }
 
-        // Inicialización
+        // ==================== FIN DE FUNCIONES DE UTILIDAD ====================
+        // La persistencia ahora se maneja automáticamente por App.Universal
+        // con getCustomData() y loadCustomData() en format-app.js
+
+
+
+        // Inicialización - App.init() se ejecuta automáticamente desde format-app.js
+        // Solo agregamos funciones auxiliares globales para compatibilidad
+        window.addFlaskManual21 = addFlaskManual21;
+        window.addSubcultivoRow = addSubcultivoRow;
+        window.addCosechaRow = addCosechaRow;
+        window.autoGenFlaskCode21 = autoGenFlaskCode21;
+
+        // Asegurar filas iniciales cuando el documento esté listo
         document.addEventListener('DOMContentLoaded', () => {
-            if (document.getElementById('tbody-flasks').children.length === 0) addFlaskManual21();
-            if (document.getElementById('tbody-nuevos').children.length === 0) addSubcultivoRow();
+            console.log('🚀 FO-LC-21: Verificando filas iniciales...');
+
+            // Solo crear filas vacías si estamos en modo nuevo y no hay filas
+            setTimeout(() => {
+                if (document.getElementById('tbody-flasks').children.length === 0) {
+                    addFlaskManual21();
+                    console.log('  ✓ Fila inicial de flasks añadida');
+                }
+                if (document.getElementById('tbody-nuevos').children.length === 0) {
+                    addSubcultivoRow();
+                    console.log('  ✓ Fila inicial de nuevos añadida');
+                }
+            }, 200);
         });
     </script>
 </body>

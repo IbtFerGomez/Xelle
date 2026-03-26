@@ -1,9 +1,10 @@
 /**
- * FORMAT-APP.JS - V10.0 FINAL MASTER
+ * FORMAT-APP.JS - V10.0 FINAL MASTER (OFFLINE VERSION)
  * - Soporte Completo: FO-LC-17 a FO-LC-45
  * - Lógica FO-24: Inventario descuenta Reproceso/Devolución. Alerta Eliminación.
  * - Lógica FO-21: Restaurada (Padre-Hijo, Cosecha, Alimentación).
  * - Lógica FO-20: Fix toggle congelación.
+ * - OFFLINE: Guardado solo en localStorage, sin persistencia en backend
  */
 
 const App = {
@@ -27,7 +28,7 @@ const App = {
         switch (docId) {
             case 'doc-fo-lc-ResumenRecepcion': case 'doc-fo-lc-17': case 'doc-fo-lc-18': case 'doc-fo-lc-19': case 'doc-fo-lc-23': break;
             case 'doc-fo-lc-20': this.Docs.FO_LC_20.init(); break;
-            case 'doc-fo-lc-21': this.Docs.FO_LC_21.init(); break;
+            case 'doc-fo-lc-21': case 'doc-fo-lc-21-offline': this.Docs.FO_LC_21.init(); break;
             case 'doc-fo-lc-22': this.Docs.FO_LC_22.init(); break;
             case 'doc-fo-lc-24': this.Docs.FO_LC_24.init(); break;
             case 'doc-fo-lc-40': case 'doc-fo-lc-41': case 'doc-fo-lc-42': case 'doc-fo-lc-43': case 'doc-fo-lc-44': case 'doc-fo-lc-45':

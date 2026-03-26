@@ -18,6 +18,7 @@ import java.util.Locale;
 import java.util.Set;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -28,6 +29,7 @@ public class DataInitializer implements CommandLineRunner {
     private final FormatInstanceRepository instanceRepository;
     private final FormatRecordRepository recordRepository;
     private final ObjectMapper objectMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${xelle.reset-format-records-on-start:false}")
     private boolean resetFormatRecordsOnStart;
@@ -37,12 +39,14 @@ public class DataInitializer implements CommandLineRunner {
             FormatMetadataRepository formatRepository,
             FormatInstanceRepository instanceRepository,
             FormatRecordRepository recordRepository,
-            ObjectMapper objectMapper) {
+            ObjectMapper objectMapper,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.formatRepository = formatRepository;
         this.instanceRepository = instanceRepository;
         this.recordRepository = recordRepository;
         this.objectMapper = objectMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -199,7 +203,8 @@ public class DataInitializer implements CommandLineRunner {
             boolean active) {
         UserEntity user = new UserEntity();
         user.setUsername(username);
-        user.setPasswordHash(pass);
+        // Usar BCrypt para hashear la contraseña
+        user.setPasswordHash(passwordEncoder.encode(pass));
         user.setFullName(fullName);
         user.setRole(role);
         user.setActive(active);
@@ -212,11 +217,15 @@ public class DataInitializer implements CommandLineRunner {
         upsertFormat("FO-LC-12", "Dictamen Técnico de Concesión", "administracion", "formats/FO-LC-12.html");
         upsertFormat("FO-SGC-01", "Matriz de Responsabilidades por Módulo", "administracion", "formats/FO-SGC-01.html");
         upsertFormat("FO-SGC-02", "Matriz de Responsabilidades", "administracion", "formats/FO-SGC-02.html");
+        upsertFormat("FO-SGC-03", "Control de Documentos", "administracion", "formats/FO-SGC-03.html");
 
         // --- ALMACEN ---
         upsertFormat("FO-OP-13", "Lista Verificación Recepción MP", "almacen", "formats/FO-OP-13.html");
         upsertFormat("FO-OP-20", "Liberación a Operaciones", "almacen", "formats/FO-OP-20.html");
         upsertFormat("FO-LC-45", "Envío a Esterilización", "almacen", "formats/FO-LC-45.html");
+        upsertFormat("FO-LC-46", "Control de Inventario RPBI", "almacen", "formats/FO-LC-46.html");
+        upsertFormat("FO-LC-47", "Bitácora de Temperatura", "almacen", "formats/FO-LC-47.html");
+        upsertFormat("FO-LC-48", "Control de Mantenimiento", "almacen", "formats/FO-LC-48.html");
         upsertFormat("FO-OP-49", "Bitácora de Almacenamiento Temporal RPBI", "almacen", "formats/FO-OP-49.html");
         upsertFormat("FO-OP-50", "Manifiesto de Residuos Peligrosos", "almacen", "formats/FO-OP-50.html");
         upsertFormat("FO-OP-52", "Reporte de MPNC", "almacen", "formats/FO-OP-52.html");
@@ -236,16 +245,21 @@ public class DataInitializer implements CommandLineRunner {
         upsertFormat("FO-LC-35", "Bitácora de Disposición de Lotes", "banco", "formats/FO-LC-35.html");
         upsertFormat("FO-LC-42", "Liofilización Placenta", "banco", "formats/FO-LC-42.html");
         upsertFormat("FO-LC-43", "Liofilización Medio Cond.", "banco", "formats/FO-LC-43.html");
+        upsertFormat("FO-LC-49", "Verificación de Proceso", "banco", "formats/FO-LC-49.html");
+        upsertFormat("FO-LC-52", "Control de Calidad Lote", "banco", "formats/FO-LC-52.html");
 
         // --- BIBLIOTECA SGC ---
         upsertFormat("FO-LC-14", "Histórico de Placentas", "biblioteca", "formats/FO-LC-14.html");
         upsertFormat("FO-LC-15", "Histórico de Líneas", "biblioteca", "formats/FO-LC-15.html");
         upsertFormat("FO-LC-32", "Desviaciones (CAPA)", "biblioteca", "formats/FO-LC-32.html");
         upsertFormat("FO-OP-39", "Lista de Verificación de Auditoría", "biblioteca", "formats/FO-OP-39.html");
+        upsertFormat("FO-OP-40", "Plan de Auditoría", "biblioteca", "formats/FO-OP-40.html");
+        upsertFormat("FO-OP-41", "Informe de Auditoría", "biblioteca", "formats/FO-OP-41.html");
+        upsertFormat("FO-OP-42", "Acciones Correctivas", "biblioteca", "formats/FO-OP-42.html");
+        upsertFormat("FO-OP-43", "Control de Cambios", "biblioteca", "formats/FO-OP-43.html");
         upsertFormat("FO-OP-51", "Producto No Conforme (Desviaciones)", "biblioteca", "formats/FO-OP-51.html");
         upsertFormat("FO-OP-53", "Acción Correctiva y Preventiva (CAPA)", "biblioteca", "formats/FO-OP-53.html");
-        upsertFormat("FO-LC-51", "Registro de Desviaciones", "biblioteca", "formats/FO-OP-51.html");
-        upsertFormat("FO-LC-TEST", "Formato de Prueba", "biblioteca", "formats/FO-LC-TEST.html");
+        upsertFormat("IT-OP-01", "Instructivo de Trabajo", "biblioteca", "formats/IT-OP-01.html");
 
         // --- COMERCIAL ---
         upsertFormat("FO-LG-05", "Orden de Envío y Distribución", "comercial", "formats/FO-LG-05.html");
@@ -261,11 +275,13 @@ public class DataInitializer implements CommandLineRunner {
         upsertFormat("FO-LC-26", "Bitácora de Autoclave", "calidad", "formats/FO-LC-26.html");
         upsertFormat("FO-LC-27", "Control de Equipos", "calidad", "formats/FO-LC-27.html");
         upsertFormat("FO-LC-28", "Uso de Equipos", "calidad", "formats/FO-LC-28.html");
+        upsertFormat("FO-LC-30", "Registro de Calificación", "calidad", "formats/FO-LC-30.html");
         upsertFormat("FO-LC-40", "Prep. Soluciones (Gral)", "calidad", "formats/FO-LC-40.html");
         upsertFormat("FO-LC-40-B", "Prep. Soluciones (Alterno B)", "calidad", "formats/FO-LC-40-B.html");
         upsertFormat("FO-LC-41", "Control Microbiológico", "calidad", "formats/FO-LC-41.html");
         upsertFormat("FO-LC-44", "Lib. Micro Flasks/Viales", "calidad", "formats/FO-LC-44.html");
         upsertFormat("FO-LC-50", "Manifiesto de Destrucción", "calidad", "formats/FO-LC-50.html");
+        upsertFormat("FO-QA-10", "Reporte de Calidad", "calidad", "formats/FO-QA-10.html");
     }
 
     private void upsertFormat(String code, String title, String area, String path) {

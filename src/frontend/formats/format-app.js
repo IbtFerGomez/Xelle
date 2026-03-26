@@ -34,7 +34,8 @@ const App = {
             case 'doc-fo-lc-22': this.Docs.FO_LC_22.init(); break;
             case 'doc-fo-lc-24': this.Docs.FO_LC_24.init(); break;
             case 'doc-fo-lc-31': this.Docs.FO_LC_31.init(); break;
-            case 'doc-fo-lc-40': case 'doc-fo-lc-40-b': case 'doc-fo-lc-41': case 'doc-fo-lc-42': case 'doc-fo-lc-43': case 'doc-fo-lc-44': case 'doc-fo-lc-45':
+            case 'doc-fo-lc-40': case 'doc-fo-lc-40-b': this.Docs.FO_LC_40.init(); break;
+            case 'doc-fo-lc-41': case 'doc-fo-lc-42': case 'doc-fo-lc-43': case 'doc-fo-lc-44': case 'doc-fo-lc-45':
                 this.Docs.FO_Generic.init(docId); break;
         }
 
@@ -572,93 +573,168 @@ const App = {
 
         // --- FO-LC-21: BITÁCORA ---
         FO_LC_21: {
-            init: function () { },
-            handleAction: function (btn, action) {
-                const row = btn.closest('tr');
-                const codigo = row.cells[0].querySelector('input').value || 'Sin Cód';
-                const linea = row.cells[1].querySelector('input').value || '';
-                const paseActual = parseInt(row.cells[2].querySelector('input').value) || 0;
+            init: function () {
+                console.log('FO-LC-21: Inicializando...');
+            },
+            getCustomData: function () {
+                console.log('FO-LC-21: Recopilando datos personalizados...');
 
-                if (action === 'alim') {
-                    Swal.fire({ title: `Alim: ${codigo}`, input: 'text', showCancelButton: true }).then(res => {
-                        if (res.value) {
-                            const today = new Date().toISOString().split('T')[0];
-                            row.cells[5].querySelector('input').value = today; // Columna 6 (Indice 5) es Último Medio
-                            row.style.backgroundColor = '#eafaf1';
-                        }
-                    });
-                } else if (action === 'pase') {
-                    const opts = App.config.recipientTypes.map(t => `<option value="${t}">${t}</option>`).join('');
-                    Swal.fire({
-                        title: `Subcultivo ${codigo}`,
-                        html: `<label>Hijos:</label><input id="sw-h" type="number" class="swal2-input" value="3"><label>Células:</label><input id="sw-c" class="swal2-input"><br><input type="checkbox" id="sw-k"> Mantener Padre`,
-                        preConfirm: () => ({ num: document.getElementById('sw-h').value, cel: document.getElementById('sw-c').value, keep: document.getElementById('sw-k').checked })
-                    }).then(res => {
-                        if (res.isConfirmed) {
-                            const nuevoPase = paseActual + 1;
-                            const tbody = document.getElementById('tbody-nuevos');
-                            for (let i = 1; i <= res.value.num; i++) {
-                                const tr = document.createElement('tr');
-                                const codHijo = `${linea}-P${nuevoPase}-${i}`;
-                                tr.innerHTML = `<td><input class="cedit" value="${codigo}" readonly></td><td><input class="cedit" value="${codHijo}" style="color:#27ae60;font-weight:bold"></td><td><select class="cedit">${opts}</select></td><td><input class="cedit" value="${res.value.cel}"></td><td><input class="cedit" value="INC-01"></td><td class="no-print"><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
-                                tbody.appendChild(tr);
-                            }
-                            if (!res.value.keep) {
-                                row.querySelector('.status-select').value = 'SUBCULTIVADO';
-                                row.style.backgroundColor = '#eaecee';
-                            }
-                        }
-                    });
-                } else if (action === 'cosecha') {
-                    Swal.fire({
-                        title: `Cosecha ${codigo}`,
-                        html: `<input id="sw-t" class="swal2-input" placeholder="Total"><input id="sw-v" class="swal2-input" placeholder="Viab %">`,
-                        preConfirm: () => ({ tot: document.getElementById('sw-t').value, via: document.getElementById('sw-v').value })
-                    }).then(res => {
-                        if (res.isConfirmed) {
-                            const tbody = document.getElementById('tbody-cosechas');
-                            const tr = document.createElement('tr');
-                            tr.innerHTML = `<td><input class="cedit" value="${codigo}"></td><td><input class="cedit" value="${res.value.tot}"></td><td><input class="cedit" value="${res.value.via}"></td><td><input class="cedit" value="Dosificación"></td><td><input class="cedit"></td><td class="no-print"><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
-                            tbody.appendChild(tr);
-                            row.querySelector('.status-select').value = 'COSECHADO';
-                            row.style.backgroundColor = '#fcf3cf';
-                        }
-                    });
-                } else if (action === 'contaminacion') {
-                    Swal.fire({ title: '¿Contaminación?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33' }).then(res => {
-                        if (res.isConfirmed) {
-                            row.querySelector('.status-select').value = 'CONTAMINADO';
-                            row.style.backgroundColor = '#f2d7d5';
-                            row.style.textDecoration = 'line-through';
+                // TABLA 1: Insumos del día (5 filas fijas)
+                const insumos = [];
+                document.querySelectorAll('#tabla-insumos-dia tbody tr').forEach(row => {
+                    const cells = Array.from(row.querySelectorAll('input, select')).map(el => el.value);
+                    insumos.push(cells);
+                });
+
+                // TABLA 2: Flasks Activos (dinámico - 11 columnas)
+                const flasks = [];
+                document.querySelectorAll('#tbody-flasks tr').forEach(row => {
+                    const cells = Array.from(row.querySelectorAll('input, select')).map(el => el.value);
+                    flasks.push(cells);
+                });
+
+                // TABLA 3: Nuevos Flasks/Subcultivo (dinámico - 9 columnas)
+                const nuevos = [];
+                document.querySelectorAll('#tbody-nuevos tr').forEach(row => {
+                    const cells = Array.from(row.querySelectorAll('input, select')).map(el => el.value);
+                    nuevos.push(cells);
+                });
+
+                // TABLA 4: Cosechas (dinámico - 6 columnas)
+                const cosechas = [];
+                document.querySelectorAll('#tbody-cosechas tr').forEach(row => {
+                    const cells = Array.from(row.querySelectorAll('input, select')).map(el => el.value);
+                    cosechas.push(cells);
+                });
+
+                console.log('FO-LC-21: Datos recopilados:', { insumos, flasks, nuevos, cosechas });
+                return {
+                    t_insumos: insumos,
+                    t_flasks: flasks,
+                    t_nuevos: nuevos,
+                    t_cosechas: cosechas
+                };
+            },
+            loadCustomData: function (data) {
+                console.log('FO-LC-21: Cargando datos personalizados...', data);
+
+                // TABLA 1: Insumos del día (5 filas fijas)
+                if (data.t_insumos && Array.isArray(data.t_insumos)) {
+                    const rows = document.querySelectorAll('#tabla-insumos-dia tbody tr');
+                    data.t_insumos.forEach((rowData, index) => {
+                        if (rows[index]) {
+                            const inputs = rows[index].querySelectorAll('input, select');
+                            rowData.forEach((value, colIndex) => {
+                                if (inputs[colIndex]) {
+                                    inputs[colIndex].value = value || '';
+                                }
+                            });
                         }
                     });
                 }
-            },
-            addFlaskManual: function () {
-                const tbody = document.getElementById('tbody-flasks');
-                const row = document.createElement('tr');
-                row.innerHTML = `<td><input class="cedit" placeholder="Cod"></td><td><input class="cedit" placeholder="Lin"></td><td><input class="cedit" type="number" style="width:40px" value="1"></td><td><input type="date" class="cedit"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td><td><select class="cedit status-select" style="font-weight:bold;"><option>ACTIVO</option><option>CUARENTENA</option><option>COSECHADO</option><option>SUBCULTIVADO</option><option>CONTAMINADO</option></select></td><td class="no-print"><button class="btn-primary btn-mini" onclick="App.Docs.FO_LC_21.handleAction(this, 'alim')">🥦</button><button class="btn-success btn-mini" onclick="App.Docs.FO_LC_21.handleAction(this, 'pase')">🌱</button><button class="btn-warning btn-mini" onclick="App.Docs.FO_LC_21.handleAction(this, 'cosecha')">📦</button><button class="btn-danger btn-mini" onclick="App.Docs.FO_LC_21.handleAction(this, 'contaminacion')">☣️</button><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`;
-                tbody.appendChild(row);
-            },
-            getCustomData: function () {
-                const f = [], i = [], n = [], c = [];
-                document.querySelectorAll('#tbody-flasks tr').forEach(r => { let d = this.scrape(r); d.push(r.style.backgroundColor); d.push(r.style.textDecoration); f.push(d); });
-                document.querySelectorAll('#tabla-insumos-dia tbody tr').forEach(r => i.push(this.scrape(r)));
-                document.querySelectorAll('#tbody-nuevos tr').forEach(r => n.push(this.scrape(r)));
-                document.querySelectorAll('#tbody-cosechas tr').forEach(r => c.push(this.scrape(r)));
-                return { t_flasks: f, t_insumos: i, t_nuevos: n, t_cosechas: c };
-            },
-            scrape: (r) => Array.from(r.querySelectorAll('input, select')).map(i => i.value),
-            loadCustomData: function (d) {
-                if (d.t_flasks) { document.getElementById('tbody-flasks').innerHTML = ''; d.t_flasks.forEach(r => { this.addFlaskManual(); const tr = document.getElementById('tbody-flasks').lastElementChild; const ins = tr.querySelectorAll('input, select'); r.forEach((v, k) => { if (k < ins.length) ins[k].value = v; }); if (r[r.length - 2]) tr.style.backgroundColor = r[r.length - 2]; if (r[r.length - 1]) tr.style.textDecoration = r[r.length - 1]; }); }
-                if (d.t_insumos) this.restore('tabla-insumos-dia', d.t_insumos, window.agregarFilaInsumo);
-                if (d.t_nuevos) this.restoreGen('tbody-nuevos', d.t_nuevos, 6);
-                if (d.t_cosechas) this.restoreGen('tbody-cosechas', d.t_cosechas, 6);
-            },
-            restore: function (id, data, fn) { document.getElementById(id).innerHTML = ''; data.forEach(d => { fn(); const tr = document.getElementById(id).querySelector('tbody').lastElementChild; const ins = tr.querySelectorAll('input, select'); d.forEach((v, k) => { if (ins[k]) ins[k].value = v; }); }); },
-            restoreGen: function (id, data, cols) {
-                const tb = document.getElementById(id); tb.innerHTML = '';
-                data.forEach(d => { const tr = document.createElement('tr'); for (let i = 0; i < cols - 1; i++) tr.innerHTML += `<td><input class="cedit" value="${d[i] || ''}"></td>`; tr.innerHTML += `<td class="no-print"><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`; tb.appendChild(tr); });
+
+                // TABLA 2: Flasks Activos (dinámico)
+                if (data.t_flasks && Array.isArray(data.t_flasks)) {
+                    const tbody = document.getElementById('tbody-flasks');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.t_flasks.forEach(rowData => {
+                            const row = document.createElement('tr');
+                            const recipientOptions = `
+                                <option value="T-25" ${rowData[5] === 'T-25' ? 'selected' : ''}>T-25</option>
+                                <option value="T-75" ${rowData[5] === 'T-75' ? 'selected' : ''}>T-75</option>
+                                <option value="T-175" ${rowData[5] === 'T-175' ? 'selected' : ''}>T-175</option>
+                                <option value="T-225" ${rowData[5] === 'T-225' ? 'selected' : ''}>T-225</option>
+                                <option value="HF" ${rowData[5] === 'HF' ? 'selected' : ''}>HyperFlask</option>
+                                <option value="CS-1" ${rowData[5] === 'CS-1' ? 'selected' : ''}>CS-1</option>
+                                <option value="CS-2" ${rowData[5] === 'CS-2' ? 'selected' : ''}>CS-2</option>
+                                <option value="CS-5" ${rowData[5] === 'CS-5' ? 'selected' : ''}>CS-5</option>
+                            `;
+                            const estadoOptions = `
+                                <option ${rowData[9] === 'ACTIVO' ? 'selected' : ''}>ACTIVO</option>
+                                <option ${rowData[9] === 'CUARENTENA' ? 'selected' : ''}>CUARENTENA</option>
+                                <option ${rowData[9] === 'PARA PASE' ? 'selected' : ''}>PARA PASE</option>
+                                <option ${rowData[9] === 'PARA COSECHA' ? 'selected' : ''}>PARA COSECHA</option>
+                                <option ${rowData[9] === 'CONTAMINADO' ? 'selected' : ''}>CONTAMINADO</option>
+                                <option ${rowData[9] === 'BAJA' ? 'selected' : ''}>BAJA</option>
+                            `;
+                            row.innerHTML = `
+                                <td><input class="cedit code-input auto-code" readonly tabindex="-1" value="${rowData[0] || ''}"></td>
+                                <td><input class="cedit linea-input" placeholder="Ej. TPL32" oninput="autoGenFlaskCode21(this)" value="${rowData[1] || ''}"></td>
+                                <td><input class="cedit pase-input" placeholder="P#" oninput="autoGenFlaskCode21(this)" value="${rowData[2] || ''}"></td>
+                                <td><input type="date" class="cedit" value="${rowData[3] || ''}"></td>
+                                <td><input type="number" class="cedit num-input" value="${rowData[4] || '1'}" style="width:40px" oninput="autoGenFlaskCode21(this)"></td>
+                                <td><select class="cedit recip-select" onchange="autoGenFlaskCode21(this)">${recipientOptions}</select></td>
+                                <td><input class="cedit" style="width:40px" value="${rowData[6] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[7] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[8] || ''}"></td>
+                                <td><select class="cedit">${estadoOptions}</select></td>
+                                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+
+                // TABLA 3: Nuevos Flasks/Subcultivo (dinámico)
+                if (data.t_nuevos && Array.isArray(data.t_nuevos)) {
+                    const tbody = document.getElementById('tbody-nuevos');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.t_nuevos.forEach(rowData => {
+                            const row = document.createElement('tr');
+                            const recipientOptions = `
+                                <option value="T-25" ${rowData[3] === 'T-25' ? 'selected' : ''}>T-25</option>
+                                <option value="T-75" ${rowData[3] === 'T-75' ? 'selected' : ''}>T-75</option>
+                                <option value="T-175" ${rowData[3] === 'T-175' ? 'selected' : ''}>T-175</option>
+                                <option value="T-225" ${rowData[3] === 'T-225' ? 'selected' : ''}>T-225</option>
+                                <option value="HF" ${rowData[3] === 'HF' ? 'selected' : ''}>HyperFlask</option>
+                                <option value="CS-1" ${rowData[3] === 'CS-1' ? 'selected' : ''}>CS-1</option>
+                                <option value="CS-2" ${rowData[3] === 'CS-2' ? 'selected' : ''}>CS-2</option>
+                                <option value="CS-5" ${rowData[3] === 'CS-5' ? 'selected' : ''}>CS-5</option>
+                            `;
+                            row.innerHTML = `
+                                <td><input class="cedit" placeholder="Origen..." value="${rowData[0] || ''}"></td>
+                                <td><input class="cedit linea-input" placeholder="Línea" oninput="autoGenFlaskCode21(this)" value="${rowData[1] || ''}"></td>
+                                <td><input class="cedit pase-input" placeholder="P#" oninput="autoGenFlaskCode21(this)" value="${rowData[2] || ''}"></td>
+                                <td><select class="cedit recip-select" onchange="autoGenFlaskCode21(this)">${recipientOptions}</select></td>
+                                <td><input type="number" class="cedit num-input" value="${rowData[4] || '1'}" style="width:40px" oninput="autoGenFlaskCode21(this)"></td>
+                                <td><input class="cedit code-input auto-code" readonly tabindex="-1" value="${rowData[5] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[6] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[7] || ''}"></td>
+                                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+
+                // TABLA 4: Cosechas (dinámico)
+                if (data.t_cosechas && Array.isArray(data.t_cosechas)) {
+                    const tbody = document.getElementById('tbody-cosechas');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.t_cosechas.forEach(rowData => {
+                            const row = document.createElement('tr');
+                            const destinoOptions = `
+                                <option ${rowData[3] === 'DOSIFICACION' ? 'selected' : ''}>DOSIFICACION</option>
+                                <option ${rowData[3] === 'RESIEMBRA' ? 'selected' : ''}>RESIEMBRA</option>
+                                <option ${rowData[3] === 'CRIOPRESERVACION' ? 'selected' : ''}>CRIOPRESERVACION</option>
+                            `;
+                            row.innerHTML = `
+                                <td><input class="cedit" placeholder="Flask Origen..." value="${rowData[0] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[1] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[2] || ''}"></td>
+                                <td><select class="cedit">${destinoOptions}</select></td>
+                                <td><input class="cedit" value="${rowData[4] || ''}"></td>
+                                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+
+                console.log('FO-LC-21: Datos cargados exitosamente');
             }
         },
 
@@ -1011,6 +1087,16 @@ const App = {
                 };
             },
             loadCustomData: function (data) {
+                // Resetear flags de override manual
+                this.manualGrandTotals = { vials: false, cells: false };
+                this.inventoryManualOverride = {
+                    "Stem Xelle": false,
+                    "Hybrid Xelle": false,
+                    "Stem Ortho": false,
+                    "Hybrid Ortho": false,
+                    "Exosomas": false
+                };
+
                 if (Array.isArray(data.t_insumos_24)) {
                     const tbodyInsumos = document.querySelector('#tbl-insumos tbody');
                     if (tbodyInsumos) {
@@ -1212,6 +1298,71 @@ const App = {
             }
         },
 
+        // --- FO-LC-40 / FO-LC-40-B: BITÁCORA PREPARACIÓN MEDIOS ---
+        FO_LC_40: {
+            init: function () {
+                console.log('FO-LC-40: Inicializando...');
+                // Agregar una fila inicial si la tabla está vacía
+                if (document.querySelector('#tbl-medios tbody').children.length === 0) {
+                    this.addMedioRow();
+                }
+            },
+            addMedioRow: function () {
+                window.addGenericRow('tbl-medios', `
+                    <td style='vertical-align:top'><input type='date' class='cedit'></td>
+                    <td style='vertical-align:top'><textarea class='cedit' rows='3'></textarea></td>
+                    <td style='vertical-align:top'><input class='cedit' placeholder='Lote...'></td>
+                    <td style='vertical-align:top' class='col-ingredientes'><textarea class='cedit' rows='4' placeholder='Ej: DMEM (L:123) - 500ml...'></textarea></td>
+                    <td style='vertical-align:top'><input class='cedit'></td>
+                    <td style='vertical-align:top'><input type='date' class='cedit'></td>
+                    <td style='vertical-align:top'>
+                        <input class='cedit' placeholder='Realizó' style='margin-bottom:5px; border-bottom:1px solid #eee;'>
+                        <input class='cedit' placeholder='Verificó'>
+                    </td>
+                    <td class='no-print' style='vertical-align:top'><button class='btn-danger btn-mini' onclick='this.closest(\'tr\').remove()'>x</button></td>
+                `);
+            },
+            getCustomData: function () {
+                console.log('FO-LC-40: Recopilando datos de la tabla...');
+                const medios = [];
+                document.querySelectorAll('#tbl-medios tbody tr').forEach(row => {
+                    const inputs = row.querySelectorAll('input, textarea');
+                    // Cada fila tiene 8 inputs: fecha, nombre, lote, ingredientes, vol_final, caducidad, realizo, verifico
+                    const rowData = Array.from(inputs).map(el => el.value || '');
+                    medios.push(rowData);
+                });
+                console.log('FO-LC-40: Filas recopiladas:', medios.length);
+                return { t_medios: medios };
+            },
+            loadCustomData: function (data) {
+                console.log('FO-LC-40: Cargando datos de la tabla...', data);
+                if (data.t_medios && Array.isArray(data.t_medios)) {
+                    const tbody = document.querySelector('#tbl-medios tbody');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.t_medios.forEach(rowData => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td style='vertical-align:top'><input type='date' class='cedit' value='${rowData[0] || ''}'></td>
+                                <td style='vertical-align:top'><textarea class='cedit' rows='3'>${rowData[1] || ''}</textarea></td>
+                                <td style='vertical-align:top'><input class='cedit' placeholder='Lote...' value='${rowData[2] || ''}'></td>
+                                <td style='vertical-align:top' class='col-ingredientes'><textarea class='cedit' rows='4' placeholder='Ej: DMEM (L:123) - 500ml...'>${rowData[3] || ''}</textarea></td>
+                                <td style='vertical-align:top'><input class='cedit' value='${rowData[4] || ''}'></td>
+                                <td style='vertical-align:top'><input type='date' class='cedit' value='${rowData[5] || ''}'></td>
+                                <td style='vertical-align:top'>
+                                    <input class='cedit' placeholder='Realizó' style='margin-bottom:5px; border-bottom:1px solid #eee;' value='${rowData[6] || ''}'>
+                                    <input class='cedit' placeholder='Verificó' value='${rowData[7] || ''}'>
+                                </td>
+                                <td class='no-print' style='vertical-align:top'><button class='btn-danger btn-mini' onclick='this.closest(\'tr\').remove()'>x</button></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+                console.log('FO-LC-40: Datos cargados exitosamente');
+            }
+        },
+
         FO_Generic: { init: function (id) { if (document.querySelector('table tbody').children.length === 0) { if (id.includes('41')) window.addMuestra41(); else if (id.includes('42')) window.addGenericRow('tbl-mp', `<td><input class='cedit'></td><td><input type='date' class='cedit'></td><td><input class='cedit'></td><td><input type='number' class='cedit'></td><td class='no-print'><button class='btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`); } } },
         addGenericRow: function (id, html) { const r = document.createElement('tr'); r.innerHTML = html; document.querySelector(`#${id} tbody`).appendChild(r); }
     }
@@ -1221,5 +1372,5 @@ document.addEventListener('DOMContentLoaded', () => App.init());
 
 window.saveForm = () => App.Universal.saveData(); window.printForm = () => App.Universal.printForm(); window.clearForm = () => App.Universal.clearForm(); window.addGenericRow = (i, h) => App.Docs.addGenericRow(i, h);
 window.addFlaskRow = () => App.Docs.FO_LC_20.addFlaskRow(); window.addSupplyRow = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="date"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.getElementById('supplies-table-body').appendChild(r); }; window.addFreezeRow = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input type="number" style="width:50px" value="1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" value="DMSO 10%"></td><td><input type="text"></td><td><input type="text"></td><td><select><option>Vial</option><option>Bolsa</option></select></td><td><input type="text"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.getElementById('freeze-table-body').appendChild(r); };
-window.agregarFilaInsumo = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td><td class="no-print"><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.querySelector('#tabla-insumos-dia tbody').appendChild(r); }; window.addFlaskManual21 = () => App.Docs.FO_LC_21.addFlaskManual();
+window.agregarFilaInsumo = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td><td class="no-print"><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.querySelector('#tabla-insumos-dia tbody').appendChild(r); };
 window.addDosis24 = () => App.Docs.FO_LC_24.addDosis(); window.addMuestra41 = () => App.Docs.addGenericRow('tbl-micro', `<td><input class='cedit'></td><td><input type='date' class='cedit'></td><td><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td><td><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td><td><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td><td><input type='date' class='cedit'></td><td><input class='cedit'></td><td class='no-print'><button class='btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`);
