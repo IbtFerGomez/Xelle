@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-52 Reporte de MPNC (OFFLINE)</title>
+    <title>FO-OP-52 Reporte de MPNC</title>
     <link rel="stylesheet" href="format-styles-OffLine.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -17,10 +17,257 @@
             font-size: 12px;
             margin-top: 15px;
             border-radius: 4px;
+            page-break-after: avoid;
         }
 
         .compact-table td {
             vertical-align: middle;
+        }
+
+        .section {
+            page-break-inside: avoid;
+        }
+
+        @media print {
+            @page {
+                margin: 8mm 10mm;
+                size: letter;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                font-size: 8pt;
+                line-height: 1.2;
+            }
+
+            .container {
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100%;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .header-top {
+                margin-bottom: 2px !important;
+                padding-bottom: 2px !important;
+            }
+
+            .header-main {
+                padding: 3px 0 !important;
+                margin-bottom: 3px !important;
+            }
+
+            .header-main h1 {
+                font-size: 12px !important;
+                margin: 2px 0 !important;
+                line-height: 1.1;
+            }
+
+            .metadata {
+                font-size: 7px !important;
+                margin-top: 1px !important;
+            }
+
+            .section-header {
+                padding: 2px 6px !important;
+                font-size: 9px !important;
+                margin-top: 4px !important;
+                margin-bottom: 3px !important;
+            }
+
+            .section {
+                margin-bottom: 4px !important;
+                padding: 3px 0 !important;
+            }
+
+            table {
+                margin-bottom: 3px !important;
+            }
+
+            table td {
+                padding: 1px 3px !important;
+                font-size: 7.5px !important;
+                line-height: 1.2;
+            }
+
+            table th {
+                padding: 1px 3px !important;
+                font-size: 7.5px !important;
+                line-height: 1.2;
+            }
+
+            input,
+            textarea,
+            select {
+                font-size: 7px !important;
+                padding: 0.5px 2px !important;
+                line-height: 1.1;
+            }
+
+            textarea {
+                min-height: 20px !important;
+                line-height: 1.1 !important;
+            }
+
+            p {
+                margin: 2px 0 !important;
+                font-size: 7px !important;
+                line-height: 1.2;
+            }
+
+            label {
+                font-size: 7px !important;
+                line-height: 1.2;
+            }
+
+            .footer {
+                margin-top: 4px !important;
+                padding: 2px 0 !important;
+                font-size: 6px !important;
+                line-height: 1.1;
+            }
+
+            /* Optimización de logos y elementos gráficos */
+            .logo-container svg {
+                height: 35px !important;
+                width: auto !important;
+            }
+
+            .registry-container {
+                font-size: 7px !important;
+            }
+
+            .barcode-svg {
+                height: 25px !important;
+            }
+
+            /* Ajustes específicos para firmas - reducir espacios */
+            .section:last-of-type p {
+                margin-bottom: 8px !important;
+            }
+
+            .section:last-of-type p[style*="margin-bottom:20px"] {
+                margin-bottom: 8px !important;
+            }
+
+            .section:last-of-type p[style*="margin-bottom:30px"] {
+                margin-bottom: 10px !important;
+            }
+
+            .section:last-of-type td[style*="padding-top: 15px"] {
+                padding-top: 5px !important;
+            }
+
+            .section:last-of-type table[style*="margin-bottom: 20px"] {
+                margin-bottom: 8px !important;
+            }
+
+            .section:last-of-type div[style*="margin-top: 20px"] {
+                margin-top: 8px !important;
+            }
+
+            /* Áreas de información con fondo */
+            div[style*="background-color: #f8fafc"] {
+                padding: 4px !important;
+                margin-bottom: 3px !important;
+            }
+
+            /* Sobrescribir márgenes inline de tablas */
+            table[style*="margin-bottom: 10px"],
+            table[style*="margin-top: 10px"] {
+                margin-bottom: 3px !important;
+                margin-top: 3px !important;
+            }
+
+            /* Ajustar labels y párrafos con estilos inline */
+            label[style*="font-size:11px"] {
+                font-size: 8px !important;
+            }
+
+            p[style*="font-size:10px"] {
+                font-size: 7.5px !important;
+            }
+
+            p[style*="font-size:9px"] {
+                font-size: 7px !important;
+            }
+
+            /* Reducir espacios en divs de firma */
+            div[style*="border-bottom: 1px solid black"] {
+                margin-bottom: 3px !important;
+            }
+
+            /* Ajustar textareas con rows */
+            textarea[rows="3"] {
+                min-height: 18px !important;
+                height: 18px !important;
+            }
+
+            textarea[rows="2"] {
+                min-height: 15px !important;
+                height: 15px !important;
+            }
+
+            /* Forzar todo en una sola página */
+            .section,
+            table,
+            .compact-table {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            /* Evitar saltos de página */
+            * {
+                page-break-inside: avoid !important;
+            }
+
+            html,
+            body {
+                height: 100%;
+            }
+        }
+
+        /* Ajustes adicionales en pantalla para mejor previsualización */
+        .section-header {
+            page-break-after: avoid;
+        }
+
+        .section {
+            page-break-inside: avoid;
         }
     </style>
 </head>
@@ -80,7 +327,8 @@
 
         <div class="header-main">
             <h1>REPORTE Y MANIFIESTO DE MATERIA PRIMA NO CONFORME (MPNC)</h1>
-            <div class="metadata">Código: FO-OP-52 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <div class="metadata">Código: FO-OP-52 | Versión: 1.0 | Vigencia: ENE 2026 |
+                Página: 1 de 1</div>
         </div>
 
         <div class="section-header">1. DATOS DE IDENTIFICACIÓN Y TRAZABILIDAD</div>
@@ -266,7 +514,7 @@
             </div>
         </div>
 
-        <div class="footer">FO-OP-52-O | REPORTE DE MPNC (OFFLINE) | Versión: 1.0<br>El contenido de este documento es
+        <div class="footer">FO-OP-52-O | REPORTE DE MPNC | Versión: 1.0<br>El contenido de este documento es
             propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor,
             por lo que está prohibida su reproducción total o parcial.</div>
     </div>

@@ -441,8 +441,8 @@
     "Responsable": ""
   },
   {
-    "Codigo": "FO-OP-53",
-    "Nombre": "FO-OP-53 CAPA - Metodología AMFE",
+    "Codigo": "FO-QA-09",
+    "Nombre": "FO-QA-09 CAPA - Metodología AMFE",
     "Version": "1.0",
     "Vigencia": "ENE 2026",
     "Cumplimiento": "GMP / ISO 13485",
@@ -466,6 +466,15 @@
     "Cumplimiento": "ISO 9001 / ISO 13485",
     "DocumentoRelacionado": "FO-LC-31, 46, 47, 48",
     "Responsable": ""
+  },
+  {
+    "Codigo": "FO-QA-11",
+    "Nombre": "FO-QA-11 Certificado de Liberación de Lote",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 9001 / ISO 13485 / NOM-241-SSA1",
+    "DocumentoRelacionado": "FO-QA-10, FO-QA-13, FO-LC-24, FO-LC-33, FO-LC-45, FO-OP-40, FO-OP-51, FO-QA-09",
+    "Responsable": "Responsable Sanitario / QA"
   },
   {
     "Codigo": "FO-SGC-01",

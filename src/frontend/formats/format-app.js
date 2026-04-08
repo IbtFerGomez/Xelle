@@ -758,6 +758,13 @@ const App = {
                 vials: false,
                 cells: false
             },
+            vialManualOverride: {
+                "Stem Xelle": false,
+                "Hybrid Xelle": false,
+                "Stem Ortho": false,
+                "Hybrid Ortho": false,
+                "Exosomas": false
+            },
             inventoryManualOverride: {
                 "Stem Xelle": false,
                 "Hybrid Xelle": false,
@@ -795,6 +802,16 @@ const App = {
                     default: return '';
                 }
             },
+            productToVialFieldId: function (product) {
+                switch (product) {
+                    case 'Stem Xelle': return 'tot-stem';
+                    case 'Hybrid Xelle': return 'tot-hybrid';
+                    case 'Stem Ortho': return 'tot-stem-ortho';
+                    case 'Hybrid Ortho': return 'tot-hybrid-ortho';
+                    case 'Exosomas': return 'tot-exo';
+                    default: return '';
+                }
+            },
             onCellSummaryInput: function (inputEl) {
                 const fieldToProduct = {
                     'cell-stem': 'Stem Xelle',
@@ -817,6 +834,20 @@ const App = {
                 }
 
                 this.updateGrandTotalCellsFromSummary();
+            },
+            onVialInput: function (inputEl, product) {
+                if (!product) return;
+
+                const n = Number(inputEl?.value);
+                if (!Number.isFinite(n) || n < 0) {
+                    this.vialManualOverride[product] = false;
+                    inputEl.value = '0';
+                } else {
+                    this.vialManualOverride[product] = true;
+                    inputEl.value = String(Math.floor(n));
+                }
+
+                this.updateGrandTotalVialsFromSummary();
             },
             onGrandTotalVialsInput: function (inputEl) {
                 const n = Number(inputEl?.value);
@@ -852,6 +883,18 @@ const App = {
                     document.getElementById('grand-tot-cells').value = this.formatCellsDisplay(total);
                 }
             },
+            updateGrandTotalVialsFromSummary: function () {
+                const ids = ['tot-stem', 'tot-hybrid', 'tot-stem-ortho', 'tot-hybrid-ortho', 'tot-exo'];
+                const total = ids.reduce((acc, id) => {
+                    const el = document.getElementById(id);
+                    const val = Number(el?.value || '0');
+                    return acc + (Number.isFinite(val) ? val : 0);
+                }, 0);
+
+                if (!this.manualGrandTotals.vials) {
+                    document.getElementById('grand-tot-vials').value = String(Math.floor(total));
+                }
+            },
             addDosis: function () {
                 const tbody = document.querySelector('#tbl-dosis tbody');
                 const row = document.createElement('tr');
@@ -869,7 +912,7 @@ const App = {
     </select></td>
     <td><textarea class="cedit origin-input" rows="1" placeholder="Origen" oninput="App.Universal.autoResize(this)"></textarea></td>
     <td><input type="date" class="cedit"></td>
-    <td><input class="cedit lote-input" readonly style="background:#eee;"></td>
+    <td><input class="cedit lote-input" placeholder="Lote"></td>
     <td>
         <select class="cedit pres-select" onchange="App.Docs.FO_LC_24.onPresChange(this)">
             <option>-</option>
@@ -878,8 +921,8 @@ const App = {
     </td>
     <td><input class="cedit cell-count-input" placeholder="No." oninput="App.Docs.FO_LC_24.calcInventory()"></td>
     <td><input class="cedit" placeholder="Venta"></td>
-    <td><input class="cedit unique-code" readonly style="font-weight:bold;color:#2980b9"></td>
-    <td><input class="cedit obs-input" placeholder="Obs" oninput="App.Docs.FO_LC_24.calcInventory()"></td>
+    <td><input class="cedit unique-code" style="font-weight:bold;color:#2980b9" placeholder="Auto-generado"></td>
+    <td><textarea class="cedit obs-input" rows="1" placeholder="Observaciones..." oninput="App.Universal.autoResize(this); App.Docs.FO_LC_24.calcInventory()"></textarea></td>
     <td class="no-print"><button class="btn-danger btn-mini" onclick="App.Docs.FO_LC_24.handleDelete(this)">X</button></td>`;
                 tbody.appendChild(row);
             },
@@ -1008,7 +1051,9 @@ const App = {
                 const c = { "Stem Xelle": 0, "Hybrid Xelle": 0, "Stem Ortho": 0, "Hybrid Ortho": 0, "Exosomas": 0 };
                 document.querySelectorAll('#tbl-dosis tbody tr').forEach(r => {
                     const obs = r.querySelector('.obs-input').value;
-                    if (!obs) {
+                    // Solo excluir si la observación es "Reproceso" o "Devolución"
+                    const shouldExclude = obs && (obs.toLowerCase().includes('reproceso') || obs.toLowerCase().includes('devolución') || obs.toLowerCase().includes('devolucion'));
+                    if (!shouldExclude) {
                         const p = r.querySelector('.prod-select').value;
                         if (t[p] !== undefined) {
                             t[p]++;
@@ -1017,18 +1062,33 @@ const App = {
                     }
                 });
 
-                const totalVials = t["Stem Xelle"] + t["Hybrid Xelle"] + t["Stem Ortho"] + t["Hybrid Ortho"] + t["Exosomas"];
-                const totalCells = c["Stem Xelle"] + c["Hybrid Xelle"] + c["Stem Ortho"] + c["Hybrid Ortho"] + c["Exosomas"];
+                // Update individual vial counts only if not manually overridden
+                ["Stem Xelle", "Hybrid Xelle", "Stem Ortho", "Hybrid Ortho", "Exosomas"].forEach(product => {
+                    const vialFieldId = this.productToVialFieldId(product);
+                    if (!vialFieldId) return;
+                    const vialFieldEl = document.getElementById(vialFieldId);
+                    if (!vialFieldEl) return;
 
-                document.getElementById('tot-stem').value = t["Stem Xelle"];
-                document.getElementById('tot-hybrid').value = t["Hybrid Xelle"];
-                document.getElementById('tot-stem-ortho').value = t["Stem Ortho"];
-                document.getElementById('tot-hybrid-ortho').value = t["Hybrid Ortho"];
-                document.getElementById('tot-exo').value = t["Exosomas"];
+                    if (!this.vialManualOverride[product]) {
+                        vialFieldEl.value = t[product];
+                    }
+                });
+
+                // Calculate grand total vials from individual fields (respecting manual edits)
+                const hasManualVial = Object.values(this.vialManualOverride).some(Boolean);
+                const computedGrandVials = hasManualVial
+                    ? (Number(document.getElementById('tot-stem')?.value || '0') || 0)
+                    + (Number(document.getElementById('tot-hybrid')?.value || '0') || 0)
+                    + (Number(document.getElementById('tot-stem-ortho')?.value || '0') || 0)
+                    + (Number(document.getElementById('tot-hybrid-ortho')?.value || '0') || 0)
+                    + (Number(document.getElementById('tot-exo')?.value || '0') || 0)
+                    : t["Stem Xelle"] + t["Hybrid Xelle"] + t["Stem Ortho"] + t["Hybrid Ortho"] + t["Exosomas"];
+
                 if (!this.manualGrandTotals.vials) {
-                    document.getElementById('grand-tot-vials').value = totalVials;
+                    document.getElementById('grand-tot-vials').value = computedGrandVials;
                 }
 
+                // Update individual cell counts only if not manually overridden
                 ["Stem Xelle", "Hybrid Xelle", "Stem Ortho", "Hybrid Ortho", "Exosomas"].forEach(product => {
                     const fieldId = this.productToFieldId(product);
                     if (!fieldId) return;
@@ -1040,6 +1100,7 @@ const App = {
                     }
                 });
 
+                // Calculate grand total cells from individual fields (respecting manual edits)
                 const hasManual = Object.values(this.inventoryManualOverride).some(Boolean);
                 const computedGrandCells = hasManual
                     ? this.formatCellsDisplay(
@@ -1049,7 +1110,7 @@ const App = {
                         + (this.parseMillions(document.getElementById('cell-hybrid-ortho')?.value || '0') || 0)
                         + (this.parseMillions(document.getElementById('cell-exo')?.value || '0') || 0)
                     )
-                    : this.formatCellsDisplay(totalCells);
+                    : this.formatCellsDisplay(c["Stem Xelle"] + c["Hybrid Xelle"] + c["Stem Ortho"] + c["Hybrid Ortho"] + c["Exosomas"]);
 
                 if (!this.manualGrandTotals.cells) {
                     document.getElementById('grand-tot-cells').value = computedGrandCells;
@@ -1089,6 +1150,13 @@ const App = {
             loadCustomData: function (data) {
                 // Resetear flags de override manual
                 this.manualGrandTotals = { vials: false, cells: false };
+                this.vialManualOverride = {
+                    "Stem Xelle": false,
+                    "Hybrid Xelle": false,
+                    "Stem Ortho": false,
+                    "Hybrid Ortho": false,
+                    "Exosomas": false
+                };
                 this.inventoryManualOverride = {
                     "Stem Xelle": false,
                     "Hybrid Xelle": false,

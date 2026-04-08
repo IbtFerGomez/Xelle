@@ -13,6 +13,10 @@ const App = {
         // Inicialización de filas vacías por documento
         if (docId === 'doc-fo-lc-40') {
             if (document.querySelector('#tbl-medios tbody').children.length === 0) window.addMedio40();
+        } else if (docId === 'doc-fo-lc-40-b') {
+            if (document.querySelector('#tbl-ingredientes tbody').children.length === 0) {
+                for (let i = 0; i < 3; i++) window.addIngrediente40B();
+            }
         } else if (docId === 'doc-fo-lc-41') {
             if (document.querySelector('#tbl-micro tbody').children.length === 0) window.addMuestra41();
         } else if (docId === 'doc-fo-lc-42') {
@@ -25,6 +29,10 @@ const App = {
             if (document.querySelector('#tbl-flask tbody').children.length === 0) window.addMuestra44();
         } else if (docId === 'doc-fo-lc-45') {
             if (document.querySelector('#tbl-emb tbody').children.length === 0) window.addProduct45();
+        } else if (docId === 'doc-fo-op-16') {
+            if (document.querySelector('#tbl-picking-off tbody').children.length === 0) {
+                for (let i = 0; i < 4; i++) window.addPickingRow16();
+            }
         }
     },
 
@@ -180,9 +188,11 @@ const App = {
                     else if (tableId === 'tbl-mp') window.addPlacenta42();
                     else if (tableId === 'tbl-mon') window.addMonitoreo42();
                     else if (tableId === 'tbl-dos') window.addDosificacion42();
+                    else if (tableId === 'tbl-ingredientes') window.addIngrediente40B();
                     else if (tableId === 'tbl-mc') window.addLote43();
                     else if (tableId === 'tbl-flask') window.addMuestra44();
                     else if (tableId === 'tbl-emb') window.addProduct45();
+                    else if (tableId === 'tbl-picking-off') window.addPickingRow16();
 
                     const lastRow = tbody.lastElementChild;
                     const inputs = lastRow.querySelectorAll('input, textarea');
@@ -215,6 +225,26 @@ window.addMedio40 = () => {
         <td style='vertical-align:top'><input type='text' class='cedit' style='margin-bottom:3px;'><input type='text' class='cedit'></td>
         <td class='no-print' style='vertical-align:top'><button class='btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`;
     document.querySelector('#tbl-medios tbody').appendChild(tr);
+};
+window.addIngrediente40B = () => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td><input class='cedit'></td>
+        <td><input class='cedit'></td>
+        <td><input class='cedit'></td>
+        <td><input class='cedit'></td>
+        <td class='no-print'><button class='btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`;
+    document.querySelector('#tbl-ingredientes tbody').appendChild(tr);
+};
+window.addGenericRow = (tableId, htmlContent) => {
+    const tbody = document.querySelector(`#${tableId} tbody`);
+    if (!tbody) {
+        console.error(`No se encontró la tabla con id: ${tableId}`);
+        return;
+    }
+    const tr = document.createElement('tr');
+    tr.innerHTML = htmlContent;
+    tbody.appendChild(tr);
 };
 window.addMuestra41 = () => {
     const tr = document.createElement('tr');
@@ -250,6 +280,17 @@ window.addProduct45 = () => {
     const tr = document.createElement('tr');
     tr.innerHTML = `<td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit'></td><td class='no-print'><button class='btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`;
     document.querySelector('#tbl-emb tbody').appendChild(tr);
+};
+window.addPickingRow16 = () => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit'></td><td class='no-print'><button class='btn-danger btn-mini' onclick='this.closest("tr").remove()' title='Eliminar esta línea'>Quitar</button></td>`;
+    document.querySelector('#tbl-picking-off tbody').appendChild(tr);
+};
+window.removeLastPickingRow16 = () => {
+    const rows = document.querySelectorAll('#tbl-picking-off tbody tr');
+    if (rows.length > 0) {
+        rows[rows.length - 1].remove();
+    }
 };
 
 window.saveForm = () => App.Universal.saveData();

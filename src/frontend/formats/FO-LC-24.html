@@ -9,6 +9,15 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
+        /* Estilos para textarea expandible */
+        .obs-input {
+            resize: vertical;
+            min-height: 30px;
+            overflow-y: hidden;
+            font-family: inherit;
+            line-height: 1.4;
+        }
+
         @media print {
 
             .global-controls,
@@ -34,6 +43,12 @@
 
             ::placeholder {
                 color: transparent !important;
+            }
+
+            /* Asegurar que el textarea mantenga su altura al imprimir */
+            .obs-input {
+                height: auto !important;
+                overflow: visible !important;
             }
 
             /* Permitir que las tablas y secciones se partan entre páginas */
@@ -187,11 +202,16 @@
                 <tbody>
                     <tr>
                         <td><strong>Viales</strong></td>
-                        <td><input id="tot-stem" type="number" class="cedit" value="0" readonly></td>
-                        <td><input id="tot-hybrid" type="number" class="cedit" value="0" readonly></td>
-                        <td><input id="tot-stem-ortho" type="number" class="cedit" value="0" readonly></td>
-                        <td><input id="tot-hybrid-ortho" type="number" class="cedit" value="0" readonly></td>
-                        <td><input id="tot-exo" type="number" class="cedit" value="0" readonly></td>
+                        <td><input id="tot-stem" type="number" class="cedit" value="0"
+                                oninput="App.Docs.FO_LC_24.onVialInput(this, 'Stem Xelle')"></td>
+                        <td><input id="tot-hybrid" type="number" class="cedit" value="0"
+                                oninput="App.Docs.FO_LC_24.onVialInput(this, 'Hybrid Xelle')"></td>
+                        <td><input id="tot-stem-ortho" type="number" class="cedit" value="0"
+                                oninput="App.Docs.FO_LC_24.onVialInput(this, 'Stem Ortho')"></td>
+                        <td><input id="tot-hybrid-ortho" type="number" class="cedit" value="0"
+                                oninput="App.Docs.FO_LC_24.onVialInput(this, 'Hybrid Ortho')"></td>
+                        <td><input id="tot-exo" type="number" class="cedit" value="0"
+                                oninput="App.Docs.FO_LC_24.onVialInput(this, 'Exosomas')"></td>
                         <td style="background-color:#e8f8f5;"><input id="grand-tot-vials" type="number" class="cedit"
                                 value="0" oninput="App.Docs.FO_LC_24.onGrandTotalVialsInput(this)"
                                 style="font-weight:bold;"></td>
@@ -214,8 +234,8 @@
                     </tr>
                 </tbody>
             </table>
-            <label style="display:block; margin-top:5px;"><strong>Observaciones Generales:</strong></label>
-            <textarea id="obs_dia" class="cedit"></textarea>
+            <!-- <label style="display:block; margin-top:5px;"><strong>Observaciones Generales:</strong></label>
+            <textarea id="obs_dia" class="cedit"></textarea> -->
         </div>
 
         <div class="signature-area">

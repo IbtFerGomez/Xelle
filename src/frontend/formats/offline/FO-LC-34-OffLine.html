@@ -26,12 +26,12 @@
             text-transform: uppercase;
         }
 
-        /* Ajuste extremo para tabla de 15 columnas */
+        /* Ajuste extremo para tabla de 12 columnas */
         .compact-table th {
             background-color: #1E3A5F;
             color: white;
             font-size: 8.5px;
-            padding: 3px 2px;
+            padding: 6px 2px;
             text-align: center;
             vertical-align: middle;
             line-height: 1.1;
@@ -39,7 +39,7 @@
 
         .compact-table td {
             font-size: 8.5px;
-            padding: 2px;
+            padding: 5px;
             vertical-align: middle;
             text-align: center;
         }
@@ -213,21 +213,18 @@
             <table class="compact-table" id="tbl-muestreo">
                 <thead>
                     <tr>
-                        <th width="6%">1. Fecha</th>
-                        <th width="11%">2. Producto y Presentación</th>
-                        <th width="7%">3. Lote</th>
-                        <th width="6%">4. Tam. Lote</th>
-                        <th width="6%">5. Plan Muestreo</th>
-                        <th width="5%">6. Cant. Ext.</th>
-                        <th width="6%">7. Temp Inicial (2-8°C)</th>
-                        <th width="5%">8. Estrat.? (Sí/No)</th>
-                        <th width="5%">9. Separ.? (Sí/No)</th>
-                        <th width="6%">10. Hora Salida</th>
-                        <th width="6%">11. Hora Llegada</th>
-                        <th width="6%">12. Temp Datalogger</th>
-                        <th width="8%">13. Estatus Muestra</th>
-                        <th width="8%">14. Firma Ejecutó</th>
-                        <th width="8%">15. Firma Recibió</th>
+                        <th width="7%">1. Fecha</th>
+                        <th width="13%">2. Producto y Presentación</th>
+                        <th width="8%">3. Lote</th>
+                        <th width="7%">4. Tam. Lote</th>
+                        <th width="8%">5. Plan Muestreo</th>
+                        <th width="6%">6. Cant. Ext.</th>
+                        <th width="7%">7. Estrat.? (Sí/No)</th>
+                        <th width="7%">8. Separ.? (Sí/No)</th>
+                        <th width="8%">9. Hora Muestreo</th>
+                        <th width="9%">10. Estatus Muestra</th>
+                        <th width="9%">11. Firma Ejecutó</th>
+                        <th width="10%">12. Firma Recibió</th>
                         <th width="1%" class="no-print"></th>
                     </tr>
                 </thead>
@@ -237,21 +234,13 @@
                         <td><input class="cedit" placeholder="Ej. Vacuna XYZ - Vial"></td>
                         <td><input class="cedit" placeholder="Ej. L-1020" style="font-weight:bold;"></td>
                         <td><input class="cedit" type="number" placeholder="Ej. 1000"></td>
-                        <td>
-                            <input type="text" class="cedit">
-                        </td>
+                        <td><input type="text" class="cedit" placeholder="ANSI / √N+1"></td>
                         <td><input class="cedit" type="number" placeholder="pzas"></td>
-                        <td><input class="cedit" type="number" step="0.1" placeholder="°C" onchange="checkTemp(this)">
-                        </td>
-                        <td><input type="text" class="cedit"></td>
-                        <td><input type="text" class="cedit"></td>
-                        <td><input class="cedit" type="time"></td>
-                        <td><input class="cedit" type="time"></td>
-                        <td><input class="cedit" type="number" step="0.1" placeholder="°C" onchange="checkTemp(this)">
-                        </td>
-                        <td>
-                            <input type="text" class="cedit" onchange="colorStatus(this)">
-                        </td>
+                        <td><input type="text" class="cedit" placeholder="Sí/No"></td>
+                        <td><input type="text" class="cedit" placeholder="Sí/No"></td>
+                        <td><input type="text" class="cedit" placeholder="HH:MM"></td>
+                        <td><input type="text" class="cedit" placeholder="Aceptada/Rechazada"
+                                onchange="colorStatus(this)"></td>
                         <td><input class="cedit" placeholder="Inspector"></td>
                         <td><input class="cedit" placeholder="Analista"></td>
                         <td class="no-print"><span onclick="delRow(this)"
@@ -262,7 +251,23 @@
             <button class="btn-add no-print" onclick="addRow('tbl-muestreo')">+ Agregar Muestreo (Fila)</button>
         </div>
 
-        <div class="section-header">3. REVISIÓN Y CIERRE MENSUAL DE LA BITÁCORA</div>
+        <div class="section-header">3. CRITERIOS CRÍTICOS DE LLENADO</div>
+        <div class="section"
+            style="background-color: #fff3cd; border: 1px solid #ffc107; padding: 10px; font-size: 10px; text-align: justify; border-radius: 4px; margin-bottom: 10px;">
+            <ul style="margin: 0; padding-left: 20px; color: #856404;">
+                <li style="margin-bottom: 5px;"><strong>5. Plan Muestreo:</strong> Solo se permite registrar "ANSI" o
+                    "√N + 1". El plan debe estar previamente validado y autorizado por Aseguramiento de Calidad.
+                    Cualquier plan diferente requiere nueva validación.</li>
+                <li style="margin-bottom: 5px;"><strong>8. Estrat.? (Sí/No):</strong> Registro obligatorio. Contestar
+                    "Sí" confirma que se aplicó búsqueda estratificada (muestreo de niveles superior, medio e inferior
+                    de la tarima). "No" implica no conformidad y puede invalidar el muestreo.</li>
+                <li><strong>9. Separ.? (Sí/No):</strong> Registro obligatorio. Contestar "Sí" confirma el uso de
+                    separadores (burbuja/cartón) entre el gel congelado y el vial para prevenir congelación. "No"
+                    implica riesgo crítico de daño al producto.</li>
+            </ul>
+        </div>
+
+        <div class="section-header">4. REVISIÓN Y CIERRE MENSUAL DE LA BITÁCORA</div>
         <div class="section">
             <p style="font-size:10px; color:#666; margin-bottom:10px;">Al finalizar el mes, el supervisor de Calidad
                 debe revisar que no existan espacios en blanco y que las excursiones térmicas hayan sido documentadas
@@ -294,23 +299,12 @@
             </table>
         </div>
 
-        <div class="footer">FO-LC-34-O | BITÁCORA DE MUESTREOS | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-LC-34-O | BITÁCORA DE MUESTREOS | Versión: 1.0<br>El contenido de este documento es
+            propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor,
+            por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 
     <script>
-        // Validar temperatura (2 a 8 grados)
-        function checkTemp(inp) {
-            const val = parseFloat(inp.value);
-            inp.className = 'cedit'; // reset
-            if (!isNaN(val)) {
-                if (val >= 2 && val <= 8) {
-                    inp.classList.add('status-ok');
-                } else {
-                    inp.classList.add('status-fail');
-                }
-            }
-        }
-
         // Colorear estatus Aceptado/Rechazado
         function colorStatus(sel) {
             sel.className = 'cedit'; // Reset

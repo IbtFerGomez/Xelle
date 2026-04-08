@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Portada de Carpeta - Xelle Scientific</title>
+    <style>
+        @page {
+            size: letter;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .global-controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Tamaño Carta Exacto: 21.59cm x 27.94cm */
+        .sheet {
+            background: white;
+            width: 21.59cm;
+            height: 27.94cm;
+            max-height: 27.94cm;
+            padding: 2cm;
+            /* Márgenes expandidos para aprovechar la hoja */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .logo-container svg {
+            width: 220px;
+            height: auto;
+        }
+
+        .legal-name {
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            color: #1E3A5F;
+            letter-spacing: 1.5px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .title-box {
+            text-align: center;
+            border: 3px solid #1E3A5F;
+            padding: 25px 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            background-color: #f8fafc;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+            text-align: center;
+        }
+
+        .cedit {
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            width: 100%;
+            resize: none;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .cedit:focus {
+            outline: 1px dashed #3b82f6;
+            background-color: #e2e8f0;
+        }
+
+        .folder-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: #1E3A5F;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .info-box {
+            border: 2px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .content-box {
+            border: 2px solid #cbd5e1;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .content-list {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #1e293b;
+            text-align: left;
+            min-height: 120px;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        /* Bloque Legal de BPD */
+        .legal-box {
+            border: 2px dashed #94a3b8;
+            padding: 18px;
+            background-color: #fff;
+            font-size: 10px;
+            color: #334155;
+            line-height: 1.5;
+            border-radius: 8px;
+        }
+
+        .legal-title {
+            font-weight: bold;
+            text-align: center;
+            color: #1E3A5F;
+            margin-top: 8px;
+            margin-bottom: 6px;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .legal-hr {
+            border: 0;
+            border-top: 1px dashed #cbd5e1;
+            margin: 12px 0;
+        }
+
+        ol {
+            margin: 0;
+            padding-left: 25px;
+        }
+
+        ol li {
+            margin-bottom: 4px;
+        }
+
+        @media print {
+            body {
+                background: transparent;
+                padding: 0;
+            }
+
+            .global-controls {
+                display: none;
+            }
+
+            .sheet {
+                box-shadow: none;
+                margin: 0;
+                padding: 2cm;
+                width: 100%;
+                height: 100%;
+                border: none;
+                page-break-after: avoid;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="global-controls no-print">
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir Portada</button>
+        <p style="font-size:12px; color:#475569; margin-left:15px; margin-bottom:0;">Formato Tamaño Carta. Haz clic en
+            los textos para editarlos.</p>
+    </div>
+
+    <div class="sheet">
+        <div class="logo-container">
+            <svg viewBox="0 0 320 80">
+                <defs>
+                    <style>
+                        .t {
+                            font-family: 'Arial Black', sans-serif;
+                            font-weight: 900;
+                            fill: #1E3A5F
+                        }
+
+                        .s {
+                            font-family: 'Arial', sans-serif;
+                            font-weight: 700;
+                            fill: #1E3A5F;
+                            letter-spacing: 2px
+                        }
+
+                        .c {
+                            fill: #2E9D82
+                        }
+                    </style>
+                </defs>
+                <g transform="translate(0,-2) scale(0.85)">
+                    <circle class="c" cx="25" cy="25" r="13" />
+                    <circle class="c" cx="75" cy="75" r="13" />
+                    <path class="c"
+                        d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                </g>
+                <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+            </svg>
+        </div>
+        <div class="legal-name">XELLE SCIENTIFIC, S.A.P.I. DE C.V.</div>
+
+        <div class="title-box">
+            <span class="info-label">Título del Recopilador</span>
+            <textarea class="cedit folder-title" rows="2"
+                placeholder="Escriba aquí el título...">REGISTROS OPERATIVOS DE DOSIFICACIÓN Y ETIQUETADO</textarea>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-box">
+                <span class="info-label">Área Propietaria / Custodia</span>
+                <input type="text" class="cedit" value="Laboratorio y Calidad (LC)"
+                    style="font-size: 16px; font-weight: bold; text-align: center;">
+            </div>
+            <div class="info-box">
+                <span class="info-label">Datos de Rastreo (Periodo)</span>
+                <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 8px;">
+                    <div>
+                        <span style="font-size: 11px; color: #64748b;">Apertura:</span><br>
+                        <input type="date" class="cedit" style="font-weight:bold; font-size:14px;">
+                    </div>
+                    <div>
+                        <span style="font-size: 11px; color: #64748b;">Cierre:</span><br>
+                        <input type="date" class="cedit" style="font-weight:bold; font-size:14px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <span class="info-label" style="text-align: left;">Contenido Específico (Formatos Contenidos)</span>
+            <textarea class="cedit content-list" placeholder="Liste aquí los códigos y nombres de formatos...">• FO-LC-24 Dosificación (Células)
+• FO-LC-25 Dosificación de Exosomas
+• FO-LC-33 Etiquetado y Acondicionamiento</textarea>
+        </div>
+
+        <div class="legal-box">
+            <div class="legal-title">AVISO DE CONFIDENCIALIDAD</div>
+            <div style="text-align: center; padding: 0 10px;">
+                El contenido de los documentos en este recopilador es propiedad de
+                <strong>"Xelle Scientific", S.A.P.I., de C. V.</strong>, y está protegido por los derechos
+                de autor, por lo que está prohibida su reproducción total o parcial.
+            </div>
+
+            <hr class="legal-hr">
+
+            <div class="legal-title">BUENAS PRÁCTICAS DE DOCUMENTACIÓN (NOM-059 / NOM-241)</div>
+            <ol>
+                <li>Llenar los registros en tiempo real en el momento de la operación.</li>
+                <li>Utilizar únicamente bolígrafo de tinta indeleble color azul.</li>
+                <li>En caso de error, trazar una sola línea sobre el texto, anotar el dato correcto, iniciales y fecha.
+                    No usar corrector ni tachaduras.</li>
+                <li>Las copias de estos formatos se consideran "No Controladas".</li>
+            </ol>
+
+            <hr class="legal-hr">
+
+            <div class="legal-title">TIEMPO DE RESGUARDO</div>
+            <div style="text-align: center; font-weight: bold; font-size: 11px; color: #b45309;">
+                Físico: 1 año activo &nbsp;|&nbsp; Disposición Final: Archivo Muerto / Destrucción controlada.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-ajustar altura de textareas
+        const textareas = document.querySelectorAll('textarea.cedit');
+        textareas.forEach(ta => {
+            ta.addEventListener('input', function () {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+            ta.style.height = 'auto';
+            ta.style.height = (ta.scrollHeight) + 'px';
+        });
+    </script>
+</body>
+
+</html>

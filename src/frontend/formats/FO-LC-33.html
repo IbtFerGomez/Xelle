@@ -37,7 +37,7 @@
 
         .compact-table td {
             font-size: 9px;
-            padding: 2px;
+            padding: 5px;
             vertical-align: middle;
         }
 
@@ -195,22 +195,24 @@
             <table class="compact-table" id="tbl-retencion">
                 <thead>
                     <tr>
+                        <th width="3%">ID</th>
                         <th width="8%">1. Fecha de Ingreso</th>
-                        <th width="12%">2. Lote / ID del Producto</th>
-                        <th width="12%">3. Tipo de Tejido / Producto</th>
+                        <th width="11%">2. Lote / ID del Producto</th>
+                        <th width="11%">3. Tipo de Tejido / Producto</th>
                         <th width="6%">4. Cantidad Retenida</th>
-                        <th width="9%">5. Fecha de Caducidad (Lote)</th>
-                        <th width="10%">6. Fecha Programada Baja (Caducidad + 1 año)</th>
-                        <th width="15%">7. Ingresó<br><span style="font-weight:normal; font-size:8px;">(Nombre y Firma
+                        <th width="8%">5. Fecha de Caducidad (Lote)</th>
+                        <th width="9%">6. Fecha Programada Baja (Caducidad + 1 año)</th>
+                        <th width="13%">7. Ingresó<br><span style="font-weight:normal; font-size:8px;">(Nombre y Firma
                                 Analista)</span></th>
-                        <th width="9%">8. Fecha Real Baja / Destrucción</th>
-                        <th width="15%">9. Autorizó Baja<br><span style="font-weight:normal; font-size:8px;">(Nombre y
+                        <th width="8%">8. Fecha Real Baja / Destrucción</th>
+                        <th width="13%">9. Autorizó Baja<br><span style="font-weight:normal; font-size:8px;">(Nombre y
                                 Firma Responsable)</span></th>
                         <th width="4%" class="no-print"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td style="text-align:center; font-weight:bold;">1</td>
                         <td><input class="cedit" type="date"></td>
                         <td><input class="cedit" placeholder="Ej. LOTE-12345"></td>
                         <td><input class="cedit" placeholder="Ej. Células Madre"></td>
@@ -244,7 +246,9 @@
             </ul>
         </div>
 
-        <div class="footer">FO-LC-33 | BITÁCORA DE MUESTRAS DE RETENCIÓN | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-LC-33 | BITÁCORA DE MUESTRAS DE RETENCIÓN | Versión: 1.0<br>El contenido de este
+            documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los
+            derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 
     <script>
@@ -257,12 +261,21 @@
                 i.value = '';
             });
 
+            // Actualizar ID
+            let newId = t.rows.length + 1;
+            r.cells[0].textContent = newId;
+
             t.appendChild(r);
         }
         function delRow(btn) {
             let row = btn.parentNode.parentNode;
-            if (row.parentNode.rows.length > 1) {
-                row.parentNode.removeChild(row);
+            let tbody = row.parentNode;
+            if (tbody.rows.length > 1) {
+                tbody.removeChild(row);
+                // Renumerar IDs
+                Array.from(tbody.rows).forEach((r, idx) => {
+                    r.cells[0].textContent = idx + 1;
+                });
             }
         }
     </script>

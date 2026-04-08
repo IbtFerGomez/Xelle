@@ -30,6 +30,25 @@
         }
 
         @media print {
+            @page {
+                margin: 5mm 7mm;
+                size: letter;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                transform: scale(0.72);
+                transform-origin: top left;
+                width: 139%;
+            }
+
+            .container {
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+
             .no-print {
                 display: none !important;
             }
@@ -54,16 +73,171 @@
                 color: transparent !important;
             }
 
-            /* Permitir que las tablas y secciones se partan entre páginas */
-            .section {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
+            /* HEADER - Compacto pero legible */
+            .header-top {
+                margin-bottom: 2px !important;
+                padding-bottom: 2px !important;
             }
 
+            .logo-container svg {
+                height: 35px !important;
+            }
+
+            .header-main {
+                padding: 3px 0 !important;
+                margin-bottom: 4px !important;
+            }
+
+            .header-main h1 {
+                font-size: 13px !important;
+                margin: 2px 0 !important;
+                line-height: 1.1 !important;
+            }
+
+            .metadata {
+                font-size: 7.5px !important;
+                margin-top: 1px !important;
+            }
+
+            /* SECCIONES - Espaciado optimizado */
+            .section-header {
+                padding: 2px 8px !important;
+                font-size: 9.5px !important;
+                margin-top: 4px !important;
+                margin-bottom: 3px !important;
+                line-height: 1.2 !important;
+            }
+
+            .section {
+                margin-bottom: 4px !important;
+                padding: 2px 0 !important;
+            }
+
+            /* TABLAS - Mantener claridad */
+            table {
+                margin-bottom: 3px !important;
+            }
+
+            table td {
+                padding: 1.5px 4px !important;
+                font-size: 8.5px !important;
+                line-height: 1.3 !important;
+            }
+
+            table th {
+                padding: 1.5px 4px !important;
+                font-size: 8.5px !important;
+                line-height: 1.3 !important;
+                font-weight: bold !important;
+            }
+
+            /* INPUTS - Legibles */
+            input,
+            textarea,
+            select {
+                font-size: 7.5px !important;
+                padding: 1px 3px !important;
+                line-height: 1.2 !important;
+                border: 1px solid #ccc !important;
+            }
+
+            textarea {
+                min-height: 28px !important;
+                max-height: 40px !important;
+            }
+
+            /* TEXTO Y LABELS */
+            p {
+                margin: 2px 0 !important;
+                font-size: 7.5px !important;
+                line-height: 1.3 !important;
+            }
+
+            label {
+                font-size: 7.5px !important;
+                line-height: 1.3 !important;
+                margin-bottom: 2px !important;
+            }
+
+            .cbx-group label {
+                margin-bottom: 3px !important;
+                display: block !important;
+            }
+
+            strong {
+                font-weight: 600 !important;
+            }
+
+            /* AJUSTES DE ESPACIADO INLINE */
+            div[style*="margin-bottom: 10px"],
+            div[style*="margin-bottom:10px"] {
+                margin-bottom: 4px !important;
+            }
+
+            div[style*="margin-top: 10px"],
+            div[style*="margin-top:10px"] {
+                margin-top: 4px !important;
+            }
+
+            div[style*="margin-bottom: 20px"],
+            div[style*="margin-bottom:20px"] {
+                margin-bottom: 6px !important;
+            }
+
+            div[style*="margin-top: 20px"],
+            div[style*="margin-top:20px"] {
+                margin-top: 6px !important;
+            }
+
+            div[style*="padding: 10px"],
+            div[style*="padding:10px"] {
+                padding: 5px !important;
+            }
+
+            /* SECCIÓN DE FIRMAS - Compacta */
+            .section:last-of-type {
+                margin-top: 4px !important;
+            }
+
+            .section:last-of-type p[style*="margin-bottom:30px"] {
+                margin-bottom: 15px !important;
+            }
+
+            .section:last-of-type p[style*="margin-bottom:20px"] {
+                margin-bottom: 12px !important;
+            }
+
+            .section:last-of-type table {
+                margin-bottom: 2px !important;
+            }
+
+            .section:last-of-type td {
+                padding-top: 5px !important;
+            }
+
+            div[style*="width: 60%"][style*="margin: 0 auto"] {
+                margin-top: 8px !important;
+            }
+
+            /* FOOTER */
+            .footer {
+                margin-top: 4px !important;
+                padding: 2px 0 !important;
+                font-size: 6.5px !important;
+                line-height: 1.3 !important;
+            }
+
+            /* BARCODE */
+            .barcode-svg {
+                height: 20px !important;
+            }
+
+            /* PREVENCIÓN DE SALTOS DE PÁGINA */
+            .section,
             table,
             .compact-table {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
             }
 
             thead {
@@ -76,9 +250,19 @@
                 break-inside: avoid !important;
             }
 
-            .section-title {
+            h1,
+            h2,
+            h3,
+            .section-header {
                 page-break-after: avoid !important;
                 break-after: avoid !important;
+            }
+
+            /* Evitar saltos generales */
+            body,
+            .container {
+                page-break-before: avoid !important;
+                page-break-after: avoid !important;
             }
         }
     </style>
@@ -138,7 +322,8 @@
 
         <div class="header-main">
             <h1>REPORTE Y MANIFIESTO DE MATERIA PRIMA NO CONFORME (MPNC)</h1>
-            <div class="metadata">Código: FO-OP-52 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <div class="metadata">Código: FO-OP-52 | Versión: 1.0 | Vigencia: ENE 2026 |
+                Página: 1 de 1</div>
         </div>
 
         <div class="section-header">1. DATOS DE IDENTIFICACIÓN Y TRAZABILIDAD</div>
@@ -352,7 +537,9 @@
             </div>
         </div>
 
-        <div class="footer">FO-OP-52 | REPORTE DE MPNC | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-OP-52 | REPORTE DE MPNC | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
 

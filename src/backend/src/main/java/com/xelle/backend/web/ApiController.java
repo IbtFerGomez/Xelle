@@ -6,8 +6,6 @@ import com.xelle.backend.audit.AuditLogEntity;
 import com.xelle.backend.audit.AuditLogRepository;
 import com.xelle.backend.dto.ApiResponse;
 import com.xelle.backend.dto.LoginRequest;
-import com.xelle.backend.exception.BadRequestException;
-import com.xelle.backend.exception.ForbiddenException;
 import com.xelle.backend.format.FormatMetadataEntity;
 import com.xelle.backend.format.FormatMetadataRepository;
 import com.xelle.backend.instance.FormatInstanceEntity;
@@ -577,17 +575,6 @@ public class ApiController {
                 "role", defaultIfBlank(user.getRole(), ""),
                 "module_access", parseAccess(user.getModuleAccess()),
                 "active", user.isActive());
-    }
-
-    private Map<String, Object> mapUserSession(UserEntity user) {
-        List<String> access = parseAccess(user.getModuleAccess());
-        return Map.of(
-                "id", user.getId(),
-                "username", defaultIfBlank(user.getUsername(), ""),
-                "fullName", defaultIfBlank(user.getFullName(), ""),
-                "role", defaultIfBlank(user.getRole(), ""),
-                "moduleAccess", access,
-                "access", access);
     }
 
     private List<String> parseAccess(String json) {

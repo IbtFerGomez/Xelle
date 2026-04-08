@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-16 Detección de Necesidades de Capacitación (DNC) - OFFLINE</title>
+    <link rel="stylesheet" href="../format-styles.css">
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .compact-table input {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+        }
+
+        .cbx-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .barcode-svg {
+            display: none;
+        }
+
+        .barcode-svg.visible {
+            display: block;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-header {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-qa-16">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveFormOffline()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearFormOffline()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .svg-logo-titulo {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .svg-logo-subtitulo {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .svg-logo-celula {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
+                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
+                        <path class="svg-logo-celula"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio DNC</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-16</span>
+                    <input type="text" id="reg-qa16" class="registry-input" placeholder="000">
+                </div>
+                <input type="text" class="registry-date" id="fecha-doc" placeholder="DD/MM/AAAA">
+                <svg id="barcode-qa16" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>DETECCIÓN DE NECESIDADES DE CAPACITACIÓN (DNC)</h1>
+            <div class="metadata">Código: FO-QA-16 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. DATOS DEL COLABORADOR</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Nombre:</strong></td>
+                    <td width="80%" colspan="3"><input class="cedit" id="nombre-colaborador"
+                            style="width:100%; border-bottom:1px solid #ccc;">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%"><strong>Puesto:</strong></td>
+                    <td width="30%"><input class="cedit" id="puesto-colaborador"
+                            style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td width="20%"><strong>Área:</strong></td>
+                    <td width="30%"><input class="cedit" id="area-colaborador"
+                            style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Fecha de Ingreso:</strong></td>
+                    <td><input type="text" class="cedit" id="fecha-ingreso" placeholder="DD/MM/AAAA"></td>
+                    <td><strong>Fecha Evaluación DNC:</strong></td>
+                    <td><input type="text" class="cedit" id="fecha-evaluacion" placeholder="DD/MM/AAAA"></td>
+                </tr>
+            </table>
+            <div style="margin-top:10px;">
+                <strong>Tipo de Evaluación:</strong>
+                <div class="cbx-group">
+                    <label><input type="radio" name="tipo_eval" class="cedit" value="nuevo_ingreso"> Nuevo
+                        Ingreso</label>
+                    <label><input type="radio" name="tipo_eval" class="cedit" value="revision_anual"> Revisión
+                        Anual</label>
+                    <label><input type="radio" name="tipo_eval" class="cedit" value="cambio_puesto"> Cambio de Puesto /
+                        Promoción</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">2. MATRIZ DE COMPETENCIAS Y BRECHAS</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">El jefe directo y QA evalúan qué PNOs, normas o
+                equipos debe dominar el colaborador para su puesto.</p>
+            <table class="compact-table" id="tbl-competencias">
+                <thead>
+                    <tr>
+                        <th width="35%">Tema / Norma / Equipo o PNO requerido</th>
+                        <th width="15%">Nivel Requerido<br>(1 Básico - 3 Experto)</th>
+                        <th width="15%">Nivel Actual<br>del Empleado</th>
+                        <th width="15%">Brecha<br>(Sí / No)</th>
+                        <th width="18%">Prioridad de Capacitación</th>
+                        <th width="2%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit" style="text-align:left; padding-left:5px;"
+                                placeholder="Ej. PNO-QA-05 (Desviaciones)"></td>
+                        <td><input type="number" class="cedit" min="1" max="3" placeholder="3"></td>
+                        <td><input type="number" class="cedit" min="0" max="3" placeholder="1"></td>
+                        <td><input class="cedit" placeholder="Sí / No"></td>
+                        <td><input class="cedit" placeholder="ALTA (1 mes)"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" style="text-align:left; padding-left:5px;"
+                                placeholder="Ej. NOM-241-SSA1-2021"></td>
+                        <td><input type="number" class="cedit" min="1" max="3" placeholder="2"></td>
+                        <td><input type="number" class="cedit" min="0" max="3" placeholder="2"></td>
+                        <td><input class="cedit" placeholder="Sí / No"></td>
+                        <td><input class="cedit" placeholder="MANTENIMIENTO"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" style="text-align:left; padding-left:5px;"
+                                placeholder="Ej. Uso de Báscula Analítica"></td>
+                        <td><input type="number" class="cedit" min="1" max="3" placeholder="3"></td>
+                        <td><input type="number" class="cedit" min="0" max="3" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Sí / No"></td>
+                        <td><input class="cedit" placeholder="URGENTE (Inmediata)"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" style="text-align:left; padding-left:5px;"></td>
+                        <td><input type="number" class="cedit" min="1" max="3"></td>
+                        <td><input type="number" class="cedit" min="0" max="3"></td>
+                        <td><input class="cedit" placeholder="Sí / No"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-competencias')">+ AGREGAR COMPETENCIA</button>
+        </div>
+
+        <div class="section-header">3. PLAN DE ACCIÓN (CURSOS PROPUESTOS)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Con base en las brechas detectadas, programe los
+                cursos necesarios.</p>
+            <table class="compact-table" id="tbl-cursos">
+                <thead>
+                    <tr>
+                        <th width="40%">Tema a Impartir</th>
+                        <th width="20%">Modalidad</th>
+                        <th width="15%">Mes Programado</th>
+                        <th width="23%">Instructor o Proveedor Sugerido</th>
+                        <th width="2%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit" style="text-align:left; padding-left:5px;"></td>
+                        <td><input class="cedit" placeholder="Interno / Externo"></td>
+                        <td><input type="text" class="cedit" placeholder="MM/AAAA"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit" style="text-align:left; padding-left:5px;"></td>
+                        <td><input class="cedit" placeholder="Interno / Externo"></td>
+                        <td><input type="text" class="cedit" placeholder="MM/AAAA"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-cursos')">+ AGREGAR CURSO AL PLAN</button>
+        </div>
+
+        <div class="section-header">4. FIRMAS DE ACUERDO</div>
+        <div class="signature-area" style="margin-top: 15px;">
+            <div class="signature-box">
+                <p>Colaborador Evaluado</p>
+                <input type="text" placeholder="Nombre y Firma" class="cedit" id="firma-colaborador">
+            </div>
+            <div class="signature-box">
+                <p>Jefe Directo</p>
+                <input type="text" placeholder="Nombre y Firma" class="cedit" id="firma-jefe">
+            </div>
+            <div class="signature-box">
+                <p>Aseguramiento de Calidad / QA</p>
+                <input type="text" placeholder="Nombre y Firma" class="cedit" id="firma-qa">
+            </div>
+        </div>
+
+        <div class="footer">FO-QA-16 | Versión: 1.0 | Detección de Necesidades de Capacitación (DNC) | Xelle Scientific
+            | Página 1 de 1</div>
+    </div>
+
+    <script>
+        // ============================================================
+        // FUNCIONES DE GESTIÓN DE FILAS
+        // ============================================================
+        function addRow(id) {
+            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
+            let r = t.rows[0].cloneNode(true);
+
+            // Limpiar inputs
+            r.querySelectorAll('input').forEach(i => i.value = '');
+
+            t.appendChild(r);
+        }
+
+        function delRow(btn) {
+            let row = btn.parentNode.parentNode;
+            if (row.parentNode.rows.length > 1) {
+                row.parentNode.removeChild(row);
+            }
+        }
+
+        // ============================================================
+        // CÓDIGO DE BARRAS OFFLINE (SVG - Code 39 Simplificado)
+        // ============================================================
+        // NOTA: Este es un código de barras simplificado para visualización offline.
+        // Los patrones no son Code39 estándar pero generan barras legibles visualmente.
+        // Para escaneo real, se requiere una biblioteca completa de códigos de barras.
+        function generarCodigoBarras() {
+            const input = document.getElementById('reg-qa16');
+            const svg = document.getElementById('barcode-qa16');
+            const valor = input.value.trim();
+
+            // Si no hay valor, ocultar el código de barras
+            if (!valor) {
+                svg.classList.remove('visible');
+                svg.innerHTML = '';
+                return;
+            }
+
+            // Si hay valor, mostrar y generar el código de barras
+            svg.classList.add('visible');
+            const valorCompleto = 'FO-QA-16-' + valor;
+
+            // Generar código de barras simple basado en Code39 simplificado
+            const barras = generarBarrasCode39(valorCompleto);
+
+            svg.innerHTML = `
+                <rect width="100%" height="40" fill="white"/>
+                <g transform="translate(5, 5)">
+                    ${barras}
+                </g>
+                <text x="50%" y="35" text-anchor="middle" font-size="8" font-family="monospace">${valorCompleto}</text>
+            `;
+        }
+
+        function generarBarrasCode39(texto) {
+            // Simplificación de Code39 - cada carácter genera un patrón de barras
+            // ADVERTENCIA: Este no es un Code39 estándar real, solo genera patrones visuales
+            let x = 0;
+            let barras = '';
+            const anchoFino = 2;
+            const anchoGrueso = 4;
+
+            // Barra de inicio
+            barras += `<rect x="${x}" y="0" width="${anchoGrueso}" height="25" fill="black"/>`;
+            x += anchoGrueso + 2;
+
+            // Generar barras para cada carácter
+            for (let i = 0; i < texto.length; i++) {
+                const char = texto.charCodeAt(i);
+                // Alternar entre barras fina y gruesa basado en el código del carácter
+                const ancho = (char % 2 === 0) ? anchoFino : anchoGrueso;
+
+                barras += `<rect x="${x}" y="0" width="${ancho}" height="25" fill="black"/>`;
+                x += ancho + 1;
+
+                barras += `<rect x="${x}" y="0" width="1" height="25" fill="white"/>`;
+                x += 2;
+            }
+
+            // Barra de fin
+            barras += `<rect x="${x}" y="0" width="${anchoGrueso}" height="25" fill="black"/>`;
+
+            return barras;
+        }
+
+        // ============================================================
+        // FUNCIONES DE ALMACENAMIENTO OFFLINE (LocalStorage)
+        // ============================================================
+        function saveFormOffline() {
+            const formData = {
+                folio: document.getElementById('reg-qa16').value,
+                fecha: document.getElementById('fecha-doc').value,
+                nombreColaborador: document.getElementById('nombre-colaborador').value,
+                puesto: document.getElementById('puesto-colaborador').value,
+                area: document.getElementById('area-colaborador').value,
+                fechaIngreso: document.getElementById('fecha-ingreso').value,
+                fechaEvaluacion: document.getElementById('fecha-evaluacion').value,
+                tipoEval: document.querySelector('input[name="tipo_eval"]:checked')?.value || '',
+                firmaColaborador: document.getElementById('firma-colaborador').value,
+                firmaJefe: document.getElementById('firma-jefe').value,
+                firmaQA: document.getElementById('firma-qa').value,
+                competencias: [],
+                cursos: []
+            };
+
+            // Guardar competencias
+            const tblCompetencias = document.getElementById('tbl-competencias').getElementsByTagName('tbody')[0];
+            for (let row of tblCompetencias.rows) {
+                const inputs = row.querySelectorAll('input');
+                formData.competencias.push({
+                    tema: inputs[0].value,
+                    nivelRequerido: inputs[1].value,
+                    nivelActual: inputs[2].value,
+                    brecha: inputs[3].value,
+                    prioridad: inputs[4].value
+                });
+            }
+
+            // Guardar cursos
+            const tblCursos = document.getElementById('tbl-cursos').getElementsByTagName('tbody')[0];
+            for (let row of tblCursos.rows) {
+                const inputs = row.querySelectorAll('input');
+                formData.cursos.push({
+                    tema: inputs[0].value,
+                    modalidad: inputs[1].value,
+                    mes: inputs[2].value,
+                    instructor: inputs[3].value
+                });
+            }
+
+            // Guardar en localStorage
+            const folio = formData.folio || 'TEMP';
+            localStorage.setItem('FO-QA-16-' + folio, JSON.stringify(formData));
+
+            alert('✓ Formulario guardado localmente con folio: ' + folio);
+        }
+
+        function loadFormOffline() {
+            const folio = document.getElementById('reg-qa16').value;
+            if (!folio) {
+                alert('Ingrese un folio para cargar');
+                return;
+            }
+
+            const savedData = localStorage.getItem('FO-QA-16-' + folio);
+            if (!savedData) {
+                alert('No se encontró información guardada para este folio');
+                return;
+            }
+
+            const formData = JSON.parse(savedData);
+
+            // Cargar datos generales
+            document.getElementById('fecha-doc').value = formData.fecha || '';
+            document.getElementById('nombre-colaborador').value = formData.nombreColaborador || '';
+            document.getElementById('puesto-colaborador').value = formData.puesto || '';
+            document.getElementById('area-colaborador').value = formData.area || '';
+            document.getElementById('fecha-ingreso').value = formData.fechaIngreso || '';
+            document.getElementById('fecha-evaluacion').value = formData.fechaEvaluacion || '';
+
+            if (formData.tipoEval) {
+                const radio = document.querySelector(`input[name="tipo_eval"][value="${formData.tipoEval}"]`);
+                if (radio) radio.checked = true;
+            }
+
+            document.getElementById('firma-colaborador').value = formData.firmaColaborador || '';
+            document.getElementById('firma-jefe').value = formData.firmaJefe || '';
+            document.getElementById('firma-qa').value = formData.firmaQA || '';
+
+            // Cargar competencias
+            if (formData.competencias && formData.competencias.length > 0) {
+                const tblCompetencias = document.getElementById('tbl-competencias').getElementsByTagName('tbody')[0];
+                tblCompetencias.innerHTML = '';
+
+                formData.competencias.forEach(comp => {
+                    const row = tblCompetencias.insertRow();
+                    row.innerHTML = `
+                        <td><input class="cedit" style="text-align:left; padding-left:5px;" value="${comp.tema || ''}"></td>
+                        <td><input type="number" class="cedit" min="1" max="3" value="${comp.nivelRequerido || ''}"></td>
+                        <td><input type="number" class="cedit" min="0" max="3" value="${comp.nivelActual || ''}"></td>
+                        <td><input class="cedit" placeholder="Sí / No" value="${comp.brecha || ''}"></td>
+                        <td><input class="cedit" value="${comp.prioridad || ''}"></td>
+                        <td class="no-print"><span onclick="delRow(this)" style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                    `;
+                });
+            }
+
+            // Cargar cursos
+            if (formData.cursos && formData.cursos.length > 0) {
+                const tblCursos = document.getElementById('tbl-cursos').getElementsByTagName('tbody')[0];
+                tblCursos.innerHTML = '';
+
+                formData.cursos.forEach(curso => {
+                    const row = tblCursos.insertRow();
+                    row.innerHTML = `
+                        <td><input class="cedit" style="text-align:left; padding-left:5px;" value="${curso.tema || ''}"></td>
+                        <td><input class="cedit" placeholder="Interno / Externo" value="${curso.modalidad || ''}"></td>
+                        <td><input type="text" class="cedit" placeholder="MM/AAAA" value="${curso.mes || ''}"></td>
+                        <td><input class="cedit" value="${curso.instructor || ''}"></td>
+                        <td class="no-print"><span onclick="delRow(this)" style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                    `;
+                });
+            }
+
+            generarCodigoBarras();
+            alert('✓ Formulario cargado correctamente');
+        }
+
+        function clearFormOffline() {
+            if (confirm('¿Está seguro de limpiar todo el formulario?')) {
+                location.reload();
+            }
+        }
+
+        // ============================================================
+        // INICIALIZACIÓN
+        // ============================================================
+        window.addEventListener('load', function () {
+            // Agregar listeners al input de folio (input para tiempo real, change para backup)
+            const folioInput = document.getElementById('reg-qa16');
+            folioInput.addEventListener('input', generarCodigoBarras);
+            folioInput.addEventListener('change', generarCodigoBarras);
+        });
+    </script>
+</body>
+
+</html>

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-17 Remisión (OFF)</title>
+    <title>FO-OP-17 Remisión</title>
     <link rel="stylesheet" href="format-styles-OffLine.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app-OffLine.js"></script>
@@ -78,6 +78,44 @@
             text-align: center;
             padding-top: 5px;
             font-weight: bold;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -204,6 +242,10 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="no-print" style="margin-top: 10px; text-align: center;">
+                <button class="btn btn-success" onclick="agregarFilaRemision()">➕ Agregar Fila</button>
+                <button class="btn btn-danger" onclick="quitarFilaRemision()">➖ Quitar Fila</button>
+            </div>
         </div>
 
         <div class="section receipt-box">
@@ -233,8 +275,31 @@
             </div>
         </div>
 
-        <div class="footer">FO-OP-17-O | REMISIÓN (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-OP-17-O | REMISIÓN | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
+
+    <script>
+        function agregarFilaRemision() {
+            const tabla = document.getElementById('tbl-remision-off').getElementsByTagName('tbody')[0];
+            const nuevaFila = tabla.insertRow();
+
+            for (let i = 0; i < 5; i++) {
+                const celda = nuevaFila.insertCell(i);
+                celda.innerHTML = '<input class="cedit">';
+            }
+        }
+
+        function quitarFilaRemision() {
+            const tabla = document.getElementById('tbl-remision-off').getElementsByTagName('tbody')[0];
+            if (tabla.rows.length > 1) {
+                tabla.deleteRow(tabla.rows.length - 1);
+            } else {
+                alert('Debe mantener al menos una fila en la tabla');
+            }
+        }
+    </script>
 </body>
 
 </html>

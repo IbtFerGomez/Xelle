@@ -54,6 +54,29 @@
             min-height: 60px;
             font-size: 11px;
         }
+
+        /* Estilos para columna de firmas en impresión */
+        @media print {
+            .firma-cell {
+                display: table-cell !important;
+            }
+
+            .firma-input {
+                display: block !important;
+                width: 100% !important;
+                border: none !important;
+                border-bottom: 1px solid #333 !important;
+                padding: 2px 4px !important;
+                margin-bottom: 4px !important;
+                font-size: 10px !important;
+                background: transparent !important;
+                box-sizing: border-box !important;
+            }
+
+            .firma-input:last-child {
+                margin-bottom: 0 !important;
+            }
+        }
     </style>
 </head>
 
@@ -118,6 +141,7 @@
             <table id="tbl-medios" class="compact-table">
                 <thead>
                     <tr>
+                        <th style="width: 30px;">#</th>
                         <th style="width: 80px;">Fecha</th>
                         <th style="width: 15%;">Nombre Medio/Solución</th>
                         <th style="width: 10%;">Lote Interno</th>
@@ -131,29 +155,67 @@
                 <tbody></tbody>
             </table>
 
-            <button class="btn btn-primary btn-mini no-print" onclick="window.addGenericRow('tbl-medios', `
+            <button class="btn btn-primary btn-mini no-print" onclick="addMedioRow()">+ Agregar Preparación</button>
+        </div>
+
+        <div class="footer">FO-LC-40 | PREP MEDIOS | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
+    </div>
+
+    <script>
+        // Función para agregar fila de medio
+        function addMedioRow() {
+            const tbody = document.querySelector('#tbl-medios tbody');
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td style='vertical-align:top; text-align:center; font-weight:bold; color:#666;' class='row-number'></td>
                 <td style='vertical-align:top'><input type='date' class='cedit'></td>
                 <td style='vertical-align:top'><textarea class='cedit' rows='3'></textarea></td>
                 <td style='vertical-align:top'><input class='cedit' placeholder='Lote...'></td>
                 <td style='vertical-align:top' class='col-ingredientes'><textarea class='cedit' rows='4' placeholder='Ej: DMEM (L:123) - 500ml...'></textarea></td>
                 <td style='vertical-align:top'><input class='cedit'></td>
                 <td style='vertical-align:top'><input type='date' class='cedit'></td>
-                <td style='vertical-align:top'>
-                    <input class='cedit' placeholder='Realizó' style='margin-bottom:5px; border-bottom:1px solid #eee;'>
-                    <input class='cedit' placeholder='Verificó'>
+                <td style='vertical-align:top' class='firma-cell'>
+                    <input class='cedit firma-input' placeholder='Realizó' style='margin-bottom:5px; border-bottom:1px solid #eee;'>
+                    <input class='cedit firma-input' placeholder='Verificó'>
                 </td>
-                <td class='no-print' style='vertical-align:top'><button class='btn-danger btn-mini' onclick='this.closest(\'tr\').remove()'>x</button></td>
-            `)">+ Agregar Preparación</button>
-        </div>
+                <td class='no-print' style='vertical-align:top'><button class='btn-danger btn-mini' onclick='removeRow(this)'>x</button></td>
+            `;
+            updateRowNumbers();
+        }
 
-        <div class="footer">FO-LC-40 | PREP MEDIOS | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
-    </div>
+        // Función para eliminar fila
+        function removeRow(btn) {
+            btn.closest('tr').remove();
+            updateRowNumbers();
+        }
 
-    <script>
         // Agregar una fila inicial automáticamente
         if (document.querySelector('#tbl-medios tbody').children.length === 0) {
-            document.querySelector('.btn-primary.btn-mini').click();
+            addMedioRow();
         }
+
+        // Función para actualizar numeración de filas
+        function updateRowNumbers() {
+            const rows = document.querySelectorAll('#tbl-medios tbody tr');
+            rows.forEach((row, index) => {
+                const numberCell = row.querySelector('.row-number');
+                if (numberCell) {
+                    numberCell.textContent = index + 1;
+                }
+            });
+        }
+
+        // Actualizar numeración cuando se agrega o elimina una fila
+        const observer = new MutationObserver(updateRowNumbers);
+        const tbody = document.querySelector('#tbl-medios tbody');
+        if (tbody) {
+            observer.observe(tbody, { childList: true });
+        }
+
+        // Actualizar numeración inicial
+        setTimeout(updateRowNumbers, 100);
     </script>
 </body>
 

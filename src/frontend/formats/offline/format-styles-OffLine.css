@@ -117,6 +117,8 @@ table {
     border-collapse: collapse;
     margin-bottom: 10px;
     table-layout: fixed;
+    page-break-inside: auto;
+    break-inside: auto;
 }
 
 th,
@@ -129,6 +131,8 @@ td {
 
 thead {
     display: table-header-group;
+    break-inside: avoid;
+    page-break-inside: avoid;
 }
 
 th {
@@ -168,7 +172,7 @@ textarea.cedit {
     border: 1px solid #eee;
     padding: 10px;
     border-radius: 4px;
-    page-break-inside: avoid;
+    page-break-inside: auto;
 }
 
 .section-title {
@@ -316,6 +320,40 @@ textarea.cedit {
 
     .cedit {
         border: none !important;
+    }
+
+    /* Permitir que las tablas se rompan entre páginas */
+    table {
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+    }
+
+    thead {
+        display: table-header-group;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    tbody {
+        page-break-inside: auto;
+        break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+        break-inside: avoid;
+        break-after: auto;
+    }
+
+    td {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .section {
+        page-break-inside: auto !important;
+        break-inside: auto !important;
     }
 
     ::-webkit-input-placeholder {

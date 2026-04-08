@@ -16,10 +16,58 @@
                 margin: 10mm;
             }
 
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
             .container {
                 width: 100%;
                 max-width: 100%;
-                min-height: 190mm;
+                min-height: auto;
+                height: auto;
+                page-break-inside: auto;
+            }
+
+            /* Permitir que las secciones se rompan */
+            .section {
+                page-break-inside: auto;
+                page-break-after: auto;
+                margin-bottom: 0;
+            }
+
+            /* Permitir que la tabla se rompa entre páginas */
+            #tbl-medios {
+                page-break-inside: auto;
+                page-break-after: auto;
+            }
+
+            /* Repetir encabezado en cada página */
+            #tbl-medios thead {
+                display: table-header-group;
+            }
+
+            #tbl-medios tbody {
+                page-break-inside: auto;
+            }
+
+            /* Evitar que las filas se rompan */
+            #tbl-medios tbody tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+
+            /* Reducir espacios innecesarios */
+            .header-top,
+            .header-main {
+                page-break-after: avoid;
+                margin-bottom: 5mm;
+            }
+
+            /* Asegurar que el footer no interfiera */
+            .footer {
+                page-break-inside: avoid;
+                margin-top: 5mm;
             }
         }
     </style>

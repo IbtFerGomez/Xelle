@@ -2,100 +2,168 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>ET-OP-02 Etiqueta de Equipo Fuera de Servicio</title>
-    <link rel="stylesheet" href="format-styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-    <script src="format-app.js"></script>
+    <title>ET-OP-02 - Fuera de Servicio</title>
     <style>
-        .label-container { border: 4px solid #991b1b; border-radius: 8px; max-width: 500px; margin: 30px auto; padding: 20px; font-family: Arial, sans-serif; background-color: #fef2f2; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .label-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #991b1b; padding-bottom: 10px; margin-bottom: 15px; }
-        .label-title { color: #991b1b; font-size: 16px; font-weight: bold; text-align: center; width: 100%; letter-spacing: 1px; }
-        .label-status { background-color: #991b1b; color: white; text-align: center; font-size: 18px; font-weight: bold; padding: 10px; border-radius: 4px; margin-bottom: 5px; }
-        .label-warning { text-align: center; color: #991b1b; font-size: 10px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; }
-        .label-row { display: flex; margin-bottom: 12px; font-size: 12px; align-items: center; }
-        .label-row label { font-weight: bold; color: #1e293b; width: 35%; }
-        .label-row .input-wrapper { width: 65%; }
-        .label-input { width: 100%; border: none; border-bottom: 1px solid #991b1b; background: transparent; font-size: 12px; padding: 2px; font-weight: bold; color: #0f172a; }
-        .label-footer { font-size: 8px; text-align: center; color: #991b1b; margin-top: 20px; font-weight: bold; border-top: 1px dashed #fca5a5; padding-top: 10px; }
-        .cbx-group { display: flex; gap: 8px; flex-wrap: wrap; }
-        .cbx-group label { width: auto; font-weight: normal; display: flex; align-items: center; gap: 3px; }
-        
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .etiqueta-container {
+            width: 100mm;
+            height: 100mm;
+            background-color: #ffffff;
+            border: 4px solid #991b1b;
+            padding: 5mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo-area {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .logo-area svg {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+        }
+
+        .logo-text {
+            font-size: 12px;
+            font-weight: bold;
+            vertical-align: middle;
+            margin-left: 5px;
+            color: #1D1D1B;
+        }
+
+        .titulo-alerta {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            margin: 0 0 2px 0;
+            background-color: #991b1b;
+            color: #ffffff;
+            padding: 6px;
+            border: 1px solid #991b1b;
+        }
+
+        .subtitulo {
+            text-align: center;
+            font-size: 10px;
+            font-weight: bold;
+            margin-top: 4px;
+            color: #991b1b;
+            text-transform: uppercase;
+        }
+
+        .advertencia-critica {
+            font-size: 9px;
+            font-weight: bold;
+            text-align: center;
+            margin: 8px 0;
+            color: #991b1b;
+            border: 1px dashed #991b1b;
+            padding: 4px;
+            background-color: #fff8f8;
+        }
+
+        .campo {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        .campo label {
+            font-weight: bold;
+            white-space: nowrap;
+            margin-right: 5px;
+        }
+
+        .linea {
+            flex-grow: 1;
+            border-bottom: 1px solid #000;
+            height: 14px;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            font-size: 9px;
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .footer-bottom {
+            margin-top: 5px;
+            font-size: 8px;
+            text-align: center;
+            color: #777;
+            border-top: 1px solid #ccc;
+            padding-top: 4px;
+        }
+
         @media print {
-            .global-controls, .no-print, .header-top, .header-main { display:none !important; }
-            .label-container { box-shadow: none; margin: 0; max-width: 100%; border-width: 3px; page-break-inside: avoid; }
-            ::-webkit-input-placeholder { color: transparent !important; }
-            ::placeholder { color: transparent !important; }
+            @page { margin: 0; }
+            body { margin: 0; padding: 0; background: #fff; }
+            .etiqueta-container { border: 4px solid #991b1b; }
         }
     </style>
 </head>
-<body id="doc-et-op-02">
-    <div class="global-controls no-print">
-        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
-        <button class="btn btn-primary" onclick="window.print()">Imprimir Etiqueta</button>
-        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
-    </div>
-    
-    <div class="container" style="max-width:100%; width:100%;">
-        <div class="header-top no-print">
-            <div class="logo-container">
-                <svg viewBox="0 0 320 80"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text></svg>
+<body>
+    <div class="etiqueta-container">
+        <div>
+            <div class="logo-area">
+                <svg viewBox="10 10 80 80" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                        <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                        <path fill="#2E9D82"
+                            d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                    </g>
+                </svg>
+                <span class="logo-text">XELLE SCIENTIFIC</span>
             </div>
-            <div class="registry-container">
-                <label>Registro Etiqueta</label>
-                <div class="registry-wrapper">
-                    <span class="registry-prefix">ET-OP-02-</span>
-                    <input type="text" id="reg-et02" class="registry-input generate-barcode" data-target="barcode-et02" data-prefix="ET-OP-02-" placeholder="000">
-                </div>
-                <input type="date" class="registry-date">
-                <svg id="barcode-et02" class="barcode-svg"></svg>
+            <div class="titulo-alerta">🛑 FUERA DE SERVICIO</div>
+            <div class="subtitulo">ESTADO CRÍTICO</div>
+            <div class="advertencia-critica">PROHIBIDO SU USO EN PRODUCCIÓN / CALIDAD</div>
+
+            <div class="campo"><label>ID del Equipo:</label>
+                <div class="linea"></div>
+            </div>
+
+            <div style="font-weight: bold; font-size: 9px; margin-bottom: 3px;">Motivo del Bloqueo:</div>
+            <div class="checkbox-grid">
+                <span>[ ] Falla</span>
+                <span>[ ] Mantenimiento</span>
+                <span>[ ] Vencido</span>
+                <span>[ ] OOT (Fuera Tol.)</span>
+            </div>
+
+            <div class="campo"><label>Fecha de Bloqueo:</label>
+                <div class="linea" style="text-align:center;">//____</div>
+            </div>
+
+            <div class="campo"><label>Reporte Desviación:</label>
+                <div class="linea"></div>
             </div>
         </div>
 
-        <div class="header-main no-print">
-            <h1>ESTADO CRÍTICO - ETIQUETA FUERA DE SERVICIO</h1>
-            <div class="metadata">Código: ET-OP-02 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
-        </div>
-
-        <div class="label-container">
-            <div class="label-header">
-                <div style="width:100px;">
-                    <svg viewBox="0 0 320 80" style="width:100%; height:auto;"><defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#991b1b}</style></defs><g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text></svg>
-                </div>
-                <div class="label-title">ESTADO CRÍTICO</div>
+        <div>
+            <div class="campo"><label>Firma Bloqueo (QA):</label>
+                <div class="linea"></div>
             </div>
-            
-            <div class="label-status">🛑 FUERA DE SERVICIO 🛑</div>
-            <div class="label-warning">PROHIBIDO SU USO EN PRODUCCIÓN / CALIDAD</div>
-
-            <div class="label-row">
-                <label>ID del Equipo:</label>
-                <div class="input-wrapper"><input type="text" class="cedit label-input" placeholder="EQ-000"></div>
-            </div>
-            <div class="label-row">
-                <label>Motivo del Bloqueo:</label>
-                <div class="input-wrapper cbx-group">
-                    <label><input type="checkbox" class="cedit"> Falla</label>
-                    <label><input type="checkbox" class="cedit"> Vencido</label>
-                    <label><input type="checkbox" class="cedit"> Mantenimiento</label>
-                    <label><input type="checkbox" class="cedit"> OOT (Out of Tolerance)</label>
-                </div>
-            </div>
-            <div class="label-row" style="margin-top:5px;">
-                <label>Fecha de Bloqueo:</label>
-                <div class="input-wrapper"><input type="date" class="cedit label-input"></div>
-            </div>
-            <div class="label-row">
-                <label>Reporte de Desviación:</label>
-                <div class="input-wrapper"><input type="text" class="cedit label-input" placeholder="(FO-OP-51 o FO-OP-44)"></div>
-            </div>
-            <div class="label-row" style="margin-top: 20px;">
-                <label>Firma de Bloqueo (QA):</label>
-                <div class="input-wrapper"><input type="text" class="cedit label-input" placeholder="Nombre y Firma (Calidad)"></div>
-            </div>
-
-            <div class="label-footer">
-                ^(Código: ET-OP-02 | RETIRO AUTORIZADO SOLO POR ASEGURAMIENTO DE CALIDAD)
-            </div>
+            <div class="footer-bottom">Código: ET-OP-02 | Versión: 1.0 | Vigencia: MAR 2026 | RETIRO SOLO POR CALIDAD</div>
         </div>
     </div>
 </body>

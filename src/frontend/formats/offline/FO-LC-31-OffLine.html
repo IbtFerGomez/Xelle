@@ -3,76 +3,69 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-LC-31 Acondicionamiento (OFF)</title>
+    <title>FO-LC-31 Lote Acelular</title>
     <link rel="stylesheet" href="format-styles-OffLine.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app-OffLine.js"></script>
     <style>
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 12px;
+        }
+
+        .calc-output {
+            background-color: #f0f4f8;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .sig-block {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+        }
+
         @media print {
-            @page {
-                size: letter;
-                margin: 0.5cm;
-            }
 
-            body {
-                -webkit-print-color-adjust: exact;
-            }
-
-            input::placeholder {
+            input::placeholder,
+            textarea::placeholder {
                 color: transparent !important;
+                opacity: 0 !important;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
             }
 
             table,
-            th,
-            td,
-            div {
-                border-color: #000 !important;
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
             }
 
-            .no-print {
-                display: none !important;
+            thead {
+                display: table-header-group !important;
+                /* Repetir encabezados en cada página */
             }
-        }
 
-        /* Estilos estrictos para tablas */
-        .data-table th {
-            background: #f0f0f0;
-            font-size: 9px;
-            padding: 3px;
-            border: 1px solid #000;
-            text-align: center;
-        }
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
 
-        .data-table td {
-            border: 1px solid #000;
-            padding: 2px;
-            height: 20px;
-        }
-
-        .data-table input {
-            width: 98%;
-            border: none;
-            outline: none;
-            background: transparent;
-            font-size: 10px;
-            text-align: center;
-        }
-
-        .box-container {
-            border: 1px solid #000;
-            padding: 5px;
-            margin-bottom: 5px;
-            font-size: 10px;
-        }
-
-        .sample-area {
-            height: 100px;
-            border: 2px dashed #666;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 5px 0;
-            color: #999;
+            /* Evitar saltos huérfanos en títulos de sección */
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
         }
     </style>
 </head>
@@ -117,11 +110,11 @@
                 </svg>
             </div>
             <div class="registry-container">
-                <label>No. Registro</label>
+                <label>Lote PT</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-31-</span>
                     <input type="text" id="reg-31" class="registry-input generate-barcode" data-target="barcode-31"
-                        data-prefix="FO-LC-31-" placeholder="0001">
+                        data-prefix="FO-LC-31-" placeholder="001">
                 </div>
                 <input type="text" class="registry-date" placeholder="DD/MM/AA">
                 <svg id="barcode-31" class="barcode-svg"></svg>
@@ -129,152 +122,219 @@
         </div>
 
         <div class="header-main">
-            <h1>BITÁCORA DE ACONDICIONAMIENTO Y ETIQUETADO</h1>
+            <h1>REGISTRO DE LOTE DE PRODUCTO TERMINADO (ACELULAR)</h1>
             <div class="metadata">Código: FO-LC-31 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
-        <div class="box-container">
+        <div class="section">
+            <div class="section-title">1. INFORMACIÓN GENERAL DEL PRODUCTO</div>
             <table class="no-border-table">
                 <tr>
-                    <td width="15%"><strong>Producto:</strong></td>
-                    <td width="35%"><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
-                    <td width="15%"><strong>Lote Granel (PT):</strong></td>
-                    <td width="35%"><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                    <td width="40%"><strong>Nombre del Producto:</strong>
+                        <input id="prod-select" class="cedit"
+                            placeholder="X-Breath / X-Exosomes / X-Exosomes HA / X-Implant / X-Wound Care">
+                    </td>
+                    <td width="30%"><strong>Presentación:</strong> <input class="cedit" list="presentaciones-list"
+                            placeholder="Ej. Única">
+                        <datalist id="presentaciones-list">
+                            <option value="Única">
+                            <option value="3B">
+                            <option value="9B">
+                            <option value="15B">
+                            <option value="1G">
+                            <option value="5x5">
+                        </datalist>
+                    </td>
+                    <td width="30%"><strong>Cant. Teórica (Unidades):</strong> <input type="number" id="cant-teorica"
+                            class="cedit" oninput="calcYield()" placeholder="0"></td>
                 </tr>
                 <tr>
-                    <td><strong>Presentación:</strong></td>
-                    <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
-                    <td><strong>Caducidad:</strong></td>
-                    <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                    <td><strong>Número de Lote:</strong> <input class="cedit" id="lote-auto"
+                            placeholder="Prefijo + AAMMDD"></td>
+                    <td><strong>Fecha Fabricación:</strong> <input type="text" id="fecha-fab" class="cedit"
+                            placeholder="DD/MM/AA"></td>
+                    <td><strong>Fecha Vencimiento:</strong> <input type="text" id="fecha-venc" class="cedit"
+                            placeholder="DD/MM/AA"></td>
+                </tr>
+                <tr>
+                    <td><strong>Referencia de Orden Maestra:</strong> <input class="cedit" placeholder="Orden Maestra">
+                    </td>
+                    <td colspan="2"></td>
                 </tr>
             </table>
         </div>
 
-        <div class="box-container">
-            <div class="section-title" style="margin-top:0;">1. DESPEJE DE LÍNEA (LINE CLEARANCE)</div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
-                <label><input type="text"> Área limpia y libre de productos anteriores.</label>
-                <label><input type="text"> Ausencia de documentación ajena al lote.</label>
-                <label><input type="text"> Equipos de impresión verificados y limpios.</label>
-                <label><input type="text"> Personal con indumentaria completa y correcta.</label>
-            </div>
-            <div style="margin-top:5px; border-top:1px solid #ccc; padding-top:2px; text-align:right;">
-                <strong>Verificó Despeje (Supervisor):</strong> <input class="cedit"
-                    style="width:150px; border-bottom:1px solid #000;">
-            </div>
-        </div>
-
         <div class="section">
-            <div class="section-title">2. CONCILIACIÓN DE MATERIALES (BALANCE)</div>
-            <table class="compact-table data-table">
+            <div class="section-title">2. COMPONENTES DEL PRODUCTO (GRANEL / ORIGEN)</div>
+            <table id="tbl-componentes" class="compact-table">
                 <thead>
                     <tr>
-                        <th width="25%">Descripción del Material</th>
-                        <th width="15%">Lote Interno</th>
-                        <th width="12%">Cant. Recibida (A)</th>
-                        <th width="12%">Cant. Usada (B)</th>
-                        <th width="12%">Mermas (C)</th>
-                        <th width="12%">Devolución (D)</th>
-                        <th width="12%">Diferencia*</th>
+                        <th width="25%">Componente</th>
+                        <th width="20%">Proveedor / Origen</th>
+                        <th width="15%">Lote</th>
+                        <th width="15%">Caducidad</th>
+                        <th width="10%">Cantidad</th>
+                        <th width="10%">Unidad</th>
+                        <th class="no-print" width="5%"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td style="text-align:left;">Etiquetas Primarias (Vial)</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left;">Etiquetas Secundarias</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left;">Cajas / Envases</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left;">Insertos / Instructivos</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left;">Sellos de Seguridad</td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
-            <div style="font-size:9px; text-align:right;">* Fórmula: A - (B + C + D). Debe ser 0.</div>
+            <button class="btn btn-primary btn-mini no-print" onclick="addCompRow()">+ Agregar Componente</button>
         </div>
 
         <div class="section">
-            <div class="section-title">3. ETIQUETA TESTIGO / MUESTRA FÍSICA</div>
-            <div class="sample-area">
-                (PEGAR AQUÍ UNA ETIQUETA REAL DEL LOTE)
-            </div>
-            <div style="font-size:10px;">
-                <label><input type="text"> Datos impresos corresponden al Lote y Caducidad correctos.</label><br>
-                <label><input type="text"> Código de barras / Datamatrix legible.</label>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="section-title">4. RENDIMIENTO DEL PROCESO</div>
-            <table class="compact-table data-table">
+            <div class="section-title">3. MATERIALES DE ACONDICIONAMIENTO</div>
+            <table id="tbl-materiales" class="compact-table">
                 <thead>
                     <tr>
-                        <th width="25%">Unidades Totales Acondicionadas</th>
-                        <th width="25%">Muestras de Retención</th>
-                        <th width="25%">Rechazos / Defectos</th>
-                        <th width="25%">Total Ingresado a PT</th>
+                        <th width="30%">Producto</th>
+                        <th width="25%">Tipo</th>
+                        <th width="25%">Lote</th>
+                        <th width="15%">Cantidad</th>
+                        <th class="no-print" width="5%"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td style="height:30px;"><input class="cedit" style="font-weight:bold; font-size:14px;"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit" style="font-weight:bold; font-size:14px;"></td>
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addMatRow()">+ Agregar Material</button>
         </div>
 
-        <div class="signature-area">
-            <div class="signature-box">
-                <p>Realizó Acondicionamiento:</p><input type="text">
-                <p>Firma</p>
+        <div class="section">
+            <div class="section-title">5. REGISTRO DE INSPECCIÓN Y CONTROL</div>
+            <div style="margin-bottom: 5px;">
+                <strong>Lote:</strong> <input class="cedit" style="width: 200px;" placeholder="Lote proceso...">
             </div>
-            <div class="signature-box">
-                <p>Verificó (Calidad):</p><input type="text">
-                <p>Firma</p>
+            <table id="tbl-control" class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="5%">ID (#)</th>
+                        <th width="40%">Muestra / Verificación (Parámetro)</th>
+                        <th width="10%">Código</th>
+                        <th width="20%">Especificación</th>
+                        <th width="10%">Resultado</th>
+                        <th width="15%">Observaciones</th>
+                        <th class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addControlRow()">+ Control</button>
+
+            <div
+                style="margin-top: 15px; border-top: 1px solid #ccc; padding-top: 5px; display:flex; align-items:center;">
+                <strong>Responsable de Inspección:</strong>
+                <span style="margin-left:10px;">Nombre:</span> <input class="cedit" style="width:200px"
+                    placeholder="Nombre">
+                <span style="margin-left:10px;">Firma:</span> <input class="cedit" style="width:150px"
+                    placeholder="Firma">
             </div>
         </div>
 
-        <div class="footer">FO-LC-31-O | ACONDICIONAMIENTO (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="section">
+            <div class="section-title">6. RECONCILIACIÓN DE PRODUCTO</div>
+            <table class="compact-table">
+                <tr>
+                    <td width="40%"><strong>Producto Terminado Obtenido (Unidades):</strong></td>
+                    <td><input type="number" id="cant-real" class="cedit" oninput="calcYield()" placeholder="0"></td>
+                </tr>
+                <tr>
+                    <td><strong>Mermas / Descarte Justificado:</strong></td>
+                    <td><input type="number" class="cedit" placeholder="0"></td>
+                </tr>
+                <tr>
+                    <td><strong>Causas:</strong></td>
+                    <td><textarea class="cedit" rows="1" placeholder="Explique las causas..."></textarea></td>
+                </tr>
+                <tr>
+                    <td style="background-color: #e8f6f3;"><strong>% Rendimiento:</strong></td>
+                    <td style="background-color: #e8f6f3;"><input id="yield-percent" class="cedit calc-output" readonly>
+                    </td>
+                </tr>
+            </table>
+            <div style="margin-top:5px;"><strong>Conclusión:</strong> <label><input type="radio" name="yield_status">
+                    Dentro de límites</label> <label><input type="radio" name="yield_status"> Fuera de límites</label>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">7. VERIFICACIONES Y APROBACIONES</div>
+            <div class="sig-block">
+                <p><strong>Operador(es):</strong></p>
+                <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
+                        class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
+                        type="text" class="cedit" style="flex:1" placeholder="Firma"><span
+                        style="width:40px;">Fecha:</span> <input type="text" class="cedit" style="width:130px"
+                        placeholder="DD/MM/AA"></div>
+            </div>
+            <div class="sig-block">
+                <p><strong>Supervisor:</strong> Verificó Proc: <label><input type="checkbox"> Sí</label> <label><input
+                            type="checkbox"> No</label></p>
+                <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
+                        class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
+                        type="text" class="cedit" style="flex:1" placeholder="Firma"><span
+                        style="width:40px;">Fecha:</span> <input type="text" class="cedit" style="width:130px"
+                        placeholder="DD/MM/AA"></div>
+            </div>
+            <div class="sig-block">
+                <p><strong>Calidad (Liberación):</strong> Datos completos/Cumple: <label><input type="checkbox">
+                        Sí</label> <label><input type="checkbox"> No</label></p>
+                <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
+                        class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
+                        type="text" class="cedit" style="flex:1" placeholder="Firma"><span
+                        style="width:40px;">Fecha:</span> <input type="text" class="cedit" style="width:130px"
+                        placeholder="DD/MM/AA"></div>
+            </div>
+            <div class="sig-block">
+                <p><strong>Responsable Dirección (Autorización Final):</strong></p>
+                <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
+                        class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
+                        type="text" class="cedit" style="flex:1" placeholder="Firma"><span
+                        style="width:40px;">Fecha:</span> <input type="text" class="cedit" style="width:130px"
+                        placeholder="DD/MM/AA"></div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-title">8. OBSERVACIONES</div>
+            <textarea class="cedit" rows="3" placeholder="Ninguna"></textarea>
+        </div>
+
+        <div class="footer">FO-LC-31 | LOTE ACELULAR | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
+
+    <script>
+        function calcYield() {
+            const teo = parseFloat(document.getElementById('cant-teorica').value);
+            const real = parseFloat(document.getElementById('cant-real').value);
+            const res = (teo > 0 && real >= 0) ? ((real / teo) * 100).toFixed(2) + '%' : '';
+            document.getElementById('yield-percent').value = res;
+        }
+
+        function addCompRow() {
+            const tbody = document.getElementById('tbl-componentes').querySelector('tbody');
+            const row = document.createElement('tr');
+            row.innerHTML = `<td><input class="cedit" placeholder="Comp..."></td><td><input class="cedit" placeholder="Prov..."></td><td><input class="cedit" placeholder="Lot..."></td><td><input type="text" class="cedit" placeholder="DD/MM/AA"></td><td><input type="number" class="cedit" placeholder="0"></td><td><input class="cedit" placeholder="Ud"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
+            tbody.appendChild(row);
+        }
+        function addMatRow() {
+            const tbody = document.getElementById('tbl-materiales').querySelector('tbody');
+            const row = document.createElement('tr');
+            // Cambiado select por input
+            row.innerHTML = `<td><input class="cedit" placeholder="Prod..."></td><td><input class="cedit" placeholder="Envase Prim / Envase Sec / Otros"></td><td><input class="cedit" placeholder="Lote"></td><td><input type="number" class="cedit" placeholder="Cant"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
+            tbody.appendChild(row);
+        }
+        function addControlRow() {
+            const tbody = document.getElementById('tbl-control').querySelector('tbody');
+            const idNum = tbody.children.length + 1;
+            const row = document.createElement('tr');
+            row.innerHTML = `<td><input type="number" class="cedit text-center" value="${idNum}"></td><td><textarea class="cedit" rows="2" placeholder="Parámetro..."></textarea></td><td><input class="cedit" placeholder="Cód"></td><td><input class="cedit" placeholder="Espec"></td><td><input class="cedit" placeholder="Res"></td><td><input class="cedit" placeholder="Obs"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
+            tbody.appendChild(row);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => { addCompRow(); addMatRow(); addControlRow(); });
+    </script>
 </body>
 
 </html>

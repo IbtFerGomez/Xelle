@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-55 Expediente de Mantenimiento</title>
+    <link rel="stylesheet" href="../format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .radio-group {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            font-size: 10px;
+            align-items: center;
+        }
+
+        .audit-notes {
+            background-color: #fffbeb;
+            border: 1px solid #b45309;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 9px;
+            color: #78350f;
+            line-height: 1.4;
+        }
+
+        .audit-notes strong {
+            color: #991b1b;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-55">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveFormOffline()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearFormOffline()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>No. Expediente</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-55-</span>
+                    <input type="text" id="reg-op55" class="registry-input cedit generate-barcode"
+                        data-target="barcode-op55" data-prefix="FO-OP-55-" placeholder="001"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-op55" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>EXPEDIENTE DE MANTENIMIENTO: UNIDADES PAQUETE (HVAC)</h1>
+            <div class="metadata">Código: FO-OP-55 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. IDENTIFICACIÓN DE LA UNIDAD</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Nombre / Ubicación:</strong></td>
+                    <td width="80%" colspan="3"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold;"
+                            placeholder="Ej. Unidad Paquete 01 - Cuarto Limpio B"></td>
+                </tr>
+                <tr>
+                    <td width="20%"><strong>Marca / Modelo:</strong></td>
+                    <td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td width="20%"><strong>No. de Serie:</strong></td>
+                    <td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Gas Refrigerante:</strong></td>
+                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;" placeholder="Ej. R-410A">
+                    </td>
+                    <td><strong>Capacidad (BTU/Ton):</strong></td>
+                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
+                            placeholder="Ej. 5 Toneladas"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. REGISTRO DE INTERVENCIONES (PREVENTIVAS Y CORRECTIVAS)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Instrucción: El técnico debe detallar cada
+                actividad realizada. Se debe cruzar la información con el Programa Anual (FO-OP-55).</p>
+            <table class="compact-table" id="tbl-intervenciones">
+                <thead>
+                    <tr>
+                        <th width="10%">Fecha</th>
+                        <th width="12%">Tipo de Mantto.</th>
+                        <th width="35%">Descripción de la Actividad / Hallazgos</th>
+                        <th width="18%">Ref. Refacciones<br><span style="font-size:8px; font-weight:normal;">(Filtros,
+                                Bandas, Gas)</span></th>
+                        <th width="12%">Firma del<br>Técnico</th>
+                        <th width="10%">Vo.Bo. QA / Gerencia</th>
+                        <th width="3%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aaaa"></td>
+                        <td><input type="text" class="cedit" placeholder="Preventivo/Correctivo"
+                                style="font-weight:bold;"></td>
+                        <td><textarea class="cedit" rows="2" style="text-align:left;"></textarea></td>
+                        <td><textarea class="cedit" rows="2"></textarea></td>
+                        <td><input class="cedit" placeholder="Firma"></td>
+                        <td><input class="cedit" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-intervenciones')">+ AGREGAR INTERVENCIÓN</button>
+        </div>
+
+        <div class="section-header">3. CHECKLIST TÉCNICO DE VERIFICACIÓN (Puntos Críticos)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Marcar conforme se verifique en cada mantenimiento
+                preventivo.</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="20%">SISTEMA</th>
+                        <th width="60%">ACTIVIDAD REALIZADA</th>
+                        <th width="20%">ESTATUS (OK / FALLA)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:bold;">Filtración</td>
+                        <td class="text-left">Lavado de filtros metálicos / Cambio de pre-filtros y HEPA.</td>
+                        <td><input type="text" class="cedit" placeholder="OK/FALLA/N/A" style="font-weight:bold;"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">Eléctrico</td>
+                        <td class="text-left">Revisión de voltaje, reapriete de terminales y contactores.</td>
+                        <td><input type="text" class="cedit" placeholder="OK/FALLA/N/A" style="font-weight:bold;"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">Mecánico</td>
+                        <td class="text-left">Inspección de bandas, poleas y lubricación de chumaceras.</td>
+                        <td><input type="text" class="cedit" placeholder="OK/FALLA/N/A" style="font-weight:bold;"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">Refrigeración</td>
+                        <td class="text-left">Medición de presiones (Succión/Descarga) y carga de gas.</td>
+                        <td><input type="text" class="cedit" placeholder="OK/FALLA/N/A" style="font-weight:bold;"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">Evacuación</td>
+                        <td class="text-left">Limpieza de charola de condensados y drenajes (Evita hongos).</td>
+                        <td><input type="text" class="cedit" placeholder="OK/FALLA/N/A" style="font-weight:bold;"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">Gabinete</td>
+                        <td class="text-left">Limpieza de serpentines (Condensadora / Evaporadora).</td>
+                        <td><input type="text" class="cedit" placeholder="OK/FALLA/N/A" style="font-weight:bold;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">4. REPORTE DE FALLA Y ACCIÓN CORRECTIVA (SOLO PARA CORRECTIVOS)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-bottom:5px;">En caso de paro no programado,
+                llenar esta sección para trazabilidad de la falla.</p>
+            <div style="margin-bottom:8px;">
+                <strong>Descripción de la falla:</strong>
+                <textarea class="cedit" rows="2"
+                    style="width:100%; border:1px solid #ccc; padding:4px; box-sizing:border-box;"></textarea>
+            </div>
+            <div style="margin-bottom:8px;">
+                <strong>Causa Raíz detectada:</strong>
+                <textarea class="cedit" rows="2"
+                    style="width:100%; border:1px solid #ccc; padding:4px; box-sizing:border-box;"></textarea>
+            </div>
+            <div style="margin-bottom:8px;">
+                <strong>Acción tomada para restablecer:</strong>
+                <textarea class="cedit" rows="2"
+                    style="width:100%; border:1px solid #ccc; padding:4px; box-sizing:border-box;"></textarea>
+            </div>
+
+            <div class="radio-group"
+                style="margin-top:10px; background-color:#f1f5f9; padding:8px; border:1px solid #cbd5e1; border-radius:4px;">
+                <strong>¿Afectó la calificación del área / cuarto limpio?</strong>
+                <label><input type="radio" name="afecta_calif" class="cedit"> No</label>
+                <label style="display:flex; align-items:center;">
+                    <input type="radio" name="afecta_calif" class="cedit"> Sí (Indicar folio de Desviación FO-OP-55):
+                    <input type="text" class="cedit"
+                        style="border-bottom:1px solid #991b1b; width:150px; margin-left:5px; background:transparent;">
+                </label>
+            </div>
+        </div>
+
+        <div class="section-header">5. FIRMAS DE CIERRE</div>
+        <div class="signature-area" style="margin-top: 15px;">
+            <div class="signature-box">
+                <p>Realizó (Técnico Interno/Externo)</p>
+                <input class="cedit" placeholder="Nombre, Firma y Fecha">
+            </div>
+            <div class="signature-box">
+                <p>Verificó (Mantto / Infraestructura)</p>
+                <input class="cedit" placeholder="Nombre, Firma y Fecha">
+            </div>
+            <div class="signature-box">
+                <p>Liberó para Operación (QA)</p>
+                <input class="cedit" placeholder="Nombre, Firma y Fecha">
+            </div>
+        </div>
+
+        <div class="audit-notes">
+            <strong>NOTAS DE OPERACIÓN Y AUDITORÍA:</strong><br>
+            • <strong>Trazabilidad de Filtros:</strong> Las unidades paquete de Xelle Scientific suelen alimentar áreas
+            estériles. Es vital anotar la fecha exacta del cambio de filtros HEPA y adjuntar su certificado de calidad
+            al expediente de la unidad.<br>
+            • <strong>Mantenimiento Externo:</strong> Si la unidad es atendida por un proveedor externo, este formato
+            debe llenarse y el reporte de servicio del proveedor debe engraparse al reverso.<br>
+            • <strong>Impacto en Calidad:</strong> Toda reparación correctiva en una Unidad Paquete que suministre aire
+            a un área Clase A o B requiere un monitoreo ambiental posterior antes de liberar el área para producción
+            nuevamente.
+        </div>
+
+    </div>
+
+    <script>
+        // Funcionalidad offline básica
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+
+            // Limpiar inputs y textareas
+            newRow.querySelectorAll('input, textarea').forEach(input => input.value = '');
+
+            tbody.appendChild(newRow);
+        }
+
+        function saveFormOffline() {
+            const formData = {};
+            const docId = 'FO-OP-55';
+
+            // Recopilar todos los inputs
+            document.querySelectorAll('.cedit').forEach((el, idx) => {
+                const id = el.id || `field_${idx}`;
+                if (el.type === 'checkbox' || el.type === 'radio') {
+                    formData[id] = el.checked;
+                } else {
+                    formData[id] = el.value;
+                }
+            });
+
+            // Guardar en localStorage
+            localStorage.setItem(docId, JSON.stringify(formData));
+            alert('Formulario guardado localmente en el navegador');
+        }
+
+        function clearFormOffline() {
+            if (confirm('¿Desea limpiar todos los campos del formulario?')) {
+                document.querySelectorAll('.cedit').forEach(el => {
+                    if (el.type === 'checkbox' || el.type === 'radio') {
+                        el.checked = false;
+                    } else {
+                        el.value = '';
+                    }
+                });
+                localStorage.removeItem('FO-OP-55');
+            }
+        }
+
+        // Cargar datos guardados al iniciar
+        window.addEventListener('DOMContentLoaded', () => {
+            const docId = 'FO-OP-55';
+            const savedData = localStorage.getItem(docId);
+
+            if (savedData) {
+                const formData = JSON.parse(savedData);
+                document.querySelectorAll('.cedit').forEach((el, idx) => {
+                    const id = el.id || `field_${idx}`;
+                    if (formData[id] !== undefined) {
+                        if (el.type === 'checkbox' || el.type === 'radio') {
+                            el.checked = formData[id];
+                        } else {
+                            el.value = formData[id];
+                        }
+                    }
+                });
+            }
+
+            // Generar código de barras con JsBarcode
+            const regInput = document.getElementById('reg-op55');
+            const barcodeSvg = document.getElementById('barcode-op55');
+
+            if (regInput && barcodeSvg && window.JsBarcode) {
+                const generateBarcode = () => {
+                    const val = regInput.value;
+                    if (val) {
+                        try {
+                            JsBarcode(barcodeSvg, 'FO-OP-55-' + val, {
+                                format: "CODE128",
+                                height: 30,
+                                displayValue: true,
+                                fontSize: 10,
+                                margin: 0
+                            });
+                        } catch (e) {
+                            console.warn('Error generando código de barras:', e);
+                        }
+                    }
+                };
+                regInput.addEventListener('input', generateBarcode);
+                if (regInput.value) generateBarcode();
+            }
+        });
+    </script>
+</body>
+
+</html>

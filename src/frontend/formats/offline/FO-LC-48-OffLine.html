@@ -11,11 +11,135 @@
         .section-header {
             background-color: #1E3A5F;
             color: white;
-            padding: 5px 10px;
+            padding: 8px 12px;
             font-weight: bold;
-            font-size: 12px;
-            margin-top: 15px;
+            font-size: 14px;
+            margin-top: 12px;
             border-radius: 4px;
+        }
+
+        /* Estilos específicos para FO-LC-48 - Tamaño más grande para impresión */
+        #doc-fo-lc-48 .container {
+            font-size: 13px;
+        }
+
+        #doc-fo-lc-48 .header-main h1 {
+            font-size: 17px;
+        }
+
+        #doc-fo-lc-48 .metadata {
+            font-size: 11px;
+        }
+
+        #doc-fo-lc-48 table th {
+            font-size: 11px;
+            padding: 6px;
+        }
+
+        #doc-fo-lc-48 table td {
+            font-size: 12px;
+            padding: 6px;
+        }
+
+        #doc-fo-lc-48 .cedit {
+            font-size: 12px;
+            padding: 4px;
+        }
+
+        #doc-fo-lc-48 strong {
+            font-size: 13px;
+        }
+
+        #doc-fo-lc-48 .signature-box p {
+            font-size: 11px;
+        }
+
+        @media print {
+            @page {
+                size: portrait;
+                margin: 0.8cm 0.5cm;
+            }
+
+            #doc-fo-lc-48 body {
+                font-size: 11px;
+            }
+
+            #doc-fo-lc-48 .container {
+                transform: scale(0.98);
+                transform-origin: top center;
+                padding: 15px 25px;
+            }
+
+            #doc-fo-lc-48 .header-main h1 {
+                font-size: 15px;
+                margin: 3px 0;
+            }
+
+            #doc-fo-lc-48 .metadata {
+                font-size: 9px;
+            }
+
+            #doc-fo-lc-48 .section-header {
+                font-size: 12px;
+                padding: 5px 10px;
+                margin-top: 8px;
+                margin-bottom: 6px;
+            }
+
+            #doc-fo-lc-48 table {
+                margin-bottom: 6px;
+            }
+
+            #doc-fo-lc-48 table th {
+                font-size: 10px;
+                padding: 5px 3px;
+            }
+
+            #doc-fo-lc-48 table td {
+                font-size: 10.5px;
+                padding: 5px 3px;
+            }
+
+            #doc-fo-lc-48 .cedit {
+                font-size: 10.5px;
+                padding: 3px;
+            }
+
+            #doc-fo-lc-48 strong {
+                font-size: 11px;
+            }
+
+            #doc-fo-lc-48 .section {
+                margin-bottom: 8px;
+                padding: 8px;
+            }
+
+            #doc-fo-lc-48 .signature-area {
+                margin-top: 12px;
+                margin-bottom: 20px;
+            }
+
+            #doc-fo-lc-48 .signature-box p {
+                font-size: 9.5px;
+                margin: 3px 0;
+            }
+
+            #doc-fo-lc-48 .footer {
+                font-size: 7.5px;
+                margin-top: 10px;
+            }
+
+            #doc-fo-lc-48 .logo-container svg {
+                height: 50px;
+            }
+
+            #doc-fo-lc-48 p[style*="font-size:10px"] {
+                font-size: 8.5px !important;
+            }
+
+            #doc-fo-lc-48 p[style*="font-size:9px"] {
+                font-size: 8px !important;
+            }
         }
     </style>
 </head>
@@ -78,30 +202,30 @@
         <div class="section">
             <table class="no-border-table">
                 <tr>
-                    <td><strong>Producto / Insumo:</strong></td>
-                    <td><input class="cedit" style="font-weight:bold;"></td>
-                    <td><strong>Lote / Serie:</strong></td>
-                    <td><input class="cedit" style="font-weight:bold;"></td>
+                    <td style="padding:6px;"><strong>Producto / Insumo:</strong></td>
+                    <td style="padding:6px;"><input class="cedit" style="font-weight:bold;"></td>
+                    <td style="padding:6px;"><strong>Lote / Serie:</strong></td>
+                    <td style="padding:6px;"><input class="cedit" style="font-weight:bold;"></td>
                 </tr>
             </table>
-            <table class="compact-table" style="margin-top:10px;">
+            <table class="compact-table" style="margin-top:12px;">
                 <thead>
                     <tr>
-                        <th>Referencia Documental Previa</th>
-                        <th>No. Folio</th>
-                        <th>Fecha Ejecución</th>
+                        <th style="padding:7px;">Referencia Documental Previa</th>
+                        <th style="padding:7px;">No. Folio</th>
+                        <th style="padding:7px;">Fecha Ejecución</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Registro de Muestreo (FO-LC-46)</td>
-                        <td><input class="cedit"></td>
-                        <td><input type="text" class="cedit"></td>
+                        <td style="padding:7px;">Registro de Muestreo (FO-LC-46)</td>
+                        <td style="padding:7px;"><input class="cedit"></td>
+                        <td style="padding:7px;"><input type="text" class="cedit"></td>
                     </tr>
                     <tr>
-                        <td>Revisión de Calidad Física (FO-LC-47)</td>
-                        <td><input class="cedit"></td>
-                        <td><input type="text" class="cedit"></td>
+                        <td style="padding:7px;">Revisión de Calidad Física (FO-LC-47)</td>
+                        <td style="padding:7px;"><input class="cedit"></td>
+                        <td style="padding:7px;"><input type="text" class="cedit"></td>
                     </tr>
                 </tbody>
             </table>
@@ -109,61 +233,64 @@
 
         <div class="section-header">2. RESULTADOS DE CONTROL MICROBIOLÓGICO</div>
         <div class="section">
-            <p style="font-size:10px; color:#666; margin-bottom:5px;">Evidencias base en formato FO-LC-41</p>
+            <p style="font-size:11px; color:#666; margin-bottom:6px;">Evidencias base en formato FO-LC-41</p>
             <table class="compact-table">
                 <thead>
                     <tr>
-                        <th width="30%">Referencia (Folio FO-LC-41)</th>
-                        <th width="15%">Ingreso</th>
-                        <th width="15%">TGL</th>
-                        <th width="15%">AST</th>
-                        <th width="15%">ADS</th>
-                        <th width="10%">Global</th>
+                        <th width="30%" style="padding:7px;">Referencia (Folio FO-LC-41)</th>
+                        <th width="15%" style="padding:7px;">Ingreso</th>
+                        <th width="15%" style="padding:7px;">TGL</th>
+                        <th width="15%" style="padding:7px;">AST</th>
+                        <th width="15%" style="padding:7px;">ADS</th>
+                        <th width="10%" style="padding:7px;">Global</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit" type="text"></td>
-                        <td><input class="cedit" type="text"></td>
-                        <td><input class="cedit" type="text"></td>
-                        <td><input class="cedit" type="text"></td>
-                        <td><input class="cedit" type="text" style="font-weight:bold;"></td>
+                        <td style="padding:7px;"><input class="cedit"></td>
+                        <td style="padding:7px;"><input class="cedit" type="text"></td>
+                        <td style="padding:7px;"><input class="cedit" type="text"></td>
+                        <td style="padding:7px;"><input class="cedit" type="text"></td>
+                        <td style="padding:7px;"><input class="cedit" type="text"></td>
+                        <td style="padding:7px;"><input class="cedit" type="text" style="font-weight:bold;"></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="section-header">3. DICTAMEN FINAL Y LIBERACIÓN</div>
-        <div class="section" style="border: 2px solid #1E3A5F; padding:15px; background:#f8fafc;">
+        <div class="section" style="border: 2px solid #1E3A5F; padding:18px; background:#f8fafc;">
             <div style="display:flex; justify-content:space-between;">
                 <div style="width:60%;">
-                    <label><strong>Observaciones / Resultados Fuera de Especificación (OOS):</strong></label>
-                    <textarea class="cedit" rows="3" style="width:100%"></textarea>
+                    <label style="font-size:13px;"><strong>Observaciones / Resultados Fuera de Especificación (OOS):</strong></label>
+                    <textarea class="cedit" rows="3" style="width:100%; font-size:12px;"></textarea>
                 </div>
                 <div style="width:35%; text-align:center;">
-                    <label style="font-weight:bold; display:block;">ESTATUS ASIGNADO:</label>
+                    <label style="font-weight:bold; display:block; font-size:13px;">ESTATUS ASIGNADO:</label>
                     <input class="cedit" type="text"
-                        style="font-size:16px; font-weight:bold; padding:10px; width:100%; border:2px solid #ccc; margin-top:5px;">
+                        style="font-size:18px; font-weight:bold; padding:12px; width:100%; border:2px solid #ccc; margin-top:5px;">
                 </div>
             </div>
-            <p style="font-size:9px; margin-top:5px; color:#555;">* Liberado: Cumple especificaciones. Uso en producción
+            <p style="font-size:10px; margin-top:8px; color:#555;">* Liberado: Cumple especificaciones. Uso en producción
                 o almacén definitivo.<br>* Rechazado: Riesgo Crítico. Segregación física, etiqueta roja e iniciar
                 Reporte NC.</p>
         </div>
 
         <div class="signature-area">
             <div class="signature-box">
-                <p>Analista de Laboratorio</p><input type="text">
-                <p>Ejecutor de Pruebas</p>
+                <p style="font-size:12px; font-weight:bold; margin:8px 0 4px 0;">Analista de Laboratorio</p>
+                <input type="text" style="padding:6px;">
+                <p style="font-size:11px; margin-top:4px;">Ejecutor de Pruebas</p>
             </div>
             <div class="signature-box">
-                <p>Jefe de Calidad</p><input type="text">
-                <p>Revisión Resultados</p>
+                <p style="font-size:12px; font-weight:bold; margin:8px 0 4px 0;">Jefe de Calidad</p>
+                <input type="text" style="padding:6px;">
+                <p style="font-size:11px; margin-top:4px;">Revisión Resultados</p>
             </div>
             <div class="signature-box">
-                <p>Responsable Dirección</p><input type="text">
-                <p>Autorización Legal</p>
+                <p style="font-size:12px; font-weight:bold; margin:8px 0 4px 0;">Responsable Dirección</p>
+                <input type="text" style="padding:6px;">
+                <p style="font-size:11px; margin-top:4px;">Autorización Legal</p>
             </div>
         </div>
         <div class="footer">FO-LC-48-O | RESULTADOS Y DICTAMEN DE LOTE | Versión: 1.0<br>El contenido de este documento

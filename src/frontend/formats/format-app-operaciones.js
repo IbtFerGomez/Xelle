@@ -513,9 +513,15 @@ const AppCom = {
                 <td><input class="cedit" placeholder="Lote"></td>
                 <td><input type="number" class="cedit text-center"></td>
                 <td><input type="number" class="cedit text-center"></td>
-                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()" title="Eliminar esta línea">Quitar</button></td>`;
             document.querySelector('#tbl-picking tbody').appendChild(r);
             AppCom.Universal.fillProdSelect(r.querySelector('.prod-select'));
+        },
+        removeLastPickingRow: function () {
+            const rows = document.querySelectorAll('#tbl-picking tbody tr');
+            if (rows.length > 0) {
+                rows[rows.length - 1].remove();
+            }
         },
         getCustomData: function () {
             const r = [];
@@ -614,4 +620,5 @@ window.printForm = () => AppCom.Universal.printForm();
 window.clearForm = () => AppCom.Universal.clearForm();
 window.addPedidoRow = () => AppCom.FO_OP_15.addPedidoRow();
 window.addPickingRow = () => AppCom.FO_OP_16.addPickingRow();
+window.removeLastPickingRow = () => AppCom.FO_OP_16.removeLastPickingRow();
 window.addRemisionRow = () => AppCom.FO_OP_17.addRemisionRow();

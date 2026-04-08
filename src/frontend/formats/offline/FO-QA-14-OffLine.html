@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-14 Checklist de Seguridad e Higiene</title>
+    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app-OffLine.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 5px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .compact-table input {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+        }
+
+        .cbx-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+            font-size: 10px;
+        }
+
+        .check-col {
+            width: 40px;
+            font-weight: bold;
+        }
+
+        .status-conforme {
+            color: #166534;
+            font-weight: bold;
+        }
+
+        .status-no-conforme {
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-qa-14">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Inspección</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-14-</span>
+                    <input type="text" id="reg-qa14" class="registry-input generate-barcode" data-target="barcode-qa14"
+                        data-prefix="FO-QA-14-" placeholder="000">
+                </div>
+                <input type="text" class="registry-date" placeholder="dd/mm/aaaa">
+                <svg id="barcode-qa14" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>CHECKLIST DE SEGURIDAD E HIGIENE DEL PERSONAL</h1>
+            <div class="metadata">Código: FO-QA-14 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. DATOS DE LA INSPECCIÓN</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="15%"><strong>Fecha:</strong></td>
+                    <td width="20%"><input type="text" class="cedit" placeholder="dd/mm/aaaa"></td>
+                    <td width="10%"><strong>Hora:</strong></td>
+                    <td width="15%"><input type="text" class="cedit" placeholder="HH:MM"></td>
+                    <td width="10%"><strong>Turno:</strong></td>
+                    <td width="30%">
+                        <div class="cbx-group">
+                            <label><input type="radio" name="turno" class="cedit"> Matutino</label>
+                            <label><input type="radio" name="turno" class="cedit"> Vespertino</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Área Inspeccionada:</strong></td>
+                    <td><input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td><strong>Inspector:</strong></td>
+                    <td colspan="3"><input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. EQUIPO DE PROTECCIÓN PERSONAL (EPP) - NOM-017-STPS</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="25%">Elemento de Protección</th>
+                        <th width="35%">Especificación</th>
+                        <th width="10%">Cumple (S/N)</th>
+                        <th width="30%">Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left">Cofia / Gorro</td>
+                        <td class="text-left">Cubre la totalidad del cabello.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Cubrebocas</td>
+                        <td class="text-left">Cubre nariz y boca correctamente.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Gafas de Seguridad</td>
+                        <td class="text-left">Sin rayaduras, ajuste hermético.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Bata / Overol</td>
+                        <td class="text-left">Limpio, sin hilos sueltos ni roturas.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Guantes de Nitrilo</td>
+                        <td class="text-left">Sin perforaciones (Doble guante en Clase A).</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Calzado de Seguridad</td>
+                        <td class="text-left">Botas de área o cubrecalzado estéril.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Protección Auditiva</td>
+                        <td class="text-left">Uso en áreas de ruido (Compresores/Bombas).</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">3. HIGIENE Y DISCIPLINA EN ÁREAS LIMPIAS - NOM-241-SSA1</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="25%">Aspecto de Higiene</th>
+                        <th width="35%">Criterio de Aceptación</th>
+                        <th width="10%">Cumple (S/N)</th>
+                        <th width="30%">Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left">Aseo Personal</td>
+                        <td class="text-left">Uñas cortas, sin esmalte, manos limpias.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Joyas y Accesorios</td>
+                        <td class="text-left">Ausencia de anillos, relojes, aretes.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Cosméticos</td>
+                        <td class="text-left">Personal libre de maquillaje y perfumes.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Heridas Expuestas</td>
+                        <td class="text-left">Ausencia de cortes o lesiones en manos.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Lavado de Manos</td>
+                        <td class="text-left">Ejecución de técnica según PNO.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">4. SEGURIDAD EN EL PUESTO DE TRABAJO</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="25%">Condición de Seguridad</th>
+                        <th width="35%">Criterio de Aceptación</th>
+                        <th width="10%">Cumple (S/N)</th>
+                        <th width="30%">Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left">Orden y Limpieza (5S)</td>
+                        <td class="text-left">Área libre de obstáculos y basura.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Manejo de Químicos</td>
+                        <td class="text-left">Envases etiquetados y con MSDS a la mano.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Ergonomía</td>
+                        <td class="text-left">Posturas adecuadas, uso de bancos/tapetes.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Salidas de Emergencia</td>
+                        <td class="text-left">Despejadas y señalizadas.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Extintores</td>
+                        <td class="text-left">Vigentes y con acceso libre.</td>
+                        <td><input type="text" class="cedit" maxlength="2"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">5. DICTAMEN Y ACCIONES CORRECTIVAS</div>
+        <div class="section">
+            <strong>Resultado de la Inspección:</strong>
+            <div class="cbx-group">
+                <label class="status-conforme"><input type="radio" name="dictamen" class="cedit"> CONFORME: El personal
+                    cumple normativas.</label>
+                <label class="status-no-conforme"><input type="radio" name="dictamen" class="cedit"> NO CONFORME: Se
+                    detectaron riesgos.</label>
+            </div>
+            <div style="margin-top:10px;">
+                <strong>Acciones de Corrección Inmediata:</strong>
+                <textarea class="cedit" style="width:100%; border:1px solid #ccc; height:40px;"
+                    placeholder="Describa medidas tomadas en caso de no conformidad..."></textarea>
+            </div>
+        </div>
+
+        <div class="section-header">6. FIRMAS DE VALIDACIÓN</div>
+        <div class="signature-area" style="margin-top:15px;">
+            <div class="signature-box">
+                <p>Inspector (Seguridad / QA)</p>
+                <input class="cedit" placeholder="Nombre y Firma">
+            </div>
+            <div class="signature-box">
+                <p>Responsable del Área</p>
+                <input class="cedit" placeholder="Nombre y Firma">
+            </div>
+        </div>
+
+        <div class="footer">FO-QA-14 | Versión: 1.0 | Checklist Seguridad e Higiene | Xelle Scientific | Página 1 de 1
+        </div>
+    </div>
+</body>
+
+</html>

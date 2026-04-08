@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-20 Liberación Alm (OFF)</title>
+    <title>FO-OP-20 Liberación Alm</title>
     <link rel="stylesheet" href="format-styles-OffLine.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app-OffLine.js"></script>
@@ -74,6 +74,43 @@
             display: inline-block;
             min-height: 15px;
             margin-bottom: 5px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -147,6 +184,10 @@
 
         <div class="section">
             <div class="section-title">2. ESPECIFICACIÓN DE ENTREGA</div>
+            <div class="no-print" style="margin-bottom: 10px;">
+                <button class="btn btn-success" onclick="agregarFilaEntrega()">➕ Agregar Fila</button>
+                <button class="btn btn-danger" onclick="quitarFilaEntrega()">➖ Quitar Fila</button>
+            </div>
             <table class="compact-table data-table" id="tbl-entrega-off">
                 <thead>
                     <tr>
@@ -209,8 +250,41 @@
             </p>
         </div>
 
-        <div class="footer">FO-OP-20-O | LIBERACIÓN ALM (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-OP-20-O | LIBERACIÓN ALM | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
+
+    <script>
+        function agregarFilaEntrega() {
+            const tabla = document.getElementById('tbl-entrega-off');
+            const tbody = tabla.querySelector('tbody');
+            const nuevaFila = document.createElement('tr');
+
+            nuevaFila.innerHTML = `
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+            `;
+
+            tbody.appendChild(nuevaFila);
+        }
+
+        function quitarFilaEntrega() {
+            const tabla = document.getElementById('tbl-entrega-off');
+            const tbody = tabla.querySelector('tbody');
+            const filas = tbody.querySelectorAll('tr');
+
+            if (filas.length > 1) {
+                tbody.removeChild(filas[filas.length - 1]);
+            } else {
+                alert('Debe mantener al menos una fila en la tabla');
+            }
+        }
+    </script>
 </body>
 
 </html>

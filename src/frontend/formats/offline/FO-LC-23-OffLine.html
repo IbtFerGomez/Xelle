@@ -82,10 +82,19 @@
                 margin: 0.5cm;
             }
 
+            /* Forzar impresión exacta de colores */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
             body,
             .container {
                 margin: 0 !important;
                 padding: 10px !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
 
             .no-print {
@@ -171,6 +180,8 @@
             .compact-table {
                 page-break-inside: auto !important;
                 break-inside: auto !important;
+                width: 100% !important;
+                table-layout: fixed !important;
             }
 
             tbody {
@@ -199,11 +210,24 @@
                 border-collapse: collapse !important;
             }
 
-            /* Mantener diseño de tabla */
+            /* Mantener colores de encabezados de grupo */
             .group-header {
-                background-color: #f0f4f8 !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                font-weight: bold !important;
+            }
+
+            .sub-header th {
+                background-color: #fafafa !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            /* Mantener anchos de columna */
+            th[width],
+            td[width] {
+                width: attr(width) !important;
             }
 
             input {

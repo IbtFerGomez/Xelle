@@ -109,6 +109,7 @@
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
 
     <div class="container" style="max-width:100%; width:100%;">
@@ -259,18 +260,22 @@
         <div class="section">
             <p style="font-size:9px; color:#666; margin-bottom:5px;">Especifique el motivo de cualquier partida marcada
                 como "NC", "Rechazada (R)" o "En Cuarentena (C)".</p>
-            <table class="no-border-table">
-                <tr>
-                    <td width="15%"><strong>Partida No. <input class="cedit"
-                                style="width:30px; border-bottom:1px solid #ccc; text-align:center;"> :</strong></td>
-                    <td width="85%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
-                </tr>
-                <tr>
-                    <td><strong>Partida No. <input class="cedit"
-                                style="width:30px; border-bottom:1px solid #ccc; text-align:center;"> :</strong></td>
-                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
-                </tr>
+            <table class="no-border-table" id="tbl-observaciones">
+                <tbody>
+                    <tr>
+                        <td width="15%"><strong>Partida No. <input class="cedit"
+                                    style="width:30px; border-bottom:1px solid #ccc; text-align:center;"> :</strong>
+                        </td>
+                        <td width="85%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                        <td width="5%" style="text-align:center;">
+                            <button type="button" onclick="delRowObservaciones(this)" class="no-print"
+                                style="background:#ef4444; color:white; border:none; padding:2px 6px; font-size:9px; cursor:pointer; border-radius:3px;">✖</button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
+            <button type="button" onclick="addRowObservaciones()" class="btn-add no-print">➕ Agregar
+                Observación</button>
         </div>
 
         <div class="section-header">4. FIRMAS DE RESPONSABILIDAD Y LIBERACIÓN</div>
@@ -344,6 +349,28 @@
             }
         }
 
+        function addRowObservaciones() {
+            let t = document.getElementById('tbl-observaciones').getElementsByTagName('tbody')[0];
+            let r = t.rows[0].cloneNode(true);
+
+            // Limpiar inputs
+            r.querySelectorAll('input').forEach(i => {
+                i.value = '';
+            });
+
+            t.appendChild(r);
+        }
+
+        function delRowObservaciones(btn) {
+            let row = btn.parentNode.parentNode;
+            let tbody = row.parentNode;
+            if (tbody.rows.length > 1) {
+                tbody.removeChild(row);
+            } else {
+                alert('Debe mantener al menos una fila de observaciones.');
+            }
+        }
+
         // Asignar names únicos a los radios iniciales
         window.onload = function () {
             let t = document.getElementById('tbl-partidas').getElementsByTagName('tbody')[0];
@@ -363,6 +390,151 @@
                 }
             }
         }
+
+        // Modo Offline: convierte selects en inputs de texto para llenado manual
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+                convertSelectsToInputs();
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+                convertInputsToSelects();
+            }
+        }
+
+        function convertSelectsToInputs() {
+            // Convertir <select> a <input type="text">
+            document.querySelectorAll('select.cedit').forEach(sel => {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = sel.className;
+                input.value = sel.options[sel.selectedIndex]?.text || '';
+                input.setAttribute('data-original-type', 'select');
+                if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                // Guardar las opciones originales como atributo
+                const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                input.setAttribute('data-select-options', options);
+                sel.parentNode.replaceChild(input, sel);
+            });
+
+            // Convertir <input type="date"> a <input type="text">
+            document.querySelectorAll('input[type="date"].cedit').forEach(inp => {
+                inp.setAttribute('data-original-type', 'date');
+                inp.type = 'text';
+                inp.placeholder = 'DD/MM/AAAA';
+            });
+
+            // Convertir <input type="time"> a <input type="text">
+            document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                inp.setAttribute('data-original-type', 'time');
+                inp.type = 'text';
+                inp.placeholder = 'HH:MM';
+            });
+
+            // Convertir <input type="number"> a <input type="text">
+            document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                inp.setAttribute('data-original-type', 'number');
+                const currentPlaceholder = inp.placeholder;
+                inp.type = 'text';
+                if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+            });
+        }
+
+        function convertInputsToSelects() {
+            // Restaurar <select> desde <input type="text">
+            document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                const sel = document.createElement('select');
+                sel.className = inp.className;
+                if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                // Recrear las opciones del select
+                const options = inp.getAttribute('data-select-options')?.split('|') || ['Ambiente', 'Refri', 'Congel.'];
+                options.forEach(optText => {
+                    const opt = document.createElement('option');
+                    opt.text = optText;
+                    sel.appendChild(opt);
+                });
+                // Intentar mantener el valor seleccionado
+                const currentValue = inp.value;
+                for (let i = 0; i < sel.options.length; i++) {
+                    if (sel.options[i].text === currentValue) {
+                        sel.selectedIndex = i;
+                        break;
+                    }
+                }
+                inp.parentNode.replaceChild(sel, inp);
+            });
+
+            // Restaurar <input type="date">
+            document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                inp.type = 'date';
+                inp.placeholder = '';
+                inp.removeAttribute('data-original-type');
+            });
+
+            // Restaurar <input type="time">
+            document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                inp.type = 'time';
+                inp.placeholder = '';
+                inp.removeAttribute('data-original-type');
+            });
+
+            // Restaurar <input type="number">
+            document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                inp.type = 'number';
+                inp.removeAttribute('data-original-type');
+            });
+        }
+
+        // Modificar addRow para considerar el modo offline
+        const originalAddRow = addRow;
+        addRow = function (id) {
+            originalAddRow(id);
+            if (isOfflineMode) {
+                // Convertir los campos de la nueva fila para modo offline
+                let t = document.getElementById(id).getElementsByTagName('tbody')[0];
+                let lastRow = t.rows[t.rows.length - 1];
+
+                // Convertir selects
+                lastRow.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    input.setAttribute('data-select-options', 'Ambiente|Refri|Congel.');
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir inputs de fecha
+                lastRow.querySelectorAll('input[type="date"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir inputs de hora
+                lastRow.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir inputs numéricos
+                lastRow.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            }
+        };
     </script>
 </body>
 

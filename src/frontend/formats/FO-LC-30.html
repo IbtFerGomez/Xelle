@@ -35,7 +35,7 @@
 
         .compact-table td {
             font-size: 9px;
-            padding: 3px;
+            padding: 6px;
             vertical-align: middle;
             text-align: center;
         }
@@ -179,30 +179,27 @@
             <table class="compact-table" id="tbl-harvest">
                 <thead>
                     <tr>
-                        <th width="8%">Fecha Recolección</th>
-                        <th width="10%">ID Banco Celular (Origen)</th>
-                        <th width="6%">Pasaje (P)</th>
-                        <th width="8%">Hora Inicio Incubación</th>
-                        <th width="8%">Hora Recolección</th>
-                        <th width="8%">Volumen Recolectado (mL)</th>
-                        <th width="10%">Aspecto Visual (Color/Turbidez)</th>
-                        <th width="8%">Viabilidad Celular (%)</th>
-                        <th width="12%">ID Recipiente Estéril</th>
-                        <th width="12%">Técnico Responsable</th>
-                        <th width="10%">Estatus (Cuarentena)</th>
+                        <th width="8%">ID</th>
+                        <th width="10%">Fecha Recolección</th>
+                        <th width="12%">ID RECIPIENTE ORIGEN</th>
+                        <th width="8%">Pasaje (P)</th>
+                        <th width="10%">Volumen Recolectado (mL)</th>
+                        <th width="15%">Aspecto Visual (Color/Turbidez)</th>
+                        <th width="17%">Codigo Medio</th>
+                        <th width="14%">Técnico Responsable</th>
+                        <th width="6%">Estatus</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td><input class="cedit" placeholder="REC-001"></td>
                         <td><input type="date" class="cedit"></td>
                         <td><input class="cedit" placeholder="BC-XXX"></td>
                         <td><input class="cedit" placeholder="P#"></td>
-                        <td><input type="time" class="cedit"></td>
-                        <td><input type="time" class="cedit"></td>
                         <td><input type="number" class="cedit" placeholder="0"></td>
                         <td><input class="cedit" placeholder="Limpio/Rosado"></td>
-                        <td><input type="number" class="cedit" placeholder="%"></td>
-                        <td><input class="cedit" placeholder="REF-LOT"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
                         <td><input class="cedit" placeholder="Nombre/Firma"></td>
                         <td><span class="status-badge pcc-alert">CUARENTENA</span></td>
                     </tr>
@@ -215,18 +212,20 @@
 
         <div class="section-header">2. ALMACENAMIENTO TEMPORAL Y TRASLADO</div>
         <div class="section">
-            <table class="compact-table">
+            <table class="compact-table" id="tbl-storage">
                 <thead>
                     <tr>
-                        <th>Hora Ingreso Almacén</th>
-                        <th>Temperatura Almacén (°C)</th>
-                        <th>ID Equipo (Refri/Congelador)</th>
-                        <th>¿Sistema de Filtración Previo?</th>
-                        <th>Observaciones de Calidad</th>
+                        <th width="8%">ID</th>
+                        <th width="10%">Hora</th>
+                        <th width="15%">Temperatura Almacén (°C)</th>
+                        <th width="18%">ID Equipo (Refri/Congelador)</th>
+                        <th width="20%">¿Sistema de Filtración Previo?</th>
+                        <th width="29%">Observaciones de Calidad</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td><input class="cedit" placeholder="ALM-001"></td>
                         <td><input type="time" class="cedit"></td>
                         <td><input type="number" step="0.1" class="cedit" placeholder="2-8°C"></td>
                         <td><input class="cedit" placeholder="REF-01"></td>
@@ -240,9 +239,16 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="no-print" style="display:flex; gap:5px; margin-top:5px;">
+                <button class="btn-add" onclick="addRow('tbl-storage')"
+                    style="flex:1; background:#e2e8f0; border:1px dashed #999; font-size:10px; cursor:pointer;">+
+                    AGREGAR FILA</button>
+                <button class="btn-remove" onclick="removeLastRow('tbl-storage')"
+                    style="flex:1; background:#fee2e2; border:1px dashed #991b1b; font-size:10px; cursor:pointer; color:#991b1b;">-
+                    QUITAR ÚLTIMA FILA</button>
+            </div>
         </div>
 
-        <div class="section-header">3. VALIDACIÓN DE RECOLECCIÓN</div>
         <div class="signature-area">
             <div class="signature-box">
                 <p>Ejecutó (Técnico de Banco Celular)</p>
@@ -263,7 +269,17 @@
         let t = document.getElementById(id).getElementsByTagName('tbody')[0];
         let r = t.rows[0].cloneNode(true);
         r.querySelectorAll('input').forEach(i => i.value = '');
+        r.querySelectorAll('textarea').forEach(ta => ta.value = '');
         t.appendChild(r);
+        }
+
+        function removeLastRow(id) {
+        let t = document.getElementById(id).getElementsByTagName('tbody')[0];
+        if (t.rows.length > 1) {
+        t.deleteRow(t.rows.length - 1);
+        } else {
+        alert('Debe mantener al menos una fila en la tabla.');
+        }
         }
         </script>
 </body>

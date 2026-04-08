@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lomo de Carpeta Individual - Xelle Scientific</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .global-controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-primary { background-color: #2563eb; }
+        .btn-primary:hover { background-color: #1d4ed8; }
+
+        .sheet {
+            background: white;
+            width: 21cm; /* Ancho Carta / A4 */
+            min-height: 29.7cm;
+            padding: 1cm;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center; /* Centrar el lomo único */
+            align-items: flex-start;
+            box-sizing: border-box;
+        }
+
+        /* Dimensiones EXACTAS solicitadas (6.5cm ancho x 28cm alto) */
+        .spine-container {
+            width: 6.5cm;
+            height: 28cm;
+            border: 1px dashed #94a3b8;
+            padding: 20px 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+        }
+
+        .spine-logo {
+            width: 100%;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #1E3A5F;
+            padding-bottom: 15px;
+        }
+
+        .spine-logo svg {
+            width: 90%;
+            height: auto;
+        }
+
+        .spine-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .label {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        /* Campos editables adaptados para lectura a 1 metro */
+        .cedit {
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-family: inherit;
+            width: 100%;
+            resize: none;
+            overflow: hidden;
+        }
+        .cedit:focus {
+            outline: 1px dashed #3b82f6;
+            background-color: #f8fafc;
+        }
+
+        .area-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1E3A5F;
+            text-transform: uppercase;
+        }
+
+        .doc-type {
+            font-size: 20px;
+            font-weight: 900;
+            color: #1D1D1B;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .doc-desc {
+            font-size: 13px;
+            font-style: italic;
+            color: #475569;
+            margin-top: 5px;
+        }
+
+        .codes-range {
+            font-size: 26px;
+            font-weight: 900;
+            color: #b45309; /* Color contrastante para búsqueda rápida */
+            line-height: 1.2;
+        }
+
+        .period {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1E3A5F;
+        }
+
+        .volume {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 0;
+            border-radius: 4px;
+            width: 90%;
+            text-transform: uppercase;
+        }
+        .volume.cedit { color: white; }
+
+        @media print {
+            body { background: transparent; padding: 0; }
+            .global-controls { display: none; }
+            .sheet { box-shadow: none; padding: 0; width: auto; height: auto; display: block; }
+            .spine-container { border: 1px solid #cbd5e1; margin: 0; } /* Borde sólido para recortar */
+            ::-webkit-input-placeholder { color: transparent !important; }
+            ::placeholder { color: transparent !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="global-controls no-print">
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir Lomo</button>
+        <p style="font-size:12px; color:#475569; margin-left:15px; margin-bottom:0;">Haz clic en el texto para editarlo. Ajustado a 6.5x28 cm.</p>
+    </div>
+
+    <div class="sheet">
+        <div class="spine-container">
+            <div class="spine-logo">
+                <svg viewBox="0 0 320 80">
+                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1E3A5F}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1E3A5F;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/>
+                        <circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+
+            <div class="spine-section">
+                <span class="label">Área</span>
+                <textarea class="cedit area-name" rows="2">Laboratorio y Calidad (LC)</textarea>
+            </div>
+
+            <div class="spine-section">
+                <span class="label">Tipo de Documento</span>
+                <textarea class="cedit doc-type" rows="2">REGISTROS OPERATIVOS</textarea>
+                <textarea class="cedit doc-desc" rows="2">(Exosomas y Muestras de Retención)</textarea>
+            </div>
+
+            <div class="spine-section">
+                <span class="label">Códigos</span>
+                <textarea class="cedit codes-range" rows="2">FO-LC-25&#10;a FO-LC-33</textarea>
+            </div>
+
+            <div class="spine-section">
+                <span class="label">Periodo</span>
+                <textarea class="cedit period" rows="2">Ene 2026&#10;Jun 2026</textarea>
+            </div>
+
+            <div class="spine-section" style="margin-bottom: 10px;">
+                <input type="text" class="cedit volume" value="Tomo: 1 de 1">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-ajustar altura de textareas para no desbordar
+        const textareas = document.querySelectorAll('textarea.cedit');
+        textareas.forEach(ta => {
+            ta.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+            // Trigger inicial
+            ta.style.height = 'auto';
+            ta.style.height = (ta.scrollHeight) + 'px';
+        });
+    </script>
+</body>
+</html>

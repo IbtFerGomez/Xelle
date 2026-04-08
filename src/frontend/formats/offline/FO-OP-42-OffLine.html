@@ -3,11 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-42 Recepción de Insumos (Múltiple)</title>
-    <link rel="stylesheet" href="format-styles-OffLine.css">
+    <title>FO-OP-42 Recepción de Insumos (Múltiple) - Modo OffLine</title>
+    <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="format-app-OffLine.js"></script>
+    <script src="format-app.js"></script>
     <style>
         @page {
             size: landscape;
@@ -75,6 +74,25 @@
             margin-top: 5px;
         }
 
+        .btn-add:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            font-size: 9px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
         @media print {
 
             .global-controls,
@@ -105,10 +123,11 @@
     </style>
 </head>
 
-<body id="doc-fo-op-42">
+<body id="doc-fo-op-42-offline">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
 
     <div class="container" style="max-width:100%; width:100%;">
@@ -152,7 +171,7 @@
                     <input type="text" id="reg-42" class="registry-input generate-barcode" data-target="barcode-42"
                         data-prefix="FO-OP-42-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
                 <svg id="barcode-42" class="barcode-svg"></svg>
             </div>
         </div>
@@ -167,9 +186,9 @@
             <table class="no-border-table">
                 <tr>
                     <td width="20%"><strong>Fecha de Recepción:</strong></td>
-                    <td width="30%"><input type="date" class="cedit"></td>
+                    <td width="30%"><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
                     <td width="20%"><strong>Hora de Ingreso:</strong></td>
-                    <td width="30%"><input type="time" class="cedit"> hrs.</td>
+                    <td width="30%"><input type="text" class="cedit" placeholder="HH:MM"> hrs.</td>
                 </tr>
                 <tr>
                     <td><strong>Proveedor(es):</strong></td>
@@ -220,57 +239,56 @@
                                 style="font-weight:bold;"></td>
                         <td><input class="cedit" placeholder="Cant:"><br><input class="cedit" placeholder="Bultos:">
                         </td>
-                        <td><input type="number" step="0.1" class="cedit" placeholder="°C"><br>
-                            <select class="cedit" style="font-size:8px;">
-                                <option>Ambiente</option>
-                                <option>Refri</option>
-                                <option>Congel.</option>
-                            </select>
+                        <td><input type="text" class="cedit" placeholder="°C"><br>
+                            <input type="text" class="cedit" placeholder="Condición" style="font-size:8px;">
                         </td>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
+                        <td><input type="text" class="cedit" style="font-size:8px;" placeholder="DD/MM/AAAA"></td>
                         <td>
                             <div class="radio-group">
-                                <label><input type="radio" class="cedit"> C</label>
-                                <label><input type="radio" class="cedit"> NC</label>
+                                <label><input type="radio" class="cedit" name="fisica_1"> C</label>
+                                <label><input type="radio" class="cedit" name="fisica_1"> NC</label>
                             </div>
                         </td>
                         <td>
                             <div class="radio-group">
-                                <label><input type="radio" class="cedit"> C</label>
-                                <label><input type="radio" class="cedit"> NC</label>
+                                <label><input type="radio" class="cedit" name="coa_1"> C</label>
+                                <label><input type="radio" class="cedit" name="coa_1"> NC</label>
                             </div>
                         </td>
                         <td>
                             <div class="radio-group">
-                                <label style="color:#166534;"><input type="radio" class="cedit"> A</label>
-                                <label style="color:#991b1b;"><input type="radio" class="cedit"> R</label>
-                                <label style="color:#b45309;"><input type="radio" class="cedit"> C</label>
+                                <label style="color:#166534;"><input type="radio" class="cedit" name="dictamen_1"> A</label>
+                                <label style="color:#991b1b;"><input type="radio" class="cedit" name="dictamen_1"> R</label>
+                                <label style="color:#b45309;"><input type="radio" class="cedit" name="dictamen_1"> C</label>
                             </div>
                         </td>
-                        <td class="no-print"><span onclick="delRow(this)"
-                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                        <td class="no-print">
+                            <button type="button" onclick="delRow(this)" class="btn-delete">✖</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
-            <button class="btn-add no-print" onclick="addRow('tbl-partidas')">+ AGREGAR PARTIDA</button>
+            <button class="btn-add no-print" onclick="addRow('tbl-partidas')">➕ AGREGAR PARTIDA</button>
         </div>
 
         <div class="section-header">3. OBSERVACIONES Y DESVIACIONES</div>
         <div class="section">
             <p style="font-size:9px; color:#666; margin-bottom:5px;">Especifique el motivo de cualquier partida marcada
                 como "NC", "Rechazada (R)" o "En Cuarentena (C)".</p>
-            <table class="no-border-table">
-                <tr>
-                    <td width="15%"><strong>Partida No. <input class="cedit"
-                                style="width:30px; border-bottom:1px solid #ccc; text-align:center;"> :</strong></td>
-                    <td width="85%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
-                </tr>
-                <tr>
-                    <td><strong>Partida No. <input class="cedit"
-                                style="width:30px; border-bottom:1px solid #ccc; text-align:center;"> :</strong></td>
-                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
-                </tr>
+            <table class="no-border-table" id="tbl-observaciones">
+                <tbody>
+                    <tr>
+                        <td width="15%"><strong>Partida No. <input class="cedit"
+                                    style="width:30px; border-bottom:1px solid #ccc; text-align:center;"> :</strong>
+                        </td>
+                        <td width="80%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;" placeholder="Descripción de la observación o desviación"></td>
+                        <td width="5%" style="text-align:center;">
+                            <button type="button" onclick="delRowObservaciones(this)" class="btn-delete no-print">✖</button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
+            <button type="button" onclick="addRowObservaciones()" class="btn-add no-print">➕ AGREGAR OBSERVACIÓN</button>
         </div>
 
         <div class="section-header">4. FIRMAS DE RESPONSABILIDAD Y LIBERACIÓN</div>
@@ -287,10 +305,16 @@
     </div>
 
     <script>
+        // Contador global para asignar nombres únicos a los radios
+        let partidaCounter = 1;
+
         function updateRowNumbers(tableId) {
             let t = document.getElementById(tableId).getElementsByTagName('tbody')[0];
             for (let i = 0; i < t.rows.length; i++) {
-                t.rows[i].querySelector('.row-num').innerText = i + 1;
+                let rowNum = t.rows[i].querySelector('.row-num');
+                if (rowNum) {
+                    rowNum.innerText = i + 1;
+                }
             }
         }
 
@@ -298,70 +322,77 @@
             let t = document.getElementById(id).getElementsByTagName('tbody')[0];
             let r = t.rows[0].cloneNode(true);
 
-            // Limpiar inputs y selects
+            partidaCounter++;
+
+            // Limpiar inputs
             r.querySelectorAll('input').forEach(i => {
                 if (i.type === 'radio' || i.type === 'checkbox') {
                     i.checked = false;
-                    // Asignar nombres únicos a los radios de la nueva fila
-                    if (i.name) {
-                        i.name = i.name + "_" + new Date().getTime();
-                    }
                 } else {
                     i.value = '';
                 }
             });
-            r.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+
+            // Asignar nombres únicos a los radios de la nueva fila
+            let radiosFisica = r.querySelectorAll('input[type="radio"][name^="fisica"]');
+            radiosFisica.forEach(radio => {
+                radio.name = 'fisica_' + partidaCounter;
+            });
+
+            let radiosCoa = r.querySelectorAll('input[type="radio"][name^="coa"]');
+            radiosCoa.forEach(radio => {
+                radio.name = 'coa_' + partidaCounter;
+            });
+
+            let radiosDictamen = r.querySelectorAll('input[type="radio"][name^="dictamen"]');
+            radiosDictamen.forEach(radio => {
+                radio.name = 'dictamen_' + partidaCounter;
+            });
 
             t.appendChild(r);
             updateRowNumbers(id);
-
-            // Re-asignar names a los radios de la nueva fila para agruparlos correctamente
-            let rowCount = t.rows.length;
-            let radios = r.querySelectorAll('input[type="radio"]');
-            let groups = ['fisica', 'coa', 'dictamen'];
-            let gIndex = 0;
-            let currentGroupCount = 0;
-
-            for (let i = 0; i < radios.length; i++) {
-                let groupName = groups[gIndex] + "_" + rowCount;
-                radios[i].name = groupName;
-                currentGroupCount++;
-
-                // Las primeras dos columnas tienen 2 radios, la tercera tiene 3
-                if ((gIndex < 2 && currentGroupCount === 2) || (gIndex === 2 && currentGroupCount === 3)) {
-                    gIndex++;
-                    currentGroupCount = 0;
-                }
-            }
         }
 
         function delRow(btn) {
             let row = btn.parentNode.parentNode;
             let tableId = row.closest('table').id;
-            if (row.parentNode.rows.length > 1) {
-                row.parentNode.removeChild(row);
+            let tbody = row.parentNode;
+            
+            if (tbody.rows.length > 1) {
+                tbody.removeChild(row);
                 updateRowNumbers(tableId);
+            } else {
+                alert('Debe mantener al menos una partida en el registro.');
             }
         }
 
-        // Asignar names únicos a los radios iniciales
-        window.onload = function () {
-            let t = document.getElementById('tbl-partidas').getElementsByTagName('tbody')[0];
-            let radios = t.rows[0].querySelectorAll('input[type="radio"]');
-            let groups = ['fisica', 'coa', 'dictamen'];
-            let gIndex = 0;
-            let currentGroupCount = 0;
+        // Funciones para la sección de Observaciones
+        function addRowObservaciones() {
+            let t = document.getElementById('tbl-observaciones').getElementsByTagName('tbody')[0];
+            let r = t.rows[0].cloneNode(true);
 
-            for (let i = 0; i < radios.length; i++) {
-                let groupName = groups[gIndex] + "_0";
-                radios[i].name = groupName;
-                currentGroupCount++;
+            // Limpiar inputs
+            r.querySelectorAll('input').forEach(i => {
+                i.value = '';
+            });
 
-                if ((gIndex < 2 && currentGroupCount === 2) || (gIndex === 2 && currentGroupCount === 3)) {
-                    gIndex++;
-                    currentGroupCount = 0;
-                }
+            t.appendChild(r);
+        }
+
+        function delRowObservaciones(btn) {
+            let row = btn.parentNode.parentNode;
+            let tbody = row.parentNode;
+            
+            if (tbody.rows.length > 1) {
+                tbody.removeChild(row);
+            } else {
+                alert('Debe mantener al menos una fila de observaciones.');
             }
+        }
+
+        // Inicialización
+        window.onload = function () {
+            console.log('FO-OP-42-OffLine cargado correctamente');
         }
     </script>
 </body>

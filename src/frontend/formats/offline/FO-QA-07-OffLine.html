@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-07 Solicitud y Control de Cambios (Offline)</title>
+    <!-- Referencias externas comentadas para uso offline -->
+    <!-- <link rel="stylesheet" href="format-styles.css"> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script> -->
+    <!-- <script src="format-app.js"></script> -->
+    <style>
+        /* Estilos inline del documento original + CSS embebido para offline */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --border-color: #d1d5db;
+            --bg-color: #f3f4f6;
+            --input-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 12px;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: #333;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            width: 95%;
+            max-width: 1400px;
+            margin: 0;
+            padding: 40px 50px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .logo-container svg {
+            height: 70px;
+            width: auto;
+            display: block;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .header-main {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .header-main h1 {
+            font-size: 18px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .metadata {
+            text-align: center;
+            font-size: 9px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .registry-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .registry-container label {
+            font-size: 10px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .registry-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 5px;
+        }
+
+        .registry-prefix {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 5px;
+            font-size: 14px;
+        }
+
+        .registry-input {
+            font-weight: bold;
+            color: var(--secondary-color);
+            text-align: center;
+            border: 1px dashed #ccc;
+            font-size: 14px;
+            width: 150px;
+            padding: 2px 5px;
+        }
+
+        .registry-date {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            font-size: 10px;
+            color: #666;
+            text-align: right;
+            width: 110px;
+            margin-top: 2px;
+            background: transparent;
+            padding: 2px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #fff;
+        }
+
+        input:not([type="checkbox"]):not([type="radio"]),
+        select,
+        textarea,
+        .cedit {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-bg);
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 11px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .no-border-table,
+        .no-border-table td,
+        .no-border-table th {
+            border: none !important;
+            background: transparent !important;
+        }
+
+        .signature-box {
+            text-align: left;
+        }
+
+        .signature-box p {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 11px;
+        }
+
+        .signature-box input {
+            border: none;
+            border-bottom: 1px solid #333;
+            background: transparent;
+        }
+
+        .footer {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            font-size: 9px;
+            color: #999;
+            text-align: center;
+        }
+
+        /* Estilos inline originales del documento */
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #333;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 5px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        .compact-table input,
+        .compact-table textarea,
+        .compact-table select {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+        }
+
+        .cbx-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .page-break {
+            page-break-before: always;
+            margin-top: 30px;
+            border-top: 2px dashed #cbd5e1;
+            padding-top: 20px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 10px !important;
+        }
+
+        /* Estilo para los inputs que reemplazan radios - para marcar con X */
+        .input-radio {
+            width: 20px !important;
+            height: 20px !important;
+            text-align: center !important;
+            padding: 0 !important;
+            font-weight: bold;
+            border: 1px solid #666 !important;
+        }
+
+        .global-controls {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+            z-index: 1000;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: white;
+            font-size: 13px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background-color: #2c3e50;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            .page-break {
+                border-top: none;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            input,
+            textarea {
+                border: none !important;
+                box-shadow: none !important;
+                background: transparent !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-qa-07">
+    <div class="global-controls no-print">
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Control de Cambios</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-07-</span>
+                    <input type="text" class="registry-input" placeholder="CC-202X-000">
+                </div>
+                <input type="text" class="registry-date" placeholder="Fecha">
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>SOLICITUD Y CONTROL DE CAMBIOS</h1>
+            <div class="metadata">Código: FO-QA-07 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 2</div>
+        </div>
+
+        <div class="section-header">1. DATOS DE LA SOLICITUD</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Nombre Solicitante:</strong></td>
+                    <td width="30%"><input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td width="20%"><strong>Área:</strong></td>
+                    <td width="30%"><input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+            <div style="margin-top:10px;">
+                <strong>Clasificación del Cambio (Marque una):</strong>
+                <div class="cbx-group">
+                    <label><input type="text" class="input-radio cedit" placeholder="X"> Documental (PNO, Formatos,
+                        Instructivos)</label>
+                    <label><input type="text" class="input-radio cedit" placeholder="X"> Equipos / Sistemas Críticos /
+                        Instalaciones</label>
+                    <label><input type="text" class="input-radio cedit" placeholder="X"> Proceso de Manufactura /
+                        Laboratorio</label>
+                    <label><input type="text" class="input-radio cedit" placeholder="X"> Materias Primas / Insumos /
+                        Cambio de
+                        Proveedor</label>
+                    <label style="display:flex; align-items:center;">
+                        <input type="text" class="input-radio cedit" placeholder="X"> Otro: <input class="cedit"
+                            style="flex:1; margin-left:5px; border-bottom:1px solid #ccc;">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">2. DESCRIPCIÓN Y JUSTIFICACIÓN</div>
+        <div class="section">
+            <div style="margin-bottom:10px;">
+                <strong>Elemento a Modificar (Nombre, Código y Versión Actual, si aplica):</strong>
+                <input class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
+            </div>
+            <div style="margin-bottom:10px;">
+                <strong>Situación Actual (¿Cómo se hace/está ahora?):</strong>
+                <textarea class="cedit" rows="2" style="width:100%; border:1px solid #cbd5e1; padding:5px;"></textarea>
+            </div>
+            <div style="margin-bottom:10px;">
+                <strong>Situación Propuesta (¿Qué cambio se propone?):</strong>
+                <textarea class="cedit" rows="2" style="width:100%; border:1px solid #cbd5e1; padding:5px;"></textarea>
+            </div>
+            <div>
+                <strong>Justificación (¿Por qué es necesario este cambio?):</strong>
+                <textarea class="cedit" rows="2" style="width:100%; border:1px solid #cbd5e1; padding:5px;"></textarea>
+            </div>
+        </div>
+
+        <div class="section-header">3. EVALUACIÓN DE IMPACTO Y RIESGO (LLENADO POR CALIDAD)</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="40%">El cambio impacta o requiere actualizar:</th>
+                        <th width="10%">Sí</th>
+                        <th width="10%">No</th>
+                        <th width="40%">Justificación / Comentarios</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left">¿Asuntos Regulatorios / Permisos COFEPRIS?</td>
+                        <td><input type="text" class="input-radio cedit" placeholder="X"></td>
+                        <td><input type="text" class="input-radio cedit" placeholder="X"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Validación de Procesos o Calificación de Equipos?</td>
+                        <td><input type="text" class="input-radio cedit" placeholder="X"></td>
+                        <td><input type="text" class="input-radio cedit" placeholder="X"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Capacitación del Personal (DNC / FO-HR-01)?</td>
+                        <td><input type="text" class="input-radio cedit" placeholder="X"></td>
+                        <td><input type="text" class="input-radio cedit" placeholder="X"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Estudios de Estabilidad del Producto?</td>
+                        <td><input type="text" class="input-radio cedit" placeholder="X"></td>
+                        <td><input type="text" class="input-radio cedit" placeholder="X"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Especificaciones de Producto Terminado o Insumos?</td>
+                        <td><input type="text" class="input-radio cedit" placeholder="X"></td>
+                        <td><input type="text" class="input-radio cedit" placeholder="X"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="page-break">
+            <div class="header-main" style="margin-top:0;">
+                <p style="text-align:right; font-size:9px; font-weight:bold; color:#64748b;">Folio: <span
+                        id="sync-folio">FO-QA-07-</span> | Página 2 de 2</p>
+            </div>
+
+            <div class="section-header">4. PLAN DE ACCIÓN E IMPLEMENTACIÓN</div>
+            <div class="section">
+                <table class="compact-table" id="tbl-accion">
+                    <thead>
+                        <tr>
+                            <th width="5%">No.</th>
+                            <th width="35%">Actividad Requerida</th>
+                            <th width="15%">Responsable</th>
+                            <th width="15%">Fecha Compromiso</th>
+                            <th width="15%">Fecha Cierre Real</th>
+                            <th width="15%">Firma Ejecución</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><input class="cedit" placeholder="Ej. Actualizar formato y emitir Nueva Versión"></td>
+                            <td><input class="cedit"></td>
+                            <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                            <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                            <td><input class="cedit"></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><input class="cedit" placeholder="Ej. Capacitar al personal en la nueva versión"></td>
+                            <td><input class="cedit"></td>
+                            <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                            <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                            <td><input class="cedit"></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><input class="cedit" placeholder="Ej. Retirar y destruir versiones obsoletas"></td>
+                            <td><input class="cedit"></td>
+                            <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                            <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                            <td><input class="cedit"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="no-print" style="font-size:9px; color:#666; margin-top:5px;"><em>Para agregar más filas,
+                        imprima y añada manualmente</em></p>
+            </div>
+
+            <div class="section-header">5. REVISIÓN Y APROBACIÓN DEL CAMBIO</div>
+            <div class="section">
+                <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-bottom:10px;">Ningún cambio puede ser
+                    implementado sin la firma de Aseguramiento de Calidad y el Responsable Sanitario.</p>
+                <div class="signature-area" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div class="signature-box">
+                        <p>Solicitante (Propone)</p>
+                        <input type="text" class="cedit" placeholder="Nombre y Firma"><br>
+                        Fecha: <input type="text" class="cedit" placeholder="DD/MM/AAAA" style="width:100px;">
+                    </div>
+                    <div class="signature-box">
+                        <p>Gerencia / Jefatura de Área</p>
+                        <input type="text" class="cedit" placeholder="Nombre y Firma"><br>
+                        Fecha: <input type="text" class="cedit" placeholder="DD/MM/AAAA" style="width:100px;">
+                    </div>
+                    <div class="signature-box">
+                        <p>Aseguramiento de Calidad</p>
+                        <input type="text" class="cedit" placeholder="Nombre y Firma"><br>
+                        Fecha: <input type="text" class="cedit" placeholder="DD/MM/AAAA" style="width:100px;">
+                    </div>
+                    <div class="signature-box">
+                        <p>Responsable Sanitario (Autoriza)</p>
+                        <input type="text" class="cedit" placeholder="Nombre y Firma"><br>
+                        Fecha: <input type="text" class="cedit" placeholder="DD/MM/AAAA" style="width:100px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">6. CIERRE DEL CAMBIO (VERIFICACIÓN DE EFICACIA)</div>
+            <div class="section">
+                <p style="font-size:9px; color:#666; margin-bottom:5px;">Firma exclusiva de Aseguramiento de Calidad
+                    confirmando el cierre de actividades.</p>
+                <div style="margin-bottom:10px;">
+                    <strong>¿El cambio fue efectivo y se cerraron todas las tareas?</strong>
+                    <label style="margin-left:10px;"><input type="text" class="input-radio cedit" placeholder="X">
+                        Sí</label>
+                    <label style="margin-left:10px;"><input type="text" class="input-radio cedit" placeholder="X">
+                        No</label>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <strong>Observaciones Finales:</strong><br>
+                    <textarea class="cedit" rows="2"
+                        style="width:100%; border:1px solid #cbd5e1; padding:5px;"></textarea>
+                </div>
+                <table class="no-border-table">
+                    <tr>
+                        <td width="50%"><strong>Nombre y Firma (QA):</strong><br><input class="cedit"
+                                style="border-bottom:1px solid #ccc;"></td>
+                        <td width="50%"><strong>Fecha de Cierre:</strong><br><input type="text" class="cedit"
+                                placeholder="DD/MM/AAAA"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer">FO-QA-07 | Versión: 1.0 | Solicitud y Control de Cambios | Xelle Scientific | Página 2 de 2
+        </div>
+    </div>
+</body>
+
+</html>

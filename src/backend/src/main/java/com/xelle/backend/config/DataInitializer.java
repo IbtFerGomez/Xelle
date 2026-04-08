@@ -258,7 +258,7 @@ public class DataInitializer implements CommandLineRunner {
         upsertFormat("FO-OP-42", "Acciones Correctivas", "biblioteca", "formats/FO-OP-42.html");
         upsertFormat("FO-OP-43", "Control de Cambios", "biblioteca", "formats/FO-OP-43.html");
         upsertFormat("FO-OP-51", "Producto No Conforme (Desviaciones)", "biblioteca", "formats/FO-OP-51.html");
-        upsertFormat("FO-OP-53", "Acción Correctiva y Preventiva (CAPA)", "biblioteca", "formats/FO-OP-53.html");
+        upsertFormat("FO-QA-09", "Acción Correctiva y Preventiva (CAPA)", "biblioteca", "formats/FO-QA-09.html");
         upsertFormat("IT-OP-01", "Instructivo de Trabajo", "biblioteca", "formats/IT-OP-01.html");
 
         // --- COMERCIAL ---

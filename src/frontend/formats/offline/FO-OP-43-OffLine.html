@@ -158,7 +158,7 @@
                     <input type="text" id="reg-43" class="registry-input generate-barcode" data-target="barcode-43"
                         data-prefix="FO-OP-43-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
                 <svg id="barcode-43" class="barcode-svg"></svg>
             </div>
         </div>
@@ -175,19 +175,15 @@
             <table class="no-border-table">
                 <tr>
                     <td width="20%"><strong>Nombre del Insumo:</strong></td>
-                    <td width="30%"><input class="cedit" style="font-weight:bold;"></td>
+                    <td width="30%"><input id="nombre-insumo-43" class="cedit" style="font-weight:bold;"
+                            oninput="updateDocTitle43()"></td>
                     <td width="20%"><strong>Código Interno:</strong></td>
                     <td width="30%"><input class="cedit"></td>
                 </tr>
                 <tr>
                     <td><strong>Unidad de Medida (UOM):</strong></td>
                     <td colspan="3">
-                        <div class="cbx-group">
-                            <label><input type="radio" name="uom" class="cedit"> Kg</label>
-                            <label><input type="radio" name="uom" class="cedit"> Litros</label>
-                            <label><input type="radio" name="uom" class="cedit"> Pzas</label>
-                            <label><input type="radio" name="uom" class="cedit"> Cajas</label>
-                        </div>
+                        <input class="cedit" placeholder="Ej: Kg, Litros, Pzas, Cajas, etc.">
                     </td>
                 </tr>
                 <tr>
@@ -195,11 +191,7 @@
                     <td><input class="cedit" placeholder="Pasillo / Rack / Nivel"></td>
                     <td><strong>Condiciones de Almacenamiento:</strong></td>
                     <td>
-                        <div class="cbx-group">
-                            <label><input type="radio" name="cond" class="cedit"> Ambiente</label>
-                            <label><input type="radio" name="cond" class="cedit"> 2-8°C</label>
-                            <label><input type="radio" name="cond" class="cedit"> &lt;-20°C</label>
-                        </div>
+                        <input class="cedit" placeholder="Ej: Ambiente, 2-8°C, <-20°C, etc.">
                     </td>
                 </tr>
                 <tr>
@@ -233,10 +225,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
                         <td><input class="cedit" value="Inventario Inicial"></td>
                         <td><input class="cedit" placeholder="[LOTE]"></td>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
                         <td><input type="number" class="cedit stock-in mov-val" oninput="calcStock()"></td>
                         <td><input type="number" class="cedit stock-out mov-val" readonly></td>
                         <td class="stock-total"><input type="number" class="cedit sum-total" readonly></td>
@@ -266,7 +258,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
                         <td><input class="cedit" placeholder="[LOTE]"></td>
                         <td><input type="text" class="cedit" placeholder="Ej. -5 pzas"></td>
                         <td><input class="cedit" placeholder="Referencia documental (FO-LC-52)"></td>
@@ -279,10 +271,22 @@
             <button class="btn-add no-print" onclick="addAjuste('tbl-ajustes')">+ AGREGAR AJUSTE</button>
         </div>
 
-        <div class="footer">FO-OP-43-O | KÁRDEX DE CONTROL DE INVENTARIOS | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-OP-43-O | KÁRDEX DE CONTROL DE INVENTARIOS | Versión: 1.0<br>El contenido de este
+            documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los
+            derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 
     <script>
+        // Actualizar título del documento para nombre de archivo por defecto
+        function updateDocTitle43() {
+            const nombreInsumo = document.getElementById('nombre-insumo-43').value.trim();
+            if (nombreInsumo) {
+                document.title = `FO-LC-43 ${nombreInsumo}`;
+            } else {
+                document.title = 'FO-LC-43 Kárdex de Control de Inventarios';
+            }
+        }
+
         function calcStock() {
             let table = document.getElementById('tbl-movimientos').getElementsByTagName('tbody')[0];
             let rows = table.rows;

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-08 Acta de Destrucción y Disposición Final</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .compact-table input,
+        .compact-table select {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+        }
+
+        .cbx-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+
+        .cbx-group-col {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+            font-size: 10px;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .inline-input {
+            width: 60px;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .info-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-header {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-qa-08">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Acta</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-08-</span>
+                    <input type="text" id="reg-qa08" class="registry-input generate-barcode" data-target="barcode-qa08"
+                        data-prefix="FO-QA-08-" placeholder="000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-qa08" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>ACTA DE DESTRUCCIÓN Y DISPOSICIÓN FINAL</h1>
+            <div class="metadata">Código: FO-QA-08 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. DATOS GENERALES Y MOTIVO DE LA DESTRUCCIÓN</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Este documento ampara la baja física y contable del
+                material detallado en las siguientes secciones.</p>
+
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Fecha de Ejecución:</strong></td>
+                    <td width="30%"><input type="date" class="cedit"></td>
+                    <td width="15%"><strong>Hora:</strong></td>
+                    <td width="35%"><input type="time" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><strong>Área que Solicita:</strong></td>
+                    <td colspan="3">
+                        <div class="cbx-group">
+                            <label><input type="radio" name="area_sol" class="cedit"><span>Almacén</span></label>
+                            <label><input type="radio" name="area_sol" class="cedit"><span>Producción</span></label>
+                            <label><input type="radio" name="area_sol" class="cedit"><span>Control de
+                                    Calidad</span></label>
+                            <label style="flex: 1;">
+                                <input type="radio" name="area_sol" class="cedit"><span>Otra:</span>
+                                <input class="cedit" style="flex:1; margin-left:5px; border-bottom:1px solid #ccc;">
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="info-box" style="margin-top:15px;">
+                <strong>Motivo de la Disposición Final / Destrucción (Marque una):</strong>
+                <div class="cbx-group-col">
+                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                        <span><strong>Producto No Conforme (PNC):</strong> Producto terminado rechazado por Calidad.
+                            (Obligatorio: Indicar folio del reporte de desviación FO-LC-51 o FO-OP-51).</span>
+                        <input type="radio" name="motivo" class="cedit">
+                    </label>
+                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                        <span><strong>Producto Caduco:</strong> Vencimiento de vida útil en almacén o muestras de
+                            retención.</span>
+                        <input type="radio" name="motivo" class="cedit">
+                    </label>
+                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                        <span><strong>Merma / Desperdicio Controlado:</strong> Sobrantes de proceso, purgas, o
+                            materiales de empaque impresos obsoletos.</span>
+                        <input type="radio" name="motivo" class="cedit">
+                    </label>
+                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                        <span><strong>Falla Microbiológica:</strong> Positivo en esterilidad, endotoxinas o
+                            micoplasma.</span>
+                        <input type="radio" name="motivo" class="cedit">
+                    </label>
+                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                        <span><strong>Excursión Térmica Crítica:</strong> Desviación de temperatura durante
+                            almacenamiento que compromete la integridad.</span>
+                        <input type="radio" name="motivo" class="cedit">
+                    </label>
+                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                        <span><strong>Defecto Crítico de Empaque/Sellado:</strong> Comprometiendo la esterilidad o
+                            trazabilidad.</span>
+                        <input type="radio" name="motivo" class="cedit">
+                    </label>
+                </div>
+            </div>
+
+            <table class="no-border-table" style="margin-top:15px;">
+                <tr>
+                    <td width="35%"><strong>Documento de Referencia (Obligatorio):</strong><br><span
+                            style="font-size:8px; color:#666;">(Ej. Folio FO-LC-51, FO-OP-51, FO-QA-09, Reporte de
+                            Merma, etc.)</span></td>
+                    <td width="65%"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Justificación Breve:</strong></td>
+                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+
+            <div class="info-box" style="margin-top:15px;">
+                <strong>Trazabilidad Documental (Obligatorio):</strong>
+                <table class="no-border-table" style="margin-top:8px;">
+                    <tr>
+                        <td width="50%">Folio de Reporte de Desviación / OOS: <input class="cedit inline-input"
+                                style="width:120px;" placeholder="FO-LC-51-..."></td>
+                        <td width="50%">Folio de CAPA Asociada (FO-QA-09): <input class="cedit inline-input"
+                                style="width:120px;" placeholder="FO-QA-09-..."></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="margin-top:20px; padding-top:15px; border-top:2px solid #1E3A5F;">
+                <strong style="font-size:11px;">1.1 IDENTIFICACIÓN DEL PRODUCTO A DESTRUIR (Si aplica para Producto
+                    Terminado)</strong>
+                <p style="font-size:9px; color:#666; margin:5px 0;">Detalle exacto del lote de Producto Terminado que
+                    será eliminado definitivamente del inventario.</p>
+                <table class="no-border-table" style="margin-top:8px;">
+                    <tr>
+                        <td width="25%"><strong>Nombre del Producto:</strong></td>
+                        <td width="25%"><input class="cedit"></td>
+                        <td width="25%"><strong>Número de Lote (PNC):</strong></td>
+                        <td width="25%"><input class="cedit" style="font-weight:bold;"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Presentación / Tamaño:</strong></td>
+                        <td><input class="cedit" placeholder="Ej. Vial 10ml"></td>
+                        <td><strong>Cantidad a Destruir:</strong></td>
+                        <td><input type="number" class="cedit" placeholder="(Viales / Unidades)"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Área que ejecutó la Segregación:</strong></td>
+                        <td><input class="cedit"></td>
+                        <td><strong>Fecha de Ingreso a Cuarentena:</strong></td>
+                        <td><input type="date" class="cedit"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-header">2. DETALLE DEL MATERIAL A DESTRUIR</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Registre cada uno de los elementos a dar de baja.
+                Cancele las filas no utilizadas.</p>
+            <table class="compact-table" id="tbl-material">
+                <thead>
+                    <tr>
+                        <th width="15%">Código / ID</th>
+                        <th width="35%">Descripción del Material</th>
+                        <th width="15%">Lote / Número de Serie</th>
+                        <th width="10%">Cantidad</th>
+                        <th width="10%">UoM<br>(Kg, L, Pzas)</th>
+                        <th width="15%">Estado Físico</th>
+                        <th width="2%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit" style="text-align:left; padding-left:5px;"></td>
+                        <td><input class="cedit" style="font-weight:bold;"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="Solido">Sólido</option>
+                                <option value="Liquido">Líquido</option>
+                                <option value="Biologico">Biológico</option>
+                            </select>
+                        </td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit" style="text-align:left; padding-left:5px;"></td>
+                        <td><input class="cedit" style="font-weight:bold;"></td>
+                        <td><input type="number" class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="Solido">Sólido</option>
+                                <option value="Liquido">Líquido</option>
+                                <option value="Biologico">Biológico</option>
+                            </select>
+                        </td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-material')">+ AGREGAR MATERIAL A DESTRUIR</button>
+        </div>
+
+        <div class="section-header">3. MÉTODO DE DESTRUCCIÓN Y DISPOSICIÓN AMBIENTAL</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Evidencia de inactivación e inhabilitación para
+                prevenir riesgos sanitarios, ambientales y falsificación de marca.</p>
+
+            <div style="margin-bottom:15px;">
+                <strong>A. Lugar de Destrucción:</strong>
+                <div class="cbx-group-col">
+                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                        <span>Interna (En instalaciones de Xelle Scientific)</span>
+                        <input type="radio" name="lugar" class="cedit">
+                    </label>
+                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                        <span>Externa (Proveedor autorizado de disposición final)</span>
+                        <input type="radio" name="lugar" class="cedit">
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom:15px; padding-top:10px; border-top:1px solid #e2e8f0;">
+                <strong>B. Método de Inactivación Previa (Para productos de riesgo biológico):</strong>
+                <div class="cbx-group-col">
+                    <label style="display:flex; align-items:flex-start; justify-content:space-between;">
+                        <span>Inactivación Química: Inmersión en Hipoclorito de sodio al
+                            <input type="number" class="cedit inline-input" placeholder="%" style="width:40px;"> %
+                            por <input type="number" class="cedit inline-input" placeholder="min" style="width:40px;">
+                            min.
+                        </span>
+                        <input type="checkbox" class="cedit" style="margin-left:10px;">
+                    </label>
+                    <label style="display:flex; align-items:flex-start; justify-content:space-between;">
+                        <span>Inactivación Térmica: Esterilización en Autoclave a 121°C por
+                            <input type="number" class="cedit inline-input" placeholder="min" style="width:40px;"> min.
+                            Ciclo No. <input class="cedit inline-input" style="width:80px;">
+                        </span>
+                        <input type="checkbox" class="cedit" style="margin-left:10px;">
+                    </label>
+                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                        <span>No aplica inactivación previa (Envío directo a contenedor de RPBI)</span>
+                        <input type="checkbox" class="cedit">
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom:15px; padding-top:10px; border-top:1px solid #e2e8f0;">
+                <strong>C. Método de Destrucción Física (Marcar los aplicables):</strong>
+                <div class="cbx-group-col">
+                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                        <span>Inutilización física (Corte, trituración, ruptura de empaques/viales)</span>
+                        <input type="checkbox" class="cedit">
+                    </label>
+                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                        <span>Neutralización Química (Ej. Hipoclorito de sodio)</span>
+                        <input type="checkbox" class="cedit">
+                    </label>
+                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                        <span>Incineración / Disposición como RPBI</span>
+                        <input type="checkbox" class="cedit">
+                    </label>
+                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                        <span>Destrucción mecánica para evitar falsificación</span>
+                        <input type="checkbox" class="cedit">
+                    </label>
+                    <label style="display:flex; align-items:center; gap:5px;">
+                        <span>Otro:</span>
+                        <input class="cedit" style="flex:1; margin-left:5px; border-bottom:1px solid #ccc;">
+                        <input type="checkbox" class="cedit">
+                    </label>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top:15px;">
+                <strong>D. Transferencia a Almacén Temporal de RPBI (Si aplica):</strong>
+                <table class="no-border-table" style="margin-top:8px;">
+                    <tr>
+                        <td width="35%">
+                            <strong>Tipo de Contenedor:</strong><br>
+                            <div class="cbx-group-col" style="margin-top:5px;">
+                                <label style="display:flex; justify-content:space-between;">
+                                    <span>Bolsa Roja</span>
+                                    <input type="radio" name="cont" class="cedit">
+                                </label>
+                                <label style="display:flex; justify-content:space-between;">
+                                    <span>Recipiente Rígido Rojo</span>
+                                    <input type="radio" name="cont" class="cedit">
+                                </label>
+                                <label style="display:flex; justify-content:space-between;">
+                                    <span>Bolsa Amarilla</span>
+                                    <input type="radio" name="cont" class="cedit">
+                                </label>
+                            </div>
+                        </td>
+                        <td width="30%">
+                            <strong>Peso Total del Residuo:</strong><br>
+                            <input type="number" step="0.01" class="cedit inline-input"
+                                style="width:80px; margin-top:5px;"> kg.
+                        </td>
+                        <td width="35%">
+                            <strong>Etiqueta Colocada:</strong><br>
+                            <div class="cbx-group-col" style="margin-top:5px;">
+                                <label style="display:flex; justify-content:space-between;">
+                                    <span>ET-RPBI-01 (Rojo)</span>
+                                    <input type="radio" name="etiq" class="cedit">
+                                </label>
+                                <label style="display:flex; justify-content:space-between;">
+                                    <span>ET-RPBI-02 (Amarillo)</span>
+                                    <input type="radio" name="etiq" class="cedit">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="margin-top:15px; padding-top:10px; border-top:1px dashed #cbd5e1;">
+                <strong>E. Datos del Proveedor Externo (Llenar solo si aplica disposición externa):</strong>
+                <table class="no-border-table" style="margin-top:5px;">
+                    <tr>
+                        <td width="40%"><strong>Empresa Recolectora:</strong></td>
+                        <td width="60%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>No. de Manifiesto Ecológico:</strong></td>
+                        <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Autorización SEMARNAT:</strong></td>
+                        <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-header">4. DECLARACIÓN JURADA Y FIRMAS DE TESTIGOS</div>
+        <div class="section">
+            <p style="font-size:10px; text-align:justify; margin-bottom:15px; line-height:1.4;">
+                Hacemos constar que el material detallado en la Sección 2 fue destruido e inactivado en nuestra
+                presencia,
+                imposibilitando su reuso, venta, desvío o uso para fines comerciales, clínicos o de investigación.
+                La disposición final se ejecutó conforme a la normatividad ambiental y sanitaria vigente
+                (NOM-087-SEMARNAT,
+                NOM-059-SSA1, Reglamento de Insumos para la Salud), y no representa un riesgo sanitario ni ambiental.
+            </p>
+
+            <div class="signature-area">
+                <div class="signature-box">
+                    <p><strong>Ejecutó la Destrucción</strong></p>
+                    <p style="font-size:9px; margin:5px 0;">(Operaciones / Almacén)</p>
+                    <input type="text" placeholder="Nombre completo" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Puesto" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Firma y Fecha" class="cedit">
+                </div>
+                <div class="signature-box">
+                    <p><strong>Testigo de Verificación</strong></p>
+                    <p style="font-size:9px; margin:5px 0;">(Control de Calidad / QA)</p>
+                    <input type="text" placeholder="Nombre completo" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Puesto" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Firma y Fecha" class="cedit">
+                </div>
+                <div class="signature-box">
+                    <p><strong>Autorización Final</strong></p>
+                    <p style="font-size:9px; margin:5px 0;">(Responsable Sanitario / Dirección)</p>
+                    <input type="text" placeholder="Nombre completo" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Puesto" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Firma y Fecha" class="cedit">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">FO-QA-08 | Versión: 1.0 | Acta de Destrucción y Disposición Final | Xelle Scientific |
+            Página 1 de 1<br>
+            El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por
+            los derechos de autor.</div>
+    </div>
+
+    <script>
+        function addRow(id) {
+            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
+            let r = t.rows[0].cloneNode(true);
+
+            // Limpiar inputs
+            r.querySelectorAll('input').forEach(i => i.value = '');
+
+            // Limpiar selects
+            r.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+
+            t.appendChild(r);
+        }
+
+        function delRow(btn) {
+            let row = btn.parentNode.parentNode;
+            if (row.parentNode.rows.length > 1) {
+                row.parentNode.removeChild(row);
+            }
+        }
+    </script>
+</body>
+
+</html>

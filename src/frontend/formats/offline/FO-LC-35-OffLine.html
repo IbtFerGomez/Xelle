@@ -37,7 +37,7 @@
 
         .compact-table td {
             font-size: 9px;
-            padding: 2px;
+            padding: 6px 2px;
             vertical-align: middle;
             text-align: center;
         }
@@ -286,35 +286,105 @@
     </div>
 
     <script>
-        function colorStatus(sel) {
-            sel.className = 'cedit'; // Reset
-            if (sel.value === 'LIBERADO') sel.classList.add('status-liberado');
-            else if (sel.value === 'CUARENTENA') sel.classList.add('status-cuarentena');
-            else if (sel.value === 'RECHAZADO') sel.classList.add('status-rechazado');
-            else if (sel.value === 'DEVUELTO') sel.classList.add('status-devuelto');
-            else if (sel.value === 'RETIRADO') sel.classList.add('status-retirado');
-        }
+        // Definir funciones en el scope global para asegurar accesibilidad desde atributos onclick/onchange
 
-        function addRow(id) {
-            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
-            let r = t.rows[0].cloneNode(true);
+        // Función para crear una fila vacía desde cero (sin depender de clonar HTML)
+        window.createEmptyRow = function () {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" class="cedit" placeholder="YYYY-MM-DD"></td>
+                <td><input class="cedit" placeholder="Ej. Células Madre"></td>
+                <td><input class="cedit" placeholder="Ej. L-102" style="font-weight:bold;"></td>
+                <td><input class="cedit" type="number" placeholder="pzas"></td>
+                <td><input type="text" class="cedit" onchange="colorStatus(this)" style="width:100%"></td>
+                <td><input class="cedit" placeholder="Ej. CoA-102"></td>
+                <td><input class="cedit" placeholder="Hospital / Interno"></td>
+                <td><input class="cedit" placeholder="N/A o Razón"></td>
+                <td><input class="cedit" placeholder="Firma"></td>
+                <td class="no-print"><span onclick="delRow(this)" style="color:red;cursor:pointer;font-weight:bold;font-size:14px;">×</span></td>
+            `;
+            return tr;
+        };
 
-            // Limpiar inputs y resetear colores
-            r.querySelectorAll('input').forEach(i => i.value = '');
-            r.querySelectorAll('select').forEach(s => {
-                s.selectedIndex = 0;
-                s.className = 'cedit';
-            });
+        window.colorStatus = function (sel) {
+            // Resetear todas las clases de estatus
+            sel.className = 'cedit';
 
-            t.appendChild(r);
-        }
+            // Aplicar clase según el valor escrito (convertir a mayúsculas para flexibilidad)
+            const valor = sel.value.toUpperCase().trim();
 
-        function delRow(btn) {
-            let row = btn.parentNode.parentNode;
-            if (row.parentNode.rows.length > 1) {
-                row.parentNode.removeChild(row);
+            if (valor === 'LIBERADO') sel.classList.add('status-liberado');
+            else if (valor === 'CUARENTENA') sel.classList.add('status-cuarentena');
+            else if (valor === 'RECHAZADO') sel.classList.add('status-rechazado');
+            else if (valor === 'DEVUELTO') sel.classList.add('status-devuelto');
+            else if (valor === 'RETIRADO') sel.classList.add('status-retirado');
+        };
+
+        window.addRow = function (id) {
+            const tabla = document.getElementById(id);
+            if (!tabla) {
+                console.error('Tabla no encontrada:', id);
+                alert('Error: No se encontró la tabla ' + id);
+                return;
             }
-        }
+
+            const tbody = tabla.getElementsByTagName('tbody')[0];
+            if (!tbody) {
+                console.error('No se encontró el tbody de la tabla');
+                alert('Error: No se encontró el cuerpo de la tabla');
+                return;
+            }
+
+            // Crear una nueva fila vacía y agregarla
+            const nuevaFila = createEmptyRow();
+            tbody.appendChild(nuevaFila);
+
+            console.log('Fila agregada exitosamente a la tabla ' + id);
+        };
+
+        window.delRow = function (btn) {
+            // Encontrar la fila que contiene el botón
+            const fila = btn.closest('tr');
+            if (!fila) {
+                console.error('No se encontró la fila a eliminar');
+                return;
+            }
+
+            const tbody = fila.parentNode;
+            if (!tbody) {
+                console.error('No se encontró el tbody');
+                return;
+            }
+
+            // Verificar que no sea la última fila
+            if (tbody.rows.length > 1) {
+                tbody.removeChild(fila);
+                console.log('Fila eliminada exitosamente');
+            } else {
+                alert('No se puede eliminar la última fila. Debe existir al menos un renglón en la tabla.');
+            }
+        };
+
+        // Asegurar que siempre haya al menos una fila en la tabla
+        window.ensureMinimumRow = function () {
+            const tbody = document.querySelector('#tbl-lotes tbody');
+            if (tbody && tbody.rows.length === 0) {
+                console.log('Tabla vacía detectada. Agregando fila inicial...');
+                tbody.appendChild(createEmptyRow());
+            }
+        };
+
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('FO-LC-35 cargado - Funciones de tabla disponibles');
+            // Asegurar que siempre haya al menos una fila
+            ensureMinimumRow();
+        });
+
+        // También verificar después de un pequeño delay (por si otro script modifica la tabla)
+        window.addEventListener('load', function () {
+            setTimeout(ensureMinimumRow, 100);
+        });
     </script>
 </body>
 

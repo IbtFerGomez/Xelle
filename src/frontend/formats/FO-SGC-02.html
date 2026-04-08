@@ -533,7 +533,7 @@
                         <td>Responsable Dirección</td>
                     </tr>
                     <tr>
-                        <td><strong>FO-OP-53</strong> CAPA - Metodología AMFE</td>
+                        <td><strong>FO-QA-09</strong> CAPA - Metodología AMFE</td>
                         <td>Responsable del Área Afectada</td>
                         <td>Aseguramiento de Calidad</td>
                         <td>Responsable Dirección</td>
@@ -1000,6 +1000,11 @@
             rows.forEach(row => {
                 row.classList.remove('drag-over');
             });
+        }
+
+        // Inicializar sistema de persistencia
+        if (typeof App !== 'undefined') {
+            App.init();
         }
     </script>
 </body>

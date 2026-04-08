@@ -310,7 +310,6 @@
                         <th width="30%">Nombre</th>
                         <th width="5%">Versión</th>
                         <th width="7%">Vigencia</th>
-                        <th width="18%">Cumplimiento</th>
                         <th width="13%">Documento Relacionado</th>
                         <th width="11%">Responsable</th>
                         <th width="6%" class="no-print">Acciones</th>
@@ -782,7 +781,7 @@
                         <td>Calidad</td>
                     </tr>
                     <tr>
-                        <td><strong>FO-OP-53</strong></td>
+                        <td><strong>FO-QA-09</strong></td>
                         <td>Acción Correctiva y Preventiva (CAPA) - Gestión AMFE</td>
                         <td>1.0</td>
                         <td>ENE 2026</td>
@@ -940,8 +939,7 @@
                         <label style="display:block; margin-bottom:5px; font-weight:bold;">Vigencia:</label>
                         <input type="text" id="input-vigencia" class="swal2-input" placeholder="ENE 2026" style="width:90%; margin:0 0 15px 0;">
                         
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Cumplimiento:</label>
-                        <input type="text" id="input-cumplimiento" class="swal2-input" placeholder="Normas aplicables" style="width:90%; margin:0 0 15px 0;">
+                        
                         
                         <label style="display:block; margin-bottom:5px; font-weight:bold;">Documento Relacionado:</label>
                         <input type="text" id="input-documento" class="swal2-input" placeholder="Opcional" style="width:90%; margin:0 0 15px 0;">
@@ -961,7 +959,6 @@
                     const nombre = document.getElementById('input-nombre').value;
                     const version = document.getElementById('input-version').value || '1.0';
                     const vigencia = document.getElementById('input-vigencia').value || 'ENE 2026';
-                    const cumplimiento = document.getElementById('input-cumplimiento').value;
                     const documento = document.getElementById('input-documento').value;
                     const responsable = document.getElementById('input-responsable').value;
 
@@ -984,7 +981,7 @@
                         <td>${data.nombre}</td>
                         <td>${data.version}</td>
                         <td>${data.vigencia}</td>
-                        <td>${data.cumplimiento}</td>
+                        <td></td>
                         <td>${data.documento}</td>
                         <td>${data.responsable}</td>
                         <td class="no-print"></td>
@@ -1009,13 +1006,12 @@
             const row = btn.closest('tr');
             const cells = row.getElementsByTagName('td');
 
-            // Índices: 0=drag, 1=código, 2=nombre, 3=versión, 4=vigencia, 5=cumplimiento, 6=documento, 7=responsable, 8=acciones
+            // Índices: 0=drag, 1=código, 2=nombre, 3=versión, 4=vigencia, 6=documento, 7=responsable, 8=acciones
             const currentData = {
                 codigo: cells[1].textContent.trim(),
                 nombre: cells[2].textContent.trim(),
                 version: cells[3].textContent.trim(),
-                vigencia: cells[4].textContent.trim(),
-                cumplimiento: cells[5].textContent.trim(),
+                vigencia: cells[4].textContent.trim(), '',
                 documento: cells[6].textContent.trim(),
                 responsable: cells[7].textContent.trim()
             };
@@ -1036,8 +1032,7 @@
                         <label style="display:block; margin-bottom:5px; font-weight:bold;">Vigencia:</label>
                         <input type="text" id="edit-vigencia" class="swal2-input" value="${currentData.vigencia}" style="width:90%; margin:0 0 15px 0;">
                         
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Cumplimiento:</label>
-                        <input type="text" id="edit-cumplimiento" class="swal2-input" value="${currentData.cumplimiento}" style="width:90%; margin:0 0 15px 0;">
+                        
                         
                         <label style="display:block; margin-bottom:5px; font-weight:bold;">Documento Relacionado:</label>
                         <input type="text" id="edit-documento" class="swal2-input" value="${currentData.documento}" style="width:90%; margin:0 0 15px 0;">
@@ -1057,8 +1052,7 @@
                         codigo: document.getElementById('edit-codigo').value,
                         nombre: document.getElementById('edit-nombre').value,
                         version: document.getElementById('edit-version').value,
-                        vigencia: document.getElementById('edit-vigencia').value,
-                        cumplimiento: document.getElementById('edit-cumplimiento').value,
+                        vigencia: document.getElementById('edit-vigencia').value, document.getElementById('edit-cumplimiento').value,
                         documento: document.getElementById('edit-documento').value,
                         responsable: document.getElementById('edit-responsable').value
                     };
@@ -1070,7 +1064,7 @@
                     cells[2].textContent = data.nombre;
                     cells[3].textContent = data.version;
                     cells[4].textContent = data.vigencia;
-                    cells[5].textContent = data.cumplimiento;
+
                     cells[6].textContent = data.documento;
                     cells[7].textContent = data.responsable;
 
@@ -1204,6 +1198,11 @@
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
+        }
+
+        // Inicializar sistema de persistencia
+        if (typeof App !== 'undefined') {
+            App.init();
         }
     </script>
 </body>

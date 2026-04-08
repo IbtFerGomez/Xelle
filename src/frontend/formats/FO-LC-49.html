@@ -1,414 +1,309 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <title>FO-LC-49 Bitácora Maestra de Estatus de Lotes</title>
+    <title>FO-LC-49 Orden Maestra y Expediente de Producción</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
-        @page {
-            size: landscape;
-            margin: 0.5cm;
-        }
-
-        .section-header {
-            background-color: #1E3A5F;
-            color: white;
-            padding: 5px 10px;
-            font-weight: bold;
-            font-size: 11px;
-            margin-top: 15px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        .compact-table th {
-            background-color: #1E3A5F;
-            color: white;
-            font-size: 9px;
-            padding: 4px;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .compact-table td {
-            font-size: 9px;
-            padding: 4px;
-            vertical-align: middle;
-            text-align: center;
-        }
-
-        .compact-table input,
-        .compact-table select {
-            font-size: 9px;
-            text-align: center;
-            width: 100%;
-            border: none;
-            background: transparent;
-        }
-
-        .status-cuarentena {
-            font-weight: bold;
-            color: #b45309;
-            background-color: #fef3c7;
-            padding: 2px 5px;
-            border-radius: 3px;
-            display: inline-block;
-            width: 90%;
-        }
-
-        .radio-group {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            font-size: 9px;
-        }
-
-        .btn-add {
-            background: #e2e8f0;
-            border: 1px dashed #94a3b8;
-            width: 100%;
-            font-size: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 5px;
-            margin-top: 5px;
-        }
-
-        @media print {
-
-            .global-controls,
-            .no-print {
-                display: none !important;
-            }
-
-            ::-webkit-input-placeholder {
-                color: transparent !important;
-            }
-
-            :-moz-placeholder {
-                color: transparent !important;
-            }
-
-            ::-moz-placeholder {
-                color: transparent !important;
-            }
-
-            :-ms-input-placeholder {
-                color: transparent !important;
-            }
-
-            ::placeholder {
-                color: transparent !important;
-            }
-
-            /* Permitir que las tablas se partan entre páginas */
-            .section {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
-            }
-
-            table,
-            .compact-table {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
-            }
-
-            thead {
-                display: table-header-group !important;
-            }
-
-            tr,
-            tbody tr {
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-            }
-
-            .section-title,
-            .section-header {
-                page-break-after: avoid !important;
-                break-after: avoid !important;
-            }
+        .section-header { background-color: #1E3A5F; color: white; padding: 6px 12px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        .sub-header { background-color: #3b82f6; } 
+        .compact-table th { background-color: #f1f5f9; color: #1e293b; font-size: 9.5px; padding: 5px; border: 1px solid #cbd5e1; text-align: center; }
+        .compact-table td { padding: 3px; border: 1px solid #cbd5e1; font-size: 10px; }
+        .input-full { width: 100%; border: none; background: transparent; font-size: 10px; padding: 2px; box-sizing: border-box; text-align: center; font-family: inherit; }
+        .input-full:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+        .bg-gray { background-color: #f8fafc; font-weight: bold; }
+        .text-left { text-align: left !important; padding-left: 5px !important; }
+        
+        .label-box { border: 2px dashed #94a3b8; background-color: #f8fafc; padding: 20px; text-align: center; margin-top: 10px; color: #64748b; font-size: 10px; border-radius: 4px; }
+        
+        @media print { 
+            .global-controls, .no-print { display: none !important; } 
+            .container { width: 100%; max-width: 100%; border:none; box-shadow: none; } 
+            ::-webkit-input-placeholder { color: transparent !important; }
+            ::placeholder { color: transparent !important; }
         }
     </style>
 </head>
-
 <body id="doc-fo-lc-49">
     <div class="global-controls no-print">
-        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-success" onclick="saveForm()">Guardar Orden</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
 
-    <div class="container" style="max-width:100%; width:100%;">
+    <div class="container">
         <div class="header-top">
             <div class="logo-container">
                 <svg viewBox="0 0 320 80">
-                    <defs>
-                        <style>
-                            .t {
-                                font-family: 'Arial Black', sans-serif;
-                                font-weight: 900;
-                                fill: #1D1D1B
-                            }
-
-                            .s {
-                                font-family: 'Arial', sans-serif;
-                                font-weight: 700;
-                                fill: #1D1D1B;
-                                letter-spacing: 2px
-                            }
-
-                            .c {
-                                fill: #2E9D82
-                            }
-                        </style>
-                    </defs>
-                    <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13" />
-                        <circle class="c" cx="75" cy="75" r="13" />
-                        <path class="c"
-                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
-                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
-                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
-                        fill="#1D1D1B">®</text>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                        <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                        <path fill="#2E9D82" d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z" />
+                    </g>
+                    <text x="90" y="42" font-family="Arial Black" font-size="34" fill="#1D1D1B">XELLE</text>
+                    <text x="91" y="68" font-family="Arial" font-size="19" font-weight="700" fill="#1D1D1B" letter-spacing="2">SCIENTIFIC</text>
                 </svg>
             </div>
             <div class="registry-container">
-                <label>Folio Registro</label>
+                <label>No. de Orden (OP)</label>
                 <div class="registry-wrapper">
-                    <span class="registry-prefix">FO-LC-49-</span>
-                    <input type="text" id="reg-49" class="registry-input generate-barcode" data-target="barcode-49"
-                        data-prefix="FO-LC-49-" placeholder="000">
+                    <span class="registry-prefix">OP-</span>
+                    <input type="text" id="reg-49" class="registry-input generate-barcode cedit" data-target="barcode-49" data-prefix="OP-" placeholder="000" style="font-weight:bold;">
                 </div>
-                <input type="date" class="registry-date">
                 <svg id="barcode-49" class="barcode-svg"></svg>
             </div>
         </div>
 
         <div class="header-main">
-            <h1>BITÁCORA MAESTRA DE ESTATUS DE LOTES</h1>
-            <div class="metadata">Código: FO-LC-49 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <h1>ORDEN DE PRODUCCIÓN / EXPEDIENTE DE LOTE</h1>
+            <div class="metadata">Código: FO-LC-49 | Versión: 2.0 | Vigencia: ENE 2026 | Página: 1 de 2</div>
         </div>
 
-        <div class="section-header">1. REGISTRO DE SEGUIMIENTO DE LOTES</div>
-        <div class="section">
-            <p style="font-size:9px; color:#666; margin-bottom:5px;">Todo lote debe ser registrado inmediatamente al ser
-                generado o recibido.</p>
-            <table class="compact-table" id="tbl-sec1">
-                <thead>
-                    <tr>
-                        <th width="12%">Fecha de Ingreso</th>
-                        <th width="20%">ID Producto / Lote</th>
-                        <th width="15%">Tipo de Banco</th>
-                        <th width="15%">Cantidad (Viales/g)</th>
-                        <th width="20%">Ubicación Física (Rack/Caja)</th>
-                        <th width="15%">Estatus Inicial</th>
-                        <th width="3%" class="no-print"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="date" class="cedit"></td>
-                        <td><input class="cedit" placeholder="[LOTE]" style="font-weight:bold;"></td>
-                        <td>
-                            <select class="cedit">
-                                <option value="">- Seleccionar -</option>
-                                <option value="BCM">BCM (Maestro)</option>
-                                <option value="BCT">BCT (Trabajo)</option>
-                                <option value="BCP">BCP (Producción)</option>
-                            </select>
-                        </td>
-                        <td><input type="number" class="cedit" placeholder="Ej. 100"></td>
-                        <td><input class="cedit" placeholder="Ej. Refri 1 - Caja A"></td>
-                        <td><span class="status-cuarentena">CUARENTENA</span></td>
-                        <td class="no-print"><span onclick="delRow(this)"
-                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="btn-add no-print" onclick="addRow('tbl-sec1')">+ AGREGAR LOTE (INGRESO)</button>
+        <div class="section-header">1. INFORMACIÓN DEL PRODUCTO Y LOTE</div>
+        <table class="compact-table" style="width:100%;">
+            <tr>
+                <th width="20%">Producto:</th>
+                <td width="30%"><input class="input-full cedit" placeholder="Nombre Comercial (Ej. X-Exosomes HA)" style="font-weight:bold;"></td>
+                <th width="20%">Código de Producto:</th>
+                <td width="30%"><input class="input-full cedit" placeholder="Ej. PRD-001"></td>
+            </tr>
+            <tr>
+                <th>Forma Farmacéutica:</th>
+                <td><input class="input-full cedit" placeholder="Líquido / Liofilizado / Gel"></td>
+                <th>Tamaño de Lote Teórico:</th>
+                <td><input class="input-full cedit" placeholder="Ej. 500 Viales / 5 Kg"></td>
+            </tr>
+            <tr>
+                <th>Lote Asignado (LOT):</th>
+                <td><input class="input-full cedit" placeholder="LOT-XXXX" style="font-weight:bold; color:#b45309;"></td>
+                <th>Fechas (Fab / Caducidad):</th>
+                <td>
+                    <div style="display:flex; justify-content:space-between;">
+                        <input type="date" class="input-full cedit" style="width:48%; border-right:1px solid #ccc;" title="Fecha Fabricación">
+                        <input type="month" class="input-full cedit" style="width:48%;" title="Fecha Caducidad">
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="section-header">2. EQUIPOS, UTENSILIOS Y DESPEJE DE LÍNEA</div>
+        <table id="tbl-equipos" class="compact-table" style="width:100%;">
+            <thead>
+                <tr>
+                    <th width="35%">Nombre del Equipo / Utensilio (Filtros, Frascos)</th>
+                    <th width="20%">ID / No. Serie</th>
+                    <th width="20%">Limpieza / Sanitización OK</th>
+                    <th width="20%">Responsable (Firma)</th>
+                    <th width="5%" class="no-print"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="input-full cedit text-left" placeholder="Ej. Filtro 0.22 µm / Autoclave"></td>
+                    <td><input class="input-full cedit"></td>
+                    <td><input class="input-full cedit" placeholder="Sí (15 min) / Irradiado"></td>
+                    <td><input class="input-full cedit"></td>
+                    <td class="no-print" style="text-align:center;"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-primary btn-mini no-print" onclick="addRow('tbl-equipos')" style="margin-top:5px;">+ AGREGAR EQUIPO</button>
+
+        <div class="section-header">3A. FÓRMULA MAESTRA Y REGISTRO DE PESAJE (MATERIAS PRIMAS)</div>
+        <table id="tbl-pesaje" class="compact-table" style="width:100%;">
+            <thead>
+                <tr>
+                    <th width="5%">Fase</th>
+                    <th width="25%">Materia Prima / Insumo</th>
+                    <th width="12%">Cant. Teórica</th>
+                    <th width="12%">Cant. Real</th>
+                    <th width="18%">Lote MP</th>
+                    <th width="15%">Fecha de Uso</th>
+                    <th width="8%">Firma</th>
+                    <th width="5%" class="no-print"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="input-full cedit" placeholder="1"></td>
+                    <td><input class="input-full cedit text-left" placeholder="Ácido Hialurónico / MC"></td>
+                    <td><input type="number" step="0.001" class="input-full cedit" placeholder="g / mL"></td>
+                    <td><input type="number" step="0.001" class="input-full cedit" style="font-weight:bold;"></td>
+                    <td><input class="input-full cedit"></td>
+                    <td><input type="date" class="input-full cedit"></td>
+                    <td><input class="input-full cedit"></td>
+                    <td class="no-print" style="text-align:center;"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-primary btn-mini no-print" onclick="addRow('tbl-pesaje')" style="margin-top:5px;">+ AGREGAR MATERIA PRIMA</button>
+
+        <div class="section-header sub-header">3B. MATERIALES DE EMPAQUE Y ACONDICIONAMIENTO</div>
+        <table id="tbl-empaque" class="compact-table" style="width:100%;">
+            <thead>
+                <tr>
+                    <th width="30%">Material Empaque (Primario/Secundario)</th>
+                    <th width="12%">Cant. Teórica</th>
+                    <th width="12%">Cant. Real</th>
+                    <th width="20%">Lote Interno / Proveedor</th>
+                    <th width="15%">Fecha de Uso</th>
+                    <th width="6%">Firma</th>
+                    <th width="5%" class="no-print"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="input-full cedit text-left" placeholder="Ej. Viales, Tapones, Etiquetas"></td>
+                    <td><input type="number" step="1" class="input-full cedit"></td>
+                    <td><input type="number" step="1" class="input-full cedit" style="font-weight:bold;"></td>
+                    <td><input class="input-full cedit"></td>
+                    <td><input type="date" class="input-full cedit"></td>
+                    <td><input class="input-full cedit"></td>
+                    <td class="no-print" style="text-align:center;"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-primary btn-mini no-print" onclick="addRow('tbl-empaque')" style="margin-top:5px; margin-bottom:10px;">+ AGREGAR MATERIAL DE EMPAQUE</button>
+        
+        <div class="label-box">
+            <strong>EVIDENCIA DE CODIFICACIÓN (MUESTRA DE ETIQUETA):</strong><br>
+            Pegue aquí una evidencia física de la etiqueta codificada con el Lote y Fecha de Caducidad que se aplicará al producto.
         </div>
 
-        <div class="section-header">2. CONTROL DE FASE 3 (PRUEBAS DE LIBERACIÓN)</div>
-        <div class="section">
-            <p style="font-size:9px; color:#666; margin-bottom:5px;">Vinculación con los resultados de laboratorio para
-                dictamen final.</p>
-            <table class="compact-table" id="tbl-sec2">
-                <thead>
-                    <tr>
-                        <th width="15%">ID Lote</th>
-                        <th width="15%">Serología<br>(FO-LC-46)</th>
-                        <th width="15%">Esterilidad<br>(FO-LC-47)</th>
-                        <th width="15%">Endotoxinas<br>(FO-LC-48)</th>
-                        <th width="15%">Micoplasma<br>(FO-LC-31)</th>
-                        <th width="22%">Dictamen de Calidad</th>
-                        <th width="3%" class="no-print"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input class="cedit" placeholder="[LOTE]" style="font-weight:bold;"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label><input type="radio" class="cedit"> Neg</label>
-                                <label><input type="radio" class="cedit"> Pos</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="radio-group">
-                                <label><input type="radio" class="cedit"> Neg</label>
-                                <label><input type="radio" class="cedit"> Pos</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="radio-group">
-                                <label><input type="radio" class="cedit"> Pass</label>
-                                <label><input type="radio" class="cedit"> Fail</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="radio-group">
-                                <label><input type="radio" class="cedit"> Neg</label>
-                                <label><input type="radio" class="cedit"> Pos</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="radio-group">
-                                <label style="color:#166534; font-weight:bold;"><input type="radio" class="cedit">
-                                    LIBERADO</label>
-                                <label style="color:#991b1b; font-weight:bold;"><input type="radio" class="cedit">
-                                    RECHAZADO</label>
-                            </div>
-                        </td>
-                        <td class="no-print"><span onclick="delRow(this)"
-                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="btn-add no-print" onclick="addRow('tbl-sec2')">+ AGREGAR RESULTADOS FASE 3</button>
+        <div style="page-break-before: always; margin-top:20px;"></div>
+
+        <div class="section-header">4. INSTRUCCIONES DE PROCESO Y CONTROLES (IPC)</div>
+        <table id="tbl-instrucciones" class="compact-table" style="width:100%;">
+            <thead>
+                <tr>
+                    <th width="40%">Instrucción de Manufactura / Muestreo</th>
+                    <th width="15%">Parámetro Crítico</th>
+                    <th width="15%">Hora (In / Out)</th>
+                    <th width="15%">Resultado / Obs</th>
+                    <th width="10%">Firma Ejecutó</th>
+                    <th width="5%" class="no-print"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><textarea class="input-full cedit text-left" rows="2" placeholder="Ej. Esterilización de equipos / Filtración estéril / Toma de Muestra Agar Soya"></textarea></td>
+                    <td><textarea class="input-full cedit" rows="2" placeholder="Ej. 121°C / 20min"></textarea></td>
+                    <td><textarea class="input-full cedit" rows="2" placeholder="In: 10:00&#10;Out: 10:20"></textarea></td>
+                    <td><textarea class="input-full cedit" rows="2"></textarea></td>
+                    <td><input class="input-full cedit"></td>
+                    <td class="no-print" style="text-align:center;"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-primary btn-mini no-print" onclick="addRow('tbl-instrucciones')" style="margin-top:5px;">+ AGREGAR INSTRUCCIÓN</button>
+
+        <div class="section-header">5. RECONCILIACIÓN Y RENDIMIENTO FINAL</div>
+        <table class="compact-table" style="width:100%;">
+            <tr>
+                <td width="30%" class="bg-gray text-left">Cant. Teórica Esperada (g/mL):</td>
+                <td width="20%"><input type="number" id="teorico-g" class="input-full cedit" oninput="calcRend('g')"></td>
+                <td width="30%" class="bg-gray text-left">Cant. Teórica (Viales/Pzas):</td>
+                <td width="20%"><input type="number" id="teorico-e" class="input-full cedit" oninput="calcRend('e')"></td>
+            </tr>
+            <tr>
+                <td class="bg-gray text-left">Cant. Real Obtenida (g/mL):</td>
+                <td><input type="number" id="real-g" class="input-full cedit" oninput="calcRend('g')" style="font-weight:bold;"></td>
+                <td class="bg-gray text-left">Viales/Pzas Acondicionadas:</td>
+                <td><input type="number" id="real-e" class="input-full cedit" oninput="calcRend('e')" style="font-weight:bold;"></td>
+            </tr>
+            <tr style="font-weight:bold; font-size:11px;">
+                <td class="bg-gray text-left" style="color:#1e3a5f;">RENDIMIENTO GRANEL:</td>
+                <td style="text-align:center;"><input id="res-g" class="input-full" style="color:blue; font-weight:bold;" readonly> %</td>
+                <td class="bg-gray text-left" style="color:#1e3a5f;">RENDIMIENTO ENVASADO:</td>
+                <td style="text-align:center;"><input id="res-e" class="input-full" style="color:blue; font-weight:bold;" readonly> %</td>
+            </tr>
+        </table>
+        <div style="font-size: 9px; color: #b45309; text-align: center; margin-top: 5px; font-weight: bold;">
+            Límite de Aceptación: 98.0% - 100.5%. Si el resultado está fuera del rango, es obligatorio abrir reporte de Desviación (FO-OP-51).
         </div>
 
-        <div class="section-header">3. CIERRE Y DISPOSICIÓN FINAL</div>
-        <div class="section">
-            <p style="font-size:9px; color:#666; margin-bottom:5px;">Registro de la salida física del lote del área de
-                cuarentena.</p>
-            <table class="compact-table" id="tbl-sec3">
-                <thead>
-                    <tr>
-                        <th width="15%">ID Lote</th>
-                        <th width="10%">Fecha Dictamen</th>
-                        <th width="15%">Etiqueta Final Aplicada</th>
-                        <th width="20%">Firma Responsable</th>
-                        <th width="15%">Folio CoA<br>(FO-QA-10)</th>
-                        <th width="22%">Observaciones<br>(CAPA/PNC)</th>
-                        <th width="3%" class="no-print"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input class="cedit" placeholder="[LOTE]" style="font-weight:bold;"></td>
-                        <td><input type="date" class="cedit"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label style="color:#166534; font-weight:bold;"><input type="radio" class="cedit"> Verde
-                                    (Aprobado)</label><br>
-                                <label style="color:#991b1b; font-weight:bold;"><input type="radio" class="cedit"> Roja
-                                    (Rechazo)</label>
-                            </div>
-                        </td>
-                        <td><input class="cedit" placeholder="Firma"></td>
-                        <td><input class="cedit" placeholder="Folio CoA"></td>
-                        <td><input class="cedit" placeholder="Ninguna o Ref. CAPA"></td>
-                        <td class="no-print"><span onclick="delRow(this)"
-                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="btn-add no-print" onclick="addRow('tbl-sec3')">+ AGREGAR DISPOSICIÓN FINAL</button>
-        </div>
+        <div class="section-header">6. ESPECIFICACIONES DE PRODUCTO TERMINADO</div>
+        <table id="tbl-liberacion" class="compact-table" style="width:100%;">
+            <thead>
+                <tr>
+                    <th width="30%">Atributo / Especificación</th>
+                    <th width="30%">Referencia / Límite</th>
+                    <th width="20%">Resultado Obtenido</th>
+                    <th width="15%">Dictamen (P/F)</th>
+                    <th width="5%" class="no-print"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="input-full cedit text-left" value="Apariencia / Color"></td>
+                    <td><input class="input-full cedit" value="Gel Translúcido / Sin Partículas"></td>
+                    <td><input class="input-full cedit"></td>
+                    <td>
+                        <select class="input-full cedit" style="font-weight:bold;">
+                            <option value=""></option>
+                            <option value="PASA" style="color:#166534;">PASA</option>
+                            <option value="FALLA" style="color:#991b1b;">FALLA</option>
+                        </select>
+                    </td>
+                    <td class="no-print" style="text-align:center;"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-primary btn-mini no-print" onclick="addRow('tbl-liberacion')" style="margin-top:5px;">+ AGREGAR ESPECIFICACIÓN</button>
 
-        <div class="footer">FO-LC-49 | BITÁCORA MAESTRA DE ESTATUS DE LOTES | Versión: 1.0<br>El contenido de este
-            documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los
-            derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="section-header sub-header">7. ENTREGA A ALMACÉN DE PRODUCTO TERMINADO</div>
+        <table class="compact-table" style="width:100%;">
+            <tr>
+                <th width="20%">Fecha de Entrega</th>
+                <th width="20%">Cantidad Aceptada (Viales/Pzas)</th>
+                <th width="30%">Entregó (Producción / QA)</th>
+                <th width="30%">Recibió (Almacén)</th>
+            </tr>
+            <tr>
+                <td><input type="date" class="input-full cedit"></td>
+                <td><input type="number" class="input-full cedit" style="font-weight:bold;"></td>
+                <td><input class="input-full cedit" placeholder="Nombre y Firma"></td>
+                <td><input class="input-full cedit" placeholder="Nombre y Firma"></td>
+            </tr>
+        </table>
+
+        <div class="signature-area" style="margin-top: 20px; display:flex; justify-content:space-between; gap:10px;">
+            <div class="signature-box" style="flex:1; border:1px solid #cbd5e1; padding:10px; text-align:center;">
+                <p style="font-size:10px; font-weight:bold; margin-bottom:20px;">Elaboró (Producción):</p>
+                <input class="input-full cedit" placeholder="Nombre, Firma y Fecha" style="border-top:1px solid #94a3b8; border-radius:0;">
+            </div>
+            <div class="signature-box" style="flex:1; border:1px solid #cbd5e1; padding:10px; text-align:center;">
+                <p style="font-size:10px; font-weight:bold; margin-bottom:20px;">Revisó (Control de Calidad):</p>
+                <input class="input-full cedit" placeholder="Nombre, Firma y Fecha" style="border-top:1px solid #94a3b8; border-radius:0;">
+            </div>
+            <div class="signature-box" style="flex:1; border:1px solid #cbd5e1; padding:10px; text-align:center;">
+                <p style="font-size:10px; font-weight:bold; margin-bottom:20px;">Liberó (Aseguramiento de Calidad):</p>
+                <input class="input-full cedit" placeholder="Dictamen Final, Firma y Fecha" style="border-top:1px solid #94a3b8; border-radius:0;">
+            </div>
+        </div>
     </div>
 
     <script>
-        function addRow(id) {
-            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
-            let r = t.rows[0].cloneNode(true);
-
-            // Limpiar inputs y desmarcar radios
-            r.querySelectorAll('input').forEach(i => {
-                if (i.type === 'radio' || i.type === 'checkbox') {
-                    i.checked = false;
-                    // Asegurar que los radios de las filas nuevas tengan un name único para agruparse bien
-                    if (i.name) {
-                        i.name = i.name + "_" + new Date().getTime();
-                    }
-                } else {
-                    i.value = '';
-                }
-            });
-
-            // Limpiar selects
-            r.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-
-            t.appendChild(r);
-
-            // Re-asignar nombres a los radios de la nueva fila de la Sección 2 para que funcionen como grupos independientes
-            if (id === 'tbl-sec2') {
-                let rowCount = t.rows.length;
-                let radios = r.querySelectorAll('input[type="radio"]');
-                let groups = ['sero', 'esteril', 'endo', 'mico', 'dictamen'];
-                let gIndex = 0;
-                for (let i = 0; i < radios.length; i += 2) {
-                    let groupName = groups[gIndex] + "_" + rowCount;
-                    radios[i].name = groupName;
-                    if (radios[i + 1]) radios[i + 1].name = groupName;
-                    gIndex++;
-                }
-            }
-
-            // Re-asignar nombres a los radios de la nueva fila de la Sección 3
-            if (id === 'tbl-sec3') {
-                let rowCount = t.rows.length;
-                let radios = r.querySelectorAll('input[type="radio"]');
-                let groupName = "etiq_" + rowCount;
-                radios[0].name = groupName;
-                if (radios[1]) radios[1].name = groupName;
-            }
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const row = tbody.rows[0].cloneNode(true);
+            row.querySelectorAll('input, textarea').forEach(i => i.value = '');
+            row.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+            tbody.appendChild(row);
         }
-
-        function delRow(btn) {
-            let row = btn.parentNode.parentNode;
-            if (row.parentNode.rows.length > 1) {
-                row.parentNode.removeChild(row);
+        function calcRend(type) {
+            const teorico = parseFloat(document.getElementById('teorico-' + type).value) || 0;
+            const real = parseFloat(document.getElementById('real-' + type).value) || 0;
+            const res = document.getElementById('res-' + type);
+            if(teorico > 0) {
+                const val = (real / teorico) * 100;
+                res.value = val.toFixed(2);
+                res.style.color = (val >= 98 && val <= 100.5) ? "#166534" : "#991b1b";
+            } else {
+                res.value = '';
             }
-        }
-
-        // Asignar names únicos a los radios de la primera fila al cargar para evitar cruces
-        window.onload = function () {
-            let r2 = document.getElementById('tbl-sec2').getElementsByTagName('tbody')[0].rows[0];
-            let rad2 = r2.querySelectorAll('input[type="radio"]');
-            let groups = ['sero', 'esteril', 'endo', 'mico', 'dictamen'];
-            let gIndex = 0;
-            for (let i = 0; i < rad2.length; i += 2) {
-                let groupName = groups[gIndex] + "_0";
-                rad2[i].name = groupName;
-                if (rad2[i + 1]) rad2[i + 1].name = groupName;
-                gIndex++;
-            }
-
-            let r3 = document.getElementById('tbl-sec3').getElementsByTagName('tbody')[0].rows[0];
-            let rad3 = r3.querySelectorAll('input[type="radio"]');
-            rad3[0].name = "etiq_0";
-            if (rad3[1]) rad3[1].name = "etiq_0";
         }
     </script>
 </body>
-
 </html>

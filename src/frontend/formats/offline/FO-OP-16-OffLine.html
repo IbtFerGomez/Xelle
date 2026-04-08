@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-16 Surtido (OFF)</title>
+    <title>FO-OP-16 Surtido</title>
     <link rel="stylesheet" href="format-styles-OffLine.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app-OffLine.js"></script>
@@ -166,12 +166,13 @@
             <table class="compact-table data-table" id="tbl-picking-off">
                 <thead>
                     <tr>
-                        <th width="28%">Producto</th>
+                        <th width="25%">Producto</th>
                         <th width="18%">Presentación</th>
                         <th width="15%">Ubicación</th>
                         <th width="15%">Lote</th>
-                        <th width="12%">Cant. Req.</th>
-                        <th width="12%">Surtido</th>
+                        <th width="10%">Cant. Req.</th>
+                        <th width="10%">Surtido</th>
+                        <th width="7%" class="no-print"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -182,6 +183,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()"
+                                title="Eliminar esta línea">Quitar</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -190,6 +193,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()"
+                                title="Eliminar esta línea">Quitar</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -198,6 +203,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()"
+                                title="Eliminar esta línea">Quitar</button></td>
                     </tr>
                     <tr>
                         <td><input class="cedit"></td>
@@ -206,9 +213,16 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()"
+                                title="Eliminar esta línea">Quitar</button></td>
                     </tr>
                 </tbody>
             </table>
+            <div class="no-print" style="display: flex; gap: 10px; margin-top: 10px;">
+                <button class="btn btn-primary btn-mini" onclick="addPickingRow16()">+ Agregar Línea</button>
+                <button class="btn btn-danger btn-mini" onclick="removeLastPickingRow16()">- Quitar Última
+                    Línea</button>
+            </div>
         </div>
 
         <div class="section">
@@ -253,7 +267,9 @@
             </div>
         </div>
 
-        <div class="footer">FO-OP-16-O | SURTIDO (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-OP-16-O | SURTIDO | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
 

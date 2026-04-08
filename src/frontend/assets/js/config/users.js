@@ -76,7 +76,7 @@ window.SeedData = {
         { code: 'FO-LC-32', title: 'Desviaciones (CAPA)', area: 'biblioteca', file: 'formats/FO-LC-32.html' },
         { code: 'FO-OP-39', title: 'Lista de Verificación de Auditoría', area: 'biblioteca', file: 'formats/FO-OP-39.html' },
         { code: 'FO-OP-51', title: 'Producto No Conforme (Desviaciones)', area: 'biblioteca', file: 'formats/FO-OP-51.html' },
-        { code: 'FO-OP-53', title: 'Acción Correctiva y Preventiva (CAPA)', area: 'biblioteca', file: 'formats/FO-OP-53.html' },
+        { code: 'FO-QA-09', title: 'Acción Correctiva y Preventiva (CAPA)', area: 'biblioteca', file: 'formats/FO-QA-09.html' },
 
         // --- COMERCIAL ---
         { code: 'FO-LG-05', title: 'Orden de Envío y Distribución', area: 'comercial', file: 'formats/FO-LG-05.html' },

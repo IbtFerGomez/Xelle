@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-LC-23 Bitácora Crio (OFF)</title>
+    <title>FO-LC-23 Bitácora Crio</title>
     <link rel="stylesheet" href="format-styles-OffLine.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -49,14 +49,22 @@
                 border: none !important;
             }
 
-            /* Permitir que la tabla se rompa naturalmente entre páginas */
+            /* Permitir que la tabla se divida entre páginas */
             .log-table {
                 page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            .log-table tbody {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
             }
 
             .log-table tbody tr {
                 page-break-inside: avoid !important;
+                break-inside: avoid !important;
                 page-break-after: auto !important;
+                break-after: auto !important;
             }
 
             /* Repetir encabezado en cada página */
@@ -64,17 +72,26 @@
             .header-main,
             .nomenclatura {
                 page-break-inside: avoid !important;
+                break-inside: avoid !important;
                 page-break-after: avoid !important;
+                break-after: avoid !important;
             }
 
             .log-table thead {
                 display: table-header-group !important;
             }
 
+            .log-table thead tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
             /* Evitar página en blanco al inicio */
             .section {
                 margin-top: 0 !important;
                 padding-top: 0 !important;
+                page-break-inside: auto !important;
+                break-inside: auto !important;
             }
         }
 
@@ -472,7 +489,7 @@
             </div>
         </div>
 
-        <div class="footer">FO-LC-23-O | BITÁCORA CRIO (OFF) | Versión: 1.0<br>El contenido de este documento es
+        <div class="footer">FO-LC-23-O | BITÁCORA CRIO | Versión: 1.0<br>El contenido de este documento es
             propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor,
             por lo que está prohibida su reproducción total o parcial.</div>
     </div>

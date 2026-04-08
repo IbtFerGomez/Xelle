@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-LC-28 Uso Equipos (OFF)</title>
+    <title>FO-LC-28 Uso Equipos</title>
     <link rel="stylesheet" href="format-styles-OffLine.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -49,6 +49,28 @@
             /* Altura de filas para llenado manual cómodo */
             .row-tall td {
                 height: 32px !important;
+            }
+
+            /* Permitir que las tablas se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .log-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
             }
         }
 
@@ -99,6 +121,22 @@
             width: 70%;
             background: transparent;
         }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 8px;
+            margin-top: 8px;
+            border-radius: 4px;
+        }
+
+        .btn-add:hover {
+            background: #cbd5e1;
+        }
     </style>
 </head>
 
@@ -147,10 +185,10 @@
                 <label>Mes / Año</label>
                 <div class="registry-wrapper">
                     <input type="text" class="registry-input generate-barcode" style="text-align:center;"
-                        placeholder="MM / AAAA" data-target="barcode-fo-lc-28-offline-html" data-prefix="FO-LC-28-">
+                        placeholder="MM / AAAA" data-target="barcode-fo-lc-28-html" data-prefix="FO-LC-28-">
                 </div>
                 <input type="text" class="registry-date" placeholder="ID Equipo">
-                <svg id=\"barcode-fo-lc-28-offline-html\" class=\"barcode-svg\"></svg>
+                <svg id=\"barcode-fo-lc-28-html\" class=\"barcode-svg\"></svg>
             </div>
         </div>
 
@@ -174,10 +212,11 @@
                         <th style="width: 6%;">H. Inicio</th>
                         <th style="width: 6%;">H. Fin</th>
                         <th style="width: 8%;">Actividad*<br>(U / L / M)</th>
-                        <th style="width: 28%;">Descripción (Lote procesado / Rutina)</th>
-                        <th style="width: 20%;">Parámetros (Temp / CO2 / RPM)</th>
+                        <th style="width: 26%;">Descripción (Lote procesado / Rutina)</th>
+                        <th style="width: 19%;">Parámetros (Temp / CO2 / RPM)</th>
                         <th style="width: 10%;">Alertas / Fallas</th>
                         <th style="width: 15%;">Realizó (Firma)</th>
+                        <th style="width: 3%;" class="no-print"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -190,6 +229,8 @@
                         <td><input class="cedit" placeholder="37°C / 5%"></td>
                         <td><input class="cedit" placeholder="Ninguna"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -200,6 +241,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -210,6 +253,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -220,6 +265,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -230,6 +277,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -240,6 +289,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -250,6 +301,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -260,6 +313,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -270,6 +325,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -280,6 +337,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -290,6 +349,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -300,6 +361,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -310,6 +373,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -320,6 +385,8 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                     <tr class="row-tall">
                         <td><input class="cedit"></td>
@@ -330,9 +397,13 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
+                        <td class="no-print"><span onclick="delRow(this)"
+                                style="color:red;cursor:pointer;font-weight:bold;font-size:16px;">×</span></td>
                     </tr>
                 </tbody>
             </table>
+
+            <button class="btn-add no-print" onclick="addRow()">+ AGREGAR FILA</button>
 
             <div style="font-size: 9px; margin-top: 5px; color: #333;">
                 <strong>*Clave de Actividad:</strong> (U) Uso / Proceso | (L) Limpieza y Sanitización | (M)
@@ -353,10 +424,40 @@
             </div>
         </div>
 
-        <div class="footer">FO-LC-28-O | USO EQUIPOS (OFF) | Versión: 1.0<br>El contenido de este documento es propiedad
+        <div class="footer">FO-LC-28-O | USO EQUIPOS | Versión: 1.0<br>El contenido de este documento es propiedad
             de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
             está prohibida su reproducción total o parcial.</div>
     </div>
+
+    <script>
+        function addRow() {
+            let tbody = document.querySelector('.log-table tbody');
+            let firstRow = tbody.rows[0];
+            let newRow = firstRow.cloneNode(true);
+
+            // Limpiar todos los inputs de la nueva fila
+            newRow.querySelectorAll('input').forEach(input => {
+                input.value = '';
+            });
+
+            tbody.appendChild(newRow);
+        }
+
+        function delRow(btn) {
+            let row = btn.parentNode.parentNode;
+            let tbody = row.parentNode;
+
+            // Mantener al menos una fila
+            if (tbody.rows.length > 1) {
+                tbody.removeChild(row);
+            } else {
+                // Si es la última fila, solo limpiar los valores
+                row.querySelectorAll('input').forEach(input => {
+                    input.value = '';
+                });
+            }
+        }
+    </script>
 </body>
 
 </html>

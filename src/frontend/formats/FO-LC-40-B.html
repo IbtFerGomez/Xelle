@@ -8,6 +8,76 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
+    <style>
+        /* Estilos específicos para aprovechar el espacio en modo bitácora */
+        @media print {
+            @page {
+                size: landscape;
+                margin: 10mm;
+            }
+
+            /* Imprimir horizontal para que quepan las columnas */
+            .container {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            /* Permitir que las tablas y secciones se partan entre páginas */
+            .section {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            table,
+            .compact-table {
+                page-break-inside: auto !important;
+                break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr,
+            tbody tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+        }
+
+        .col-ingredientes textarea {
+            min-height: 60px;
+            font-size: 11px;
+        }
+
+        /* Estilos para columna de firmas en impresión */
+        @media print {
+            .firma-cell {
+                display: table-cell !important;
+            }
+
+            .firma-input {
+                display: block !important;
+                width: 100% !important;
+                border: none !important;
+                border-bottom: 1px solid #333 !important;
+                padding: 2px 4px !important;
+                margin-bottom: 4px !important;
+                font-size: 10px !important;
+                background: transparent !important;
+                box-sizing: border-box !important;
+            }
+
+            .firma-input:last-child {
+                margin-bottom: 0 !important;
+            }
+        }
+    </style>
 </head>
 
 <body id="doc-fo-lc-40-b">
@@ -55,7 +125,7 @@
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-40-B-</span>
                     <input type="text" id="reg-40-b" class="registry-input generate-barcode" data-target="barcode-40-b"
-                        data-prefix="FO-LC-40-B-">
+                        data-prefix="FO-LC-40-B-" placeholder="001">
                 </div>
                 <input type="date" class="registry-date no-auto-date">
                 <svg id="barcode-40-b" class="barcode-svg"></svg>
@@ -63,96 +133,89 @@
         </div>
 
         <div class="header-main">
-            <h1>FORMATO BITÁCORA DE PREPARACIÓN DE MEDIOS Y SOLUCIONES.</h1>
+            <h1>FORMATO BITÁCORA DE PREPARACIÓN DE MEDIOS Y SOLUCIONES CALIDAD</h1>
             <div class="metadata">Código: FO-LC-40-B | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section">
-            <div class="section-title">Datos de la Preparación</div>
-            <table class="no-border-table">
-                <tr>
-                    <td><strong>Nombre Medio/Solución:</strong> <input class="cedit" style="font-weight:bold;"></td>
-                    <td><strong>Volumen Final:</strong> <input class="cedit"></td>
-                </tr>
-                <tr>
-                    <td><strong>Fecha Preparación:</strong> <input type="date" class="cedit"></td>
-                    <td><strong>Fecha Caducidad:</strong> <input type="date" class="cedit"></td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="section">
-            <div class="section-title">Fórmula e Ingredientes</div>
-            <table id="tbl-ingredientes" class="compact-table">
+            <table id="tbl-medios" class="compact-table">
                 <thead>
                     <tr>
-                        <th width="40%">Ingrediente / Reactivo</th>
-                        <th width="25%">Marca / Proveedor</th>
-                        <th width="15%">Lote</th>
-                        <th width="15%">Cant. Real</th>
-                        <th width="5%" class="no-print"></th>
+                        <th style="width: 30px;">#</th>
+                        <th style="width: 80px;">Fecha</th>
+                        <th style="width: 15%;">Nombre Medio/Solución</th>
+                        <th style="width: 10%;">Lote Interno</th>
+                        <th style="width: 30%;">Lotes / Cantidad</th>
+                        <th style="width: 80px;">Vol. Final</th>
+                        <th style="width: 80px;">Caducidad</th>
+                        <th style="width: 15%;">Realizó / Verificó</th>
+                        <th class="no-print" style="width: 30px;"></th>
                     </tr>
                 </thead>
-                <tbody>
-                </tbody>
+                <tbody></tbody>
             </table>
-            <button class="btn btn-primary btn-mini no-print"
-                onclick="window.addGenericRow('tbl-ingredientes', `<td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit'></td><td class='no-print'><button class='btn-danger btn-mini' onclick='this.parentElement.parentElement.remove()'>x</button></td>`)">+
-                Ingrediente</button>
+
+            <button class="btn btn-primary btn-mini no-print" onclick="addMedioRow()">+ Agregar Preparación</button>
         </div>
 
-        <div class="section">
-            <div class="section-title">Parámetros de Control</div>
-            <table class="compact-table">
-                <thead>
-                    <tr>
-                        <th>pH Final</th>
-                        <th>Osmolaridad</th>
-                        <th>Método Esterilización</th>
-                        <th>Equipo / Filtro</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="number" step="0.01" class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td>
-                            <select class="cedit">
-                                <option value="Filtracion 0.22um">Filtración 0.22µm</option>
-                                <option value="Autoclave">Autoclave</option>
-                                <option value="NA">N/A</option>
-                            </select>
-                        </td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="section">
-            <label><strong>Observaciones:</strong></label>
-            <textarea class="cedit" oninput="App.Universal.autoResize(this)"></textarea>
-        </div>
-
-        <div class="signature-area">
-            <div class="signature-box">
-                <p>Realizó:</p><input type="text">
-                <p>Firma</p>
-            </div>
-            <div class="signature-box">
-                <p>Verificó / Liberó:</p><input type="text">
-                <p>Firma</p>
-            </div>
-        </div>
-        <div class="footer">FO-LC-40-B | PREP MEDIOS | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
-        <div class="footer">El contenido de este documento es propiedad de “Xelle Scientific”, S.A.P.I., de C. V.</div>
+        <div class="footer">FO-LC-40-B | PREP MEDIOS | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
 
     <script>
-        // Inicializar con 3 filas vacías si no hay datos
-        if (document.querySelector('#tbl-ingredientes tbody').children.length === 0) {
-            for (let i = 0; i < 3; i++) document.querySelector('.btn-primary.btn-mini').click();
+        // Función para agregar fila de medio
+        function addMedioRow() {
+            const tbody = document.querySelector('#tbl-medios tbody');
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td style='vertical-align:top; text-align:center; font-weight:bold; color:#666;' class='row-number'></td>
+                <td style='vertical-align:top'><input type='date' class='cedit'></td>
+                <td style='vertical-align:top'><textarea class='cedit' rows='3'></textarea></td>
+                <td style='vertical-align:top'><input class='cedit' placeholder='Lote...'></td>
+                <td style='vertical-align:top' class='col-ingredientes'><textarea class='cedit' rows='4' placeholder='Ej: DMEM (L:123) - 500ml...'></textarea></td>
+                <td style='vertical-align:top'><input class='cedit'></td>
+                <td style='vertical-align:top'><input type='date' class='cedit'></td>
+                <td style='vertical-align:top' class='firma-cell'>
+                    <input class='cedit firma-input' placeholder='Realizó' style='margin-bottom:5px; border-bottom:1px solid #eee;'>
+                    <input class='cedit firma-input' placeholder='Verificó'>
+                </td>
+                <td class='no-print' style='vertical-align:top'><button class='btn-danger btn-mini' onclick='removeRow(this)'>x</button></td>
+            `;
+            updateRowNumbers();
         }
+
+        // Función para eliminar fila
+        function removeRow(btn) {
+            btn.closest('tr').remove();
+            updateRowNumbers();
+        }
+
+        // Agregar una fila inicial automáticamente
+        if (document.querySelector('#tbl-medios tbody').children.length === 0) {
+            addMedioRow();
+        }
+
+        // Función para actualizar numeración de filas
+        function updateRowNumbers() {
+            const rows = document.querySelectorAll('#tbl-medios tbody tr');
+            rows.forEach((row, index) => {
+                const numberCell = row.querySelector('.row-number');
+                if (numberCell) {
+                    numberCell.textContent = index + 1;
+                }
+            });
+        }
+
+        // Actualizar numeración cuando se agrega o elimina una fila
+        const observer = new MutationObserver(updateRowNumbers);
+        const tbody = document.querySelector('#tbl-medios tbody');
+        if (tbody) {
+            observer.observe(tbody, { childList: true });
+        }
+
+        // Actualizar numeración inicial
+        setTimeout(updateRowNumbers, 100);
     </script>
 </body>
 
