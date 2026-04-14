@@ -355,8 +355,7 @@
             <thead>
                 <tr>
                     <th width="10%">Número</th>
-                    <th width="60%">Nombre del Separador</th>
-                    <th width="30%">Color</th>
+                    <th width="90%">Nombre del Separador</th>
                 </tr>
             </thead>
             <tbody id="tablaFilas">
@@ -364,7 +363,7 @@
         </table>
 
         <div class="instructions">
-            * Instrucciones: Registre cada separador de color utilizado en la carpeta con su nombre descriptivo
+            * Instrucciones: Registre cada separador utilizado en la carpeta con su nombre descriptivo
             correspondiente.
         </div>
 
@@ -433,21 +432,6 @@
             tr.innerHTML = `
                 <td style="font-weight:bold; color:#64748b;">${contadorFilas}</td>
                 <td><input type="text" style="text-align:left; padding-left:5px;"></td>
-                <td class="color-cell" onclick="activarEdicion(this)">
-                    <select onchange="cambiarColor(this)" onblur="desactivarEdicion(this)">
-                        <option value="">-- Seleccionar --</option>
-                        <option value="rojo">🔴 Rojo</option>
-                        <option value="azul">🔵 Azul</option>
-                        <option value="verde">🟢 Verde</option>
-                        <option value="amarillo">🟡 Amarillo</option>
-                        <option value="naranja">🟠 Naranja</option>
-                        <option value="morado">🟣 Morado</option>
-                        <option value="rosa">🩷 Rosa</option>
-                        <option value="cafe">🟤 Café</option>
-                        <option value="gris">⚫ Gris</option>
-                        <option value="blanco">⚪ Blanco</option>
-                    </select>
-                </td>
             `;
             tbody.appendChild(tr);
         }

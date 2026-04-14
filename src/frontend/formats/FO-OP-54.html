@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-54 Reporte de Desviación de Procesos y Equipos</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 6px 12px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .readonly-input {
+            background-color: #f1f5f9 !important;
+            font-weight: bold;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: flex-start;
+            font-size: 10px;
+            cursor: pointer;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .radio-group label span {
+            flex: 1;
+            min-width: 50%;
+            text-align: justify;
+            line-height: 1.4;
+        }
+
+        .radio-group input {
+            margin-top: 2px;
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+
+        .cbx-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+
+        .alert-box {
+            background-color: #fffbeb;
+            border: 1px solid #b45309;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: #b45309;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .ipr-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 11px;
+            border: 1px solid #cbd5e1;
+            background-color: #f8fafc;
+            color: #64748b;
+        }
+
+        .ipr-bajo {
+            background-color: #dcfce7;
+            color: #166534;
+            border-color: #166534;
+        }
+
+        .ipr-alto {
+            background-color: #fef08a;
+            color: #b45309;
+            border-color: #b45309;
+        }
+
+        .ipr-critico {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border-color: #991b1b;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-54">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Desviación</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-54-</span>
+                    <input type="text" id="reg-des" class="registry-input generate-barcode cedit"
+                        data-target="barcode-des" data-prefix="FO-OP-54-" placeholder="202X-000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-des" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>REPORTE DE DESVIACIÓN DE PROCESOS Y EQUIPOS</h1>
+            <div class="metadata">Código: FO-OP-54 | Versión: 2.0 | Vigencia: Mar 2026 | Página: 1 de 2</div>
+        </div>
+
+        <div class="section-header">1. DATOS DE LA DESVIACIÓN (Llenado por quien detecta la falla)</div>
+        <div class="section">
+            <table class="no-border-table" style="margin-bottom:10px;">
+                <tr>
+                    <td width="20%"><strong>Fecha del Evento:</strong></td>
+                    <td width="30%"><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
+                    </td>
+                    <td width="20%"><strong>Hora de Detección:</strong></td>
+                    <td width="30%"><input type="time" class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Área donde ocurrió:</strong></td>
+                    <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
+                            placeholder="Ej. Cuarto Limpio B / Liofilización"></td>
+                </tr>
+            </table>
+
+            <div
+                style="background-color: #f8fafc; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; margin-bottom: 10px;">
+                <strong>Tipo de Desviación (Marque una):</strong>
+                <div class="radio-group" style="margin-top: 8px;">
+                    <label><span><strong>Falla de Equipo Crítico:</strong>
+                            (Ej. Autoclave, HVAC, Campana, Ultracongelador, Liofilizadora).</span><input type="radio"
+                            name="tipo_desv" class="cedit"></label>
+                    <label><span><strong>Falla de Proceso /
+                                Parámetro:</strong> (Ej. Excursión de temperatura, pérdida de vacío, RPM fuera de
+                            rango).</span><input type="radio" name="tipo_desv" class="cedit"></label>
+                    <label><span><strong>Falla de Servicios /
+                                Instalaciones:</strong> (Ej. Corte de luz, caída de presión de agua/aire
+                            comprimido).</span><input type="radio" name="tipo_desv" class="cedit"></label>
+                </div>
+            </div>
+
+            <table class="no-border-table" style="margin-bottom:10px;">
+                <tr>
+                    <td width="25%"><strong>Nombre del Equipo Afectado:</strong></td>
+                    <td width="35%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td width="15%"><strong>ID / No. Serie:</strong></td>
+                    <td width="25%"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold;"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="padding-top:10px;">
+                        <strong>Estado de Calibración/Mantenimiento:</strong>
+                        <label style="margin-left:15px;"><input type="radio" name="estado_cal" class="cedit">
+                            Vigente</label>
+                        <label style="margin-left:15px; color:#991b1b;"><input type="radio" name="estado_cal"
+                                class="cedit"> Vencido</label>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="border-top: 1px dashed #cbd5e1; padding-top: 10px;">
+                <strong style="color:#1E3A5F;">Impacto en la Producción:</strong><br>
+                <div style="margin-top:5px; margin-bottom:10px;">
+                    ¿Había producto en proceso durante la falla?
+                    <label style="margin-left:15px; color:#b45309; font-weight:bold;"><input type="radio"
+                            name="prod_proc" class="cedit"> Sí</label>
+                    <label style="margin-left:15px;"><input type="radio" name="prod_proc" class="cedit"> No</label>
+                </div>
+                <table class="no-border-table">
+                    <tr>
+                        <td width="20%"><strong>Lote(s) Afectado(s):</strong></td>
+                        <td width="30%"><input class="cedit"
+                                style="width:100%; border-bottom:1px solid #b45309; font-weight:bold;"></td>
+                        <td width="20%"><strong>Producto:</strong></td>
+                        <td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-header">2. DESCRIPCIÓN DEL EVENTO Y ACCIÓN DE CONTENCIÓN</div>
+        <div class="section">
+            <div style="margin-bottom:10px;">
+                <strong>¿Qué sucedió y cómo se detectó? (Describa el parámetro esperado vs. el real):</strong><br>
+                <span style="font-size:8px; color:#666;">(Ej. "Durante el paso 4.2 de mezclado, el agitador se detuvo a
+                    los 5 min en lugar de 20. La temp. cayó de 37°C a 30°C").</span>
+                <textarea class="cedit" rows="3"
+                    style="width:100%; border:1px solid #cbd5e1; padding:5px; margin-top:5px;"></textarea>
+            </div>
+            <div style="margin-bottom:15px;">
+                <strong>Acción Inmediata (Contención):</strong><br>
+                <span style="font-size:8px; color:#666;">(¿Qué hizo el operador para evitar un daño mayor? Ej. "Se pausó
+                    el proceso, se etiquetó el equipo como FUERA DE SERVICIO y se colocó el lote en cuarentena").</span>
+                <textarea class="cedit" rows="3"
+                    style="width:100%; border:1px solid #cbd5e1; padding:5px; margin-top:5px;"></textarea>
+            </div>
+            <table class="no-border-table">
+                <tr>
+                    <td width="25%"><strong>Reportado por (Nombre y Firma):</strong></td>
+                    <td width="45%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td width="10%"><strong>Fecha:</strong></td>
+                    <td width="20%"><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">3. EVALUACIÓN DE RIESGO (Llenado por Aseguramiento de Calidad)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Cálculo del Índice de Prioridad de Riesgo (IPR)
+                basado en la metodología AMFE. Valores del 1 (Mínimo) al 5 (Máximo).</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="30%">Factor de Riesgo</th>
+                        <th width="15%">Valor (1 a 5)</th>
+                        <th width="55%">Justificación Breve</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left"><strong>Severidad (S)</strong><br><span
+                                style="font-size:8px; font-weight:normal;">(Impacto si el producto afectado llega al
+                                cliente)</span></td>
+                        <td><input type="number" min="1" max="5" id="val-s" class="cedit" oninput="calcIPR()"
+                                style="font-size:14px; font-weight:bold;"></td>
+                        <td><input class="cedit text-left"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left"><strong>Ocurrencia (O)</strong><br><span
+                                style="font-size:8px; font-weight:normal;">(Frecuencia histórica de esta falla en el
+                                equipo)</span></td>
+                        <td><input type="number" min="1" max="5" id="val-o" class="cedit" oninput="calcIPR()"
+                                style="font-size:14px; font-weight:bold;"></td>
+                        <td><input class="cedit text-left"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left"><strong>Detección (D)</strong><br><span
+                                style="font-size:8px; font-weight:normal;">(Facilidad de detectar el error antes de
+                                liberar el lote)</span></td>
+                        <td><input type="number" min="1" max="5" id="val-d" class="cedit" oninput="calcIPR()"
+                                style="font-size:14px; font-weight:bold;"></td>
+                        <td><input class="cedit text-left"></td>
+                    </tr>
+                    <tr style="background-color: #f1f5f9;">
+                        <td class="text-left" style="font-weight:bold; color:#1E3A5F; font-size:12px;">IPR TOTAL (S
+                            &times; O &times; D):</td>
+                        <td><input type="text" id="ipr-total" class="readonly-input"
+                                style="font-size:16px; color:#1E3A5F;" readonly></td>
+                        <td class="text-left" style="padding-left:15px !important;">
+                            <span id="badge-bajo" class="ipr-badge">Bajo (1-9)</span>
+                            <span id="badge-alto" class="ipr-badge">Alto (10-26)</span>
+                            <span id="badge-critico" class="ipr-badge">Crítico (&ge;27)</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert-box">
+                Nota: Si el Nivel del IPR es ALTO o CRÍTICO, es obligatorio abrir un folio de Acción Correctiva y
+                Preventiva (CAPA).<br>
+                <div style="margin-top:5px;">
+                    Folio CAPA Asignado: <input type="text" class="cedit"
+                        style="width:150px; border-bottom:1px solid #b45309; background:transparent; font-weight:bold; color:#b45309; text-align:center;">
+                </div>
+            </div>
+        </div>
+
+        <div style="page-break-before: always; margin-top:20px;"></div>
+
+        <div class="header-main" style="margin-top:0;">
+            <p style="text-align:right; font-size:9px; font-weight:bold; color:#64748b;">Folio: <span id="sync-folio"
+                    style="color:#b45309;">FO-OP-54-202X-000</span> | Página 2 de 2</p>
+        </div>
+
+        <div class="section-header">4. ANÁLISIS DE CAUSA RAÍZ (Mantenimiento / Producción)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:10px;">Breve análisis de por qué falló el proceso o el
+                equipo (Puede anexar un 5 Porqués o diagrama de Ishikawa físico al expediente).</p>
+
+            <strong>Causa Raíz Determinada (Clasificación Principal):</strong>
+            <div class="cbx-group"
+                style="background-color:#f8fafc; border:1px solid #cbd5e1; padding:10px; border-radius:4px; margin-bottom:10px;">
+                <label><input type="radio" name="causa" class="cedit"> Falla Mecánica / Eléctrica</label>
+                <label><input type="radio" name="causa" class="cedit"> Desgaste Normal del Equipo</label>
+                <label><input type="radio" name="causa" class="cedit"> Error Humano / Operativo</label>
+                <label><input type="radio" name="causa" class="cedit"> Omisión de Mantenimiento Preventivo</label>
+                <label><input type="radio" name="causa" class="cedit"> Falla de Proveedor (Refacciones /
+                    Servicios)</label>
+                <label><input type="radio" name="causa" class="cedit"> Condición Ambiental / Externa</label>
+            </div>
+
+            <strong>Descripción detallada de la Causa Raíz:</strong>
+            <textarea class="cedit" rows="4"
+                style="width:100%; border:1px solid #cbd5e1; padding:5px; margin-top:5px;"></textarea>
+        </div>
+
+        <div class="section-header">5. DICTAMEN DE CALIDAD Y DISPOSICIÓN DEL LOTE AFECTADO</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:10px;">Con base en la falla del equipo y la causa raíz,
+                ¿qué procede con el material en proceso?</p>
+
+            <strong>Dictamen del Lote Afectado:</strong>
+            <div class="radio-group"
+                style="background-color:#f8fafc; border:1px solid #cbd5e1; padding:10px; border-radius:4px; margin-bottom:15px;">
+                <label style="color:#166534;"><span><strong>Aprobado para
+                            continuar:</strong> La falla fue contenida y no afectó las propiedades
+                        fisicoquímicas/biológicas
+                        del producto.</span><input type="radio" name="dictamen" class="cedit"></label>
+                <label style="color:#b45309;"><span><strong>Reproceso
+                            Autorizado:</strong> Se autoriza filtrar/esterilizar o re-acondicionar nuevamente (Anexar
+                        justificación y protocolo de reproceso).</span><input type="radio" name="dictamen"
+                        class="cedit"></label>
+                <label style="color:#991b1b;"><span><strong>Rechazo
+                            Definitivo:</strong> Destrucción del lote por compromiso crítico de esterilidad/calidad
+                        (Vincular a FO-QA-08 Acta de Destrucción).</span><input type="radio" name="dictamen"
+                        class="cedit"></label>
+                <label><span><strong>No Aplica:</strong> No había producto
+                        involucrado durante la falla del equipo/servicio.</span><input type="radio" name="dictamen"
+                        class="cedit"></label>
+            </div>
+
+            <strong>Acciones requeridas para liberar el EQUIPO para uso futuro:</strong><br>
+            <span style="font-size:8px; color:#666;">(Ej. "Mantenimiento cambió la banda del motor. Se requiere ejecutar
+                un OQ corto antes de usarlo nuevamente").</span>
+            <textarea class="cedit" rows="3"
+                style="width:100%; border:1px solid #cbd5e1; padding:5px; margin-top:5px;"></textarea>
+        </div>
+
+        <div class="section-header">6. FIRMAS DE CIERRE Y AUTORIZACIÓN</div>
+        <div class="signature-area" style="margin-top: 15px;">
+            <div class="signature-box">
+                <p>Investigó (Producción / Mantto)</p>
+                <input class="cedit" placeholder="Nombre y Firma">
+                <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+            </div>
+            <div class="signature-box">
+                <p>Evaluó Impacto (Aseguramiento Calidad)</p>
+                <input class="cedit" placeholder="Nombre y Firma">
+                <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+            </div>
+            <div class="signature-box">
+                <p>Autorizó Disposición (Responsable Dirección)</p>
+                <input class="cedit" placeholder="Nombre y Firma">
+                <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+            </div>
+        </div>
+
+        <div class="footer">FO-OP-54 | Versión: 2.0 | Reporte de Desviación de Procesos y Equipos | Xelle Scientific |
+            Página 2 de 2</div>
+    </div>
+
+    <script>
+        // Sincronizar Folio entre paginas
+        document.getElementById('reg-des').addEventListener('input', function () {
+            let val = this.value;
+            document.getElementById('sync-folio').innerText = val ? 'FO-OP-54-' + val : 'FO-OP-54-202X-000';
+        });
+
+        // Calculadora IPR (AMFE)
+        function calcIPR() {
+            const s = parseInt(document.getElementById('val-s').value) || 0;
+            const o = parseInt(document.getElementById('val-o').value) || 0;
+            const d = parseInt(document.getElementById('val-d').value) || 0;
+            const totalInput = document.getElementById('ipr-total');
+
+            const bBajo = document.getElementById('badge-bajo');
+            const bAlto = document.getElementById('badge-alto');
+            const bCritico = document.getElementById('badge-critico');
+
+            // Reset visual
+            bBajo.classList.remove('ipr-bajo');
+            bAlto.classList.remove('ipr-alto');
+            bCritico.classList.remove('ipr-critico');
+
+            if (s > 0 && o > 0 && d > 0) {
+                const ipr = s * o * d;
+                totalInput.value = ipr;
+
+                // Evaluacion segun limites: Bajo (1-9), Alto (10-26), Critico (>=27)
+                if (ipr >= 27) {
+                    bCritico.classList.add('ipr-critico');
+                    totalInput.style.color = '#991b1b'; // Rojo
+                } else if (ipr >= 10 && ipr <= 26) {
+                    bAlto.classList.add('ipr-alto');
+                    totalInput.style.color = '#b45309'; // Naranja
+                } else {
+                    bBajo.classList.add('ipr-bajo');
+                    totalInput.style.color = '#166534'; // Verde
+                }
+            } else {
+                totalInput.value = '';
+            }
+        }
+    </script>
+</body>
+
+</html>

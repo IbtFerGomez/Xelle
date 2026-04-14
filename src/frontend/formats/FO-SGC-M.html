@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-SGC-M Índice Maestro de Carpetas</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 4px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            margin-top: 10px;
+            font-size: 11px;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-sgc-m">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Índice Maestro</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-SGC-M-</span>
+                    <input type="text" id="reg-sgcm" class="registry-input generate-barcode cedit"
+                        data-target="barcode-sgcm" data-prefix="FO-SGC-M-" placeholder="001"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-sgcm" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>ÍNDICE MAESTRO DE CARPETAS DEL SGC</h1>
+            <div class="metadata">Código: FO-SGC | Versión: 1.0 | Vigencia: Mar 2026 | Clasificación: Mapa Documental |
+                Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. ESTRUCTURA GLOBAL DEL SISTEMA (MAPA DE CARPETAS)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:10px;">Este índice enumera las carpetas oficiales que
+                contienen los registros originales (evidencia) del cumplimiento de la NOM-241 y NOM-059.</p>
+            <table class="compact-table" id="tbl-carpetas">
+                <thead>
+                    <tr>
+                        <th width="8%">Carpeta N°</th>
+                        <th width="22%">Título de la Carpeta</th>
+                        <th width="45%">Contenido Principal (Documentos y Formatos)</th>
+                        <th width="20%">Responsable / Custodio</th>
+                        <th width="5%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">01</td>
+                        <td><textarea class="cedit text-left" rows="3"
+                                style="font-weight:bold;">Gestión de Calidad y Gobierno</textarea></td>
+                        <td><textarea class="cedit text-left"
+                                rows="3">FO-SGC-01, FO-SGC-02, FO-SGC-03, FO-SGC-I, FO-SGC-M, FO-QA-07, FO-QA-08, FO-QA-09, FO-QA-10, FO-QA-11, FO-QA-12, FO-QA-13, FO-QA-14, FO-QA-15, FO-QA-16, FO-QA-17</textarea>
+                        </td>
+                        <td><input class="cedit" value="Aseguramiento de Calidad (QA)"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">02</td>
+                        <td><textarea class="cedit text-left" rows="2"
+                                style="font-weight:bold;">Recepción y Almacenamiento</textarea></td>
+                        <td><textarea class="cedit text-left"
+                                rows="2">FO-OP-13, FO-OP-14, FO-OP-15, FO-OP-16, FO-OP-17</textarea></td>
+                        <td><input class="cedit" value="Almacén / Recepción"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">03</td>
+                        <td><textarea class="cedit text-left" rows="2"
+                                style="font-weight:bold;">Procesamiento Laboratorio</textarea></td>
+                        <td><textarea class="cedit text-left"
+                                rows="2">FO-LC-12, FO-LC-14, FO-LC-15, FO-LC-16, FO-LC-17, FO-LC-18, FO-LC-19, FO-LC-20</textarea>
+                        </td>
+                        <td><input class="cedit" value="Jefe de Laboratorio"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">04</td>
+                        <td><textarea class="cedit text-left" rows="2"
+                                style="font-weight:bold;">Procesamiento Avanzado</textarea></td>
+                        <td><textarea class="cedit text-left"
+                                rows="2">FO-LC-21, FO-LC-22, FO-LC-23, FO-LC-24, FO-LC-25, FO-LC-26, FO-LC-27, FO-LC-28, FO-LC-29, FO-LC-30</textarea>
+                        </td>
+                        <td><input class="cedit" value="Jefe de Laboratorio"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">05</td>
+                        <td><textarea class="cedit text-left" rows="2"
+                                style="font-weight:bold;">Validación y Control Final</textarea></td>
+                        <td><textarea class="cedit text-left"
+                                rows="2">FO-LC-31, FO-LC-32, FO-LC-33, FO-LC-34, FO-LC-35</textarea></td>
+                        <td><input class="cedit" value="Aseguramiento de Calidad (QA)"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">06</td>
+                        <td><textarea class="cedit text-left" rows="3"
+                                style="font-weight:bold;">Órdenes de Producción</textarea></td>
+                        <td><textarea class="cedit text-left"
+                                rows="3">FO-OP-20, FO-OP-39, FO-OP-40, FO-OP-40-B, FO-OP-41, FO-OP-42, FO-OP-43, IT-OP-01</textarea>
+                        </td>
+                        <td><input class="cedit" value="Producción / QA"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">07</td>
+                        <td><textarea class="cedit text-left" rows="2"
+                                style="font-weight:bold;">Equipos y Mantenimiento</textarea></td>
+                        <td><textarea class="cedit text-left" rows="2">FO-OP-44, FO-OP-48, FO-OP-56</textarea></td>
+                        <td><input class="cedit" value="Mantenimiento / QA"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">08</td>
+                        <td><textarea class="cedit text-left" rows="2"
+                                style="font-weight:bold;">Expedientes de Lote Serie 40</textarea></td>
+                        <td><textarea class="cedit text-left"
+                                rows="2">FO-LC-40, FO-LC-40-B, FO-LC-41, FO-LC-42, FO-LC-43, FO-LC-44, FO-LC-45, FO-LC-46, FO-LC-47, FO-LC-48, FO-LC-49, FO-LC-50</textarea>
+                        </td>
+                        <td><input class="cedit" value="Jefe de Laboratorio"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">09</td>
+                        <td><textarea class="cedit text-left" rows="2"
+                                style="font-weight:bold;">Desviaciones y No Conformidades</textarea></td>
+                        <td><textarea class="cedit text-left"
+                                rows="2">FO-OP-49, FO-OP-50, FO-OP-51, FO-OP-52, FO-OP-53, FO-OP-54, FO-OP-55</textarea>
+                        </td>
+                        <td><input class="cedit" value="Aseguramiento de Calidad (QA)"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRowNumbered('tbl-carpetas')">+ AGREGAR CARPETA AL
+                SISTEMA</button>
+        </div>
+
+        <div class="section-header">2. CONTROL DE LOCALIZACIÓN</div>
+        <div class="section"
+            style="background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 4px; padding: 15px;">
+            <p style="font-size:10px; color:#1E3A5F; font-weight:bold; margin-bottom:5px;">Indique la naturaleza del
+                resguardo maestro de estas carpetas:</p>
+            <div class="radio-group">
+                <label>
+                    <input type="checkbox" class="cedit" checked>
+                    <strong>Sistema Digital:</strong>&nbsp; Ubicación en Servidor/Nube:&nbsp;
+                    <input type="text" class="cedit" value="SGC_XELLE_SCIENTIFIC/REGISTROS_OPERATIVOS/"
+                        style="border-bottom:1px solid #ccc; width: 400px; text-align: left; padding-left: 5px;">
+                </label>
+                <label>
+                    <input type="checkbox" class="cedit" checked>
+                    <strong>Sistema Físico:</strong>&nbsp; Ubicación Exacta:&nbsp;
+                    <input type="text" class="cedit" value="Archivo de Calidad - Bloque A / Pasillo 1"
+                        style="border-bottom:1px solid #ccc; width: 450px; text-align: left; padding-left: 5px;">
+                </label>
+            </div>
+        </div>
+
+        <div class="section-header">3. VALIDACIÓN DEL ÍNDICE MAESTRO</div>
+        <div class="signature-area" style="margin-top: 15px;">
+            <div class="signature-box" style="flex:1;">
+                <p>Elaboró (Control Documental)</p>
+                <input class="cedit" placeholder="Nombre y Firma">
+                <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+            </div>
+            <div class="signature-box" style="flex:1;">
+                <p>Aprobó (Responsable de Dirección)</p>
+                <input class="cedit" placeholder="Nombre y Firma">
+                <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+            </div>
+        </div>
+
+        <div class="footer">FO-SGC | Versión: 1.0 | Índice Maestro de Carpetas del SGC | Xelle Scientific | Página 1 de
+            1</div>
+    </div>
+
+    <script>
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input, textarea').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+            autoResizeTextareas(newRow);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if (row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                const numCell = row.querySelector('.row-num');
+                if (numCell) numCell.innerText = (index + 1).toString().padStart(2, '0');
+            });
+        }
+
+        // Auto-ajustar altura de textareas
+        function autoResizeTextareas(container = document) {
+            const textareas = container.querySelectorAll('textarea.cedit');
+            textareas.forEach(ta => {
+                ta.addEventListener('input', function () {
+                    this.style.height = 'auto';
+                    this.style.height = (this.scrollHeight) + 'px';
+                });
+                // Trigger inicial
+                ta.style.height = 'auto';
+                ta.style.height = (ta.scrollHeight) + 'px';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            autoResizeTextareas();
+        });
+    </script>
+</body>
+
+</html>

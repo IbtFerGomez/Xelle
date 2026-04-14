@@ -922,7 +922,7 @@ const App = {
     <td><input class="cedit cell-count-input" placeholder="No." oninput="App.Docs.FO_LC_24.calcInventory()"></td>
     <td><input class="cedit" placeholder="Venta"></td>
     <td><input class="cedit unique-code" style="font-weight:bold;color:#2980b9" placeholder="Auto-generado"></td>
-    <td><textarea class="cedit obs-input" rows="1" placeholder="Observaciones..." oninput="App.Universal.autoResize(this); App.Docs.FO_LC_24.calcInventory()"></textarea></td>
+    <td><textarea class="cedit obs-input" rows="1" placeholder="Observaciones" oninput="App.Universal.autoResize(this); App.Docs.FO_LC_24.calcInventory()"></textarea></td>
     <td class="no-print"><button class="btn-danger btn-mini" onclick="App.Docs.FO_LC_24.handleDelete(this)">X</button></td>`;
                 tbody.appendChild(row);
             },

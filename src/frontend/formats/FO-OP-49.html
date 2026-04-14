@@ -1,322 +1,144 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-49 Vale de Salida a Producción</title>
+    <title>FO-OP-49 Bitácora de Almacenamiento Temporal de RPBI</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app.js"></script>
     <style>
-        .section-header {
-            background-color: #1E3A5F;
-            color: white;
-            padding: 5px 10px;
-            font-weight: bold;
-            font-size: 11px;
-            margin-top: 15px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
+        /* Configuración para impresión horizontal */
+        @page { size: landscape; margin: 1cm; }
+        
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 10px; padding: 6px; text-align: center; vertical-align: middle; border: 1px solid #cbd5e1; }
+        .compact-table td { font-size: 10px; padding: 4px; vertical-align: middle; text-align: center; border: 1px solid #cbd5e1; }
+        .compact-table input, .compact-table select, .compact-table textarea { font-size: 10px; text-align: center; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
+        .compact-table input:focus, .compact-table select:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+        
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 5px; margin-top: 5px; }
+        .text-left { text-align: left !important; padding-left: 5px !important; }
+        
+        .alert-box { background-color: #fef2f2; border: 1px dashed #991b1b; padding: 10px; border-radius: 4px; font-size: 10px; color: #991b1b; margin-top: 10px; margin-bottom: 10px; font-weight: bold; text-align: justify; }
 
-        .compact-table th {
-            background-color: #1E3A5F;
-            color: white;
-            font-size: 10px;
-            padding: 6px;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .compact-table td {
-            font-size: 10px;
-            padding: 5px;
-            vertical-align: middle;
-            text-align: center;
-        }
-
-        .compact-table input {
-            font-size: 10px;
-            text-align: center;
-            width: 100%;
-            border: none;
-            background: transparent;
-        }
-
-        .radio-group {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            font-size: 10px;
-        }
-
-        .btn-add {
-            background: #e2e8f0;
-            border: 1px dashed #94a3b8;
-            width: 100%;
-            font-size: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 5px;
-            margin-top: 5px;
-        }
-
-        /* REGLA ESTRICTA: Placeholders invisibles al imprimir */
         @media print {
-
-            .global-controls,
-            .no-print {
-                display: none !important;
-            }
-
-            ::-webkit-input-placeholder {
-                color: transparent !important;
-            }
-
-            :-moz-placeholder {
-                color: transparent !important;
-            }
-
-            ::-moz-placeholder {
-                color: transparent !important;
-            }
-
-            :-ms-input-placeholder {
-                color: transparent !important;
-            }
-
-            ::placeholder {
-                color: transparent !important;
-            }
+            .global-controls, .no-print { display: none !important; }
+            ::-webkit-input-placeholder { color: transparent !important; }
+            ::placeholder { color: transparent !important; }
+            .section { page-break-inside: auto !important; }
+            tr { page-break-inside: avoid !important; }
         }
     </style>
 </head>
-
 <body id="doc-fo-op-49">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
-
+    
     <div class="container" style="max-width:100%; width:100%;">
         <div class="header-top">
             <div class="logo-container">
                 <svg viewBox="0 0 320 80">
-                    <defs>
-                        <style>
-                            .t {
-                                font-family: 'Arial Black', sans-serif;
-                                font-weight: 900;
-                                fill: #1D1D1B
-                            }
-
-                            .s {
-                                font-family: 'Arial', sans-serif;
-                                font-weight: 700;
-                                fill: #1D1D1B;
-                                letter-spacing: 2px
-                            }
-
-                            .c {
-                                fill: #2E9D82
-                            }
-                        </style>
-                    </defs>
+                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
                     <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13" />
-                        <circle class="c" cx="75" cy="75" r="13" />
-                        <path class="c"
-                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
-                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
-                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
-                        fill="#1D1D1B">®</text>
+                        <circle class="c" cx="25" cy="25" r="13"/>
+                        <circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
                 </svg>
             </div>
             <div class="registry-container">
-                <label>Folio de Vale</label>
+                <label>Folio de Bitácora</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-OP-49-</span>
-                    <input type="text" id="reg-op49" class="registry-input generate-barcode" data-target="barcode-op49"
-                        data-prefix="FO-OP-49-" placeholder="000">
+                    <input type="text" id="reg-op49" class="registry-input generate-barcode cedit" data-target="barcode-op49" data-prefix="FO-OP-49-" placeholder="000" style="font-weight:bold; font-size:14px; text-transform:uppercase;">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="month" class="registry-date cedit" title="Mes de Registro">
                 <svg id="barcode-op49" class="barcode-svg"></svg>
             </div>
         </div>
 
         <div class="header-main">
-            <h1>VALE DE SALIDA A PRODUCCIÓN</h1>
-            <div class="metadata">Código: FO-OP-49 | Versión: 1.0 | Vigencia: Mar 2026 |
-                Página: 1 de 1</div>
+            <h1>BITÁCORA DE ALMACENAMIENTO TEMPORAL DE RPBI</h1>
+            <div class="metadata">Código: FO-OP-49 | Versión: 1.0 | Vigencia: Mar 2026 | Área: Almacén Temporal de Residuos | Página: 1 de 1</div>
         </div>
 
-        <div class="section-header">1. DATOS DE LA SOLICITUD</div>
-        <div class="section">
-            <p style="font-size:9px; color:#666; margin-bottom:5px;">Este vale ampara la entrega exclusiva de materiales
-                para una Orden de Producción específica.</p>
-            <table class="no-border-table">
-                <tr>
-                    <td width="20%"><strong>Fecha de Solicitud:</strong></td>
-                    <td width="30%"><input type="date" class="cedit"></td>
-                    <td width="20%"><strong>Hora:</strong></td>
-                    <td width="30%"><input type="time" class="cedit"> hrs.</td>
-                </tr>
-                <tr>
-                    <td><strong>No. de Orden de Producción (FO-OP-40):</strong></td>
-                    <td colspan="3"><input class="cedit"
-                            style="font-weight:bold; width:100%; border-bottom:1px solid #ccc;"></td>
-                </tr>
-                <tr>
-                    <td><strong>Producto a Fabricar:</strong></td>
-                    <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
-                </tr>
-                <tr>
-                    <td><strong>Lote a Fabricar:</strong></td>
-                    <td><input class="cedit" style="font-weight:bold; border-bottom:1px solid #ccc;"></td>
-                    <td><strong>Solicitado por (Químico/Analista):</strong></td>
-                    <td><input class="cedit" style="border-bottom:1px solid #ccc;"></td>
-                </tr>
-            </table>
+        <div class="alert-box">
+            Instrucciones (NOM-087): Registrar cada bolsa o contenedor rígido de RPBI al momento exacto de ingresarlo al área de almacenamiento temporal. Asegúrese de que el Manifiesto de Recolección quede resguardado.
         </div>
 
-        <div class="section-header">2. DETALLE DE INSUMOS Y MATERIAS PRIMAS ENTREGADAS</div>
+        <div class="section-header">1. REGISTRO DE ENTRADA Y SALIDA DE RESIDUOS (DISPOSICIÓN HORIZONTAL)</div>
         <div class="section">
-            <p style="font-size:9px; color:#666; margin-bottom:5px;">El personal de almacén debe surtir respetando la
-                regla PEPS/FEFO. Calidad o Producción verificará los datos contra la Orden Maestra.</p>
-            <table class="compact-table" id="tbl-insumos">
+            <table class="compact-table" id="tbl-rpbi">
                 <thead>
                     <tr>
-                        <th width="5%">No.</th>
-                        <th width="30%">Nombre del Insumo / Material</th>
-                        <th width="12%">Cantidad Solicitada</th>
-                        <th width="12%">Cantidad Entregada</th>
-                        <th width="15%">Lote Interno Surtido</th>
-                        <th width="12%">Fecha de Caducidad</th>
-                        <th width="12%">Verificación PEPS</th>
+                        <th width="8%">Fecha de Ingreso</th>
+                        <th width="7%">Hora</th>
+                        <th width="15%">Tipo de Residuo<br><span style="font-size:8px; font-weight:normal;">(Clasificación NOM-087)</span></th>
+                        <th width="9%">Estado Físico</th>
+                        <th width="7%">Cantidad<br><span style="font-size:8px; font-weight:normal;">(Kg o L)</span></th>
+                        <th width="12%">Área de Generación<br><span style="font-size:8px; font-weight:normal;">(Ej. Lab, Quirófano)</span></th>
+                        <th width="8%">Fecha de Salida<br><span style="font-size:8px; font-weight:normal;">(Recolección)</span></th>
+                        <th width="10%">No. de Manifiesto de Recolección</th>
+                        <th width="12%">Empresa Recolectora<br><span style="font-size:8px; font-weight:normal;">(Firma)</span></th>
+                        <th width="10%">Responsable Xelle<br><span style="font-size:8px; font-weight:normal;">(Firma)</span></th>
                         <th width="2%" class="no-print"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="row-num" style="font-weight:bold;">1</td>
-                        <td><input class="cedit" placeholder="Descripción"></td>
-                        <td><input class="cedit" placeholder="UOM"></td>
-                        <td><input class="cedit" style="font-weight:bold;"></td>
-                        <td><input class="cedit"></td>
                         <td><input type="date" class="cedit"></td>
+                        <td><input type="time" class="cedit"></td>
                         <td>
-                            <div class="radio-group">
-                                <label><input type="radio" class="cedit"> Sí</label>
-                                <label><input type="radio" class="cedit"> No</label>
-                            </div>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="SANGRE">Sangre</option>
+                                <option value="CULTIVOS">Cultivos y Cepas</option>
+                                <option value="PATOLOGICOS">Patológicos</option>
+                                <option value="NO_ANATOMICOS">Residuos No Anatómicos</option>
+                                <option value="PUNZOCORTANTES">Punzocortantes</option>
+                            </select>
                         </td>
-                        <td class="no-print"><span onclick="delRow(this)"
-                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
-                    </tr>
-                    <tr>
-                        <td class="row-num" style="font-weight:bold;">2</td>
-                        <td><input class="cedit" placeholder="Descripción"></td>
-                        <td><input class="cedit" placeholder="UOM"></td>
-                        <td><input class="cedit" style="font-weight:bold;"></td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="SOLIDO">Sólido</option>
+                                <option value="LIQUIDO">Líquido</option>
+                            </select>
+                        </td>
+                        <td><input type="number" step="0.01" class="cedit" style="font-weight:bold; color:#991b1b;"></td>
+                        <td><input class="cedit" placeholder="Ej. Cuarto Limpio"></td>
+                        <td><input type="date" class="cedit" style="color:#166534; font-weight:bold;"></td>
                         <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label><input type="radio" class="cedit"> Sí</label>
-                                <label><input type="radio" class="cedit"> No</label>
-                            </div>
-                        </td>
-                        <td class="no-print"><span onclick="delRow(this)"
-                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
+                        <td><input class="cedit" placeholder="Firma / Sello"></td>
+                        <td><input class="cedit" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
                     </tr>
                 </tbody>
             </table>
-            <button class="btn-add no-print" onclick="addRow('tbl-insumos')">+ AGREGAR INSUMO / MATERIAL</button>
-            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-top:5px;">Nota: Cualquier discrepancia
-                entre la cantidad solicitada y la entregada debe ser justificada en la sección de observaciones.</p>
+            <button class="btn-add no-print" onclick="addRow('tbl-rpbi')">+ AGREGAR RESIDUO A LA BITÁCORA</button>
         </div>
 
-        <div class="section-header">3. OBSERVACIONES</div>
-        <div class="section">
-            <textarea class="cedit" rows="3"
-                style="width:100%; border:1px solid #ccc; padding:5px; box-sizing:border-box;"
-                placeholder="Registre justificaciones, desviaciones en surtido o notas importantes..."></textarea>
-        </div>
-
-        <div class="section-header">4. FIRMAS DE TRANSFERENCIA Y RESPONSABILIDAD</div>
-        <div class="section">
-            <p style="font-size:9px; color:#666; margin-bottom:15px; text-align:justify;">Al firmar este documento,
-                Operaciones acepta la custodia del material, y Almacén queda autorizado para descontarlo del Kárdex
-                (FO-AL-01).</p>
-            <div class="signature-area">
-                <div class="signature-box">
-                    <p>Entregó (Responsable de Almacén)</p>
-                    <input type="text" placeholder="Nombre y Firma" class="cedit">
-                </div>
-                <div class="signature-box">
-                    <p>Recibió (Producción / Laboratorio)</p>
-                    <input type="text" placeholder="Nombre y Firma" class="cedit">
-                </div>
-                <div class="signature-box">
-                    <p>Verificó (Aseguramiento de Calidad)</p>
-                    <input type="text" placeholder="Nombre y Firma" class="cedit">
-                </div>
-            </div>
-        </div>
-
-        <div class="footer">FO-OP-49 | Versión: 1.0 | Vale de Salida a Producción | Xelle Scientific | Página 1 de 1
-        </div>
+        <div class="footer">FO-OP-49 | Versión: 1.0 | Bitácora de Almacenamiento Temporal de RPBI | Xelle Scientific | Página 1 de 1</div>
     </div>
 
     <script>
-        function updateRowNumbers(tableId) {
-            let t = document.getElementById(tableId).getElementsByTagName('tbody')[0];
-            for (let i = 0; i < t.rows.length; i++) {
-                t.rows[i].querySelector('.row-num').innerText = i + 1;
-            }
-        }
-
-        function addRow(id) {
-            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
-            let r = t.rows[0].cloneNode(true);
-
-            // Limpiar inputs y desmarcar radios
-            r.querySelectorAll('input').forEach(i => {
-                if (i.type === 'radio' || i.type === 'checkbox') {
-                    i.checked = false;
-                    // Asignar nombres únicos a los radios de la nueva fila
-                    if (i.name) {
-                        i.name = "peps_" + new Date().getTime();
-                    }
-                } else {
-                    i.value = '';
-                }
-            });
-
-            t.appendChild(r);
-            updateRowNumbers(id);
-        }
-
-        function delRow(btn) {
-            let row = btn.parentNode.parentNode;
-            let tableId = row.closest('table').id;
-            if (row.parentNode.rows.length > 1) {
-                row.parentNode.removeChild(row);
-                updateRowNumbers(tableId);
-            }
-        }
-
-        // Asignar names únicos a los radios iniciales
-        window.onload = function () {
-            let t = document.getElementById('tbl-insumos').getElementsByTagName('tbody')[0];
-            for (let i = 0; i < t.rows.length; i++) {
-                let radios = t.rows[i].querySelectorAll('input[type="radio"]');
-                let groupName = "peps_init_" + i;
-                radios.forEach(r => r.name = groupName);
-            }
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            
+            // Limpiar inputs
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            // Limpiar selects
+            newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+            
+            tbody.appendChild(newRow);
         }
     </script>
 </body>
-
 </html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-SGC-04 Listado Maestro de Formatos</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración para impresión */
+        @page {
+            size: portrait;
+            margin: 1cm;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .alert-box {
+            background-color: #eff6ff;
+            border: 1px dashed #1e40af;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: #1e40af;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: justify;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-sgc-04">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Número de Control</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-SGC-04-</span>
+                    <input type="text" id="reg-sgc04" class="registry-input generate-barcode cedit"
+                        data-target="barcode-sgc04" data-prefix="FO-SGC-04-" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <input type="date" class="registry-date cedit" title="Fecha de Elaboración">
+                <svg id="barcode-sgc04" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>LISTADO MAESTRO DE FORMATOS</h1>
+            <div class="metadata">Código: FO-SGC-04 | Versión: 1.0 | Vigencia: Abr 2026 | Área: Sistema de Gestión de
+                Calidad | Página: 1 de 1</div>
+        </div>
+
+        <div class="alert-box">
+            Instrucciones: Este formato registra todos los formatos activos del Sistema de Gestión de Calidad. Incluya
+            el código completo, el nombre descriptivo del formato y la ubicación física o digital donde se almacena.
+            Mantenga este listado actualizado ante cualquier cambio.
+        </div>
+
+        <div class="section-header">1. REGISTRO DE FORMATOS DEL SISTEMA DE GESTIÓN DE CALIDAD</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-formatos">
+                <thead>
+                    <tr>
+                        <th width="20%">CÓDIGO FORMATO</th>
+                        <th width="50%">NOMBRE DE FORMATO</th>
+                        <th width="30%">CARPETA CONTENEDORA</th>
+                        <th width="2%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- LABORATORIO Y CONTROL (FO-LC) -->
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-12" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="DICTAMEN TÉCNICO DE CONCESIÓN"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-14" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REGISTRO HISTÓRICO DE PLACENTAS LIBERADAS PARA PRODUCCIÓN"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-15" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REGISTRO HISTÓRICO DE LÍNEAS LIBERADAS PARA PRODUCCIÓN"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-16" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO RESUMEN EJECUTIVO DE RECEPCIÓN LOTE (COVER SHEET)"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-17" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO RECEPCIÓN DE MUESTRAS Y DATOS CLÍNICOS."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-18" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO EVALUACIÓN MACROSCÓPICA DE TEJIDO."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-19" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO LIBERACIÓN Y CONTROL DE CALIDAD DE PLACENTAS."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-20" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO PROCESAMIENTO DE PLACENTA Y CULTIVO INICIAL."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-21" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO BITÁCORA DE CULTIVO Y MANTENIMIENTO CELULAR."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-22" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO DE REGISTRO DE CRIOPRESERVACIÓN BANCO CELULAR."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-23" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="BITÁCORA DE CRIOPRESERVACIÓN"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-24" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO REGISTRO DIARIO DE DOSIFICACIÓN."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-25" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO REGISTRO DIARIO DE DOSIFICACIÓN DE EXOSOMAS"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-26" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="BITÁCORA DE ESTERILIZACIÓN"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-27" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="BITÁCORA DE REGISTRO DE CONTROL DE EQUIPOS"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-28" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="BITÁCORA DE REGISTRO DE USO DE EQUIPOS"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-29" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REGISTRO DE LOTE DE PRODUCTO TERMINADO (CELULAR)"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-30" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="BITÁCORA DE RECOLECCIÓN DE MEDIOS CONDICIONADOS"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-31" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REGISTRO DE LOTE DE PRODUCTO TERMINADO (ACELULAR)"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-32" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REGISTRO DE INGRESO DE MUESTRAS DE RETENCIÓN"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-33" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="BITÁCORA DE CONTROL DE MUESTRAS DE RETENCIÓN (CONTRAMUESTRAS)"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-34" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="BITÁCORA DE MUESTREOS DE PRODUCTO TERMINADO"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-35" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="BITÁCORA MAESTRA DE DISPOSICIÓN Y ESTATUS DE LOTES"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-40-B" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO BITÁCORA DE PREPARACIÓN DE MEDIOS Y SOLUCIONES CALIDAD"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-40" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO BITÁCORA DE PREPARACIÓN DE MEDIOS Y SOLUCIONES."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-41" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO CONTROL MICROBIOLÓGICO DE MUESTRAS."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-42" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO BITÁCORA DE LIOFILIZACIÓN DE PLACENTA."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-43" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO LIOFILIZACIÓN DE MEDIO CONDICIONADO (MC)."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-44" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO LIBERACIÓN MICROBIOLÓGICA FLASKS Y CRIOVIALES."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-45" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO EMBALAJE Y ENVÍO A ESTERILIZACIÓN."></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-46" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO DE REGISTRO MUESTREO PRODUCTO BIOLÓGICO"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-47" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REGISTRO REVISIÓN DE CALIDAD DE MUESTREO"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-48" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REGISTRO DE RESULTADOS ANALÍTICOS Y DICTAMEN DE LOTE"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-49" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="ORDEN DE PRODUCCIÓN / EXPEDIENTE DE LOTE"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-LC-50" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="MANIFIESTO DE DESTRUCCIÓN MPNC"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+
+                    <!-- OPERACIONES (FO-OP) -->
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-13" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="LISTA DE VERIFICACIÓN E INSPECCIÓN DE RECIBO DE MATERIA PRIMA (CHECK-LIST)"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-15" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REGISTRO MAESTRO DE PEDIDO (OPERACIONES)"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-16" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="ORDEN DE SURTIDO Y EMPAQUE (OPERACIONES)"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-17" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="NOTA DE REMISIÓN Y ENTREGA"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-20" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="LIBERACIÓN LOTE PARA ALMACÉN"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-39" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="LISTA DE VERIFICACIÓN (CHECK-LIST) DE AUDITORÍA INTERNA DE TRAZABILIDAD"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-40" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="ORDEN MAESTRA DE PRODUCCIÓN"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-41" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="RECEPCIÓN Y APROBACIÓN DE MATERIAS PRIMAS E INSUMOS"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-42" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="RECEPCIÓN Y APROBACIÓN DE MATERIAS PRIMAS E INSUMOS MULTIPLES"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-49" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="BITÁCORA DE ALMACENAMIENTO TEMPORAL DE RPBI"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-50" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="FORMATO MANIFIESTO DE ENTREGA, TRANSPORTE Y RECEPCIÓN DE RESIDUOS PELIGROSOS (GENERADOR)"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-51" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REPORTE DE PRODUCTO NO CONFORME (DESVIACIONES)"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-52" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REPORTE Y MANIFIESTO DE MATERIA PRIMA NO CONFORME (MPNC)"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-54" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REPORTE DE DESVIACIÓN DE PROCESOS Y EQUIPOS"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-57" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REPORTE DE CONTROL DE PLAGAS Y MANEJO DE FAUNA NOCIVA"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-58" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="REGISTRO DE REVISIÓN Y COLOCACIÓN DE TRAMPAS"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-OP-59" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="BITÁCORA DE FUMIGACIONES Y APLICACIÓN QUÍMICA"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+
+                    <!-- CALIDAD (FO-QA) -->
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-QA-09" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="ACCIÓN CORRECTIVA Y PREVENTIVA (CAPA) - GESTIÓN AMFE"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-QA-10" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="CERTIFICADO DE CALIDAD DE PRODUCTO DE LOTE (CoA)"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+
+                    <!-- SISTEMA DE GESTIÓN DE CALIDAD (FO-SGC) -->
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-SGC-01" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="MATRIZ DE RESPONSABILIDADES Y FIRMAS POR MÓDULO"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-SGC-02" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="MATRIZ DE RESPONSABILIDADES Y FIRMAS DEL SISTEMA DE GESTIÓN DE CALIDAD"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-SGC-03" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="MATRIZ DE FORMATOS ACTIVOS DEL SISTEMA DE GESTIÓN DE CALIDAD"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" value="FO-SGC-04" style="font-weight:bold; text-transform:uppercase;"></td>
+                        <td class="text-left"><input type="text" class="cedit" value="LISTADO MAESTRO DE FORMATOS"></td>
+                        <td class="text-left"><input type="text" class="cedit" placeholder="Pendiente"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-formatos')">+ AGREGAR FORMATO AL LISTADO</button>
+        </div>
+
+        <div class="section-header">2. INFORMACIÓN DE REVISIÓN Y APROBACIÓN</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="33%">ELABORÓ</th>
+                        <th width="33%">REVISÓ</th>
+                        <th width="34%">AUTORIZÓ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="height:60px; vertical-align:bottom;">
+                            <input type="text" class="cedit" placeholder="Nombre y Firma"
+                                style="border-top:1px solid #94a3b8;">
+                        </td>
+                        <td style="height:60px; vertical-align:bottom;">
+                            <input type="text" class="cedit" placeholder="Nombre y Firma"
+                                style="border-top:1px solid #94a3b8;">
+                        </td>
+                        <td style="height:60px; vertical-align:bottom;">
+                            <input type="text" class="cedit" placeholder="Nombre y Firma"
+                                style="border-top:1px solid #94a3b8;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="date" class="cedit"></td>
+                        <td><input type="date" class="cedit"></td>
+                        <td><input type="date" class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">FO-SGC-04 | Versión: 1.0 | Listado Maestro de Formatos | Xelle Scientific | Página 1 de 1
+        </div>
+    </div>
+
+    <script>
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+
+            // Limpiar inputs
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            // Limpiar selects
+            newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+
+            tbody.appendChild(newRow);
+        }
+    </script>
+</body>
+
+</html>

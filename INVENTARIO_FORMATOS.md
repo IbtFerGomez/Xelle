@@ -1,7 +1,7 @@
 # 📊 INVENTARIO DE FORMATOS - XELLE LIMS
 
 ## Resumen
-- **Total de Formatos:** 59
+- **Total de Formatos:** 62
 - **Estado de Persistencia:** ✅ Todos configurados
 - **Código PK:** {TIPO}-{SECUENCIAL} (ej: FO-LC-21-001)
 
@@ -74,7 +74,7 @@
 
 ---
 
-## 📦 Otros Formatos - 4 Formatos
+## 📦 Otros Formatos - 9 Formatos
 
 | # | Código | Archivo HTML | Categoría | Estado | Botón Guardar |
 |---|--------|--------------|-----------|--------|---------------|
@@ -84,6 +84,9 @@
 | 4 | FO-SGC-01 | FO-SGC-01.html | SGC | ✅ | saveForm() |
 | 5 | FO-SGC-02 | FO-SGC-02.html | SGC | ✅ | saveForm() |
 | 6 | FO-SGC-03 | FO-SGC-03.html | SGC | ✅ | saveForm() |
+| 7 | FO-SGC-04 | FO-SGC-04.html | SGC | ✅ | saveForm() |
+| 8 | FO-SGC-I | FO-SGC-I.html | SGC | ✅ | saveForm() |
+| 9 | FO-SGC-M | FO-SGC-M.html | SGC | ✅ | saveForm() |
 
 ---
 

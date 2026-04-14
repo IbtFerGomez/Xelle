@@ -82,6 +82,32 @@
             tbody tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
+                height: auto !important;
+                min-height: 70px !important;
+            }
+
+            /* Asegurar que las celdas respeten el contenido */
+            td,
+            th {
+                height: auto !important;
+                min-height: 60px !important;
+                vertical-align: middle !important;
+                overflow: visible !important;
+                padding: 12px !important;
+            }
+
+            /* Inputs en impresión con altura automática */
+            td input,
+            .cedit {
+                height: auto !important;
+                min-height: 48px !important;
+                line-height: 1.5 !important;
+                padding: 6px 8px !important;
+                box-sizing: border-box !important;
+                border: 1px solid #ccc !important;
+                white-space: normal !important;
+                overflow: visible !important;
+                font-size: 11pt !important;
             }
 
             /* Mantener título con contenido */

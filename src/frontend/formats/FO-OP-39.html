@@ -108,6 +108,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
 
     <div class="container">
@@ -166,15 +167,16 @@
             <table class="no-border-table">
                 <tr>
                     <td width="20%"><strong>Auditor:</strong></td>
-                    <td width="30%"><input class="cedit" placeholder="Nombre completo"></td>
+                    <td width="30%"><input class="cedit" id="auditor" placeholder="Nombre completo"></td>
                     <td width="20%"><strong>Área Auditada:</strong></td>
-                    <td width="30%"><input class="cedit" placeholder="Ej. Laboratorio / Almacén"></td>
+                    <td width="30%"><input class="cedit" id="area-auditada" placeholder="Ej. Laboratorio / Almacén">
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Auditado:</strong></td>
-                    <td><input class="cedit" placeholder="Nombre y Cargo"></td>
+                    <td><input class="cedit" id="auditado" placeholder="Nombre y Cargo"></td>
                     <td><strong>Fecha:</strong></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="date" class="cedit" id="fecha-auditoria"></td>
                 </tr>
             </table>
         </div>
@@ -191,101 +193,129 @@
                 </thead>
                 <tbody>
                     <tr class="group-header">
-                        <td colspan="3">TRAZABILIDAD Y LIBERACIÓN</td>
+                        <td colspan="3">TRAZABILIDAD Y LIBERACIÓN DE PRODUCTO TERMINADO</td>
                     </tr>
                     <tr>
-                        <td><strong>Trazabilidad de Lote:</strong> ¿El FO-LC-16 (Cover Sheet) coincide con los
+                        <td><strong>Trazabilidad de Lote:</strong> ¿El FO-LC-16 (Cover Sheet del lote) coincide con los
                             resultados de Fase 3 y analíticos del FO-LC-19?</td>
-                        <td><select class="cedit status-select">
-                                <option>SÍ</option>
-                                <option>NO</option>
-                                <option>N/A</option>
+                        <td><select class="cedit status-select" id="check-trazabilidad">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" rows="2" placeholder="Referenciar Folios revisados..."></textarea>
+                        <td><textarea class="cedit" id="obs-trazabilidad" rows="2"
+                                placeholder="Referenciar Folios revisados..."></textarea>
                         </td>
                     </tr>
                     <tr>
-                        <td><strong>Liberación Legal:</strong> ¿Los lotes liberados cuentan con la firma del Responsable
-                            Dirección en el CoA (FO-QA-10)?</td>
-                        <td><select class="cedit status-select">
-                                <option>SÍ</option>
-                                <option>NO</option>
-                                <option>N/A</option>
+                        <td><strong>Liberación Legal:</strong> ¿Los lotes de producto terminado liberados cuentan con la
+                            firma del Responsable Sanitario en el CoA (FO-QA-10)?</td>
+                        <td><select class="cedit status-select" id="check-liberacion">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
+                        <td><textarea class="cedit" id="obs-liberacion" rows="2"
+                                placeholder="Indicar folios de CoA revisados..."></textarea></td>
                     </tr>
 
                     <tr class="group-header">
-                        <td colspan="3">CADENA DE FRÍO Y MUESTREO</td>
+                        <td colspan="3">CADENA DE FRÍO Y RECEPCIÓN DE MATERIA PRIMA</td>
                     </tr>
                     <tr>
-                        <td><strong>Cadena de Frío:</strong> ¿Las temperaturas se mantuvieron entre 2°C y 8°C durante el
-                            transporte?</td>
-                        <td><select class="cedit status-select">
-                                <option>SÍ</option>
-                                <option>NO</option>
-                                <option>N/A</option>
+                        <td><strong>Cadena de Frío (Producto Terminado):</strong> ¿Los productos terminados que
+                            requieren refrigeración (2-8°C) cuentan con registros continuos de temperatura?</td>
+                        <td><select class="cedit status-select" id="check-cadena-frio">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" rows="2"
+                        <td><textarea class="cedit" id="obs-cadena-frio" rows="2"
                                 placeholder="Verificar registros de datalogger..."></textarea></td>
                     </tr>
                     <tr>
-                        <td><strong>Muestreo Estratificado:</strong> ¿Se evidencia toma de muestra en tres niveles
-                            (Superior, Media e Inferior) según PNO?</td>
-                        <td><select class="cedit status-select">
-                                <option>SÍ</option>
-                                <option>NO</option>
-                                <option>N/A</option>
+                        <td><strong>Recepción de Materia Prima (Placenta):</strong> ¿La recepción de placenta cumple con
+                            los criterios del FO-LC-17 (documentación, temperatura, serología)?</td>
+                        <td><select class="cedit status-select" id="check-muestreo">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
+                        <td><textarea class="cedit" id="obs-muestreo" rows="2"
+                                placeholder="Verificar folio FO-LC-17, temp. recepción, serología..."></textarea></td>
                     </tr>
 
                     <tr class="group-header">
-                        <td colspan="3">BIOSEGURIDAD Y RESIDUOS (RPBI)</td>
+                        <td colspan="3">BIOSEGURIDAD, RESIDUOS (RPBI) Y NO CONFORMIDADES</td>
                     </tr>
                     <tr>
-                        <td><strong>Identificación RPBI:</strong> ¿Los recipientes y bolsas tienen la etiqueta ET-RPBI
-                            vigente y están al 80% de su capacidad?</td>
-                        <td><select class="cedit status-select">
-                                <option>SÍ</option>
-                                <option>NO</option>
-                                <option>N/A</option>
+                        <td><strong>Gestión RPBI:</strong> ¿Los residuos biológico-infecciosos (sangre, tejido
+                            placentario contaminado) son segregados y registrados conforme al FO-OP-49?</td>
+                        <td><select class="cedit status-select" id="check-rpbi">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
+                        <td><textarea class="cedit" id="obs-rpbi" rows="2"
+                                placeholder="Verificar segregación y bitácora..."></textarea></td>
                     </tr>
                     <tr>
-                        <td><strong>Segregación de PNC:</strong> ¿El material rechazado está en área aislada y porta la
-                            etiqueta roja ET-LC-07?</td>
-                        <td><select class="cedit status-select">
-                                <option>SÍ</option>
-                                <option>NO</option>
-                                <option>N/A</option>
+                        <td><strong>Materia Prima No Conforme (MPNC):</strong> ¿Las placentas rechazadas (MPNC) están
+                            identificadas con etiqueta ET-LC-06, segregadas y registradas en FO-OP-52?</td>
+                        <td><select class="cedit status-select" id="check-mpnc">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
+                        <td><textarea class="cedit" id="obs-mpnc" rows="2"
+                                placeholder="Verificar folio FO-OP-52, etiquetado ET-LC-06..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Producto No Conforme (PNC):</strong> ¿Los productos terminados rechazados (PNC)
+                            están identificados con etiqueta roja, segregados físicamente y registrados en FO-OP-51?
+                        </td>
+                        <td><select class="cedit status-select" id="check-pnc">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit" id="obs-pnc" rows="2"
+                                placeholder="Indicar folio FO-OP-51, ubicación cuarentena..."></textarea></td>
                     </tr>
 
                     <tr class="group-header">
-                        <td colspan="3">INSTALACIONES Y DOCUMENTACIÓN</td>
+                        <td colspan="3">HIGIENE Y GESTIÓN DE RIESGOS</td>
                     </tr>
                     <tr>
-                        <td><strong>Bitácoras de Limpieza:</strong> ¿Los registros de sanitización de áreas críticas
-                            están actualizados al día de hoy?</td>
-                        <td><select class="cedit status-select">
-                                <option>SÍ</option>
-                                <option>NO</option>
-                                <option>N/A</option>
+                        <td><strong>Limpieza y Sanitización:</strong> ¿Los registros de limpieza (FO-OP-48) están
+                            completos y firmados al día de hoy?</td>
+                        <td><select class="cedit status-select" id="check-limpieza">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
+                        <td><textarea class="cedit" id="obs-limpieza" rows="2"
+                                placeholder="Indicar áreas verificadas..."></textarea></td>
                     </tr>
                     <tr>
-                        <td><strong>Gestión de Riesgos:</strong> ¿Las desviaciones con IPR ≥ 27 tienen una CAPA
-                            (FO-QA-09) abierta y en curso?</td>
-                        <td><select class="cedit status-select">
-                                <option>SÍ</option>
-                                <option>NO</option>
-                                <option>N/A</option>
+                        <td><strong>Gestión de Riesgos (CAPA):</strong> ¿Las desviaciones con Nivel de Prioridad de
+                            Riesgo (NPR) ≥ 27 tienen una CAPA (FO-QA-09) abierta y en seguimiento?</td>
+                        <td><select class="cedit status-select" id="check-riesgos">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" rows="2"></textarea></td>
+                        <td><textarea class="cedit" id="obs-riesgos" rows="2"
+                                placeholder="Listar folios CAPA activos y su estado..."></textarea></td>
                     </tr>
                 </tbody>
             </table>
@@ -296,27 +326,92 @@
             <table class="no-border-table">
                 <tr>
                     <td colspan="2"><strong>Resumen de No Conformidades Detectadas:</strong><br>
-                        <textarea class="cedit" rows="3" style="width:100%; border:1px solid #ccc;"
+                        <textarea class="cedit" id="resumen-nc" rows="3" style="width:100%; border:1px solid #ccc;"
                             placeholder="Describa brevemente las desviaciones mayores encontradas..."></textarea>
                     </td>
                 </tr>
             </table>
         </div>
 
-        <div class="signature-area">
+        <div class="section">
             <div class="signature-box">
                 <p>Auditor (Calidad)</p>
-                <input type="text" placeholder="Firma">
+                <input type="text" class="cedit" id="firma-auditor" placeholder="Firma">
                 <p>Nombre y Fecha</p>
             </div>
             <div class="signature-box">
                 <p>Auditado (Responsable de Área)</p>
-                <input type="text" placeholder="Firma">
+                <input type="text" class="cedit" id="firma-auditado" placeholder="Firma">
                 <p>Nombre y Fecha</p>
             </div>
         </div>
 
-        <div class="footer">FO-OP-39 | LISTA DE VERIFICACIÓN DE AUDITORÍA | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <script>
+            // Función de validación y guardado con SweetAlert2
+            function saveForm() {
+                const auditor = document.getElementById('auditor').value.trim();
+                const areaAuditada = document.getElementById('area-auditada').value.trim();
+
+                if (!auditor || !areaAuditada) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Campos Obligatorios',
+                        text: 'Por favor complete al menos: Auditor y Área Auditada',
+                        confirmButtonColor: '#1E3A5F'
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Guardado Exitoso',
+                    text: 'La lista de verificación FO-OP-39 ha sido guardada correctamente',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }
+
+            // Función de limpieza del formulario completo
+            function clearForm() {
+                Swal.fire({
+                    title: '¿Limpiar Formulario?',
+                    text: 'Esta acción eliminará todos los datos ingresados',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc2626',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: 'Sí, Limpiar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Limpiar todos los inputs
+                        document.querySelectorAll('input[type="text"], input[type="date"]').forEach(input => {
+                            if (!input.classList.contains('registry-input')) {
+                                input.value = '';
+                            }
+                        });
+
+                        // Limpiar todos los textareas
+                        document.querySelectorAll('textarea').forEach(textarea => textarea.value = '');
+
+                        // Resetear todos los selects
+                        document.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Formulario Limpiado',
+                            text: 'Todos los campos han sido reiniciados',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    }
+                });
+            }
+        </script>
+
+        <div class="footer">FO-OP-39 | LISTA DE VERIFICACIÓN DE AUDITORÍA | Versión: 1.0<br>El contenido de este
+            documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los
+            derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
 

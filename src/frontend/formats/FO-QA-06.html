@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-06 Certificado de Liberación de Exosomas</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .sub-header {
+            background-color: #f1f5f9;
+            font-weight: bold;
+            color: #1e293b;
+            text-align: left;
+            padding-left: 10px;
+            font-size: 10px;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: flex-start;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .watermark {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 80px;
+            color: rgba(30, 58, 95, 0.05);
+            font-weight: bold;
+            z-index: -1;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-qa-06">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir CoA</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%; position: relative;">
+        <div class="watermark">CERTIFICADO DE ANÁLISIS</div>
+
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1E3A5F
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1E3A5F;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1E3A5F">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Liberación</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-06</span>
+                    <input type="text" id="reg-qa06" class="registry-input generate-barcode cedit"
+                        data-target="barcode-qa06" data-prefix="FO-QA-06" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-qa06" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>CERTIFICADO DE ANÁLISIS Y LIBERACIÓN DE PRODUCTO (CoA)</h1>
+            <div class="metadata">Código: FO-QA-06 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 2</div>
+        </div>
+
+        <div class="section-header">1. DATOS DEL PRODUCTO Y LOTE</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Producto:</strong></td>
+                    <td width="30%"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:14px;"
+                            value="SOLUCIÓN CON EXOSOMAS"></td>
+                    <td width="20%"><strong>Número de Lote:</strong></td>
+                    <td width="30%"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; color:#b45309;"
+                            placeholder="Ej. EXO-250722"></td>
+                </tr>
+                <tr>
+                    <td><strong>Presentación:</strong></td>
+                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
+                            value="Solución transparente e incolora"></td>
+                    <td><strong>Tamaño de Lote Real:</strong></td>
+                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
+                            placeholder="Ej. 100 Viales"></td>
+                </tr>
+                <tr>
+                    <td><strong>Fecha de Fabricación:</strong></td>
+                    <td><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td><strong>Fecha de Caducidad:</strong></td>
+                    <td><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. RESULTADOS ANALÍTICOS (CONTROL DE CALIDAD)</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-resultados">
+                <thead>
+                    <tr>
+                        <th width="20%">Parámetro Analizado</th>
+                        <th width="25%">Especificación / Límite</th>
+                        <th width="20%">Resultado Obtenido</th>
+                        <th width="20%">Método / Referencia</th>
+                        <th width="15%">Dictamen (P/F)</th>
+                        <th width="0%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6" class="sub-header">Análisis Físico-Químico (Interno)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" style="font-weight:bold;">Apariencia / Color</td>
+                        <td>Solución transparente e incolora, libre de partículas visibles.</td>
+                        <td><input class="cedit"></td>
+                        <td>Inspección Visual</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="PASA" style="color:#166534;">CUMPLE</option>
+                                <option value="FALLA" style="color:#991b1b;">NO CUMPLE</option>
+                            </select>
+                        </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" style="font-weight:bold;">pH</td>
+                        <td><input class="cedit" placeholder="Ej. 7.0 - 7.4"></td>
+                        <td><input class="cedit"></td>
+                        <td>Potenciómetro</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="PASA" style="color:#166534;">CUMPLE</option>
+                                <option value="FALLA" style="color:#991b1b;">NO CUMPLE</option>
+                            </select>
+                        </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="6" class="sub-header">Análisis Microbiológico y de Seguridad Biológica</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" style="font-weight:bold; color:#1E3A5F;">Esterilidad</td>
+                        <td>Ausencia de crecimiento microbiano (Bacterias y Hongos) en 14 días.</td>
+                        <td><input class="cedit" placeholder="Sin crecimiento"></td>
+                        <td>Prueba Interna<br><span style="font-size:8px; font-weight:bold;">(FO-LC-41)</span></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="PASA" style="color:#166534;">CUMPLE</option>
+                                <option value="FALLA" style="color:#991b1b;">NO CUMPLE</option>
+                            </select>
+                        </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" style="font-weight:bold; color:#1E3A5F;">Determinación de Endotoxinas
+                            Bacterianas</td>
+                        <td>No contiene más de 1.0 UE / mL</td>
+                        <td><input class="cedit" placeholder="< 1.0 UE / mL" style="font-weight:bold;"></td>
+                        <td>Lab. Externo Autorizado<br><span style="font-size:8px;">(MGA 0316, FEUM)</span></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="PASA" style="color:#166534;">CUMPLE</option>
+                                <option value="FALLA" style="color:#991b1b;">NO CUMPLE</option>
+                            </select>
+                        </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-resultados')">+ AGREGAR PARÁMETRO DE ANÁLISIS</button>
+        </div>
+
+        <div style="page-break-before: always; margin-top:20px;"></div>
+
+        <div class="section-header">3. REVISIÓN DEL EXPEDIENTE DE LOTE (QA)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">El Aseguramiento de Calidad verifica que la
+                documentación adjunta soporte la integridad del producto.</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="50%">Documento a Verificar</th>
+                        <th width="20%">Estatus</th>
+                        <th width="30%">Folio / Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left">Orden de Producción y Acondicionamiento debidamente firmada y conciliada.
+                        </td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="OK" style="color:#166534;">OK (Completo)</option>
+                                <option value="NO">Faltante</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit" placeholder="FO-OP-40-B"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Reporte Interno de Prueba de Esterilidad sin desviaciones.</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="OK" style="color:#166534;">OK (Completo)</option>
+                                <option value="NO">Faltante</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit" placeholder="FO-LC-41"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Informe Analítico de Laboratorio Externo (Endotoxinas / EMA / SADER).</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="OK" style="color:#166534;">OK (Completo)</option>
+                                <option value="NO">Faltante</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit" placeholder="Folio Lab. Externo"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Desviaciones o No Conformidades asociadas al lote cerradas (Si aplica).
+                        </td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="NA">No Aplica</option>
+                                <option value="OK" style="color:#166534;">OK (Cerradas)</option>
+                                <option value="NO" style="color:#991b1b;">Abiertas</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit" placeholder="N/A o Folio FO-OP-51"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">4. DICTAMEN FINAL DE LIBERACIÓN</div>
+        <div class="section">
+            <div
+                style="background-color:#f8fafc; border:1px solid #cbd5e1; padding:15px; border-radius:4px; margin-top:5px; margin-bottom:10px;">
+                <div style="display: flex; justify-content: space-around; align-items: center; gap: 20px;">
+                    <label
+                        style="color:#166534; font-weight:bold; font-size:12px; flex:1; display:flex; align-items:flex-start;">
+                        <input type="radio" name="dictamen_final" class="cedit" style="width:auto; margin-right:8px;">
+                        <div>
+                            <div>APROBADO Y LIBERADO</div>
+                            <span
+                                style="font-size:10px; font-weight:normal; color:#334155; display:block; margin-top:5px;">El
+                                lote cumple con todas las especificaciones de calidad, seguridad y eficacia
+                                documentadas. Se autoriza su comercialización y uso.</span>
+                        </div>
+                    </label>
+                    <div style="border-left:1px dashed #cbd5e1; height:60px;"></div>
+                    <label
+                        style="color:#991b1b; font-weight:bold; font-size:12px; flex:1; display:flex; align-items:flex-start;">
+                        <input type="radio" name="dictamen_final" class="cedit" style="width:auto; margin-right:8px;">
+                        <div>
+                            <div>RECHAZADO</div>
+                            <span
+                                style="font-size:10px; font-weight:normal; color:#334155; display:block; margin-top:5px;">El
+                                lote NO cumple con las especificaciones. Debe permanecer en cuarentena para su
+                                destrucción.</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom:10px;">
+                <strong>Restricciones o Notas Adicionales:</strong>
+                <textarea class="cedit" rows="2"
+                    style="width:100%; border:1px solid #ccc; padding:5px; box-sizing:border-box; margin-top:5px;"></textarea>
+            </div>
+        </div>
+
+        <div class="section-header">5. FIRMAS DE AUTORIZACIÓN</div>
+        <div class="section">
+            <div class="signature-area"
+                style="display:flex; justify-content:space-between; gap:15px; margin-top: 15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Analista de Control de Calidad</p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #94a3b8; border-radius:0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:100px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Supervisor de Aseguramiento (QA)</p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #94a3b8; border-radius:0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:100px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1; background-color:#f0fdf4; border-color:#166534;">
+                    <p style="font-weight:bold; color:#14532d; margin-bottom: 25px;">RESPONSABLE DIRECCION</p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #166534; border-radius:0; background:transparent;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:100px; background:transparent;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">FO-QA-06 | Versión: 1.0 | Certificado de Liberación de Producto Terminado | Xelle Scientific
+            | Página 2 de 2</div>
+    </div>
+
+    <script>
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            // Clona la última fila para no arrastrar encabezados intermedios
+            const rows = tbody.querySelectorAll('tr');
+            const lastRow = rows[rows.length - 1];
+
+            if (lastRow) {
+                const newRow = lastRow.cloneNode(true);
+                newRow.querySelectorAll('input, textarea').forEach(input => input.value = '');
+                newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+                tbody.appendChild(newRow);
+            }
+        }
+    </script>
+</body>
+
+</html>

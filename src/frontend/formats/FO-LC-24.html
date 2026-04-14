@@ -51,6 +51,32 @@
                 overflow: visible !important;
             }
 
+            /* Ocultar placeholder específicamente en textareas */
+            textarea::-webkit-input-placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
+            }
+
+            textarea:-moz-placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
+            }
+
+            textarea::-moz-placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
+            }
+
+            textarea:-ms-input-placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
+            }
+
+            textarea::placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
+            }
+
             /* Permitir que las tablas y secciones se partan entre páginas */
             .section {
                 page-break-inside: auto !important;

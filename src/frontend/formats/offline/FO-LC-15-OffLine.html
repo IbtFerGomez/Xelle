@@ -56,11 +56,49 @@
             tbody tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
+                height: auto !important;
+                min-height: 70px !important;
+            }
+
+            /* Asegurar que las celdas respeten el contenido */
+            td,
+            th {
+                height: auto !important;
+                min-height: 60px !important;
+                vertical-align: middle !important;
+                overflow: visible !important;
+                padding: 12px !important;
+            }
+
+            /* Inputs en impresión con altura automática */
+            td input,
+            .cedit {
+                height: auto !important;
+                min-height: 48px !important;
+                line-height: 1.5 !important;
+                padding: 6px 8px !important;
+                box-sizing: border-box !important;
+                border: 1px solid #ccc !important;
+                white-space: normal !important;
+                overflow: visible !important;
+                font-size: 11pt !important;
             }
 
             .section-title {
                 page-break-after: avoid !important;
                 break-after: avoid !important;
+            }
+
+            /* Mantener header con contenido */
+            .header-top,
+            .header-main {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            /* Footer en cada página */
+            .footer {
+                page-break-before: auto !important;
             }
         }
 
@@ -154,14 +192,18 @@
                         <td><input class="cedit" type="number"></td>
                         <td><input class="cedit" placeholder="Tanque/Caja"></td>
                         <td><input class="cedit"></td>
-                        <td class="no-print"><button class="btn-delete" onclick="deleteRow(this)" style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">🗑️</button></td>
+                        <td class="no-print"><button class="btn-delete" onclick="deleteRow(this)"
+                                style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">🗑️</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
             <button class="btn-add no-print" onclick="addRow('tbl-lineas')"
                 style="margin-top:10px; width:100%; background:#e2e8f0; border:1px dashed #999;">+ Agregar Fila</button>
         </div>
-        <div class="footer">FO-LC-15-O | HISTÓRICO LÍNEAS | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-LC-15-O | HISTÓRICO LÍNEAS | Versión: 1.0<br>El contenido de este documento es propiedad
+            de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
     <script>
         function addRow(id) {

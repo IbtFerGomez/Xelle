@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lomo de Carpeta Individual - Xelle Scientific</title>
+    <style>
+        /* Ajustamos el tamaño a Carta por defecto para evitar páginas extra */
+        @page {
+            size: letter;
+            margin: 0.5cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .global-controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .sheet {
+            background: white;
+            padding: 0.5cm;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            box-sizing: border-box;
+        }
+
+        /* CAMBIO PRINCIPAL:
+           Usamos min-height: 26.5cm (altura segura para Carta sin saltar de página).
+           Al usar min-height y space-between, el espacio intermedio se reduce
+           si agregas texto. Si se acaba el espacio, el contenedor crecerá.
+        */
+        .spine-container {
+            width: 6.5cm;
+            min-height: 26.5cm; 
+            border: 1px dashed #94a3b8;
+            padding: 25px 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribuye el espacio sobrante equitativamente */
+            align-items: center;
+            text-align: center;
+        }
+
+        .spine-logo {
+            width: 100%;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #1E3A5F;
+            padding-bottom: 15px;
+        }
+
+        .spine-logo svg {
+            width: 90%;
+            height: auto;
+        }
+
+        .spine-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .label {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .cedit {
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-family: inherit;
+            width: 100%;
+            resize: none;
+            overflow: hidden;
+        }
+
+        .cedit:focus {
+            outline: 1px dashed #3b82f6;
+            background-color: #f8fafc;
+        }
+
+        .area-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1E3A5F;
+            text-transform: uppercase;
+        }
+
+        .doc-type {
+            font-size: 20px;
+            font-weight: 900;
+            color: #1D1D1B;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .doc-desc {
+            font-size: 13px;
+            font-style: italic;
+            color: #475569;
+            margin-top: 5px;
+        }
+
+        .codes-range {
+            font-size: 26px;
+            font-weight: 900;
+            color: #b45309;
+            line-height: 1.2;
+        }
+
+        .period {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1E3A5F;
+        }
+
+        .volume {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 5px 0;
+            border-radius: 4px;
+            width: 90%;
+            text-transform: uppercase;
+        }
+
+        .volume.cedit {
+            color: white;
+        }
+
+        /* Reglas estrictas para guardar como PDF en 1 sola página */
+        @media print {
+            body, html {
+                background: transparent;
+                padding: 0;
+                margin: 0;
+            }
+
+            .global-controls {
+                display: none;
+            }
+
+            .sheet {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                /* Centramos el lomo en la hoja impresa */
+                display: flex;
+                justify-content: center; 
+            }
+
+            .spine-container {
+                border: 2px solid #cbd5e1; /* Borde sólido para recortar */
+                margin: 0;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="global-controls no-print">
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir Lomo</button>
+        <p style="font-size:12px; color:#475569; margin-left:15px; margin-bottom:0;">
+            Haz clic en el texto para editarlo. El diseño se mantendrá en 1 hoja.
+        </p>
+    </div>
+
+    <div class="sheet">
+        <div class="spine-container">
+            <div class="spine-logo">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t { font-family: 'Arial Black', sans-serif; font-weight: 900; fill: #1E3A5F }
+                            .s { font-family: 'Arial', sans-serif; font-weight: 700; fill: #1E3A5F; letter-spacing: 2px }
+                            .c { fill: #2E9D82 }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+
+            <div class="spine-section">
+                <span class="label">Área</span>
+                <textarea class="cedit area-name" rows="2">Laboratorio y Calidad (LC)</textarea>
+            </div>
+
+            <div class="spine-section">
+                <span class="label">Tipo de Documento</span>
+                <textarea class="cedit doc-type" rows="2">REGISTROS OPERATIVOS</textarea>
+                <textarea class="cedit doc-desc" rows="2">(Exosomas y Muestras de Retención)</textarea>
+            </div>
+
+            <div class="spine-section">
+                <span class="label">Códigos</span>
+                <textarea class="cedit codes-range" rows="2">FO-LC-25&#10;a FO-LC-33</textarea>
+            </div>
+
+            <div class="spine-section">
+                <span class="label">Periodo</span>
+                <textarea class="cedit period" rows="2">Ene 2026&#10;Jun 2026</textarea>
+            </div>
+
+            <div class="spine-section" style="margin-bottom: 0;">
+                <input type="text" class="cedit volume" value="Tomo: 1 de 1">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-ajustar altura de textareas dinámicamente
+        const textareas = document.querySelectorAll('textarea.cedit');
+        textareas.forEach(ta => {
+            ta.addEventListener('input', function () {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+            // Trigger inicial para acomodar el texto por defecto
+            ta.style.height = 'auto';
+            ta.style.height = (ta.scrollHeight) + 'px';
+        });
+    </script>
+</body>
+
+</html>

@@ -7,7 +7,7 @@
     <style>
         @page {
             size: letter;
-            margin: 0;
+            margin: 0.3cm;
         }
 
         body {
@@ -51,7 +51,7 @@
             width: 21.59cm;
             height: 27.94cm;
             max-height: 27.94cm;
-            padding: 2cm;
+            padding: 0.5cm;
             /* Márgenes expandidos para aprovechar la hoja */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             display: flex;
@@ -63,7 +63,7 @@
 
         .logo-container {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
         }
 
         .logo-container svg {
@@ -116,7 +116,7 @@
         }
 
         .folder-title {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 900;
             color: #1E3A5F;
             text-transform: uppercase;
@@ -205,7 +205,7 @@
             .sheet {
                 box-shadow: none;
                 margin: 0;
-                padding: 2cm;
+                padding: 0.5cm;
                 width: 100%;
                 height: 100%;
                 border: none;
@@ -283,11 +283,13 @@
                 <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 8px;">
                     <div>
                         <span style="font-size: 11px; color: #64748b;">Apertura:</span><br>
-                        <input type="date" class="cedit" style="font-weight:bold; font-size:14px;">
+                        <input type="text" class="cedit" placeholder="dd/mm/aaaa"
+                            style="font-weight:bold; font-size:14px; text-align:center;">
                     </div>
                     <div>
                         <span style="font-size: 11px; color: #64748b;">Cierre:</span><br>
-                        <input type="date" class="cedit" style="font-weight:bold; font-size:14px;">
+                        <input type="text" class="cedit" placeholder="dd/mm/aaaa"
+                            style="font-weight:bold; font-size:14px; text-align:center;">
                     </div>
                 </div>
             </div>
@@ -307,17 +309,6 @@
                 <strong>"Xelle Scientific", S.A.P.I., de C. V.</strong>, y está protegido por los derechos
                 de autor, por lo que está prohibida su reproducción total o parcial.
             </div>
-
-            <hr class="legal-hr">
-
-            <div class="legal-title">BUENAS PRÁCTICAS DE DOCUMENTACIÓN (NOM-059 / NOM-241)</div>
-            <ol>
-                <li>Llenar los registros en tiempo real en el momento de la operación.</li>
-                <li>Utilizar únicamente bolígrafo de tinta indeleble color azul.</li>
-                <li>En caso de error, trazar una sola línea sobre el texto, anotar el dato correcto, iniciales y fecha.
-                    No usar corrector ni tachaduras.</li>
-                <li>Las copias de estos formatos se consideran "No Controladas".</li>
-            </ol>
 
             <hr class="legal-hr">
 

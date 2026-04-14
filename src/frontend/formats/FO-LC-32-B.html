@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-32-B Salida y Disposición de Muestras</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .radio-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            font-size: 11px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-lc-32-b">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Salida/Baja</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">SAL-MR-</span>
+                    <input type="text" id="reg-salmr" class="registry-input generate-barcode cedit"
+                        data-target="barcode-salmr" data-prefix="SAL-MR-" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-salmr" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>CONTROL DE SALIDA Y DISPOSICIÓN DE MUESTRAS DE RETENCIÓN</h1>
+            <div class="metadata">Código: FO-LC-32-B | Versión: 1.0 | Vigencia: Mar 2026 | Área: Control de Calidad |
+                Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. DATOS DE ORIGEN (Trazabilidad)</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="30%"><strong>Folio de Retención Original<br><span
+                                style="font-size:9px; font-weight:normal; color:#666;">(Ver FO-LC-32)</span>:</strong>
+                    </td>
+                    <td width="70%" colspan="3"><input class="cedit"
+                            style="width:50%; border-bottom:1px solid #1E3A5F; font-weight:bold; color:#1E3A5F;"
+                            placeholder="MR-202X-_______"></td>
+                </tr>
+                <tr>
+                    <td width="30%"><strong>Nombre del Producto / Insumo:</strong></td>
+                    <td width="70%" colspan="3"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:12px;"></td>
+                </tr>
+                <tr>
+                    <td width="30%"><strong>Número de Lote:</strong></td>
+                    <td width="30%"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; color:#b45309;"></td>
+                    <td width="25%"><strong>Cantidad Inicial Resguardada:</strong></td>
+                    <td width="15%"><input type="number" class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. REGISTRO DE EXTRACCIONES PARCIALES</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Llenar únicamente si se requiere extraer unidades
+                antes de su destrucción legal.</p>
+            <table class="compact-table" id="tbl-extracciones">
+                <thead>
+                    <tr>
+                        <th width="12%">Fecha de Extracción</th>
+                        <th width="12%">Cantidad Extraída</th>
+                        <th width="12%">Saldo Restante</th>
+                        <th width="30%">Motivo de la Extracción<br><span
+                                style="font-size:8px; font-weight:normal;">(Queja, Estabilidad, Re-análisis)</span></th>
+                        <th width="15%">Autorizó Extracción (QA)</th>
+                        <th width="15%">Recibió Muestra (Analista)</th>
+                        <th width="4%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="date" class="cedit"></td>
+                        <td><input type="number" class="cedit" style="font-weight:bold; color:#991b1b;"></td>
+                        <td><input type="number" class="cedit" style="font-weight:bold; color:#1E3A5F;"></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="QUEJA">Investigación de Queja</option>
+                                <option value="ESTABILIDAD">Evaluación de Estabilidad</option>
+                                <option value="REANALISIS">Re-análisis / Auditoría</option>
+                                <option value="OTRO">Otro (Especificar en Referencia)</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit" placeholder="Firma"></td>
+                        <td><input class="cedit" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-extracciones')">+ AGREGAR EXTRACCIÓN PARCIAL</button>
+
+            <div style="margin-top:10px;">
+                <strong>Folio de Referencia:</strong> <input type="text" class="cedit"
+                    style="width:400px; border-bottom:1px solid #ccc; background:transparent;"
+                    placeholder="Ej. Folio de Queja, Desviación o Protocolo de Estabilidad">
+            </div>
+        </div>
+
+        <div class="section-header">3. DISPOSICIÓN FINAL (DESTRUCCIÓN)</div>
+        <div class="section">
+            <p style="font-size:10px; color:#1E3A5F; font-weight:bold; margin-bottom:10px;">Dictamen de cierre
+                definitivo del ciclo de vida de la muestra.</p>
+
+            <table class="no-border-table" style="margin-bottom: 10px;">
+                <tr>
+                    <td width="30%"><strong>Fecha de Ejecución de la Baja:</strong></td>
+                    <td width="20%"><input type="date" class="cedit" style="border-bottom:1px solid #ccc; width:100%;">
+                    </td>
+                    <td width="30%" style="text-align:right; padding-right:10px;"><strong>Saldo Final de Unidades a
+                            Destruir:</strong></td>
+                    <td width="20%"><input type="number" class="cedit"
+                            style="border-bottom:2px solid #b45309; width:80%; font-weight:bold; font-size:14px; color:#b45309; text-align:center;">
+                    </td>
+                </tr>
+            </table>
+
+            <div
+                style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+                <strong>Motivo de la Disposición Final (Marque una):</strong>
+                <div class="radio-group">
+                    <label><input type="radio" name="motivo_disp" class="cedit"> <strong>Término de Vigencia
+                            Legal:</strong> Se cumplió el plazo (Caducidad + 1 año) sin incidencias.</label>
+                    <label><input type="radio" name="motivo_disp" class="cedit"> <strong>Agotamiento de
+                            Muestra:</strong> El saldo llegó a cero (0) por las extracciones documentadas en la Sección
+                        2.</label>
+                    <label style="display:flex; align-items:center;">
+                        <input type="radio" name="motivo_disp" class="cedit"> <strong>Otra (Especificar):</strong>
+                        <input type="text" class="cedit"
+                            style="border-bottom:1px solid #ccc; width:300px; margin-left:5px; background:transparent;">
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom:15px;">
+                <strong>Folio de Acta de Destrucción (Vincular a FO-QA-52):</strong>
+                <input type="text" class="cedit" style="width:250px; border-bottom:1px solid #1E3A5F; font-weight:bold;"
+                    placeholder="Ej. ACT-202X-000">
+            </div>
+        </div>
+
+        <div class="section-header">4. FIRMAS DE CIERRE DEFINITIVO</div>
+        <div class="section">
+            <div class="signature-area" style="display:flex; gap:20px; margin-top: 15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p>Ejecutó Baja Física (Control de Calidad)</p>
+                    <div style="height: 30px;"></div>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top: 1px solid #ccc; border-radius: 0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p>Verificó Cierre de Expediente (Aseguramiento de Calidad)</p>
+                    <div style="height: 30px;"></div>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top: 1px solid #ccc; border-radius: 0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">FO-LC-32-B | Versión: 1.0 | Control de Salida y Disposición de Muestras de Retención | Xelle
+            Scientific | Página 1 de 1</div>
+    </div>
+
+    <script>
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+            tbody.appendChild(newRow);
+        }
+    </script>
+</body>
+
+</html>

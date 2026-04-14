@@ -493,5 +493,41 @@
     "Cumplimiento": "ISO 9001",
     "DocumentoRelacionado": "",
     "Responsable": ""
+  },
+  {
+    "Codigo": "FO-SGC-03",
+    "Nombre": "FO-SGC-03 Matriz de Formatos Activos",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "ISO 9001",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-SGC-04",
+    "Nombre": "FO-SGC-04 Listado Maestro de Formatos",
+    "Version": "1.0",
+    "Vigencia": "ABR 2026",
+    "Cumplimiento": "ISO 9001",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-SGC-I",
+    "Nombre": "FO-SGC-I Índice de Carpetas del SGC",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "ISO 9001",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
+  },
+  {
+    "Codigo": "FO-SGC-M",
+    "Nombre": "FO-SGC-M Índice Maestro de Carpetas",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "ISO 9001",
+    "DocumentoRelacionado": "",
+    "Responsable": ""
   }
 ]

@@ -218,9 +218,13 @@ public class DataInitializer implements CommandLineRunner {
         upsertFormat("FO-SGC-01", "Matriz de Responsabilidades por Módulo", "administracion", "formats/FO-SGC-01.html");
         upsertFormat("FO-SGC-02", "Matriz de Responsabilidades", "administracion", "formats/FO-SGC-02.html");
         upsertFormat("FO-SGC-03", "Control de Documentos", "administracion", "formats/FO-SGC-03.html");
+        upsertFormat("FO-QA-16", "Detección de Necesidades de Capacitación (DNC)", "administracion",
+                "formats/FO-QA-16.html");
+        upsertFormat("FO-QA-17", "Lista de Asistencia y Evaluación", "administracion", "formats/FO-QA-17.html");
 
         // --- ALMACEN ---
         upsertFormat("FO-OP-13", "Lista Verificación Recepción MP", "almacen", "formats/FO-OP-13.html");
+        upsertFormat("FO-OP-14", "Inspección de Recibo de Materia Prima", "almacen", "formats/FO-OP-14.html");
         upsertFormat("FO-OP-20", "Liberación a Operaciones", "almacen", "formats/FO-OP-20.html");
         upsertFormat("FO-LC-45", "Envío a Esterilización", "almacen", "formats/FO-LC-45.html");
         upsertFormat("FO-LC-46", "Control de Inventario RPBI", "almacen", "formats/FO-LC-46.html");
@@ -246,7 +250,7 @@ public class DataInitializer implements CommandLineRunner {
         upsertFormat("FO-LC-42", "Liofilización Placenta", "banco", "formats/FO-LC-42.html");
         upsertFormat("FO-LC-43", "Liofilización Medio Cond.", "banco", "formats/FO-LC-43.html");
         upsertFormat("FO-LC-49", "Verificación de Proceso", "banco", "formats/FO-LC-49.html");
-        upsertFormat("FO-LC-52", "Control de Calidad Lote", "banco", "formats/FO-LC-52.html");
+        upsertFormat("FO-OP-40-B", "Expediente de Lote de Producción", "banco", "formats/FO-OP-40-B.html");
 
         // --- BIBLIOTECA SGC ---
         upsertFormat("FO-LC-14", "Histórico de Placentas", "biblioteca", "formats/FO-LC-14.html");
@@ -258,11 +262,12 @@ public class DataInitializer implements CommandLineRunner {
         upsertFormat("FO-OP-42", "Acciones Correctivas", "biblioteca", "formats/FO-OP-42.html");
         upsertFormat("FO-OP-43", "Control de Cambios", "biblioteca", "formats/FO-OP-43.html");
         upsertFormat("FO-OP-51", "Producto No Conforme (Desviaciones)", "biblioteca", "formats/FO-OP-51.html");
+        upsertFormat("FO-OP-53", "CAPA - Metodología AMFE", "biblioteca", "formats/FO-OP-53.html");
+        upsertFormat("FO-QA-07", "Solicitud y Control de Cambios", "biblioteca", "formats/FO-QA-07.html");
         upsertFormat("FO-QA-09", "Acción Correctiva y Preventiva (CAPA)", "biblioteca", "formats/FO-QA-09.html");
         upsertFormat("IT-OP-01", "Instructivo de Trabajo", "biblioteca", "formats/IT-OP-01.html");
 
         // --- COMERCIAL ---
-        upsertFormat("FO-LG-05", "Orden de Envío y Distribución", "comercial", "formats/FO-LG-05.html");
         upsertFormat("FO-OP-15", "Pedido Maestro", "comercial", "formats/FO-OP-15.html");
         upsertFormat("FO-OP-16", "Orden de Surtido (Picking)", "comercial", "formats/FO-OP-16.html");
         upsertFormat("FO-OP-17", "Nota de Remisión", "comercial", "formats/FO-OP-17.html");
@@ -281,7 +286,16 @@ public class DataInitializer implements CommandLineRunner {
         upsertFormat("FO-LC-41", "Control Microbiológico", "calidad", "formats/FO-LC-41.html");
         upsertFormat("FO-LC-44", "Lib. Micro Flasks/Viales", "calidad", "formats/FO-LC-44.html");
         upsertFormat("FO-LC-50", "Manifiesto de Destrucción", "calidad", "formats/FO-LC-50.html");
+        upsertFormat("FO-OP-48", "Bitácora de Limpieza y Desinfección", "calidad", "formats/FO-OP-48.html");
+        upsertFormat("FO-OP-55", "Expediente de Mantenimiento", "calidad", "formats/FO-OP-55.html");
+        upsertFormat("FO-OP-56", "Registro de Presión Diferencial", "calidad", "formats/FO-OP-56.html");
+        upsertFormat("FO-QA-08", "Acta de Destrucción y Disposición Final", "calidad", "formats/FO-QA-08.html");
         upsertFormat("FO-QA-10", "Reporte de Calidad", "calidad", "formats/FO-QA-10.html");
+        upsertFormat("FO-QA-11", "Certificado de Liberación de Lote", "calidad", "formats/FO-QA-11.html");
+        upsertFormat("FO-QA-12", "Bitácora de Uso y Fallas de Equipo", "calidad", "formats/FO-QA-12.html");
+        upsertFormat("FO-QA-13", "Bitácora de Monitoreo Ambiental", "calidad", "formats/FO-QA-13.html");
+        upsertFormat("FO-QA-14", "Checklist de Seguridad e Higiene", "calidad", "formats/FO-QA-14.html");
+        upsertFormat("FO-QA-15", "Programa Anual de Mantenimiento", "calidad", "formats/FO-QA-15.html");
     }
 
     private void upsertFormat(String code, String title, String area, String path) {

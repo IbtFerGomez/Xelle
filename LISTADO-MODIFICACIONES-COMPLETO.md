@@ -5,10 +5,11 @@
 
 ## 🎯 RESUMEN EJECUTIVO
 
-**Total de archivos modificados:** 29 archivos
+**Total de archivos modificados:** 32 archivos
 **Matrices SGC actualizadas:** 3
+**Formatos SGC adicionales catalogados:** 3
 **Formatos con firmas agregadas/corregidas:** 20
-**Archivos offline actualizados:** 6
+**Archivos offline actualizados:** 9
 
 ---
 
@@ -35,6 +36,24 @@
 - 6 flujos completos (OPERACIONES + FLUJO 1-6)
 - 71 entradas totales con responsabilidades asignadas
 - Firmas de autorización: Elaboró (Coordinador SGC) + Aprobó (Responsable Dirección)
+
+### FO-SGC-04.html - Listado Maestro de Formatos
+✅ **Verificado y catalogado** - formato activo
+- Control de versiones y vigencia de formatos
+- Listado completo de formatos del sistema
+- Firmas de autorización: Coordinación SGC
+
+### FO-SGC-I.html - Índice de Carpetas del SGC
+✅ **Verificado y catalogado** - formato activo
+- Organización de carpetas del Sistema de Gestión de Calidad
+- Control de documentación física y digital
+- Firmas de autorización: Coordinación SGC
+
+### FO-SGC-M.html - Índice Maestro de Carpetas
+✅ **Verificado y catalogado** - formato activo
+- Índice maestro de toda la documentación
+- Control de carpetas principales del SGC
+- Firmas de autorización: Coordinación SGC
 
 ---
 
@@ -69,6 +88,11 @@
 10. **FO-OP-51-OffLine.html** - Entrega Producto Terminado (offline)
 11. **FO-OP-53-OffLine.html** - CAPA - Metodología AMFE (offline)
 
+### Archivos Offline SGC (3 archivos)
+12. **FO-SGC-01-OffLine.html** - Matriz por Módulo (offline)
+13. **FO-SGC-02-OffLine.html** - Matriz del SGC (offline)
+14. **FO-SGC-03-OffLine.html** - Matriz de Formatos Activos (offline)
+
 ---
 
 ## ✍️ FASE 3: AGREGAR FIRMAS "RESPONSABLE DIRECCIÓN"
@@ -91,33 +115,33 @@
     - **Agregado:** 3ra caja de firma "Autorizó (Responsable Dirección)"
     - Estructura: Elaboró → Verificó → Autorizó
 
-16. **FO-LC-48.html** - Hoja Maestra de Formulación
+15. **FO-LC-48.html** - Hoja Maestra de Formulación
     - **Corregido:** Capitalización "dirección" → "Dirección"
     - Firma: "Responsable Dirección" (ya existía)
 
-17. **FO-LC-29.html** - Bitácora de Refrigerador
+16. **FO-LC-29.html** - Bitácora de Refrigerador
     - **Agregado:** 3ra caja de firma "Autorizó (Responsable Dirección)"
     - Estructura: Elaboró → Verificó → Autorizó
 
-18. **FO-LC-31.html** - Bitácora de Congelador
+17. **FO-LC-31.html** - Bitácora de Congelador
     - **Agregado:** 3ra caja de firma "Autorizó (Responsable Dirección)"
     - Estructura: Elaboró → Verificó → Autorizó
 
 ### Segunda Actualización (4 archivos - Fase 3 original)
 
-19. **FO-OP-20.html** - Liberación a Almacén
+18. **FO-OP-20.html** - Liberación a Almacén
     - **Agregado:** Sección completa de verificación y autorización (3 firmas)
     - Estructura: Elaboró (Almacén) → Verificó (Control de Calidad) → Autorizó (Responsable Dirección)
 
-20. **FO-OP-49.html** - Bitácora de Almacenamiento Temporal RPBI
+19. **FO-OP-49.html** - Bitácora de Almacenamiento Temporal RPBI
     - **Agregado:** Secciones de verificación y autorización
     - Estructura: Ejecución → Verificación (Aseg. Calidad) → Autorización (Responsable Dirección)
 
-21. **FO-OP-50.html** - Manifiesto de Residuos Peligrosos
+20. **FO-OP-50.html** - Manifiesto de Residuos Peligrosos
     - **Agregado:** Secciones de verificación y autorización
     - Estructura: Ejecución → Verificación (Aseg. Calidad) → Autorización (Responsable Dirección)
 
-22. **FO-LG-05.html** - Orden de Envío y Distribución
+21. **FO-LG-05.html** - Orden de Envío y Distribución
     - **Agregado:** Secciones de verificación y autorización
     - Estructura: Elaboró (Coord. Logística) → Verificó (Gerencia Operaciones) → Autorizó (Responsable Dirección)
 
@@ -127,34 +151,34 @@
 
 ### Formatos Sin Área de Firmas (3 archivos)
 
-23. **FO-LC-14.html** - Histórico de Placentas Liberadas
+22. **FO-LC-14.html** - Histórico de Placentas Liberadas
     - **Agregado:** signature-area completo con 3 cajas
     - Estructura: Elaboró (Coordinación SGC) → Revisó (Aseg. Calidad) → Autorizó (Responsable Dirección)
     - **Posición:** Antes del footer (después de tabla)
 
-24. **FO-LC-15.html** - Histórico Líneas
+23. **FO-LC-15.html** - Histórico Líneas
     - **Agregado:** signature-area completo con 3 cajas
     - Estructura: Elaboró (Coordinación SGC) → Revisó (Aseg. Calidad) → Autorizó (Responsable Dirección)
     - **Posición:** Antes del footer (después de tabla)
 
-25. **IT-OP-01.html** - Manual de Identificación Visual y Trazabilidad
+24. **IT-OP-01.html** - Manual de Identificación Visual y Trazabilidad
     - **Agregado:** signature-area completo con 3 cajas
     - Estructura: Elaboró (Coord. SGC/Operaciones) → Revisó (Aseg. Calidad) → Autorizó (Responsable Dirección)
     - **Posición:** Antes del footer (después del contenido)
 
 ### Formatos con Firmas Incompletas (3 archivos)
 
-26. **FO-LC-18.html** - Macro (Evaluación Macroscópica)
+25. **FO-LC-18.html** - Macro (Evaluación Macroscópica)
     - **Agregado:** 3ra caja de firma "Autorizó (Responsable Dirección)"
     - **Antes:** Solo 2 firmas (Evaluó/Verificó)
     - **Ahora:** 3 firmas (Evaluó → Verificó → Autorizó Responsable Dirección)
 
-27. **FO-OP-15.html** - Pedido Maestro
+26. **FO-OP-15.html** - Pedido Maestro
     - **Corregido:** Estructura completa de 3 firmas
     - **Antes:** 2 cajas (Ejecutivo Ventas / Autorizó Gerencia)
     - **Ahora:** 3 cajas (Ejecutó Operaciones → Revisó Coord. Operaciones → Autorizó Gerencia Operaciones)
 
-28. **FO-OP-17.html** - Nota de Remisión
+27. **FO-OP-17.html** - Nota de Remisión
     - **Agregado:** signature-area completo con 3 cajas
     - **Antes:** Solo firma manual de acuse de recibo (sin signature-area formal)
     - **Ahora:** 3 cajas (Elaboró Almacén/Logística → Revisó Coord. Embarques → Autorizó Gerencia Operaciones)
@@ -189,16 +213,18 @@
 ## 📈 ESTADÍSTICAS FINALES
 
 ### Por Tipo de Modificación
-- **Matrices actualizadas:** 3 archivos
+- **Matrices actualizadas:** 3 archivos (FO-SGC-01, FO-SGC-02, FO-SGC-03)
+- **Formatos SGC adicionales:** 3 archivos (FO-SGC-04, FO-SGC-I, FO-SGC-M)
 - **Eliminación "responsable sanitario":** 11 archivos (5 main + 6 offline)
 - **Firmas agregadas/corregidas:** 15 archivos
 - **Formatos verificados sin cambios:** 17 archivos
+- **Archivos offline SGC catalogados:** 3 archivos (FO-SGC-01, FO-SGC-02, FO-SGC-03)
 
 ### Por Categoría de Formato
 - **FO-LC (Laboratorio/Control):** 15 archivos modificados
 - **FO-OP (Operaciones):** 9 archivos modificados
 - **FO-LG (Logística):** 1 archivo modificado
-- **FO-SGC (Sistema Gestión Calidad):** 3 archivos modificados
+- **FO-SGC (Sistema Gestión Calidad):** 6 archivos (3 actualizados + 3 catalogados)
 - **IT-OP (Instrucciones):** 1 archivo modificado
 
 ### Consistencia Lograda
@@ -249,7 +275,7 @@
 
 **Fecha de finalización:** 2026
 **Total de archivos en proyecto:** 60+ formatos
-**Archivos modificados:** 29
+**Archivos modificados:** 32
 **Archivos verificados sin cambios:** 31+
 
 ---

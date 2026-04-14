@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Lomo de Carpeta Individual - Xelle Scientific</title>
     <style>
+        @page {
+            size: letter;
+            margin: 0.3cm;
+        }
+
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f1f5f9;
@@ -19,6 +25,7 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -30,25 +37,64 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        .btn-primary { background-color: #2563eb; }
-        .btn-primary:hover { background-color: #1d4ed8; }
+
+        .btn-primary {
+            background-color: #2563eb;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-success {
+            background-color: #16a34a;
+        }
+
+        .btn-success:hover {
+            background-color: #15803d;
+        }
+
+        .btn-danger {
+            background-color: #dc2626;
+        }
+
+        .btn-danger:hover {
+            background-color: #b91c1c;
+        }
+
+        #pages-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
 
         .sheet {
             background: white;
-            width: 21cm; /* Ancho Carta / A4 */
-            min-height: 29.7cm;
-            padding: 1cm;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 21cm;
+            height: 27.94cm;
+            /* Altura Carta */
+            padding: 0.5cm;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             display: flex;
-            justify-content: center; /* Centrar el lomo único */
+            flex-wrap: wrap;
+            justify-content: flex-start;
             align-items: flex-start;
+            gap: 0.3cm;
             box-sizing: border-box;
+            page-break-after: always;
         }
 
-        /* Dimensiones EXACTAS solicitadas (6.5cm ancho x 28cm alto) */
+        .sheet:last-child {
+            page-break-after: auto;
+        }
+
+        /* Dimensiones EXACTAS solicitadas (7.3cm ancho x 28cm alto) */
         .spine-container {
-            width: 6.5cm;
-            height: 28cm;
+            width: 7.3cm;
+            height: 26cm;
+            /* Ajustado para caber en página carta */
             border: 1px dashed #94a3b8;
             padding: 20px 15px;
             box-sizing: border-box;
@@ -57,6 +103,33 @@
             justify-content: space-between;
             align-items: center;
             text-align: center;
+            position: relative;
+        }
+
+        .spine-container .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .spine-container:hover .delete-btn {
+            display: flex;
+        }
+
+        .spine-container .delete-btn:hover {
+            background-color: #b91c1c;
         }
 
         .spine-logo {
@@ -96,6 +169,7 @@
             resize: none;
             overflow: hidden;
         }
+
         .cedit:focus {
             outline: 1px dashed #3b82f6;
             background-color: #f8fafc;
@@ -126,7 +200,8 @@
         .codes-range {
             font-size: 26px;
             font-weight: 900;
-            color: #b45309; /* Color contrastante para búsqueda rápida */
+            color: #b45309;
+            /* Color contrastante para búsqueda rápida */
             line-height: 1.2;
         }
 
@@ -141,39 +216,101 @@
             color: white;
             font-size: 18px;
             font-weight: bold;
-            padding: 10px 0;
+            padding: 5px 0;
             border-radius: 4px;
             width: 90%;
             text-transform: uppercase;
         }
-        .volume.cedit { color: white; }
+
+        .volume.cedit {
+            color: white;
+        }
 
         @media print {
-            body { background: transparent; padding: 0; }
-            .global-controls { display: none; }
-            .sheet { box-shadow: none; padding: 0; width: auto; height: auto; display: block; }
-            .spine-container { border: 1px solid #cbd5e1; margin: 0; } /* Borde sólido para recortar */
-            ::-webkit-input-placeholder { color: transparent !important; }
-            ::placeholder { color: transparent !important; }
+            body {
+                background: transparent;
+                padding: 0;
+            }
+
+            .global-controls {
+                display: none;
+            }
+
+            .sheet {
+                box-shadow: none;
+                padding: 0.5cm;
+                width: auto;
+                height: auto;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .spine-container {
+                border: 2px solid #cbd5e1;
+                margin: 0;
+                page-break-inside: avoid;
+            }
+
+            .spine-container .delete-btn {
+                display: none !important;
+            }
+
+            /* Borde sólido para recortar */
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="global-controls no-print">
-        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir Lomo</button>
-        <p style="font-size:12px; color:#475569; margin-left:15px; margin-bottom:0;">Haz clic en el texto para editarlo. Ajustado a 6.5x28 cm.</p>
+        <button class="btn btn-success" onclick="addSpine()">➕ Agregar Lomo</button>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir/Guardar PDF</button>
+        <p style="font-size:12px; color:#475569; margin-left:15px; margin-bottom:0;">
+            Haz clic en el texto para editarlo. Los lomos se organizan automáticamente en páginas.
+        </p>
     </div>
 
-    <div class="sheet">
+    <div id="pages-container">
+        <!-- Las páginas se generarán dinámicamente aquí -->
+    </div>
+
+    <template id="spine-template">
         <div class="spine-container">
+            <button class="delete-btn" onclick="deleteSpine(this)" title="Eliminar lomo">×</button>
             <div class="spine-logo">
                 <svg viewBox="0 0 320 80">
-                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1E3A5F}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1E3A5F;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1E3A5F
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1E3A5F;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
                     <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13"/>
-                        <circle class="c" cx="75" cy="75" r="13"/>
-                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
                     </g>
                     <text x="90" y="42" class="t" font-size="34">XELLE</text>
                     <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
@@ -205,20 +342,84 @@
                 <input type="text" class="cedit volume" value="Tomo: 1 de 1">
             </div>
         </div>
-    </div>
+    </template>
 
     <script>
-        // Auto-ajustar altura de textareas para no desbordar
-        const textareas = document.querySelectorAll('textarea.cedit');
-        textareas.forEach(ta => {
-            ta.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = (this.scrollHeight) + 'px';
+        let spines = [];
+        const SPINES_PER_PAGE = 3; // 3 lomos por página en formato carta
+
+        // Inicializar con un lomo
+        function init() {
+            addSpine();
+        }
+
+        // Agregar un nuevo lomo
+        function addSpine() {
+            const template = document.getElementById('spine-template');
+            const clone = template.content.cloneNode(true);
+
+            // Guardar el elemento DOM para usarlo después
+            const spineElement = clone.querySelector('.spine-container');
+            spines.push(spineElement);
+
+            // Auto-ajustar textareas
+            const textareas = clone.querySelectorAll('textarea.cedit');
+            textareas.forEach(ta => {
+                ta.addEventListener('input', function () {
+                    this.style.height = 'auto';
+                    this.style.height = (this.scrollHeight) + 'px';
+                });
+                // Trigger inicial después de agregar al DOM
+                setTimeout(() => {
+                    ta.style.height = 'auto';
+                    ta.style.height = (ta.scrollHeight) + 'px';
+                }, 10);
             });
-            // Trigger inicial
-            ta.style.height = 'auto';
-            ta.style.height = (ta.scrollHeight) + 'px';
-        });
+
+            reorganizePages();
+        }
+
+        // Eliminar un lomo
+        function deleteSpine(btn) {
+            const spineElement = btn.closest('.spine-container');
+            const index = spines.indexOf(spineElement);
+            if (index > -1) {
+                spines.splice(index, 1);
+            }
+            reorganizePages();
+        }
+
+        // Reorganizar lomos en páginas
+        function reorganizePages() {
+            const container = document.getElementById('pages-container');
+            container.innerHTML = '';
+
+            if (spines.length === 0) {
+                return;
+            }
+
+            // Crear páginas según sea necesario
+            const numPages = Math.ceil(spines.length / SPINES_PER_PAGE);
+
+            for (let i = 0; i < numPages; i++) {
+                const sheet = document.createElement('div');
+                sheet.className = 'sheet';
+
+                // Agregar lomos a esta página
+                const startIdx = i * SPINES_PER_PAGE;
+                const endIdx = Math.min(startIdx + SPINES_PER_PAGE, spines.length);
+
+                for (let j = startIdx; j < endIdx; j++) {
+                    sheet.appendChild(spines[j]);
+                }
+
+                container.appendChild(sheet);
+            }
+        }
+
+        // Inicializar al cargar la página
+        window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
+
 </html>

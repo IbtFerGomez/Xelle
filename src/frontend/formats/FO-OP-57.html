@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-57 Reporte de Control de Plagas y Fauna Nociva</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 10px; padding: 6px; text-align: center; vertical-align: middle; border: 1px solid #cbd5e1; }
+        .compact-table td { font-size: 10px; padding: 4px; vertical-align: middle; text-align: center; border: 1px solid #cbd5e1; }
+        .compact-table input, .compact-table select, .compact-table textarea { font-size: 10px; text-align: center; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
+        .compact-table input:focus, .compact-table select:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+        
+        .text-left { text-align: left !important; padding-left: 5px !important; }
+        
+        .radio-group { display: flex; flex-wrap: wrap; gap: 15px; font-size: 10px; margin-top: 5px; margin-bottom: 5px; }
+        .radio-group label { display: flex; align-items: center; cursor: pointer; }
+        
+        .alert-box { background-color: #fef2f2; border: 1px dashed #991b1b; padding: 10px; border-radius: 4px; font-size: 10px; color: #991b1b; margin-top: 10px; margin-bottom: 10px; font-weight: bold; text-align: justify; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            ::-webkit-input-placeholder { color: transparent !important; }
+            ::placeholder { color: transparent !important; }
+            .section { page-break-inside: auto !important; }
+            tr { page-break-inside: avoid !important; }
+        }
+    </style>
+</head>
+<body id="doc-fo-op-57">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/>
+                        <circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Inspección</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-57-</span>
+                    <input type="text" id="reg-op57" class="registry-input generate-barcode cedit" data-target="barcode-op57" data-prefix="FO-OP-57-" placeholder="000" style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-op57" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>REPORTE DE CONTROL DE PLAGAS Y MANEJO DE FAUNA NOCIVA</h1>
+            <div class="metadata">Código: FO-OP-57 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="alert-box">
+            Nota de BPF: El control de plagas es crítico para la integridad de las instalaciones y áreas limpias. Cualquier hallazgo de actividad debe ser reportado inmediatamente a Aseguramiento de Calidad y Mantenimiento.
+        </div>
+
+        <div class="section-header">1. DATOS DE LA INSPECCIÓN</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="15%"><strong>Fecha:</strong></td>
+                    <td width="25%"><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td width="15%"><strong>Hora Inicio:</strong></td>
+                    <td width="15%"><input type="time" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td width="15%"><strong>Hora Fin:</strong></td>
+                    <td width="15%"><input type="time" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+
+            <div style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 4px; margin-top: 10px; margin-bottom: 10px;">
+                <strong>Tipo de Servicio:</strong>
+                <div class="radio-group">
+                    <label><input type="radio" name="tipo_servicio" class="cedit"> Preventivo (Rutina / Programa Anual)</label>
+                    <label style="color:#b45309;"><input type="radio" name="tipo_servicio" class="cedit"> Correctivo (Por avistamiento / Incidencia)</label>
+                </div>
+            </div>
+
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Empresa Proveedora<br><span style="font-size:8px; font-weight:normal;">(Si aplica)</span>:</strong></td>
+                    <td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc; font-weight:bold;"></td>
+                    <td width="20%"><strong>Licencia Sanitaria:</strong></td>
+                    <td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Inspector / Técnico:</strong></td>
+                    <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. CHECKLIST DE INTEGRIDAD DE INSTALACIONES (Prevención)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Verifique las barreras físicas que evitan el ingreso de fauna nociva a las áreas productivas y de almacenamiento.</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="45%">Punto de Inspección</th>
+                        <th width="15%">Estatus (OK / Falla)</th>
+                        <th width="40%">Observaciones / Acción Requerida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left" style="font-weight:bold;">Cortinas Hawaianas / Esclusas:<br><span style="font-size:9px; font-weight:normal;">Íntegras y cerrando bien.</span></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="OK" style="color:#166534;">OK</option>
+                                <option value="FALLA" style="color:#991b1b;">FALLA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" style="font-weight:bold;">Guardapolvos (Sellos de puertas):<br><span style="font-size:9px; font-weight:normal;">Sin huecos en la base.</span></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="OK" style="color:#166534;">OK</option>
+                                <option value="FALLA" style="color:#991b1b;">FALLA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" style="font-weight:bold;">Mosquiteros / Rejillas:<br><span style="font-size:9px; font-weight:normal;">Intactos en ductos o ventanas.</span></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="OK" style="color:#166534;">OK</option>
+                                <option value="FALLA" style="color:#991b1b;">FALLA</option>
+                                <option value="NA">N/A</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" style="font-weight:bold;">Perímetro Exterior:<br><span style="font-size:9px; font-weight:normal;">Libre de maleza, basura o agua estancada.</span></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="OK" style="color:#166534;">OK</option>
+                                <option value="FALLA" style="color:#991b1b;">FALLA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">3. HALLAZGOS Y EVIDENCIA DE ACTIVIDAD</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:10px;">Marque si se detectó evidencia física de plaga en alguna de las áreas (interior o exterior).</p>
+            
+            <div style="background-color: #f0fdf4; border: 1px solid #166534; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+                <label style="font-weight:bold; color:#14532d; display:flex; align-items:center; cursor:pointer;">
+                    <input type="radio" name="hallazgos" class="cedit" style="margin-right:10px;"> Sin hallazgos / Instalaciones libres de plaga.
+                </label>
+            </div>
+
+            <div style="background-color: #fffbeb; border: 1px solid #b45309; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+                <label style="font-weight:bold; color:#991b1b; display:flex; align-items:center; cursor:pointer; margin-bottom:10px;">
+                    <input type="radio" name="hallazgos" class="cedit" style="margin-right:10px;"> Se detectó actividad de:
+                </label>
+                
+                <div class="radio-group" style="padding-left: 25px;">
+                    <label><input type="checkbox" class="cedit"> Roedores (Heces, roeduras, avistamiento)</label>
+                    <label><input type="checkbox" class="cedit"> Insectos rastreros (Cucarachas, hormigas, arañas)</label>
+                    <label><input type="checkbox" class="cedit"> Insectos voladores (Moscas, mosquitos, polillas)</label>
+                    <label><input type="checkbox" class="cedit"> Aves / Otros vertebrados</label>
+                </div>
+            </div>
+
+            <div style="margin-top: 10px;">
+                <strong>Área exacta del hallazgo y tratamiento aplicado:</strong>
+                <textarea class="cedit" rows="2" style="width:100%; border:1px solid #cbd5e1; padding:5px; margin-top:5px; box-sizing:border-box;" placeholder="Ej. Se detectaron hormigas en pasillo exterior. Se aplicó gel cebo autorizado."></textarea>
+            </div>
+        </div>
+
+        <div class="section-header">4. DICTAMEN Y FIRMAS</div>
+        <div class="section">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:15px; margin-top: 15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Realizó Inspección<br><span style="font-size:9px; font-weight:normal;">(Técnico / Proveedor)</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #94a3b8; border-radius:0;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Verificó<br><span style="font-size:9px; font-weight:normal;">(Mantenimiento Xelle)</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #94a3b8; border-radius:0;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Vo.Bo. de Cierre<br><span style="font-size:9px; font-weight:normal;">(Aseguramiento de Calidad)</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #94a3b8; border-radius:0;">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">FO-OP-57 | Versión: 1.0 | Reporte de Control de Plagas y Manejo de Fauna Nociva | Xelle Scientific | Página 1 de 1</div>
+    </div>
+</body>
+</html>
