@@ -441,6 +441,33 @@
     "Responsable": ""
   },
   {
+    "Codigo": "FO-QA-06",
+    "Nombre": "FO-QA-06 Certificado de Liberación de Exosomas",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": "Quality Assurance"
+  },
+  {
+    "Codigo": "FO-QA-07",
+    "Nombre": "FO-QA-07 Solicitud y Control de Cambios",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "ISO 9001 / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": "Quality Assurance"
+  },
+  {
+    "Codigo": "FO-QA-08",
+    "Nombre": "FO-QA-08 Acta de Destrucción y Disposición Final",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-087-ECOL / ISO 13485",
+    "DocumentoRelacionado": "FO-OP-50",
+    "Responsable": "Quality Assurance"
+  },
+  {
     "Codigo": "FO-QA-09",
     "Nombre": "FO-QA-09 CAPA - Metodología AMFE",
     "Version": "1.0",
@@ -475,6 +502,60 @@
     "Cumplimiento": "GMP / ISO 9001 / ISO 13485 / NOM-241-SSA1",
     "DocumentoRelacionado": "FO-QA-10, FO-QA-13, FO-LC-24, FO-LC-33, FO-LC-45, FO-OP-40, FO-OP-51, FO-QA-09",
     "Responsable": "Responsable Sanitario / QA"
+  },
+  {
+    "Codigo": "FO-QA-12",
+    "Nombre": "FO-QA-12 Bitácora de Uso y Fallas de Equipo",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "ISO 9001 / ISO 13485",
+    "DocumentoRelacionado": "FO-QA-15",
+    "Responsable": "Quality Assurance"
+  },
+  {
+    "Codigo": "FO-QA-13",
+    "Nombre": "FO-QA-13 Bitácora de Monitoreo Ambiental",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "GMP / ISO 13485",
+    "DocumentoRelacionado": "FO-LC-19",
+    "Responsable": "Quality Assurance"
+  },
+  {
+    "Codigo": "FO-QA-14",
+    "Nombre": "FO-QA-14 Checklist de Seguridad e Higiene",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "NOM-087-ECOL / ISO 13485",
+    "DocumentoRelacionado": "",
+    "Responsable": "Quality Assurance"
+  },
+  {
+    "Codigo": "FO-QA-15",
+    "Nombre": "FO-QA-15 Programa Anual de Mantenimiento",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "ISO 9001 / ISO 13485",
+    "DocumentoRelacionado": "FO-QA-12",
+    "Responsable": "Quality Assurance"
+  },
+  {
+    "Codigo": "FO-QA-16",
+    "Nombre": "FO-QA-16 Detección de Necesidades de Capacitación (DNC)",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "ISO 9001 / ISO 13485",
+    "DocumentoRelacionado": "FO-QA-17",
+    "Responsable": "Quality Assurance / RH"
+  },
+  {
+    "Codigo": "FO-QA-17",
+    "Nombre": "FO-QA-17 Lista de Asistencia y Evaluación",
+    "Version": "1.0",
+    "Vigencia": "ENE 2026",
+    "Cumplimiento": "ISO 9001 / ISO 13485",
+    "DocumentoRelacionado": "FO-QA-16",
+    "Responsable": "Quality Assurance / RH"
   },
   {
     "Codigo": "FO-SGC-01",

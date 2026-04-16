@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-01 Matriz de Riesgos y Oportunidades</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración para impresión horizontal */
+        @page { size: landscape; margin: 1cm; }
+        
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 9px; padding: 4px; text-align: center; vertical-align: middle; border: 1px solid #cbd5e1; }
+        .compact-table td { font-size: 9px; padding: 3px; vertical-align: middle; text-align: center; border: 1px solid #cbd5e1; }
+        .compact-table input, .compact-table select, .compact-table textarea { font-size: 9px; text-align: center; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
+        .compact-table input:focus, .compact-table select:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+        
+        .nr-cell { font-weight: bold; font-size: 11px; }
+        .bg-low { background-color: #dcfce7 !important; color: #166534; }
+        .bg-med { background-color: #fef08a !important; color: #854d0e; }
+        .bg-high { background-color: #fee2e2 !important; color: #991b1b; }
+
+        .info-box { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 8px; border-radius: 4px; font-size: 9px; margin-bottom: 10px; line-height: 1.3; }
+        .audit-note { background-color: #f1f5f9; border-left: 4px solid #64748b; padding: 10px; margin-top: 15px; font-size: 9px; color: #334155; font-style: italic; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            ::-webkit-input-placeholder { color: transparent !important; }
+            ::placeholder { color: transparent !important; }
+            .container { max-width: 100%; width: 100%; border: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body id="doc-fo-qa-01">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar Matriz</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/>
+                        <circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Evaluación</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-01-</span>
+                    <input type="text" id="reg-qa01" class="registry-input generate-barcode cedit" data-target="barcode-qa01" data-prefix="FO-QA-01-" placeholder="202X-00" style="font-weight:bold; font-size:14px;">
+                </div>
+                <svg id="barcode-qa01" class="barcode-svg" style="height:30px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>MATRIZ DE RIESGOS Y OPORTUNIDADES</h1>
+            <div class="metadata">Código: FO-QA-01 | Versión: 1.0 | Vigencia: Mar 2026 | Área: SGC | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. CRITERIOS DE EVALUACIÓN (ESCALA 1 AL 3)</div>
+        <div class="section">
+            <div style="display:flex; gap:10px;">
+                <div class="info-box" style="flex:1;">
+                    <strong>Severidad (S):</strong><br>
+                    1. Bajo (Sin impacto calidad)<br>
+                    2. Medio (Impacto interno/reproceso)<br>
+                    3. Alto (Daño paciente/Rechazo lote)
+                </div>
+                <div class="info-box" style="flex:1;">
+                    <strong>Probabilidad (P):</strong><br>
+                    1. Rara vez (1 vez/año)<br>
+                    2. Ocasional (1 vez/mes)<br>
+                    3. Frecuente (1 vez/semana o más)
+                </div>
+                <div class="info-box" style="flex:1.5;">
+                    <strong>Nivel de Riesgo (NR = S × P):</strong><br>
+                    <span style="color:#166534;">🟢 1 a 2 (Bajo):</span> Aceptable. Monitoreo rutinario.<br>
+                    <span style="color:#854d0e;">🟡 3 a 4 (Medio):</span> Requiere controles preventivos.<br>
+                    <span style="color:#991b1b;">🔴 6 a 9 (Alto/Crítico):</span> Inaceptable. Acción CAPA inmediata.
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">2. MATRIZ DE RIESGOS (AMENAZAS AL QMS Y AL PRODUCTO)</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-riesgos">
+                <thead>
+                    <tr>
+                        <th width="3%" rowspan="2">ID</th>
+                        <th width="8%" rowspan="2">Proceso / Área</th>
+                        <th width="15%" rowspan="2">Descripción del Riesgo<br>(¿Qué puede salir mal?)</th>
+                        <th width="12%" rowspan="2">Consecuencia (Impacto)</th>
+                        <th width="12%" rowspan="2">Controles Actuales</th>
+                        <th colspan="3">Inherente</th>
+                        <th width="15%" rowspan="2">Acciones de Mitigación (Tratamiento)</th>
+                        <th width="10%" rowspan="2">Responsable y Fecha</th>
+                        <th colspan="3">Residual</th>
+                        <th width="0%" rowspan="2" class="no-print"></th>
+                    </tr>
+                    <tr>
+                        <th width="2%">S</th><th width="2%">P</th><th width="3%">NR</th>
+                        <th width="2%">S</th><th width="2%">P</th><th width="3%">NR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit" value="R-01"></td>
+                        <td><input class="cedit"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><input type="number" min="1" max="3" class="cedit val-s" oninput="calcNR(this)"></td>
+                        <td><input type="number" min="1" max="3" class="cedit val-p" oninput="calcNR(this)"></td>
+                        <td class="nr-cell"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><textarea class="cedit" rows="2"></textarea></td>
+                        <td><input type="number" min="1" max="3" class="cedit val-s" oninput="calcNR(this)"></td>
+                        <td><input type="number" min="1" max="3" class="cedit val-p" oninput="calcNR(this)"></td>
+                        <td class="nr-cell"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addRow('tbl-riesgos')" style="margin-top:5px;">+ AGREGAR RIESGO</button>
+        </div>
+
+        <div class="section-header">3. MATRIZ DE OPORTUNIDADES (MEJORA CONTINUA)</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-oportunidades">
+                <thead>
+                    <tr>
+                        <th width="4%">ID</th>
+                        <th width="10%">Proceso / Área</th>
+                        <th width="20%">Descripción de la Oportunidad</th>
+                        <th width="15%">Beneficio Esperado</th>
+                        <th width="10%">Viabilidad<br>(A/M/B)</th>
+                        <th width="25%">Plan de Acción para Aprovechar</th>
+                        <th width="10%">Responsable y Fecha</th>
+                        <th width="6%">Estatus</th>
+                        <th width="0%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit" value="O-01"></td>
+                        <td><input class="cedit"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option><option value="ALTA">Alta</option><option value="MEDIA">Media</option><option value="BAJA">Baja</option>
+                            </select>
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><input class="cedit"></td>
+                        <td>
+                            <select class="cedit">
+                                <option value="ABIERTA">Abierta</option><option value="CERRADA">Cerrada</option>
+                            </select>
+                        </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary btn-mini no-print" onclick="addRow('tbl-oportunidades')" style="margin-top:5px;">+ AGREGAR OPORTUNIDAD</button>
+        </div>
+
+        <div class="section-header">4. REVISIÓN Y SEGUIMIENTO DEL COMITÉ DE CALIDAD</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="30%"><strong>Fecha de Sesión de Evaluación:</strong></td>
+                    <td width="20%"><input type="date" class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td width="35%" style="text-align:right;"><strong>¿Se identificaron riesgos que requieran CAPA?</strong></td>
+                    <td width="15%">
+                        <label style="font-size:9px;"><input type="checkbox" class="cedit"> Sí</label>
+                        <label style="font-size:9px; margin-left:10px;"><input type="checkbox" class="cedit"> No</label>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:15px; margin-top:15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom:20px;">Aseguramiento de Calidad</p>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #94a3b8; border-radius:0;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom:20px;">Dirección General</p>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #94a3b8; border-radius:0;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom:20px;">Responsable Sanitario</p>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #94a3b8; border-radius:0;">
+                </div>
+            </div>
+
+            <div class="audit-note">
+                <strong>Notas de Cumplimiento:</strong> La columna de NR (Residual) es crítica. Si un riesgo inicial es "9" (Crítico), la mitigación debe bajar el nivel a verde (1-2) o amarillo (3-4). Este documento (FO-QA-01) debe vincularse con los Reportes de Desviación (FO-OP-51) para demostrar que el sistema aprende de las fallas reales.
+            </div>
+        </div>
+
+        <div class="footer" style="margin-top:20px;">
+            <div style="font-weight: bold; margin-bottom: 5px;">FO-QA-01 | Versión: 1.0 | Matriz de Riesgos y Oportunidades | Xelle Scientific | Página 1 de 1</div>
+            <div style="font-size: 8px; color: #64748b; font-style: italic;">
+                El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const row = tbody.rows[0].cloneNode(true);
+            row.querySelectorAll('input, textarea').forEach(i => {
+                if(i.type !== 'number' || !i.classList.contains('val-s')) i.value = '';
+            });
+            // Reset color de NR en clon
+            row.querySelectorAll('.nr-cell').forEach(c => {
+                c.innerText = '';
+                c.className = 'nr-cell';
+            });
+            tbody.appendChild(row);
+        }
+
+        function calcNR(input) {
+            const row = input.closest('tr');
+            // Determinar si estamos en Inherente o Residual basándonos en la posición
+            // Buscamos los inputs de S y P relativos al input actual (misma zona)
+            const parentCell = input.closest('td');
+            const siblingCells = Array.from(row.cells);
+            const inputIdx = siblingCells.indexOf(parentCell);
+            
+            let sVal, pVal, nrCell;
+            
+            if (inputIdx <= 7) { // Zona Inherente
+                sVal = parseInt(row.querySelector('.val-s').value) || 0;
+                pVal = parseInt(row.querySelector('.val-p').value) || 0;
+                nrCell = row.querySelectorAll('.nr-cell')[0];
+            } else { // Zona Residual
+                const sInputs = row.querySelectorAll('.val-s');
+                const pInputs = row.querySelectorAll('.val-p');
+                sVal = parseInt(sInputs[1].value) || 0;
+                pVal = parseInt(pInputs[1].value) || 0;
+                nrCell = row.querySelectorAll('.nr-cell')[1];
+            }
+
+            if (sVal > 0 && pVal > 0) {
+                const nr = sVal * pVal;
+                nrCell.innerText = nr;
+                nrCell.className = 'nr-cell'; // reset
+                if (nr >= 6) nrCell.classList.add('bg-high');
+                else if (nr >= 3) nrCell.classList.add('bg-med');
+                else nrCell.classList.add('bg-low');
+            } else {
+                nrCell.innerText = '';
+                nrCell.className = 'nr-cell';
+            }
+        }
+    </script>
+</body>
+</html>

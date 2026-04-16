@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-LC-32 Registro de Ingreso de Muestras de Retención</title>
@@ -7,39 +8,134 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app.js"></script>
     <style>
-        .section-header { background-color: #1E3A5F; color: white; padding: 6px 12px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
-        .compact-table th { background-color: #1E3A5F; color: white; font-size: 10px; padding: 6px; text-align: center; vertical-align: middle; border: 1px solid #cbd5e1; }
-        .compact-table td { font-size: 10px; padding: 4px; vertical-align: middle; text-align: center; border: 1px solid #cbd5e1; }
-        .cedit { border: none; background: transparent; font-size: 11px; padding: 2px; box-sizing: border-box; text-align: center; font-family: inherit; width: 100%; }
-        .cedit:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
-        
-        .radio-group { display: flex; flex-wrap: wrap; gap: 15px; font-size: 11px; margin-top: 8px; margin-bottom: 8px; }
-        .radio-group label { display: flex; align-items: center; cursor: pointer; }
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 6px 12px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .cedit {
+            border: none;
+            background: transparent;
+            font-size: 11px;
+            padding: 2px;
+            box-sizing: border-box;
+            text-align: center;
+            font-family: inherit;
+            width: 100%;
+        }
+
+        .cedit:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 11px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
 
         @media print {
-            .global-controls, .no-print { display: none !important; }
-            ::-webkit-input-placeholder { color: transparent !important; }
-            ::placeholder { color: transparent !important; }
-            .section { page-break-inside: auto !important; }
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
         }
     </style>
 </head>
+
 <body id="doc-fo-lc-32">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
-    
+
     <div class="container" style="max-width:100%; width:100%;">
         <div class="header-top">
             <div class="logo-container">
                 <svg viewBox="0 0 320 80">
-                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
                     <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13"/>
-                        <circle class="c" cx="75" cy="75" r="13"/>
-                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
                     </g>
                     <text x="90" y="42" class="t" font-size="34">XELLE</text>
                     <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
@@ -50,7 +146,9 @@
                 <label>Folio de Retención</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">MR-</span>
-                    <input type="text" id="reg-mr" class="registry-input generate-barcode cedit" data-target="barcode-mr" data-prefix="MR-" placeholder="202X-000" style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                    <input type="text" id="reg-mr" class="registry-input generate-barcode cedit"
+                        data-target="barcode-mr" data-prefix="MR-" placeholder="202X-000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
                 </div>
                 <svg id="barcode-mr" class="barcode-svg"></svg>
             </div>
@@ -66,11 +164,13 @@
             <table class="no-border-table" style="margin-bottom:10px;">
                 <tr>
                     <td width="20%"><strong>Fecha de Ingreso:</strong></td>
-                    <td width="80%"><input type="date" class="cedit" style="border-bottom:1px solid #ccc; width: 30%;"></td>
+                    <td width="80%"><input type="date" class="cedit" style="border-bottom:1px solid #ccc; width: 30%;">
+                    </td>
                 </tr>
             </table>
 
-            <div style="background-color: #f8fafc; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; margin-bottom: 10px;">
+            <div
+                style="background-color: #f8fafc; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; margin-bottom: 10px;">
                 <strong>Tipo de Muestra:</strong>
                 <div class="radio-group">
                     <label><input type="radio" name="tipo_muestra" class="cedit"> Producto Terminado</label>
@@ -82,13 +182,16 @@
             <table class="no-border-table">
                 <tr>
                     <td width="25%"><strong>Nombre del Producto / Insumo:</strong></td>
-                    <td width="75%" colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:12px;"></td>
+                    <td width="75%" colspan="3"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:12px;"></td>
                 </tr>
                 <tr>
                     <td width="25%"><strong>Número de Lote:</strong></td>
-                    <td width="25%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; color:#b45309;"></td>
+                    <td width="25%"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; color:#b45309;"></td>
                     <td width="25%"><strong>Presentación:</strong></td>
-                    <td width="25%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;" placeholder="Ej. Vial 10mL"></td>
+                    <td width="25%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
+                            placeholder="Ej. Vial 10mL"></td>
                 </tr>
                 <tr>
                     <td><strong>Fecha de Fabricación:</strong></td>
@@ -103,20 +206,27 @@
         <div class="section">
             <table class="no-border-table" style="margin-bottom: 15px;">
                 <tr>
-                    <td width="30%" style="color:#1E3A5F; font-weight:bold; font-size: 12px;">Cantidad Ingresada (Unidades/Viales):</td>
-                    <td width="20%"><input type="number" class="cedit" style="width:100%; border-bottom:2px solid #1E3A5F; font-weight:bold; font-size:14px;"></td>
+                    <td width="30%" style="color:#1E3A5F; font-weight:bold; font-size: 12px;">Cantidad Ingresada
+                        (Unidades/Viales):</td>
+                    <td width="20%"><input type="number" class="cedit"
+                            style="width:100%; border-bottom:2px solid #1E3A5F; font-weight:bold; font-size:14px;"></td>
                     <td width="50%" style="font-size:9px; color:#666; vertical-align:middle; padding-left: 15px;">
                         (Nota: La cantidad debe ser suficiente para realizar al menos dos análisis completos).
                     </td>
                 </tr>
                 <tr>
-                    <td style="color:#b45309; font-weight:bold; font-size: 12px; padding-top: 15px;">Fecha Límite de Retención Legal<br><span style="font-size: 10px; font-weight: normal;">(Caducidad + 1 año):</span></td>
-                    <td style="padding-top: 15px;"><input type="date" class="cedit" style="width:100%; border-bottom:2px solid #b45309; font-weight:bold; font-size:12px; color: #b45309;"></td>
+                    <td style="color:#b45309; font-weight:bold; font-size: 12px; padding-top: 15px;">Fecha Límite de
+                        Retención Legal<br><span style="font-size: 10px; font-weight: normal;">(Caducidad + 1
+                            año):</span></td>
+                    <td style="padding-top: 15px;"><input type="date" class="cedit"
+                            style="width:100%; border-bottom:2px solid #b45309; font-weight:bold; font-size:12px; color: #b45309;">
+                    </td>
                     <td></td>
                 </tr>
             </table>
 
-            <div style="background-color: #f0fdf4; padding: 10px; border: 1px dashed #166534; border-radius: 4px; margin-bottom: 10px;">
+            <div
+                style="background-color: #f0fdf4; padding: 10px; border: 1px dashed #166534; border-radius: 4px; margin-bottom: 10px;">
                 <strong style="color:#14532d;">Condiciones de Almacenamiento Requeridas:</strong>
                 <div class="radio-group">
                     <label><input type="radio" name="cond_almacen" class="cedit"> Temp. Ambiente (15-25°C)</label>
@@ -126,13 +236,16 @@
                 </div>
             </div>
 
-            <table class="no-border-table" style="background-color: #f8fafc; padding: 10px; border-radius: 4px; border: 1px solid #cbd5e1;">
+            <table class="no-border-table"
+                style="background-color: #f8fafc; padding: 10px; border-radius: 4px; border: 1px solid #cbd5e1;">
                 <tr>
                     <td width="25%"><strong>Ubicación Física Asignada:</strong></td>
                     <td width="15%"><strong>Equipo (ID):</strong></td>
-                    <td width="25%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;" placeholder="Ej. REF-01"></td>
+                    <td width="25%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
+                            placeholder="Ej. REF-01"></td>
                     <td width="15%"><strong>Estante / Caja:</strong></td>
-                    <td width="20%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;" placeholder="Ej. Charola 2 / Caja B"></td>
+                    <td width="20%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
+                            placeholder="Ej. Charola 2 / Caja B"></td>
                 </tr>
             </table>
         </div>
@@ -140,25 +253,123 @@
         <div class="section-header">3. FIRMAS DE TRANSFERENCIA Y CIERRE DE INGRESO</div>
         <div class="section">
             <p style="font-size:10px; color:#1e3a5f; margin-bottom:15px; font-style: italic; text-align: center;">
-                "Con estas firmas se confirma que la cantidad descrita de muestra física ha sido entregada y depositada bajo resguardo en el área designada de la Muestroteca."
+                "Con estas firmas se confirma que la cantidad descrita de muestra física ha sido entregada y depositada
+                bajo resguardo en el área designada de la Muestroteca."
             </p>
             <div class="signature-area" style="display:flex; gap:20px;">
                 <div class="signature-box" style="flex:1;">
                     <p>Entregó (Producción / Almacén)</p>
                     <div style="height: 30px;"></div>
-                    <input class="cedit" placeholder="Nombre y Firma" style="border-top: 1px solid #ccc; border-radius: 0;">
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top: 1px solid #ccc; border-radius: 0;">
                     <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
                 </div>
                 <div class="signature-box" style="flex:1;">
                     <p>Recibió y Resguardó (Control de Calidad)</p>
                     <div style="height: 30px;"></div>
-                    <input class="cedit" placeholder="Nombre y Firma" style="border-top: 1px solid #ccc; border-radius: 0;">
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top: 1px solid #ccc; border-radius: 0;">
                     <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
                 </div>
             </div>
         </div>
 
-        <div class="footer">FO-LC-32 | Versión: 2.0 | Registro de Ingreso de Muestras de Retención | Xelle Scientific | Página 1 de 1</div>
+        <div class="footer">FO-LC-32 | Versión: 2.0 | Registro de Ingreso de Muestras de Retención | Xelle Scientific |
+            Página 1 de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de
+            C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+            parcial.</div>
     </div>
+    <script>
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="date"> a <input type="text">
+                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="date">
+                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                    inp.type = 'date';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
+            }
+        }
+    </script>
 </body>
+
 </html>

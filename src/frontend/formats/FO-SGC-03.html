@@ -215,6 +215,32 @@
                 page-break-after: avoid !important;
             }
         }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        @media print {
+            .container {
+                padding-bottom: 42px;
+            }
+
+            .footer {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: 0;
+                padding: 6px 10px 0;
+                background: #fff;
+                border-top: 1px solid #d1d5db;
+            }
+        }
     </style>
 </head>
 
@@ -222,6 +248,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
         <button class="btn btn-secondary" onclick="exportToCSV()">Exportar CSV</button>
     </div>
 
@@ -278,12 +305,12 @@
 
         <div class="stats-box no-print">
             <div class="stat-item">
-                <div class="stat-number">57</div>
+                <div class="stat-number">85</div>
                 <div class="stat-label">Formatos Activos</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">4</div>
-                <div class="stat-label">Familias (LC, OP, QA, SGC)</div>
+                <div class="stat-number">5</div>
+                <div class="stat-label">Familias (AD, LC, OP, QA, SGC)</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number">1</div>
@@ -298,7 +325,7 @@
         <div class="section-header">1. INVENTARIO DE FORMATOS ACTIVOS</div>
         <div class="section">
             <p style="font-size:10px; color:#666; margin-bottom:10px;">
-                Inventario completo de 57 formatos del Sistema de Gestión de Calidad de Xelle Scientific.
+                Inventario completo de 85 formatos del Sistema de Gestión de Calidad de Xelle Scientific.
                 Todos los formatos están estandarizados a versión 1, vigencia ENE 2026.
             </p>
 
@@ -499,6 +526,15 @@
                     </tr>
                     <tr>
                         <td>#21</td>
+                        <td>FO-LC-32-B</td>
+                        <td>SALIDA Y DISPOSICIÓN DE MUESTRAS DE RETENCIÓN</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td>FO-LC-32</td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td>#22</td>
                         <td>FO-LC-33</td>
                         <td>BITÁCORA DE CONTROL DE MUESTRAS DE RETENCIÓN (CONTRAMUESTRAS)</td>
                         <td>1</td>
@@ -617,7 +653,7 @@
                     <tr>
                         <td>#34</td>
                         <td>FO-LC-49</td>
-                        <td>ORDEN DE PRODUCCIÓN / EXPEDIENTE DE LOTE</td>
+                        <td>ORDEN MAESTRA Y EXPEDIENTE DE PRODUCCIÓN</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
@@ -635,6 +671,24 @@
 
                     <!-- OPERACIONES (FO-OP) -->
                     <tr>
+                        <td>#36a</td>
+                        <td>FO-OP-01</td>
+                        <td>PROGRAMA ANUAL DE MANTENIMIENTO</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td>FO-QA-15</td>
+                        <td>Mantenimiento</td>
+                    </tr>
+                    <tr>
+                        <td>#36b</td>
+                        <td>FO-OP-04</td>
+                        <td>REGISTRO GRÁFICO DE TEMPERATURA DE REFRIGERADORES</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Operaciones / Calidad</td>
+                    </tr>
+                    <tr>
                         <td>#36</td>
                         <td>FO-OP-13</td>
                         <td>LISTA DE VERIFICACIÓN E INSPECCIÓN DE RECIBO DE MATERIA PRIMA (CHECK-LIST)</td>
@@ -645,6 +699,15 @@
                     </tr>
                     <tr>
                         <td>#37</td>
+                        <td>FO-OP-14</td>
+                        <td>FICHA CLÍNICA DE RECOLECCIÓN DE TEJIDO PLACENTARIO</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Operaciones</td>
+                    </tr>
+                    <tr>
+                        <td>#38</td>
                         <td>FO-OP-15</td>
                         <td>REGISTRO MAESTRO DE PEDIDO (OPERACIONES)</td>
                         <td>1</td>
@@ -653,7 +716,7 @@
                         <td>Operaciones</td>
                     </tr>
                     <tr>
-                        <td>#38</td>
+                        <td>#39</td>
                         <td>FO-OP-16</td>
                         <td>ORDEN DE SURTIDO Y EMPAQUE (OPERACIONES)</td>
                         <td>1</td>
@@ -662,7 +725,7 @@
                         <td>Almacén</td>
                     </tr>
                     <tr>
-                        <td>#39</td>
+                        <td>#40</td>
                         <td>FO-OP-17</td>
                         <td>NOTA DE REMISIÓN Y ENTREGA</td>
                         <td>1</td>
@@ -671,7 +734,7 @@
                         <td>Operaciones</td>
                     </tr>
                     <tr>
-                        <td>#40</td>
+                        <td>#41</td>
                         <td>FO-OP-20</td>
                         <td>LIBERACIÓN LOTE PARA ALMACÉN</td>
                         <td>1</td>
@@ -680,7 +743,7 @@
                         <td>Calidad</td>
                     </tr>
                     <tr>
-                        <td>#41</td>
+                        <td>#42</td>
                         <td>FO-OP-39</td>
                         <td>LISTA DE VERIFICACIÓN (CHECK-LIST) DE AUDITORÍA INTERNA DE TRAZABILIDAD</td>
                         <td>1</td>
@@ -689,7 +752,7 @@
                         <td>Calidad</td>
                     </tr>
                     <tr>
-                        <td>#42</td>
+                        <td>#43</td>
                         <td>FO-OP-40</td>
                         <td>ORDEN MAESTRA DE PRODUCCIÓN</td>
                         <td>1</td>
@@ -698,7 +761,16 @@
                         <td>Producción</td>
                     </tr>
                     <tr>
-                        <td>#43</td>
+                        <td>#44</td>
+                        <td>FO-OP-40-B</td>
+                        <td>EXPEDIENTE DE LOTE DE PRODUCCIÓN</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td>FO-OP-40</td>
+                        <td>Producción</td>
+                    </tr>
+                    <tr>
+                        <td>#45</td>
                         <td>FO-OP-41</td>
                         <td>RECEPCIÓN Y APROBACIÓN DE MATERIAS PRIMAS E INSUMOS</td>
                         <td>1</td>
@@ -707,7 +779,7 @@
                         <td>Almacén</td>
                     </tr>
                     <tr>
-                        <td>#44</td>
+                        <td>#46</td>
                         <td>FO-OP-42</td>
                         <td>RECEPCIÓN Y APROBACIÓN DE MATERIAS PRIMAS E INSUMOS MULTIPLES</td>
                         <td>1</td>
@@ -716,7 +788,16 @@
                         <td>Almacén</td>
                     </tr>
                     <tr>
-                        <td>#45</td>
+                        <td>#47</td>
+                        <td>FO-OP-48</td>
+                        <td>BITÁCORA DE LIMPIEZA Y DESINFECCIÓN</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Operaciones</td>
+                    </tr>
+                    <tr>
+                        <td>#48</td>
                         <td>FO-OP-49</td>
                         <td>BITÁCORA DE ALMACENAMIENTO TEMPORAL DE RPBI</td>
                         <td>1</td>
@@ -725,16 +806,17 @@
                         <td>Almacén</td>
                     </tr>
                     <tr>
-                        <td>#46</td>
+                        <td>#49</td>
                         <td>FO-OP-50</td>
-                        <td>FORMATO MANIFIESTO DE ENTREGA, TRANSPORTE Y RECEPCIÓN DE RESIDUOS PELIGROSOS (GENERADOR)</td>
+                        <td>FORMATO MANIFIESTO DE ENTREGA, TRANSPORTE Y RECEPCIÓN DE RESIDUOS PELIGROSOS (GENERADOR)
+                        </td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
                         <td>Almacén</td>
                     </tr>
                     <tr>
-                        <td>#47</td>
+                        <td>#50</td>
                         <td>FO-OP-51</td>
                         <td>REPORTE DE PRODUCTO NO CONFORME (DESVIACIONES)</td>
                         <td>1</td>
@@ -743,7 +825,7 @@
                         <td>Calidad</td>
                     </tr>
                     <tr>
-                        <td>#48</td>
+                        <td>#51</td>
                         <td>FO-OP-52</td>
                         <td>REPORTE Y MANIFIESTO DE MATERIA PRIMA NO CONFORME (MPNC)</td>
                         <td>1</td>
@@ -752,7 +834,7 @@
                         <td>Calidad</td>
                     </tr>
                     <tr>
-                        <td>#49</td>
+                        <td>#52</td>
                         <td>FO-OP-54</td>
                         <td>REPORTE DE DESVIACIÓN DE PROCESOS Y EQUIPOS</td>
                         <td>1</td>
@@ -761,7 +843,25 @@
                         <td>Calidad</td>
                     </tr>
                     <tr>
-                        <td>#50</td>
+                        <td>#53</td>
+                        <td>FO-OP-55</td>
+                        <td>EXPEDIENTE DE MANTENIMIENTO</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Mantenimiento</td>
+                    </tr>
+                    <tr>
+                        <td>#54</td>
+                        <td>FO-OP-56</td>
+                        <td>REGISTRO DE PRESIÓN DIFERENCIAL</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Operaciones</td>
+                    </tr>
+                    <tr>
+                        <td>#55</td>
                         <td>FO-OP-57</td>
                         <td>REPORTE DE CONTROL DE PLAGAS Y MANEJO DE FAUNA NOCIVA</td>
                         <td>1</td>
@@ -770,7 +870,7 @@
                         <td>Operaciones / Mantenimiento</td>
                     </tr>
                     <tr>
-                        <td>#51</td>
+                        <td>#56</td>
                         <td>FO-OP-58</td>
                         <td>REGISTRO DE REVISIÓN Y COLOCACIÓN DE TRAMPAS</td>
                         <td>1</td>
@@ -779,7 +879,7 @@
                         <td>Operaciones / Mantenimiento</td>
                     </tr>
                     <tr>
-                        <td>#52</td>
+                        <td>#57</td>
                         <td>FO-OP-59</td>
                         <td>BITÁCORA DE FUMIGACIONES Y APLICACIÓN QUÍMICA</td>
                         <td>1</td>
@@ -788,9 +888,73 @@
                         <td>Operaciones / Mantenimiento</td>
                     </tr>
 
+                    <tr>
+                        <td>#58a</td>
+                        <td>FO-OP-60</td>
+                        <td>REGISTRO MENSUAL DE ACTIVIDADES CRÍTICAS DE ÁREA</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Operaciones</td>
+                    </tr>
+                    <tr>
+                        <td>#58b</td>
+                        <td>FO-OP-61</td>
+                        <td>HOJA DE VIDA Y EXPEDIENTE DOCUMENTAL DE EQUIPO</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td>FO-OP-55</td>
+                        <td>Mantenimiento</td>
+                    </tr>
+                    <tr>
+                        <td>#58c</td>
+                        <td>FO-OP-62</td>
+                        <td>HISTORIAL DE MODIFICACIONES, REPARACIONES Y CALIBRACIONES DE EQUIPO</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td>FO-OP-61</td>
+                        <td>Mantenimiento</td>
+                    </tr>
+
                     <!-- CALIDAD (FO-QA) -->
                     <tr>
-                        <td>#53</td>
+                        <td>#57a</td>
+                        <td>FO-QA-01</td>
+                        <td>MATRIZ DE RIESGOS Y OPORTUNIDADES</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>SGC / Calidad</td>
+                    </tr>
+                    <tr>
+                        <td>#58</td>
+                        <td>FO-QA-06</td>
+                        <td>CERTIFICADO DE LIBERACIÓN DE EXOSOMAS</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td>#59</td>
+                        <td>FO-QA-07</td>
+                        <td>SOLICITUD Y CONTROL DE CAMBIOS</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td>#60</td>
+                        <td>FO-QA-08</td>
+                        <td>ACTA DE DESTRUCCIÓN Y DISPOSICIÓN FINAL</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td>#61</td>
                         <td>FO-QA-09</td>
                         <td>ACCIÓN CORRECTIVA Y PREVENTIVA (CAPA) - GESTIÓN AMFE</td>
                         <td>1</td>
@@ -799,7 +963,7 @@
                         <td>Calidad / Laboratorio</td>
                     </tr>
                     <tr>
-                        <td>#54</td>
+                        <td>#62</td>
                         <td>FO-QA-10</td>
                         <td>CERTIFICADO DE CALIDAD DE PRODUCTO DE LOTE (CoA)</td>
                         <td>1</td>
@@ -807,10 +971,73 @@
                         <td>FO-LC-31, FO-LC-46, FO-LC-47, FO-LC-48</td>
                         <td>Calidad</td>
                     </tr>
+                    <tr>
+                        <td>#63</td>
+                        <td>FO-QA-11</td>
+                        <td>CERTIFICADO DE LIBERACIÓN DE LOTE</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td>#64</td>
+                        <td>FO-QA-12</td>
+                        <td>BITÁCORA DE USO Y FALLAS DE EQUIPO</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Laboratorio</td>
+                    </tr>
+                    <tr>
+                        <td>#65</td>
+                        <td>FO-QA-13</td>
+                        <td>BITÁCORA DE MONITOREO AMBIENTAL</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Calidad</td>
+                    </tr>
+                    <tr>
+                        <td>#66</td>
+                        <td>FO-QA-14</td>
+                        <td>CHECKLIST DE SEGURIDAD E HIGIENE</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Operaciones</td>
+                    </tr>
+                    <tr>
+                        <td>#67</td>
+                        <td>FO-QA-15</td>
+                        <td>PROGRAMA ANUAL DE MANTENIMIENTO</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Mantenimiento</td>
+                    </tr>
+                    <tr>
+                        <td>#68</td>
+                        <td>FO-QA-16</td>
+                        <td>DETECCIÓN DE NECESIDADES DE CAPACITACIÓN (DNC)</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>SGC</td>
+                    </tr>
+                    <tr>
+                        <td>#69</td>
+                        <td>FO-QA-17</td>
+                        <td>LISTA DE ASISTENCIA Y EVALUACIÓN</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>SGC</td>
+                    </tr>
 
                     <!-- SISTEMA DE GESTIÓN DE CALIDAD (FO-SGC) -->
                     <tr>
-                        <td>#55</td>
+                        <td>#70</td>
                         <td>FO-SGC-01</td>
                         <td>MATRIZ DE RESPONSABILIDADES Y FIRMAS POR MÓDULO</td>
                         <td>1</td>
@@ -819,7 +1046,7 @@
                         <td>SGC</td>
                     </tr>
                     <tr>
-                        <td>#56</td>
+                        <td>#71</td>
                         <td>FO-SGC-02</td>
                         <td>MATRIZ DE RESPONSABILIDADES Y FIRMAS DEL SISTEMA DE GESTIÓN DE CALIDAD</td>
                         <td>1</td>
@@ -828,12 +1055,48 @@
                         <td>SGC</td>
                     </tr>
                     <tr>
-                        <td>#57</td>
+                        <td>#72</td>
                         <td>FO-SGC-03</td>
                         <td>MATRIZ DE FORMATOS ACTIVOS DEL SISTEMA DE GESTIÓN DE CALIDAD</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td>FO-SGC-01, FO-SGC-02</td>
+                        <td>SGC</td>
+                    </tr>
+                    <tr>
+                        <td>#73</td>
+                        <td>FO-SGC-04</td>
+                        <td>LISTADO MAESTRO DE FORMATOS</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>SGC</td>
+                    </tr>
+                    <tr>
+                        <td>#73a</td>
+                        <td>FO-SGC-05</td>
+                        <td>INVENTARIO DE EQUIPOS E INSTRUMENTOS</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td>FO-OP-55, FO-OP-61</td>
+                        <td>SGC / Mantenimiento</td>
+                    </tr>
+                    <tr>
+                        <td>#74</td>
+                        <td>FO-SGC-I</td>
+                        <td>ÍNDICE DE CARPETAS DEL SGC</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>SGC</td>
+                    </tr>
+                    <tr>
+                        <td>#75</td>
+                        <td>FO-SGC-M</td>
+                        <td>ÍNDICE MAESTRO DE CARPETAS</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
                         <td>SGC</td>
                     </tr>
                 </tbody>
@@ -851,6 +1114,34 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- ADMINISTRATIVO (FO-AD) -->
+                    <tr>
+                        <td>#AD1</td>
+                        <td>FO-AD-01</td>
+                        <td>PERFIL Y DESCRIPCIÓN DE PUESTO</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td>Recursos Humanos / SGC</td>
+                    </tr>
+                    <tr>
+                        <td>#AD2</td>
+                        <td>FO-AD-02</td>
+                        <td>MATRIZ DE COMPETENCIAS Y HABILIDADES</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td>FO-AD-01</td>
+                        <td>Recursos Humanos / SGC</td>
+                    </tr>
+                    <tr>
+                        <td>#AD3</td>
+                        <td>FO-AD-03</td>
+                        <td>EVALUACIÓN DE DESEMPEÑO Y NECESIDADES DE CAPACITACIÓN</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td>FO-AD-01, FO-AD-02</td>
+                        <td>Recursos Humanos / SGC</td>
+                    </tr>
                     <tr style="height:60px;">
                         <td style="text-align:center; vertical-align:bottom;">
                             <div style="border-bottom:1px solid #000; width:80%; margin:0 auto 5px;"></div>
@@ -869,6 +1160,13 @@
             </table>
             <button class="btn-add no-print" onclick="addRow()">+ AGREGAR NUEVO FORMATO</button>
         </div>
+
+        <footer class="footer">FO-SGC-03 | Versión: 1 | MATRIZ DE FORMATOS ACTIVOS DEL SISTEMA DE GESTIÓN DE CALIDAD |
+            Xelle
+            Scientific | Página 1 de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;,
+            S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción
+            total
+            o parcial.</footer>
     </div>
 
     <script>
@@ -888,6 +1186,19 @@
                     addRowControls(rows[i]);
                 }
             }
+
+            renumberRows();
+        }
+
+        function renumberRows() {
+            const tbody = document.getElementById('tbl-formatos').getElementsByTagName('tbody')[0];
+            const rows = tbody.querySelectorAll('tr:not(.comment-row)');
+
+            rows.forEach((row, index) => {
+                if (row.cells.length > 1) {
+                    row.cells[1].textContent = `#${index + 1}`;
+                }
+            });
         }
 
         function addRowControls(row) {
@@ -987,6 +1298,7 @@
 
                     tbody.appendChild(newRow);
                     addRowControls(newRow);
+                    renumberRows();
                     updateStats();
 
                     Swal.fire({
@@ -1092,6 +1404,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     row.remove();
+                    renumberRows();
                     updateStats();
                     Swal.fire({
                         icon: 'success',
@@ -1156,6 +1469,8 @@
                 } else {
                     target.parentNode.insertBefore(draggedRow, target);
                 }
+
+                renumberRows();
             }
 
             return false;
@@ -1201,6 +1516,97 @@
         // Inicializar sistema de persistencia
         if (typeof App !== 'undefined') {
             App.init();
+        }
+    </script>
+    <script>
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="date"> a <input type="text">
+                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="date">
+                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                    inp.type = 'date';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
+            }
         }
     </script>
 </body>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-60 Programa y Registro de Ejecución de Control de Plagas</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 10px; padding: 6px; text-align: center; vertical-align: middle; border: 1px solid #cbd5e1; }
+        .compact-table td { font-size: 10px; padding: 4px; vertical-align: middle; text-align: center; border: 1px solid #cbd5e1; }
+        .compact-table input, .compact-table select, .compact-table textarea { font-size: 10px; text-align: center; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
+        .compact-table input:focus, .compact-table select:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+        
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 5px; margin-top: 5px; }
+        .text-left { text-align: left !important; padding-left: 5px !important; }
+        
+        .info-box { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 4px; font-size: 10px; color: #334155; margin-bottom: 10px; line-height: 1.4; }
+        .info-box strong { color: #1E3A5F; }
+
+        .year-input { font-size: 24px; font-weight: 900; color: #b45309; text-align: center; border: none; border-bottom: 2px solid #b45309; width: 80px; background: transparent; }
+        .year-input:focus { outline: none; background-color: #fffbeb; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            ::-webkit-input-placeholder { color: transparent !important; }
+            ::placeholder { color: transparent !important; }
+            .section { page-break-inside: auto !important; }
+            tr { page-break-inside: avoid !important; }
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body id="doc-fo-op-60">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/>
+                        <circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>AÑO DE EJECUCIÓN</label>
+                <div style="margin-bottom: 5px;">
+                    <input type="number" class="year-input cedit" value="2026">
+                </div>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-60-</span>
+                    <input type="text" id="reg-op60" class="registry-input generate-barcode cedit" data-target="barcode-op60" data-prefix="FO-OP-60-" placeholder="000" style="font-size:12px;">
+                </div>
+                <svg id="barcode-op60" class="barcode-svg" style="height:30px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>PROGRAMA Y REGISTRO DE EJECUCIÓN DE CONTROL DE PLAGAS</h1>
+            <div class="metadata">Código: FO-OP-60 | Versión: 1.0 | Vigencia: Mar 2026 | Área: Infraestructura / Mantenimiento | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. DATOS DEL PROVEEDOR AUTORIZADO</div>
+        <div class="section">
+            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-bottom:5px;">Instrucción: El control de plagas debe ser ejecutado por una empresa con licencia sanitaria vigente (NOM-256-SSA1).</p>
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Empresa Proveedora:</strong></td>
+                    <td width="80%" colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:12px;"></td>
+                </tr>
+                <tr>
+                    <td width="20%"><strong>No. Licencia Sanitaria:</strong></td>
+                    <td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; color:#1E3A5F;"></td>
+                    <td width="20%"><strong>Vigencia de Licencia:</strong></td>
+                    <td width="30%"><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Responsable Técnico:</strong></td>
+                    <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;" placeholder="Nombre del responsable por parte del proveedor"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. PUNTOS CRÍTICOS DE CONTROL (PCC) PREVIOS A EJECUCIÓN</div>
+        <div class="section">
+            <div class="info-box">
+                <strong>Antes de autorizar el ingreso del proveedor cada mes, Aseguramiento de Calidad debe verificar:</strong><br><br>
+                <strong>[PCC-1]</strong> No hay producto expuesto, materias primas abiertas ni personal operativo en las áreas a tratar.<br>
+                <strong>[PCC-2]</strong> Los químicos a utilizar coinciden con la lista maestra autorizada y tienen registro RSCO vigente.<br>
+                <strong>[PCC-3]</strong> Se cuenta con el formato FO-OP-59 (Bitácora de Aplicación Química) listo en el área para detallar la aplicación del día.
+            </div>
+        </div>
+
+        <div class="section-header">3. CRONOGRAMA DE EJECUCIÓN (PROGRAMADO VS. REALIZADO)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Registre la fecha exacta en la que el proveedor acude a las instalaciones. La frecuencia estándar de fumigación perimetral y revisión de trampas es mensual.</p>
+            <table class="compact-table" id="tbl-cronograma">
+                <thead>
+                    <tr>
+                        <th width="8%">Mes</th>
+                        <th width="20%">Tipo de Servicio<br><span style="font-size:8px; font-weight:normal;">(Rutina / Refuerzo / Revisión)</span></th>
+                        <th width="14%">Fecha Programada</th>
+                        <th width="14%">Fecha Real de Ejecución</th>
+                        <th width="14%">¿Hubo Hallazgos de Plaga?</th>
+                        <th width="15%">Firma de Mantenimiento</th>
+                        <th width="15%">Vo.Bo.<br>Aseguramiento Calidad</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-meses">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">4. GESTIÓN DE INCIDENCIAS Y SERVICIOS EXTRAORDINARIOS</div>
+        <div class="section">
+            <p style="font-size:9px; color:#b45309; font-weight:bold; margin-bottom:5px;">Llenar esta sección si se requiere un servicio fuera del programa (ej. si se marca "Sí" en hallazgos de plaga, o si se realiza una fumigación correctiva).</p>
+            <table class="compact-table" id="tbl-incidencias">
+                <thead>
+                    <tr>
+                        <th width="15%">Fecha del Evento</th>
+                        <th width="35%">Descripción de la Incidencia<br><span style="font-size:8px; font-weight:normal;">(Ej. Avistamiento de insecto en almacén)</span></th>
+                        <th width="30%">Acción Correctiva<br><span style="font-size:8px; font-weight:normal;">(Servicio Extra)</span></th>
+                        <th width="15%">Folio de Desviación<br><span style="font-size:8px; font-weight:normal;">(FO-OP-51)</span></th>
+                        <th width="5%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="date" class="cedit"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit" style="font-weight:bold;"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-incidencias')">+ AGREGAR INCIDENCIA EXTRAORDINARIA</button>
+        </div>
+
+        <div class="section-header">5. VALIDACIÓN DEL PROGRAMA ANUAL</div>
+        <div class="section">
+            <p style="font-size:9px; text-align:justify; margin-bottom:15px; font-style:italic;">
+                <strong>Nota de Liberación de Áreas:</strong> Se hace constar que posterior a cada servicio de fumigación química, se ejecuta una limpieza profunda (sanitización) de las áreas antes de reanudar operaciones, para evitar contaminación cruzada al producto.
+            </p>
+            
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Elaboró<br><span style="font-size:9px; font-weight:normal;">Jefe de Mantenimiento</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #94a3b8; border-radius:0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Revisó<br><span style="font-size:9px; font-weight:normal;">Aseguramiento de Calidad</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #94a3b8; border-radius:0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1; background-color:#f0fdf4; border-color:#166534;">
+                    <p style="font-weight:bold; color:#14532d; margin-bottom: 25px;">Autorizó<br><span style="font-size:9px; font-weight:normal;">Responsable Sanitario</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #166534; border-radius:0; background:transparent;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">FO-OP-60 | Versión: 1.0 | Programa y Registro de Ejecución de Control de Plagas | Xelle Scientific | Página 1 de 1</div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Generar los 12 meses fijos
+            const meses = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+            const tbody = document.getElementById('tbody-meses');
+            
+            meses.forEach(mes => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight:bold; color:#1e3a5f; background-color:#f1f5f9;">${mes}</td>
+                    <td>
+                        <select class="cedit">
+                            <option value=""></option>
+                            <option value="RUTINA">Rutina (Preventivo)</option>
+                            <option value="REFUERZO">Refuerzo (Correctivo)</option>
+                            <option value="REVISION">Revisión de Trampas</option>
+                        </select>
+                    </td>
+                    <td><input type="date" class="cedit"></td>
+                    <td><input type="date" class="cedit" style="font-weight:bold; color:#166534;"></td>
+                    <td>
+                        <select class="cedit" style="font-weight:bold;">
+                            <option value=""></option>
+                            <option value="NO" style="color:#166534;">No</option>
+                            <option value="SI" style="color:#991b1b;">Sí</option>
+                        </select>
+                    </td>
+                    <td><input class="cedit" placeholder="Firma"></td>
+                    <td><input class="cedit" placeholder="Firma"></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        });
+
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+        }
+    </script>
+</body>
+</html>

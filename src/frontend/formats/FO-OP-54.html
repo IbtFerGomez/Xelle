@@ -145,6 +145,15 @@
             border-color: #991b1b;
         }
 
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
         @media print {
 
             .global-controls,
@@ -176,6 +185,7 @@
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
 
     <div class="container" style="max-width:100%; width:100%;">
@@ -472,7 +482,9 @@
         </div>
 
         <div class="footer">FO-OP-54 | Versión: 2.0 | Reporte de Desviación de Procesos y Equipos | Xelle Scientific |
-            Página 2 de 2</div>
+            Página 2 de 2<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de
+            C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+            parcial.</div>
     </div>
 
     <script>
@@ -515,6 +527,97 @@
                 }
             } else {
                 totalInput.value = '';
+            }
+        }
+    </script>
+    <script>
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="date"> a <input type="text">
+                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="date">
+                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                    inp.type = 'date';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
             }
         }
     </script>

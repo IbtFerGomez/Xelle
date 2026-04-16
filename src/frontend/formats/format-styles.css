@@ -521,7 +521,6 @@ div:where(.swal2-container) {
 @media print {
 
     /* Ocultar leyendas (footer) y elementos marcados como no imprimir */
-    .footer,
     .no-print-legend {
         display: none !important;
     }
@@ -552,7 +551,6 @@ div:where(.swal2-container) {
 @media print {
 
     /* Ocultar elementos de navegación y leyendas (footer) */
-    .footer,
     .no-print,
     .global-controls,
     .btn {

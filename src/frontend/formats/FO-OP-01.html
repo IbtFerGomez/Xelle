@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-01 Programa Anual de Mantenimiento</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .info-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: #334155;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .info-box strong {
+            color: #1E3A5F;
+        }
+
+        .year-input {
+            font-size: 24px;
+            font-weight: 900;
+            color: #b45309;
+            text-align: center;
+            border: none;
+            border-bottom: 2px solid #b45309;
+            width: 80px;
+            background: transparent;
+        }
+
+        .year-input:focus {
+            outline: none;
+            background-color: #fffbeb;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-01">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>AÑO DEL PROGRAMA</label>
+                <div style="margin-bottom: 5px;">
+                    <input type="number" class="year-input cedit" value="2026">
+                </div>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-01-</span>
+                    <input type="text" id="reg-op01" class="registry-input generate-barcode cedit"
+                        data-target="barcode-op01" data-prefix="FO-OP-01-" placeholder="000" style="font-size:12px;">
+                </div>
+                <svg id="barcode-op01" class="barcode-svg" style="height:30px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>PROGRAMA ANUAL DE MANTENIMIENTO</h1>
+            <div class="metadata">Código: FO-OP-01 | Versión: 1.0 | Vigencia: Mar 2026 | Área: Mantenimiento /
+                Infraestructura | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. INSTRUCCIONES DE LLENADO</div>
+        <div class="section">
+            <div class="info-box">
+                <strong>Fecha Programada:</strong> Indicar el día o la semana en la que está proyectado el mantenimiento
+                según el manual del fabricante o el plan anual de calibración.<br>
+                <strong>Fecha de Realización:</strong> Indicar el día exacto en el que el técnico interno o externo
+                finalizó el servicio.<br>
+                <strong>Evidencia / Folio:</strong> Anotar el número de reporte del proveedor, el certificado de
+                calibración, o el folio interno de la bitácora de mantenimiento (Ej. FO-MT-02).
+            </div>
+        </div>
+
+        <div class="section-header">2. REGISTRO DE MANTENIMIENTO A MOBILIARIO, INSTALACIONES Y EQUIPOS</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-mantenimiento">
+                <thead>
+                    <tr>
+                        <th width="3%">No.</th>
+                        <th width="20%">Equipo, Mobiliario o Instalación</th>
+                        <th width="10%">ID / No. Equipo</th>
+                        <th width="10%">Frecuencia</th>
+                        <th width="12%">Tipo de Servicio<br><span style="font-size:8px; font-weight:normal;">(Prev /
+                                Corr / Calib)</span></th>
+                        <th width="12%">Fecha Programada</th>
+                        <th width="12%">Fecha de Realización</th>
+                        <th width="13%">Evidencia / Folio de Reporte</th>
+                        <th width="8%">Firma<br><span style="font-size:8px; font-weight:normal;">(Técnico / QA)</span>
+                        </th>
+                        <th width="3%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold; color:#1e3a5f;">1</td>
+                        <td><input class="cedit text-left" placeholder="Ej. Unidad Paquete HVAC"></td>
+                        <td><input class="cedit" style="font-weight:bold;"></td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="MENSUAL">Mensual</option>
+                                <option value="TRIMESTRAL">Trimestral</option>
+                                <option value="SEMESTRAL">Semestral</option>
+                                <option value="ANUAL">Anual</option>
+                                <option value="OTRO">Otro</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="PREVENTIVO">Preventivo</option>
+                                <option value="CORRECTIVO">Correctivo</option>
+                                <option value="CALIBRACION">Calibración</option>
+                                <option value="CALIFICACION">Calificación</option>
+                            </select>
+                        </td>
+                        <td><input type="date" class="cedit"></td>
+                        <td><input type="date" class="cedit" style="font-weight:bold; color:#166534;"></td>
+                        <td><input class="cedit" placeholder="Folio / Certificado"></td>
+                        <td><input class="cedit" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-mantenimiento')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold; color:#1e3a5f;">2</td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit" style="font-weight:bold;"></td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="MENSUAL">Mensual</option>
+                                <option value="TRIMESTRAL">Trimestral</option>
+                                <option value="SEMESTRAL">Semestral</option>
+                                <option value="ANUAL">Anual</option>
+                                <option value="OTRO">Otro</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="PREVENTIVO">Preventivo</option>
+                                <option value="CORRECTIVO">Correctivo</option>
+                                <option value="CALIBRACION">Calibración</option>
+                                <option value="CALIFICACION">Calificación</option>
+                            </select>
+                        </td>
+                        <td><input type="date" class="cedit"></td>
+                        <td><input type="date" class="cedit" style="font-weight:bold; color:#166534;"></td>
+                        <td><input class="cedit" placeholder="Folio / Certificado"></td>
+                        <td><input class="cedit" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-mantenimiento')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold; color:#1e3a5f;">3</td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit" style="font-weight:bold;"></td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="MENSUAL">Mensual</option>
+                                <option value="TRIMESTRAL">Trimestral</option>
+                                <option value="SEMESTRAL">Semestral</option>
+                                <option value="ANUAL">Anual</option>
+                                <option value="OTRO">Otro</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="PREVENTIVO">Preventivo</option>
+                                <option value="CORRECTIVO">Correctivo</option>
+                                <option value="CALIBRACION">Calibración</option>
+                                <option value="CALIFICACION">Calificación</option>
+                            </select>
+                        </td>
+                        <td><input type="date" class="cedit"></td>
+                        <td><input type="date" class="cedit" style="font-weight:bold; color:#166534;"></td>
+                        <td><input class="cedit" placeholder="Folio / Certificado"></td>
+                        <td><input class="cedit" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-mantenimiento')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold; color:#1e3a5f;">4</td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit" style="font-weight:bold;"></td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="MENSUAL">Mensual</option>
+                                <option value="TRIMESTRAL">Trimestral</option>
+                                <option value="SEMESTRAL">Semestral</option>
+                                <option value="ANUAL">Anual</option>
+                                <option value="OTRO">Otro</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="PREVENTIVO">Preventivo</option>
+                                <option value="CORRECTIVO">Correctivo</option>
+                                <option value="CALIBRACION">Calibración</option>
+                                <option value="CALIFICACION">Calificación</option>
+                            </select>
+                        </td>
+                        <td><input type="date" class="cedit"></td>
+                        <td><input type="date" class="cedit" style="font-weight:bold; color:#166534;"></td>
+                        <td><input class="cedit" placeholder="Folio / Certificado"></td>
+                        <td><input class="cedit" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-mantenimiento')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold; color:#1e3a5f;">5</td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit" style="font-weight:bold;"></td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="MENSUAL">Mensual</option>
+                                <option value="TRIMESTRAL">Trimestral</option>
+                                <option value="SEMESTRAL">Semestral</option>
+                                <option value="ANUAL">Anual</option>
+                                <option value="OTRO">Otro</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="PREVENTIVO">Preventivo</option>
+                                <option value="CORRECTIVO">Correctivo</option>
+                                <option value="CALIBRACION">Calibración</option>
+                                <option value="CALIFICACION">Calificación</option>
+                            </select>
+                        </td>
+                        <td><input type="date" class="cedit"></td>
+                        <td><input type="date" class="cedit" style="font-weight:bold; color:#166534;"></td>
+                        <td><input class="cedit" placeholder="Folio / Certificado"></td>
+                        <td><input class="cedit" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-mantenimiento')">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRowNumbered('tbl-mantenimiento')">+ AGREGAR EQUIPO /
+                MANTENIMIENTO AL PROGRAMA</button>
+        </div>
+
+        <div class="section-header">3. REPROGRAMACIÓN Y OBSERVACIONES</div>
+        <div class="section">
+            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-bottom:5px;">Si la Fecha de Realización
+                excede por más de 7 días la Fecha Programada, justificar el motivo.</p>
+            <textarea class="cedit" rows="3"
+                style="width:100%; border:1px solid #cbd5e1; padding:5px; box-sizing:border-box;"
+                placeholder="Escriba aquí justificaciones de atrasos, equipos dados de baja, o reprogramaciones de calibración..."></textarea>
+        </div>
+
+        <div class="section-header">4. VALIDACIÓN Y FIRMAS</div>
+        <div class="section">
+            <div class="signature-area"
+                style="display:flex; justify-content:space-between; gap:15px; margin-top: 15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">ELABORÓ<br><span style="font-size:9px; font-weight:normal;">Responsable
+                            de Mantenimiento</span></p>
+                    <div style="height: 30px;"></div>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #94a3b8; border-radius:0;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">REVISÓ<br><span
+                            style="font-size:9px; font-weight:normal;">Aseguramiento de Calidad</span></p>
+                    <div style="height: 30px;"></div>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #94a3b8; border-radius:0;">
+                </div>
+                <div class="signature-box" style="flex:1; background-color:#f0fdf4; border-color:#166534;">
+                    <p style="font-weight:bold; color:#14532d;">AUTORIZÓ<br><span
+                            style="font-size:9px; font-weight:normal;">Responsable Sanitario</span></p>
+                    <div style="height: 30px;"></div>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #166534; border-radius:0; background:transparent;">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">FO-OP-01 | Versión: 1.0 | Programa Anual de Mantenimiento | Xelle Scientific | Página 1 de
+            1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está
+            protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+
+    <script>
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if (row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                const numCell = row.querySelector('.row-num');
+                if (numCell) numCell.innerText = index + 1;
+            });
+        }
+    </script>
+    <script>
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="date"> a <input type="text">
+                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="date">
+                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                    inp.type = 'date';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

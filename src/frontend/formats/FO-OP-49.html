@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-OP-49 Bitácora de Almacenamiento Temporal de RPBI</title>
@@ -8,44 +9,161 @@
     <script src="format-app.js"></script>
     <style>
         /* Configuración para impresión horizontal */
-        @page { size: landscape; margin: 1cm; }
-        
-        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
-        .compact-table th { background-color: #1E3A5F; color: white; font-size: 10px; padding: 6px; text-align: center; vertical-align: middle; border: 1px solid #cbd5e1; }
-        .compact-table td { font-size: 10px; padding: 4px; vertical-align: middle; text-align: center; border: 1px solid #cbd5e1; }
-        .compact-table input, .compact-table select, .compact-table textarea { font-size: 10px; text-align: center; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
-        .compact-table input:focus, .compact-table select:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
-        
-        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 5px; margin-top: 5px; }
-        .text-left { text-align: left !important; padding-left: 5px !important; }
-        
-        .alert-box { background-color: #fef2f2; border: 1px dashed #991b1b; padding: 10px; border-radius: 4px; font-size: 10px; color: #991b1b; margin-top: 10px; margin-bottom: 10px; font-weight: bold; text-align: justify; }
+        @page {
+            size: landscape;
+            margin: 1cm;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .alert-box {
+            background-color: #fef2f2;
+            border: 1px dashed #991b1b;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: #991b1b;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: justify;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
 
         @media print {
-            .global-controls, .no-print { display: none !important; }
-            ::-webkit-input-placeholder { color: transparent !important; }
-            ::placeholder { color: transparent !important; }
-            .section { page-break-inside: auto !important; }
-            tr { page-break-inside: avoid !important; }
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
         }
     </style>
 </head>
+
 <body id="doc-fo-op-49">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
-    
+
     <div class="container" style="max-width:100%; width:100%;">
         <div class="header-top">
             <div class="logo-container">
                 <svg viewBox="0 0 320 80">
-                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
                     <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13"/>
-                        <circle class="c" cx="75" cy="75" r="13"/>
-                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
                     </g>
                     <text x="90" y="42" class="t" font-size="34">XELLE</text>
                     <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
@@ -56,7 +174,9 @@
                 <label>Folio de Bitácora</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-OP-49-</span>
-                    <input type="text" id="reg-op49" class="registry-input generate-barcode cedit" data-target="barcode-op49" data-prefix="FO-OP-49-" placeholder="000" style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                    <input type="text" id="reg-op49" class="registry-input generate-barcode cedit"
+                        data-target="barcode-op49" data-prefix="FO-OP-49-" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
                 </div>
                 <input type="month" class="registry-date cedit" title="Mes de Registro">
                 <svg id="barcode-op49" class="barcode-svg"></svg>
@@ -65,11 +185,13 @@
 
         <div class="header-main">
             <h1>BITÁCORA DE ALMACENAMIENTO TEMPORAL DE RPBI</h1>
-            <div class="metadata">Código: FO-OP-49 | Versión: 1.0 | Vigencia: Mar 2026 | Área: Almacén Temporal de Residuos | Página: 1 de 1</div>
+            <div class="metadata">Código: FO-OP-49 | Versión: 1.0 | Vigencia: Mar 2026 | Área: Almacén Temporal de
+                Residuos | Página: 1 de 1</div>
         </div>
 
         <div class="alert-box">
-            Instrucciones (NOM-087): Registrar cada bolsa o contenedor rígido de RPBI al momento exacto de ingresarlo al área de almacenamiento temporal. Asegúrese de que el Manifiesto de Recolección quede resguardado.
+            Instrucciones (NOM-087): Registrar cada bolsa o contenedor rígido de RPBI al momento exacto de ingresarlo al
+            área de almacenamiento temporal. Asegúrese de que el Manifiesto de Recolección quede resguardado.
         </div>
 
         <div class="section-header">1. REGISTRO DE ENTRADA Y SALIDA DE RESIDUOS (DISPOSICIÓN HORIZONTAL)</div>
@@ -79,14 +201,19 @@
                     <tr>
                         <th width="8%">Fecha de Ingreso</th>
                         <th width="7%">Hora</th>
-                        <th width="15%">Tipo de Residuo<br><span style="font-size:8px; font-weight:normal;">(Clasificación NOM-087)</span></th>
+                        <th width="15%">Tipo de Residuo<br><span
+                                style="font-size:8px; font-weight:normal;">(Clasificación NOM-087)</span></th>
                         <th width="9%">Estado Físico</th>
                         <th width="7%">Cantidad<br><span style="font-size:8px; font-weight:normal;">(Kg o L)</span></th>
-                        <th width="12%">Área de Generación<br><span style="font-size:8px; font-weight:normal;">(Ej. Lab, Quirófano)</span></th>
-                        <th width="8%">Fecha de Salida<br><span style="font-size:8px; font-weight:normal;">(Recolección)</span></th>
+                        <th width="12%">Área de Generación<br><span style="font-size:8px; font-weight:normal;">(Ej. Lab,
+                                Quirófano)</span></th>
+                        <th width="8%">Fecha de Salida<br><span
+                                style="font-size:8px; font-weight:normal;">(Recolección)</span></th>
                         <th width="10%">No. de Manifiesto de Recolección</th>
-                        <th width="12%">Empresa Recolectora<br><span style="font-size:8px; font-weight:normal;">(Firma)</span></th>
-                        <th width="10%">Responsable Xelle<br><span style="font-size:8px; font-weight:normal;">(Firma)</span></th>
+                        <th width="12%">Empresa Recolectora<br><span
+                                style="font-size:8px; font-weight:normal;">(Firma)</span></th>
+                        <th width="10%">Responsable Xelle<br><span
+                                style="font-size:8px; font-weight:normal;">(Firma)</span></th>
                         <th width="2%" class="no-print"></th>
                     </tr>
                 </thead>
@@ -111,34 +238,131 @@
                                 <option value="LIQUIDO">Líquido</option>
                             </select>
                         </td>
-                        <td><input type="number" step="0.01" class="cedit" style="font-weight:bold; color:#991b1b;"></td>
+                        <td><input type="number" step="0.01" class="cedit" style="font-weight:bold; color:#991b1b;">
+                        </td>
                         <td><input class="cedit" placeholder="Ej. Cuarto Limpio"></td>
                         <td><input type="date" class="cedit" style="color:#166534; font-weight:bold;"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit" placeholder="Firma / Sello"></td>
                         <td><input class="cedit" placeholder="Firma"></td>
-                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">x</button></td>
                     </tr>
                 </tbody>
             </table>
             <button class="btn-add no-print" onclick="addRow('tbl-rpbi')">+ AGREGAR RESIDUO A LA BITÁCORA</button>
         </div>
 
-        <div class="footer">FO-OP-49 | Versión: 1.0 | Bitácora de Almacenamiento Temporal de RPBI | Xelle Scientific | Página 1 de 1</div>
+        <div class="footer">FO-OP-49 | Versión: 1.0 | Bitácora de Almacenamiento Temporal de RPBI | Xelle Scientific |
+            Página 1 de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de
+            C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+            parcial.</div>
     </div>
 
     <script>
         function addRow(tableId) {
             const tbody = document.getElementById(tableId).querySelector('tbody');
             const newRow = tbody.rows[0].cloneNode(true);
-            
+
             // Limpiar inputs
             newRow.querySelectorAll('input').forEach(input => input.value = '');
             // Limpiar selects
             newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
-            
+
             tbody.appendChild(newRow);
         }
     </script>
+    <script>
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="date"> a <input type="text">
+                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="date">
+                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                    inp.type = 'date';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
+            }
+        }
+    </script>
 </body>
+
 </html>

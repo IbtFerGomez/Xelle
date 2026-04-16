@@ -198,6 +198,7 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
 
     <div class="container" style="max-width:100%; width:100%;">
@@ -271,7 +272,44 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td rowspan="12" style="font-weight:bold; background:#f1f5f9;">OPERACIONES</td>
+                        <td rowspan="3" style="font-weight:bold; background:#f1f5f9;">ADMINISTRATIVO</td>
+                        <td><strong>FO-AD-01</strong> Perfil y Descripción de Puesto</td>
+                        <td>Recursos Humanos</td>
+                        <td>Coordinación Administrativa</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-AD-02</strong> Matriz de Competencias y Habilidades</td>
+                        <td>Recursos Humanos</td>
+                        <td>Coordinación Administrativa</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-AD-03</strong> Evaluación de Desempeño y Necesidades de Capacitación</td>
+                        <td>Recursos Humanos / Jefatura Inmediata</td>
+                        <td>Coordinación Administrativa</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="25" style="font-weight:bold; background:#f1f5f9;">OPERACIONES</td>
+                        <td><strong>FO-OP-01</strong> Programa Anual de Mantenimiento</td>
+                        <td>Jefe de Mantenimiento</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-04</strong> Registro Gráfico de Temperatura de Refrigeradores</td>
+                        <td>Operaciones / Almacén</td>
+                        <td>Supervisor de Área / Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-14</strong> Ficha Clínica de Recolección de Tejido Placentario</td>
+                        <td>Médico / Personal Hospitalario</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
                         <td><strong>FO-OP-15</strong> Registro Maestro de Pedido</td>
                         <td>Ejecutivo de Operaciones</td>
                         <td>Coordinación de Operaciones</td>
@@ -308,10 +346,71 @@
                         <td>Responsable Dirección</td>
                     </tr>
                     <tr>
-                        <td><strong>FO-LG-05</strong> Orden de Envío y Distribución</td>
-                        <td>Coordinador Logística</td>
-                        <td>Gerencia de Operaciones</td>
+                        <td><strong>FO-OP-40</strong> Orden Maestra de Producción</td>
+                        <td>Gerencia de Producción</td>
+                        <td>Aseguramiento de Calidad</td>
                         <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-40-B</strong> Expediente de Lote de Producción</td>
+                        <td>Operador de Producción</td>
+                        <td>Supervisor de Producción</td>
+                        <td>Gerencia de Producción</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-41</strong> Recepción de Insumos (Individual)</td>
+                        <td>Personal de Almacén</td>
+                        <td>Supervisor de Almacén</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-42</strong> Recepción de Insumos (Múltiple)</td>
+                        <td>Personal de Almacén</td>
+                        <td>Supervisor de Almacén</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-43</strong> Kárdex de Control de Inventarios</td>
+                        <td>Almacén / Control de Inventarios</td>
+                        <td>Coordinación de Operaciones</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-48</strong> Bitácora de Limpieza y Desinfección</td>
+                        <td>Personal de Limpieza / Operador</td>
+                        <td>Supervisor de Área</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-60</strong> Registro Mensual de Actividades Críticas de Área</td>
+                        <td>Responsable de Área</td>
+                        <td>Coordinación de Operaciones</td>
+                        <td>Gerencia de Operaciones</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-61</strong> Hoja de Vida y Expediente Documental de Equipo</td>
+                        <td>Técnico de Mantenimiento</td>
+                        <td>Jefe de Mantenimiento</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-62</strong> Historial de Modificaciones, Reparaciones y Calibraciones de
+                            Equipo</td>
+                        <td>Técnico de Mantenimiento</td>
+                        <td>Jefe de Mantenimiento</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-55</strong> Expediente de Mantenimiento</td>
+                        <td>Técnico de Mantenimiento</td>
+                        <td>Jefe de Mantenimiento</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-OP-56</strong> Registro de Presión Diferencial</td>
+                        <td>Operador / Técnico de Área</td>
+                        <td>Jefe de Producción / Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
                     </tr>
                     <tr>
                         <td><strong>FO-OP-57</strong> Reporte de Control de Plagas y Manejo de Fauna Nociva</td>
@@ -345,14 +444,8 @@
                     </tr>
 
                     <tr>
-                        <td rowspan="17" style="font-weight:bold; background:#f1f5f9;">FLUJO 2: PROCESAMIENTO, BANCO Y
+                        <td rowspan="16" style="font-weight:bold; background:#f1f5f9;">FLUJO 2: PROCESAMIENTO, BANCO Y
                             MANUFACTURA</td>
-                        <td><strong>FO-LC-13</strong> Registro de Aislamiento</td>
-                        <td>Técnico de Laboratorio / Procesamiento</td>
-                        <td>Supervisor de Banco / Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
                         <td><strong>FO-LC-20</strong> Formato Procesamiento de Placenta y Cultivo Inicial</td>
                         <td>Técnico de Procesamiento</td>
                         <td>Supervisor de Banco</td>
@@ -377,7 +470,7 @@
                         <td style="color:#666; text-align:center;">N/A</td>
                     </tr>
                     <tr>
-                        <td><strong>FO-LC-25</strong> Formato Bitácora de Preparación de Medios y Soluciones</td>
+                        <td><strong>FO-LC-25</strong> Dosificación de Exosomas</td>
                         <td>Técnico de Laboratorio</td>
                         <td>Jefe de Laboratorio</td>
                         <td style="color:#666; text-align:center;">N/A</td>
@@ -450,7 +543,7 @@
                     </tr>
 
                     <tr>
-                        <td rowspan="14" style="font-weight:bold; background:#f1f5f9;">FLUJO 3: CONTROL, MUESTREO Y
+                        <td rowspan="17" style="font-weight:bold; background:#f1f5f9;">FLUJO 3: CONTROL, MUESTREO Y
                             LIBERACIÓN</td>
                         <td><strong>FO-LC-46</strong> Registro de Muestreo de Producto Biológico</td>
                         <td>Inspector de Calidad</td>
@@ -500,11 +593,17 @@
                         <td>Responsable Dirección</td>
                     </tr>
                     <tr>
-                        <td><strong>FO-LC-32</strong> Formato de Control de Calidad para Liberación de Lotes (Celulares)
+                        <td><strong>FO-LC-32</strong> Registro de Ingreso de Muestras de Retención
                         </td>
                         <td>Responsable del Área Afectada</td>
                         <td>Aseguramiento de Calidad</td>
                         <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-LC-32-B</strong> Salida y Disposición de Muestras</td>
+                        <td>Analista de Laboratorio</td>
+                        <td>Jefe de Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
                     </tr>
                     <tr>
                         <td><strong>FO-LC-33</strong> Bitácora de Muestras de Retención</td>
@@ -519,13 +618,25 @@
                         <td style="color:#666; text-align:center;">N/A</td>
                     </tr>
                     <tr>
-                        <td><strong>FO-LC-49</strong> Bitácora Maestra de Estatus de Lotes</td>
+                        <td><strong>FO-LC-49</strong> Orden Maestra y Expediente de Producción</td>
                         <td>Analista de Laboratorio</td>
                         <td>Jefe de Laboratorio</td>
                         <td style="color:#666; text-align:center;">N/A</td>
                     </tr>
                     <tr>
                         <td><strong>FO-QA-10</strong> Certificado de Calidad de Producto de Lote (CoA)</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Jefe de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-QA-06</strong> Certificado de Liberación de Exosomas</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Jefe de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-QA-11</strong> Certificado de Liberación de Lote</td>
                         <td>Aseguramiento de Calidad</td>
                         <td>Jefe de Calidad</td>
                         <td>Responsable Dirección</td>
@@ -538,7 +649,7 @@
                     </tr>
 
                     <tr>
-                        <td rowspan="8" style="font-weight:bold; background:#f1f5f9;">FLUJO 4: NO CONFORME Y DISPOSICIÓN
+                        <td rowspan="9" style="font-weight:bold; background:#f1f5f9;">FLUJO 4: NO CONFORME Y DISPOSICIÓN
                             FINAL</td>
                         <td><strong>FO-OP-51</strong> Reporte de Producto No Conforme (Desviaciones)</td>
                         <td>Supervisor del Área Afectada</td>
@@ -558,7 +669,7 @@
                         <td>Responsable Dirección</td>
                     </tr>
                     <tr>
-                        <td><strong>FO-OP-54</strong> Bitácora de Muestreo y Cadena de Frío</td>
+                        <td><strong>FO-OP-54</strong> Reporte de Desviación de Procesos y Equipos</td>
                         <td>Inspector Calidad / Logística</td>
                         <td>Jefe de Calidad</td>
                         <td style="color:#666; text-align:center;">N/A</td>
@@ -583,14 +694,20 @@
                         <td>Responsable Dirección</td>
                     </tr>
                     <tr>
-                        <td><strong>FO-LC-50</strong> Manifiesto de Destrucción de MPNC</td>
+                        <td><strong>FO-LC-50</strong> Manifiesto de Destrucción</td>
                         <td>Entrega: Xelle Scientific</td>
                         <td>Recibe: Proveedor RPBI</td>
                         <td style="color:#666; text-align:center;">N/A (Evidencia legal)</td>
                     </tr>
+                    <tr>
+                        <td><strong>FO-QA-08</strong> Acta de Destrucción y Disposición Final</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Dirección Operativa</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
 
                     <tr>
-                        <td rowspan="7" style="font-weight:bold; background:#f1f5f9;">FLUJO 5: TRAZABILIDAD HISTÓRICA
+                        <td rowspan="10" style="font-weight:bold; background:#f1f5f9;">FLUJO 5: TRAZABILIDAD HISTÓRICA
                             SGC</td>
                         <td><strong>FO-LC-14</strong> Registro Histórico de Placentas Liberadas para Producción</td>
                         <td>Coordinación SGC</td>
@@ -622,9 +739,27 @@
                         <td>Responsable Dirección</td>
                     </tr>
                     <tr>
-                        <td><strong>FO-LC-52</strong> Manifiesto de Destrucción de Producto No Conforme (PNC)</td>
+                        <td><strong>FO-SGC-04</strong> Listado Maestro de Formatos</td>
+                        <td>Coordinación SGC</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>Dirección Operativa</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-SGC-05</strong> Inventario de Equipos e Instrumentos</td>
+                        <td>Coordinación SGC / Mantenimiento</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-SGC-I</strong> Índice de Carpetas del SGC</td>
+                        <td>Coordinación SGC</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-SGC-M</strong> Índice Maestro de Carpetas</td>
+                        <td>Coordinación SGC</td>
+                        <td>Aseguramiento de Calidad</td>
                         <td>Responsable Dirección</td>
                     </tr>
                     <tr>
@@ -632,6 +767,57 @@
                         <td>Coordinación SGC / Operaciones</td>
                         <td>Aseguramiento de Calidad</td>
                         <td>Responsable Dirección</td>
+                    </tr>
+
+                    <tr>
+                        <td rowspan="8" style="font-weight:bold; background:#f1f5f9;">FLUJO 7: GESTIÓN DE CALIDAD,
+                            CAMBIOS Y CAPACITACIÓN</td>
+                        <td><strong>FO-QA-01</strong> Matriz de Riesgos y Oportunidades</td>
+                        <td>Responsable del Proceso</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-QA-07</strong> Solicitud y Control de Cambios</td>
+                        <td>Responsable del Área (Solicitante)</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-QA-12</strong> Bitácora de Uso y Fallas de Equipo</td>
+                        <td>Operador / Usuario del Equipo</td>
+                        <td>Jefe de Área</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-QA-13</strong> Bitácora de Monitoreo Ambiental</td>
+                        <td>Analista de Laboratorio</td>
+                        <td>Jefe de Calidad</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-QA-14</strong> Checklist de Seguridad e Higiene</td>
+                        <td>Responsable de Seguridad</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-QA-15</strong> Programa Anual de Mantenimiento</td>
+                        <td>Jefe de Mantenimiento</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-QA-16</strong> Detección de Necesidades de Capacitación (DNC)</td>
+                        <td>Jefe de Área / Recursos Humanos</td>
+                        <td>Aseguramiento de Calidad</td>
+                        <td>Responsable Dirección</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FO-QA-17</strong> Lista de Asistencia y Evaluación</td>
+                        <td>Instructor / Facilitador</td>
+                        <td>Recursos Humanos</td>
+                        <td style="color:#666; text-align:center;">N/A</td>
                     </tr>
 
                     <tr>
@@ -1025,6 +1211,97 @@
         // Inicializar sistema de persistencia
         if (typeof App !== 'undefined') {
             App.init();
+        }
+    </script>
+    <script>
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="date"> a <input type="text">
+                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="date">
+                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                    inp.type = 'date';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
+            }
         }
     </script>
 </body>

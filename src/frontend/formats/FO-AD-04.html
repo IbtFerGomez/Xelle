@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-AD-04 Evaluación y Selección de Proveedores</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 11px;
+            margin-top: 5px;
+            align-items: center;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .criticidad-options {
+            align-items: stretch;
+            gap: 12px;
+        }
+
+        .criticidad-options label {
+            flex: 1 1 320px;
+            min-width: 0;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 0 !important;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 11px;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .checkbox-grid label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .checklist-horizontal {
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            align-items: start;
+        }
+
+        .info-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: #334155;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .audit-note {
+            background-color: #f1f5f9;
+            border-left: 4px solid #b45309;
+            padding: 10px;
+            margin-top: 15px;
+            font-size: 9px;
+            color: #334155;
+            line-height: 1.4;
+            text-align: justify;
+        }
+
+        .audit-note strong {
+            color: #b45309;
+        }
+
+        .score-box {
+            background-color: #e2e8f0;
+            font-weight: bold;
+            font-size: 14px;
+            color: #1e3a5f;
+            padding: 5px 15px;
+            text-align: center;
+            border-radius: 4px;
+            border: 1px solid #94a3b8;
+        }
+
+        /* Estilos del Footer Unificado y Legal */
+        .footer-unified {
+            margin-top: 20px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 8px;
+            text-align: center;
+            font-size: 9px;
+            /* Tamaño unificado para todo el pie de página */
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+
+        .footer-unified .control-data {
+            font-weight: bold;
+            color: #1E3A5F;
+            margin-bottom: 3px;
+        }
+
+        .footer-unified .legal-data {
+            color: #475569;
+            font-style: italic;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-ad-04">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Evaluación</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">EV-PRV-</span>
+                    <input type="text" id="reg-ad04" class="registry-input generate-barcode cedit"
+                        data-target="barcode-ad04" data-prefix="EV-PRV-" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-ad04" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>EVALUACIÓN Y SELECCIÓN DE PROVEEDORES</h1>
+            <div class="metadata">Código: FO-AD-04 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 2</div>
+        </div>
+
+        <div class="section-header">1. DATOS GENERALES DEL PROVEEDOR</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Razón Social:</strong></td>
+                    <td width="80%" colspan="3"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:12px;"></td>
+                </tr>
+                <tr>
+                    <td width="20%"><strong>RFC / ID Fiscal:</strong></td>
+                    <td width="30%"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; color:#1E3A5F;"></td>
+                    <td width="20%"><strong>País de Origen:</strong></td>
+                    <td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Dirección Física:</strong></td>
+                    <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
+                            placeholder="(Planta o Almacén Principal)"></td>
+                </tr>
+                <tr>
+                    <td><strong>Contacto (Ventas):</strong></td>
+                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td><strong>E-mail:</strong></td>
+                    <td><input type="email" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Insumo/Servicio a Proveer:</strong></td>
+                    <td colspan="3"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold;"
+                            placeholder="Ej. Medios de cultivo / Mantenimiento HVAC"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. CLASIFICACIÓN DE CRITICIDAD</div>
+        <div class="section">
+            <div class="info-box">
+                Defina qué tanto impacto tiene lo que este proveedor nos vende sobre la calidad y seguridad del producto
+                final.
+                <div class="radio-group criticidad-options" style="margin-top: 10px;">
+                    <label style="color:#991b1b; font-weight:bold; align-items:flex-start;">
+                        <input type="radio" name="criticidad" class="cedit" style="margin-top:2px;">
+                        CRÍTICO:
+                        <span style="font-weight:normal; color:#334155; margin-left:5px;">Insumos que forman parte del
+                            producto (Células, Medios de cultivo, Viales) o servicios que afectan la esterilidad
+                            (Mantenimiento HVAC, Esterilización). Requiere Auditoría física o virtual
+                            obligatoria.</span>
+                    </label>
+                    <label style="color:#166534; font-weight:bold; align-items:flex-start; margin-top:5px;">
+                        <input type="radio" name="criticidad" class="cedit" style="margin-top:2px;">
+                        NO CRÍTICO:
+                        <span style="font-weight:normal; color:#334155; margin-left:5px;">Papelería, mobiliario
+                            administrativo, servicios generales. Solo evaluación documental.</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">3. CRITERIOS DE EVALUACIÓN (CUESTIONARIO INICIAL)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px; font-weight:bold;">Calificación: 0 (No cuenta) | 5
+                (Cuenta parcialmente) | 10 (Cumple totalmente).</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="5%">No.</th>
+                        <th width="45%">Parámetro a Evaluar</th>
+                        <th width="15%">Calificación</th>
+                        <th width="35%">Observaciones / Evidencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:bold;">1</td>
+                        <td class="text-left"><strong>Licencia Sanitaria / Avisos:</strong> ¿Cuenta con los permisos
+                            legales para operar en su ramo?</td>
+                        <td>
+                            <select class="cedit score-val" onchange="calcTotalEval()"
+                                style="font-weight:bold; font-size:12px;">
+                                <option value="0">0</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit text-left"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">2</td>
+                        <td class="text-left"><strong>Certificaciones de Calidad:</strong> ¿Cuenta con ISO 9001, ISO
+                            13485, BPF o equivalentes?</td>
+                        <td>
+                            <select class="cedit score-val" onchange="calcTotalEval()"
+                                style="font-weight:bold; font-size:12px;">
+                                <option value="0">0</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit text-left"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">3</td>
+                        <td class="text-left"><strong>Infraestructura:</strong> ¿Sus instalaciones aseguran el resguardo
+                            adecuado de los insumos (ej. Control de temperatura)?</td>
+                        <td>
+                            <select class="cedit score-val" onchange="calcTotalEval()"
+                                style="font-weight:bold; font-size:12px;">
+                                <option value="0">0</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit text-left"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">4</td>
+                        <td class="text-left"><strong>Capacidad de Respuesta:</strong> ¿Garantiza tiempos de entrega que
+                            se ajusten a nuestras necesidades operativas?</td>
+                        <td>
+                            <select class="cedit score-val" onchange="calcTotalEval()"
+                                style="font-weight:bold; font-size:12px;">
+                                <option value="0">0</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit text-left"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">5</td>
+                        <td class="text-left"><strong>Trazabilidad:</strong> ¿Garantiza el seguimiento de lotes y
+                            entrega de Certificados de Análisis (CoA)?</td>
+                        <td>
+                            <select class="cedit score-val" onchange="calcTotalEval()"
+                                style="font-weight:bold; font-size:12px;">
+                                <option value="0">0</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit text-left"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">6</td>
+                        <td class="text-left"><strong>Gestión de Quejas:</strong> ¿Tiene un procedimiento claro para
+                            devoluciones y reporte de fallas de calidad?</td>
+                        <td>
+                            <select class="cedit score-val" onchange="calcTotalEval()"
+                                style="font-weight:bold; font-size:12px;">
+                                <option value="0">0</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit text-left"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="display:flex; justify-content:flex-end; margin-top:10px; align-items:center;">
+                <span style="font-weight:bold; color:#1E3A5F; margin-right:15px; font-size:11px;">PUNTAJE TOTAL
+                    OBTENIDO:</span>
+                <div class="score-box"><span id="total-score">0</span> / 60</div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-04 | Versión: 1.0 | Evaluación y Selección de Proveedores | Xelle Scientific
+                | Página 1 de 2</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
+        </div>
+
+        <div style="page-break-before: always;"></div>
+
+        <div class="header-main" style="margin-top:0;">
+            <p style="text-align:right; font-size:9px; font-weight:bold; color:#64748b;">Folio: <span
+                    id="sync-folio">EV-PRV-000</span> | Página 2 de 2</p>
+        </div>
+
+        <div class="section-header">4. CHECKLIST DOCUMENTAL (EXPEDIENTE DEL PROVEEDOR)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:10px;">Marque los documentos que el proveedor ya entregó
+                para formar parte de su expediente oficial.</p>
+            <div class="checkbox-grid checklist-horizontal">
+                <label><input type="checkbox" class="cedit"> Copia de Acta Constitutiva y RFC.</label>
+                <label><input type="checkbox" class="cedit"> Copia de Licencia Sanitaria o Aviso de
+                    Funcionamiento.</label>
+                <label><input type="checkbox" class="cedit"> Certificados de Calidad (ISO, GMP, etc.).</label>
+                <label><input type="checkbox" class="cedit"> Carta de Garantía de Calidad del Producto/Servicio.</label>
+                <label><input type="checkbox" class="cedit"> Fichas Técnicas / Hojas de Seguridad (MSDS) de los
+                    insumos.</label>
+                <label><input type="checkbox" class="cedit"> Cuestionario de Autoevaluación de Calidad
+                    contestado.</label>
+            </div>
+        </div>
+
+        <div class="section-header">5. DICTAMEN FINAL DE SELECCIÓN</div>
+        <div class="section">
+            <div style="display:flex; gap:10px; margin-bottom:15px;">
+                <div class="info-box" style="flex:1; border-left: 4px solid #166534;">
+                    <strong>Puntaje ≥ 50: APROBADO.</strong><br>Puede ser dado de alta en el Listado Maestro.
+                </div>
+                <div class="info-box" style="flex:1; border-left: 4px solid #b45309;">
+                    <strong>Puntaje 40-49: CONDICIONADO.</strong><br>Requiere auditoría de seguimiento en 3 meses.
+                </div>
+                <div class="info-box" style="flex:1; border-left: 4px solid #991b1b;">
+                    <strong>Puntaje < 40: RECHAZADO.</strong><br>No cumple con los estándares de Xelle Scientific.
+                </div>
+            </div>
+
+            <div style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 4px;">
+                <div style="display:flex; align-items:center; margin-bottom:10px;">
+                    <strong style="margin-right:15px; font-size:12px;">DICTAMEN DEL PROVEEDOR:</strong>
+                    <div class="radio-group" style="margin:0;">
+                        <label style="color:#166534; font-weight:bold;"><input type="radio" name="dictamen"
+                                value="APROBADO" class="cedit"> APROBADO</label>
+                        <label style="color:#b45309; font-weight:bold;"><input type="radio" name="dictamen"
+                                value="CONDICIONADO" class="cedit"> CONDICIONADO</label>
+                        <label style="color:#991b1b; font-weight:bold;"><input type="radio" name="dictamen"
+                                value="RECHAZADO" class="cedit"> RECHAZADO</label>
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <strong>Comentarios / Condiciones:</strong>
+                    <textarea class="cedit" rows="2"
+                        style="width:100%; border:1px solid #ccc; padding:5px; box-sizing:border-box; margin-top:5px;"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">6. FIRMAS DE AUTORIZACIÓN</div>
+        <div class="section">
+            <div class="signature-area"
+                style="display:flex; justify-content:space-between; gap:15px; margin-top: 15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Evaluó<br><span
+                            style="font-size:9px; font-weight:normal;">Compras / Operaciones</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #94a3b8; border-radius:0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Verificó<br><span
+                            style="font-size:9px; font-weight:normal;">Aseguramiento de Calidad</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #94a3b8; border-radius:0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1; background-color:#f0fdf4; border-color:#166534;">
+                    <p style="font-weight:bold; color:#14532d; margin-bottom: 25px;">Aprobó<br><span
+                            style="font-size:9px; font-weight:normal;">Responsable Sanitario</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #166534; border-radius:0; background:transparent;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="audit-note">
+            <strong>¿Por qué este formato es vital para Xelle Scientific?</strong><br>
+            • <strong>Protección Legal:</strong> Si COFEPRIS encuentra una impureza en el producto y demuestras que
+            hiciste esta evaluación (FO-AD-04), la responsabilidad se mitiga al demostrar "Debida Diligencia".<br>
+            • <strong>Ahorro de Costos:</strong> Al evaluar la "Capacidad de Respuesta" y "Trazabilidad" evitas detener
+            tu producción por falta de insumos o por certificados analíticos deficientes.<br>
+            • <strong>Auditorías de Terceros:</strong> Si un proveedor es CRÍTICO, este documento es el filtro previo
+            que justifica si es necesario destinar recursos para ir a auditarlo físicamente a su planta.
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-04 | Versión: 1.0 | Evaluación y Selección de Proveedores | Xelle Scientific
+                | Página 2 de 2</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        // Sincronizar Folio entre paginas
+        document.getElementById('reg-ad04').addEventListener('input', function () {
+            let val = this.value;
+            document.getElementById('sync-folio').innerText = val ? 'EV-PRV-' + val : 'EV-PRV-000';
+        });
+
+        // Calcular Score Total y Auto-Dictamen
+        function calcTotalEval() {
+            const selects = document.querySelectorAll('.score-val');
+            let total = 0;
+            selects.forEach(sel => {
+                total += parseInt(sel.value) || 0;
+            });
+
+            const scoreDisplay = document.getElementById('total-score');
+            scoreDisplay.innerText = total;
+
+            // Colores dependiendo del score
+            if (total < 40) { scoreDisplay.style.color = '#991b1b'; } // Rojo
+            else if (total < 50) { scoreDisplay.style.color = '#b45309'; } // Amarillo/Naranja
+            else { scoreDisplay.style.color = '#166534'; } // Verde
+
+            // Auto Marcar Dictamen
+            const radios = document.getElementsByName('dictamen');
+            radios.forEach(r => r.checked = false); // reset
+
+            if (total >= 50) {
+                radios[0].checked = true; // APROBADO
+            } else if (total >= 40) {
+                radios[1].checked = true; // CONDICIONADO
+            } else {
+                radios[2].checked = true; // RECHAZADO
+            }
+        }
+    </script>
+</body>
+
+</html>

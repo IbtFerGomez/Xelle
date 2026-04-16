@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ET-OP-03 - Identificación de Equipo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .etiqueta-container {
+            width: 100mm;
+            height: 100mm;
+            background-color: #ffffff;
+            border: 2px solid #1E3A5F;
+            padding: 5mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logo-area {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .logo-area svg {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+        }
+
+        .logo-text {
+            font-size: 12px;
+            font-weight: bold;
+            vertical-align: middle;
+            margin-left: 5px;
+            color: #1D1D1B;
+        }
+
+        .titulo-alerta {
+            text-align: center;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            margin: 0 0 2px 0;
+            background-color: #1E3A5F;
+            color: #ffffff;
+            padding: 6px;
+            border: 1px solid #1E3A5F;
+            text-transform: uppercase;
+        }
+
+        .subtitulo {
+            text-align: center;
+            font-size: 10px;
+            font-weight: bold;
+            margin-top: 4px;
+            margin-bottom: 10px;
+            color: #1E3A5F;
+        }
+
+        .campo {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        .campo label {
+            font-weight: bold;
+            white-space: nowrap;
+            margin-right: 5px;
+        }
+
+        .linea {
+            flex-grow: 1;
+            border-bottom: 1px solid #000;
+            height: 14px;
+        }
+
+        .id-prefix {
+            font-weight: 900;
+            font-size: 11px;
+            margin-right: 2px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 8px;
+            font-size: 9px;
+            margin-left: 5px;
+            flex-wrap: wrap;
+        }
+
+        .dates-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .date-campo {
+            flex: 1;
+            font-size: 9px;
+        }
+
+        .date-campo label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .date-linea {
+            border-bottom: 1px solid #000;
+            height: 14px;
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 5px;
+            font-size: 8px;
+            text-align: center;
+            color: #777;
+            border-top: 1px solid #ccc;
+            padding-top: 4px;
+        }
+
+        .controls-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            border: 2px solid #2E9D82;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            min-width: 250px;
+        }
+
+        .controls-panel h3 {
+            margin: 0 0 10px 0;
+            color: #2E9D82;
+            font-size: 16px;
+        }
+
+        .control-group {
+            margin-bottom: 12px;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .control-group select,
+        .control-group input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .print-button {
+            width: 100%;
+            background-color: #2E9D82;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .print-button:hover {
+            background-color: #267d66;
+        }
+
+        .print-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10mm;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* Mantener tamaño fijo de 100mm x 100mm siempre */
+        .etiqueta-container {
+            width: 100mm !important;
+            height: 100mm !important;
+        }
+
+        @media print {
+            @page {
+                margin: 10mm;
+                size: letter;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background: #fff;
+            }
+
+            .controls-panel {
+                display: none;
+            }
+
+            .etiqueta-container {
+                width: 100mm !important;
+                height: 100mm !important;
+                page-break-inside: avoid;
+                border: 2px solid #1E3A5F;
+                transform-origin: center center;
+                box-sizing: border-box;
+            }
+
+            /* 1 por página - Escala 1:1 (100mm) */
+            body.print-1 .etiqueta-container {
+                transform: scale(1);
+            }
+
+            body.print-1 .print-wrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+            }
+
+            /* 2 por página - Escala 1:1 (100mm) */
+            body.print-2 .etiqueta-container {
+                transform: scale(1);
+            }
+
+            body.print-2 .print-wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 15mm;
+                min-height: 100vh;
+            }
+
+            /* 4 por página - Escala 0.9 (90mm efectivo) */
+            body.print-4 .etiqueta-container {
+                transform: scale(0.9);
+            }
+
+            body.print-4 .print-wrapper {
+                display: grid;
+                grid-template-columns: repeat(2, 100mm);
+                grid-template-rows: repeat(2, 100mm);
+                gap: 0mm;
+                justify-content: center;
+                align-content: center;
+                min-height: 100vh;
+            }
+
+            /* 6 por página - Escala 0.65 (65mm efectivo) */
+            body.print-6 .etiqueta-container {
+                transform: scale(0.65);
+            }
+
+            body.print-6 .print-wrapper {
+                display: grid;
+                grid-template-columns: repeat(2, 100mm);
+                grid-template-rows: repeat(3, 100mm);
+                gap: 0mm;
+                justify-content: center;
+                align-content: center;
+                min-height: 100vh;
+            }
+
+            /* 8 por página - Escala 0.5 (50mm efectivo) */
+            body.print-8 .etiqueta-container {
+                transform: scale(0.5);
+            }
+
+            body.print-8 .print-wrapper {
+                display: grid;
+                grid-template-columns: repeat(2, 50mm);
+                grid-template-rows: repeat(4, 50mm);
+                gap: 3mm;
+                justify-content: center;
+                align-content: center;
+                min-height: 100vh;
+            }
+
+            /* 9 por página - Escala 0.6 (60mm efectivo) */
+            body.print-9 .etiqueta-container {
+                transform: scale(0.6);
+            }
+
+            body.print-9 .print-wrapper {
+                display: grid;
+                grid-template-columns: repeat(3, 100mm);
+                grid-template-rows: repeat(3, 100mm);
+                gap: 0mm;
+                justify-content: center;
+                align-content: center;
+                min-height: 100vh;
+            }
+
+            /* 10 por página - Escala 0.5 (50mm efectivo) */
+            body.print-10 .etiqueta-container {
+                transform: scale(0.5);
+            }
+
+            body.print-10 .print-wrapper {
+                display: grid;
+                grid-template-columns: repeat(2, 100mm);
+                grid-template-rows: repeat(5, 100mm);
+                gap: 0mm;
+                justify-content: center;
+                align-content: center;
+                min-height: 100vh;
+            }
+        }
+    </style>
+</head>
+
+<body class="print-1">
+    <div class="controls-panel">
+        <h3>⚙️ Opciones de Impresión</h3>
+
+        <div class="control-group">
+            <label>Cantidad por página:</label>
+            <select id="printLayout" onchange="changePrintLayout()">
+                <option value="1">1 etiqueta</option>
+                <option value="2">2 etiquetas</option>
+                <option value="4" selected>4 etiquetas (2x2)</option>
+                <option value="6">6 etiquetas (2x3)</option>
+                <option value="8">8 etiquetas (2x4)</option>
+                <option value="9">9 etiquetas (3x3)</option>
+                <option value="10">10 etiquetas (2x5)</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Copias a imprimir:</label>
+            <input type="number" id="copies" value="4" min="1" max="100" onchange="updateCopies()">
+        </div>
+
+        <div
+            style="font-size: 11px; color: #666; margin-bottom: 10px; padding: 8px; background-color: #f0f9f6; border-radius: 4px;">
+            📏 Tamaño base: 10cm × 10cm<br>
+            <span style="font-size: 10px; color: #888;">Se ajusta automáticamente según cantidad</span>
+        </div>
+
+        <button class="print-button" onclick="window.print()">🖨️ Imprimir</button>
+    </div>
+
+    <div class="print-wrapper" id="printWrapper">
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="10 10 80 80" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo-alerta">📋 IDENTIFICACIÓN DE EQUIPO</div>
+                <div class="subtitulo">CONTROL DE INVENTARIO</div>
+
+                <div class="campo">
+                    <label><span class="id-prefix">EQ-</span></label>
+                    <div class="linea" style="max-width: 25px; text-align: center;"></div>
+                    <span class="id-prefix" style="margin: 0 2px;">-</span>
+                    <div class="linea" style="max-width: 35px; text-align: center;"></div>
+                </div>
+
+                <div class="campo"><label>Nombre del Equipo:</label>
+                    <div class="linea"></div>
+                </div>
+
+                <div class="campo"><label>Marca / Modelo:</label>
+                    <div class="linea"></div>
+                </div>
+
+                <div class="campo"><label>No. Serie:</label>
+                    <div class="linea"></div>
+                </div>
+
+                <div class="campo">
+                    <label>Estatus:</label>
+                    <div class="checkbox-group">
+                        <span>[ ] Operativo</span>
+                        <span>[ ] Calibrado</span>
+                        <span>[ ] Fuera Servicio</span>
+                    </div>
+                </div>
+
+                <div class="dates-row">
+                    <div class="date-campo">
+                        <label>Últ. Mantto/Cal:</label>
+                        <div class="date-linea">//____</div>
+                    </div>
+                    <div class="date-campo">
+                        <label>Próx. Mantto/Cal:</label>
+                        <div class="date-linea">//____</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="campo"><label>Responsable:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="footer-bottom">Código: ET-OP-03 | Versión: 1.0 | Vigencia: ABR 2026 | MANTENER EN EQUIPO
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function changePrintLayout() {
+            const layout = document.getElementById('printLayout').value;
+            document.body.className = document.body.className.replace(/print-\d+/g, '');
+            document.body.classList.add('print-' + layout);
+
+            // Ajustar automáticamente las copias según el layout
+            const copiesInput = document.getElementById('copies');
+            const currentCopies = parseInt(copiesInput.value);
+            const perPage = parseInt(layout);
+
+            // Si las copias actuales no son múltiplo de perPage, ajustar
+            if (currentCopies % perPage !== 0) {
+                copiesInput.value = Math.ceil(currentCopies / perPage) * perPage;
+            }
+
+            updateCopies();
+        }
+
+        function updateCopies() {
+            const copies = parseInt(document.getElementById('copies').value);
+            const perPage = parseInt(document.getElementById('printLayout').value);
+            const wrapper = document.getElementById('printWrapper');
+            const original = wrapper.querySelector('.etiqueta-container');
+
+            // Remover copias existentes
+            const allLabels = wrapper.querySelectorAll('.etiqueta-container');
+            for (let i = 1; i < allLabels.length; i++) {
+                allLabels[i].remove();
+            }
+
+            // Agregar nuevas copias
+            for (let i = 1; i < copies; i++) {
+                const clone = original.cloneNode(true);
+                wrapper.appendChild(clone);
+            }
+
+            // Actualizar información de páginas
+            const totalPages = Math.ceil(copies / perPage);
+            console.log(`Total etiquetas: ${copies}, Por página: ${perPage}, Páginas: ${totalPages}`);
+        }
+
+        // Inicializar con 4 copias
+        window.onload = function () {
+            changePrintLayout();
+            updateCopies();
+        };
+    </script>
+</body>
+
+</html>

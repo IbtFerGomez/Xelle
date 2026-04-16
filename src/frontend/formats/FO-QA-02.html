@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-02 Cuestionario Maestro de Auditoría Interna</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .sub-header {
+            background-color: #e2e8f0;
+            color: #1e293b;
+            font-size: 10px;
+            font-weight: bold;
+            text-align: left;
+            padding: 5px 10px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 5px;
+            font-size: 11px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+
+        .info-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #334155;
+            margin-bottom: 10px;
+        }
+
+        .conclusion-section {
+            width: 100%;
+            display: block;
+            clear: both;
+            box-sizing: border-box;
+        }
+
+        .conclusion-section .radio-group {
+            width: 100%;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            align-items: stretch;
+            gap: 12px;
+        }
+
+        .conclusion-section .radio-group label {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            width: 100%;
+            min-width: 0;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .conclusion-section .radio-group label span {
+            flex: 1;
+            margin-left: 0 !important;
+        }
+
+        .conclusion-section .option-divider {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .conclusion-section .radio-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Estilos del Footer Unificado y Legal */
+        .footer-unified {
+            margin-top: 20px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 8px;
+            text-align: center;
+            font-size: 9px;
+            /* Tamaño unificado para todo el pie de página */
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+
+        .footer-unified .control-data {
+            font-weight: bold;
+            color: #1E3A5F;
+            margin-bottom: 3px;
+            font-size: 9px;
+        }
+
+        .footer-unified .legal-data {
+            color: #475569;
+            font-style: italic;
+            font-size: 9px;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-qa-02">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Auditoría</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-02-</span>
+                    <input type="text" id="reg-qa02" class="registry-input generate-barcode cedit"
+                        data-target="barcode-qa02" data-prefix="FO-QA-02-" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-qa02" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>CUESTIONARIO MAESTRO DE AUDITORÍA INTERNA AL SGC</h1>
+            <div class="metadata">Código: FO-QA-02 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 2</div>
+        </div>
+
+        <div class="section-header">1. DATOS GENERALES DE LA AUDITORÍA</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="25%"><strong>Área / Departamento Auditado:</strong></td>
+                    <td width="75%" colspan="3"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:12px;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Responsable del Área (Auditado):</strong></td>
+                    <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Auditor(es) Interno(s):</strong></td>
+                    <td colspan="3"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; color:#1E3A5F;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Fecha de Auditoría:</strong></td>
+                    <td width="25%"><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
+                    </td>
+                    <td width="25%" style="text-align: right; padding-right: 10px;"><strong>Horario:</strong></td>
+                    <td width="25%">
+                        <div style="display:flex; align-items:center;">
+                            Inicio: <input type="time" class="cedit"
+                                style="width:70px; border-bottom:1px solid #ccc; margin:0 5px;">
+                            Fin: <input type="time" class="cedit"
+                                style="width:70px; border-bottom:1px solid #ccc; margin-left:5px;">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. LISTA DE VERIFICACIÓN POR SISTEMA (CHECKLIST)</div>
+        <div class="section">
+            <div class="info-box">
+                <strong>Instrucciones para el Auditor:</strong> Califique con SÍ (Cumple), NO (No Cumple) o N/A (No
+                Aplica). Todo "NO" genera automáticamente una No Conformidad (NC) que debe registrarse detalladamente en
+                la sección de hallazgos.
+            </div>
+
+            <table class="compact-table" style="margin-bottom: 15px;">
+                <thead>
+                    <tr>
+                        <th width="50%">Punto de Inspección (Requisito Normativo)</th>
+                        <th width="15%">Cumple (S/N/NA)</th>
+                        <th width="35%">Evidencia Revisada / Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3" class="sub-header">A. SISTEMA DE GESTIÓN DE CALIDAD Y DOCUMENTACIÓN (Carpeta QA)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿El personal cuenta con la versión vigente y autorizada de los PNOs en su
+                            área? (Sin copias piratas/obsoletas)</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Los reportes de Desviación y CAPAs (FO-QA-09) están siendo cerrados en
+                            los tiempos comprometidos?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿La Matriz de Riesgos (FO-QA-20) está actualizada e incluye los riesgos
+                            recientes del área?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="sub-header">B. PERSONAL Y CAPACITACIÓN (Carpeta HR)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿El personal del área cuenta con su Perfil de Puesto (FO-HR-03) firmado?
+                            (Revisar expediente al azar)</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><input class="cedit text-left" placeholder="Expediente revisado: "></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿La Matriz de Competencias (FO-HR-04) demuestra que los operadores están
+                            calificados para los equipos que operan?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿El personal de áreas limpias cumple con los requisitos de higiene (uñas
+                            cortas, sin maquillaje/joyería, EPP correcto)?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="sub-header">C. INSTALACIONES, EQUIPOS Y METROLOGÍA (Carpeta MT y OP)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Se cumple con el Programa Anual de Mantenimiento (FO-MT-01) en los meses
+                            correspondientes?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><input class="cedit text-left" placeholder="Verificar equipo: "></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Los instrumentos de medición muestran etiquetas de calibración vigentes
+                            (ET-MT-01) e inventario (FO-MT-03)?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Las bitácoras de limpieza de áreas (FO-OP-61) y control de plagas
+                            (FO-OP-60) están al día?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-QA-02 | Versión: 1.0 | Cuestionario Maestro de Auditoría Interna al SGC | Xelle
+                Scientific | Página 1 de 2</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
+        </div>
+
+        <div style="page-break-before: always;"></div>
+
+        <div class="header-main" style="margin-top:0;">
+            <p style="text-align:right; font-size:9px; font-weight:bold; color:#64748b;">Folio de Auditoría: <span
+                    id="sync-folio">FO-QA-02-000</span> | Página 2 de 2</p>
+        </div>
+
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="50%">Punto de Inspección (Requisito Normativo)</th>
+                        <th width="15%">Cumple (S/N/NA)</th>
+                        <th width="35%">Evidencia Revisada / Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3" class="sub-header">D. PRODUCCIÓN Y CONTROL DE MATERIALES (Carpeta OP y LC)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Se realiza el Despeje de Línea antes de cada proceso y se registra
+                            adecuadamente?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Los materiales en el Almacén respetan el sistema Primeras Caducidades,
+                            Primeras Salidas (FEFO)?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿El producto en cuarentena o rechazado está físicamente segregado e
+                            identificado con etiquetas rojas/amarillas?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="sub-header">E. LABORATORIO Y CONTROL DE CALIDAD (Carpeta LC)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Las muestras de retención coinciden físicamente con el registro de
+                            entradas y salidas (FO-LC-32)?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><input class="cedit text-left" placeholder="Inventario Lote: "></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Los reactivos de laboratorio están rotulados con su fecha de apertura y
+                            fecha de caducidad?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Las excursiones de temperatura en refrigeradores (FO-OP-04) fueron
+                            investigadas y reportadas?</td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">SÍ</option>
+                                <option value="N" style="color:#991b1b;">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">3. CONSOLIDADO DE NO CONFORMIDADES (HALLAZGOS)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-bottom:5px;">Describa detalladamente
+                cualquier incumplimiento detectado ("NO" en el Checklist). Cada punto listado aquí requiere la apertura
+                de una Acción Correctiva o Preventiva (CAPA).</p>
+            <table class="compact-table" id="tbl-hallazgos">
+                <thead>
+                    <tr>
+                        <th width="5%">No.</th>
+                        <th width="15%">Clasificación</th>
+                        <th width="65%">Descripción del Hallazgo (Indicar qué se encontró, dónde y qué artículo/PNO
+                            incumple)</th>
+                        <th width="12%">Req. CAPA (S/N)</th>
+                        <th width="3%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">01</td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="MENOR">Menor</option>
+                                <option value="MAYOR" style="color:#b45309;">Mayor</option>
+                                <option value="CRITICA" style="color:#991b1b;">Crítica</option>
+                            </select>
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#991b1b;">SÍ</option>
+                                <option value="N">NO</option>
+                            </select>
+                        </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-hallazgos')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">02</td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="MENOR">Menor</option>
+                                <option value="MAYOR" style="color:#b45309;">Mayor</option>
+                                <option value="CRITICA" style="color:#991b1b;">Crítica</option>
+                            </select>
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#991b1b;">SÍ</option>
+                                <option value="N">NO</option>
+                            </select>
+                        </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-hallazgos')">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRowNumbered('tbl-hallazgos')">+ AGREGAR HALLAZGO</button>
+        </div>
+
+        <div class="section-header">4. CONCLUSIÓN DE LA AUDITORÍA</div>
+        <div class="section conclusion-section">
+            <p style="font-size:9px; color:#666; margin-bottom:10px;">Evaluación general del área auditada con respecto
+                al cumplimiento de las Buenas Prácticas.</p>
+
+            <div class="radio-group"
+                style="background-color:#f8fafc; border:1px solid #cbd5e1; padding:15px; border-radius:4px;">
+                <label style="color:#166534; font-weight:bold; font-size:11px;">
+                    <input type="radio" name="conclusion" class="cedit"> SATISFACTORIO
+                    <span style="font-size:10px; font-weight:normal; color:#334155; margin-left:10px;">El área opera
+                        bajo control normativo. Las desviaciones son menores y no afectan la calidad del
+                        producto.</span>
+                </label>
+                <div class="option-divider" style="border-top:1px dashed #cbd5e1; margin:8px 0;"></div>
+                <label style="color:#b45309; font-weight:bold; font-size:11px;">
+                    <input type="radio" name="conclusion" class="cedit"> CONDICIONADO
+                    <span style="font-size:10px; font-weight:normal; color:#334155; margin-left:10px;">Existen
+                        desviaciones mayores que requieren atención. Se programará auditoría de seguimiento en <input
+                            type="number" class="cedit"
+                            style="width:40px; border-bottom:1px solid #b45309; background:transparent;"> días.</span>
+                </label>
+                <div class="option-divider" style="border-top:1px dashed #cbd5e1; margin:8px 0;"></div>
+                <label style="color:#991b1b; font-weight:bold; font-size:11px;">
+                    <input type="radio" name="conclusion" class="cedit"> CRÍTICO
+                    <span style="font-size:10px; font-weight:normal; color:#334155; margin-left:10px;">Desviaciones
+                        críticas que comprometen la calidad. Se recomienda detener operaciones hasta el cierre de los
+                        CAPAs.</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="section-header">5. FIRMAS Y ACUERDOS</div>
+        <div class="section">
+            <div class="signature-area"
+                style="display:flex; justify-content:space-between; gap:15px; margin-top: 15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 5px;">Auditor Líder (QA)</p>
+                    <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">Certifico que la
+                        auditoría se realizó con objetividad e independencia.</p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #ccc; border-radius:0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1; background-color: #fffbeb; border: 1px solid #b45309;">
+                    <p style="font-weight:bold; margin-bottom: 5px; color:#991b1b;">Responsable del Área Auditada</p>
+                    <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">Acepto los hallazgos y
+                        me comprometo a ejecutar las acciones correctivas.</p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #b45309; border-radius:0; background:transparent;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
+                </div>
+                <div class="signature-box" style="flex:1; background-color:#f0fdf4; border-color:#166534;">
+                    <p style="font-weight:bold; color:#14532d; margin-bottom: 5px;">Vo.Bo. Responsable Sanitario</p>
+                    <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">Enterado de los
+                        resultados de la auditoría interna.</p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #166534; border-radius:0; background:transparent;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-QA-02 | Versión: 1.0 | Cuestionario Maestro de Auditoría Interna al SGC | Xelle
+                Scientific | Página 2 de 2</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        // Sincronizar Folio
+        document.getElementById('reg-qa02').addEventListener('input', function () {
+            let val = this.value;
+            document.getElementById('sync-folio').innerText = val ? 'FO-QA-02-' + val : 'FO-QA-02-000';
+        });
+
+        // Add row and update numbers
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('textarea').forEach(textarea => textarea.value = '');
+            newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+        }
+
+        // Delete row and update numbers
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if (row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                const numCell = row.querySelector('.row-num');
+                if (numCell) {
+                    let num = index + 1;
+                    numCell.innerText = num < 10 ? '0' + num : num;
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

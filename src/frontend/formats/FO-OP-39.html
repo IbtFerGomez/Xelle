@@ -9,6 +9,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
         .section-header {
             background-color: #1E3A5F;
             color: white;
@@ -44,6 +50,12 @@
         .status-select {
             font-weight: bold;
             text-align: center;
+        }
+
+        .check-number {
+            text-align: center;
+            font-weight: bold;
+            vertical-align: middle;
         }
 
         /* REGLA ESTRICTA: Placeholders invisibles al imprimir */
@@ -109,6 +121,7 @@
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
 
     <div class="container">
@@ -158,8 +171,8 @@
         </div>
 
         <div class="header-main">
-            <h1>LISTA DE VERIFICACIÓN (CHECK-LIST) DE AUDITORÍA INTERNA DE TRAZABILIDAD</h1>
-            <div class="metadata">Código: FO-OP-39 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <h1>LISTA DE VERIFICACIÓN (CHECK-LIST) DE AUDITORÍA INTERNA DE TRAZABILIDAD Y BPF</h1>
+            <div class="metadata">Código: FO-OP-39 | Versión: 2.0 | Vigencia: MAR 2026 | Página: 1 de 2</div>
         </div>
 
         <div class="section-header">1. DATOS DE LA AUDITORÍA</div>
@@ -181,23 +194,55 @@
             </table>
         </div>
 
-        <div class="section-header">2. PUNTOS CRÍTICOS DE CONTROL Y TRAZABILIDAD</div>
+        <div class="section-header">2. PUNTOS CRÍTICOS DE CONTROL (CUMPLIMIENTO NOM-059 / NOM-241)</div>
         <div class="section">
-            <table class="compact-table">
+            <table class="compact-table" id="tabla-auditoria-op39">
                 <thead>
                     <tr>
-                        <th width="40%">Punto a Evaluar / Referencia Normativa</th>
+                        <th width="6%">No.</th>
+                        <th width="39%">Punto a Evaluar / Referencia Normativa</th>
                         <th width="15%">Cumple (S/N/NA)</th>
-                        <th width="45%">Hallazgo / Evidencia Objetiva</th>
+                        <th width="40%">Hallazgo / Evidencia Objetiva</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="group-header">
-                        <td colspan="3">TRAZABILIDAD Y LIBERACIÓN DE PRODUCTO TERMINADO</td>
+                        <td colspan="4">Buenas Prácticas de Documentación (BPD) y ALCOA+</td>
                     </tr>
                     <tr>
-                        <td><strong>Trazabilidad de Lote:</strong> ¿El FO-LC-16 (Cover Sheet del lote) coincide con los
-                            resultados de Fase 3 y analíticos del FO-LC-19?</td>
+                        <td class="check-number"></td>
+                        <td><strong>Integridad de Datos:</strong> ¿Los expedientes y bitácoras del área se llenan en
+                            tiempo real, sin uso de corrector, ni lápiz?</td>
+                        <td><select class="cedit status-select" id="check-bpd-corrector">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit" id="obs-bpd-corrector" rows="2"
+                                placeholder="Revisar bitácoras físicas recientes..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="check-number"></td>
+                        <td><strong>Correcciones Autorizadas:</strong> ¿Los errores de registro se corrigen con una
+                            línea simple, fecha y firma/iniciales de quien corrige?</td>
+                        <td><select class="cedit status-select" id="check-bpd-errores">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit" id="obs-bpd-errores" rows="2"
+                                placeholder="Verificar correcciones en FO-OP-40-B..."></textarea></td>
+                    </tr>
+
+                    <tr class="group-header">
+                        <td colspan="4">Trazabilidad y Liberación de Producto</td>
+                    </tr>
+                    <tr>
+                        <td class="check-number"></td>
+                        <td><strong>Trazabilidad de Lote:</strong> ¿El FO-LC-16 (Cover Sheet del lote) vincula
+                            correctamente las materias primas con el producto final y sus rendimientos?</td>
                         <td><select class="cedit status-select" id="check-trazabilidad">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
@@ -209,8 +254,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><strong>Liberación Legal:</strong> ¿Los lotes de producto terminado liberados cuentan con la
-                            firma del Responsable Sanitario en el CoA (FO-QA-10)?</td>
+                        <td class="check-number"></td>
+                        <td><strong>Liberación Legal:</strong> ¿Los lotes de producto terminado liberados cuentan con el
+                            FO-QA-03 y la firma del Responsable Sanitario en el CoA (FO-QA-10)?</td>
                         <td><select class="cedit status-select" id="check-liberacion">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
@@ -222,11 +268,29 @@
                     </tr>
 
                     <tr class="group-header">
-                        <td colspan="3">CADENA DE FRÍO Y RECEPCIÓN DE MATERIA PRIMA</td>
+                        <td colspan="4">Equipos y Metrología</td>
                     </tr>
                     <tr>
-                        <td><strong>Cadena de Frío (Producto Terminado):</strong> ¿Los productos terminados que
-                            requieren refrigeración (2-8°C) cuentan con registros continuos de temperatura?</td>
+                        <td class="check-number"></td>
+                        <td><strong>Identificación y Calibración:</strong> ¿Los equipos críticos (básculas, termómetros)
+                            tienen etiquetas de calibración vigentes visibles (ET-MT-01)?</td>
+                        <td><select class="cedit status-select" id="check-equipos-cal">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit" id="obs-equipos-cal" rows="2"
+                                placeholder="Verificar equipos en el área física..."></textarea></td>
+                    </tr>
+
+                    <tr class="group-header">
+                        <td colspan="4">Cadena de Frío y Recepción de Materiales</td>
+                    </tr>
+                    <tr>
+                        <td class="check-number"></td>
+                        <td><strong>Cadena de Frío:</strong> ¿Se cuenta con registros diarios de temperatura (FO-OP-04)
+                            sin excursiones fuera de rango (o con desviación levantada si las hay)?</td>
                         <td><select class="cedit status-select" id="check-cadena-frio">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
@@ -234,51 +298,29 @@
                                 <option value="NA">N/A</option>
                             </select></td>
                         <td><textarea class="cedit" id="obs-cadena-frio" rows="2"
-                                placeholder="Verificar registros de datalogger..."></textarea></td>
+                                placeholder="Verificar refrigeradores/ultracongeladores..."></textarea></td>
                     </tr>
                     <tr>
-                        <td><strong>Recepción de Materia Prima (Placenta):</strong> ¿La recepción de placenta cumple con
-                            los criterios del FO-LC-17 (documentación, temperatura, serología)?</td>
-                        <td><select class="cedit status-select" id="check-muestreo">
+                        <td class="check-number"></td>
+                        <td><strong>Muestras de Retención:</strong> ¿Las muestras de retención obligatorias están
+                            debidamente resguardadas y conciliadas en el FO-LC-32?</td>
+                        <td><select class="cedit status-select" id="check-retencion">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
                                 <option value="NO">NO</option>
                                 <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" id="obs-muestreo" rows="2"
-                                placeholder="Verificar folio FO-LC-17, temp. recepción, serología..."></textarea></td>
+                        <td><textarea class="cedit" id="obs-retencion" rows="2"
+                                placeholder="Verificar inventario físico en muestroteca..."></textarea></td>
                     </tr>
 
                     <tr class="group-header">
-                        <td colspan="3">BIOSEGURIDAD, RESIDUOS (RPBI) Y NO CONFORMIDADES</td>
+                        <td colspan="4">Gestión de Riesgos, Desviaciones y CAPA</td>
                     </tr>
                     <tr>
-                        <td><strong>Gestión RPBI:</strong> ¿Los residuos biológico-infecciosos (sangre, tejido
-                            placentario contaminado) son segregados y registrados conforme al FO-OP-49?</td>
-                        <td><select class="cedit status-select" id="check-rpbi">
-                                <option value=""></option>
-                                <option value="SI">SÍ</option>
-                                <option value="NO">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
-                        <td><textarea class="cedit" id="obs-rpbi" rows="2"
-                                placeholder="Verificar segregación y bitácora..."></textarea></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Materia Prima No Conforme (MPNC):</strong> ¿Las placentas rechazadas (MPNC) están
-                            identificadas con etiqueta ET-LC-06, segregadas y registradas en FO-OP-52?</td>
-                        <td><select class="cedit status-select" id="check-mpnc">
-                                <option value=""></option>
-                                <option value="SI">SÍ</option>
-                                <option value="NO">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
-                        <td><textarea class="cedit" id="obs-mpnc" rows="2"
-                                placeholder="Verificar folio FO-OP-52, etiquetado ET-LC-06..."></textarea></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Producto No Conforme (PNC):</strong> ¿Los productos terminados rechazados (PNC)
-                            están identificados con etiqueta roja, segregados físicamente y registrados en FO-OP-51?
+                        <td class="check-number"></td>
+                        <td><strong>Producto No Conforme (PNC):</strong> ¿El material o producto rechazado está
+                            físicamente en cuarentena/rechazo, etiquetado y registrado en el FO-OP-51?
                         </td>
                         <td><select class="cedit status-select" id="check-pnc">
                                 <option value=""></option>
@@ -287,27 +329,12 @@
                                 <option value="NA">N/A</option>
                             </select></td>
                         <td><textarea class="cedit" id="obs-pnc" rows="2"
-                                placeholder="Indicar folio FO-OP-51, ubicación cuarentena..."></textarea></td>
-                    </tr>
-
-                    <tr class="group-header">
-                        <td colspan="3">HIGIENE Y GESTIÓN DE RIESGOS</td>
+                                placeholder="Inspeccionar área de Cuarentena/Rechazados..."></textarea></td>
                     </tr>
                     <tr>
-                        <td><strong>Limpieza y Sanitización:</strong> ¿Los registros de limpieza (FO-OP-48) están
-                            completos y firmados al día de hoy?</td>
-                        <td><select class="cedit status-select" id="check-limpieza">
-                                <option value=""></option>
-                                <option value="SI">SÍ</option>
-                                <option value="NO">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
-                        <td><textarea class="cedit" id="obs-limpieza" rows="2"
-                                placeholder="Indicar áreas verificadas..."></textarea></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Gestión de Riesgos (CAPA):</strong> ¿Las desviaciones con Nivel de Prioridad de
-                            Riesgo (NPR) ≥ 27 tienen una CAPA (FO-QA-09) abierta y en seguimiento?</td>
+                        <td class="check-number"></td>
+                        <td><strong>CAPA y Acciones:</strong> ¿Las desviaciones críticas cuentan con un folio CAPA
+                            (FO-QA-09) y las acciones se están ejecutando en el tiempo establecido?</td>
                         <td><select class="cedit status-select" id="check-riesgos">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
@@ -315,27 +342,58 @@
                                 <option value="NA">N/A</option>
                             </select></td>
                         <td><textarea class="cedit" id="obs-riesgos" rows="2"
-                                placeholder="Listar folios CAPA activos y su estado..."></textarea></td>
+                                placeholder="Listar folios CAPA activos..."></textarea></td>
+                    </tr>
+
+                    <tr class="group-header">
+                        <td colspan="4">Capacitación e Higiene del Personal</td>
+                    </tr>
+                    <tr>
+                        <td class="check-number"></td>
+                        <td><strong>Competencia del Personal:</strong> ¿El personal que ejecuta labores críticas en el
+                            momento de la auditoría cuenta con su Matriz de Competencias (FO-HR-04) aprobada?</td>
+                        <td><select class="cedit status-select" id="check-personal-cap">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit" id="obs-personal-cap" rows="2"
+                                placeholder="Solicitar evidencia al azar de un operador..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="check-number"></td>
+                        <td><strong>Limpieza de Áreas (FO-OP-61):</strong> ¿Los registros de limpieza profunda y
+                            sanitización coinciden con el programa establecido?</td>
+                        <td><select class="cedit status-select" id="check-limpieza">
+                                <option value=""></option>
+                                <option value="SI">SÍ</option>
+                                <option value="NO">NO</option>
+                                <option value="NA">N/A</option>
+                            </select></td>
+                        <td><textarea class="cedit" id="obs-limpieza" rows="2"
+                                placeholder="Verificar FO-OP-59 y FO-OP-61..."></textarea></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="section-header">3. CIERRE DE AUDITORÍA</div>
+        <div class="section-header">3. CIERRE Y DICTAMEN DE AUDITORÍA</div>
         <div class="section">
             <table class="no-border-table">
                 <tr>
-                    <td colspan="2"><strong>Resumen de No Conformidades Detectadas:</strong><br>
-                        <textarea class="cedit" id="resumen-nc" rows="3" style="width:100%; border:1px solid #ccc;"
-                            placeholder="Describa brevemente las desviaciones mayores encontradas..."></textarea>
+                    <td colspan="2"><strong>Resumen de No Conformidades Detectadas (Generación de Reporte):</strong><br>
+                        <textarea class="cedit" id="resumen-nc" rows="4"
+                            style="width:100%; border:1px solid #ccc; padding: 5px;"
+                            placeholder="Describa los hallazgos. Cada No Conformidad (NC) listada aquí debe generar un folio de Desviación o CAPA..."></textarea>
                     </td>
                 </tr>
             </table>
         </div>
 
-        <div class="section">
+        <div class="section" style="margin-top: 30px;">
             <div class="signature-box">
-                <p>Auditor (Calidad)</p>
+                <p>Auditor Lider (Aseguramiento de Calidad)</p>
                 <input type="text" class="cedit" id="firma-auditor" placeholder="Firma">
                 <p>Nombre y Fecha</p>
             </div>
@@ -347,6 +405,20 @@
         </div>
 
         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                renumberAuditChecklist();
+            });
+
+            function renumberAuditChecklist() {
+                const rows = document.querySelectorAll('#tabla-auditoria-op39 tbody tr:not(.group-header)');
+                rows.forEach((row, index) => {
+                    const numberCell = row.querySelector('.check-number');
+                    if (numberCell) {
+                        numberCell.textContent = index + 1;
+                    }
+                });
+            }
+
             // Función de validación y guardado con SweetAlert2
             function saveForm() {
                 const auditor = document.getElementById('auditor').value.trim();
@@ -409,10 +481,101 @@
             }
         </script>
 
-        <div class="footer">FO-OP-39 | LISTA DE VERIFICACIÓN DE AUDITORÍA | Versión: 1.0<br>El contenido de este
+        <div class="footer">FO-OP-39 | LISTA DE VERIFICACIÓN DE AUDITORÍA BPF | Versión: 2.0<br>El contenido de este
             documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los
             derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
+    <script>
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="date"> a <input type="text">
+                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="date">
+                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                    inp.type = 'date';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 10mm;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 8pt;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        .header-table td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 14pt;
+            color: #004a87;
+            width: 25%;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 12pt;
+            text-transform: uppercase;
+            width: 50%;
+        }
+
+        .info {
+            width: 25%;
+            text-align: left !important;
+            font-size: 7pt;
+        }
+
+        .subheader {
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 9pt;
+        }
+
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .main-table th,
+        .main-table td {
+            border: 1px solid #000;
+            text-align: center;
+            height: 20px;
+            word-wrap: break-word;
+        }
+
+        .main-table th {
+            background-color: #f2f2f2;
+            font-size: 7pt;
+        }
+
+        .activity-col {
+            width: 180px;
+            text-align: left !important;
+            padding-left: 5px;
+            font-weight: bold;
+        }
+
+        .day-col {
+            width: 22px;
+        }
+
+        .pcc-section {
+            margin-top: 10px;
+            border: 1px solid #000;
+            padding: 5px;
+            background-color: #fafafa;
+        }
+
+        .pcc-title {
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 3px;
+        }
+
+        .footer-table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+
+        .footer-table td {
+            width: 33%;
+            text-align: center;
+            padding-top: 25px;
+        }
+
+        .sig-line {
+            border-top: 1px solid #000;
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 3px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table class="header-table">
+        <tr>
+            <td class="logo" rowspan="2">XELLE SCIENTIFIC</td>
+            <td class="title">Registro Mensual de Actividades Críticas de Área</td>
+            <td class="info">
+                <strong>Código:</strong> FO-OP-60<br>
+                <strong>Versión:</strong> 1.0
+            </td>
+        </tr>
+        <tr>
+            <td>Gestión de Operaciones y Mantenimiento de Áreas</td>
+            <td class="info">
+                <strong>Vigencia:</strong> Mar 2026<br>
+                <strong>Página:</strong> 1 de 1
+            </td>
+        </tr>
+    </table>
+
+    <table class="subheader">
+        <tr>
+            <td><strong>ÁREA:</strong> ________________________________</td>
+            <td><strong>MES:</strong> ________________</td>
+            <td><strong>AÑO:</strong> 202____</td>
+            <td><strong>CLASIFICACIÓN:</strong> ☐ ISO 5 ☐ ISO 7 ☐ ISO 8 ☐ Gris</td>
+        </tr>
+    </table>
+
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th class="activity-col">ACTIVIDAD / DÍA</th>
+                <script>
+                    for (let i = 1; i <= 31; i++) {
+                        document.write('<th class="day-col">' + i + '</th>');
+                    }
+                </script>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="activity-col">Sanitización de Superficies</td>
+                <script>for (let i = 1; i <= 31; i++) { document.write('<td></td>'); }</script>
+            </tr>
+            <tr>
+                <td class="activity-col">Limpieza de Pisos</td>
+                <script>for (let i = 1; i <= 31; i++) { document.write('<td></td>'); }</script>
+            </tr>
+            <tr>
+                <td class="activity-col">Vaciado de botes (Municipal)</td>
+                <script>for (let i = 1; i <= 31; i++) { document.write('<td></td>'); }</script>
+            </tr>
+            <tr>
+                <td class="activity-col">Vaciado de RPBI (Si aplica)</td>
+                <script>for (let i = 1; i <= 31; i++) { document.write('<td></td>'); }</script>
+            </tr>
+            <tr>
+                <td class="activity-col">Verificación de Manómetros</td>
+                <script>for (let i = 1; i <= 31; i++) { document.write('<td></td>'); }</script>
+            </tr>
+            <tr>
+                <td class="activity-col">Limpieza de Esclusas</td>
+                <script>for (let i = 1; i <= 31; i++) { document.write('<td></td>'); }</script>
+            </tr>
+            <tr>
+                <td class="activity-col">Orden General de Insumos</td>
+                <script>for (let i = 1; i <= 31; i++) { document.write('<td></td>'); }</script>
+            </tr>
+            <tr>
+                <td class="activity-col">Aspersión de Sanitizante</td>
+                <script>for (let i = 1; i <= 31; i++) { document.write('<td></td>'); }</script>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pcc-section">
+        <div class="pcc-title">Puntos Críticos de Control (PCC):</div>
+        1. <strong>PCC-1:</strong> No realizar limpieza si hay producto expuesto.
+        2. <strong>PCC-2:</strong> El registro debe ser contemporáneo (al momento de terminar la tarea).
+        3. <strong>PCC-3:</strong> Uso de sanitizante vigente y rotado según PNO correspondente.
+        4. <strong>Nota:</strong> Si el día cae en inhábil, cruzar con una línea diagonal y escribir "N/A" o "Inhábil".
+    </div>
+
+    <div style="margin-top:10px; font-size: 7pt;">
+        <strong>OBSERVACIONES / DESVIACIONES:</strong>
+        ________________________________________________________________________________________________________________________________________________________________________________________________________________
+    </div>
+
+    <table class="footer-table">
+        <tr>
+            <td>
+                <div class="sig-line">Responsable de Ejecución (Supervisor)</div>
+            </td>
+            <td>
+                <div class="sig-line">Aseguramiento de Calidad (Revisó)</div>
+            </td>
+            <td>
+                <div class="sig-line">Responsable Sanitario (Autorizó)</div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="footer">FO-OP-60 | Versión: 1.0 | Registro Mensual de Actividades Críticas de Área | Xelle Scientific |
+        Página 1 de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C.
+        V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+
+</body>
+
+</html>

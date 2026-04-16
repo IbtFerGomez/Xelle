@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-AD-07 Minuta de Revisión por la Dirección</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 10px; padding: 6px; text-align: center; border: 1px solid #cbd5e1; }
+        .compact-table td { font-size: 10px; padding: 4px; vertical-align: middle; text-align: center; border: 1px solid #cbd5e1; }
+        .compact-table input, .compact-table select, .compact-table textarea { font-size: 10px; text-align: center; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
+        .compact-table input:focus, .compact-table select:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+        
+        .text-left { text-align: left !important; padding-left: 8px !important; }
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 5px; margin-top: 5px; }
+
+        .conclusion-card { border: 1px solid #cbd5e1; padding: 15px; border-radius: 4px; background-color: #f8fafc; margin-top: 10px; }
+        .radio-option { display: block; margin-bottom: 10px; font-size: 11px; font-weight: bold; cursor: pointer; }
+        .radio-option input { margin-right: 10px; }
+
+        /* Estilos del Footer Unificado y Legal */
+        .footer-unified { 
+            margin-top: 20px; 
+            border-top: 2px solid #1E3A5F; 
+            padding-top: 8px; 
+            text-align: center; 
+            font-size: 9px; 
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+        .footer-unified .control-data { font-weight: bold; color: #1E3A5F; margin-bottom: 3px; }
+        .footer-unified .legal-data { color: #475569; font-style: italic; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            .container { max-width: 100%; width: 100%; border: none; box-shadow: none; }
+            .section { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body id="doc-fo-ad-07">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/>
+                        <circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Minuta</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-AD-07-</span>
+                    <input type="text" id="reg-ad07" 
+                           class="registry-input generate-barcode cedit" 
+                           data-target="barcode-ad07" 
+                           data-prefix="FO-AD-07-" 
+                           placeholder="202X-00" 
+                           style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-ad07" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>MINUTA DE REVISIÓN POR LA DIRECCIÓN</h1>
+            <div class="metadata">Código: FO-AD-07 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 2</div>
+        </div>
+
+        <div class="section-header">1. DATOS DE LA REUNIÓN</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="15%"><strong>Fecha:</strong></td>
+                    <td width="25%"><input type="date" class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td width="15%"><strong>Horario:</strong></td>
+                    <td width="45%">
+                        <div style="display:flex; align-items:center;">
+                            Inicio: <input type="time" class="cedit" style="width:80px; border-bottom:1px solid #ccc; margin-right:10px;">
+                            Fin: <input type="time" class="cedit" style="width:80px; border-bottom:1px solid #ccc;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Tipo:</strong></td>
+                    <td colspan="3">
+                        <label><input type="radio" name="tipo_rev" class="cedit"> Ordinaria (Anual)</label>
+                        <label style="margin-left:20px;"><input type="radio" name="tipo_rev" class="cedit"> Extraordinaria</label>
+                    </td>
+                </tr>
+            </table>
+            <div style="margin-top:10px;">
+                <strong>Participantes (Nombre y Cargo):</strong>
+                <table class="no-border-table">
+                    <tr><td><input class="cedit" style="width:80%; border-bottom:1px solid #eee;" placeholder="Nombre"></td><td>(Gerente General)</td></tr>
+                    <tr><td><input class="cedit" style="width:80%; border-bottom:1px solid #eee;" placeholder="Nombre"></td><td>(Responsable Sanitario)</td></tr>
+                    <tr><td><input class="cedit" style="width:80%; border-bottom:1px solid #eee;" placeholder="Nombre"></td><td>(Aseguramiento de Calidad)</td></tr>
+                    <tr><td><input class="cedit" style="width:80%; border-bottom:1px solid #eee;" placeholder="Nombre"></td><td>(Producción / Operaciones)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-header">2. ORDEN DEL DÍA / PUNTOS DE REVISIÓN</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Instrucciones: Documentar comentarios clave sobre el estatus de cada entrada revisada.</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="35%">Entradas de la Revisión</th>
+                        <th width="65%">Comentarios de la Dirección / Estatus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="text-left">1. Seguimiento de acuerdos previos: ¿Se cumplieron los compromisos de la minuta anterior?</td><td><textarea class="cedit" rows="2"></textarea></td></tr>
+                    <tr><td class="text-left">2. Resultados de Auditorías: Revisión de hallazgos del informe FO-AD-06.</td><td><textarea class="cedit" rows="2"></textarea></td></tr>
+                    <tr><td class="text-left">3. Desempeño de Procesos: ¿Se cumplieron objetivos e indicadores (KPIs)?</td><td><textarea class="cedit" rows="2"></textarea></td></tr>
+                    <tr><td class="text-left">4. Quejas y Eventos Adversos: Revisión de tendencias (FO-RS-01 / FO-RS-02).</td><td><textarea class="cedit" rows="2"></textarea></td></tr>
+                    <tr><td class="text-left">5. Estatus de CAPAs: ¿Hay retrasos en la implementación de acciones correctivas?</td><td><textarea class="cedit" rows="2"></textarea></td></tr>
+                    <tr><td class="text-left">6. Desempeño de Proveedores: Revisión del padrón FO-AD-05.</td><td><textarea class="cedit" rows="2"></textarea></td></tr>
+                    <tr><td class="text-left">7. Cambios en el Entorno: ¿Nuevas regulaciones de COFEPRIS que nos afecten?</td><td><textarea class="cedit" rows="2"></textarea></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-07 | Versión: 1.0 | Minuta de Revisión por la Dirección | Xelle Scientific | Página 1 de 2</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        </div>
+
+        <div style="page-break-before: always;"></div>
+
+        <div class="header-main" style="margin-top:0;">
+            <p style="text-align:right; font-size:9px; font-weight:bold; color:#64748b;">Folio: <span id="sync-folio">FO-AD-07-000</span> | Página 2 de 2</p>
+        </div>
+
+        <div class="section-header">3. ACUERDOS Y ASIGNACIÓN DE RECURSOS (SALIDAS)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-bottom:5px;">Esta es la sección más importante, donde la Dirección aprueba los recursos para la mejora del sistema.</p>
+            <table class="compact-table" id="tbl-acuerdos">
+                <thead>
+                    <tr>
+                        <th width="5%">No.</th>
+                        <th width="45%">Acción / Acuerdo Estratégico</th>
+                        <th width="15%">Responsable</th>
+                        <th width="12%">Fecha Límite</th>
+                        <th width="23%">Recursos Requeridos<br><span style="font-size:8px; font-weight:normal;">(Presupuesto/Personal)</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>01</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td>02</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td>03</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td><td><input class="cedit"></td></tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-acuerdos')">+ AGREGAR ACUERDO</button>
+        </div>
+
+        <div class="section-header">4. DECLARACIÓN DE EFICACIA DEL SGC</div>
+        <div class="section">
+            <div class="conclusion-card">
+                <label class="radio-option" style="color:#166534;">
+                    <input type="radio" name="eficacia" class="cedit"> El Sistema de Gestión de Calidad es EFICAZ, adecuado y cumple con los objetivos de Xelle Scientific.
+                </label>
+                <label class="radio-option" style="color:#991b1b;">
+                    <input type="radio" name="eficacia" class="cedit"> El Sistema de Gestión de Calidad REQUIERE MEJORAS CRÍTICAS para asegurar la conformidad de los productos/servicios.
+                </label>
+            </div>
+        </div>
+
+        <div class="section-header">5. FIRMAS DE LOS ASISTENTES</div>
+        <div class="section">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:10px; margin-top:15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">Dirección General</p>
+                    <input class="cedit" placeholder="Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:30px;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">Responsable Sanitario</p>
+                    <input class="cedit" placeholder="Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:30px;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">Aseguramiento de Calidad</p>
+                    <input class="cedit" placeholder="Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:30px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-07 | Versión: 1.0 | Minuta de Revisión por la Dirección | Xelle Scientific | Página 2 de 2</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('reg-ad07').addEventListener('input', function() {
+            let val = this.value;
+            document.getElementById('sync-folio').innerText = val ? 'FO-AD-07-' + val : 'FO-AD-07-000';
+        });
+
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const rowCount = tbody.rows.length + 1;
+            const row = tbody.insertRow();
+            row.innerHTML = `<td>${rowCount < 10 ? '0'+rowCount : rowCount}</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td><td><input class="cedit"></td>`;
+        }
+    </script>
+</body>
+</html>

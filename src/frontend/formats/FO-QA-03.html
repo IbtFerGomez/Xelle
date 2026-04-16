@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-03 Hoja de Inspección y Liberación de Calidad</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 5px;
+            font-size: 11px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+
+        .dictamen-options {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .dictamen-option {
+            flex: 1;
+            margin: 0;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .dictamen-option-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .dictamen-option-description {
+            font-size: 10px;
+            font-weight: normal;
+            color: #334155;
+            line-height: 1.35;
+        }
+
+        @media (max-width: 768px) {
+            .dictamen-options {
+                flex-direction: column;
+            }
+        }
+
+        .audit-note {
+            background-color: #f1f5f9;
+            border-left: 4px solid #b45309;
+            padding: 10px;
+            margin-top: 15px;
+            font-size: 9px;
+            color: #334155;
+            line-height: 1.4;
+            text-align: justify;
+        }
+
+        .audit-note strong {
+            color: #b45309;
+        }
+
+        /* Estilos del Footer Unificado y Legal */
+        .footer-unified {
+            margin-top: 20px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 8px;
+            text-align: center;
+            font-size: 9px;
+            /* Tamaño unificado para todo el pie de página */
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+
+        .footer-unified .control-data {
+            font-weight: bold;
+            color: #1E3A5F;
+            margin-bottom: 3px;
+        }
+
+        .footer-unified .legal-data {
+            color: #475569;
+            font-style: italic;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-qa-03">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Número de Lote</label>
+                <div class="registry-wrapper">
+                    <input type="text" id="reg-lote" class="registry-input generate-barcode cedit"
+                        data-target="barcode-lote" placeholder="LOTE-000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-lote" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>HOJA DE INSPECCIÓN Y LIBERACIÓN DE CALIDAD (CHECKLIST)</h1>
+            <div class="metadata">Código: FO-QA-03 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 2</div>
+        </div>
+
+        <div class="section-header">1. DATOS DEL PRODUCTO Y LOTE A EVALUAR</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Nombre del Producto:</strong></td>
+                    <td width="80%" colspan="3"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:12px;"></td>
+                </tr>
+                <tr>
+                    <td width="20%"><strong>Número de Lote:</strong></td>
+                    <td width="30%"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; color:#b45309;"
+                            id="lote-display" readonly placeholder="(Autollenado)"></td>
+                    <td width="20%"><strong>Tamaño de Lote Real:</strong></td>
+                    <td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Fecha de Fabricación:</strong></td>
+                    <td><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td><strong>Fecha de Caducidad:</strong></td>
+                    <td><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. ETAPA 1: RECEPCIÓN Y PRE-PROCESO (DESPEJE DE LÍNEA)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Verificación documental y física antes de autorizar
+                el inicio de la manufactura.</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="60%">Criterio de Inspección (QA)</th>
+                        <th width="15%">Cumple (S/N/NA)</th>
+                        <th width="25%">Observaciones / Folio Referencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left">Las materias primas críticas cuentan con dictamen de liberación previo
+                            (FO-OP-41 / FO-OP-42 / CoA).</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">El área y los equipos cuentan con limpieza profunda vigente (FO-OP-48 /
+                            FO-SGC-05).</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Los instrumentos de medición (básculas, termómetros) tienen calibración
+                            vigente.</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Se realizó el Despeje de Línea: No hay restos de lotes anteriores ni
+                            documentos ajenos al proceso actual.</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="display:flex; justify-content:flex-end; margin-top:10px; align-items:center;">
+                <span style="font-weight:bold; font-size:10px; margin-right:10px;">Aprobación Etapa 1 (Firma del
+                    Inspector QA):</span>
+                <input class="cedit" style="width:200px; border-bottom:1px solid #1E3A5F;"
+                    placeholder="Firma de autorización">
+            </div>
+        </div>
+
+        <div class="section-header">3. ETAPA 2: CONTROLES EN PROCESO (IN-PROCESS CONTROL)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Verificación concurrente o documental de los
+                parámetros críticos durante la producción.</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="60%">Criterio de Inspección (QA)</th>
+                        <th width="15%">Cumple (S/N/NA)</th>
+                        <th width="25%">Observaciones / Folio Referencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left">La Orden de Producción (FO-OP-40-B) está siendo llenada en tiempo real
+                            (ALCOA+) y sin tachaduras no autorizadas.</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Los parámetros críticos (ej. Temp, RPM, Tiempo) se mantuvieron dentro de
+                            los rangos de la Fórmula Maestra.</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">El Monitoreo Ambiental del cuarto limpio / campana indica parámetros
+                            aceptables (Presión diferencial, partículas).</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit" placeholder="Ver FO-OP-56"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Hubo alguna desviación durante el proceso? En caso afirmativo, ¿se cerró
+                            el folio correspondiente?</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit" placeholder="Folio FO-OP-51: _________"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="display:flex; justify-content:flex-end; margin-top:10px; align-items:center;">
+                <span style="font-weight:bold; font-size:10px; margin-right:10px;">Aprobación Etapa 2 (Firma del
+                    Inspector QA):</span>
+                <input class="cedit" style="width:200px; border-bottom:1px solid #1E3A5F;"
+                    placeholder="Firma de autorización">
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-QA-03 | Versión: 1.0 | Hoja de Inspección y Liberación de Calidad | Xelle
+                Scientific | Página 1 de 2</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
+        </div>
+
+        <div style="page-break-before: always;"></div>
+
+        <div class="header-main" style="margin-top:0;">
+            <p style="text-align:right; font-size:9px; font-weight:bold; color:#64748b;">Lote en Revisión: <span
+                    id="sync-lote" style="color:#b45309;">LOTE-000</span> | Página 2 de 2</p>
+        </div>
+
+        <div class="section-header">4. ETAPA 3: PRODUCTO TERMINADO Y ACONDICIONAMIENTO</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Inspección física del vial/empaque final y revisión
+                analítica.</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="60%">Criterio de Inspección (QA)</th>
+                        <th width="15%">Cumple (S/N/NA)</th>
+                        <th width="25%">Observaciones / Folio Referencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left">Inspección Visual (AQL): Los viales están libres de partículas visibles,
+                            el color es el esperado y los cierres son herméticos.</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Etiquetado: La etiqueta corresponde al producto, el número de lote y la
+                            caducidad están impresos correctamente y son legibles.</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Conciliación de Materiales: El cálculo de etiquetas impresas vs. usadas y
+                            mermas está dentro del límite permitido (± 1%).</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Resultados Analíticos: El Certificado de Análisis (CoA) del producto
+                            terminado cumple con todas las especificaciones de liberación.</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit" placeholder="FO-QA-06"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Se ingresaron las muestras de retención obligatorias a la muestroteca
+                            (FO-LC-32).</td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="S" style="color:#166534;">S</option>
+                                <option value="N" style="color:#991b1b;">N</option>
+                                <option value="NA">NA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit" placeholder="FO-LC-32"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">5. DICTAMEN DE CALIDAD Y LIBERACIÓN FINAL DEL LOTE</div>
+        <div class="section">
+            <p style="font-size:10px; margin-bottom:10px;">Con base en la inspección de las 3 etapas anteriores y la
+                revisión del Batch Record completo, se emite el siguiente dictamen:</p>
+
+            <div class="dictamen-options">
+                <label class="dictamen-option" style="color:#166534; border-color:#86efac; background-color:#f0fdf4;">
+                    <span class="dictamen-option-title">
+                        <input type="radio" name="dictamen" class="cedit"> APROBADO PARA LIBERACIÓN
+                    </span>
+                    <span class="dictamen-option-description">El lote cumple con las especificaciones técnicas y los
+                        requisitos de BPF. Se autoriza su distribución y uso.</span>
+                </label>
+                <label class="dictamen-option" style="color:#991b1b; border-color:#fca5a5; background-color:#fef2f2;">
+                    <span class="dictamen-option-title">
+                        <input type="radio" name="dictamen" class="cedit"> RECHAZADO / CUARENTENA
+                    </span>
+                    <span class="dictamen-option-description">El lote presenta desviaciones críticas no resueltas o
+                        fallas analíticas. No puede ser comercializado.</span>
+                </label>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <strong>Justificación (Obligatoria en caso de rechazo o restricciones):</strong>
+                <textarea class="cedit" rows="2"
+                    style="width:100%; border:1px solid #ccc; padding:5px; box-sizing:border-box; margin-top:5px;"></textarea>
+            </div>
+
+            <div class="signature-area" style="display:flex; justify-content:space-around; gap:20px; margin-top: 15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 5px;">Inspeccionó (Aseguramiento de Calidad)</p>
+                    <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">He revisado física y
+                        documentalmente el lote.</p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #ccc; border-radius:0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1; background-color: #f0fdf4; border-color: #166534;">
+                    <p style="font-weight:bold; color:#14532d; margin-bottom: 5px;">Autorizó Liberación Final
+                        (Responsable Sanitario)</p>
+                    <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">El expediente está
+                        completo y conforme a normativa.</p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #166534; border-radius:0; background:transparent;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="audit-note">
+            <strong>¿Por qué este Checklist es la "red de seguridad" de Xelle Scientific?</strong><br>
+            • <strong>Evita Omisiones:</strong> Obliga a QA a hacer una "parada táctica" (Etapa 1) para revisar que las
+            condiciones sean óptimas antes de mezclar reactivos costosos.<br>
+            • <strong>Revisión Continua (Trazabilidad):</strong> Divide la revisión en tres barreras. Si la Etapa 1
+            falla, el proceso se detiene ahí, ahorrando dinero y evitando crear producto no conforme.<br>
+            • <strong>Poder de Veto:</strong> La Sección 5 deja por escrito y con firmas quién asume la responsabilidad
+            legal de liberar el lote al mercado (Responsable Sanitario), asegurando el cumplimiento ante COFEPRIS.
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-QA-03 | Versión: 1.0 | Hoja de Inspección y Liberación de Calidad | Xelle
+                Scientific | Página 2 de 2</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        // Sincronizar el número de Lote entre paginas
+        document.getElementById('reg-lote').addEventListener('input', function () {
+            let val = this.value;
+            document.getElementById('lote-display').value = val;
+            document.getElementById('sync-lote').innerText = val ? val : 'LOTE-000';
+        });
+    </script>
+</body>
+
+</html>

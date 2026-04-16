@@ -1,0 +1,2302 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-57 Reporte de Control de Plagas y Fauna Nociva (Offline)</title>
+    <style>
+        /* ==========================================================================
+           ESTILOS COMPLETOS INLINE - VERSION OFFLINE
+           ========================================================================== */
+
+/* ==========================================================================
+   FORMAT-STYLES-OFFLINE.CSS - V1.6 MASTER FINAL
+   ========================================================================== */
+:root {
+    --primary-color: #1D1D1B;
+    --secondary-color: #2c3e50;
+    --border-color: #d1d5db;
+    --bg-color: #f3f4f6;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: 11px;
+    line-height: 1.25;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.container {
+    background-color: white;
+    width: 95%;
+    max-width: 1400px;
+    margin: 0;
+    padding: 25px 45px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    min-height: 270mm;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* HEADER */
+.logo-container svg {
+    height: 60px;
+    width: auto;
+    display: block;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+.header-main {
+    text-align: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+
+.header-main h1 {
+    font-size: 15px;
+    text-transform: uppercase;
+    margin: 5px 0;
+    color: var(--primary-color);
+}
+
+/* BARCODE & REGISTRY */
+.registry-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.registry-wrapper {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 2px;
+}
+
+.registry-prefix {
+    font-weight: bold;
+    font-size: 13px;
+    margin-right: 5px;
+}
+
+.registry-input {
+    border: none;
+    font-weight: bold;
+    font-size: 13px;
+    width: 50px;
+    outline: none;
+    text-align: center;
+    background: transparent;
+}
+
+.registry-date {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 9px;
+    text-align: right;
+    width: 100px;
+    height: 14px;
+    background: transparent;
+}
+
+.barcode-svg {
+    max-height: 32px;
+    margin-top: 5px;
+}
+
+/* TABLAS */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    table-layout: fixed;
+    page-break-inside: auto;
+    break-inside: auto;
+}
+
+th,
+td {
+    border: 1px solid var(--border-color);
+    padding: 4px;
+    vertical-align: top;
+    word-break: break-word;
+}
+
+thead {
+    display: table-header-group;
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    font-size: 9px;
+    text-transform: uppercase;
+    text-align: center;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+tr[style*="background"] th {
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
+.cedit {
+    width: 100%;
+    border: 1px solid #eee;
+    padding: 2px;
+    border-radius: 2px;
+    font-size: 9.5px;
+    text-align: center;
+    outline: none;
+    background: transparent;
+}
+
+textarea.cedit {
+    resize: none;
+    min-height: 24px;
+}
+
+/* SECCIONES */
+.section {
+    margin-bottom: 12px;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 4px;
+    page-break-inside: auto;
+}
+
+.section-title {
+    background-color: var(--secondary-color) !important;
+    color: white !important;
+    padding: 4px 10px;
+    font-weight: bold;
+    margin: -10px -10px 8px -10px;
+    border-radius: 4px 4px 0 0;
+    font-size: 10px;
+    text-transform: uppercase;
+    -webkit-print-color-adjust: exact;
+}
+
+.no-border-table,
+.no-border-table td {
+    border: none !important;
+    background: transparent !important;
+}
+
+/* SIGNATURES */
+.signature-area {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    margin-bottom: 35px;
+}
+
+.signature-box {
+    width: 30%;
+    text-align: center;
+}
+
+.signature-box input {
+    border: none;
+    border-bottom: 1px solid #000;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 5px;
+    background: transparent;
+}
+
+/* FOOTER */
+.footer {
+    margin-top: auto;
+    border-top: 1px solid #eee;
+    padding-top: 5px;
+    font-size: 8px;
+    color: #666;
+    text-align: center;
+}
+
+/* CONTROLES UI - DRAGGABLE */
+.global-controls {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px 12px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+    border: 2px solid #3498db;
+    cursor: move;
+    user-select: none;
+    min-width: 130px;
+}
+
+.global-controls:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    font-size: 13px;
+    width: 100%;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-success {
+    background: #27ae60;
+}
+
+.btn-primary {
+    background: #2980b9;
+}
+
+.btn-danger {
+    background: #c0392b;
+}
+
+.btn-mini {
+    padding: 2px 6px;
+    font-size: 8px;
+    border-radius: 3px;
+}
+
+@media print {
+    @page {
+        margin: 0.5cm;
+    }
+
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .container {
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        padding: 0;
+        min-height: auto;
+    }
+
+    .global-controls,
+    .no-print {
+        display: none !important;
+    }
+
+    .footer {
+        position: static;
+        width: 100%;
+        border-top: 1px solid #000;
+    }
+
+    .cedit {
+        border: none !important;
+    }
+
+    /* Permitir que las tablas se rompan entre páginas */
+    table {
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+    }
+
+    thead {
+        display: table-header-group;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    tbody {
+        page-break-inside: auto;
+        break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+        break-inside: avoid;
+        break-after: auto;
+    }
+
+    td {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .section {
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+    }
+
+    ::-webkit-input-placeholder {
+        color: transparent !important;
+    }
+
+    :-moz-placeholder {
+        color: transparent !important;
+    }
+
+    ::-moz-placeholder {
+        color: transparent !important;
+    }
+
+    :-ms-input-placeholder {
+        color: transparent !important;
+    }
+
+    ::placeholder {
+        color: transparent !important;
+    }
+}
+    </style>
+    <script>
+        /* JsBarcode Library */
+/*! JsBarcode v3.11.5 | (c) Johan Lindell | MIT license */
+!function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)n.d(r,o,function(e){return t[e]}.bind(null,o));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=15)}([function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});e.default=function t(e,n){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.data=e,this.text=n.text||e,this.options=n}},function(t,e,n){"use strict";var r;function o(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}Object.defineProperty(e,"__esModule",{value:!0});var i=e.SET_A=0,a=e.SET_B=1,u=e.SET_C=2,f=(e.SHIFT=98,e.START_A=103),c=e.START_B=104,s=e.START_C=105;e.MODULO=103,e.STOP=106,e.FNC1=207,e.SET_BY_CODE=(o(r={},f,i),o(r,c,a),o(r,s,u),r),e.SWAP={101:i,100:a,99:u},e.A_START_CHAR=String.fromCharCode(208),e.B_START_CHAR=String.fromCharCode(209),e.C_START_CHAR=String.fromCharCode(210),e.A_CHARS="[\0-_È-Ï]",e.B_CHARS="[ -È-Ï]",e.C_CHARS="(Ï*[0-9]{2}Ï*)",e.BARS=[11011001100,11001101100,11001100110,10010011e3,10010001100,10001001100,10011001e3,10011000100,10001100100,11001001e3,11001000100,11000100100,10110011100,10011011100,10011001110,10111001100,10011101100,10011100110,11001110010,11001011100,11001001110,11011100100,11001110100,11101101110,11101001100,11100101100,11100100110,11101100100,11100110100,11100110010,11011011e3,11011000110,11000110110,10100011e3,10001011e3,10001000110,10110001e3,10001101e3,10001100010,11010001e3,11000101e3,11000100010,10110111e3,10110001110,10001101110,10111011e3,10111000110,10001110110,11101110110,11010001110,11000101110,11011101e3,11011100010,11011101110,11101011e3,11101000110,11100010110,11101101e3,11101100010,11100011010,11101111010,11001000010,11110001010,1010011e4,10100001100,1001011e4,10010000110,10000101100,10000100110,1011001e4,10110000100,1001101e4,10011000010,10000110100,10000110010,11000010010,1100101e4,11110111010,11000010100,10001111010,10100111100,10010111100,10010011110,10111100100,10011110100,10011110010,11110100100,11110010100,11110010010,11011011110,11011110110,11110110110,10101111e3,10100011110,10001011110,10111101e3,10111100010,11110101e3,11110100010,10111011110,10111101110,11101011110,11110101110,11010000100,1101001e4,11010011100,1100011101011]},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});e.SIDE_BIN="101",e.MIDDLE_BIN="01010",e.BINARIES={L:["0001101","0011001","0010011","0111101","0100011","0110001","0101111","0111011","0110111","0001011"],G:["0100111","0110011","0011011","0100001","0011101","0111001","0000101","0010001","0001001","0010111"],R:["1110010","1100110","1101100","1000010","1011100","1001110","1010000","1000100","1001000","1110100"],O:["0001101","0011001","0010011","0111101","0100011","0110001","0101111","0111011","0110111","0001011"],E:["0100111","0110011","0011011","0100001","0011101","0111001","0000101","0010001","0001001","0010111"]},e.EAN2_STRUCTURE=["LL","LG","GL","GG"],e.EAN5_STRUCTURE=["GGLLL","GLGLL","GLLGL","GLLLG","LGGLL","LLGGL","LLLGG","LGLGL","LGLLG","LLGLG"],e.EAN13_STRUCTURE=["LLLLLL","LLGLGG","LLGGLG","LLGGGL","LGLLGG","LGGLLG","LGGGLL","LGLGLG","LGLGGL","LGGLGL"]},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=n(2);e.default=function(t,e,n){var o=t.split("").map((function(t,n){return r.BINARIES[e[n]]})).map((function(e,n){return e?e[t[n]]:""}));if(n){var i=t.length-1;o=o.map((function(t,e){return e<i?t+n:t}))}return o.join("")}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(0);var a=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"encode",value:function(){for(var t="110",e=0;e<this.data.length;e++){var n=parseInt(this.data[e]).toString(2);n=u(n,4-n.length);for(var r=0;r<n.length;r++)t+="0"==n[r]?"100":"110"}return{data:t+="1001",text:this.text}}},{key:"valid",value:function(){return-1!==this.data.search(/^[0-9]+$/)}}]),e}(((r=i)&&r.__esModule?r:{default:r}).default);function u(t,e){for(var n=0;n<e;n++)t="0"+t;return t}e.default=a},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(0),a=(r=i)&&r.__esModule?r:{default:r},u=n(1);var f=function(t){function e(t,n){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e);var r=function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t.substring(1),n));return r.bytes=t.split("").map((function(t){return t.charCodeAt(0)})),r}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"valid",value:function(){return/^[\x00-\x7F\xC8-\xD3]+$/.test(this.data)}},{key:"encode",value:function(){var t=this.bytes,n=t.shift()-105,r=u.SET_BY_CODE[n];if(void 0===r)throw new RangeError("The encoding does not start with a start character.");!0===this.shouldEncodeAsEan128()&&t.unshift(u.FNC1);var o=e.next(t,1,r);return{text:this.text===this.data?this.text.replace(/[^\x20-\x7E]/g,""):this.text,data:e.getBar(n)+o.result+e.getBar((o.checksum+n)%u.MODULO)+e.getBar(u.STOP)}}},{key:"shouldEncodeAsEan128",value:function(){var t=this.options.ean128||!1;return"string"==typeof t&&(t="true"===t.toLowerCase()),t}}],[{key:"getBar",value:function(t){return u.BARS[t]?u.BARS[t].toString():""}},{key:"correctIndex",value:function(t,e){if(e===u.SET_A){var n=t.shift();return n<32?n+64:n-32}return e===u.SET_B?t.shift()-32:10*(t.shift()-48)+t.shift()-48}},{key:"next",value:function(t,n,r){if(!t.length)return{result:"",checksum:0};var o=void 0,i=void 0;if(t[0]>=200){i=t.shift()-105;var a=u.SWAP[i];void 0!==a?o=e.next(t,n+1,a):(r!==u.SET_A&&r!==u.SET_B||i!==u.SHIFT||(t[0]=r===u.SET_A?t[0]>95?t[0]-96:t[0]:t[0]<32?t[0]+96:t[0]),o=e.next(t,n+1,r))}else i=e.correctIndex(t,r),o=e.next(t,n+1,r);var f=i*n;return{result:e.getBar(i)+o.result,checksum:f+o.checksum}}}]),e}(a.default);e.default=f},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.mod10=function(t){for(var e=0,n=0;n<t.length;n++){var r=parseInt(t[n]);(n+t.length)%2==0?e+=r:e+=2*r%10+Math.floor(2*r/10)}return(10-e%10)%10},e.mod11=function(t){for(var e=0,n=[2,3,4,5,6,7],r=0;r<t.length;r++){var o=parseInt(t[t.length-1-r]);e+=n[r%n.length]*o}return(11-e%11)%11}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(t[r]=n[r])}return t};e.default=function(t,e){return r({},t,e)}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),o=n(2),i=a(n(3));function a(t){return t&&t.__esModule?t:{default:t}}var u=function(t){function e(t,n){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e);var r=function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n));return r.fontSize=!n.flat&&n.fontSize>10*n.width?10*n.width:n.fontSize,r.guardHeight=n.height+r.fontSize/2+n.textMargin,r}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),r(e,[{key:"encode",value:function(){return this.options.flat?this.encodeFlat():this.encodeGuarded()}},{key:"leftText",value:function(t,e){return this.text.substr(t,e)}},{key:"leftEncode",value:function(t,e){return(0,i.default)(t,e)}},{key:"rightText",value:function(t,e){return this.text.substr(t,e)}},{key:"rightEncode",value:function(t,e){return(0,i.default)(t,e)}},{key:"encodeGuarded",value:function(){var t={fontSize:this.fontSize},e={height:this.guardHeight};return[{data:o.SIDE_BIN,options:e},{data:this.leftEncode(),text:this.leftText(),options:t},{data:o.MIDDLE_BIN,options:e},{data:this.rightEncode(),text:this.rightText(),options:t},{data:o.SIDE_BIN,options:e}]}},{key:"encodeFlat",value:function(){return{data:[o.SIDE_BIN,this.leftEncode(),o.MIDDLE_BIN,this.rightEncode(),o.SIDE_BIN].join(""),text:this.text}}}]),e}(a(n(0)).default);e.default=u},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}();e.checksum=u;var o=i(n(3));function i(t){return t&&t.__esModule?t:{default:t}}var a=function(t){function e(t,n){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),-1!==t.search(/^[0-9]{11}$/)&&(t+=u(t));var r=function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n));return r.displayValue=n.displayValue,n.fontSize>10*n.width?r.fontSize=10*n.width:r.fontSize=n.fontSize,r.guardHeight=n.height+r.fontSize/2+n.textMargin,r}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),r(e,[{key:"valid",value:function(){return-1!==this.data.search(/^[0-9]{12}$/)&&this.data[11]==u(this.data)}},{key:"encode",value:function(){return this.options.flat?this.flatEncoding():this.guardedEncoding()}},{key:"flatEncoding",value:function(){var t="";return t+="101",t+=(0,o.default)(this.data.substr(0,6),"LLLLLL"),t+="01010",t+=(0,o.default)(this.data.substr(6,6),"RRRRRR"),{data:t+="101",text:this.text}}},{key:"guardedEncoding",value:function(){var t=[];return this.displayValue&&t.push({data:"00000000",text:this.text.substr(0,1),options:{textAlign:"left",fontSize:this.fontSize}}),t.push({data:"101"+(0,o.default)(this.data[0],"L"),options:{height:this.guardHeight}}),t.push({data:(0,o.default)(this.data.substr(1,5),"LLLLL"),text:this.text.substr(1,5),options:{fontSize:this.fontSize}}),t.push({data:"01010",options:{height:this.guardHeight}}),t.push({data:(0,o.default)(this.data.substr(6,5),"RRRRR"),text:this.text.substr(6,5),options:{fontSize:this.fontSize}}),t.push({data:(0,o.default)(this.data[11],"R")+"101",options:{height:this.guardHeight}}),this.displayValue&&t.push({data:"00000000",text:this.text.substr(11,1),options:{textAlign:"right",fontSize:this.fontSize}}),t}}]),e}(i(n(0)).default);function u(t){var e,n=0;for(e=1;e<11;e+=2)n+=parseInt(t[e]);for(e=0;e<11;e+=2)n+=3*parseInt(t[e]);return(10-n%10)%10}e.default=a},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(31),a=n(0);function u(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function f(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}var c=function(t){function e(){return u(this,e),f(this,(e.__proto__||Object.getPrototypeOf(e)).apply(this,arguments))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"valid",value:function(){return-1!==this.data.search(/^([0-9]{2})+$/)}},{key:"encode",value:function(){var t=this,e=this.data.match(/.{2}/g).map((function(e){return t.encodePair(e)})).join("");return{data:i.START_BIN+e+i.END_BIN,text:this.text}}},{key:"encodePair",value:function(t){var e=i.BINARIES[t[1]];return i.BINARIES[t[0]].split("").map((function(t,n){return("1"===t?"111":"1")+("1"===e[n]?"000":"0")})).join("")}}]),e}(((r=a)&&r.__esModule?r:{default:r}).default);e.default=c},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(t){var e=["width","height","textMargin","fontSize","margin","marginTop","marginBottom","marginLeft","marginRight"];for(var n in e)e.hasOwnProperty(n)&&(n=e[n],"string"==typeof t[n]&&(t[n]=parseInt(t[n],10)));"string"==typeof t.displayValue&&(t.displayValue="false"!=t.displayValue);return t}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r={width:2,height:100,format:"auto",displayValue:!0,fontOptions:"",font:"monospace",text:void 0,textAlign:"center",textPosition:"bottom",textMargin:2,fontSize:20,background:"#ffffff",lineColor:"#000000",margin:10,marginTop:void 0,marginBottom:void 0,marginLeft:void 0,marginRight:void 0,valid:function(){}};e.default=r},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.getTotalWidthOfEncodings=e.calculateEncodingAttributes=e.getBarcodePadding=e.getEncodingHeight=e.getMaximumHeightOfEncodings=void 0;var r,o=n(7),i=(r=o)&&r.__esModule?r:{default:r};function a(t,e){return e.height+(e.displayValue&&t.text.length>0?e.fontSize+e.textMargin:0)+e.marginTop+e.marginBottom}function u(t,e,n){if(n.displayValue&&e<t){if("center"==n.textAlign)return Math.floor((t-e)/2);if("left"==n.textAlign)return 0;if("right"==n.textAlign)return Math.floor(t-e)}return 0}function f(t,e,n){var r;if(n)r=n;else{if("undefined"==typeof document)return 0;r=document.createElement("canvas").getContext("2d")}r.font=e.fontOptions+" "+e.fontSize+"px "+e.font;var o=r.measureText(t);return o?o.width:0}e.getMaximumHeightOfEncodings=function(t){for(var e=0,n=0;n<t.length;n++)t[n].height>e&&(e=t[n].height);return e},e.getEncodingHeight=a,e.getBarcodePadding=u,e.calculateEncodingAttributes=function(t,e,n){for(var r=0;r<t.length;r++){var o,c=t[r],s=(0,i.default)(e,c.options);o=s.displayValue?f(c.text,s,n):0;var l=c.data.length*s.width;c.width=Math.ceil(Math.max(o,l)),c.height=a(c,s),c.barcodePadding=u(o,l,s)}},e.getTotalWidthOfEncodings=function(t){for(var e=0,n=0;n<t.length;n++)e+=t[n].width;return e}},function(t,e,n){"use strict";function r(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function o(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function i(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}Object.defineProperty(e,"__esModule",{value:!0});var a=function(t){function e(t,n){r(this,e);var i=o(this,(e.__proto__||Object.getPrototypeOf(e)).call(this));return i.name="InvalidInputException",i.symbology=t,i.input=n,i.message='"'+i.input+'" is not a valid input for '+i.symbology,i}return i(e,Error),e}(),u=function(t){function e(){r(this,e);var t=o(this,(e.__proto__||Object.getPrototypeOf(e)).call(this));return t.name="InvalidElementException",t.message="Not supported type to render on",t}return i(e,Error),e}(),f=function(t){function e(){r(this,e);var t=o(this,(e.__proto__||Object.getPrototypeOf(e)).call(this));return t.name="NoElementException",t.message="No element to render on.",t}return i(e,Error),e}();e.InvalidInputException=a,e.InvalidElementException=u,e.NoElementException=f},function(t,e,n){"use strict";var r=p(n(16)),o=p(n(7)),i=p(n(41)),a=p(n(42)),u=p(n(43)),f=p(n(11)),c=p(n(49)),s=n(14),l=p(n(12));function p(t){return t&&t.__esModule?t:{default:t}}var d=function(){},h=function(t,e,n){var r=new d;if(void 0===t)throw Error("No element to render on was provided.");return r._renderProperties=(0,u.default)(t),r._encodings=[],r._options=l.default,r._errorHandler=new c.default(r),void 0!==e&&((n=n||{}).format||(n.format=_()),r.options(n)[n.format](e,n).render()),r};for(var y in h.getModule=function(t){return r.default[t]},r.default)r.default.hasOwnProperty(y)&&b(r.default,y);function b(t,e){d.prototype[e]=d.prototype[e.toUpperCase()]=d.prototype[e.toLowerCase()]=function(n,r){var i=this;return i._errorHandler.wrapBarcodeCall((function(){r.text=void 0===r.text?void 0:""+r.text;var a=(0,o.default)(i._options,r);a=(0,f.default)(a);var u=t[e],c=v(n,u,a);return i._encodings.push(c),i}))}}function v(t,e,n){var r=new e(t=""+t,n);if(!r.valid())throw new s.InvalidInputException(r.constructor.name,t);var a=r.encode();a=(0,i.default)(a);for(var u=0;u<a.length;u++)a[u].options=(0,o.default)(n,a[u].options);return a}function _(){return r.default.CODE128?"CODE128":Object.keys(r.default)[0]}function g(t,e,n){e=(0,i.default)(e);for(var r=0;r<e.length;r++)e[r].options=(0,o.default)(n,e[r].options),(0,a.default)(e[r].options);(0,a.default)(n),new(0,t.renderer)(t.element,e,n).render(),t.afterRender&&t.afterRender()}d.prototype.options=function(t){return this._options=(0,o.default)(this._options,t),this},d.prototype.blank=function(t){var e=new Array(t+1).join("0");return this._encodings.push({data:e}),this},d.prototype.init=function(){var t;if(this._renderProperties)for(var e in Array.isArray(this._renderProperties)||(this._renderProperties=[this._renderProperties]),this._renderProperties){t=this._renderProperties[e];var n=(0,o.default)(this._options,t.options);"auto"==n.format&&(n.format=_()),this._errorHandler.wrapBarcodeCall((function(){var e=v(n.value,r.default[n.format.toUpperCase()],n);g(t,e,n)}))}},d.prototype.render=function(){if(!this._renderProperties)throw new s.NoElementException;if(Array.isArray(this._renderProperties))for(var t=0;t<this._renderProperties.length;t++)g(this._renderProperties[t],this._encodings,this._options);else g(this._renderProperties,this._encodings,this._options);return this},d.prototype._defaults=l.default,"undefined"!=typeof window&&(window.JsBarcode=h),"undefined"!=typeof jQuery&&(jQuery.fn.JsBarcode=function(t,e){var n=[];return jQuery(this).each((function(){n.push(this)})),h(n,t,e)}),t.exports=h},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=n(17),o=n(18),i=n(24),a=n(30),u=n(33),f=n(38),c=n(39),s=n(40);e.default={CODE39:r.CODE39,CODE128:o.CODE128,CODE128A:o.CODE128A,CODE128B:o.CODE128B,CODE128C:o.CODE128C,EAN13:i.EAN13,EAN8:i.EAN8,EAN5:i.EAN5,EAN2:i.EAN2,UPC:i.UPC,UPCE:i.UPCE,ITF14:a.ITF14,ITF:a.ITF,MSI:u.MSI,MSI10:u.MSI10,MSI11:u.MSI11,MSI1010:u.MSI1010,MSI1110:u.MSI1110,pharmacode:f.pharmacode,codabar:c.codabar,GenericBarcode:s.GenericBarcode}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.CODE39=void 0;var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(0);var a=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),t=t.toUpperCase(),n.mod43&&(t+=function(t){return u[t]}(function(t){for(var e=0,n=0;n<t.length;n++)e+=s(t[n]);return e%=43}(t))),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"encode",value:function(){for(var t=c("*"),e=0;e<this.data.length;e++)t+=c(this.data[e])+"0";return{data:t+=c("*"),text:this.text}}},{key:"valid",value:function(){return-1!==this.data.search(/^[0-9A-Z\-\.\ \$\/\+\%]+$/)}}]),e}(((r=i)&&r.__esModule?r:{default:r}).default),u=["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","-","."," ","$","/","+","%","*"],f=[20957,29783,23639,30485,20951,29813,23669,20855,29789,23645,29975,23831,30533,22295,30149,24005,21623,29981,23837,22301,30023,23879,30545,22343,30161,24017,21959,30065,23921,22385,29015,18263,29141,17879,29045,18293,17783,29021,18269,17477,17489,17681,20753,35770];function c(t){return function(t){return f[t].toString(2)}(s(t))}function s(t){return u.indexOf(t)}e.CODE39=a},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.CODE128C=e.CODE128B=e.CODE128A=e.CODE128=void 0;var r=u(n(19)),o=u(n(21)),i=u(n(22)),a=u(n(23));function u(t){return t&&t.__esModule?t:{default:t}}e.CODE128=r.default,e.CODE128A=o.default,e.CODE128B=i.default,e.CODE128C=a.default},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=i(n(5)),o=i(n(20));function i(t){return t&&t.__esModule?t:{default:t}}function a(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}var u=function(t){function e(t,n){if(function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),/^[\x00-\x7F\xC8-\xD3]+$/.test(t))var r=a(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,(0,o.default)(t),n));else r=a(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n));return a(r)}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),e}(r.default);e.default=u},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=n(1),o=function(t){return t.match(new RegExp("^"+r.A_CHARS+"*"))[0].length},i=function(t){return t.match(new RegExp("^"+r.B_CHARS+"*"))[0].length},a=function(t){return t.match(new RegExp("^"+r.C_CHARS+"*"))[0]};function u(t,e){var n=e?r.A_CHARS:r.B_CHARS,o=t.match(new RegExp("^("+n+"+?)(([0-9]{2}){2,})([^0-9]|$)"));if(o)return o[1]+String.fromCharCode(204)+f(t.substring(o[1].length));var i=t.match(new RegExp("^"+n+"+"))[0];return i.length===t.length?t:i+String.fromCharCode(e?205:206)+u(t.substring(i.length),!e)}function f(t){var e=a(t),n=e.length;if(n===t.length)return t;t=t.substring(n);var r=o(t)>=i(t);return e+String.fromCharCode(r?206:205)+u(t,r)}e.default=function(t){var e=void 0;if(a(t).length>=2)e=r.C_START_CHAR+f(t);else{var n=o(t)>i(t);e=(n?r.A_START_CHAR:r.B_START_CHAR)+u(t,n)}return e.replace(/[\xCD\xCE]([^])[\xCD\xCE]/,(function(t,e){return String.fromCharCode(203)+e}))}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(5),a=(r=i)&&r.__esModule?r:{default:r},u=n(1);var f=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,u.A_START_CHAR+t,n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"valid",value:function(){return new RegExp("^"+u.A_CHARS+"+$").test(this.data)}}]),e}(a.default);e.default=f},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(5),a=(r=i)&&r.__esModule?r:{default:r},u=n(1);var f=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,u.B_START_CHAR+t,n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"valid",value:function(){return new RegExp("^"+u.B_CHARS+"+$").test(this.data)}}]),e}(a.default);e.default=f},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(5),a=(r=i)&&r.__esModule?r:{default:r},u=n(1);var f=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,u.C_START_CHAR+t,n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"valid",value:function(){return new RegExp("^"+u.C_CHARS+"+$").test(this.data)}}]),e}(a.default);e.default=f},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.UPCE=e.UPC=e.EAN2=e.EAN5=e.EAN8=e.EAN13=void 0;var r=c(n(25)),o=c(n(26)),i=c(n(27)),a=c(n(28)),u=c(n(9)),f=c(n(29));function c(t){return t&&t.__esModule?t:{default:t}}e.EAN13=r.default,e.EAN8=o.default,e.EAN5=i.default,e.EAN2=a.default,e.UPC=u.default,e.UPCE=f.default},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=function t(e,n,r){null===e&&(e=Function.prototype);var o=Object.getOwnPropertyDescriptor(e,n);if(void 0===o){var i=Object.getPrototypeOf(e);return null===i?void 0:t(i,n,r)}if("value"in o)return o.value;var a=o.get;return void 0!==a?a.call(r):void 0},a=n(2),u=n(8),f=(r=u)&&r.__esModule?r:{default:r};var c=function(t){return(10-t.substr(0,12).split("").map((function(t){return+t})).reduce((function(t,e,n){return n%2?t+3*e:t+e}),0)%10)%10},s=function(t){function e(t,n){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),-1!==t.search(/^[0-9]{12}$/)&&(t+=c(t));var r=function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n));return r.lastChar=n.lastChar,r}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"valid",value:function(){return-1!==this.data.search(/^[0-9]{13}$/)&&+this.data[12]===c(this.data)}},{key:"leftText",value:function(){return i(e.prototype.__proto__||Object.getPrototypeOf(e.prototype),"leftText",this).call(this,1,6)}},{key:"leftEncode",value:function(){var t=this.data.substr(1,6),n=a.EAN13_STRUCTURE[this.data[0]];return i(e.prototype.__proto__||Object.getPrototypeOf(e.prototype),"leftEncode",this).call(this,t,n)}},{key:"rightText",value:function(){return i(e.prototype.__proto__||Object.getPrototypeOf(e.prototype),"rightText",this).call(this,7,6)}},{key:"rightEncode",value:function(){var t=this.data.substr(7,6);return i(e.prototype.__proto__||Object.getPrototypeOf(e.prototype),"rightEncode",this).call(this,t,"RRRRRR")}},{key:"encodeGuarded",value:function(){var t=i(e.prototype.__proto__||Object.getPrototypeOf(e.prototype),"encodeGuarded",this).call(this);return this.options.displayValue&&(t.unshift({data:"000000000000",text:this.text.substr(0,1),options:{textAlign:"left",fontSize:this.fontSize}}),this.options.lastChar&&(t.push({data:"00"}),t.push({data:"00000",text:this.options.lastChar,options:{fontSize:this.fontSize}}))),t}}]),e}(f.default);e.default=s},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=function t(e,n,r){null===e&&(e=Function.prototype);var o=Object.getOwnPropertyDescriptor(e,n);if(void 0===o){var i=Object.getPrototypeOf(e);return null===i?void 0:t(i,n,r)}if("value"in o)return o.value;var a=o.get;return void 0!==a?a.call(r):void 0},a=n(8),u=(r=a)&&r.__esModule?r:{default:r};var f=function(t){return(10-t.substr(0,7).split("").map((function(t){return+t})).reduce((function(t,e,n){return n%2?t+e:t+3*e}),0)%10)%10},c=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),-1!==t.search(/^[0-9]{7}$/)&&(t+=f(t)),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"valid",value:function(){return-1!==this.data.search(/^[0-9]{8}$/)&&+this.data[7]===f(this.data)}},{key:"leftText",value:function(){return i(e.prototype.__proto__||Object.getPrototypeOf(e.prototype),"leftText",this).call(this,0,4)}},{key:"leftEncode",value:function(){var t=this.data.substr(0,4);return i(e.prototype.__proto__||Object.getPrototypeOf(e.prototype),"leftEncode",this).call(this,t,"LLLL")}},{key:"rightText",value:function(){return i(e.prototype.__proto__||Object.getPrototypeOf(e.prototype),"rightText",this).call(this,4,4)}},{key:"rightEncode",value:function(){var t=this.data.substr(4,4);return i(e.prototype.__proto__||Object.getPrototypeOf(e.prototype),"rightEncode",this).call(this,t,"RRRR")}}]),e}(u.default);e.default=c},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),o=n(2),i=u(n(3)),a=u(n(0));function u(t){return t&&t.__esModule?t:{default:t}}var f=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),r(e,[{key:"valid",value:function(){return-1!==this.data.search(/^[0-9]{5}$/)}},{key:"encode",value:function(){var t,e=o.EAN5_STRUCTURE[(t=this.data,t.split("").map((function(t){return+t})).reduce((function(t,e,n){return n%2?t+9*e:t+3*e}),0)%10)];return{data:"1011"+(0,i.default)(this.data,e,"01"),text:this.text}}}]),e}(a.default);e.default=f},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),o=n(2),i=a(n(3));function a(t){return t&&t.__esModule?t:{default:t}}var u=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),r(e,[{key:"valid",value:function(){return-1!==this.data.search(/^[0-9]{2}$/)}},{key:"encode",value:function(){var t=o.EAN2_STRUCTURE[parseInt(this.data)%4];return{data:"1011"+(0,i.default)(this.data,t,"01"),text:this.text}}}]),e}(a(n(0)).default);e.default=u},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),o=u(n(3)),i=u(n(0)),a=n(9);function u(t){return t&&t.__esModule?t:{default:t}}function f(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}var c=["XX00000XXX","XX10000XXX","XX20000XXX","XXX00000XX","XXXX00000X","XXXXX00005","XXXXX00006","XXXXX00007","XXXXX00008","XXXXX00009"],s=[["EEEOOO","OOOEEE"],["EEOEOO","OOEOEE"],["EEOOEO","OOEEOE"],["EEOOOE","OOEEEO"],["EOEEOO","OEOOEE"],["EOOEEO","OEEOOE"],["EOOOEE","OEEEOO"],["EOEOEO","OEOEOE"],["EOEOOE","OEOEEO"],["EOOEOE","OEEOEO"]],l=function(t){function e(t,n){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e);var r=f(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n));if(r.isValid=!1,-1!==t.search(/^[0-9]{6}$/))r.middleDigits=t,r.upcA=p(t,"0"),r.text=n.text||""+r.upcA[0]+t+r.upcA[r.upcA.length-1],r.isValid=!0;else{if(-1===t.search(/^[01][0-9]{7}$/))return f(r);if(r.middleDigits=t.substring(1,t.length-1),r.upcA=p(r.middleDigits,t[0]),r.upcA[r.upcA.length-1]!==t[t.length-1])return f(r);r.isValid=!0}return r.displayValue=n.displayValue,n.fontSize>10*n.width?r.fontSize=10*n.width:r.fontSize=n.fontSize,r.guardHeight=n.height+r.fontSize/2+n.textMargin,r}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),r(e,[{key:"valid",value:function(){return this.isValid}},{key:"encode",value:function(){return this.options.flat?this.flatEncoding():this.guardedEncoding()}},{key:"flatEncoding",value:function(){var t="";return t+="101",t+=this.encodeMiddleDigits(),{data:t+="010101",text:this.text}}},{key:"guardedEncoding",value:function(){var t=[];return this.displayValue&&t.push({data:"00000000",text:this.text[0],options:{textAlign:"left",fontSize:this.fontSize}}),t.push({data:"101",options:{height:this.guardHeight}}),t.push({data:this.encodeMiddleDigits(),text:this.text.substring(1,7),options:{fontSize:this.fontSize}}),t.push({data:"010101",options:{height:this.guardHeight}}),this.displayValue&&t.push({data:"00000000",text:this.text[7],options:{textAlign:"right",fontSize:this.fontSize}}),t}},{key:"encodeMiddleDigits",value:function(){var t=this.upcA[0],e=this.upcA[this.upcA.length-1],n=s[parseInt(e)][parseInt(t)];return(0,o.default)(this.middleDigits,n)}}]),e}(i.default);function p(t,e){for(var n=parseInt(t[t.length-1]),r=c[n],o="",i=0,u=0;u<r.length;u++){var f=r[u];o+="X"===f?t[i++]:f}return""+(o=""+e+o)+(0,a.checksum)(o)}e.default=l},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.ITF14=e.ITF=void 0;var r=i(n(10)),o=i(n(32));function i(t){return t&&t.__esModule?t:{default:t}}e.ITF=r.default,e.ITF14=o.default},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});e.START_BIN="1010",e.END_BIN="11101",e.BINARIES=["00110","10001","01001","11000","00101","10100","01100","00011","10010","01010"]},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(10),a=(r=i)&&r.__esModule?r:{default:r};var u=function(t){var e=t.substr(0,13).split("").map((function(t){return parseInt(t,10)})).reduce((function(t,e,n){return t+e*(3-n%2*2)}),0);return 10*Math.ceil(e/10)-e},f=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),-1!==t.search(/^[0-9]{13}$/)&&(t+=u(t)),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"valid",value:function(){return-1!==this.data.search(/^[0-9]{14}$/)&&+this.data[13]===u(this.data)}}]),e}(a.default);e.default=f},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.MSI1110=e.MSI1010=e.MSI11=e.MSI10=e.MSI=void 0;var r=f(n(4)),o=f(n(34)),i=f(n(35)),a=f(n(36)),u=f(n(37));function f(t){return t&&t.__esModule?t:{default:t}}e.MSI=r.default,e.MSI10=o.default,e.MSI11=i.default,e.MSI1010=a.default,e.MSI1110=u.default},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=n(4),i=(r=o)&&r.__esModule?r:{default:r},a=n(6);var u=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t+(0,a.mod10)(t),n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),e}(i.default);e.default=u},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=n(4),i=(r=o)&&r.__esModule?r:{default:r},a=n(6);var u=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t+(0,a.mod11)(t),n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),e}(i.default);e.default=u},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=n(4),i=(r=o)&&r.__esModule?r:{default:r},a=n(6);var u=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),t+=(0,a.mod10)(t),t+=(0,a.mod10)(t),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),e}(i.default);e.default=u},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=n(4),i=(r=o)&&r.__esModule?r:{default:r},a=n(6);var u=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),t+=(0,a.mod11)(t),t+=(0,a.mod10)(t),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),e}(i.default);e.default=u},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.pharmacode=void 0;var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(0);var a=function(t){function e(t,n){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e);var r=function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n));return r.number=parseInt(t,10),r}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"encode",value:function(){for(var t=this.number,e="";!isNaN(t)&&0!=t;)t%2==0?(e="11100"+e,t=(t-2)/2):(e="100"+e,t=(t-1)/2);return{data:e=e.slice(0,-2),text:this.text}}},{key:"valid",value:function(){return this.number>=3&&this.number<=131070}}]),e}(((r=i)&&r.__esModule?r:{default:r}).default);e.pharmacode=a},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.codabar=void 0;var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(0);var a=function(t){function e(t,n){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),0===t.search(/^[0-9\-\$\:\.\+\/]+$/)&&(t="A"+t+"A");var r=function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t.toUpperCase(),n));return r.text=r.options.text||r.text.replace(/[A-D]/g,""),r}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"valid",value:function(){return-1!==this.data.search(/^[A-D][0-9\-\$\:\.\+\/]+[A-D]$/)}},{key:"encode",value:function(){for(var t=[],e=this.getEncodings(),n=0;n<this.data.length;n++)t.push(e[this.data.charAt(n)]),n!==this.data.length-1&&t.push("0");return{text:this.text,data:t.join("")}}},{key:"getEncodings",value:function(){return{0:"101010011",1:"101011001",2:"101001011",3:"110010101",4:"101101001",5:"110101001",6:"100101011",7:"100101101",8:"100110101",9:"110100101","-":"101001101",$:"101100101",":":"1101011011","/":"1101101011",".":"1101101101","+":"1011011011",A:"1011001001",B:"1001001011",C:"1010010011",D:"1010011001"}}}]),e}(((r=i)&&r.__esModule?r:{default:r}).default);e.codabar=a},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.GenericBarcode=void 0;var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(0);var a=function(t){function e(t,n){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}(this,(e.__proto__||Object.getPrototypeOf(e)).call(this,t,n))}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(e,t),o(e,[{key:"encode",value:function(){return{data:"10101010101010101010101010101010101010101",text:this.text}}},{key:"valid",value:function(){return!0}}]),e}(((r=i)&&r.__esModule?r:{default:r}).default);e.GenericBarcode=a},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(t){var e=[];return function t(n){if(Array.isArray(n))for(var r=0;r<n.length;r++)t(n[r]);else n.text=n.text||"",n.data=n.data||"",e.push(n)}(t),e}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(t){return t.marginTop=t.marginTop||t.margin,t.marginBottom=t.marginBottom||t.margin,t.marginRight=t.marginRight||t.margin,t.marginLeft=t.marginLeft||t.margin,t}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},o=u(n(44)),i=u(n(45)),a=n(14);function u(t){return t&&t.__esModule?t:{default:t}}function f(t){if("string"==typeof t)return function(t){var e=document.querySelectorAll(t);if(0===e.length)return;for(var n=[],r=0;r<e.length;r++)n.push(f(e[r]));return n}(t);if(Array.isArray(t)){for(var e=[],n=0;n<t.length;n++)e.push(f(t[n]));return e}if("undefined"!=typeof HTMLCanvasElement&&t instanceof HTMLImageElement)return u=t,{element:c=document.createElement("canvas"),options:(0,o.default)(u),renderer:i.default.CanvasRenderer,afterRender:function(){u.setAttribute("src",c.toDataURL())}};if(t&&t.nodeName&&"svg"===t.nodeName.toLowerCase()||"undefined"!=typeof SVGElement&&t instanceof SVGElement)return{element:t,options:(0,o.default)(t),renderer:i.default.SVGRenderer};if("undefined"!=typeof HTMLCanvasElement&&t instanceof HTMLCanvasElement)return{element:t,options:(0,o.default)(t),renderer:i.default.CanvasRenderer};if(t&&t.getContext)return{element:t,renderer:i.default.CanvasRenderer};if(t&&"object"===(void 0===t?"undefined":r(t))&&!t.nodeName)return{element:t,renderer:i.default.ObjectRenderer};throw new a.InvalidElementException;var u,c}e.default=f},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=i(n(11)),o=i(n(12));function i(t){return t&&t.__esModule?t:{default:t}}e.default=function(t){var e={};for(var n in o.default)o.default.hasOwnProperty(n)&&(t.hasAttribute("jsbarcode-"+n.toLowerCase())&&(e[n]=t.getAttribute("jsbarcode-"+n.toLowerCase())),t.hasAttribute("data-"+n.toLowerCase())&&(e[n]=t.getAttribute("data-"+n.toLowerCase())));return e.value=t.getAttribute("jsbarcode-value")||t.getAttribute("data-value"),e=(0,r.default)(e)}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=a(n(46)),o=a(n(47)),i=a(n(48));function a(t){return t&&t.__esModule?t:{default:t}}e.default={CanvasRenderer:r.default,SVGRenderer:o.default,ObjectRenderer:i.default}},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(7),a=(r=i)&&r.__esModule?r:{default:r},u=n(13);var f=function(){function t(e,n,r){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.canvas=e,this.encodings=n,this.options=r}return o(t,[{key:"render",value:function(){if(!this.canvas.getContext)throw new Error("The browser does not support canvas.");this.prepareCanvas();for(var t=0;t<this.encodings.length;t++){var e=(0,a.default)(this.options,this.encodings[t].options);this.drawCanvasBarcode(e,this.encodings[t]),this.drawCanvasText(e,this.encodings[t]),this.moveCanvasDrawing(this.encodings[t])}this.restoreCanvas()}},{key:"prepareCanvas",value:function(){var t=this.canvas.getContext("2d");t.save(),(0,u.calculateEncodingAttributes)(this.encodings,this.options,t);var e=(0,u.getTotalWidthOfEncodings)(this.encodings),n=(0,u.getMaximumHeightOfEncodings)(this.encodings);this.canvas.width=e+this.options.marginLeft+this.options.marginRight,this.canvas.height=n,t.clearRect(0,0,this.canvas.width,this.canvas.height),this.options.background&&(t.fillStyle=this.options.background,t.fillRect(0,0,this.canvas.width,this.canvas.height)),t.translate(this.options.marginLeft,0)}},{key:"drawCanvasBarcode",value:function(t,e){var n,r=this.canvas.getContext("2d"),o=e.data;n="top"==t.textPosition?t.marginTop+t.fontSize+t.textMargin:t.marginTop,r.fillStyle=t.lineColor;for(var i=0;i<o.length;i++){var a=i*t.width+e.barcodePadding;"1"===o[i]?r.fillRect(a,n,t.width,t.height):o[i]&&r.fillRect(a,n,t.width,t.height*o[i])}}},{key:"drawCanvasText",value:function(t,e){var n,r,o=this.canvas.getContext("2d"),i=t.fontOptions+" "+t.fontSize+"px "+t.font;t.displayValue&&(r="top"==t.textPosition?t.marginTop+t.fontSize-t.textMargin:t.height+t.textMargin+t.marginTop+t.fontSize,o.font=i,"left"==t.textAlign||e.barcodePadding>0?(n=0,o.textAlign="left"):"right"==t.textAlign?(n=e.width-1,o.textAlign="right"):(n=e.width/2,o.textAlign="center"),o.fillText(e.text,n,r))}},{key:"moveCanvasDrawing",value:function(t){this.canvas.getContext("2d").translate(t.width,0)}},{key:"restoreCanvas",value:function(){this.canvas.getContext("2d").restore()}}]),t}();e.default=f},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r,o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(7),a=(r=i)&&r.__esModule?r:{default:r},u=n(13);var f="http://www.w3.org/2000/svg",c=function(){function t(e,n,r){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.svg=e,this.encodings=n,this.options=r,this.document=r.xmlDocument||document}return o(t,[{key:"render",value:function(){var t=this.options.marginLeft;this.prepareSVG();for(var e=0;e<this.encodings.length;e++){var n=this.encodings[e],r=(0,a.default)(this.options,n.options),o=this.createGroup(t,r.marginTop,this.svg);this.setGroupOptions(o,r),this.drawSvgBarcode(o,r,n),this.drawSVGText(o,r,n),t+=n.width}}},{key:"prepareSVG",value:function(){for(;this.svg.firstChild;)this.svg.removeChild(this.svg.firstChild);(0,u.calculateEncodingAttributes)(this.encodings,this.options);var t=(0,u.getTotalWidthOfEncodings)(this.encodings),e=(0,u.getMaximumHeightOfEncodings)(this.encodings),n=t+this.options.marginLeft+this.options.marginRight;this.setSvgAttributes(n,e),this.options.background&&this.drawRect(0,0,n,e,this.svg).setAttribute("style","fill:"+this.options.background+";")}},{key:"drawSvgBarcode",value:function(t,e,n){var r,o=n.data;r="top"==e.textPosition?e.fontSize+e.textMargin:0;for(var i=0,a=0,u=0;u<o.length;u++)a=u*e.width+n.barcodePadding,"1"===o[u]?i++:i>0&&(this.drawRect(a-e.width*i,r,e.width*i,e.height,t),i=0);i>0&&this.drawRect(a-e.width*(i-1),r,e.width*i,e.height,t)}},{key:"drawSVGText",value:function(t,e,n){var r,o,i=this.document.createElementNS(f,"text");e.displayValue&&(i.setAttribute("style","font:"+e.fontOptions+" "+e.fontSize+"px "+e.font),o="top"==e.textPosition?e.fontSize-e.textMargin:e.height+e.textMargin+e.fontSize,"left"==e.textAlign||n.barcodePadding>0?(r=0,i.setAttribute("text-anchor","start")):"right"==e.textAlign?(r=n.width-1,i.setAttribute("text-anchor","end")):(r=n.width/2,i.setAttribute("text-anchor","middle")),i.setAttribute("x",r),i.setAttribute("y",o),i.appendChild(this.document.createTextNode(n.text)),t.appendChild(i))}},{key:"setSvgAttributes",value:function(t,e){var n=this.svg;n.setAttribute("width",t+"px"),n.setAttribute("height",e+"px"),n.setAttribute("x","0px"),n.setAttribute("y","0px"),n.setAttribute("viewBox","0 0 "+t+" "+e),n.setAttribute("xmlns",f),n.setAttribute("version","1.1"),n.setAttribute("style","transform: translate(0,0)")}},{key:"createGroup",value:function(t,e,n){var r=this.document.createElementNS(f,"g");return r.setAttribute("transform","translate("+t+", "+e+")"),n.appendChild(r),r}},{key:"setGroupOptions",value:function(t,e){t.setAttribute("style","fill:"+e.lineColor+";")}},{key:"drawRect",value:function(t,e,n,r,o){var i=this.document.createElementNS(f,"rect");return i.setAttribute("x",t),i.setAttribute("y",e),i.setAttribute("width",n),i.setAttribute("height",r),o.appendChild(i),i}}]),t}();e.default=c},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}();var o=function(){function t(e,n,r){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.object=e,this.encodings=n,this.options=r}return r(t,[{key:"render",value:function(){this.object.encodings=this.encodings}}]),t}();e.default=o},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}();var o=function(){function t(e){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.api=e}return r(t,[{key:"handleCatch",value:function(t){if("InvalidInputException"!==t.name)throw t;if(this.api._options.valid===this.api._defaults.valid)throw t.message;this.api._options.valid(!1),this.api.render=function(){}}},{key:"wrapBarcodeCall",value:function(t){try{var e=t.apply(void 0,arguments);return this.api._options.valid(!0),e}catch(t){return this.handleCatch(t),this.api}}}]),t}();e.default=o}]);
+    </script>
+    <script>
+        /* ==========================================================================
+           FUNCIONES INLINE - VERSION OFFLINE
+           ========================================================================== */
+
+/**
+ * FORMAT-APP.JS - V10.0 FINAL MASTER
+ * - Soporte Completo: FO-LC-17 a FO-LC-45
+ * - Lógica FO-24: Inventario descuenta Reproceso/Devolución. Alerta Eliminación.
+ * - Lógica FO-21: Restaurada (Padre-Hijo, Cosecha, Alimentación).
+ * - Lógica FO-20: Fix toggle congelación.
+ */
+
+const API_URL = '/api';
+
+const App = {
+    config: {
+        recipientTypes: [
+            "Flask 75 cm²", "Flask 175 cm²", "Flask 225 cm²",
+            "Hyper Flask", "Cell Stack", "Bioreactor",
+            "Placa Petri", "Tubo Cónico"
+        ]
+    },
+
+    init: function () {
+        const docId = document.body.id;
+        console.log("Iniciando App V10 para:", docId);
+
+        this.Universal.ensureFieldIds(docId);
+        this.Universal.setupDateInputs();
+        this.Universal.setupBarcodes();
+        this.Universal.setupPrintHandler();
+        this.Universal.setupDraggableControls();
+
+        switch (docId) {
+            case 'doc-fo-lc-ResumenRecepcion': case 'doc-fo-lc-17': case 'doc-fo-lc-18': case 'doc-fo-lc-19': case 'doc-fo-lc-23': break;
+            case 'doc-fo-lc-20': this.Docs.FO_LC_20.init(); break;
+            case 'doc-fo-lc-21': this.Docs.FO_LC_21.init(); break;
+            case 'doc-fo-lc-22': this.Docs.FO_LC_22.init(); break;
+            case 'doc-fo-lc-24': this.Docs.FO_LC_24.init(); break;
+            case 'doc-fo-lc-31': this.Docs.FO_LC_31.init(); break;
+            case 'doc-fo-lc-40': case 'doc-fo-lc-40-b': this.Docs.FO_LC_40.init(); break;
+            case 'doc-fo-lc-41': case 'doc-fo-lc-42': case 'doc-fo-lc-43': case 'doc-fo-lc-44': case 'doc-fo-lc-45':
+                this.Docs.FO_Generic.init(docId); break;
+        }
+
+        setTimeout(() => this.Universal.loadData(docId), 0);
+    },
+
+    Universal: {
+        ensureFieldIds: function (docId) {
+            // Asegurar que cada campo editable tenga un ID único
+            const formatPrefix = String(docId || '').replace(/^doc-/, '').replace(/-/g, '_');
+            const fields = Array.from(document.querySelectorAll('input, select, textarea'))
+                .filter(el => el.type !== 'submit' && el.type !== 'button');
+
+            fields.forEach((el, index) => {
+                // Si el campo no tiene ID, asignar uno único
+                if (!el.id) {
+                    // Intentar generar un ID basado en el contexto del campo
+                    let generatedId = '';
+
+                    // Si tiene un name, usarlo como base
+                    if (el.name) {
+                        generatedId = `${formatPrefix}_${el.name}`;
+                    }
+                    // Si tiene un placeholder descriptivo, usarlo
+                    else if (el.placeholder) {
+                        const cleanPlaceholder = el.placeholder
+                            .toLowerCase()
+                            .replace(/[^a-z0-9]/g, '_')
+                            .substring(0, 30);
+                        generatedId = `${formatPrefix}_${cleanPlaceholder}_${index}`;
+                    }
+                    // Caso contrario, usar el tipo de campo y el índice
+                    else {
+                        const fieldType = el.tagName.toLowerCase();
+                        generatedId = `${formatPrefix}_${fieldType}_${index}`;
+                    }
+
+                    // Asignar el ID generado
+                    el.id = generatedId;
+                }
+            });
+
+            console.log(`✓ IDs únicos asignados a ${fields.length} campos en ${docId}`);
+        },
+        getDocHandler: function (docId) {
+            const key = String(docId || '')
+                .replace(/^doc-/, '')
+                .replace(/-/g, '_')
+                .toUpperCase();
+            return App.Docs[key] || null;
+        },
+        getInstanceCode: function () {
+            const params = new URLSearchParams(window.location.search);
+            return (params.get('instance') || '').trim();
+        },
+        isNewMode: function () {
+            const params = new URLSearchParams(window.location.search);
+            const value = String(params.get('new') || '').trim().toLowerCase();
+            return value === '1' || value === 'true' || value === 'yes';
+        },
+        setInstanceCode: function (instanceCode) {
+            if (!instanceCode) return;
+            const url = new URL(window.location.href);
+            url.searchParams.set('instance', instanceCode);
+            window.history.replaceState({}, '', url.toString());
+        },
+        getStorageKey: function (docId, instanceCode = '') {
+            const code = String(instanceCode || this.getInstanceCode() || '').trim();
+            return code ? `xelle_${docId}_${code}` : `xelle_${docId}`;
+        },
+        getSession: function () {
+            try {
+                return JSON.parse(localStorage.getItem('xelle_session') || 'null') || null;
+            } catch (e) {
+                return null;
+            }
+        },
+        getCurrentUserId: function () {
+            const session = this.getSession();
+            const raw = session?.id ?? session?.userId ?? session?.user_id ?? null;
+            const parsed = Number(raw);
+            return Number.isFinite(parsed) ? parsed : null;
+        },
+        getFormatType: function (docId) {
+            const barcodeInput = document.querySelector('.generate-barcode');
+            const prefix = (barcodeInput?.dataset?.prefix || '').trim();
+            if (prefix) return prefix.replace(/-$/, '');
+            return String(docId || '').replace(/^doc-/, '').toUpperCase();
+        },
+        getFieldKey: function (el, index) {
+            if (el.id) return `id:${el.id}`;
+            if (el.name) return `name:${el.name}`;
+            return `idx:${index}`;
+        },
+        collectData: function () {
+            const data = {};
+            const fields = Array.from(document.querySelectorAll('input, select, textarea'))
+                .filter(el => el.type !== 'submit');
+
+            fields.forEach((el, index) => {
+                const key = this.getFieldKey(el, index);
+                if (el.type === 'checkbox') {
+                    data[key] = el.checked;
+                } else if (el.type === 'radio') {
+                    if (el.checked) data[key] = el.value;
+                } else {
+                    data[key] = el.value;
+                }
+            });
+
+            return data;
+        },
+        applyDataToForm: function (data) {
+            if (!data || typeof data !== 'object') return;
+            const fields = Array.from(document.querySelectorAll('input, select, textarea'))
+                .filter(el => el.type !== 'submit');
+
+            fields.forEach((el, index) => {
+                const key = this.getFieldKey(el, index);
+                if (!(key in data)) return;
+                const value = data[key];
+
+                if (el.type === 'checkbox') {
+                    el.checked = Boolean(value);
+                } else if (el.type === 'radio') {
+                    el.checked = String(el.value) === String(value);
+                } else {
+                    el.value = value ?? '';
+                }
+
+                el.dispatchEvent(new Event('input'));
+                el.dispatchEvent(new Event('change'));
+            });
+        },
+        ensureBarcodeValueFromCode: function (instanceCode) {
+            const barcodeInput = document.querySelector('.generate-barcode');
+            if (!barcodeInput || !instanceCode) return;
+
+            const prefix = barcodeInput.dataset.prefix || '';
+            let raw = instanceCode;
+            if (prefix && instanceCode.startsWith(prefix)) {
+                raw = instanceCode.slice(prefix.length);
+            }
+            barcodeInput.value = raw;
+            barcodeInput.dispatchEvent(new Event('input'));
+        },
+        resolveOrCreateInstanceCode: async function (docId) {
+            const fromQuery = this.getInstanceCode();
+            if (fromQuery) return fromQuery;
+
+            const barcodeInput = document.querySelector('.generate-barcode');
+            const prefix = barcodeInput?.dataset?.prefix || '';
+            const barcodeValue = String(barcodeInput?.value || '').trim();
+            if (barcodeValue) return `${prefix}${barcodeValue}`;
+
+            const formatType = this.getFormatType(docId);
+            const response = await fetch(`${API_URL}/formats/generate-unique-code`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ format_type: formatType })
+            });
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok || !payload.unique_code) {
+                throw new Error(payload.msg || 'No se pudo generar código único');
+            }
+            return String(payload.unique_code).trim();
+        },
+        persistInstance: async function (docId, data) {
+            // El barcode es el identificador único del formato
+            const barcodeInput = document.querySelector('.generate-barcode');
+            const prefix = barcodeInput?.dataset?.prefix || '';
+            const barcodeValue = String(barcodeInput?.value || '').trim();
+
+            if (!barcodeValue) {
+                throw new Error('Debe ingresar un código de folio único');
+            }
+
+            // El uniqueCode es el barcode completo (prefix + valor)
+            const uniqueCode = `${prefix}${barcodeValue}`;
+            const urlInstanceCode = this.getInstanceCode();
+            const userId = this.getCurrentUserId();
+            const formatType = this.getFormatType(docId);
+
+            console.log('💾 Guardando:', {
+                inputValue: barcodeValue,
+                uniqueCode: uniqueCode,
+                urlCode: urlInstanceCode,
+                isUpdate: uniqueCode === urlInstanceCode
+            });
+
+            // Determinar si es actualización o creación nueva
+            // Solo es actualización si el código del input coincide con el de la URL
+            const isUpdate = urlInstanceCode && uniqueCode === urlInstanceCode;
+
+            const payload = {
+                unique_code: uniqueCode,
+                format_type: formatType,
+                status: 'DRAFT',
+                data_payload: data,
+                user_id: userId,
+                notes: ''
+            };
+
+            let response;
+
+            if (isUpdate) {
+                // Actualizar documento existente
+                console.log('📝 Actualizando documento:', uniqueCode);
+                response = await fetch(`${API_URL}/format-instances/${encodeURIComponent(uniqueCode)}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        status: 'DRAFT',
+                        data_payload: data,
+                        user_id: userId
+                    })
+                });
+            } else {
+                // Crear nuevo documento
+                console.log('🆕 Creando nuevo documento:', uniqueCode);
+                response = await fetch(`${API_URL}/format-instances`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            }
+
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(result.msg || 'No se pudo guardar en servidor');
+            }
+
+            // Actualizar la URL con el nuevo código de instancia
+            this.setInstanceCode(uniqueCode);
+            return uniqueCode;
+        },
+        setupDateInputs: function () {
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                // Autollenar solo si no es fecha de registro (clase no-auto-date)
+                if (!input.value && !input.classList.contains('no-auto-date')) input.valueAsDate = new Date();
+            });
+        },
+        setupBarcodes: function () {
+            const process = (input) => {
+                const prefix = input.dataset.prefix || '';
+                const val = input.value;
+                if (val && window.JsBarcode) {
+                    try {
+                        JsBarcode(`#${input.dataset.target}`, prefix + val, { format: "CODE128", height: 30, displayValue: true, fontSize: 10, margin: 0 });
+                    } catch (e) { }
+                }
+
+                // Verificar si el código cambió respecto al de la URL
+                const urlInstanceCode = this.getInstanceCode();
+                const currentCode = `${prefix}${val}`.trim();
+                if (urlInstanceCode && currentCode && urlInstanceCode !== currentCode) {
+                    // El código cambió - se creará un nuevo documento
+                    if (!input.dataset.warningShown) {
+                        input.dataset.warningShown = 'true';
+                        const indicator = document.createElement('span');
+                        indicator.className = 'code-changed-indicator';
+                        indicator.textContent = '🆕 Nuevo documento';
+                        indicator.style.cssText = 'color: #28a745; font-weight: bold; font-size: 11px; margin-left: 10px;';
+                        input.parentElement.appendChild(indicator);
+
+                        setTimeout(() => {
+                            indicator.remove();
+                            delete input.dataset.warningShown;
+                        }, 3000);
+                    }
+                }
+            };
+            document.querySelectorAll('.generate-barcode').forEach(i => {
+                i.addEventListener('input', (e) => process.call(this, e.target));
+                if (i.value) process.call(this, i);
+            });
+        },
+        setupPrintHandler: function () {
+            window.addEventListener('beforeprint', () => {
+                document.querySelectorAll('select').forEach(sel => {
+                    let span = sel.nextElementSibling;
+                    if (!span || !span.classList.contains('print-only-value')) {
+                        span = document.createElement('span');
+                        span.className = 'print-only-value';
+                        sel.parentNode.insertBefore(span, sel.nextSibling);
+                    }
+                    span.textContent = sel.options[sel.selectedIndex]?.text || '';
+                });
+            });
+        },
+        setupDraggableControls: function () {
+            const controlBar = document.querySelector('.global-controls');
+            if (!controlBar) return;
+
+            let isDragging = false;
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+            let xOffset = 0;
+            let yOffset = 0;
+
+            controlBar.addEventListener('mousedown', dragStart);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+
+            // Touch events para dispositivos móviles
+            controlBar.addEventListener('touchstart', dragStart);
+            document.addEventListener('touchmove', drag);
+            document.addEventListener('touchend', dragEnd);
+
+            function dragStart(e) {
+                // No iniciar drag si se hace clic en un botón
+                if (e.target.tagName === 'BUTTON') return;
+
+                if (e.type === 'touchstart') {
+                    initialX = e.touches[0].clientX - xOffset;
+                    initialY = e.touches[0].clientY - yOffset;
+                } else {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                }
+
+                isDragging = true;
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+
+                if (e.type === 'touchmove') {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+
+                xOffset = currentX;
+                yOffset = currentY;
+
+                setTranslate(currentX, currentY, controlBar);
+            }
+
+            function dragEnd() {
+                isDragging = false;
+            }
+
+            function setTranslate(xPos, yPos, el) {
+                el.style.transform = `translate(${xPos}px, calc(-50% + ${yPos}px))`;
+            }
+        },
+        autoResize: function (textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        },
+        saveData: async function () {
+            const docId = document.body.id;
+
+            // Verificar que existe un código de barcode
+            const barcodeInput = document.querySelector('.generate-barcode');
+            const barcodeValue = String(barcodeInput?.value || '').trim();
+
+            if (!barcodeValue) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Debe ingresar un código de folio único antes de guardar',
+                    confirmButtonText: 'Entendido'
+                });
+                return;
+            }
+
+            const data = this.collectData();
+            const docHandler = this.getDocHandler(docId);
+            if (docHandler?.getCustomData) {
+                Object.assign(data, docHandler.getCustomData());
+            }
+
+            try {
+                const instanceCode = await this.persistInstance(docId, data);
+                const instanceKey = this.getStorageKey(docId, instanceCode);
+                localStorage.setItem(instanceKey, JSON.stringify(data));
+
+                // Determinar si fue creación o actualización
+                const urlCode = new URLSearchParams(window.location.search).get('instance');
+                const wasUpdate = urlCode && urlCode === instanceCode;
+
+                Swal.fire({
+                    icon: 'success',
+                    title: wasUpdate ? 'Actualizado' : 'Documento Creado',
+                    text: wasUpdate
+                        ? `Formato actualizado: ${instanceCode}`
+                        : `Nuevo documento guardado: ${instanceCode}`,
+                    timer: 2500,
+                    showConfirmButton: false
+                });
+            } catch (e) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al Guardar',
+                    text: e.message || 'No se pudo guardar el formato',
+                    confirmButtonText: 'Entendido'
+                });
+            }
+        },
+        loadData: async function (docId) {
+            let data = null;
+            const instanceCode = this.getInstanceCode();
+            const isNewMode = this.isNewMode();
+
+            // Si es modo nuevo (nueva tarjeta), no cargar datos previos - documento en blanco
+            if (isNewMode) {
+                console.log('Modo nuevo: Cargando documento en blanco');
+                return;
+            }
+
+            // Si hay un código de instancia específico, cargar desde servidor
+            if (instanceCode) {
+                try {
+                    const response = await fetch(`${API_URL}/format-instances/${encodeURIComponent(instanceCode)}`);
+                    const payload = await response.json().catch(() => ({}));
+                    if (response.ok && payload && payload.data_payload && typeof payload.data_payload === 'object') {
+                        data = payload.data_payload;
+                        this.ensureBarcodeValueFromCode(instanceCode);
+                        localStorage.setItem(this.getStorageKey(docId, instanceCode), JSON.stringify(data));
+                    }
+                } catch (e) {
+                    console.error('Error cargando formato desde servidor:', e);
+                }
+            }
+
+            // Si no hay datos y tenemos un instanceCode, intentar cargar desde localStorage
+            if (!data && instanceCode) {
+                const saved = localStorage.getItem(this.getStorageKey(docId, instanceCode));
+                if (saved) {
+                    try {
+                        data = JSON.parse(saved);
+                    } catch (e) {
+                        data = null;
+                    }
+                }
+            }
+
+            // Si hay datos, aplicarlos al formulario
+            if (data) {
+                const docHandler = this.getDocHandler(docId);
+                if (docHandler?.loadCustomData) docHandler.loadCustomData(data);
+                this.applyDataToForm(data);
+            }
+        },
+        clearForm: function () {
+            Swal.fire({
+                title: '¿Limpiar todo?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'Sí'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const docId = document.body.id;
+                    localStorage.removeItem(this.getStorageKey(docId));
+                    localStorage.removeItem(`xelle_${docId}`);
+                    location.reload();
+                }
+            });
+        },
+        printForm: function () { window.print(); }
+    },
+
+    Docs: {
+        // --- FO-LC-20: PROCESAMIENTO ---
+        FO_LC_20: {
+            init: function () {
+                const tplInput = document.getElementById('tpl-id-input');
+                if (tplInput) tplInput.addEventListener('input', this.updateCodes);
+
+                const freezeSelect = document.getElementById('freeze-select');
+                if (freezeSelect) {
+                    freezeSelect.addEventListener('change', (e) => {
+                        document.getElementById('freeze-container').style.display = (e.target.value === 'Si') ? 'block' : 'none';
+                    });
+                    if (freezeSelect.value === 'Si') document.getElementById('freeze-container').style.display = 'block';
+                }
+
+                if (document.querySelectorAll('#flask-table-body tr').length === 0) {
+                    this.addFlaskRow(); window.addSupplyRow();
+                }
+            },
+            updateCodes: function () {
+                const tpl = document.getElementById('tpl-id-input')?.value || '';
+                const date = document.querySelector('.today-date')?.value || '';
+                const formatDate = (d) => {
+                    if (!d) return 'DDMMAA';
+                    const dt = new Date(d + 'T00:00:00');
+                    const m = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'][dt.getMonth()];
+                    return `${dt.getDate().toString().padStart(2, '0')}${m}${dt.getFullYear().toString().substr(-2)}`;
+                };
+                document.querySelectorAll('#flask-table-body tr').forEach((row, i) => {
+                    const type = row.querySelector('.flask-method').value;
+                    row.querySelector('.code-preview').textContent = `${tpl} ${formatDate(date)} ${type} #${i + 1}`;
+                });
+            },
+            addFlaskRow: function () {
+                const tbody = document.getElementById('flask-table-body');
+                const row = document.createElement('tr');
+                const count = tbody.children.length + 1;
+                const opts = App.config.recipientTypes.map(t => `<option value="${t}">${t}</option>`).join('');
+                row.innerHTML = `
+    <td>${document.getElementById('tpl-id-input')?.value || '---'}</td>
+    <td><select class="flask-method" onchange="App.Docs.FO_LC_20.updateCodes()"><option value="EX">EX</option><option value="DG">DG</option></select></td>
+    <td>${document.querySelector('.today-date')?.value || ''}</td>
+    <td>${count}</td>
+    <td class="code-preview" style="font-weight:bold; color: var(--primary-color);">---</td>
+    <td><select style="width:100%">${opts}</select></td>
+    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove(); App.Docs.FO_LC_20.updateCodes()">X</button></td>
+`;
+                tbody.appendChild(row);
+                this.updateCodes();
+            },
+            getCustomData: function () {
+                const supplies = [], flasks = [], freeze = [];
+                document.querySelectorAll('#supplies-table-body tr').forEach(r => supplies.push(this.scrape(r)));
+                document.querySelectorAll('#flask-table-body tr').forEach(r => flasks.push(this.scrape(r)));
+                document.querySelectorAll('#freeze-table-body tr').forEach(r => freeze.push(this.scrape(r)));
+                return { t_supplies: supplies, t_flasks: flasks, t_freeze: freeze };
+            },
+            scrape: (row) => Array.from(row.querySelectorAll('input, select')).map(i => i.value),
+            loadCustomData: function (data) {
+                if (data.t_supplies) this.restore('supplies-table-body', data.t_supplies, window.addSupplyRow);
+                if (data.t_flasks) this.restore('flask-table-body', data.t_flasks, () => this.addFlaskRow());
+                if (data.t_freeze) this.restore('freeze-table-body', data.t_freeze, window.addFreezeRow);
+            },
+            restore: function (id, data, fn) {
+                const tbody = document.getElementById(id); tbody.innerHTML = '';
+                data.forEach(d => { fn(); const ins = tbody.lastElementChild.querySelectorAll('input, select'); d.forEach((v, i) => { if (ins[i]) ins[i].value = v; }); });
+            }
+        },
+
+        // --- FO-LC-21: BITÁCORA ---
+        FO_LC_21: {
+            init: function () {
+                console.log('FO-LC-21: Inicializando...');
+            },
+            getCustomData: function () {
+                console.log('FO-LC-21: Recopilando datos personalizados...');
+
+                // TABLA 1: Insumos del día (5 filas fijas)
+                const insumos = [];
+                document.querySelectorAll('#tabla-insumos-dia tbody tr').forEach(row => {
+                    const cells = Array.from(row.querySelectorAll('input, select')).map(el => el.value);
+                    insumos.push(cells);
+                });
+
+                // TABLA 2: Flasks Activos (dinámico - 11 columnas)
+                const flasks = [];
+                document.querySelectorAll('#tbody-flasks tr').forEach(row => {
+                    const cells = Array.from(row.querySelectorAll('input, select')).map(el => el.value);
+                    flasks.push(cells);
+                });
+
+                // TABLA 3: Nuevos Flasks/Subcultivo (dinámico - 9 columnas)
+                const nuevos = [];
+                document.querySelectorAll('#tbody-nuevos tr').forEach(row => {
+                    const cells = Array.from(row.querySelectorAll('input, select')).map(el => el.value);
+                    nuevos.push(cells);
+                });
+
+                // TABLA 4: Cosechas (dinámico - 6 columnas)
+                const cosechas = [];
+                document.querySelectorAll('#tbody-cosechas tr').forEach(row => {
+                    const cells = Array.from(row.querySelectorAll('input, select')).map(el => el.value);
+                    cosechas.push(cells);
+                });
+
+                console.log('FO-LC-21: Datos recopilados:', { insumos, flasks, nuevos, cosechas });
+                return {
+                    t_insumos: insumos,
+                    t_flasks: flasks,
+                    t_nuevos: nuevos,
+                    t_cosechas: cosechas
+                };
+            },
+            loadCustomData: function (data) {
+                console.log('FO-LC-21: Cargando datos personalizados...', data);
+
+                // TABLA 1: Insumos del día (5 filas fijas)
+                if (data.t_insumos && Array.isArray(data.t_insumos)) {
+                    const rows = document.querySelectorAll('#tabla-insumos-dia tbody tr');
+                    data.t_insumos.forEach((rowData, index) => {
+                        if (rows[index]) {
+                            const inputs = rows[index].querySelectorAll('input, select');
+                            rowData.forEach((value, colIndex) => {
+                                if (inputs[colIndex]) {
+                                    inputs[colIndex].value = value || '';
+                                }
+                            });
+                        }
+                    });
+                }
+
+                // TABLA 2: Flasks Activos (dinámico)
+                if (data.t_flasks && Array.isArray(data.t_flasks)) {
+                    const tbody = document.getElementById('tbody-flasks');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.t_flasks.forEach(rowData => {
+                            const row = document.createElement('tr');
+                            const recipientOptions = `
+                                <option value="T-25" ${rowData[5] === 'T-25' ? 'selected' : ''}>T-25</option>
+                                <option value="T-75" ${rowData[5] === 'T-75' ? 'selected' : ''}>T-75</option>
+                                <option value="T-175" ${rowData[5] === 'T-175' ? 'selected' : ''}>T-175</option>
+                                <option value="T-225" ${rowData[5] === 'T-225' ? 'selected' : ''}>T-225</option>
+                                <option value="HF" ${rowData[5] === 'HF' ? 'selected' : ''}>HyperFlask</option>
+                                <option value="CS-1" ${rowData[5] === 'CS-1' ? 'selected' : ''}>CS-1</option>
+                                <option value="CS-2" ${rowData[5] === 'CS-2' ? 'selected' : ''}>CS-2</option>
+                                <option value="CS-5" ${rowData[5] === 'CS-5' ? 'selected' : ''}>CS-5</option>
+                            `;
+                            const estadoOptions = `
+                                <option ${rowData[9] === 'ACTIVO' ? 'selected' : ''}>ACTIVO</option>
+                                <option ${rowData[9] === 'CUARENTENA' ? 'selected' : ''}>CUARENTENA</option>
+                                <option ${rowData[9] === 'PARA PASE' ? 'selected' : ''}>PARA PASE</option>
+                                <option ${rowData[9] === 'PARA COSECHA' ? 'selected' : ''}>PARA COSECHA</option>
+                                <option ${rowData[9] === 'CONTAMINADO' ? 'selected' : ''}>CONTAMINADO</option>
+                                <option ${rowData[9] === 'BAJA' ? 'selected' : ''}>BAJA</option>
+                            `;
+                            row.innerHTML = `
+                                <td><input class="cedit code-input auto-code" readonly tabindex="-1" value="${rowData[0] || ''}"></td>
+                                <td><input class="cedit linea-input" placeholder="Ej. TPL32" oninput="autoGenFlaskCode21(this)" value="${rowData[1] || ''}"></td>
+                                <td><input class="cedit pase-input" placeholder="P#" oninput="autoGenFlaskCode21(this)" value="${rowData[2] || ''}"></td>
+                                <td><input type="date" class="cedit" value="${rowData[3] || ''}"></td>
+                                <td><input type="number" class="cedit num-input" value="${rowData[4] || '1'}" style="width:40px" oninput="autoGenFlaskCode21(this)"></td>
+                                <td><select class="cedit recip-select" onchange="autoGenFlaskCode21(this)">${recipientOptions}</select></td>
+                                <td><input class="cedit" style="width:40px" value="${rowData[6] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[7] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[8] || ''}"></td>
+                                <td><select class="cedit">${estadoOptions}</select></td>
+                                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+
+                // TABLA 3: Nuevos Flasks/Subcultivo (dinámico)
+                if (data.t_nuevos && Array.isArray(data.t_nuevos)) {
+                    const tbody = document.getElementById('tbody-nuevos');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.t_nuevos.forEach(rowData => {
+                            const row = document.createElement('tr');
+                            const recipientOptions = `
+                                <option value="T-25" ${rowData[3] === 'T-25' ? 'selected' : ''}>T-25</option>
+                                <option value="T-75" ${rowData[3] === 'T-75' ? 'selected' : ''}>T-75</option>
+                                <option value="T-175" ${rowData[3] === 'T-175' ? 'selected' : ''}>T-175</option>
+                                <option value="T-225" ${rowData[3] === 'T-225' ? 'selected' : ''}>T-225</option>
+                                <option value="HF" ${rowData[3] === 'HF' ? 'selected' : ''}>HyperFlask</option>
+                                <option value="CS-1" ${rowData[3] === 'CS-1' ? 'selected' : ''}>CS-1</option>
+                                <option value="CS-2" ${rowData[3] === 'CS-2' ? 'selected' : ''}>CS-2</option>
+                                <option value="CS-5" ${rowData[3] === 'CS-5' ? 'selected' : ''}>CS-5</option>
+                            `;
+                            row.innerHTML = `
+                                <td><input class="cedit" placeholder="Origen..." value="${rowData[0] || ''}"></td>
+                                <td><input class="cedit linea-input" placeholder="Línea" oninput="autoGenFlaskCode21(this)" value="${rowData[1] || ''}"></td>
+                                <td><input class="cedit pase-input" placeholder="P#" oninput="autoGenFlaskCode21(this)" value="${rowData[2] || ''}"></td>
+                                <td><select class="cedit recip-select" onchange="autoGenFlaskCode21(this)">${recipientOptions}</select></td>
+                                <td><input type="number" class="cedit num-input" value="${rowData[4] || '1'}" style="width:40px" oninput="autoGenFlaskCode21(this)"></td>
+                                <td><input class="cedit code-input auto-code" readonly tabindex="-1" value="${rowData[5] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[6] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[7] || ''}"></td>
+                                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+
+                // TABLA 4: Cosechas (dinámico)
+                if (data.t_cosechas && Array.isArray(data.t_cosechas)) {
+                    const tbody = document.getElementById('tbody-cosechas');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.t_cosechas.forEach(rowData => {
+                            const row = document.createElement('tr');
+                            const destinoOptions = `
+                                <option ${rowData[3] === 'DOSIFICACION' ? 'selected' : ''}>DOSIFICACION</option>
+                                <option ${rowData[3] === 'RESIEMBRA' ? 'selected' : ''}>RESIEMBRA</option>
+                                <option ${rowData[3] === 'CRIOPRESERVACION' ? 'selected' : ''}>CRIOPRESERVACION</option>
+                            `;
+                            row.innerHTML = `
+                                <td><input class="cedit" placeholder="Flask Origen..." value="${rowData[0] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[1] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[2] || ''}"></td>
+                                <td><select class="cedit">${destinoOptions}</select></td>
+                                <td><input class="cedit" value="${rowData[4] || ''}"></td>
+                                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+
+                console.log('FO-LC-21: Datos cargados exitosamente');
+            }
+        },
+
+        // --- FO-LC-22: CRIO ---
+        FO_LC_22: {
+            init: function () { this.renderGrid(); },
+            renderGrid: function () { const c = document.getElementById('cryo-grid'); if (!c || c.children.length > 0) return; for (let i = 1; i <= 100; i++) { const d = document.createElement('div'); d.className = 'cryo-cell p-empty'; d.textContent = i; d.onclick = () => this.toggle(d); c.appendChild(d); } },
+            toggle: function (d) {
+                if (!d.classList.contains('p-empty')) { d.className = 'cryo-cell p-empty'; return; }
+                const p = parseInt(document.getElementById('input-pase').value) || 0;
+                let c = 'p-0-1'; if (p >= 2 && p <= 3) c = 'p-2-3'; if (p >= 4 && p <= 5) c = 'p-4-5'; if (p >= 6 && p <= 7) c = 'p-6-7'; if (p >= 8) c = 'p-8-9';
+                d.className = `cryo-cell ${c}`;
+            },
+            getCustomData: function () { const s = []; document.querySelectorAll('.cryo-cell').forEach(c => s.push(c.className)); return { grid: s }; },
+            loadCustomData: function (d) { if (d.grid) document.querySelectorAll('.cryo-cell').forEach((c, i) => { if (d.grid[i]) c.className = d.grid[i]; }); }
+        },
+
+        // --- FO-LC-24: DOSIS (ACTUALIZADO) ---
+        FO_LC_24: {
+            manualGrandTotals: {
+                vials: false,
+                cells: false
+            },
+            vialManualOverride: {
+                "Stem Xelle": false,
+                "Hybrid Xelle": false,
+                "Stem Ortho": false,
+                "Hybrid Ortho": false,
+                "Exosomas": false
+            },
+            inventoryManualOverride: {
+                "Stem Xelle": false,
+                "Hybrid Xelle": false,
+                "Stem Ortho": false,
+                "Hybrid Ortho": false,
+                "Exosomas": false
+            },
+            productsDB: {
+                "Stem Xelle": { lotPre: "XCM", pres: ["10M", "25M", "50M", "100M", "Especial"] },
+                "Hybrid Xelle": { lotPre: "XHY", pres: ["10M+1B", "25M+2B", "50M+5B", "60M+6B", "100M+10B", "Especial"] },
+                "Stem Ortho": { lotPre: "XOR", pres: ["10M", "25M", "50M", "100M", "Especial"] },
+                "Hybrid Ortho": { lotPre: "XHO", pres: ["10M+1B", "25M+2B", "50M+5B", "60M+6B", "100M+10B", "Especial"] },
+                "Exosomas": { lotPre: "EXO", pres: ["3B", "9B", "15B", "30B", "75B", "90B", "Especial"] }
+            },
+            init: function () {
+                if (document.querySelectorAll('#tbl-dosis tbody tr').length === 0) this.addDosis();
+                const fechaOperacion = document.getElementById('fecha_operacion');
+                if (fechaOperacion) {
+                    fechaOperacion.addEventListener('change', () => {
+                        document.querySelectorAll('#tbl-dosis tbody tr').forEach(r => {
+                            const prodSelect = r.querySelector('.prod-select');
+                            if (prodSelect && prodSelect.value) this.onProd(prodSelect);
+                        });
+                    });
+                }
+                this.calcInventory();
+            },
+            productToFieldId: function (product) {
+                switch (product) {
+                    case 'Stem Xelle': return 'cell-stem';
+                    case 'Hybrid Xelle': return 'cell-hybrid';
+                    case 'Stem Ortho': return 'cell-stem-ortho';
+                    case 'Hybrid Ortho': return 'cell-hybrid-ortho';
+                    case 'Exosomas': return 'cell-exo';
+                    default: return '';
+                }
+            },
+            productToVialFieldId: function (product) {
+                switch (product) {
+                    case 'Stem Xelle': return 'tot-stem';
+                    case 'Hybrid Xelle': return 'tot-hybrid';
+                    case 'Stem Ortho': return 'tot-stem-ortho';
+                    case 'Hybrid Ortho': return 'tot-hybrid-ortho';
+                    case 'Exosomas': return 'tot-exo';
+                    default: return '';
+                }
+            },
+            onCellSummaryInput: function (inputEl) {
+                const fieldToProduct = {
+                    'cell-stem': 'Stem Xelle',
+                    'cell-hybrid': 'Hybrid Xelle',
+                    'cell-stem-ortho': 'Stem Ortho',
+                    'cell-hybrid-ortho': 'Hybrid Ortho',
+                    'cell-exo': 'Exosomas'
+                };
+
+                const product = fieldToProduct[inputEl?.id || ''];
+                if (!product) return;
+
+                const valueMillions = this.parseMillions(inputEl.value);
+                if (valueMillions === null || valueMillions <= 0) {
+                    this.inventoryManualOverride[product] = false;
+                    inputEl.value = '0';
+                } else {
+                    this.inventoryManualOverride[product] = true;
+                    inputEl.value = this.formatCellsDisplay(this.normalizeMillions(valueMillions, product));
+                }
+
+                this.updateGrandTotalCellsFromSummary();
+            },
+            onVialInput: function (inputEl, product) {
+                if (!product) return;
+
+                const n = Number(inputEl?.value);
+                if (!Number.isFinite(n) || n < 0) {
+                    this.vialManualOverride[product] = false;
+                    inputEl.value = '0';
+                } else {
+                    this.vialManualOverride[product] = true;
+                    inputEl.value = String(Math.floor(n));
+                }
+
+                this.updateGrandTotalVialsFromSummary();
+            },
+            onGrandTotalVialsInput: function (inputEl) {
+                const n = Number(inputEl?.value);
+                if (!Number.isFinite(n) || n < 0) {
+                    this.manualGrandTotals.vials = false;
+                    this.calcInventory();
+                    return;
+                }
+
+                this.manualGrandTotals.vials = true;
+                inputEl.value = String(Math.floor(n));
+            },
+            onGrandTotalCellsInput: function (inputEl) {
+                const millions = this.parseMillions(inputEl?.value || '');
+                if (millions === null || millions <= 0) {
+                    this.manualGrandTotals.cells = false;
+                    this.calcInventory();
+                    return;
+                }
+
+                this.manualGrandTotals.cells = true;
+                inputEl.value = this.formatCellsDisplay(millions);
+            },
+            updateGrandTotalCellsFromSummary: function () {
+                const ids = ['cell-stem', 'cell-hybrid', 'cell-stem-ortho', 'cell-hybrid-ortho', 'cell-exo'];
+                const total = ids.reduce((acc, id) => {
+                    const el = document.getElementById(id);
+                    const val = this.parseMillions(el?.value || '0') || 0;
+                    return acc + val;
+                }, 0);
+
+                if (!this.manualGrandTotals.cells) {
+                    document.getElementById('grand-tot-cells').value = this.formatCellsDisplay(total);
+                }
+            },
+            updateGrandTotalVialsFromSummary: function () {
+                const ids = ['tot-stem', 'tot-hybrid', 'tot-stem-ortho', 'tot-hybrid-ortho', 'tot-exo'];
+                const total = ids.reduce((acc, id) => {
+                    const el = document.getElementById(id);
+                    const val = Number(el?.value || '0');
+                    return acc + (Number.isFinite(val) ? val : 0);
+                }, 0);
+
+                if (!this.manualGrandTotals.vials) {
+                    document.getElementById('grand-tot-vials').value = String(Math.floor(total));
+                }
+            },
+            addDosis: function () {
+                const tbody = document.querySelector('#tbl-dosis tbody');
+                const row = document.createElement('tr');
+                const n = tbody.rows.length + 1;
+                // Se agregó un div contenedor para la opción "Especial" en la columna de Pres.
+                row.innerHTML = `
+    <td class="text-center row-num">${n}</td>
+    <td><select class="cedit prod-select" onchange="App.Docs.FO_LC_24.onProd(this)">
+        <option value="">Sel...</option>
+        <option value="Stem Xelle">Stem Xelle</option>
+        <option value="Hybrid Xelle">Hybrid Xelle</option>
+        <option value="Stem Ortho">Stem Ortho</option>
+        <option value="Hybrid Ortho">Hybrid Ortho</option>
+        <option value="Exosomas">Exosomas</option>
+    </select></td>
+    <td><textarea class="cedit origin-input" rows="1" placeholder="Origen" oninput="App.Universal.autoResize(this)"></textarea></td>
+    <td><input type="date" class="cedit"></td>
+    <td><input class="cedit lote-input" placeholder="Lote"></td>
+    <td>
+        <select class="cedit pres-select" onchange="App.Docs.FO_LC_24.onPresChange(this)">
+            <option>-</option>
+        </select>
+        <input type="text" class="cedit special-pres-input" style="display:none; margin-top:2px; border:1px solid #2e9d82;" placeholder="¿Cuál?" oninput="App.Docs.FO_LC_24.syncRowCellCount(this.closest('tr')); App.Docs.FO_LC_24.calcInventory()">
+    </td>
+    <td><input class="cedit cell-count-input" placeholder="No." oninput="App.Docs.FO_LC_24.calcInventory()"></td>
+    <td><input class="cedit" placeholder="Venta"></td>
+    <td><input class="cedit unique-code" style="font-weight:bold;color:#2980b9" placeholder="Auto-generado"></td>
+    <td><textarea class="cedit obs-input" rows="1" placeholder="Observaciones" oninput="App.Universal.autoResize(this); App.Docs.FO_LC_24.calcInventory()"></textarea></td>
+    <td class="no-print"><button class="btn-danger btn-mini" onclick="App.Docs.FO_LC_24.handleDelete(this)">X</button></td>`;
+                tbody.appendChild(row);
+            },
+            onProd: function (s) {
+                const r = s.closest('tr'); const c = this.productsDB[s.value]; const p = r.querySelector('.pres-select');
+                p.innerHTML = '<option value="">-</option>';
+                if (c) c.pres.forEach(x => p.add(new Option(x, x)));
+
+                const d = document.getElementById('fecha_operacion').value;
+                if (d && c) r.querySelector('.lote-input').value = `${c.lotPre}${d.replace(/-/g, '').substring(2)}`;
+                this.updateCode(r); this.calcInventory();
+            },
+            onPresChange: function (s) {
+                const r = s.closest('tr');
+                const specialInput = r.querySelector('.special-pres-input');
+                // Si elige "Especial", muestra el input de texto, si no lo oculta
+                if (s.value === "Especial") {
+                    specialInput.style.display = "block";
+                    specialInput.focus();
+                } else {
+                    specialInput.style.display = "none";
+                    specialInput.value = "";
+                }
+                this.syncRowCellCount(r);
+                this.calcInventory();
+            },
+            parseMillions: function (rawValue) {
+                const raw = String(rawValue || '').trim();
+                if (!raw) return null;
+
+                const clean = raw.replace(',', '.');
+
+                let match = clean.match(/(\d+(?:\.\d+)?)\s*[xX]\s*10\s*[eE]?\s*6/);
+                if (match) return Number(match[1]);
+
+                match = clean.match(/(\d+(?:\.\d+)?)\s*[mM]\b/);
+                if (match) return Number(match[1]);
+
+                const numeric = Number(clean.replace(/[^0-9.\-]/g, ''));
+                if (!Number.isFinite(numeric) || numeric <= 0) return null;
+
+                if (numeric >= 1000000) {
+                    return numeric / 1000000;
+                }
+
+                return numeric;
+            },
+            parseMillionsFromPresentation: function (presentationValue, specialValue) {
+                const base = String(presentationValue || '').trim();
+                if (!base) return null;
+
+                if (base === 'Especial') {
+                    return this.parseMillions(specialValue);
+                }
+
+                const millionPart = base.split('+')[0];
+                return this.parseMillions(millionPart);
+            },
+            normalizeMillions: function (millions, product) {
+                if (!Number.isFinite(millions) || millions <= 0) return 0;
+                if (product === 'Exosomas') return millions;
+                return Math.max(10, millions);
+            },
+            formatMillionsValue: function (millions) {
+                if (!Number.isFinite(millions) || millions <= 0) return '0';
+                if (Number.isInteger(millions)) return String(millions);
+                return millions.toFixed(2).replace(/\.00$/, '').replace(/(\.\d*[1-9])0+$/, '');
+            },
+            syncRowCellCount: function (row) {
+                const product = row.querySelector('.prod-select')?.value || '';
+                if (!product || product === 'Exosomas') return;
+
+                const cellInput = row.querySelector('.cell-count-input');
+                const presValue = row.querySelector('.pres-select')?.value || '';
+                const specialPres = row.querySelector('.special-pres-input')?.value || '';
+
+                const inputMillions = this.parseMillions(cellInput?.value || '');
+                const presMillions = this.parseMillionsFromPresentation(presValue, specialPres);
+                const normalized = this.normalizeMillions(inputMillions ?? presMillions ?? 0, product);
+
+                if (cellInput && normalized > 0) {
+                    cellInput.value = `${this.formatMillionsValue(normalized)}M`;
+                }
+            },
+            getRowMillions: function (row) {
+                const product = row.querySelector('.prod-select')?.value || '';
+                if (!product) return 0;
+
+                const cellInput = row.querySelector('.cell-count-input');
+                const presValue = row.querySelector('.pres-select')?.value || '';
+                const specialPres = row.querySelector('.special-pres-input')?.value || '';
+
+                const inputMillions = this.parseMillions(cellInput?.value || '');
+                const presMillions = this.parseMillionsFromPresentation(presValue, specialPres);
+                const rawMillions = inputMillions ?? presMillions ?? 0;
+                const normalized = this.normalizeMillions(rawMillions, product);
+
+                if (cellInput && normalized > 0 && product !== 'Exosomas') {
+                    cellInput.value = `${this.formatMillionsValue(normalized)}M`;
+                }
+
+                return normalized;
+            },
+            formatCellsDisplay: function (millions) {
+                if (!Number.isFinite(millions) || millions <= 0) return '0';
+                return `${this.formatMillionsValue(millions)}x10E6`;
+            },
+            updateCode: function (r) {
+                const l = r.querySelector('.lote-input').value; const n = r.querySelector('.row-num').innerText.padStart(3, '0');
+                if (l) r.querySelector('.unique-code').value = `${l.replace(/\s/g, '')}-${n}`;
+            },
+            handleDelete: function (b) {
+                Swal.fire({ title: '¿Acción?', icon: 'question', showDenyButton: true, showCancelButton: true, confirmButtonText: 'Eliminar Fila', denyButtonText: 'Reproceso/Dev' }).then(r => {
+                    const row = b.closest('tr');
+                    if (r.isConfirmed) { row.remove(); this.reindex(); this.calcInventory(); }
+                    else if (r.isDenied) {
+                        Swal.fire({ input: 'select', inputOptions: { 'Reproceso': 'Reproceso', 'Devolución': 'Devolución' }, title: 'Motivo' }).then(s => {
+                            if (s.value) { row.querySelector('.obs-input').value = s.value; row.style.backgroundColor = '#fdedec'; this.calcInventory(); }
+                        });
+                    }
+                });
+            },
+            reindex: function () { document.querySelectorAll('#tbl-dosis tbody tr').forEach((r, i) => { r.querySelector('.row-num').innerText = i + 1; this.updateCode(r); }); },
+            calcInventory: function () {
+                const t = { "Stem Xelle": 0, "Hybrid Xelle": 0, "Stem Ortho": 0, "Hybrid Ortho": 0, "Exosomas": 0 };
+                const c = { "Stem Xelle": 0, "Hybrid Xelle": 0, "Stem Ortho": 0, "Hybrid Ortho": 0, "Exosomas": 0 };
+                document.querySelectorAll('#tbl-dosis tbody tr').forEach(r => {
+                    const obs = r.querySelector('.obs-input').value;
+                    // Solo excluir si la observación es "Reproceso" o "Devolución"
+                    const shouldExclude = obs && (obs.toLowerCase().includes('reproceso') || obs.toLowerCase().includes('devolución') || obs.toLowerCase().includes('devolucion'));
+                    if (!shouldExclude) {
+                        const p = r.querySelector('.prod-select').value;
+                        if (t[p] !== undefined) {
+                            t[p]++;
+                            c[p] += this.getRowMillions(r);
+                        }
+                    }
+                });
+
+                // Update individual vial counts only if not manually overridden
+                ["Stem Xelle", "Hybrid Xelle", "Stem Ortho", "Hybrid Ortho", "Exosomas"].forEach(product => {
+                    const vialFieldId = this.productToVialFieldId(product);
+                    if (!vialFieldId) return;
+                    const vialFieldEl = document.getElementById(vialFieldId);
+                    if (!vialFieldEl) return;
+
+                    if (!this.vialManualOverride[product]) {
+                        vialFieldEl.value = t[product];
+                    }
+                });
+
+                // Calculate grand total vials from individual fields (respecting manual edits)
+                const hasManualVial = Object.values(this.vialManualOverride).some(Boolean);
+                const computedGrandVials = hasManualVial
+                    ? (Number(document.getElementById('tot-stem')?.value || '0') || 0)
+                    + (Number(document.getElementById('tot-hybrid')?.value || '0') || 0)
+                    + (Number(document.getElementById('tot-stem-ortho')?.value || '0') || 0)
+                    + (Number(document.getElementById('tot-hybrid-ortho')?.value || '0') || 0)
+                    + (Number(document.getElementById('tot-exo')?.value || '0') || 0)
+                    : t["Stem Xelle"] + t["Hybrid Xelle"] + t["Stem Ortho"] + t["Hybrid Ortho"] + t["Exosomas"];
+
+                if (!this.manualGrandTotals.vials) {
+                    document.getElementById('grand-tot-vials').value = computedGrandVials;
+                }
+
+                // Update individual cell counts only if not manually overridden
+                ["Stem Xelle", "Hybrid Xelle", "Stem Ortho", "Hybrid Ortho", "Exosomas"].forEach(product => {
+                    const fieldId = this.productToFieldId(product);
+                    if (!fieldId) return;
+                    const fieldEl = document.getElementById(fieldId);
+                    if (!fieldEl) return;
+
+                    if (!this.inventoryManualOverride[product]) {
+                        fieldEl.value = this.formatCellsDisplay(c[product]);
+                    }
+                });
+
+                // Calculate grand total cells from individual fields (respecting manual edits)
+                const hasManual = Object.values(this.inventoryManualOverride).some(Boolean);
+                const computedGrandCells = hasManual
+                    ? this.formatCellsDisplay(
+                        (this.parseMillions(document.getElementById('cell-stem')?.value || '0') || 0)
+                        + (this.parseMillions(document.getElementById('cell-hybrid')?.value || '0') || 0)
+                        + (this.parseMillions(document.getElementById('cell-stem-ortho')?.value || '0') || 0)
+                        + (this.parseMillions(document.getElementById('cell-hybrid-ortho')?.value || '0') || 0)
+                        + (this.parseMillions(document.getElementById('cell-exo')?.value || '0') || 0)
+                    )
+                    : this.formatCellsDisplay(c["Stem Xelle"] + c["Hybrid Xelle"] + c["Stem Ortho"] + c["Hybrid Ortho"] + c["Exosomas"]);
+
+                if (!this.manualGrandTotals.cells) {
+                    document.getElementById('grand-tot-cells').value = computedGrandCells;
+                }
+            },
+            getCustomData: function () {
+                const dosisRows = [];
+                document.querySelectorAll('#tbl-dosis tbody tr').forEach(r => {
+                    const presValue = r.querySelector('.pres-select')?.value || '';
+                    const specialPres = r.querySelector('.special-pres-input')?.value || '';
+                    dosisRows.push({
+                        producto: r.querySelector('.prod-select')?.value || '',
+                        origen: r.querySelector('.origin-input')?.value || '',
+                        caducidad: r.querySelector('td:nth-child(4) input')?.value || '',
+                        lote: r.querySelector('.lote-input')?.value || '',
+                        presentacion: presValue,
+                        presentacionEspecial: specialPres,
+                        numeroCelulas: r.querySelector('.cell-count-input')?.value || '',
+                        codigoVenta: r.querySelector('td:nth-child(8) input')?.value || '',
+                        codigoUnico: r.querySelector('.unique-code')?.value || '',
+                        observaciones: r.querySelector('.obs-input')?.value || ''
+                    });
+                });
+
+                const insumosRows = [];
+                document.querySelectorAll('#tbl-insumos tbody tr').forEach(r => {
+                    insumosRows.push(Array.from(r.querySelectorAll('input')).map(i => i.value));
+                });
+
+                this.persistDailySummary(dosisRows);
+
+                return {
+                    t_dosis: dosisRows,
+                    t_insumos_24: insumosRows
+                };
+            },
+            loadCustomData: function (data) {
+                // Resetear flags de override manual
+                this.manualGrandTotals = { vials: false, cells: false };
+                this.vialManualOverride = {
+                    "Stem Xelle": false,
+                    "Hybrid Xelle": false,
+                    "Stem Ortho": false,
+                    "Hybrid Ortho": false,
+                    "Exosomas": false
+                };
+                this.inventoryManualOverride = {
+                    "Stem Xelle": false,
+                    "Hybrid Xelle": false,
+                    "Stem Ortho": false,
+                    "Hybrid Ortho": false,
+                    "Exosomas": false
+                };
+
+                if (Array.isArray(data.t_insumos_24)) {
+                    const tbodyInsumos = document.querySelector('#tbl-insumos tbody');
+                    if (tbodyInsumos) {
+                        tbodyInsumos.innerHTML = '';
+                        data.t_insumos_24.forEach(rowData => {
+                            if (typeof window.addInsumoRow24 === 'function') window.addInsumoRow24();
+                            const row = tbodyInsumos.lastElementChild;
+                            if (!row) return;
+                            const inputs = row.querySelectorAll('input');
+                            rowData.forEach((value, idx) => {
+                                if (inputs[idx]) inputs[idx].value = value || '';
+                            });
+                        });
+                    }
+                }
+
+                if (Array.isArray(data.t_dosis)) {
+                    const tbodyDosis = document.querySelector('#tbl-dosis tbody');
+                    if (tbodyDosis) {
+                        tbodyDosis.innerHTML = '';
+                        data.t_dosis.forEach(rowData => {
+                            this.addDosis();
+                            const row = tbodyDosis.lastElementChild;
+                            if (!row) return;
+
+                            const prodSelect = row.querySelector('.prod-select');
+                            const presSelect = row.querySelector('.pres-select');
+                            const specialInput = row.querySelector('.special-pres-input');
+
+                            if (prodSelect) {
+                                prodSelect.value = rowData.producto || '';
+                                this.onProd(prodSelect);
+                            }
+
+                            const cadInput = row.querySelector('td:nth-child(4) input');
+                            const ventaInput = row.querySelector('td:nth-child(8) input');
+
+                            if (row.querySelector('.origin-input')) row.querySelector('.origin-input').value = rowData.origen || '';
+                            if (cadInput) cadInput.value = rowData.caducidad || '';
+                            if (row.querySelector('.lote-input')) row.querySelector('.lote-input').value = rowData.lote || '';
+
+                            if (presSelect) {
+                                presSelect.value = rowData.presentacion || '';
+                                this.onPresChange(presSelect);
+                            }
+                            if (specialInput) specialInput.value = rowData.presentacionEspecial || '';
+
+                            if (row.querySelector('.cell-count-input')) row.querySelector('.cell-count-input').value = rowData.numeroCelulas || '';
+                            if (ventaInput) ventaInput.value = rowData.codigoVenta || '';
+                            if (row.querySelector('.unique-code')) row.querySelector('.unique-code').value = rowData.codigoUnico || '';
+                            if (row.querySelector('.obs-input')) row.querySelector('.obs-input').value = rowData.observaciones || '';
+                        });
+                    }
+                }
+
+                this.reindex();
+                this.calcInventory();
+                this.updateGrandTotalCellsFromSummary();
+            },
+            persistDailySummary: function (dosisRows) {
+                const fechaOperacion = document.getElementById('fecha_operacion')?.value;
+                if (!fechaOperacion || !Array.isArray(dosisRows)) return;
+
+                const reg24Input = document.getElementById('reg-24');
+                let folio = (reg24Input?.value || '').trim();
+                if (!folio) {
+                    const now = new Date();
+                    const hh = String(now.getHours()).padStart(2, '0');
+                    const mm = String(now.getMinutes()).padStart(2, '0');
+                    const ss = String(now.getSeconds()).padStart(2, '0');
+                    folio = `${fechaOperacion.replace(/-/g, '')}${hh}${mm}${ss}`;
+                    if (reg24Input) {
+                        reg24Input.value = folio;
+                        reg24Input.dispatchEvent(new Event('input'));
+                    }
+                }
+                const barcodeCode = `FO-LC-24-${folio}`;
+
+                const grouped = {};
+                dosisRows.forEach(row => {
+                    if (row.observaciones) return;
+                    const producto = (row.producto || '').trim();
+                    if (!producto) return;
+
+                    const presentacionBase = (row.presentacion || '').trim();
+                    const presentacion = presentacionBase === 'Especial'
+                        ? (`Especial: ${(row.presentacionEspecial || '').trim() || 'Sin especificar'}`)
+                        : (presentacionBase || 'Sin especificar');
+
+                    const key = `${producto}||${presentacion}`;
+                    if (!grouped[key]) {
+                        grouped[key] = {
+                            producto,
+                            presentacion,
+                            cantidad: 0,
+                            lotes: new Set(),
+                            codigosUnicos: []
+                        };
+                    }
+
+                    grouped[key].cantidad += 1;
+                    if (row.lote) grouped[key].lotes.add(row.lote);
+                    if (row.codigoUnico) grouped[key].codigosUnicos.push(row.codigoUnico);
+                });
+
+                const items = Object.values(grouped).map(item => ({
+                    producto: item.producto,
+                    presentacion: item.presentacion,
+                    cantidad: item.cantidad,
+                    lotes: Array.from(item.lotes),
+                    codigosUnicos: item.codigosUnicos
+                }));
+
+                const payload = {
+                    fechaOperacion,
+                    folio,
+                    barcodeCode,
+                    generatedAt: new Date().toISOString(),
+                    dosisRows,
+                    items
+                };
+
+                localStorage.setItem(`xelle_fo_lc_24_daily_${fechaOperacion}`, JSON.stringify(payload));
+                localStorage.setItem(`xelle_fo_lc_24_daily_${fechaOperacion}_${folio}`, JSON.stringify(payload));
+                localStorage.setItem('xelle_fo_lc_24_daily_latest', JSON.stringify(payload));
+
+                const recordsRaw = localStorage.getItem('xelle_fo_lc_24_records');
+                let records = [];
+                try {
+                    const parsed = JSON.parse(recordsRaw || '[]');
+                    if (Array.isArray(parsed)) records = parsed;
+                } catch (e) { }
+
+                const idx = records.findIndex(r => (r?.barcodeCode || '') === barcodeCode && (r?.fechaOperacion || '') === fechaOperacion);
+                const record = {
+                    fechaOperacion,
+                    folio,
+                    barcodeCode,
+                    savedAt: payload.generatedAt,
+                    dosisRows,
+                    items
+                };
+
+                if (idx >= 0) records[idx] = record;
+                else records.push(record);
+
+                localStorage.setItem('xelle_fo_lc_24_records', JSON.stringify(records));
+            }
+        },
+
+        FO_LC_31: {
+            init: function () { },
+            scrapeRow: function (row) {
+                return Array.from(row.querySelectorAll('input, select, textarea')).map(el => {
+                    if (el.type === 'checkbox') return el.checked;
+                    return el.value;
+                });
+            },
+            fillRow: function (row, data) {
+                const fields = row.querySelectorAll('input, select, textarea');
+                (data || []).forEach((value, idx) => {
+                    const el = fields[idx];
+                    if (!el) return;
+                    if (el.type === 'checkbox') el.checked = Boolean(value);
+                    else el.value = value ?? '';
+                    el.dispatchEvent(new Event('input'));
+                    el.dispatchEvent(new Event('change'));
+                });
+            },
+            rebuildTable: function (tableSelector, rowsData, addRowFnName) {
+                const tbody = document.querySelector(`${tableSelector} tbody`);
+                if (!tbody || !Array.isArray(rowsData)) return;
+                tbody.innerHTML = '';
+                rowsData.forEach(rowData => {
+                    if (typeof window[addRowFnName] === 'function') {
+                        window[addRowFnName]();
+                        const row = tbody.lastElementChild;
+                        if (row) this.fillRow(row, rowData);
+                    }
+                });
+            },
+            getCustomData: function () {
+                const componentes = Array.from(document.querySelectorAll('#tbl-componentes tbody tr')).map(r => this.scrapeRow(r));
+                const materiales = Array.from(document.querySelectorAll('#tbl-materiales tbody tr')).map(r => this.scrapeRow(r));
+                const controles = Array.from(document.querySelectorAll('#tbl-control tbody tr')).map(r => this.scrapeRow(r));
+                return {
+                    t_comp_30: componentes,
+                    t_mat_30: materiales,
+                    t_control_30: controles
+                };
+            },
+            loadCustomData: function (data) {
+                if (Array.isArray(data?.t_comp_30)) this.rebuildTable('#tbl-componentes', data.t_comp_30, 'addCompRow');
+                if (Array.isArray(data?.t_mat_30)) this.rebuildTable('#tbl-materiales', data.t_mat_30, 'addMatRow');
+                if (Array.isArray(data?.t_control_30)) this.rebuildTable('#tbl-control', data.t_control_30, 'addControlRow');
+
+                if (typeof window.updateProductLogic === 'function') window.updateProductLogic();
+                if (typeof window.calcYield === 'function') window.calcYield();
+            }
+        },
+
+        // --- FO-LC-40 / FO-LC-40-B: BITÁCORA PREPARACIÓN MEDIOS ---
+        FO_LC_40: {
+            init: function () {
+                console.log('FO-LC-40: Inicializando...');
+                // Agregar una fila inicial si la tabla está vacía
+                if (document.querySelector('#tbl-medios tbody').children.length === 0) {
+                    this.addMedioRow();
+                }
+            },
+            addMedioRow: function () {
+                window.addGenericRow('tbl-medios', `
+                    <td style='vertical-align:top'><input type='date' class='cedit'></td>
+                    <td style='vertical-align:top'><textarea class='cedit' rows='3'></textarea></td>
+                    <td style='vertical-align:top'><input class='cedit' placeholder='Lote...'></td>
+                    <td style='vertical-align:top' class='col-ingredientes'><textarea class='cedit' rows='4' placeholder='Ej: DMEM (L:123) - 500ml...'></textarea></td>
+                    <td style='vertical-align:top'><input class='cedit'></td>
+                    <td style='vertical-align:top'><input type='date' class='cedit'></td>
+                    <td style='vertical-align:top'>
+                        <input class='cedit' placeholder='Realizó' style='margin-bottom:5px; border-bottom:1px solid #eee;'>
+                        <input class='cedit' placeholder='Verificó'>
+                    </td>
+                    <td class='no-print' style='vertical-align:top'><button class='btn-danger btn-mini' onclick='this.closest(\'tr\').remove()'>x</button></td>
+                `);
+            },
+            getCustomData: function () {
+                console.log('FO-LC-40: Recopilando datos de la tabla...');
+                const medios = [];
+                document.querySelectorAll('#tbl-medios tbody tr').forEach(row => {
+                    const inputs = row.querySelectorAll('input, textarea');
+                    // Cada fila tiene 8 inputs: fecha, nombre, lote, ingredientes, vol_final, caducidad, realizo, verifico
+                    const rowData = Array.from(inputs).map(el => el.value || '');
+                    medios.push(rowData);
+                });
+                console.log('FO-LC-40: Filas recopiladas:', medios.length);
+                return { t_medios: medios };
+            },
+            loadCustomData: function (data) {
+                console.log('FO-LC-40: Cargando datos de la tabla...', data);
+                if (data.t_medios && Array.isArray(data.t_medios)) {
+                    const tbody = document.querySelector('#tbl-medios tbody');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.t_medios.forEach(rowData => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td style='vertical-align:top'><input type='date' class='cedit' value='${rowData[0] || ''}'></td>
+                                <td style='vertical-align:top'><textarea class='cedit' rows='3'>${rowData[1] || ''}</textarea></td>
+                                <td style='vertical-align:top'><input class='cedit' placeholder='Lote...' value='${rowData[2] || ''}'></td>
+                                <td style='vertical-align:top' class='col-ingredientes'><textarea class='cedit' rows='4' placeholder='Ej: DMEM (L:123) - 500ml...'>${rowData[3] || ''}</textarea></td>
+                                <td style='vertical-align:top'><input class='cedit' value='${rowData[4] || ''}'></td>
+                                <td style='vertical-align:top'><input type='date' class='cedit' value='${rowData[5] || ''}'></td>
+                                <td style='vertical-align:top'>
+                                    <input class='cedit' placeholder='Realizó' style='margin-bottom:5px; border-bottom:1px solid #eee;' value='${rowData[6] || ''}'>
+                                    <input class='cedit' placeholder='Verificó' value='${rowData[7] || ''}'>
+                                </td>
+                                <td class='no-print' style='vertical-align:top'><button class='btn-danger btn-mini' onclick='this.closest(\'tr\').remove()'>x</button></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+                console.log('FO-LC-40: Datos cargados exitosamente');
+            }
+        },
+
+        FO_Generic: { init: function (id) { if (document.querySelector('table tbody').children.length === 0) { if (id.includes('41')) window.addMuestra41(); else if (id.includes('42')) window.addGenericRow('tbl-mp', `<td><input class='cedit'></td><td><input type='date' class='cedit'></td><td><input class='cedit'></td><td><input type='number' class='cedit'></td><td class='no-print'><button class='btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`); } } },
+        addGenericRow: function (id, html) { const r = document.createElement('tr'); r.innerHTML = html; document.querySelector(`#${id} tbody`).appendChild(r); }
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => App.init());
+
+window.saveForm = () => App.Universal.saveData(); window.printForm = () => App.Universal.printForm(); window.clearForm = () => App.Universal.clearForm(); window.addGenericRow = (i, h) => App.Docs.addGenericRow(i, h);
+window.addFlaskRow = () => App.Docs.FO_LC_20.addFlaskRow(); window.addSupplyRow = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="date"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.getElementById('supplies-table-body').appendChild(r); }; window.addFreezeRow = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input type="number" style="width:50px" value="1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" value="DMSO 10%"></td><td><input type="text"></td><td><input type="text"></td><td><select><option>Vial</option><option>Bolsa</option></select></td><td><input type="text"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.getElementById('freeze-table-body').appendChild(r); };
+window.agregarFilaInsumo = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td><td class="no-print"><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.querySelector('#tabla-insumos-dia tbody').appendChild(r); };
+window.addDosis24 = () => App.Docs.FO_LC_24.addDosis(); window.addMuestra41 = () => App.Docs.addGenericRow('tbl-micro', `<td><input class='cedit'></td><td><input type='date' class='cedit'></td><td><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td><td><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td><td><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td><td><input type='date' class='cedit'></td><td><input class='cedit'></td><td class='no-print'><button class='btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`);
+    </script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .alert-box {
+            background-color: #fef2f2;
+            border: 1px dashed #991b1b;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: #991b1b;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: justify;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-57">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Inspección</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-57-</span>
+                    <input type="text" id="reg-op57" class="registry-input generate-barcode cedit"
+                        data-target="barcode-op57" data-prefix="FO-OP-57-" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-op57" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>REPORTE DE CONTROL DE PLAGAS Y MANEJO DE FAUNA NOCIVA</h1>
+            <div class="metadata">Código: FO-OP-57 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="alert-box">
+            Nota de BPF: El control de plagas es crítico para la integridad de las instalaciones y áreas limpias.
+            Cualquier hallazgo de actividad debe ser reportado inmediatamente a Aseguramiento de Calidad y
+            Mantenimiento.
+        </div>
+
+        <div class="section-header">1. DATOS DE LA INSPECCIÓN</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="15%"><strong>Fecha:</strong></td>
+                    <td width="25%"><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
+                    </td>
+                    <td width="15%"><strong>Hora Inicio:</strong></td>
+                    <td width="15%"><input type="time" class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
+                    </td>
+                    <td width="15%"><strong>Hora Fin:</strong></td>
+                    <td width="15%"><input type="time" class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
+                    </td>
+                </tr>
+            </table>
+
+            <div
+                style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 4px; margin-top: 10px; margin-bottom: 10px;">
+                <strong>Tipo de Servicio:</strong>
+                <div class="radio-group">
+                    <label><input type="radio" name="tipo_servicio" class="cedit"> Preventivo (Rutina / Programa
+                        Anual)</label>
+                    <label style="color:#b45309;"><input type="radio" name="tipo_servicio" class="cedit"> Correctivo
+                        (Por avistamiento / Incidencia)</label>
+                </div>
+            </div>
+
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Empresa Proveedora<br><span style="font-size:8px; font-weight:normal;">(Si
+                                aplica)</span>:</strong></td>
+                    <td width="30%"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold;"></td>
+                    <td width="20%"><strong>Licencia Sanitaria:</strong></td>
+                    <td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Inspector / Técnico:</strong></td>
+                    <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. CHECKLIST DE INTEGRIDAD DE INSTALACIONES (Prevención)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Verifique las barreras físicas que evitan el
+                ingreso de fauna nociva a las áreas productivas y de almacenamiento.</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="45%">Punto de Inspección</th>
+                        <th width="15%">Estatus (OK / Falla)</th>
+                        <th width="40%">Observaciones / Acción Requerida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left" style="font-weight:bold;">Cortinas Hawaianas / Esclusas:<br><span
+                                style="font-size:9px; font-weight:normal;">Íntegras y cerrando bien.</span></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="OK" style="color:#166534;">OK</option>
+                                <option value="FALLA" style="color:#991b1b;">FALLA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" style="font-weight:bold;">Guardapolvos (Sellos de puertas):<br><span
+                                style="font-size:9px; font-weight:normal;">Sin huecos en la base.</span></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="OK" style="color:#166534;">OK</option>
+                                <option value="FALLA" style="color:#991b1b;">FALLA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" style="font-weight:bold;">Mosquiteros / Rejillas:<br><span
+                                style="font-size:9px; font-weight:normal;">Intactos en ductos o ventanas.</span></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="OK" style="color:#166534;">OK</option>
+                                <option value="FALLA" style="color:#991b1b;">FALLA</option>
+                                <option value="NA">N/A</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left" style="font-weight:bold;">Perímetro Exterior:<br><span
+                                style="font-size:9px; font-weight:normal;">Libre de maleza, basura o agua
+                                estancada.</span></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="OK" style="color:#166534;">OK</option>
+                                <option value="FALLA" style="color:#991b1b;">FALLA</option>
+                            </select>
+                        </td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">3. HALLAZGOS Y EVIDENCIA DE ACTIVIDAD</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:10px;">Marque si se detectó evidencia física de plaga en
+                alguna de las áreas (interior o exterior).</p>
+
+            <div
+                style="background-color: #f0fdf4; border: 1px solid #166534; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+                <label style="font-weight:bold; color:#14532d; display:flex; align-items:center; cursor:pointer;">
+                    <input type="radio" name="hallazgos" class="cedit" style="margin-right:10px;"> Sin hallazgos /
+                    Instalaciones libres de plaga.
+                </label>
+            </div>
+
+            <div
+                style="background-color: #fffbeb; border: 1px solid #b45309; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+                <label
+                    style="font-weight:bold; color:#991b1b; display:flex; align-items:center; cursor:pointer; margin-bottom:10px;">
+                    <input type="radio" name="hallazgos" class="cedit" style="margin-right:10px;"> Se detectó actividad
+                    de:
+                </label>
+
+                <div class="radio-group" style="padding-left: 25px;">
+                    <label><input type="checkbox" class="cedit"> Roedores (Heces, roeduras, avistamiento)</label>
+                    <label><input type="checkbox" class="cedit"> Insectos rastreros (Cucarachas, hormigas,
+                        arañas)</label>
+                    <label><input type="checkbox" class="cedit"> Insectos voladores (Moscas, mosquitos,
+                        polillas)</label>
+                    <label><input type="checkbox" class="cedit"> Aves / Otros vertebrados</label>
+                </div>
+            </div>
+
+            <div style="margin-top: 10px;">
+                <strong>Área exacta del hallazgo y tratamiento aplicado:</strong>
+                <textarea class="cedit" rows="2"
+                    style="width:100%; border:1px solid #cbd5e1; padding:5px; margin-top:5px; box-sizing:border-box;"
+                    placeholder="Ej. Se detectaron hormigas en pasillo exterior. Se aplicó gel cebo autorizado."></textarea>
+            </div>
+        </div>
+
+        <div class="section-header">4. DICTAMEN Y FIRMAS</div>
+        <div class="section">
+            <div class="signature-area"
+                style="display:flex; justify-content:space-between; gap:15px; margin-top: 15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Realizó Inspección<br><span
+                            style="font-size:9px; font-weight:normal;">(Técnico / Proveedor)</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #94a3b8; border-radius:0;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Verificó<br><span
+                            style="font-size:9px; font-weight:normal;">(Mantenimiento Xelle)</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #94a3b8; border-radius:0;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Vo.Bo. de Cierre<br><span
+                            style="font-size:9px; font-weight:normal;">(Aseguramiento de Calidad)</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #94a3b8; border-radius:0;">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">FO-OP-57 | Versión: 1.0 | Reporte de Control de Plagas y Manejo de Fauna Nociva | Xelle
+            Scientific | Página 1 de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;,
+            S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción
+            total o parcial.</div>
+    </div>
+    <script>
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="date"> a <input type="text">
+                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="date">
+                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                    inp.type = 'date';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -15,10 +15,10 @@
 
         .etiqueta-container {
             width: 100mm;
-            height: 100mm;
+            height: 50mm;
             background-color: #ffffff;
             border: 2px solid #000;
-            padding: 5mm;
+            padding: 3mm;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -27,66 +27,66 @@
 
         .logo-area {
             text-align: center;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
         }
 
         .logo-area svg {
-            width: 30px;
-            height: 30px;
+            width: 20px;
+            height: 20px;
             vertical-align: middle;
         }
 
         .logo-text {
-            font-size: 12px;
+            font-size: 9px;
             font-weight: bold;
             vertical-align: middle;
-            margin-left: 5px;
+            margin-left: 3px;
             color: #2c3e50;
         }
 
         .titulo-alerta {
             text-align: center;
-            font-size: 16px;
+            font-size: 11px;
             font-weight: 900;
-            letter-spacing: 1px;
-            margin: 0 0 2px 0;
+            letter-spacing: 0.5px;
+            margin: 0 0 1px 0;
             background-color: #e3f2fd;
             color: #0d47a1;
-            padding: 4px;
+            padding: 2px;
             border: 1px solid #2196f3;
         }
 
         .subtitulo {
             text-align: center;
-            font-size: 9px;
+            font-size: 7px;
             font-weight: bold;
-            margin-bottom: 12px;
+            margin-bottom: 3px;
             text-decoration: underline;
         }
 
         .campo {
             display: flex;
             align-items: flex-end;
-            margin-bottom: 10px;
-            font-size: 10px;
+            margin-bottom: 2px;
+            font-size: 8px;
         }
 
         .campo label {
             font-weight: bold;
             white-space: nowrap;
-            margin-right: 5px;
+            margin-right: 3px;
         }
 
         .linea {
             flex-grow: 1;
             border-bottom: 1px solid #000;
-            height: 12px;
+            height: 10px;
         }
 
         .fila-doble {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
+            gap: 5px;
         }
 
         .fila-doble .campo {
@@ -95,38 +95,38 @@
 
         .estatus-caja {
             border: 1px solid #ccc;
-            padding: 6px;
-            margin: 5px 0;
-            font-size: 10px;
+            padding: 2px 4px;
+            margin: 2px 0;
+            font-size: 7px;
             display: flex;
             justify-content: space-around;
             background-color: #fafafa;
         }
 
         .firma-area {
-            margin-top: 15px;
+            margin-top: 2px;
             text-align: center;
         }
 
         .linea-firma {
-            width: 75%;
+            width: 50%;
             border-bottom: 1px solid #000;
-            margin: 0 auto 4px auto;
-            height: 18px;
+            margin: 0 auto 2px auto;
+            height: 8px;
         }
 
         .firma-label {
-            font-size: 10px;
+            font-size: 7px;
             font-weight: bold;
         }
 
         .footer-bottom {
-            margin-top: 5px;
-            font-size: 8px;
+            margin-top: 1px;
+            font-size: 6px;
             text-align: center;
             color: #777;
             border-top: 1px solid #ccc;
-            padding-top: 4px;
+            padding-top: 2px;
         }
 
         .controls-panel {
@@ -194,10 +194,10 @@
             align-items: flex-start;
         }
 
-        /* Mantener tamaño fijo de 100mm x 100mm siempre */
+        /* Mantener tamaño fijo de 100mm x 50mm siempre */
         .etiqueta-container {
             width: 100mm !important;
-            height: 100mm !important;
+            height: 50mm !important;
         }
 
         @media print {
@@ -218,7 +218,7 @@
 
             .etiqueta-container {
                 width: 100mm !important;
-                height: 100mm !important;
+                height: 50mm !important;
                 page-break-inside: avoid;
                 border: 1px solid #000;
                 transform-origin: center center;
@@ -259,36 +259,36 @@
             body.print-4 .print-wrapper {
                 display: grid;
                 grid-template-columns: repeat(2, 100mm);
-                grid-template-rows: repeat(2, 100mm);
-                gap: 0mm;
+                grid-template-rows: repeat(2, 50mm);
+                gap: 5mm;
                 justify-content: center;
                 align-content: center;
                 min-height: 100vh;
             }
 
-            /* 6 por página - Escala 0.65 (65mm efectivo) */
+            /* 6 por página - Escala 0.8 (80mm efectivo) */
             body.print-6 .etiqueta-container {
-                transform: scale(0.65);
+                transform: scale(0.8);
             }
 
             body.print-6 .print-wrapper {
                 display: grid;
                 grid-template-columns: repeat(2, 100mm);
-                grid-template-rows: repeat(3, 100mm);
-                gap: 0mm;
+                grid-template-rows: repeat(3, 50mm);
+                gap: 3mm;
                 justify-content: center;
                 align-content: center;
                 min-height: 100vh;
             }
 
-            /* 8 por página - Escala 0.5 (50mm efectivo) */
+            /* 8 por página - Escala 0.7 (70mm efectivo) */
             body.print-8 .etiqueta-container {
-                transform: scale(0.5);
+                transform: scale(0.7);
             }
 
             body.print-8 .print-wrapper {
                 display: grid;
-                grid-template-columns: repeat(2, 50mm);
+                grid-template-columns: repeat(2, 100mm);
                 grid-template-rows: repeat(4, 50mm);
                 gap: 3mm;
                 justify-content: center;
@@ -304,23 +304,23 @@
             body.print-9 .print-wrapper {
                 display: grid;
                 grid-template-columns: repeat(3, 100mm);
-                grid-template-rows: repeat(3, 100mm);
-                gap: 0mm;
+                grid-template-rows: repeat(3, 50mm);
+                gap: 2mm;
                 justify-content: center;
                 align-content: center;
                 min-height: 100vh;
             }
 
-            /* 10 por página - Escala 0.5 (50mm efectivo) */
+            /* 10 por página - Escala 0.65 (65mm efectivo) */
             body.print-10 .etiqueta-container {
-                transform: scale(0.5);
+                transform: scale(0.65);
             }
 
             body.print-10 .print-wrapper {
                 display: grid;
                 grid-template-columns: repeat(2, 100mm);
-                grid-template-rows: repeat(5, 100mm);
-                gap: 0mm;
+                grid-template-rows: repeat(5, 50mm);
+                gap: 2mm;
                 justify-content: center;
                 align-content: center;
                 min-height: 100vh;
@@ -353,7 +353,7 @@
 
         <div
             style="font-size: 11px; color: #666; margin-bottom: 10px; padding: 8px; background-color: #f0f9f6; border-radius: 4px;">
-            📏 Tamaño base: 10cm × 10cm<br>
+            📏 Tamaño base: 10cm × 5cm<br>
             <span style="font-size: 10px; color: #888;">Se ajusta automáticamente según cantidad</span>
         </div>
 
@@ -374,27 +374,29 @@
                     </svg>
                     <span class="logo-text">XELLE SCIENTIFIC</span>
                 </div>
-                <div class="titulo-alerta">🛡️ C O N T R A M U E S T R A 🛡️</div>
+                <div class="titulo-alerta">🛡️ CONTRAMUESTRA 🛡️</div>
                 <div class="subtitulo">MUESTRA DE RETENCIÓN - PROHIBIDA SU VENTA</div>
-                <div class="campo"><label>ID Producto / Lote:</label>
+                <div class="campo"><label>Producto/Lote:</label>
                     <div class="linea"></div>
                 </div>
-                <div class="campo"><label>Fecha de Muestreo:</label>
-                    <div class="linea" style="text-align:center; color:#777;">DD / MM / AA</div>
-                </div>
-                <div class="campo"><label>FECHA DE BAJA (Caducidad + 1 año):</label>
-                    <div class="linea" style="text-align:center; color:#777;">DD / MM / AA</div>
+                <div class="fila-doble">
+                    <div class="campo"><label>F. Muestreo:</label>
+                        <div class="linea" style="text-align:center; color:#777; font-size:7px;">DD/MM/AA</div>
+                    </div>
+                    <div class="campo"><label>F. Baja:</label>
+                        <div class="linea" style="text-align:center; color:#777; font-size:7px;">DD/MM/AA</div>
+                    </div>
                 </div>
                 <div class="estatus-caja">
-                    <strong>Estatus:</strong> <span>☐ Análisis CC</span> <span>☐ Retención Legal</span>
+                    <strong>Estatus:</strong> <span>☐ Análisis CC</span> <span>☐ Retención</span>
                 </div>
             </div>
             <div>
                 <div class="firma-area">
                     <div class="linea-firma"></div>
-                    <div class="firma-label">Muestreó (Firma)</div>
+                    <div class="firma-label">Firma</div>
                 </div>
-                <div class="footer-bottom">Código: ET-LC-09 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+                <div class="footer-bottom">ET-LC-09 | V1.0 | ENE 2026</div>
             </div>
         </div>
 

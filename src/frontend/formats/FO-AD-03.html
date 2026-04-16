@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-AD-03 Evaluación de Desempeño y Capacitación</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 11px;
+            margin-top: 5px;
+            align-items: center;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .info-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #334155;
+        }
+
+        .info-box strong {
+            color: #1E3A5F;
+        }
+
+        .audit-note {
+            background-color: #f1f5f9;
+            border-left: 4px solid #b45309;
+            padding: 10px;
+            margin-top: 15px;
+            font-size: 9px;
+            color: #334155;
+        }
+
+        .audit-note strong {
+            color: #b45309;
+        }
+
+        .score-box {
+            background-color: #e2e8f0;
+            font-weight: bold;
+            font-size: 14px;
+            color: #1e3a5f;
+            padding: 5px;
+            text-align: center;
+            border-radius: 4px;
+            border: 1px solid #94a3b8;
+        }
+
+        /* Estilos del Footer Unificado y Legal */
+        .footer-unified {
+            margin-top: 20px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 8px;
+            text-align: center;
+            font-size: 9px;
+            /* Tamaño unificado para todo el pie de página */
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+
+        .footer-unified .control-data {
+            font-weight: bold;
+            color: #1E3A5F;
+            margin-bottom: 3px;
+        }
+
+        .footer-unified .legal-data {
+            color: #475569;
+            font-style: italic;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-ad-03">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Evaluación</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-AD-03-</span>
+                    <input type="text" id="reg-ad03" class="registry-input generate-barcode cedit"
+                        data-target="barcode-ad03" data-prefix="FO-AD-03-" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-ad03" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>EVALUACIÓN DE DESEMPEÑO Y NECESIDADES DE CAPACITACIÓN</h1>
+            <div class="metadata">Código: FO-AD-03 | Versión: 1.0 | Vigencia: Mar 2026 | Área: Recursos Humanos |
+                Página: 1 de 2</div>
+        </div>
+
+        <div class="section-header">1. DATOS DEL COLABORADOR Y PERIODO EVALUADO</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="25%"><strong>Nombre del Empleado:</strong></td>
+                    <td width="75%" colspan="3"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:12px;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Puesto:</strong></td>
+                    <td width="35%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td width="15%"><strong>Departamento:</strong></td>
+                    <td width="25%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Evaluador (Jefe Inmediato):</strong></td>
+                    <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Periodo Evaluado:</strong></td>
+                    <td>
+                        <div style="display:flex; align-items:center;">
+                            Del <input type="date" class="cedit"
+                                style="width:100px; border-bottom:1px solid #ccc; margin:0 5px;">
+                            al <input type="date" class="cedit"
+                                style="width:100px; border-bottom:1px solid #ccc; margin-left:5px;">
+                        </div>
+                    </td>
+                    <td><strong>Tipo de Eval.:</strong></td>
+                    <td>
+                        <div class="radio-group" style="margin:0;">
+                            <label><input type="radio" name="tipo_eval" class="cedit"> Semestral</label>
+                            <label><input type="radio" name="tipo_eval" class="cedit"> Anual</label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. ESCALA DE CALIFICACIÓN</div>
+        <div class="section">
+            <div style="display:flex; gap:10px;">
+                <div class="info-box" style="flex:1; border-left: 4px solid #991b1b;">
+                    <strong>1 - Insatisfactorio:</strong> No cumple requerimientos mínimos. Requiere plan de mejora
+                    urgente.
+                </div>
+                <div class="info-box" style="flex:1; border-left: 4px solid #b45309;">
+                    <strong>2 - Regular:</strong> Cumple parcialmente. Requiere supervisión constante y capacitación.
+                </div>
+                <div class="info-box" style="flex:1; border-left: 4px solid #eab308;">
+                    <strong>3 - Satisfactorio:</strong> Cumple consistentemente con las expectativas del puesto.
+                </div>
+                <div class="info-box" style="flex:1; border-left: 4px solid #22c55e;">
+                    <strong>4 - Destacado:</strong> Supera las expectativas ocasionalmente; muestra alta iniciativa.
+                </div>
+                <div class="info-box" style="flex:1; border-left: 4px solid #166534;">
+                    <strong>5 - Excepcional:</strong> Supera constantemente expectativas; es un modelo a seguir.
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">3. EVALUACIÓN DE COMPETENCIAS Y CUMPLIMIENTO (SGC)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Instrucción: Asigne una calificación del 1 al 5.
+                Sea objetivo y base su calificación en evidencias (ej. número de desviaciones, errores en bitácoras).
+            </p>
+            <table class="compact-table" id="tbl-eval">
+                <thead>
+                    <tr>
+                        <th width="15%">Categoría de Evaluación</th>
+                        <th width="45%">Criterios a Evaluar</th>
+                        <th width="10%">Calificación<br>(1-5)</th>
+                        <th width="30%">Observaciones / Ejemplos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:bold;">A. Calidad y Normativa (BPF / BPD)</td>
+                        <td class="text-left">Ejecuta sus tareas siguiendo estrictamente los PNOs. Llena registros y
+                            bitácoras sin errores, en tiempo real (ALCOA+).</td>
+                        <td>
+                            <select class="cedit score-val" onchange="calcTotal()"
+                                style="font-weight:bold; font-size:12px;">
+                                <option value="0">-</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">B. Productividad y Eficiencia</td>
+                        <td class="text-left">Cumple con los tiempos de producción/análisis establecidos. Organiza su
+                            trabajo minimizando tiempos muertos o desperdicios.</td>
+                        <td>
+                            <select class="cedit score-val" onchange="calcTotal()"
+                                style="font-weight:bold; font-size:12px;">
+                                <option value="0">-</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">C. Seguridad e Higiene</td>
+                        <td class="text-left">Utiliza su Equipo de Protección Personal (EPP). Mantiene su área limpia y
+                            respeta reglas de ingreso a áreas controladas.</td>
+                        <td>
+                            <select class="cedit score-val" onchange="calcTotal()"
+                                style="font-weight:bold; font-size:12px;">
+                                <option value="0">-</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">D. Solución de Problemas</td>
+                        <td class="text-left">Detecta anomalías en proceso/equipo, las reporta inmediatamente y propone
+                            soluciones o participa en las investigaciones.</td>
+                        <td>
+                            <select class="cedit score-val" onchange="calcTotal()"
+                                style="font-weight:bold; font-size:12px;">
+                                <option value="0">-</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;">E. Trabajo en Equipo</td>
+                        <td class="text-left">Se comunica asertivamente con otras áreas. Muestra disposición para apoyar
+                            a sus compañeros.</td>
+                        <td>
+                            <select class="cedit score-val" onchange="calcTotal()"
+                                style="font-weight:bold; font-size:12px;">
+                                <option value="0">-</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="display:flex; justify-content:flex-end; margin-top:10px; align-items:center;">
+                <span style="font-weight:bold; color:#1E3A5F; margin-right:15px; font-size:11px;">PUNTAJE TOTAL (Suma de
+                    calificaciones):</span>
+                <div class="score-box"><span id="total-score">0</span> / 25</div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-03 | Versión: 1.0 | Evaluación de Desempeño y Capacitación | Xelle
+                Scientific | Página 1 de 2</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
+        </div>
+
+        <div style="page-break-before: always;"></div>
+
+        <div class="header-main" style="margin-top:0;">
+            <p style="text-align:right; font-size:9px; font-weight:bold; color:#64748b;">Folio: <span
+                    id="sync-folio">FO-AD-03-000</span> | Página 2 de 2</p>
+        </div>
+
+        <div class="section-header">4. REVISIÓN DE OBJETIVOS ESPECÍFICOS (KPIs)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Evalúe si el colaborador cumplió con las metas
+                individuales fijadas al inicio del periodo.</p>
+            <table class="compact-table" id="tbl-kpi">
+                <thead>
+                    <tr>
+                        <th width="40%">Objetivo / Meta Establecida</th>
+                        <th width="20%">Estatus</th>
+                        <th width="40%">Justificación del resultado (Si no se cumplió, explicar por qué)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><textarea class="cedit text-left" rows="2"
+                                placeholder="1. Ej. Reducir errores de llenado en FO-OP-40-B a cero."></textarea></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="ALCANZADO" style="color:#166534;">Alcanzado</option>
+                                <option value="NO_ALCANZADO" style="color:#991b1b;">No Alcanzado</option>
+                                <option value="EN_PROCESO" style="color:#b45309;">En Proceso</option>
+                            </select>
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><textarea class="cedit text-left" rows="2" placeholder="2."></textarea></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="ALCANZADO" style="color:#166534;">Alcanzado</option>
+                                <option value="NO_ALCANZADO" style="color:#991b1b;">No Alcanzado</option>
+                                <option value="EN_PROCESO" style="color:#b45309;">En Proceso</option>
+                            </select>
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><textarea class="cedit text-left" rows="2" placeholder="3."></textarea></td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="ALCANZADO" style="color:#166534;">Alcanzado</option>
+                                <option value="NO_ALCANZADO" style="color:#991b1b;">No Alcanzado</option>
+                                <option value="EN_PROCESO" style="color:#b45309;">En Proceso</option>
+                            </select>
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">5. DETECCIÓN DE NECESIDADES DE CAPACITACIÓN (DNC)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#b45309; font-weight:bold; margin-bottom:5px;">Con base en los rubros con
+                calificación baja (1 o 2) y los nuevos retos del área, defina qué capacitación requiere el empleado para
+                el próximo periodo.</p>
+            <table class="compact-table" id="tbl-dnc">
+                <thead>
+                    <tr>
+                        <th width="45%">Tema o Habilidad a Desarrollar</th>
+                        <th width="30%">Tipo de Capacitación</th>
+                        <th width="20%">Prioridad</th>
+                        <th width="5%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit text-left"
+                                placeholder="Ej. Reforzamiento en llenado de bitácoras (ALCOA+)"></td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="INTERNA">Interna (Lectura PNO)</option>
+                                <option value="PRACTICA">Interna (Práctica/Supervisada)</option>
+                                <option value="EXTERNA">Externa (Curso/Taller)</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="ALTA" style="color:#991b1b;">Alta</option>
+                                <option value="MEDIA" style="color:#b45309;">Media</option>
+                                <option value="BAJA" style="color:#166534;">Baja</option>
+                            </select>
+                        </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit text-left"></td>
+                        <td>
+                            <select class="cedit">
+                                <option value=""></option>
+                                <option value="INTERNA">Interna (Lectura PNO)</option>
+                                <option value="PRACTICA">Interna (Práctica/Supervisada)</option>
+                                <option value="EXTERNA">Externa (Curso/Taller)</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="cedit" style="font-weight:bold;">
+                                <option value=""></option>
+                                <option value="ALTA" style="color:#991b1b;">Alta</option>
+                                <option value="MEDIA" style="color:#b45309;">Media</option>
+                                <option value="BAJA" style="color:#166534;">Baja</option>
+                            </select>
+                        </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-dnc')">+ AGREGAR NECESIDAD DE CAPACITACIÓN</button>
+        </div>
+
+        <div class="section-header">6. RETROALIMENTACIÓN Y PLAN DE ACCIÓN</div>
+        <div class="section">
+            <div style="margin-bottom: 10px;">
+                <strong>Comentarios del Evaluador (Fortalezas y Áreas de Mejora):</strong>
+                <textarea class="cedit" rows="3"
+                    style="width:100%; border:1px solid #cbd5e1; padding:5px; box-sizing:border-box; margin-top:5px;"></textarea>
+            </div>
+            <div>
+                <strong>Comentarios del Empleado (Obligatorio para cumplimiento de calidad):</strong>
+                <textarea class="cedit" rows="3"
+                    style="width:100%; border:1px solid #cbd5e1; padding:5px; box-sizing:border-box; margin-top:5px;"></textarea>
+            </div>
+        </div>
+
+        <div class="section-header">7. FIRMAS DE ACUERDO</div>
+        <div class="section">
+            <div class="signature-area"
+                style="display:flex; justify-content:space-between; gap:15px; margin-top: 15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Evaluó<br><span
+                            style="font-size:9px; font-weight:normal;">Jefe Inmediato</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #94a3b8; border-radius:0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1; background-color: #f0fdf4; border: 1px solid #166534;">
+                    <p style="font-weight:bold; margin-bottom: 25px; color:#14532d;">Recibió Retroalimentación<br><span
+                            style="font-size:9px; font-weight:normal;">Empleado (Obligatorio)</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #166534; border-radius:0; background:transparent;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Verificó<br><span
+                            style="font-size:9px; font-weight:normal;">Recursos Humanos</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #94a3b8; border-radius:0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="audit-note">
+            <strong>Consideraciones normativas para este formato:</strong><br>
+            • <strong>Alineación (FO-AD-02):</strong> Si en la Evaluación de Desempeño le pones un "1" en Calidad a un
+            operador, su calificación en la Matriz de Competencias debe bajar correspondientemente, y la Sección 5 de
+            este formato dictará qué curso se le dará para corregir la deficiencia.<br>
+            • <strong>Firma del Colaborador:</strong> Es vital que el empleado firme. Un auditor revisará que la
+            evaluación fue un diálogo bidireccional enfocado a la mejora continua y no una imposición.
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-03 | Versión: 1.0 | Evaluación de Desempeño y Capacitación | Xelle
+                Scientific | Página 2 de 2</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        // Sincronizar Folio entre paginas
+        document.getElementById('reg-ad03').addEventListener('input', function () {
+            let val = this.value;
+            document.getElementById('sync-folio').innerText = val ? 'FO-AD-03-' + val : 'FO-AD-03-000';
+        });
+
+        // Calcular Score Total
+        function calcTotal() {
+            const selects = document.querySelectorAll('.score-val');
+            let total = 0;
+            selects.forEach(sel => {
+                total += parseInt(sel.value) || 0;
+            });
+
+            const scoreDisplay = document.getElementById('total-score');
+            scoreDisplay.innerText = total;
+
+            // Colores dependiendo del score
+            if (total < 15) { scoreDisplay.style.color = '#991b1b'; } // Rojo
+            else if (total < 20) { scoreDisplay.style.color = '#b45309'; } // Amarillo/Naranja
+            else { scoreDisplay.style.color = '#166534'; } // Verde
+        }
+
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+            tbody.appendChild(newRow);
+        }
+    </script>
+</body>
+
+</html>

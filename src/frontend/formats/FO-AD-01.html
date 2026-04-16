@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-AD-01 Perfil y Descripción de Puesto</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 11px;
+            margin-top: 5px;
+            align-items: center;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px 14px;
+            font-size: 11px;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 14px;
+            border-radius: 4px;
+        }
+
+        .skill-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 34px;
+            background: #ffffff;
+            border: 1px solid #dbe5f0;
+            border-radius: 4px;
+            padding: 6px 8px;
+            line-height: 1.25;
+            cursor: pointer;
+        }
+
+        .skill-option input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        .skill-option.skill-priority {
+            border-color: #93c5fd;
+            background: #eff6ff;
+            color: #1e3a8a;
+            font-weight: 700;
+        }
+
+        @media (max-width: 760px) {
+            .checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .audit-note {
+            background-color: #f1f5f9;
+            border-left: 4px solid #64748b;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 10px;
+            color: #334155;
+            line-height: 1.4;
+        }
+
+        .audit-note strong {
+            color: #1E3A5F;
+        }
+
+        .copyright-footer {
+            font-size: 8px;
+            color: #64748b;
+            font-style: italic;
+            margin-top: 10px;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 5px;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-ad-01">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio del Perfil</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-AD-01-</span>
+                    <input type="text" id="reg-ad01" class="registry-input generate-barcode cedit"
+                        data-target="barcode-ad01" data-prefix="FO-AD-01-" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-ad01" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>PERFIL Y DESCRIPCIÓN DE PUESTO</h1>
+            <div class="metadata">Código: FO-AD-01 | Versión: 1.0 | Vigencia: Mar 2026 | Área: Recursos Humanos |
+                Página: 1 de 2</div>
+        </div>
+
+        <div class="section-header">1. IDENTIFICACIÓN DEL PUESTO</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="25%"><strong>Nombre del Puesto:</strong></td>
+                    <td width="75%" colspan="3"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:12px;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Departamento / Área:</strong></td>
+                    <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Reporta directamente a:</strong></td>
+                    <td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td width="15%"><strong>Supervisa a:</strong></td>
+                    <td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Tipo de Contratación:</strong></td>
+                    <td colspan="3">
+                        <div class="radio-group">
+                            <label><input type="radio" name="contrato" class="cedit"> Tiempo Completo</label>
+                            <label><input type="radio" name="contrato" class="cedit"> Medio Tiempo</label>
+                            <label><input type="radio" name="contrato" class="cedit"> Temporal / Proyecto</label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. PROPÓSITO GENERAL DEL PUESTO</div>
+        <div class="section">
+            <textarea class="cedit" rows="3"
+                style="width:100%; border:1px solid #cbd5e1; padding:10px; box-sizing:border-box;"
+                placeholder="Describa la razón de ser del puesto y su impacto en la organización..."></textarea>
+        </div>
+
+        <div class="section-header">3. RESPONSABILIDADES Y FUNCIONES PRINCIPALES</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-funciones">
+                <thead>
+                    <tr>
+                        <th width="5%">No.</th>
+                        <th width="75%">Funciones Operativas y Administrativas</th>
+                        <th width="20%">Frecuencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><input class="cedit text-left"
+                                placeholder="Ej. Ejecutar la validación de métodos analíticos"></td>
+                        <td><input class="cedit" placeholder="Diaria"></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-funciones')">+ AGREGAR FUNCIÓN</button>
+
+            <div style="margin-top: 15px;">
+                <strong>Responsabilidades dentro del Sistema de Gestión de Calidad (BPF / GMP):</strong>
+                <textarea class="cedit" rows="3"
+                    style="width:100%; border:1px solid #cbd5e1; padding:10px; box-sizing:border-box; margin-top:5px;"
+                    placeholder="Ej. Cumplir estrictamente con los PNO del área, reportar desviaciones, llenar bitácoras bajo principios ALCOA+..."></textarea>
+            </div>
+        </div>
+
+        <div class="footer" style="margin-top: 20px;">
+            <div style="font-weight: bold; margin-bottom: 5px;">FO-AD-01 | Versión: 1.0 | Perfil y Descripción de Puesto
+                | Xelle Scientific | Página 1 de 2</div>
+            <div class="copyright-footer">
+                El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido
+                por los derechos de autor, por lo que está prohibida su reproducción total o parcial.
+            </div>
+        </div>
+
+        <div style="page-break-before: always;"></div>
+
+        <div class="header-main" style="margin-top:0;">
+            <p style="text-align:right; font-size:9px; font-weight:bold; color:#64748b;">Folio: <span
+                    id="sync-folio">FO-AD-01-000</span> | Página 2 de 2</p>
+        </div>
+
+        <div class="section-header">4. PERFIL DE INGRESO (REQUISITOS MÍNIMOS)</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Escolaridad:</strong></td>
+                    <td width="80%">
+                        <div class="radio-group">
+                            <label><input type="radio" name="escolaridad" class="cedit"> Preparatoria/Técnico</label>
+                            <label><input type="radio" name="escolaridad" class="cedit"> Licenciatura/Ingeniería</label>
+                            <label><input type="radio" name="escolaridad" class="cedit"> Maestría/Especialidad</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Carreras:</strong></td>
+                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
+                            placeholder="Ej. QFB, Biología, Ingeniería Industrial"></td>
+                </tr>
+                <tr>
+                    <td><strong>Experiencia:</strong></td>
+                    <td><input type="number" class="cedit" style="width:50px; border-bottom:1px solid #ccc;"> años en
+                        <input class="cedit" style="width:70%; border-bottom:1px solid #ccc;">
+                    </td>
+                </tr>
+            </table>
+
+            <div
+                style="margin-top: 10px; background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 4px;">
+                <strong>Conocimientos Técnicos Requeridos:</strong>
+                <div style="margin-top: 5px;">
+                    <span style="font-size: 10px; color: #475569;">Normativa Regulatoria:</span>
+                    <input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
+                        placeholder="Ej. NOM-241, NOM-059, ISO 9001">
+                </div>
+                <div style="margin-top: 5px;">
+                    <span style="font-size: 10px; color: #475569;">Manejo de Equipos:</span>
+                    <input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
+                        placeholder="Ej. Campanas de flujo laminar, autoclaves">
+                </div>
+                <div style="margin-top: 5px;">
+                    <span style="font-size: 10px; color: #475569;">Software / Sistemas:</span>
+                    <input class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
+                </div>
+                <div style="margin-top: 10px;">
+                    <span style="font-size: 10px; color: #475569;">Idiomas:</span>
+                    <div class="radio-group">
+                        <label><input type="radio" name="idioma" class="cedit"> Inglés Técnico (Lectura)</label>
+                        <label><input type="radio" name="idioma" class="cedit"> Inglés Avanzado</label>
+                        <label><input type="radio" name="idioma" class="cedit"> N/A</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">5. HABILIDADES Y COMPETENCIAS (SOFT SKILLS)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:10px;">Marque las 3 a 5 competencias más críticas para el
+                éxito en esta posición.</p>
+            <div class="checkbox-grid">
+                <label class="skill-option"><input type="checkbox" class="cedit"> Liderazgo y Manejo de
+                    Conflictos</label>
+                <label class="skill-option"><input type="checkbox" class="cedit"> Trabajo en Equipo</label>
+                <label class="skill-option skill-priority"><input type="checkbox" class="cedit"> Atención al Detalle
+                    (BPF)</label>
+                <label class="skill-option"><input type="checkbox" class="cedit"> Análisis y Solución de
+                    Problemas</label>
+                <label class="skill-option"><input type="checkbox" class="cedit"> Orientación a Resultados</label>
+                <label class="skill-option"><input type="checkbox" class="cedit"> Tolerancia a la Presión</label>
+                <label class="skill-option"><input type="checkbox" class="cedit"> Comunicación Asertiva</label>
+                <label class="skill-option"><input type="checkbox" class="cedit"> Apego a Normas y
+                    Procedimientos</label>
+            </div>
+        </div>
+
+        <div class="section-header">6. FIRMAS DE APROBACIÓN Y ACEPTACIÓN DEL EMPLEADO</div>
+        <div class="section">
+            <table class="no-border-table" style="margin-bottom: 15px;">
+                <tr>
+                    <td width="30%"><strong>Nombre del Colaborador:</strong></td>
+                    <td width="70%"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold;"></td>
+                </tr>
+            </table>
+
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:10px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">Aprobación de RRHH</p>
+                    <p style="font-size:8px; color:#666; margin-bottom:20px;">Perfil revisado y autorizado.</p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #ccc; border-radius:0;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">Aprobación Jefe Inmediato</p>
+                    <p style="font-size:8px; color:#666; margin-bottom:20px;">Cumple necesidades del área.</p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #ccc; border-radius:0;">
+                </div>
+                <div class="signature-box" style="flex:1; background-color: #f0fdf4;">
+                    <p style="font-weight:bold; color:#166534;">Aceptación del Empleado</p>
+                    <p style="font-size:8px; color:#666; margin-bottom:20px;">Acepto las funciones descritas.</p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #166534; border-radius:0; background:transparent;">
+                </div>
+            </div>
+        </div>
+
+        <div class="audit-note">
+            <strong>¿Cómo utilizar este documento en auditorías?</strong><br>
+            • <strong>NOM-059:</strong> El auditor buscará este perfil firmado en el expediente del personal
+            seleccionado al azar para verificar competencia.<br>
+            • <strong>Justificación de Autoridad:</strong> Si un empleado firma documentos de liberación, este perfil
+            debe declarar explícitamente dicha autoridad y competencia técnica.
+        </div>
+
+        <div class="footer" style="margin-top: 20px;">
+            <div style="font-weight: bold; margin-bottom: 5px;">FO-AD-01 | Versión: 1.0 | Perfil y Descripción de Puesto
+                | Xelle Scientific | Página 2 de 2</div>
+            <div class="copyright-footer">
+                El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido
+                por los derechos de autor, por lo que está prohibida su reproducción total o parcial.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sincronizar Folio entre paginas
+        document.getElementById('reg-ad01').addEventListener('input', function () {
+            let val = this.value;
+            document.getElementById('sync-folio').innerText = val ? 'FO-AD-01-' + val : 'FO-AD-01-000';
+        });
+
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const rowCount = tbody.rows.length + 1;
+            const row = tbody.insertRow();
+            row.innerHTML = `<td>${rowCount}</td><td><input class="cedit text-left"></td><td><input class="cedit"></td>`;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-AD-06 Informe Final de Auditoría Interna</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        
+        .compact-table th { background-color: #f1f5f9; color: #1E3A5F; font-size: 10px; padding: 6px; text-align: center; vertical-align: middle; border: 1px solid #cbd5e1; }
+        .compact-table td { font-size: 10px; padding: 5px; vertical-align: middle; text-align: center; border: 1px solid #cbd5e1; }
+        .compact-table input, .compact-table select, .compact-table textarea { font-size: 10px; text-align: center; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
+        
+        .summary-box { border: 1px solid #1E3A5F; padding: 10px; margin-top: 5px; border-radius: 4px; }
+        .text-left { text-align: left !important; padding-left: 8px !important; }
+        .highlight-row { background-color: #f8fafc; font-weight: bold; }
+
+        .conclusion-card { border: 1px solid #cbd5e1; padding: 12px; border-radius: 4px; margin-top: 5px; }
+        .radio-option { display: block; margin-bottom: 8px; font-size: 10px; line-height: 1.4; }
+        .radio-option input { margin-right: 8px; }
+
+        /* Estilos del Footer Unificado y Legal */
+        .footer-unified { 
+            margin-top: 20px; 
+            border-top: 2px solid #1E3A5F; 
+            padding-top: 8px; 
+            text-align: center; 
+            font-size: 9px; 
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+        .footer-unified .control-data { font-weight: bold; color: #1E3A5F; margin-bottom: 3px; }
+        .footer-unified .legal-data { color: #475569; font-style: italic; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            .section { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body id="doc-fo-ad-06">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/>
+                        <circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio del Informe</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-AD-06-</span>
+                    <input type="text" id="reg-ad06" 
+                           class="registry-input generate-barcode cedit" 
+                           data-target="barcode-ad06" 
+                           data-prefix="FO-AD-06-" 
+                           placeholder="202X-00" 
+                           style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-ad06" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>INFORME FINAL DE AUDITORÍA INTERNA</h1>
+            <div class="metadata">Código: FO-AD-06 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 2</div>
+        </div>
+
+        <div class="section-header">1. DATOS DEL EJERCICIO DE AUDITORÍA</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Fecha de Emisión:</strong></td>
+                    <td width="30%"><input type="date" class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td width="20%"><strong>Folio Auditado:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="Referencia FO-QA-02" style="border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Áreas Auditadas:</strong></td>
+                    <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Auditor Líder:</strong></td>
+                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td><strong>Equipo Auditor:</strong></td>
+                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. OBJETIVO Y ALCANCE</div>
+        <div class="section">
+            <p style="font-size:10px; line-height:1.5;">
+                Evaluar el nivel de cumplimiento del Sistema de Gestión de Calidad frente a las Buenas Prácticas de Fabricación (BPF) y determinar la eficacia de los procesos operativos en el periodo comprendido de 
+                <input type="date" class="cedit" style="width:120px; border-bottom:1px solid #ccc;"> a 
+                <input type="date" class="cedit" style="width:120px; border-bottom:1px solid #ccc;">.
+            </p>
+        </div>
+
+        <div class="section-header">3. RESUMEN EJECUTIVO DE HALLAZGOS</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="40%">Clasificación de Hallazgos</th>
+                        <th width="20%">Cantidad Detectada</th>
+                        <th width="40%">Folios de Desviación / CAPA Generados</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left">Conformidades (Fortalezas):</td>
+                        <td><input type="number" class="cedit"></td>
+                        <td><input class="cedit" value="N/A" readonly></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Observaciones (Oportunidades de Mejora):</td>
+                        <td><input type="number" class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td class="text-left">No Conformidades Menores:</td>
+                        <td><input type="number" class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="highlight-row" style="color:#b45309;">
+                        <td class="text-left">No Conformidades Mayores:</td>
+                        <td><input type="number" class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr class="highlight-row" style="color:#991b1b;">
+                        <td class="text-left">No Conformidades Críticas:</td>
+                        <td><input type="number" class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">4. DESCRIPCIÓN DETALLADA DE NO CONFORMIDADES (HALLAZGOS CRÍTICOS)</div>
+        <div class="section">
+            <div class="summary-box">
+                <p style="margin-bottom:10px;"><strong>NC-01:</strong> <textarea class="cedit" rows="2" placeholder="Describa el hallazgo..."></textarea></p>
+                <p><strong>Evidencia / Punto Normativo:</strong> <input class="cedit" style="width:80%; border-bottom:1px solid #eee;"></p>
+            </div>
+            <div class="summary-box">
+                <p style="margin-bottom:10px;"><strong>NC-02:</strong> <textarea class="cedit" rows="2" placeholder="Describa el hallazgo..."></textarea></p>
+                <p><strong>Evidencia / Punto Normativo:</strong> <input class="cedit" style="width:80%; border-bottom:1px solid #eee;"></p>
+            </div>
+        </div>
+
+        <div class="section-header">5. CONCLUSIÓN Y DICTAMEN DEL AUDITOR</div>
+        <div class="section">
+            <div class="conclusion-card">
+                <label class="radio-option">
+                    <input type="radio" name="dictamen" class="cedit"> <strong>SISTEMA EFICAZ:</strong> Se demuestra cumplimiento normativo. Las desviaciones son mínimas y no ponen en riesgo la seguridad del producto.
+                </label>
+                <label class="radio-option" style="color:#b45309;">
+                    <input type="radio" name="dictamen" class="cedit"> <strong>SISTEMA CON DEFICIENCIAS:</strong> Se requiere atención prioritaria a las No Conformidades Mayores detectadas. Se requiere auditoría de seguimiento.
+                </label>
+                <label class="radio-option" style="color:#991b1b;">
+                    <input type="radio" name="dictamen" class="cedit"> <strong>SISTEMA NO EFICAZ:</strong> Existen riesgos críticos para la calidad o legalidad de la operación. Se recomienda el paro de actividades hasta la mitigación.
+                </label>
+            </div>
+        </div>
+
+        <div class="section-header">6. PLAN DE SEGUIMIENTO (COMPROMISOS)</div>
+        <div class="section">
+            <p style="font-size:10px; font-weight:bold;">Fecha límite para la entrega de los planes de acción (CAPA) por parte de los auditados: 
+                <input type="date" class="cedit" style="width:150px; border-bottom:1px solid #1E3A5F;">
+            </p>
+        </div>
+
+        <div class="section-header">7. FIRMAS DE CIERRE</div>
+        <div class="section">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:10px; margin-top:15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">Auditor Líder</p>
+                    <span style="font-size:8px;">(Emite)</span>
+                    <input class="cedit" placeholder="Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:25px;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">Aseguramiento de Calidad</p>
+                    <span style="font-size:8px;">(Revisa)</span>
+                    <input class="cedit" placeholder="Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:25px;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">Dirección General</p>
+                    <span style="font-size:8px;">(Recibe)</span>
+                    <input class="cedit" placeholder="Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:25px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-06 | Versión: 1.0 | Informe Final de Auditoría Interna | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        </div>
+    </div>
+</body>
+</html>

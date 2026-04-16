@@ -1,7 +1,7 @@
 # 📊 INVENTARIO DE FORMATOS - XELLE LIMS
 
 ## Resumen
-- **Total de Formatos:** 62
+- **Total de Formatos:** 71
 - **Estado de Persistencia:** ✅ Todos configurados
 - **Código PK:** {TIPO}-{SECUENCIAL} (ej: FO-LC-21-001)
 
@@ -74,19 +74,29 @@
 
 ---
 
-## 📦 Otros Formatos - 9 Formatos
+## 📦 Otros Formatos - 18 Formatos
 
 | # | Código | Archivo HTML | Categoría | Estado | Botón Guardar |
 |---|--------|--------------|-----------|--------|---------------|
 | 1 | FO-LG-05 | FO-LG-05.html | Logística | ✅ | saveForm() |
-| 2 | FO-QA-10 | FO-QA-10.html | Quality Assurance | ✅ | saveForm() |
-| 3 | FO-QA-11 | FO-QA-11.html | Quality Assurance | ✅ | saveForm() |
-| 4 | FO-SGC-01 | FO-SGC-01.html | SGC | ✅ | saveForm() |
-| 5 | FO-SGC-02 | FO-SGC-02.html | SGC | ✅ | saveForm() |
-| 6 | FO-SGC-03 | FO-SGC-03.html | SGC | ✅ | saveForm() |
-| 7 | FO-SGC-04 | FO-SGC-04.html | SGC | ✅ | saveForm() |
-| 8 | FO-SGC-I | FO-SGC-I.html | SGC | ✅ | saveForm() |
-| 9 | FO-SGC-M | FO-SGC-M.html | SGC | ✅ | saveForm() |
+| 2 | FO-QA-06 | FO-QA-06.html | Quality Assurance | ✅ | saveForm() |
+| 3 | FO-QA-07 | FO-QA-07.html | Quality Assurance | ✅ | saveForm() |
+| 4 | FO-QA-08 | FO-QA-08.html | Quality Assurance | ✅ | saveForm() |
+| 5 | FO-QA-09 | FO-QA-09.html | Quality Assurance | ✅ | saveForm() |
+| 6 | FO-QA-10 | FO-QA-10.html | Quality Assurance | ✅ | saveForm() |
+| 7 | FO-QA-11 | FO-QA-11.html | Quality Assurance | ✅ | saveForm() |
+| 8 | FO-QA-12 | FO-QA-12.html | Quality Assurance | ✅ | saveForm() |
+| 9 | FO-QA-13 | FO-QA-13.html | Quality Assurance | ✅ | saveForm() |
+| 10 | FO-QA-14 | FO-QA-14.html | Quality Assurance | ✅ | saveForm() |
+| 11 | FO-QA-15 | FO-QA-15.html | Quality Assurance | ✅ | saveForm() |
+| 12 | FO-QA-16 | FO-QA-16.html | Quality Assurance | ✅ | saveForm() |
+| 13 | FO-QA-17 | FO-QA-17.html | Quality Assurance | ✅ | saveForm() |
+| 14 | FO-SGC-01 | FO-SGC-01.html | SGC | ✅ | saveForm() |
+| 15 | FO-SGC-02 | FO-SGC-02.html | SGC | ✅ | saveForm() |
+| 16 | FO-SGC-03 | FO-SGC-03.html | SGC | ✅ | saveForm() |
+| 17 | FO-SGC-04 | FO-SGC-04.html | SGC | ✅ | saveForm() |
+| 18 | FO-SGC-I | FO-SGC-I.html | SGC | ✅ | saveForm() |
+| 19 | FO-SGC-M | FO-SGC-M.html | SGC | ✅ | saveForm() |
 
 ---
 
