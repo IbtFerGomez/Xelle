@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-04 Registro Gráfico de Temperatura</title>
+    <link rel="stylesheet" href="../format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="../format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 4px 8px;
+            font-weight: bold;
+            font-size: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 4px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 2px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 9px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .alert-box {
+            background-color: #fef2f2;
+            border: 1px dashed #991b1b;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: #991b1b;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        /* Estilos específicos para la Gráfica */
+        .graph-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            table-layout: fixed;
+        }
+
+        .graph-table th,
+        .graph-table td {
+            border: 1px solid #cbd5e1;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .graph-table th {
+            background-color: #1E3A5F;
+            color: white;
+        }
+
+        .graph-cell {
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            color: #1e3a5f;
+            padding: 0 !important;
+            height: 14px;
+        }
+
+        .graph-cell:hover {
+            background-color: #e2e8f0 !important;
+        }
+
+        .bg-risk {
+            background-color: #fee2e2;
+        }
+
+        .bg-normal {
+            background-color: #ffffff;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            body {
+                font-size: 10px;
+            }
+
+            .container {
+                padding: 10px;
+                max-width: 100%;
+                box-shadow: none;
+                border: none;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-04-grafico">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Registro</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-04-</span>
+                    <input type="text" id="reg-op04g" class="registry-input generate-barcode cedit"
+                        data-target="barcode-op04g" data-prefix="FO-OP-04-" placeholder="000" style="font-size:12px;">
+                </div>
+                <svg id="barcode-op04g" class="barcode-svg" style="height:30px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1 style="font-size:14px;">REGISTRO GRÁFICO DE TEMPERATURA DE REFRIGERADORES</h1>
+            <div class="metadata">Código: FO-OP-04 | Versión: 1.0 | Vigencia: Mar 2026 | Área: Laboratorio / Almacén |
+                Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. DATOS DEL EQUIPO Y PUNTOS CRÍTICOS (PCC)</div>
+        <div class="section">
+            <table class="no-border-table" style="margin-bottom: 5px;">
+                <tr>
+                    <td width="15%"><strong>Mes / Año:</strong></td>
+                    <td width="20%"><input type="text" class="cedit" placeholder="MM/AAAA"
+                            style="border-bottom:1px solid #1E3A5F; font-weight:bold; color:#1E3A5F; font-size:12px; width:100%;">
+                    </td>
+                    <td width="15%"><strong>Equipo:</strong></td>
+                    <td width="25%"><input class="cedit"
+                            style="border-bottom:1px solid #ccc; width:100%; font-weight:bold;"></td>
+                    <td width="10%"><strong>ID REGISTRO INTERNO (ID INTERNO):</strong></td>
+                    <td width="15%"><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Rango Operativo:</strong></td>
+                    <td><input class="cedit" value="2°C a 8°C"
+                            style="border-bottom:1px solid #ccc; width:100%; font-weight:bold;"></td>
+                    <td><strong>ID Termómetro:</strong></td>
+                    <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                    <td><strong>Vigencia Cal:</strong></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"
+                            style="border-bottom:1px solid #ccc; width:100%;"></td>
+                </tr>
+            </table>
+
+            <div
+                style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 6px; border-radius: 4px; font-size: 9px; color:#334155;">
+                <strong>Puntos Críticos a verificar diariamente (Marque ✓ en la sección de firmas si
+                    cumple):</strong><br>
+                <strong>[PCC-1]</strong> Puerta herméticamente cerrada y empaques en buen estado. &nbsp;|&nbsp;
+                <strong>[PCC-2]</strong> Interior limpio, sin escarcha excesiva ni derrames. &nbsp;|&nbsp;
+                <strong>[PCC-3]</strong> Producto no obstruye los ventiladores ni toca las paredes del equipo.
+            </div>
+        </div>
+
+        <div class="section-header">2. GRÁFICA DE REGISTRO DIARIO DE TEMPERATURA</div>
+        <div class="section">
+            <p style="font-size:8px; color:#666; margin-bottom:2px;">Instrucciones: Marque con un punto (•) en la
+                intersección de la temperatura observada y el turno (M=Mañana, T=Tarde). Una los puntos con una línea
+                para formar la gráfica.</p>
+            <table class="graph-table" id="tabla-grafica">
+                <thead id="thead-grafica">
+                </thead>
+                <tbody id="tbody-grafica">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">3. CONTROL DE VERIFICACIÓN (FIRMAS Y PCC)</div>
+        <div class="section">
+            <p style="font-size:8px; color:#666; margin-bottom:4px;">El operador debe firmar y validar que los Puntos
+                Críticos (PCC) se cumplen en cada turno.</p>
+            <div style="display: flex; gap: 10px;">
+                <div style="flex: 1;">
+                    <table class="compact-table" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th width="10%">DÍA</th>
+                                <th width="25%">Inic. (M)</th>
+                                <th width="25%">Inic. (T)</th>
+                                <th width="15%">PCC Ok?</th>
+                                <th width="25%">Obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-firmas-1">
+                        </tbody>
+                    </table>
+                </div>
+                <div style="flex: 1;">
+                    <table class="compact-table" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th width="10%">DÍA</th>
+                                <th width="25%">Inic. (M)</th>
+                                <th width="25%">Inic. (T)</th>
+                                <th width="15%">PCC Ok?</th>
+                                <th width="25%">Obs.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-firmas-2">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">4. REPORTE DE EXCURSIONES (FUERA DE RANGO)</div>
+        <div class="section">
+            <div class="alert-box">
+                🚨 ATENCIÓN: Si la gráfica toca o supera los límites de ≥9.0°C o ≤1.0°C, o si el equipo falla, detenga
+                el uso, avise a Calidad y registre el evento de inmediato.
+            </div>
+            <table class="compact-table" id="tbl-excursiones">
+                <thead>
+                    <tr>
+                        <th width="20%">Fecha y Hora de Excursión</th>
+                        <th width="15%">Temp. Registrada</th>
+                        <th width="45%">Acción de Contención (Ej. Traslado de producto)</th>
+                        <th width="20%">Folio FO-OP-51</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA HH:MM"></td>
+                        <td><input type="text" class="cedit" style="font-weight:bold; color:#991b1b;" placeholder="0.0">
+                        </td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit" placeholder="FO-OP-51 - _____"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="datetime-local" class="cedit"></td>
+                        <td><input type="number" step="0.1" class="cedit" style="font-weight:bold; color:#991b1b;"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit" placeholder="FO-OP-51 - _____"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">5. CIERRE Y VALIDACIÓN MENSUAL DEL REGISTRO</div>
+        <div class="section">
+            <div class="signature-area"
+                style="display:flex; justify-content:space-between; gap:20px; margin-top: 10px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom:2px;">Revisión Mensual Operaciones</p>
+                    <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">"Confirmo que el
+                        registro gráfico está completo y veraz."</p>
+                    <input class="cedit" placeholder="Nombre, Firma y Fecha"
+                        style="border-top:1px solid #ccc; border-radius:0;">
+                </div>
+                <div class="signature-box" style="flex:1; background-color: #f8fafc;">
+                    <p style="font-weight:bold; color:#1E3A5F; margin-bottom:2px;">Dictamen Aseguramiento de Calidad</p>
+                    <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">"Registro sin
+                        excursiones / Excursiones cerradas con desviación."</p>
+                    <input class="cedit" placeholder="Nombre, Firma y Fecha"
+                        style="border-top:1px solid #1E3A5F; border-radius:0; background:transparent;">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">FO-OP-04 | Versión: 1.0 | Registro Gráfico de Temperatura | Xelle Scientific | Página 1 de
+            1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está
+            protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            generarGrafica();
+            generarTablasFirmas();
+        });
+
+        function generarGrafica() {
+            const temps = [
+                { val: "≥ 9.0", bg: "bg-risk" },
+                { val: "8.5", bg: "bg-normal" },
+                { val: "8.0", bg: "bg-normal" },
+                { val: "7.5", bg: "bg-normal" },
+                { val: "7.0", bg: "bg-normal" },
+                { val: "6.5", bg: "bg-normal" },
+                { val: "6.0", bg: "bg-normal" },
+                { val: "5.5", bg: "bg-normal" },
+                { val: "5.0", bg: "bg-normal" },
+                { val: "4.5", bg: "bg-normal" },
+                { val: "4.0", bg: "bg-normal" },
+                { val: "3.5", bg: "bg-normal" },
+                { val: "3.0", bg: "bg-normal" },
+                { val: "2.5", bg: "bg-normal" },
+                { val: "2.0", bg: "bg-normal" },
+                { val: "1.5", bg: "bg-normal" },
+                { val: "≤ 1.0", bg: "bg-risk" }
+            ];
+
+            // Construir thead
+            let thead = '<tr><th rowspan="2" style="width:45px; font-size:8px;">Temp (°C)</th>';
+            for (let i = 1; i <= 31; i++) {
+                thead += `<th colspan="2" style="font-size:8px; padding:1px;">${i}</th>`;
+            }
+            thead += '</tr><tr>';
+            for (let i = 1; i <= 31; i++) {
+                thead += `<th style="font-size:6px; padding:0; width:10px;">M</th><th style="font-size:6px; padding:0; width:10px;">T</th>`;
+            }
+            thead += '</tr>';
+            document.getElementById('thead-grafica').innerHTML = thead;
+
+            // Construir tbody
+            let tbody = '';
+            temps.forEach(t => {
+                let bold = (t.val.includes('9') || t.val.includes('1')) ? 'color:#991b1b;' : 'color:#1e3a5f;';
+                tbody += `<tr><td style="font-size:8px; font-weight:bold; background-color:#f1f5f9; ${bold}">${t.val}</td>`;
+                for (let i = 1; i <= 62; i++) {
+                    tbody += `<td class="graph-cell ${t.bg}" onclick="toggleDot(this)"></td>`;
+                }
+                tbody += `</tr>`;
+            });
+            document.getElementById('tbody-grafica').innerHTML = tbody;
+        }
+
+        // Permite marcar/desmarcar con un punto al hacer click
+        function toggleDot(cell) {
+            cell.innerHTML = cell.innerHTML === '•' ? '' : '•';
+        }
+
+        function generarTablasFirmas() {
+            let html1 = '';
+            let html2 = '';
+
+            const rowTemplate = (dia) => `
+                <tr>
+                    <td style="font-weight:bold; background-color:#f1f5f9;">${dia}</td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit" style="font-weight:bold;" placeholder="S/N"></td>
+                    <td><input class="cedit"></td>
+                </tr>`;
+
+            for (let i = 1; i <= 31; i++) {
+                if (i <= 16) {
+                    html1 += rowTemplate(i);
+                } else {
+                    html2 += rowTemplate(i);
+                }
+            }
+            document.getElementById('tbody-firmas-1').innerHTML = html1;
+            document.getElementById('tbody-firmas-2').innerHTML = html2;
+        }
+    </script>
+    <script>
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="date"> a <input type="text">
+                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="date">
+                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                    inp.type = 'date';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

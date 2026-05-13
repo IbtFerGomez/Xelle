@@ -305,18 +305,22 @@
             style="background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 4px; padding: 15px;">
             <p style="font-size:10px; color:#1E3A5F; font-weight:bold; margin-bottom:5px;">Indique la naturaleza del
                 resguardo maestro de estas carpetas:</p>
-            <div class="radio-group">
-                <label>
-                    <input type="checkbox" class="cedit" checked>
-                    <strong>Sistema Digital:</strong>&nbsp; Ubicación en Servidor/Nube:&nbsp;
-                    <input type="text" class="cedit" value="SGC_XELLE_SCIENTIFIC/REGISTROS_OPERATIVOS/"
-                        style="border-bottom:1px solid #ccc; width: 400px; text-align: left; padding-left: 5px;">
+            <div class="radio-group" style="width:100%; justify-content:space-between; display:flex; gap:30px;">
+                <label style="flex:1; display:flex; align-items:flex-start; gap:8px;">
+                    <input type="checkbox" class="cedit" checked style="margin-top:5px;">
+                    <div style="width:100%;">
+                        <strong>Sistema Digital:</strong> Ubicación en Servidor/Nube:
+                        <textarea class="cedit" rows="2"
+                            style="width:100%; min-width:200px; max-width:100%; border-bottom:1px solid #ccc; text-align:left; padding-left:5px; resize:vertical;">SGC_XELLE_SCIENTIFIC/REGISTROS_OPERATIVOS/</textarea>
+                    </div>
                 </label>
-                <label>
-                    <input type="checkbox" class="cedit" checked>
-                    <strong>Sistema Físico:</strong>&nbsp; Ubicación Exacta:&nbsp;
-                    <input type="text" class="cedit" value="Archivo de Calidad - Bloque A / Pasillo 1"
-                        style="border-bottom:1px solid #ccc; width: 450px; text-align: left; padding-left: 5px;">
+                <label style="flex:1; display:flex; align-items:flex-start; gap:8px;">
+                    <input type="checkbox" class="cedit" checked style="margin-top:5px;">
+                    <div style="width:100%;">
+                        <strong>Sistema Físico:</strong> Ubicación Exacta:
+                        <textarea class="cedit" rows="2"
+                            style="width:100%; min-width:200px; max-width:100%; border-bottom:1px solid #ccc; text-align:left; padding-left:5px; resize:vertical;">Archivo de Calidad - Bloque A / Pasillo 1</textarea>
+                    </div>
                 </label>
             </div>
         </div>

@@ -3,13 +3,22 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Resumen Ejecutivo de Lote</title>
+    <title>FO-LC-16 Liberación de Línea Celular</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
-        /* Estilos visuales para el resumen */
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
         .summary-header {
             background-color: #2c3e50;
             color: white;
@@ -20,338 +29,346 @@
             margin-top: 10px;
         }
 
-        .status-ok {
-            color: #27ae60;
-            font-weight: bold;
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 4px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
         }
 
-        .status-fail {
-            color: #c0392b;
-            font-weight: bold;
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
         }
+
+        .compact-table input,
+        .compact-table select {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .marker-positive { background-color: #f0fdf4; }
+        .marker-negative { background-color: #fef2f2; }
 
         .big-decision-box {
-            border: 2px solid #333;
-            background-color: #f4f4f4;
+            border: 2px solid #1E3A5F;
+            background-color: #f8fafc;
             padding: 15px;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 15px;
+            border-radius: 4px;
         }
 
         .big-decision-select {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 900;
             padding: 5px;
-            width: 80%;
+            width: 100%;
             text-align-last: center;
             border: 2px solid #2c3e50;
+            margin-top: 5px;
         }
 
-        .footer {
-            text-align: center;
-            font-size: 8px;
-            color: #64748b;
+        .footer-unified {
             margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px solid #e2e8f0;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 8px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+
+        .footer-unified .control-data {
+            font-weight: bold;
+            color: #1E3A5F;
+            margin-bottom: 3px;
+        }
+
+        .footer-unified .legal-data {
+            color: #475569;
+            font-style: italic;
         }
 
         @media print {
-
             .global-controls,
-            .no-print {
-                display: none !important;
-            }
-
-            ::-webkit-input-placeholder {
-                color: transparent !important;
-            }
-
-            :-moz-placeholder {
-                color: transparent !important;
-            }
-
-            ::-moz-placeholder {
-                color: transparent !important;
-            }
-
-            :-ms-input-placeholder {
-                color: transparent !important;
-            }
-
-            ::placeholder {
-                color: transparent !important;
-            }
-
-            /* Permitir que las tablas y secciones se partan entre páginas */
-            .section {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
-            }
-
-            table,
-            .compact-table {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
-            }
-
-            thead {
-                display: table-header-group !important;
-            }
-
-            tr,
-            tbody tr {
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-            }
-
-            .section-title {
-                page-break-after: avoid !important;
-                break-after: avoid !important;
-            }
+            .no-print { display: none !important; }
+            ::-webkit-input-placeholder { color: transparent !important; }
+            ::placeholder { color: transparent !important; }
+            .section { page-break-inside: auto !important; }
+            tr { page-break-inside: avoid !important; }
         }
     </style>
 </head>
 
-<body id="doc-fo-lc-resumen">
+<body id="doc-fo-lc-16">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
-        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
 
-    <div class="container">
+    <div class="container" style="max-width:100%; width:100%;">
         <div class="header-top">
             <div class="logo-container">
                 <svg viewBox="0 0 320 80">
                     <defs>
                         <style>
-                            .svg-logo-titulo {
-                                font-family: 'Arial Black', sans-serif;
-                                font-weight: 900;
-                                fill: #1D1D1B
-                            }
-
-                            .svg-logo-subtitulo {
-                                font-family: 'Arial', sans-serif;
-                                font-weight: 700;
-                                fill: #1D1D1B;
-                                letter-spacing: 2px
-                            }
-
-                            .svg-logo-celula {
-                                fill: #2E9D82
-                            }
+                            .t { font-family: 'Arial Black', sans-serif; font-weight: 900; fill: #1D1D1B }
+                            .s { font-family: 'Arial', sans-serif; font-weight: 700; fill: #1D1D1B; letter-spacing: 2px }
+                            .c { fill: #2E9D82 }
                         </style>
                     </defs>
-                    <g transform="translate(0, -2) scale(0.85)">
-                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
-                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
-                        <path class="svg-logo-celula"
-                            d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z" />
-                    </g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68"
-                        class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35"
-                        font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
                 </svg>
             </div>
             <div class="registry-container">
-                <label>Lote Asignado</label>
+                <label>ID Línea Celular</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-16-</span>
-                    <input type="text" id="lote-final" class="registry-input generate-barcode" data-target="barcode-res"
-                        data-prefix="FO-LC-16-" style="width:120px; font-size:14px;" placeholder="001">
+                    <input type="text" id="linea-celular-id" class="registry-input generate-barcode cedit"
+                        data-target="barcode-res" data-prefix="FO-LC-16-" style="width:100px; font-size:14px;"
+                        placeholder="000">
                 </div>
-                <input type="date" class="registry-date no-auto-date">
-                <svg id="barcode-res" class="barcode-svg"></svg>
+                <input type="date" class="registry-date cedit">
             </div>
         </div>
 
         <div class="header-main">
-            <h1>FORMATO RESUMEN EJECUTIVO DE RECEPCIÓN LOTE (COVER SHEET)</h1>
-            <div class="metadata">Código: FO-LC-16 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <h1>CERTIFICADO Y RESUMEN DE LIBERACIÓN DE LÍNEA CELULAR</h1>
+            <div class="metadata">Código: FO-LC-16 | Versión: 3.0 | Vigencia: Mar 2026 | Página: 1 de 2</div>
         </div>
 
+        <div class="section-header">1. IDENTIFICACIÓN DEL TEJIDO / LÍNEA CELULAR</div>
         <div class="section">
-            <div class="section-title">1. Identificación y Trazabilidad</div>
             <table class="no-border-table">
                 <tr>
-                    <td><strong>ID Donante:</strong> <input class="cedit"></td>
-                    <td><strong>ID Materia Prima (Etiqueta):</strong> <input class="cedit"></td>
-                    <td><strong>Fecha Recolección:</strong> <input type="date" class="cedit"></td>
+                    <td width="20%"><strong>Código/ID Paciente:</strong></td>
+                    <td width="30%"><input class="cedit" placeholder="Ej: TPL-33-26-FEB-25" style="border-bottom:1px solid #ccc; width:90%; font-weight:bold;"></td>
+                    <td width="20%"><strong>Línea Celular:</strong></td>
+                    <td width="30%"><input class="cedit" id="linea-celular-nombre" placeholder="Ej: Células Mesenquimales" style="border-bottom:1px solid #ccc; width:90%;"></td>
                 </tr>
                 <tr>
-                    <td width="40%"><strong>Nombre Madre:</strong> <input class="cedit"></td>
-                    <td width="35%"><strong>Hospital/Origen:</strong> <input class="cedit"></td>
-                    <td width="25%"><strong>Tipo Tejido:</strong> <select class="cedit">
-                            <option>Placenta</option>
-                            <option>Cordón</option>
-                            <option>Adiposo</option>
-                        </select></td>
+                    <td><strong>Pasaje / Generación:</strong></td>
+                    <td><input class="cedit" style="border-bottom:1px solid #ccc; width:90%;"></td>
+                    <td><strong>Laboratorio Subcontratado:</strong></td>
+                    <td><input class="cedit" placeholder="Ej: DILETEC / Hematología" style="border-bottom:1px solid #ccc; width:90%;"></td>
                 </tr>
+            </table>
+            <div style="text-align: center; margin-top: 10px;">
+                <svg id="barcode-res" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="section-header">2. PERFIL INMUNOFENOTÍPICO Y VIABILIDAD (CITOMETRÍA DE FLUJO)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#1E3A5F; font-weight:bold; margin-bottom:5px;">A. Marcadores de Superficie Positivos (Criterio de Aceptación: &ge; 95%)</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="16%">CD44+</th>
+                        <th width="16%">CD73+</th>
+                        <th width="16%">CD90+</th>
+                        <th width="16%">CD105+</th>
+                        <th width="16%">OCT3/4</th>
+                        <th width="20%">SSEA 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="marker-positive">
+                        <td><input type="text" class="cedit" placeholder="%"></td>
+                        <td><input type="text" class="cedit" placeholder="%"></td>
+                        <td><input type="text" class="cedit" placeholder="%"></td>
+                        <td><input type="text" class="cedit" placeholder="%"></td>
+                        <td><input type="text" class="cedit" placeholder="%"></td>
+                        <td><input type="text" class="cedit" placeholder="%"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-top:10px; margin-bottom:5px;">B. Marcadores de Superficie Negativos (Criterio de Aceptación: &le; 2%)</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="16%">CD34+</th>
+                        <th width="16%">CD45+</th>
+                        <th width="16%">HLA DR+</th>
+                        <th width="16%">CD14+</th>
+                        <th width="16%">CD11b+</th>
+                        <th width="20%">CD19+</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="marker-negative">
+                        <td><input type="text" class="cedit" placeholder="%"></td>
+                        <td><input type="text" class="cedit" placeholder="%"></td>
+                        <td><input type="text" class="cedit" placeholder="%"></td>
+                        <td><input type="text" class="cedit" placeholder="%"></td>
+                        <td><input type="text" class="cedit" placeholder="%"></td>
+                        <td><input type="text" class="cedit" placeholder="%"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="compact-table" style="margin-top:10px;">
+                <thead>
+                    <tr>
+                        <th width="50%">Viabilidad Celular Total (Criterio: > 70%)</th>
+                        <th width="50%">Potencial de Membrana Mitocondrial (PMM - TMRE) (Criterio: > 75%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="cedit" placeholder="% Viabilidad" style="font-weight:bold;"></td>
+                        <td><input type="text" class="cedit" placeholder="% PMM" style="font-weight:bold;"></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
 
-        <div class="summary-header">FASE 1: RECEPCIÓN Y LOGÍSTICA (Ref. FO-LC-17)</div>
-        <table class="compact-table">
-            <thead>
-                <tr>
-                    <th>Integridad Embalaje</th>
-                    <th>Temperatura Llegada</th>
-                    <th>Documentación Legal</th>
-                    <th>Muestra Sanguínea</th>
-                    <th>Estatus Fase 1</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><select class="cedit">
-                            <option>Integro/Sellado</option>
-                            <option>Dañado/Abierto</option>
-                        </select></td>
-                    <td><input class="cedit" placeholder="°C" style="width:60px; text-align:center;"></td>
-                    <td><select class="cedit">
-                            <option>Completa (Consent+Hist)</option>
-                            <option>Incompleta</option>
-                        </select></td>
-                    <td><select class="cedit">
-                            <option>Si</option>
-                            <option>No</option>
-                        </select></td>
-                    <td><select class="cedit" style="font-weight:bold;">
-                            <option>ACEPTADO</option>
-                            <option>RECHAZADO</option>
-                        </select></td>
-                </tr>
-            </tbody>
-        </table>
+        <div style="page-break-before: always; margin-top:20px;"></div>
+        <div class="header-main" style="margin-top:0;"></div>
 
-        <div class="summary-header">FASE 2: PROCESAMIENTO Y MACRO (Ref. FO-LC-18)</div>
-        <table class="compact-table">
-            <thead>
-                <tr>
-                    <th>Peso Neto (g)</th>
-                    <th>Apariencia Visual</th>
-                    <th>Integridad Membranas</th>
-                    <th>Desviaciones Proceso</th>
-                    <th>Estatus Fase 2</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input class="cedit" style="text-align:center;"></td>
-                    <td><select class="cedit">
-                            <option>Normal</option>
-                            <option>Anormal/Calcif</option>
-                        </select></td>
-                    <td><select class="cedit">
-                            <option>Íntegras</option>
-                            <option>Laceradas</option>
-                        </select></td>
-                    <td><select class="cedit">
-                            <option>Ninguna</option>
-                            <option>Sí (Ver obs)</option>
-                        </select></td>
-                    <td><select class="cedit" style="font-weight:bold;">
-                            <option>APTO PARA PROCESO</option>
-                            <option>NO APTO</option>
-                        </select></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="section-header">3. BIOSEGURIDAD Y CONTROL MICROBIOLÓGICO</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="30%">Parámetro</th>
+                        <th width="30%">Especificación</th>
+                        <th width="20%">Resultado / Folio</th>
+                        <th width="20%">Dictamen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:left; font-weight:bold;">PCR múltiple (PCRm) Micoplasma</td>
+                        <td>Negativo a Myc, Ure y Ach</td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><select class="cedit" style="font-weight:bold;"><option></option><option value="CUMPLE">Cumple</option><option value="NO CUMPLE">No Cumple</option></select></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left; font-weight:bold;">Esterilidad (Cultivo Bacterias/Hongos)</td>
+                        <td>Sin desarrollo / Negativo</td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><select class="cedit" style="font-weight:bold;"><option></option><option value="CUMPLE">Cumple</option><option value="NO CUMPLE">No Cumple</option></select></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left; font-weight:bold;">Endotoxinas Bacterianas</td>
+                        <td>< 5.0 EU/mL</td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><select class="cedit" style="font-weight:bold;"><option></option><option value="CUMPLE">Cumple</option><option value="NO CUMPLE">No Cumple</option></select></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <div class="summary-header">FASE 3: CALIDAD Y SEGURIDAD (Ref. FO-LC-19)</div>
-        <table class="compact-table">
-            <thead>
-                <tr>
-                    <th>Serología (Viral)</th>
-                    <th>Cultivo Aerobio</th>
-                    <th>Cultivo Anaerobio</th>
-                    <th>Hongos/Levaduras</th>
-                    <th>Endotoxinas</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><select class="cedit">
-                            <option>NEGATIVO (Pasa)</option>
-                            <option>POSITIVO (Falla)</option>
-                            <option>Pendiente</option>
-                        </select></td>
-                    <td><select class="cedit">
-                            <option>NEGATIVO</option>
-                            <option>POSITIVO</option>
-                            <option>Pendiente</option>
-                        </select></td>
-                    <td><select class="cedit">
-                            <option>NEGATIVO</option>
-                            <option>POSITIVO</option>
-                            <option>Pendiente</option>
-                        </select></td>
-                    <td><select class="cedit">
-                            <option>NEGATIVO</option>
-                            <option>POSITIVO</option>
-                            <option>Pendiente</option>
-                        </select></td>
-                    <td><select class="cedit">
-                            <option>CUMPLE</option>
-                            <option>NO CUMPLE</option>
-                            <option>NA</option>
-                        </select></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="section-header">4. PRUEBAS FUNCIONALES (DIFERENCIACIÓN TRILINEAL)</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="33%">Diferenciación Adipogénica</th>
+                        <th width="33%">Diferenciación Condrogénica</th>
+                        <th width="34%">Diferenciación Osteogénica</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><select class="cedit"><option></option><option>Confirmada</option><option>No confirmada</option><option>NA / En proceso</option></select></td>
+                        <td><select class="cedit"><option></option><option>Confirmada</option><option>No confirmada</option><option>NA / En proceso</option></select></td>
+                        <td><select class="cedit"><option></option><option>Confirmada</option><option>No confirmada</option><option>NA / En proceso</option></select></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <div class="section big-decision-box">
-            <h3 style="margin:0 0 10px 0; border-bottom:1px solid #ccc; padding-bottom:5px;">DICTAMEN FINAL DEL LOTE
-            </h3>
-
-            <div style="display:flex; justify-content:space-between; align-items: flex-start; text-align:left;">
-                <div style="width: 55%;">
-                    <label><strong>Observaciones Finales / Desviaciones / CAPA:</strong></label>
-                    <textarea class="cedit" rows="4" style="background:white; margin-top:5px;"></textarea>
+            <h3 style="margin:0 0 10px 0; border-bottom:1px solid #1E3A5F; padding-bottom:5px; color:#1E3A5F;">DICTAMEN FINAL DE LIBERACIÓN DE LÍNEA CELULAR</h3>
+            <div style="display:flex; justify-content:space-between; align-items: flex-start; text-align:left; gap:15px;">
+                <div style="flex: 2;">
+                    <label><strong>Observaciones y Resultados de Laboratorio:</strong></label>
+                    <textarea class="cedit" rows="4" style="background:white; margin-top:5px; border:1px solid #ccc; width:100%;"></textarea>
                 </div>
-                <div style="width: 40%; text-align:center;">
-                    <label style="display:block; margin-bottom:5px; color:#555;">Decisión de Calidad:</label>
-                    <select class="cedit big-decision-select"
-                        onchange="this.style.backgroundColor = (this.value=='LIBERADO') ? '#d4efdf' : (this.value=='RECHAZADO' ? '#fadbd8' : '#fcf3cf')">
+                <div style="flex: 1; text-align:center;">
+                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Estatus de Liberación:</label>
+                    <select class="cedit big-decision-select" onchange="this.style.backgroundColor = (this.value=='LIBERADA') ? '#d4efdf' : (this.value=='RECHAZADA' ? '#fadbd8' : '#fcf3cf')">
                         <option value="">- SELECCIONAR -</option>
-                        <option value="LIBERADO">LIBERADO</option>
-                        <option value="CUARENTENA">CUARENTENA / RETENIDO</option>
-                        <option value="RECHAZADO">RECHAZADO / DESTRUCCIÓN</option>
+                        <option value="LIBERADA">APROBADA / LIBERADA</option>
+                        <option value="CUARENTENA">CUARENTENA / RETENIDA</option>
+                        <option value="RECHAZADA">RECHAZADA / PARA DESTRUCCIÓN</option>
                     </select>
-                    <p style="font-size:10px; color:#777; margin-top:5px;">Esta firma libera el producto para su
-                        distribución o uso final.</p>
                 </div>
             </div>
         </div>
 
-        <div class="signature-area">
-            <div class="signature-box">
-                <p>Responsable Dirección / Calidad:</p>
-                <input type="text" placeholder="Nombre Completo">
-                <p>Firma y Fecha</p>
-            </div>
-            <div class="signature-box">
-                <p>Dirección Operativa:</p>
-                <input type="text" placeholder="Nombre Completo">
-                <p>Firma y Fecha</p>
+        <div class="section">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:15px; margin-top: 20px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 25px;">Verificó Resultados Anexos<br><span style="font-size:9px; font-weight:normal;">(Aseguramiento de Calidad)</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #94a3b8; border-radius:0;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1; background-color:#f0fdf4; border-color:#166534;">
+                    <p style="font-weight:bold; color:#14532d; margin-bottom: 25px;">Autorizó Liberación<br><span style="font-size:9px; font-weight:normal;">(Responsable Sanitario)</span></p>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #166534; border-radius:0; background:transparent;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
+                </div>
             </div>
         </div>
 
-        <div class="footer">FO-LC-16 | RESUMEN EJECUTIVO DE LOTE | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer-unified">
+            <div class="control-data">FO-LC-16 | Versión: 3.0 | Formato de Liberación de Línea Celular | Xelle Scientific | Página 2 de 2</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por los derechos de autor.</div>
+        </div>
     </div>
-    <script>
-        let isOfflineMode = false;
 
+    <script>
+        document.getElementById('linea-celular-id').addEventListener('input', function () {
+            let val = this.value;
+            let code = val ? 'FO-LC-16-' + val : 'FO-LC-16-000';
+            JsBarcode('#barcode-res', code, { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
+        });
+        JsBarcode('#barcode-res', 'FO-LC-16-000', { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
+
+        let isOfflineMode = false;
         function toggleOfflineMode() {
             isOfflineMode = !isOfflineMode;
             const btn = document.getElementById('btn-offline');
             if (isOfflineMode) {
-                btn.textContent = 'Modo Online';
-                btn.style.backgroundColor = '#f59e0b';
-
-                // Convertir <select> a <input type="text">
-                document.querySelectorAll('select.cedit').forEach(sel => {
+                // Actualiza el código de barras con el valor del input de Línea Celular (sin prefijo)
+                function updateBarcodeFromLineaCelular() {
+                    const input = document.getElementById('linea-celular-nombre');
+                    let code = input && input.value ? input.value : '';
+                    JsBarcode('#barcode-res', code || ' ', { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
+                }
+                document.getElementById('linea-celular-nombre').addEventListener('input', updateBarcodeFromLineaCelular);
+                // Inicializar barcode vacío
+                updateBarcodeFromLineaCelular();
                     const input = document.createElement('input');
                     input.type = 'text';
                     input.className = sel.className;
@@ -362,33 +379,14 @@
                     input.setAttribute('data-select-options', options);
                     sel.parentNode.replaceChild(input, sel);
                 });
-
-                // Convertir <input type="date"> a <input type="text">
                 document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
                     inp.setAttribute('data-original-type', 'date');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
-
-                // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
-                    inp.type = 'text';
-                    inp.placeholder = 'HH:MM';
-                });
-
-                // Convertir <input type="number"> a <input type="text">
-                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'number');
-                    const currentPlaceholder = inp.placeholder;
-                    inp.type = 'text';
-                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
-                });
             } else {
                 btn.textContent = 'Modo Offline';
                 btn.style.backgroundColor = '';
-
-                // Restaurar <select> desde <input type="text">
                 document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
                     const sel = document.createElement('select');
                     sel.className = inp.className;
@@ -401,36 +399,17 @@
                     });
                     const currentValue = inp.value;
                     for (let i = 0; i < sel.options.length; i++) {
-                        if (sel.options[i].text === currentValue) {
-                            sel.selectedIndex = i;
-                            break;
-                        }
+                        if (sel.options[i].text === currentValue) { sel.selectedIndex = i; break; }
                     }
                     inp.parentNode.replaceChild(sel, inp);
                 });
-
-                // Restaurar <input type="date">
                 document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
                     inp.type = 'date';
                     inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
-
-                // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
-
-                // Restaurar <input type="number">
-                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
-                    inp.type = 'number';
                     inp.removeAttribute('data-original-type');
                 });
             }
         }
     </script>
 </body>
-
 </html>

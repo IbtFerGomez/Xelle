@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-19 Registro de Limpieza de Áreas</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 4px 8px;
+            font-weight: bold;
+            font-size: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 4px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 2px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            height: 18px;
+            vertical-align: middle;
+        }
+
+        .compact-table input {
+            border: none;
+            background: transparent;
+            text-align: center;
+            width: 100%;
+            font-size: 10px;
+            box-sizing: border-box;
+        }
+
+        .compact-table input:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        /* Estilos del Footer Unificado */
+        .footer-unified {
+            margin-top: 15px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 5px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+
+        .footer-unified .control-data {
+            font-weight: bold;
+            color: #1E3A5F;
+            margin-bottom: 2px;
+        }
+
+        .footer-unified .legal-data {
+            color: #475569;
+            font-style: italic;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-19">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Registro</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-19-</span>
+                    <input type="text" id="reg-op19" class="registry-input generate-barcode cedit"
+                        data-target="barcode-op19" data-prefix="FO-OP-19-" placeholder="codigo unico"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-op19" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>REGISTRO DE LIMPIEZA Y SANITIZACIÓN DE ÁREAS</h1>
+            <div class="metadata">Código: FO-OP-19 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. IDENTIFICACIÓN DEL ÁREA</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="15%"><strong>Área / Sala:</strong></td>
+                    <td width="40%"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold;"
+                            placeholder="Ej. Cuarto de Cultivo 1"></td>
+                    <td width="15%"><strong>Mes / Año:</strong></td>
+                    <td width="30%"><input type="month" class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. BITÁCORA DE LIMPIEZA DIARIA</div>
+        <div class="section">
+            <p style="font-size:8.5px; color:#666; margin-bottom:4px;">Instrucción: Marque con una (X) o (✓) las
+                superficies limpiadas. Escriba el nombre y lote del sanitizante utilizado.</p>
+            <table class="compact-table" id="tbl-limpieza">
+                <thead>
+                    <tr>
+                        <th rowspan="2" width="5%">DÍA</th>
+                        <th colspan="5" width="40%">SUPERFICIES (Marcar)</th>
+                        <th rowspan="2" width="30%">SANITIZANTE / LOTE</th>
+                        <th rowspan="2" width="25%">REALIZÓ (Firma / Inic.)</th>
+                    </tr>
+                    <tr>
+                        <th width="8%">PISOS</th>
+                        <th width="8%">PAREDES</th>
+                        <th width="8%">TECHOS</th>
+                        <th width="8%">MESAS</th>
+                        <th width="8%">EQUIPOS</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-limpieza">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">3. VALIDACIÓN Y CIERRE MENSUAL</div>
+        <div class="section">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">SUPERVISOR DE ÁREA</p>
+                    <span style="font-size:8px;">(Revisión de Cumplimiento)</span>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #ccc; border-radius:0; margin-top:25px;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1; background-color:#f0fdf4;">
+                    <p style="font-weight:bold; color:#14532d;">ASEGURAMIENTO DE CALIDAD</p>
+                    <span style="font-size:8px;">(Cierre de Bitácora)</span>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #166534; border-radius:0; margin-top:25px; background:transparent;">
+                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-OP-19 | Versión: 1.0 | Registro de Limpieza de Áreas | Xelle Scientific |
+                Página 1 de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        function generarTablaLimpieza() {
+            const tbody = document.getElementById('tbody-limpieza');
+            let rows = '';
+            for (let i = 1; i <= 50; i++) {
+                rows += `<tr>
+                    <td style="font-weight:bold; background-color:#f8fafc;">${i}</td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit text-left" placeholder="Ej. Preempt L-1234"></td>
+                    <td><input class="cedit"></td>
+                </tr>`;
+            }
+            tbody.innerHTML = rows;
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', generarTablaLimpieza);
+    </script>
+</body>
+
+</html>

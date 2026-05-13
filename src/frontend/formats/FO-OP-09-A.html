@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-09-A Registro Gráfico Incubadora 35°C V2</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Orientación Horizontal para la gráfica de 31 días */
+        @page {
+            size: landscape;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 26.5cm;
+            margin: 0.5cm auto;
+            background: white;
+            padding: 0.8cm;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 4px 8px;
+            font-weight: bold;
+            font-size: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Gráfica de Tendencia */
+        .graph-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            table-layout: fixed;
+        }
+
+        .graph-table th,
+        .graph-table td {
+            border: 1px solid #cbd5e1;
+            font-size: 8px;
+            text-align: center;
+            height: 16px;
+            padding: 0;
+        }
+
+        .graph-table th {
+            background-color: #f1f5f9;
+            color: #1E3A5F;
+        }
+
+        .nc-row {
+            background-color: #fee2e2;
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .target-row {
+            background-color: #f0fdf4;
+            font-weight: bold;
+            border: 2px solid #166534 !important;
+        }
+
+        .label-col {
+            width: 90px;
+            font-weight: bold;
+            font-size: 8.5px !important;
+        }
+
+        .day-col {
+            width: 24px;
+        }
+
+        .compact-table {
+            table-layout: fixed;
+            word-break: break-word;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 8px;
+            padding: 4px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 2px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            height: 18px;
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        .compact-table input {
+            border: none;
+            background: transparent;
+            text-align: center;
+            width: 100%;
+            font-size: 9px;
+        }
+
+        .alert-box {
+            background-color: #fef2f2;
+            border: 1px dashed #991b1b;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            color: #991b1b;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .footer-unified {
+            margin-top: 15px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 8px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-09-a">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Registro</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 180px;">
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900;" font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700;" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-09-A-</span>
+                    <input type="text" id="reg-op09a" class="registry-input generate-barcode cedit"
+                        data-target="barcode-09a" data-prefix="FO-OP-09-A-" placeholder="TAG-MM/AA">
+                </div>
+                <svg id="barcode-09a" class="barcode-svg" style="height:30px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>REGISTRO GRÁFICO DE TEMPERATURA - INCUBADORA 35°C</h1>
+            <div class="metadata">Código: FO-OP-09-A | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. IDENTIFICACIÓN DEL EQUIPO</div>
+
+        <div class="section">
+            <table class="no-border-table" style="font-size: 10px;">
+                <tr>
+                    <td width="33%"><strong>ID Incubadora (TAG):</strong> <input class="cedit"
+                            style="width:120px; border-bottom:1px solid #000;"></td>
+                    <td width="33%"><strong>Marca / Modelo:</strong> <input class="cedit"
+                            style="width:140px; border-bottom:1px solid #000;" placeholder="Marca / Modelo:"></td>
+                    <td width="33%"><strong>Mes / Año:</strong> <input class="cedit"
+                            style="width:100px; border-bottom:1px solid #000;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Ubicación:</strong> <input class="cedit"
+                            style="width:70%; border-bottom:1px solid #000;"></td>
+                    <td><strong>Especificación:</strong> 20.0°C a 25.0°C (Ideal: 25.0°C)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. GRÁFICA DE REGISTRO DIARIO DE TEMPERATURA (35.0°C ± 0.5°C)</div>
+        <table class="graph-table">
+            <thead>
+                <tr>
+                    <th class="label-col" rowspan="2">Límite / Día</th>
+                    <script>for (let i = 1; i <= 31; i++) document.write(`<th class="day-col" colspan="2">${i}</th>`);</script>
+                </tr>
+                <tr>
+                    <script>for (let i = 1; i <= 31; i++) document.write(`<th style="font-size:6px;">M</th><th style="font-size:6px;">T</th>`);</script>
+                </tr>
+            </thead>
+            <tbody id="tbody-grafica">
+                <tr class="nc-row">
+                    <td class="label-col">≥ 35.6 (NC)</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">35.5</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">35.4</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">35.3</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">35.2</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">35.1</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+                <tr class="target-row">
+                    <td class="label-col">35.0 (Target)</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">34.9</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">34.8</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">34.7</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">34.6</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">34.5</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+                <tr class="nc-row">
+                    <td class="label-col">≤ 34.4 (NC)</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td></td>');</script>
+                </tr>
+            </tbody>
+
+        </table>
+
+        <div class="section-header">3. CONTROL DE VERIFICACIÓN Y REPORTE DE EXCURSIONES</div>
+
+        <div class="section" style="display: flex; gap: 15px; margin-top: 5px;">
+            <div style="flex: 1.2; display: flex; gap: 5px;">
+                <table class="compact-table" style="width: 50%;">
+
+                    <thead>
+                        <tr>
+                            <th width="20%">Día</th>
+                            <th>M</th>
+                            <th>T</th>
+                            <th>PCC Ok?</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-firmas-1"></tbody>
+                </table>
+                <table class="compact-table" style="width: 50%;">
+                    <thead>
+                        <tr>
+                            <th width="20%">Día</th>
+                            <th>M</th>
+                            <th>T</th>
+                            <th>PCC Ok?</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-firmas-2"></tbody>
+                </table>
+            </div>
+
+            <div style="flex: 1;">
+                <div class="alert-box">
+                    🚨 EXCURSIONES: Si la temperatura toca las filas NC (≥ 35.6°C o ≤ 34.4°C), detenga el uso, avise a
+                    Calidad y registre el folio FO-OP-51.
+                </div>
+                <table class="compact-table" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Día / Hora</th>
+                            <th>Temp. Obs.</th>
+                            <th>Acción / Folio Desviación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input class="cedit"></td>
+                            <td><input class="cedit"></td>
+                            <td><input class="cedit"></td>
+                        </tr>
+                        <tr>
+                            <td><input class="cedit"></td>
+                            <td><input class="cedit"></td>
+                            <td><input class="cedit"></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <table class="compact-table" style="width: 100%; margin-top: 5px;">
+                    <thead>
+                        <tr>
+                            <th width="60%">Puntos Críticos de Control (PCC)</th>
+                            <th width="10%">Cumple</th>
+                            <th width="30%">Observaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-left">[PCC-1] Trazabilidad: ¿Se registraron ambas lecturas (AM/PM) sin
+                                omisiones?</td>
+                            <td><input class="cedit"></td>
+                            <td><input class="cedit"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">[PCC-2] Estabilidad: ¿La temperatura se mantuvo en rango (34.5°C -
+                                35.5°C)?</td>
+                            <td><input class="cedit"></td>
+                            <td><input class="cedit"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">[PCC-3] Integridad: ¿El registro cumple con ALCOA+ (sin tachaduras)?
+                            </td>
+                            <td><input class="cedit"></td>
+                            <td><input class="cedit"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-top: 10px; border: 1px solid #cbd5e1; padding: 8px; background: #f8fafc;">
+                    <div style="display: flex; justify-content: space-between; gap: 10px;">
+                        <div class="signature-box" style="flex: 1; text-align: center;">
+                            <p style="font-size: 7px; font-weight: bold; margin: 0;">VERIFICÓ (SUPERVISOR)</p>
+                            <div style="border-top: 1px solid #000; width: 80%; margin: 15px auto 2px auto;"></div>
+                            <input class="cedit" style="font-size: 7px;" placeholder="Nombre / Firma">
+                        </div>
+                        <div class="signature-box" style="flex: 1; text-align: center;">
+                            <p style="font-size: 7px; font-weight: bold; margin: 0;">DICTAMEN (QA)</p>
+                            <div style="border-top: 1px solid #000; width: 80%; margin: 15px auto 2px auto;"></div>
+                            <input class="cedit" style="font-size: 7px;" placeholder="Nombre / Firma">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-OP-09-A | Versión: 1.0 | Registro Gráfico de Temperatura - Incubadora 35°C |
+                Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">Propiedad de Xelle Scientific, S.A.P.I. de C.V. Prohibida su reproducción total o
+                parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        function fillInitials() {
+            let html1 = '', html2 = '';
+            for (let i = 1; i <= 31; i++) {
+                let row = `<tr><td>${i}</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit" placeholder="S/N"></td></tr>`;
+                if (i <= 16) html1 += row; else html2 += row;
+            }
+            document.getElementById('tbody-firmas-1').innerHTML = html1;
+            document.getElementById('tbody-firmas-2').innerHTML = html2;
+        }
+        fillInitials();
+    </script>
+</body>
+
+</html>

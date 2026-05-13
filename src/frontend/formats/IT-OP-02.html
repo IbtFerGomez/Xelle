@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT-OP-02 - Manual Descriptivo de Uso de Formatos - Xelle Scientific</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #23313f;
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f3f7fc;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0b1f3a, #1a4a80);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-radius: 8px 8px 0 0;
+            gap: 24px;
+        }
+
+        .logo {
+            flex-shrink: 0;
+        }
+
+        .logo svg {
+            width: 60px;
+            height: 60px;
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        h2 {
+            border-bottom: 2px solid #1a4a80;
+            color: #12325a;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #e9eff7;
+            color: #0b1f3a;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: #e9eff7;
+            color: #12325a;
+            font-weight: bold;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8em;
+            text-align: center;
+            color: #1a4a80;
+            border-top: 1px solid #e9eff7;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                    <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                    <path fill="#2E9D82"
+                        d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                </g>
+            </svg>
+        </div>
+        <div class="header-content">
+            <h1>IT-OP-02 - Manual Descriptivo de Uso de Formatos</h1>
+            <p>Guía detallada de cada formato, responsable de uso y revisión, y formatos relacionados en Xelle
+                Scientific</p>
+        </div>
+    </header>
+    <div class="container">
+        <h2>1. Introducción</h2>
+        <p>Este manual describe el propósito, uso, responsable y revisión de cada formato activo en el sistema Xelle
+            Scientific, así como los formatos relacionados para asegurar la trazabilidad y cumplimiento normativo.</p>
+        <h2>2. Catálogo Descriptivo de Formatos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Descripción de Uso</th>
+                    <th>Responsable de Uso</th>
+                    <th>Responsable de Revisión</th>
+                    <th>Formatos Relacionados</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight">FO-LC-17</td>
+                    <td>Recepción</td>
+                    <td>Registro de datos clínicos y logísticos de la materia prima recibida. Incluye identificación del
+                        donante, hospital, temperatura y documentación anexa.</td>
+                    <td>Logística / Almacén</td>
+                    <td>Control de Calidad</td>
+                    <td>FO-LC-18, FO-LC-19</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC-18</td>
+                    <td>Macro</td>
+                    <td>Evaluación macroscópica de tejido placentario. Registra peso, dimensiones, integridad y dictamen
+                        de aptitud para proceso.</td>
+                    <td>Laboratorio</td>
+                    <td>Control de Calidad</td>
+                    <td>FO-LC-17, FO-LC-19</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC-19</td>
+                    <td>Calidad</td>
+                    <td>Control y liberación de calidad de placentas. Incluye panel viral, microbiológico y dictamen
+                        final.</td>
+                    <td>Control de Calidad</td>
+                    <td>Responsable Dirección</td>
+                    <td>FO-LC-17, FO-LC-18, FO-LC-34</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC-34</td>
+                    <td>Bitácora de Muestreos</td>
+                    <td>Registro de muestreos de producto terminado. Incluye plan de muestreo, criterios críticos y
+                        revisión mensual.</td>
+                    <td>Control de Calidad</td>
+                    <td>Supervisor de Calidad</td>
+                    <td>FO-LC-19</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>3. Instrucciones Generales</h2>
+        <ul>
+            <li>Verifique que el formato corresponda al proceso y etapa antes de su llenado.</li>
+            <li>Complete todos los campos requeridos y asegure la legibilidad de la información.</li>
+            <li>El responsable de uso debe firmar y entregar el formato al responsable de revisión.</li>
+            <li>Los formatos deben archivarse y estar disponibles para auditoría y trazabilidad.</li>
+        </ul>
+        <div class="footer">
+            <div class="signature-area"
+                style="margin-top: 40px; display: flex; justify-content: space-between; gap: 24px;">
+                <div style="flex:1; text-align:center;">
+                    <div style="font-weight:bold; font-size:15px; margin-bottom:18px;">Elaboró</div>
+                    <div style="min-height:40px; border-bottom:1.5px solid #23313f; margin-bottom:6px;"></div>
+                    <div style="font-size:13px; color:#555;">Coordinación SGC</div>
+                    <div style="font-size:12px; color:#888; margin-top:4px;">Nombre y Firma</div>
+                </div>
+                <div style="flex:1; text-align:center;">
+                    <div style="font-weight:bold; font-size:15px; margin-bottom:18px;">Revisó</div>
+                    <div style="min-height:40px; border-bottom:1.5px solid #23313f; margin-bottom:6px;"></div>
+                    <div style="font-size:13px; color:#555;">Aseguramiento de Calidad</div>
+                    <div style="font-size:12px; color:#888; margin-top:4px;">Nombre y Firma</div>
+                </div>
+                <div style="flex:1; text-align:center;">
+                    <div style="font-weight:bold; font-size:15px; margin-bottom:18px;">Aprobó</div>
+                    <div style="min-height:40px; border-bottom:1.5px solid #23313f; margin-bottom:6px;"></div>
+                    <div style="font-size:13px; color:#555;">Responsable Dirección </div>
+                    <div style="font-size:12px; color:#888; margin-top:4px;">Nombre y Firma</div>
+                </div>
+            </div>
+            <p><strong>IT-OP-02</strong> - Manual Descriptivo de Uso de Formatos</p>
+            <p>Propiedad de Xelle Scientific © 2026 | Aseguramiento de Calidad | Versión 1.0</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Este manual es propiedad de "Xelle Scientific", S.A.P.I., de
+                C. V., y está protegido por derechos de autor.</p>
+        </div>
+    </div>
+</body>
+
+</html>

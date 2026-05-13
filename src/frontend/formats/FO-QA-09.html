@@ -216,15 +216,17 @@
             <table class="no-border-table">
                 <tr>
                     <td colspan="2"><strong>Origen:</strong>
-                        <label><input type="checkbox" class="cedit"> Auditoría</label>
-                        <label><input type="checkbox" class="cedit"> Queja</label>
-                        <label><input type="checkbox" class="cedit"> Desviación</label>
-                        <label><input type="checkbox" class="cedit"> Riesgo Crítico (IPR > 27)</label>
+                        <label><input type="checkbox" class="cedit" style="flex-wrap: wrap;"> Auditoría</label>
+                        <label><input type="checkbox" class="cedit" style="flex-wrap: wrap;"> Queja</label>
+                        <label><input type="checkbox" class="cedit" style="flex-wrap: wrap;"> Desviación</label>
+                        <label><input type="checkbox" class="cedit" style="flex-wrap: wrap;"> Riesgo Crítico (IPR > 27)</label>
                     </td>
                 </tr>
             </table>
             <div style="margin-top:10px;">
-                <strong>Etapa del Proceso afectada:</strong>
+                <label class="pcc-item"><input type="checkbox""><strong>No afecta proceso</strong></label>
+                <label class="pcc-item"><input type="checkbox"><strong>Etapa del Proceso afectada:</strong></label>
+                
                 <div class="pcc-group">
                     <label class="pcc-item"><input type="radio" name="etapa"> Recepción / Cuarentena</label>
                     <label class="pcc-item"><input type="radio" name="etapa"> Selección de Cultivo</label>
@@ -232,6 +234,9 @@
                     <label class="pcc-item"><input type="radio" name="etapa"> Cosecha / Concentración</label>
                     <label class="pcc-item"><input type="radio" name="etapa"> Congelación Controlada</label>
                     <label class="pcc-item"><input type="radio" name="etapa"> Gestión de Inventario</label>
+                   
+                    
+                   
                 </div>
             </div>
             <textarea class="cedit" rows="3" style="width:100%; margin-top:10px;"

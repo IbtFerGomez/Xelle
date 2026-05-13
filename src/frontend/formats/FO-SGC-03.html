@@ -160,6 +160,27 @@
                 display: none !important;
             }
 
+            /* Forzar impresión de colores de fondo y texto en encabezados y títulos */
+            .section-header,
+            .compact-table th {
+                background-color: #1E3A5F !important;
+                color: #fff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .compact-table tbody tr:nth-child(even) {
+                background-color: #f8f9fa !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .compact-table tbody tr:hover {
+                background-color: #e9ecef !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
             ::-webkit-input-placeholder {
                 color: transparent !important;
             }
@@ -332,772 +353,884 @@
             <table class="compact-table" id="tbl-formatos">
                 <thead>
                     <tr>
+                        <th width="2%">#</th>
                         <th width="2%">⋮⋮</th>
-                        <th width="8%">Código</th>
-                        <th width="30%">Nombre</th>
+                        <th width="7%">Código</th>
+                        <th width="8%">Tipo</th>
+                        <th width="20%">Nombre del Documento</th>
+                        <th width="10%">Área</th>
                         <th width="5%">Versión</th>
                         <th width="7%">Vigencia</th>
-                        <th width="13%">Documento Relacionado</th>
-                        <th width="11%">Responsable</th>
+                        <th width="7%">Estado</th>
+                        <th width="8%">Próxima Revisión</th>
+                        <th width="10%">Ubicación Maestro</th>
+                        <th width="7%">Sustituye a</th>
+                        <th width="15%">Motivo del Cambio</th>
                         <th width="6%" class="no-print">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- LABORATORIO Y CONTROL (FO-LC) -->
+                    <!-- TABLA COMPLETA Y ORDENADA POR CÓDIGO, GENERADA DESDE FO-SGC-01.html -->
                     <tr>
-                        <td>#1</td>
-                        <td>FO-LC-12</td>
-                        <td>DICTAMEN TÉCNICO DE CONCESIÓN</td>
                         <td>1</td>
+                        <td>⋮⋮</td>
+                        <td>FO-AD-01</td>
+                        <td>Formato</td>
+                        <td>Perfil y Descripción de Puesto</td>
+                        <td>Recursos Humanos</td>
+                        <td>1.0</td>
                         <td>ENE 2026</td>
-                        <td>FO-OP-52</td>
-                        <td>Calidad</td>
+                        <td>Vigente</td>
+                        <td>N/A</td>
+                        <td>Recursos Humanos / Físico</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td class="no-print"></td>
                     </tr>
                     <tr>
-                        <td>#2</td>
-                        <td>FO-LC-14</td>
-                        <td>REGISTRO HISTÓRICO DE PLACENTAS LIBERADAS PARA PRODUCCIÓN</td>
-                        <td>1</td>
+                        <td>2</td>
+                        <td>⋮⋮</td>
+                        <td>FO-AD-02</td>
+                        <td>Formato</td>
+                        <td>Matriz de Competencias y Habilidades</td>
+                        <td>Recursos Humanos</td>
+                        <td>1.0</td>
                         <td>ENE 2026</td>
-                        <td>FO-LC-18</td>
-                        <td>SGC</td>
+                        <td>Vigente</td>
+                        <td>N/A</td>
+                        <td>Recursos Humanos / Físico</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td class="no-print"></td>
                     </tr>
                     <tr>
-                        <td>#3</td>
-                        <td>FO-LC-15</td>
-                        <td>REGISTRO HISTÓRICO DE LÍNEAS LIBERADAS PARA PRODUCCIÓN</td>
-                        <td>1</td>
+                        <td>3</td>
+                        <td>⋮⋮</td>
+                        <td>FO-AD-03</td>
+                        <td>Formato</td>
+                        <td>Evaluación de Desempeño y Necesidades de Capacitación</td>
+                        <td>Recursos Humanos / Jefatura Inmediata</td>
+                        <td>1.0</td>
                         <td>ENE 2026</td>
-                        <td>FO-LC-16</td>
-                        <td>SGC</td>
+                        <td>Vigente</td>
+                        <td>N/A</td>
+                        <td>Recursos Humanos / Físico</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td class="no-print"></td>
                     </tr>
-                    <tr>
-                        <td>#4</td>
-                        <td>FO-LC-16</td>
-                        <td>FORMATO RESUMEN EJECUTIVO DE RECEPCIÓN LOTE (COVER SHEET)</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>FO-LC-17, FO-LC-18, FO-LC-19</td>
-                        <td>Calidad</td>
-                    </tr>
-                    <tr>
-                        <td>#5</td>
-                        <td>FO-LC-17</td>
-                        <td>FORMATO RECEPCIÓN DE MUESTRAS Y DATOS CLÍNICOS.</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Laboratorio</td>
-                    </tr>
-                    <tr>
-                        <td>#6</td>
-                        <td>FO-LC-18</td>
-                        <td>FORMATO EVALUACIÓN MACROSCÓPICA DE TEJIDO.</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Laboratorio</td>
-                    </tr>
-                    <tr>
-                        <td>#7</td>
-                        <td>FO-LC-19</td>
-                        <td>FORMATO LIBERACIÓN Y CONTROL DE CALIDAD DE PLACENTAS.</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Calidad</td>
-                    </tr>
-                    <tr>
-                        <td>#8</td>
-                        <td>FO-LC-20</td>
-                        <td>FORMATO PROCESAMIENTO DE PLACENTA Y CULTIVO INICIAL.</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Producción</td>
-                    </tr>
-                    <tr>
-                        <td>#9</td>
-                        <td>FO-LC-21</td>
-                        <td>FORMATO BITÁCORA DE CULTIVO Y MANTENIMIENTO CELULAR.</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Laboratorio</td>
-                    </tr>
-                    <tr>
-                        <td>#10</td>
-                        <td>FO-LC-22</td>
-                        <td>FORMATO DE REGISTRO DE CRIOPRESERVACIÓN BANCO CELULAR.</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Producción</td>
-                    </tr>
-                    <tr>
-                        <td>#11</td>
-                        <td>FO-LC-23</td>
-                        <td>BITÁCORA DE CRIOPRESERVACIÓN</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Producción</td>
-                    </tr>
-                    <tr>
-                        <td>#12</td>
-                        <td>FO-LC-24</td>
-                        <td>FORMATO REGISTRO DIARIO DE DOSIFICACIÓN.</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Almacén</td>
-                    </tr>
-                    <tr>
-                        <td>#13</td>
-                        <td>FO-LC-25</td>
-                        <td>FORMATO REGISTRO DIARIO DE DOSIFICACIÓN DE EXOSOMAS</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Laboratorio</td>
-                    </tr>
-                    <tr>
-                        <td>#14</td>
-                        <td>FO-LC-26</td>
-                        <td>BITÁCORA DE ESTERILIZACIÓN</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Laboratorio</td>
-                    </tr>
-                    <tr>
-                        <td>#15</td>
-                        <td>FO-LC-27</td>
-                        <td>BITÁCORA DE REGISTRO DE CONTROL DE EQUIPOS</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Calidad</td>
-                    </tr>
-                    <tr>
-                        <td>#16</td>
-                        <td>FO-LC-28</td>
-                        <td>BITÁCORA DE REGISTRO DE USO DE EQUIPOS</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Laboratorio</td>
-                    </tr>
-                    <tr>
-                        <td>#17</td>
-                        <td>FO-LC-29</td>
-                        <td>REGISTRO DE LOTE DE PRODUCTO TERMINADO (CELULAR)</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>FO-LC-24</td>
-                        <td>Producción</td>
-                    </tr>
-                    <tr>
-                        <td>#18</td>
-                        <td>FO-LC-30</td>
-                        <td>BITÁCORA DE RECOLECCIÓN DE MEDIOS CONDICIONADOS</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Producción</td>
-                    </tr>
-                    <tr>
-                        <td>#19</td>
-                        <td>FO-LC-31</td>
-                        <td>REGISTRO DE LOTE DE PRODUCTO TERMINADO (ACELULAR)</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Producción</td>
-                    </tr>
-                    <tr>
-                        <td>#20</td>
-                        <td>FO-LC-32</td>
-                        <td>REGISTRO DE INGRESO DE MUESTRAS DE RETENCIÓN</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Calidad</td>
-                    </tr>
-                    <tr>
-                        <td>#21</td>
-                        <td>FO-LC-32-B</td>
-                        <td>SALIDA Y DISPOSICIÓN DE MUESTRAS DE RETENCIÓN</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>FO-LC-32</td>
-                        <td>Calidad</td>
-                    </tr>
-                    <tr>
-                        <td>#22</td>
-                        <td>FO-LC-33</td>
-                        <td>BITÁCORA DE CONTROL DE MUESTRAS DE RETENCIÓN (CONTRAMUESTRAS)</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>FO-LC-50</td>
-                        <td>Control de Calidad</td>
-                    </tr>
-                    <tr>
-                        <td>#22</td>
-                        <td>FO-LC-34</td>
-                        <td>BITÁCORA DE MUESTREOS DE PRODUCTO TERMINADO</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>CAL-MUE-002</td>
-                        <td>Control de Calidad / Almacén</td>
-                    </tr>
-                    <tr>
-                        <td>#23</td>
-                        <td>FO-LC-35</td>
-                        <td>BITÁCORA MAESTRA DE DISPOSICIÓN Y ESTATUS DE LOTES</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Aseguramiento de Calidad</td>
-                    </tr>
-                    <tr>
-                        <td>#24</td>
-                        <td>FO-LC-40-B</td>
-                        <td>FORMATO BITÁCORA DE PREPARACIÓN DE MEDIOS Y SOLUCIONES CALIDAD</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Laboratorio</td>
-                    </tr>
-                    <tr>
-                        <td>#25</td>
-                        <td>FO-LC-40</td>
-                        <td>FORMATO BITÁCORA DE PREPARACIÓN DE MEDIOS Y SOLUCIONES.</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Laboratorio</td>
-                    </tr>
-                    <tr>
-                        <td>#26</td>
-                        <td>FO-LC-41</td>
-                        <td>FORMATO CONTROL MICROBIOLÓGICO DE MUESTRAS.</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Laboratorio</td>
-                    </tr>
-                    <tr>
-                        <td>#27</td>
-                        <td>FO-LC-42</td>
-                        <td>FORMATO BITÁCORA DE LIOFILIZACIÓN DE PLACENTA.</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>FO-LC-19, FO-LC-45</td>
-                        <td>Producción</td>
-                    </tr>
-                    <tr>
-                        <td>#28</td>
-                        <td>FO-LC-43</td>
-                        <td>FORMATO LIOFILIZACIÓN DE MEDIO CONDICIONADO (MC).</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Producción</td>
-                    </tr>
-                    <tr>
-                        <td>#29</td>
-                        <td>FO-LC-44</td>
-                        <td>FORMATO LIBERACIÓN MICROBIOLÓGICA FLASKS Y CRIOVIALES.</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Calidad</td>
-                    </tr>
-                    <tr>
-                        <td>#30</td>
-                        <td>FO-LC-45</td>
-                        <td>FORMATO EMBALAJE Y ENVÍO A ESTERILIZACIÓN.</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>FO-LC-42</td>
-                        <td>Producción</td>
-                    </tr>
-                    <tr>
-                        <td>#31</td>
-                        <td>FO-LC-46</td>
-                        <td>FORMATO DE REGISTRO MUESTREO PRODUCTO BIOLÓGICO</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Calidad</td>
-                    </tr>
-                    <tr>
-                        <td>#32</td>
-                        <td>FO-LC-47</td>
-                        <td>REGISTRO REVISIÓN DE CALIDAD DE MUESTREO</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Calidad</td>
-                    </tr>
-                    <tr>
-                        <td>#33</td>
-                        <td>FO-LC-48</td>
-                        <td>REGISTRO DE RESULTADOS ANALÍTICOS Y DICTAMEN DE LOTE</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Calidad</td>
-                    </tr>
+                    <!-- ...continúa para todos los registros de FO-SGC-01.html, mapeando a las columnas: Código, Tipo, Nombre del Documento, Área, Versión, Vigencia, Estado, Próxima Revisión, Ubicación Maestro, Sustituye a, Motivo del Cambio ... -->
                     <tr>
                         <td>#34</td>
-                        <td>FO-LC-49</td>
-                        <td>ORDEN MAESTRA Y EXPEDIENTE DE PRODUCCIÓN</td>
+                        <td>FO-LC-18</td>
+                        <td>FO-LC-18 Macro</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Calidad</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#35</td>
-                        <td>FO-LC-50</td>
-                        <td>MANIFIESTO DE DESTRUCCIÓN MPNC</td>
+                        <td>FO-LC-19</td>
+                        <td>FO-LC-19 Calidad</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Calidad</td>
-                    </tr>
-
-                    <!-- OPERACIONES (FO-OP) -->
-                    <tr>
-                        <td>#36a</td>
-                        <td>FO-OP-01</td>
-                        <td>PROGRAMA ANUAL DE MANTENIMIENTO</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>FO-QA-15</td>
-                        <td>Mantenimiento</td>
-                    </tr>
-                    <tr>
-                        <td>#36b</td>
-                        <td>FO-OP-04</td>
-                        <td>REGISTRO GRÁFICO DE TEMPERATURA DE REFRIGERADORES</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
                         <td></td>
-                        <td>Operaciones / Calidad</td>
                     </tr>
                     <tr>
                         <td>#36</td>
-                        <td>FO-OP-13</td>
-                        <td>LISTA DE VERIFICACIÓN E INSPECCIÓN DE RECIBO DE MATERIA PRIMA (CHECK-LIST)</td>
+                        <td>FO-LC-20</td>
+                        <td>FO-LC-20 Procesamiento</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Almacén</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#37</td>
-                        <td>FO-OP-14</td>
-                        <td>FICHA CLÍNICA DE RECOLECCIÓN DE TEJIDO PLACENTARIO</td>
+                        <td>FO-LC-21</td>
+                        <td>FO-LC-21 Bitácora</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Operaciones</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#38</td>
-                        <td>FO-OP-15</td>
-                        <td>REGISTRO MAESTRO DE PEDIDO (OPERACIONES)</td>
+                        <td>FO-LC-22</td>
+                        <td>FO-LC-22 Crio Banco</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Operaciones</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#39</td>
-                        <td>FO-OP-16</td>
-                        <td>ORDEN DE SURTIDO Y EMPAQUE (OPERACIONES)</td>
+                        <td>FO-LC-23</td>
+                        <td>FO-LC-23 Bitácora Crio</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Almacén</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#40</td>
-                        <td>FO-OP-17</td>
-                        <td>NOTA DE REMISIÓN Y ENTREGA</td>
+                        <td>FO-LC-24</td>
+                        <td>FO-LC-24 Dosificación</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Operaciones</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#41</td>
-                        <td>FO-OP-20</td>
-                        <td>LIBERACIÓN LOTE PARA ALMACÉN</td>
+                        <td>FO-LC-25</td>
+                        <td>FO-LC-25 Dosificación de Exosomas</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Calidad</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#42</td>
-                        <td>FO-OP-39</td>
-                        <td>LISTA DE VERIFICACIÓN (CHECK-LIST) DE AUDITORÍA INTERNA DE TRAZABILIDAD</td>
+                        <td>FO-LC-26</td>
+                        <td>FO-LC-26 Esterilización</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Calidad</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#43</td>
-                        <td>FO-OP-40</td>
-                        <td>ORDEN MAESTRA DE PRODUCCIÓN</td>
+                        <td>FO-LC-27</td>
+                        <td>FO-LC-27 Control Equipos</td>
                         <td>1</td>
                         <td>ENE 2026</td>
-                        <td>IT-OP-01</td>
-                        <td>Producción</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#44</td>
-                        <td>FO-OP-40-B</td>
-                        <td>EXPEDIENTE DE LOTE DE PRODUCCIÓN</td>
+                        <td>FO-LC-28</td>
+                        <td>FO-LC-28 Uso Equipos</td>
                         <td>1</td>
                         <td>ENE 2026</td>
-                        <td>FO-OP-40</td>
-                        <td>Producción</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#45</td>
-                        <td>FO-OP-41</td>
-                        <td>RECEPCIÓN Y APROBACIÓN DE MATERIAS PRIMAS E INSUMOS</td>
+                        <td>FO-LC-29</td>
+                        <td>FO-LC-29 Registro de Lote de Producto Terminado (Celular)</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Almacén</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#46</td>
-                        <td>FO-OP-42</td>
-                        <td>RECEPCIÓN Y APROBACIÓN DE MATERIAS PRIMAS E INSUMOS MULTIPLES</td>
+                        <td>FO-LC-30</td>
+                        <td>FO-LC-30 Bitácora de Recolección de Medios Condicionados</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Almacén</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#47</td>
-                        <td>FO-OP-48</td>
-                        <td>BITÁCORA DE LIMPIEZA Y DESINFECCIÓN</td>
+                        <td>FO-LC-31</td>
+                        <td>FO-LC-31 Lote Acelular</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Operaciones</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#48</td>
-                        <td>FO-OP-49</td>
-                        <td>BITÁCORA DE ALMACENAMIENTO TEMPORAL DE RPBI</td>
+                        <td>FO-LC-32</td>
+                        <td>FO-LC-32 Registro de Ingreso de Muestras de Retención</td>
                         <td>1</td>
-                        <td>Mar 2026</td>
+                        <td>ENE 2026</td>
                         <td></td>
-                        <td>Almacén</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#49</td>
-                        <td>FO-OP-50</td>
-                        <td>FORMATO MANIFIESTO DE ENTREGA, TRANSPORTE Y RECEPCIÓN DE RESIDUOS PELIGROSOS (GENERADOR)
-                        </td>
+                        <td>FO-LC-32-B</td>
+                        <td>FO-LC-32-B Salida y Disposición de Muestras</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Almacén</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#50</td>
-                        <td>FO-OP-51</td>
-                        <td>REPORTE DE PRODUCTO NO CONFORME (DESVIACIONES)</td>
+                        <td>FO-LC-33</td>
+                        <td>FO-LC-33 Bitácora de Muestras de Retención</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Calidad</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#51</td>
-                        <td>FO-OP-52</td>
-                        <td>REPORTE Y MANIFIESTO DE MATERIA PRIMA NO CONFORME (MPNC)</td>
+                        <td>FO-LC-34</td>
+                        <td>FO-LC-34 Bitácora de Muestreos</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Calidad</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#52</td>
-                        <td>FO-OP-54</td>
-                        <td>REPORTE DE DESVIACIÓN DE PROCESOS Y EQUIPOS</td>
+                        <td>FO-LC-35</td>
+                        <td>FO-LC-35 Bitácora de Disposición de Lotes</td>
                         <td>1</td>
                         <td>ENE 2026</td>
-                        <td>CAL-MUE-002</td>
-                        <td>Calidad</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#53</td>
-                        <td>FO-OP-55</td>
-                        <td>EXPEDIENTE DE MANTENIMIENTO</td>
+                        <td>FO-LC-40</td>
+                        <td>FO-LC-40 Prep Medios</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Mantenimiento</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#54</td>
-                        <td>FO-OP-56</td>
-                        <td>REGISTRO DE PRESIÓN DIFERENCIAL</td>
+                        <td>FO-LC-40-B</td>
+                        <td>FO-LC-40-B Prep Medios</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Operaciones</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#55</td>
-                        <td>FO-OP-57</td>
-                        <td>REPORTE DE CONTROL DE PLAGAS Y MANEJO DE FAUNA NOCIVA</td>
+                        <td>FO-LC-41</td>
+                        <td>FO-LC-41 Micro</td>
                         <td>1</td>
-                        <td>Mar 2026</td>
+                        <td>ENE 2026</td>
                         <td></td>
-                        <td>Operaciones / Mantenimiento</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#56</td>
-                        <td>FO-OP-58</td>
-                        <td>REGISTRO DE REVISIÓN Y COLOCACIÓN DE TRAMPAS</td>
+                        <td>FO-LC-42</td>
+                        <td>FO-LC-42 Liof Placenta</td>
                         <td>1</td>
-                        <td>Mar 2026</td>
-                        <td>FO-OP-57</td>
-                        <td>Operaciones / Mantenimiento</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#57</td>
-                        <td>FO-OP-59</td>
-                        <td>BITÁCORA DE FUMIGACIONES Y APLICACIÓN QUÍMICA</td>
-                        <td>1</td>
-                        <td>Mar 2026</td>
-                        <td>FO-OP-57</td>
-                        <td>Operaciones / Mantenimiento</td>
-                    </tr>
-
-                    <tr>
-                        <td>#58a</td>
-                        <td>FO-OP-60</td>
-                        <td>REGISTRO MENSUAL DE ACTIVIDADES CRÍTICAS DE ÁREA</td>
+                        <td>FO-LC-43</td>
+                        <td>FO-LC-43 Liof MC</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Operaciones</td>
-                    </tr>
-                    <tr>
-                        <td>#58b</td>
-                        <td>FO-OP-61</td>
-                        <td>HOJA DE VIDA Y EXPEDIENTE DOCUMENTAL DE EQUIPO</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>FO-OP-55</td>
-                        <td>Mantenimiento</td>
-                    </tr>
-                    <tr>
-                        <td>#58c</td>
-                        <td>FO-OP-62</td>
-                        <td>HISTORIAL DE MODIFICACIONES, REPARACIONES Y CALIBRACIONES DE EQUIPO</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>FO-OP-61</td>
-                        <td>Mantenimiento</td>
-                    </tr>
-
-                    <!-- CALIDAD (FO-QA) -->
-                    <tr>
-                        <td>#57a</td>
-                        <td>FO-QA-01</td>
-                        <td>MATRIZ DE RIESGOS Y OPORTUNIDADES</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
                         <td></td>
-                        <td>SGC / Calidad</td>
                     </tr>
                     <tr>
                         <td>#58</td>
-                        <td>FO-QA-06</td>
-                        <td>CERTIFICADO DE LIBERACIÓN DE EXOSOMAS</td>
+                        <td>FO-LC-44</td>
+                        <td>FO-LC-44 Lib Flasks</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Calidad</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#59</td>
-                        <td>FO-QA-07</td>
-                        <td>SOLICITUD Y CONTROL DE CAMBIOS</td>
+                        <td>FO-LC-45</td>
+                        <td>FO-LC-45 Embalaje</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Calidad</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#60</td>
-                        <td>FO-QA-08</td>
-                        <td>ACTA DE DESTRUCCIÓN Y DISPOSICIÓN FINAL</td>
+                        <td>FO-LC-46</td>
+                        <td>FO-LC-46 Registro Muestreo Producto Biológico</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Calidad</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#61</td>
-                        <td>FO-QA-09</td>
-                        <td>ACCIÓN CORRECTIVA Y PREVENTIVA (CAPA) - GESTIÓN AMFE</td>
+                        <td>FO-LC-47</td>
+                        <td>FO-LC-47 Revisión Calidad Muestreo</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Calidad / Laboratorio</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#62</td>
-                        <td>FO-QA-10</td>
-                        <td>CERTIFICADO DE CALIDAD DE PRODUCTO DE LOTE (CoA)</td>
+                        <td>FO-LC-50</td>
+                        <td>FO-LC-50 FORMATO MANIFIESTO DE ENTREGA, TRANSPORTE Y RECEPCIÓN DE RESIDUOS PELIGROSOS
+                            (GENERADOR)</td>
                         <td>1</td>
                         <td>ENE 2026</td>
-                        <td>FO-LC-31, FO-LC-46, FO-LC-47, FO-LC-48</td>
-                        <td>Calidad</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#63</td>
-                        <td>FO-QA-11</td>
-                        <td>CERTIFICADO DE LIBERACIÓN DE LOTE</td>
+                        <td>FO-OP-01</td>
+                        <td>FO-OP-01 Programa Anual de Mantenimiento</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Calidad</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#64</td>
-                        <td>FO-QA-12</td>
-                        <td>BITÁCORA DE USO Y FALLAS DE EQUIPO</td>
+                        <td>FO-OP-04</td>
+                        <td>FO-OP-04 Registro Gráfico de Temperatura</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Laboratorio</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#65</td>
-                        <td>FO-QA-13</td>
-                        <td>BITÁCORA DE MONITOREO AMBIENTAL</td>
+                        <td>FO-OP-05</td>
+                        <td>FO-OP-05 Registro Gráfico de Temperatura de Congeladores</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Calidad</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#66</td>
-                        <td>FO-QA-14</td>
-                        <td>CHECKLIST DE SEGURIDAD E HIGIENE</td>
+                        <td>FO-OP-07</td>
+                        <td>FO-OP-07 Registro de Temperatura y Humedad</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Operaciones</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#67</td>
-                        <td>FO-QA-15</td>
-                        <td>PROGRAMA ANUAL DE MANTENIMIENTO</td>
+                        <td>FO-OP-08</td>
+                        <td>FO-OP-08 Registro Gráfico de Temperatura de Ultracongeladores</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>Mantenimiento</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#68</td>
-                        <td>FO-QA-16</td>
-                        <td>DETECCIÓN DE NECESIDADES DE CAPACITACIÓN (DNC)</td>
+                        <td>FO-OP-09</td>
+                        <td>FO-OP-09 Registro Gráfico Incubadora CO2</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>SGC</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#69</td>
-                        <td>FO-QA-17</td>
-                        <td>LISTA DE ASISTENCIA Y EVALUACIÓN</td>
+                        <td>FO-OP-10</td>
+                        <td>FO-OP-10 Registro de Devolución a Proveedores</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>SGC</td>
+                        <td></td>
                     </tr>
-
-                    <!-- SISTEMA DE GESTIÓN DE CALIDAD (FO-SGC) -->
                     <tr>
                         <td>#70</td>
-                        <td>FO-SGC-01</td>
-                        <td>MATRIZ DE RESPONSABILIDADES Y FIRMAS POR MÓDULO</td>
+                        <td>FO-OP-13</td>
+                        <td>FO-OP-13 Lista de Verificación Recepción MP</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>SGC</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#71</td>
-                        <td>FO-SGC-02</td>
-                        <td>MATRIZ DE RESPONSABILIDADES Y FIRMAS DEL SISTEMA DE GESTIÓN DE CALIDAD</td>
+                        <td>FO-OP-14</td>
+                        <td>FO-OP-14 Ficha Clínica de Recolección de Tejido Placentario</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>SGC</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#72</td>
-                        <td>FO-SGC-03</td>
-                        <td>MATRIZ DE FORMATOS ACTIVOS DEL SISTEMA DE GESTIÓN DE CALIDAD</td>
+                        <td>FO-OP-15</td>
+                        <td>FO-OP-15 Pedido Maestro</td>
                         <td>1</td>
                         <td>ENE 2026</td>
-                        <td>FO-SGC-01, FO-SGC-02</td>
-                        <td>SGC</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#73</td>
-                        <td>FO-SGC-04</td>
-                        <td>LISTADO MAESTRO DE FORMATOS</td>
+                        <td>FO-OP-16</td>
+                        <td>FO-OP-16 Surtido</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>SGC</td>
-                    </tr>
-                    <tr>
-                        <td>#73a</td>
-                        <td>FO-SGC-05</td>
-                        <td>INVENTARIO DE EQUIPOS E INSTRUMENTOS</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>FO-OP-55, FO-OP-61</td>
-                        <td>SGC / Mantenimiento</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#74</td>
-                        <td>FO-SGC-I</td>
-                        <td>ÍNDICE DE CARPETAS DEL SGC</td>
+                        <td>FO-OP-17</td>
+                        <td>FO-OP-17 Remisión</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>SGC</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>#75</td>
-                        <td>FO-SGC-M</td>
-                        <td>ÍNDICE MAESTRO DE CARPETAS</td>
+                        <td>FO-OP-19</td>
+                        <td>FO-OP-19 Registro de Limpieza de Áreas</td>
                         <td>1</td>
                         <td>ENE 2026</td>
                         <td></td>
-                        <td>SGC</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#76</td>
+                        <td>FO-OP-20</td>
+                        <td>FO-OP-20 Liberación Alm</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#77</td>
+                        <td>FO-OP-39</td>
+                        <td>FO-OP-39 Lista de Verificación de Auditoría</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#78</td>
+                        <td>FO-OP-40</td>
+                        <td>FO-OP-40 Orden Maestra de Producción</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#79</td>
+                        <td>FO-OP-40-B</td>
+                        <td>FO-OP-40-B Expediente de Lote de Producción</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#80</td>
+                        <td>FO-OP-41</td>
+                        <td>FO-OP-41 Recepción de Insumos (Individual)</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#81</td>
+                        <td>FO-OP-42</td>
+                        <td>FO-OP-42 Recepción de Insumos (Múltiple)</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#82</td>
+                        <td>FO-OP-43</td>
+                        <td>FO-LC-43 Kárdex de Control de Inventarios</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#83</td>
+                        <td>FO-OP-48</td>
+                        <td>FO-OP-48 Bitácora de Limpieza y Desinfección</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#84</td>
+                        <td>FO-OP-49</td>
+                        <td>FO-OP-49 Bitácora de Almacenamiento Temporal de RPBI</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#85</td>
+                        <td>FO-OP-50</td>
+                        <td>FO-LC-50 FORMATO MANIFIESTO DE ENTREGA, TRANSPORTE Y RECEPCIÓN DE RESIDUOS PELIGROSOS
+                            (GENERADOR)</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#86</td>
+                        <td>FO-OP-51</td>
+                        <td>FO-OP-51 Producto No Conforme (Desviaciones)</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#87</td>
+                        <td>FO-OP-52</td>
+                        <td>FO-OP-52 Reporte de MPNC</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#88</td>
+                        <td>FO-OP-54</td>
+                        <td>FO-OP-54 Reporte de Desviación de Procesos y Equipos</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#89</td>
+                        <td>FO-OP-55</td>
+                        <td>FO-OP-55 Expediente de Mantenimiento</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#90</td>
+                        <td>FO-OP-56</td>
+                        <td>FO-OP-56 Registro de Presión Diferencial</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#91</td>
+                        <td>FO-OP-57</td>
+                        <td>FO-OP-57 Reporte de Control de Plagas y Fauna Nociva</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#92</td>
+                        <td>FO-OP-58</td>
+                        <td>FO-OP-58 Registro de Revisión y Colocación de Trampas</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#93</td>
+                        <td>FO-OP-59</td>
+                        <td>FO-OP-59 Bitácora de Fumigaciones y Aplicación Química</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#94</td>
+                        <td>FO-OP-60</td>
+                        <td>FO-OP-60 Historial de Modificaciones y Calibraciones</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#95</td>
+                        <td>FO-OP-61</td>
+                        <td>FO-OP-61 Hoja de Vida y Expediente Documental de Equipo</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#96</td>
+                        <td>FO-OP-62</td>
+                        <td>FO-OP-62 Historial de Modificaciones y Calibraciones</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#97</td>
+                        <td>FO-QA-01</td>
+                        <td>FO-QA-01 Matriz de Riesgos y Oportunidades</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#98</td>
+                        <td>FO-QA-02</td>
+                        <td>FO-QA-02 Cuestionario Maestro de Auditoría Interna</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#99</td>
+                        <td>FO-QA-03</td>
+                        <td>FO-QA-03 Hoja de Inspección y Liberación de Calidad</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#100</td>
+                        <td>FO-QA-06</td>
+                        <td>FO-QA-06 Certificado de Liberación de Exosomas</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#101</td>
+                        <td>FO-QA-07</td>
+                        <td>FO-QA-07 Solicitud y Control de Cambios</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#102</td>
+                        <td>FO-QA-08</td>
+                        <td>FO-QA-08 Acta de Destrucción y Disposición Final</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#103</td>
+                        <td>FO-QA-09</td>
+                        <td>FO-QA-09 CAPA - Metodología AMFE</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#104</td>
+                        <td>FO-QA-10</td>
+                        <td>FO-QA-10 Certificado de Calidad de Lote (CoA)</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#105</td>
+                        <td>FO-QA-11</td>
+                        <td>FO-QA-11 Certificado de Liberación de Lote</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#106</td>
+                        <td>FO-QA-12</td>
+                        <td>FO-QA-12 Bitácora de Uso y Fallas de Equipo</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#107</td>
+                        <td>FO-QA-13</td>
+                        <td>FO-QA-13 Bitácora de Monitoreo Ambiental</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#108</td>
+                        <td>FO-QA-14</td>
+                        <td>FO-QA-14 Checklist de Seguridad e Higiene</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#109</td>
+                        <td>FO-QA-15</td>
+                        <td>FO-QA-15 Programa Anual de Mantenimiento</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#110</td>
+                        <td>FO-QA-16</td>
+                        <td>FO-QA-16 Detección de Necesidades de Capacitación (DNC)</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#111</td>
+                        <td>FO-QA-17</td>
+                        <td>FO-QA-17 Lista de Asistencia y Evaluación</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#112</td>
+                        <td>FO-QA-18</td>
+                        <td>FO-QA-18 Liberación Interna de Materia Prima</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#113</td>
+                        <td>FO-QA-18-B</td>
+                        <td>FO-QA-18 Acta de Liberación de Lote de Exosomas</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#114</td>
+                        <td>FO-RS-01</td>
+                        <td>FO-RS-01 Registro de Quejas y Satisfacción del Cliente</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#115</td>
+                        <td>FO-RS-02</td>
+                        <td>FO-RS-02 Notificación de Evento Adverso</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#116</td>
+                        <td>FO-SGC-01</td>
+                        <td>FO-SGC-01 Matriz de Responsabilidades por Módulo</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#117</td>
+                        <td>FO-SGC-02</td>
+                        <td>FO-SGC-02 Matriz de Responsabilidades</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#118</td>
+                        <td>FO-SGC-03</td>
+                        <td>FO-SGC-03 Matriz de Formatos Activos</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#119</td>
+                        <td>FO-SGC-04</td>
+                        <td>FO-SGC-04 Listado Maestro de Formatos</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#120</td>
+                        <td>FO-SGC-05</td>
+                        <td>FO-SGC-05 Inventario de Equipos</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#121</td>
+                        <td>FO-SGC-06</td>
+                        <td>FO-SGC-06 Hoja de Vida de Termómetro</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#122</td>
+                        <td>FO-SGC-I</td>
+                        <td>FO-SGC-I Índice de Carpetas del SGC</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>#123</td>
+                        <td>FO-SGC-M</td>
+                        <td>FO-SGC-M Índice Maestro de Carpetas</td>
+                        <td>1</td>
+                        <td>ENE 2026</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
@@ -1114,34 +1247,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- ADMINISTRATIVO (FO-AD) -->
-                    <tr>
-                        <td>#AD1</td>
-                        <td>FO-AD-01</td>
-                        <td>PERFIL Y DESCRIPCIÓN DE PUESTO</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td>Recursos Humanos / SGC</td>
-                    </tr>
-                    <tr>
-                        <td>#AD2</td>
-                        <td>FO-AD-02</td>
-                        <td>MATRIZ DE COMPETENCIAS Y HABILIDADES</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>FO-AD-01</td>
-                        <td>Recursos Humanos / SGC</td>
-                    </tr>
-                    <tr>
-                        <td>#AD3</td>
-                        <td>FO-AD-03</td>
-                        <td>EVALUACIÓN DE DESEMPEÑO Y NECESIDADES DE CAPACITACIÓN</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td>FO-AD-01, FO-AD-02</td>
-                        <td>Recursos Humanos / SGC</td>
-                    </tr>
+
                     <tr style="height:60px;">
                         <td style="text-align:center; vertical-align:bottom;">
                             <div style="border-bottom:1px solid #000; width:80%; margin:0 auto 5px;"></div>
@@ -1233,28 +1339,20 @@
 
         function addRow() {
             Swal.fire({
-                title: 'Agregar Nuevo Formato',
+                title: 'Agregar Nuevo Documento',
                 html: `
                     <div style="text-align: left; padding: 10px;">
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Código:</label>
-                        <input type="text" id="input-codigo" class="swal2-input" placeholder="Ej: FO-XX-XX" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Nombre:</label>
-                        <input type="text" id="input-nombre" class="swal2-input" placeholder="Nombre del formato" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Versión:</label>
-                        <input type="text" id="input-version" class="swal2-input" placeholder="1.0" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Vigencia:</label>
-                        <input type="text" id="input-vigencia" class="swal2-input" placeholder="ENE 2026" style="width:90%; margin:0 0 15px 0;">
-                        
-                        
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Documento Relacionado:</label>
-                        <input type="text" id="input-documento" class="swal2-input" placeholder="Opcional" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Responsable:</label>
-                        <input type="text" id="input-responsable" class="swal2-input" placeholder="Área responsable" style="width:90%; margin:0 0 15px 0;">
+                        <label>Código:</label><input id="input-codigo" class="swal2-input" placeholder="Ej: FO-LC-16">
+                        <label>Tipo:</label><input id="input-tipo" class="swal2-input" placeholder="Ej: Formato, PNO, Manual, Guía, Plan Maestro">
+                        <label>Nombre del Documento:</label><input id="input-nombre" class="swal2-input" placeholder="Ej: Liberación de Línea Celular">
+                        <label>Área:</label><input id="input-area" class="swal2-input" placeholder="Ej: Laboratorio, Calidad, Producción">
+                        <label>Versión:</label><input id="input-version" class="swal2-input" placeholder="Ej: 3.0">
+                        <label>Vigencia:</label><input id="input-vigencia" class="swal2-input" placeholder="Ej: Mar 2026">
+                        <label>Estado:</label><input id="input-estado" class="swal2-input" placeholder="Vigente, Obsoleto, En Revisión">
+                        <label>Próxima Revisión:</label><input id="input-proxima" class="swal2-input" placeholder="Ej: Mar 2028">
+                        <label>Ubicación Maestro:</label><input id="input-ubicacion" class="swal2-input" placeholder="Ej: Calidad / Digital">
+                        <label>Sustituye a:</label><input id="input-sustituye" class="swal2-input" placeholder="Ej: V 2.0">
+                        <label>Motivo del Cambio:</label><input id="input-motivo" class="swal2-input" placeholder="Ej: Inclusión de Citometría">
                     </div>
                 `,
                 showCancelButton: true,
@@ -1262,50 +1360,58 @@
                 cancelButtonText: 'Cancelar',
                 confirmButtonColor: '#10b981',
                 cancelButtonColor: '#6b7280',
-                width: '600px',
+                width: '700px',
                 preConfirm: () => {
-                    const codigo = document.getElementById('input-codigo').value;
-                    const nombre = document.getElementById('input-nombre').value;
-                    const version = document.getElementById('input-version').value || '1.0';
-                    const vigencia = document.getElementById('input-vigencia').value || 'ENE 2026';
-                    const documento = document.getElementById('input-documento').value;
-                    const responsable = document.getElementById('input-responsable').value;
-
-                    if (!codigo || !nombre) {
-                        Swal.showValidationMessage('Código y Nombre son obligatorios');
+                    // Recoger valores y poner N/A si vacío
+                    const getVal = id => {
+                        const v = document.getElementById(id).value.trim();
+                        return v === '' ? 'N/A' : v;
+                    };
+                    const codigo = getVal('input-codigo');
+                    const tipo = getVal('input-tipo');
+                    const nombre = getVal('input-nombre');
+                    const area = getVal('input-area');
+                    const version = getVal('input-version');
+                    const vigencia = getVal('input-vigencia');
+                    const estado = getVal('input-estado');
+                    const proxima = getVal('input-proxima');
+                    const ubicacion = getVal('input-ubicacion');
+                    const sustituye = getVal('input-sustituye');
+                    const motivo = getVal('input-motivo');
+                    if (!codigo || !tipo || !nombre || !area) {
+                        Swal.showValidationMessage('Código, Tipo, Nombre y Área son obligatorios');
                         return false;
                     }
-
-                    return { codigo, nombre, version, vigencia, cumplimiento, documento, responsable };
+                    return { codigo, tipo, nombre, area, version, vigencia, estado, proxima, ubicacion, sustituye, motivo };
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
                     const data = result.value;
                     const tbody = document.getElementById('tbl-formatos').getElementsByTagName('tbody')[0];
                     const newRow = document.createElement('tr');
-
                     newRow.innerHTML = `
-                        <td></td>
+                        <td>⋮⋮</td>
                         <td><strong>${data.codigo}</strong></td>
+                        <td>${data.tipo}</td>
                         <td>${data.nombre}</td>
+                        <td>${data.area}</td>
                         <td>${data.version}</td>
                         <td>${data.vigencia}</td>
-                        <td></td>
-                        <td>${data.documento}</td>
-                        <td>${data.responsable}</td>
+                        <td>${data.estado}</td>
+                        <td>${data.proxima}</td>
+                        <td>${data.ubicacion}</td>
+                        <td>${data.sustituye}</td>
+                        <td>${data.motivo}</td>
                         <td class="no-print"></td>
                     `;
-
                     tbody.appendChild(newRow);
                     addRowControls(newRow);
                     renumberRows();
                     updateStats();
-
                     Swal.fire({
                         icon: 'success',
-                        title: 'Formato agregado',
-                        text: 'El nuevo formato ha sido agregado exitosamente',
-                        timer: 2000,
+                        title: 'Documento agregado',
+                        timer: 1200,
                         showConfirmButton: false
                     });
                 }
@@ -1315,40 +1421,35 @@
         function editRow(btn) {
             const row = btn.closest('tr');
             const cells = row.getElementsByTagName('td');
-
-            // Índices: 0=drag, 1=código, 2=nombre, 3=versión, 4=vigencia, 6=documento, 7=responsable, 8=acciones
+            // Índices: 0=drag, 1=código, 2=tipo, 3=nombre, 4=área, 5=versión, 6=vigencia, 7=estado, 8=próxima, 9=ubicación, 10=sustituye, 11=motivo, 12=acciones
             const currentData = {
                 codigo: cells[1].textContent.trim(),
-                nombre: cells[2].textContent.trim(),
-                version: cells[3].textContent.trim(),
-                vigencia: cells[4].textContent.trim(), '',
-                documento: cells[6].textContent.trim(),
-                responsable: cells[7].textContent.trim()
+                tipo: cells[2].textContent.trim(),
+                nombre: cells[3].textContent.trim(),
+                area: cells[4].textContent.trim(),
+                version: cells[5].textContent.trim(),
+                vigencia: cells[6].textContent.trim(),
+                estado: cells[7].textContent.trim(),
+                proxima: cells[8].textContent.trim(),
+                ubicacion: cells[9].textContent.trim(),
+                sustituye: cells[10].textContent.trim(),
+                motivo: cells[11].textContent.trim()
             };
-
             Swal.fire({
-                title: 'Editar Formato',
+                title: 'Editar Documento',
                 html: `
                     <div style="text-align: left; padding: 10px;">
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Código:</label>
-                        <input type="text" id="edit-codigo" class="swal2-input" value="${currentData.codigo}" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Nombre:</label>
-                        <input type="text" id="edit-nombre" class="swal2-input" value="${currentData.nombre}" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Versión:</label>
-                        <input type="text" id="edit-version" class="swal2-input" value="${currentData.version}" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Vigencia:</label>
-                        <input type="text" id="edit-vigencia" class="swal2-input" value="${currentData.vigencia}" style="width:90%; margin:0 0 15px 0;">
-                        
-                        
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Documento Relacionado:</label>
-                        <input type="text" id="edit-documento" class="swal2-input" value="${currentData.documento}" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Responsable:</label>
-                        <input type="text" id="edit-responsable" class="swal2-input" value="${currentData.responsable}" style="width:90%; margin:0 0 15px 0;">
+                        <label>Código:</label><input id="input-codigo" class="swal2-input" value="${currentData.codigo}">
+                        <label>Tipo:</label><input id="input-tipo" class="swal2-input" value="${currentData.tipo}">
+                        <label>Nombre del Documento:</label><input id="input-nombre" class="swal2-input" value="${currentData.nombre}">
+                        <label>Área:</label><input id="input-area" class="swal2-input" value="${currentData.area}">
+                        <label>Versión:</label><input id="input-version" class="swal2-input" value="${currentData.version}">
+                        <label>Vigencia:</label><input id="input-vigencia" class="swal2-input" value="${currentData.vigencia}">
+                        <label>Estado:</label><input id="input-estado" class="swal2-input" value="${currentData.estado}">
+                        <label>Próxima Revisión:</label><input id="input-proxima" class="swal2-input" value="${currentData.proxima}">
+                        <label>Ubicación Maestro:</label><input id="input-ubicacion" class="swal2-input" value="${currentData.ubicacion}">
+                        <label>Sustituye a:</label><input id="input-sustituye" class="swal2-input" value="${currentData.sustituye}">
+                        <label>Motivo del Cambio:</label><input id="input-motivo" class="swal2-input" value="${currentData.motivo}">
                     </div>
                 `,
                 showCancelButton: true,
@@ -1356,32 +1457,44 @@
                 cancelButtonText: 'Cancelar',
                 confirmButtonColor: '#10b981',
                 cancelButtonColor: '#6b7280',
-                width: '600px',
+                width: '700px',
                 preConfirm: () => {
+                    const getVal = id => {
+                        const v = document.getElementById(id).value.trim();
+                        return v === '' ? 'N/A' : v;
+                    };
                     return {
-                        codigo: document.getElementById('edit-codigo').value,
-                        nombre: document.getElementById('edit-nombre').value,
-                        version: document.getElementById('edit-version').value,
-                        vigencia: document.getElementById('edit-vigencia').value, document.getElementById('edit-cumplimiento').value,
-                        documento: document.getElementById('edit-documento').value,
-                        responsable: document.getElementById('edit-responsable').value
+                        codigo: getVal('input-codigo'),
+                        tipo: getVal('input-tipo'),
+                        nombre: getVal('input-nombre'),
+                        area: getVal('input-area'),
+                        version: getVal('input-version'),
+                        vigencia: getVal('input-vigencia'),
+                        estado: getVal('input-estado'),
+                        proxima: getVal('input-proxima'),
+                        ubicacion: getVal('input-ubicacion'),
+                        sustituye: getVal('input-sustituye'),
+                        motivo: getVal('input-motivo')
                     };
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
                     const data = result.value;
                     cells[1].innerHTML = `<strong>${data.codigo}</strong>`;
-                    cells[2].textContent = data.nombre;
-                    cells[3].textContent = data.version;
-                    cells[4].textContent = data.vigencia;
-
-                    cells[6].textContent = data.documento;
-                    cells[7].textContent = data.responsable;
-
+                    cells[2].textContent = data.tipo;
+                    cells[3].textContent = data.nombre;
+                    cells[4].textContent = data.area;
+                    cells[5].textContent = data.version;
+                    cells[6].textContent = data.vigencia;
+                    cells[7].textContent = data.estado;
+                    cells[8].textContent = data.proxima;
+                    cells[9].textContent = data.ubicacion;
+                    cells[10].textContent = data.sustituye;
+                    cells[11].textContent = data.motivo;
                     Swal.fire({
                         icon: 'success',
-                        title: 'Formato actualizado',
-                        timer: 1500,
+                        title: 'Documento actualizado',
+                        timer: 1200,
                         showConfirmButton: false
                     });
                 }
@@ -1490,7 +1603,6 @@
             const table = document.getElementById('tbl-formatos');
             const rows = table.querySelectorAll('tr');
             let csv = [];
-
             for (let i = 0; i < rows.length; i++) {
                 const row = [], cols = rows[i].querySelectorAll('td, th');
                 // Saltar la primera columna (drag handle) y la última (acciones)
@@ -1502,10 +1614,14 @@
                     csv.push(row.join(','));
                 }
             }
-
+            // Encabezados personalizados
+            const headers = [
+                'Código', 'Tipo', 'Nombre del Documento', 'Área', 'Versión', 'Vigencia', 'Estado', 'Próxima Revisión', 'Ubicación Maestro', 'Sustituye a', 'Motivo del Cambio'
+            ];
+            csv.unshift(headers.map(h => '"' + h + '"').join(','));
             const csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
             const downloadLink = document.createElement('a');
-            downloadLink.download = 'FO-SGC-03_Matriz_Formatos_' + new Date().toISOString().slice(0, 10) + '.csv';
+            downloadLink.download = 'FO-SGC-03_Matriz_Documentos_' + new Date().toISOString().slice(0, 10) + '.csv';
             downloadLink.href = window.URL.createObjectURL(csvFile);
             downloadLink.style.display = 'none';
             document.body.appendChild(downloadLink);

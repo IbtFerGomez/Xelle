@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-AD-09 Descriptiva de Puesto V2</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Vertical para Descriptiva de Puesto */
+        @page {
+            size: portrait;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 19.5cm;
+            margin: 0 auto;
+            background: white;
+            padding: 0.8cm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+        .compact-table th {
+            background-color: #f1f5f9;
+            color: #1E3A5F;
+            font-size: 10px;
+            padding: 6px;
+            text-align: left;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table textarea {
+            resize: none;
+            overflow: hidden;
+            line-height: 1.4;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 2px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 9.5px;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+            color: #1E3A5F;
+        }
+
+        /* Para evitar cortes feos al imprimir */
+        table {
+            page-break-inside: avoid;
+        }
+
+        .section-break {
+            page-break-inside: avoid;
+        }
+
+        .footer-unified {
+            margin-top: 25px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 10px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-ad-09">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Descriptiva</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                        font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                        font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Código de Puesto</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-AD-09-</span>
+                    <input type="text" id="reg-ad09" class="registry-input generate-barcode cedit"
+                        data-target="barcode-ad09" data-prefix="FO-AD-09-" placeholder="PST-00">
+                </div>
+                <svg id="barcode-ad09" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>DESCRIPTIVA DE PUESTO</h1>
+            <div class="metadata">Código: FO-AD-09 | Versión: 2.0 | Vigencia: May 2026 | Página: 1 de 2</div>
+        </div>
+
+        <div class="section-break">
+            <div class="section-header">A. DESCRIPCIÓN GENERAL</div>
+            <table class="compact-table">
+                <tr>
+                    <th width="20%">Nombre del puesto:</th>
+                    <td width="40%"><input class="cedit" style="font-weight:bold;"></td>
+                    <th width="20%">Fecha de elaboración:</th>
+                    <td width="20%"><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <th>Área / Departamento:</th>
+                    <td><input class="cedit"></td>
+                    <th>Código del puesto:</th>
+                    <td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <th>Puesto al que reporta:</th>
+                    <td><input class="cedit"></td>
+                    <th>Supervisa a:</th>
+                    <td><input class="cedit" placeholder="(Si aplica)"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-break">
+            <div class="section-header">B. OBJETIVO DEL PUESTO</div>
+            <table class="compact-table">
+                <tr>
+                    <td><textarea class="cedit" rows="20"
+                            placeholder="Describa brevemente el propósito principal por el cual existe este puesto en la organización..."></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-break">
+            <div class="section-header">C. PRINCIPALES FUNCIONES Y RESPONSABILIDADES</div>
+            <table class="compact-table">
+                <tr>
+                    <td><textarea class="cedit" rows="20"></textarea></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-break">
+            <div class="section-header">D. RELACIÓN DEL PUESTO CON OTRAS ÁREAS (INTERNAS Y EXTERNAS)</div>
+            <table class="compact-table" id="tbl-relaciones">
+                <thead>
+                    <tr>
+                        <th width="20%" class="text-center">Tipo</th>
+                        <th width="30%" class="text-center">Área / Proveedor / Cliente</th>
+                        <th width="45%" class="text-center">Propósito de la relación</th>
+                        <th width="5%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-relaciones')">+ Agregar Relación</button>
+        </div>
+
+        <div class="section-break">
+            <div class="section-header">E. REQUISITOS GENERALES DEL PUESTO</div>
+            <table class="compact-table">
+                <tr>
+                    <th width="25%">Educación mínima:</th>
+                    <td width="25%">
+                        <input type="text">
+                    </td>
+                    <th width="20%">Horario laboral:</th>
+                    <td width="30%"><input class="cedit" placeholder="Ej. L-V 9:00 a 18:00"></td>
+                </tr>
+                <tr>
+                    <th>¿Requiere viajar?</th>
+                    <td><input type="text" class="cedit"></td>
+                    <th>¿Licencia de conducir?</th>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <th>¿Requiere vehículo propio?</th>
+                    <td> <input type="text" class="cedit"></td>
+                    <th>¿Cuenta de correo?</th>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <th>Equipo de cómputo requerido:</th>
+                    <td colspan="3">
+                        <div class="checkbox-group" style="display:inline-flex; width: 30%;">
+                            <label class="checkbox-item"><input type="checkbox" class="cedit"
+                                    style="width: min-content"> Laptop</label>
+                            <label class="checkbox-item"><input type="checkbox" class="cedit"
+                                    style="width: min-content"> PC</label>
+                            <label class="checkbox-item"><input type="checkbox" class="cedit"
+                                    style="width: min-content"> N/A</label>
+                        </div>
+                        <span
+                            style="font-weight:bold; font-size:10px; color:#1E3A5F; margin-left:10px;">Justificación:</span>
+                        <input class="cedit" style="width:50%; border-bottom:1px solid #ccc; display:inline-block;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-break">
+            <div class="section-header">F. EXPERIENCIA LABORAL REQUERIDA</div>
+            <table class="compact-table" id="tbl-experiencia">
+                <thead>
+                    <tr>
+                        <th width="30%" class="text-center">Área de Conocimiento</th>
+                        <th width="45%" class="text-center">Conocimiento Específico</th>
+                        <th width="20%" class="text-center">Nivel de Dominio</th>
+                        <th width="5%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input type="text" class="cedit"> </td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-experiencia')">+ Agregar Experiencia</button>
+        </div>
+
+        <div class="section-break">
+            <div class="section-header">G. MANEJO DE PAQUETERÍA / SOFTWARE</div>
+            <table class="compact-table" id="tbl-software">
+                <thead>
+                    <tr>
+                        <th width="75%" class="text-center">Paquetería / Software (Ej. ERP, Office, Software de Equipos)
+                        </th>
+                        <th width="20%" class="text-center">Nivel de Dominio</th>
+                        <th width="5%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td>
+                            <input type="text" class="cedit">
+                        </td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-software')">+ Agregar Software</button>
+        </div>
+
+        <div class="section-break">
+            <div class="section-header">H. COMPETENCIAS REQUERIDAS E I. EQUIPO DE PROTECCIÓN PERSONAL (EPP)</div>
+            <table class="compact-table">
+                <tr>
+                    <th width="50%" class="text-center">H. Competencias (Habilidades Blandas/Directivas)</th>
+                    <th width="50%" class="text-center">I. Equipo de Protección Personal Requerido</th>
+                </tr>
+                <tr>
+                    <td><textarea class="cedit" rows="4"
+                            placeholder="Ej. Liderazgo, Trabajo en equipo, Orientación a resultados..."></textarea></td>
+                    <td><textarea class="cedit" rows="4"
+                            placeholder="Ej. Bata, Cofia, Cubrebocas, Zapatos de seguridad..."></textarea></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-break" style="margin-top: 20px;">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px;">
+                <div class="signature-box" style="flex:1; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;">ELABORÓ (SOLICITANTE / RH)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre y Firma</p>
+                </div>
+                <div class="signature-box" style="flex:1; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;">REVISÓ (RECURSOS HUMANOS)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre y Firma</p>
+                </div>
+                <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                    <p style="font-weight:bold; font-size:10px; color:#14532d;">APROBÓ (DIRECCIÓN / RS)</p>
+                    <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre y Firma</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-09 | Versión: 2.0 | Descriptiva de Puesto | Xelle Scientific | Página 1 de 2
+            </div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V.
+                Prohibida su reproducción total o parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+            tbody.appendChild(newRow);
+        }
+        function delRow(btn) {
+            const row = btn.closest('tr');
+            if (row.parentNode.rows.length > 1) row.remove();
+        }
+    </script>
+</body>
+
+</html>

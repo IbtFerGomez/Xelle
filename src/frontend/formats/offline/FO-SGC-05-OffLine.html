@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-SGC-05-OffLine Inventario de Equipos</title>
+    <link rel="stylesheet" href="../format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="../format-app.js"></script>
+    <style>
+        /* Configuración para formato HORIZONTAL */
+        @page {
+            size: landscape;
+            margin: 0.8cm;
+        }
+
+        body {
+            margin: 0;
+            padding: 10px;
+            min-width: 1200px;
+        }
+
+        .container {
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 0 auto;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .header-main h1 {
+            font-size: 16px;
+            margin: 8px 0;
+        }
+
+        .metadata {
+            font-size: 8px;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .compact-table th {
+            font-size: 9px;
+            padding: 3px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            word-break: break-word;
+            white-space: normal;
+            background-color: #1E3A5F;
+            /* Azul NAVI */
+            color: #fff;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 3px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 9px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .signature-area {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .signature-box {
+            flex: 1;
+            border: 1px solid #cbd5e1;
+            padding: 8px;
+        }
+
+        .signature-box table {
+            font-size: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+
+            body {
+                padding: 0;
+            }
+
+            .footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 5px 0;
+                background: white;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-sgc-05-offline">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm && saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm && clearForm()">Limpiar</button>
+    </div>
+    <script>
+        // Barcode generation logic for FO-SGC-05-OffLine
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('reg-sgc05-offline');
+            const barcode = document.getElementById('barcode-sgc05-offline');
+            const prefix = input.getAttribute('data-prefix') || '';
+            function renderBarcode() {
+                const code = prefix + (input.value || '');
+                if (window.JsBarcode && barcode) {
+                    JsBarcode(barcode, code, {
+                        format: 'CODE128',
+                        displayValue: false,
+                        height: 30,
+                        margin: 0
+                    });
+                }
+            }
+            input.addEventListener('input', renderBarcode);
+            renderBarcode();
+        });
+    </script>
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio del Inventario</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-SGC-05</span>
+                    <input type="text" id="reg-sgc05-offline" class="registry-input generate-barcode cedit"
+                        data-target="barcode-sgc05-offline" data-prefix="FO-SGC-05" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-sgc05-offline" class="barcode-svg" style="height:30px;"></svg>
+            </div>
+        </div>
+        <div class="header-main">
+            <h1>INVENTARIO DE EQUIPOS E INSTRUMENTOS</h1>
+            <div class="metadata">Código: FO-SGC-05-OffLine | Versión: 1.0 | Vigencia: Mar 2026 | Área: Operaciones /
+                Mantenimiento | Página: 1 de 1</div>
+        </div>
+        <div class="section">
+            <table class="no-border-table" style="margin-bottom: 10px; margin-top: 10px;">
+                <tr>
+                    <td width="70%"></td>
+                    <td width="15%" style="text-align: right; font-weight: bold; color: #1E3A5F;">ACTUALIZADO AL:</td>
+                    <td width="15%"><input type="text" class="cedit"
+                            style="border-bottom: 2px solid #1E3A5F; font-weight: bold; width: 100%;"
+                            placeholder="DD/MM/AAAA"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="section">
+            <table class="compact-table" id="tbl-inventario">
+                <thead>
+                    <tr>
+                        <th width="3%">No.</th>
+                        <th width="15%">Descripción</th>
+                        <th width="10%">ID Equipo / Instrumento</th>
+                        <th width="12%">Ubicación</th>
+                        <th width="10%">Marca</th>
+                        <th width="10%">Modelo</th>
+                        <th width="10%">Número de Serie</th>
+                        <th width="10%"><span style="white-space:normal;line-height:1.1;">Fecha de Calibración<br>/
+                                Calificación / Mantto.</span></th>
+                        <th width="8%">Días de Vigencia</th>
+                        <th width="12%">Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold; color:#1e3a5f;">1</td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><input class="cedit" style="font-weight:bold;"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                        <td><input class="cedit" placeholder="Ej. 365 días"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-inventario')">x</button></td>
+                    </tr>
+                    <button class="btn-add no-print" onclick="addRowNumbered('tbl-inventario')">+ AGREGAR EQUIPO AL
+                        INVENTARIO</button>
+                    <script>
+                        function addRowNumbered(tableId) {
+                            const tbody = document.getElementById(tableId).querySelector('tbody');
+                            const newRow = tbody.rows[0].cloneNode(true);
+                            newRow.querySelectorAll('input, textarea').forEach(input => input.value = '');
+                            tbody.appendChild(newRow);
+                            updateNumbers(tableId);
+                        }
+
+                        function delRowNumbered(btn, tableId) {
+                            const row = btn.closest('tr');
+                            if (row.parentNode.rows.length > 1) {
+                                row.remove();
+                                updateNumbers(tableId);
+                            }
+                        }
+
+                        function updateNumbers(tableId) {
+                            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+                            rows.forEach((row, index) => {
+                                const numCell = row.querySelector('.row-num');
+                                if (numCell) numCell.innerText = index + 1;
+                            });
+                        }
+                    </script>
+                </tbody>
+            </table>
+            <p style="font-size: 9px; color: #64748b; font-weight: bold; text-align: center; margin-top: 5px;">
+                *NOTA: ADICIONAR O ELIMINAR FILAS DE ACUERDO AL NÚMERO DE EQUIPOS NECESARIOS.
+            </p>
+        </div>
+        <div class="section" style="margin-top: 30px;">
+            <div class="signature-area" style="display:flex; justify-content:space-around; gap:15px;">
+                <div class="signature-box" style="flex:1; border: 1px solid #cbd5e1; padding: 10px;">
+                    <p style="font-weight:bold; text-align: center; margin-bottom: 25px; color: #1E3A5F;">ELABORÓ</p>
+                    <table class="no-border-table" style="font-size: 9px;">
+                        <tr>
+                            <td width="30%">Nombre:</td>
+                            <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>Puesto:</td>
+                            <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>Firma:</td>
+                            <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>Fecha:</td>
+                            <td><input type="text" class="cedit" style="border-bottom:1px solid #ccc; width:100%;"
+                                    placeholder="DD/MM/AAAA"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="signature-box" style="flex:1; border: 1px solid #cbd5e1; padding: 10px;">
+                    <p style="font-weight:bold; text-align: center; margin-bottom: 25px; color: #1E3A5F;">REVISÓ</p>
+                    <table class="no-border-table" style="font-size: 9px;">
+                        <tr>
+                            <td width="30%">Nombre:</td>
+                            <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>Puesto:</td>
+                            <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>Firma:</td>
+                            <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>Fecha:</td>
+                            <td><input type="text" class="cedit" style="border-bottom:1px solid #ccc; width:100%;"
+                                    placeholder="DD/MM/AAAA"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="signature-box"
+                    style="flex:1; border: 1px solid #cbd5e1; padding: 10px; background-color: #f8fafc;">
+                    <p style="font-weight:bold; text-align: center; margin-bottom: 25px; color: #1E3A5F;">VO. BO.</p>
+                    <table class="no-border-table" style="font-size: 9px;">
+                        <tr>
+                            <td width="30%">Nombre:</td>
+                            <td><input class="cedit"
+                                    style="border-bottom:1px solid #ccc; width:100%; background:transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>Puesto:</td>
+                            <td><input class="cedit"
+                                    style="border-bottom:1px solid #ccc; width:100%; background:transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>Firma:</td>
+                            <td><input class="cedit"
+                                    style="border-bottom:1px solid #ccc; width:100%; background:transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>Fecha:</td>
+                            <td><input type="text" class="cedit"
+                                    style="border-bottom:1px solid #ccc; width:100%; background:transparent;"
+                                    placeholder="DD/MM/AAAA"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="footer">FO-SGC-05-OffLine | Versión: 1.0 | Inventario de Equipos | Xelle Scientific | Página 1 de
+            1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está
+            protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+</body>
+
+</html>

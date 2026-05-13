@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Portada Manual Maestro SIGC</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Vertical para Portada */
+        @page { size: portrait; margin: 1cm; }
+        
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        .container { width: 19cm; margin: 0 auto; background: white; padding: 1cm 1.5cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; min-height: 25cm; }
+
+        .section-header { background-color: #1E3A5F; color: white; padding: 8px 12px; font-weight: bold; font-size: 12px; margin-top: 25px; border-radius: 4px; text-transform: uppercase; text-align: center; letter-spacing: 1px; }
+        
+        .compact-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .compact-table th { background-color: #f1f5f9; color: #1E3A5F; font-size: 11px; padding: 8px; text-align: center; border: 1px solid #cbd5e1; text-transform: uppercase; }
+        .compact-table td { font-size: 11px; padding: 8px; vertical-align: middle; border: 1px solid #cbd5e1; text-align: center; font-weight: bold; }
+        .compact-table input { font-size: 11px; text-align: center; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; font-weight: bold; color: #1e293b; }
+        .compact-table input:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+        
+        .normative-list { font-size: 12px; line-height: 1.8; color: #334155; margin-top: 15px; padding-left: 20px; text-align: justify; }
+        .normative-list li { margin-bottom: 10px; }
+        .normative-list strong { color: #1E3A5F; }
+
+        .confidential-box { border: 2px solid #1E3A5F; padding: 15px; border-radius: 4px; font-size: 10px; color: #334155; margin-top: auto; line-height: 1.5; text-align: justify; background-color: #f8fafc; }
+
+        .footer-unified { 
+            margin-top: 20px; border-top: 2px solid #1E3A5F; padding-top: 10px; 
+            text-align: center; font-size: 9px; line-height: 1.4; color: #475569;
+        }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0.5cm; min-height: 100%; }
+        }
+    </style>
+</head>
+<body id="doc-sgc-maestro">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Portada</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 220px;">
+                    <defs><style>.c { fill: #2E9D82 }</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Control Documental</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix" style="display:none;"></span>
+                    <input type="text" id="reg-maestro" class="registry-input generate-barcode cedit" 
+                           data-target="barcode-maestro" data-prefix="" value="DOC-SGC-MAESTRO" readonly
+                           style="font-weight:bold; font-size:14px; text-transform:uppercase; border:none; text-align:right;">
+                </div>
+                <svg id="barcode-maestro" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
+            <h1 style="font-size: 32px; color: #1E3A5F; margin-bottom: 10px; letter-spacing: 2px;">MANUAL MAESTRO</h1>
+            <h2 style="font-size: 18px; color: #475569; margin-top: 0; font-weight: normal;">Sistema Integral de Gestión de Calidad (SIGC)</h2>
+            <div style="width: 60px; height: 4px; background-color: #2E9D82; margin: 25px auto;"></div>
+        </div>
+
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th width="30%">Código del Documento</th>
+                    <th width="20%">Versión Actual</th>
+                    <th width="25%">Fecha de Emisión</th>
+                    <th width="25%">Próxima Revisión</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="cedit" value="DOC-SGC-MAESTRO"></td>
+                    <td><input class="cedit" value="1.0"></td>
+                    <td><input type="month" class="cedit" value="2026-05"></td>
+                    <td><input type="month" class="cedit" value="2028-05"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-header">MARCO NORMATIVO DE APLICACIÓN</div>
+        <div class="section">
+            <ul class="normative-list">
+                <li><strong>NOM-059-SSA1-2015:</strong> Buenas Prácticas de Fabricación de Medicamentos.</li>
+                <li><strong>NOM-241-SSA1-2021:</strong> Buenas Prácticas de Fabricación de Dispositivos Médicos.</li>
+                <li><strong>ISO 9001:2015 | ISO 13485:2016:</strong> Sistemas de Gestión de la Calidad / Dispositivos Médicos.</li>
+                <li><strong>Suplemento de la FEUM:</strong> Para Establecimientos Dedicados a la Venta y Suministro de Insumos para la Salud.</li>
+            </ul>
+        </div>
+
+        <div class="section-header" style="margin-top: 40px;">FIRMAS DE AUTORIZACIÓN</div>
+        <div class="section">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:20px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; font-size:11px;">ELABORÓ</p>
+                    <span style="font-size:9px;">(Control Documental de SGC)</span>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:35px;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; font-size:11px;">VERIFICÓ</p>
+                    <span style="font-size:9px;">(Coordinación de Calidad)</span>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:35px;">
+                </div>
+                <div class="signature-box" style="flex:1; background-color:#f0fdf4;">
+                    <p style="font-weight:bold; color:#14532d; font-size:11px;">APROBÓ</p>
+                    <span style="font-size:9px;">(Responsable dirección)</span>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #166534; border-radius:0; margin-top:35px; background:transparent;">
+                </div>
+            </div>
+        </div>
+
+        <div class="confidential-box">
+            <div style="text-align: center; font-weight: bold; margin-bottom: 8px; font-size: 11px;">INFORMACIÓN CONFIDENCIAL Y PROPIEDAD INTELECTUAL</div>
+            Este documento es propiedad exclusiva de <strong>XELLE LAB, S.A. DE C.V.</strong> Su contenido es estrictamente confidencial y está protegido por las leyes de propiedad intelectual en México. Queda prohibida su reproducción total o parcial, así como su distribución a terceros sin la autorización expresa y por escrito de la Dirección General. El uso inapropiado de esta información será sancionado conforme a la legislación vigente.
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">DOC-SGC-MAESTRO | Versión: 1.0 | Manual Maestro del SGC | Xelle Scientific | Portada</div>
+        </div>
+    </div>
+</body>
+</html>

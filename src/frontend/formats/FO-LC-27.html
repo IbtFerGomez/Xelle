@@ -134,11 +134,11 @@
         </div>
 
         <div class="section">
-            <div class="section-title">SECCIÓN 1: CONTROL DE EQUIPOS</div>
+            <div class="section-title summary-header">SECCIÓN 1: CONTROL DE EQUIPOS</div>
             <table id="tbl-equipos" class="compact-table">
                 <thead>
                     <tr>
-                        <th width="20%">Equipo</th>
+                        <th width="20%">Equipo / ID EQUIPO</th>
                         <th width="15%">N° Serie</th>
                         <th width="20%">PARAMETROS REGISTRADOS</th>
                         <th width="23%">Mantenimiento Realizado</th>
@@ -147,6 +147,11 @@
                     </tr>
                 </thead>
                 <tbody></tbody>
+                <style>
+                    #tbl-equipos tbody tr {
+                        height: 64px;
+                    }
+                </style>
             </table>
             <button class="btn btn-primary btn-mini no-print" onclick="addEquipoRow()">+ Agregar Equipo</button>
         </div>
@@ -179,12 +184,12 @@
             const row = document.createElement('tr');
 
             row.innerHTML = `
-                <td><input class="cedit" placeholder="Nombre del Equipo"></td>
-                <td><input class="cedit"></td>
-                <td><input class="cedit"></td>
-                <td><input class="cedit"></td>
-                <td><input class="cedit"></td>
-                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                <td style="height: 64px;"><input class="cedit" placeholder="Nombre del Equipo"></td>
+                <td style="height: 64px;"><input class="cedit"></td>
+                <td style="height: 64px;"><textarea class="cedit" style="width: 100%; height: 48px; resize: vertical;"></textarea></td>
+                <td style="height: 64px;"><textarea class="cedit" style="width: 100%; height: 48px; resize: vertical;"></textarea></td>
+                <td style="height: 64px;"><input class="cedit"></td>
+                <td class="no-print" style="height: 64px;"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
             `;
             tbody.appendChild(row);
         }

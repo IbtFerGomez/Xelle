@@ -172,10 +172,51 @@
 
             .section {
                 page-break-inside: auto !important;
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            .section-header {
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            .footer {
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            .header-main {
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            .container {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
             }
 
             tr {
                 page-break-inside: avoid !important;
+            }
+            /* Eliminar saltos de página forzados para impresión continua */
+            [style*="page-break-before: always"] {
+                page-break-before: auto !important;
+                break-before: auto !important;
+                display: block !important;
+                height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
             }
         }
     </style>
@@ -237,8 +278,7 @@
 
         <div class="header-main">
             <h1>PERFIL Y DESCRIPCIÓN DE PUESTO</h1>
-            <div class="metadata">Código: FO-AD-01 | Versión: 1.0 | Vigencia: Mar 2026 | Área: Recursos Humanos |
-                Página: 1 de 2</div>
+
         </div>
 
         <div class="section-header">1. IDENTIFICACIÓN DEL PUESTO</div>
@@ -317,23 +357,6 @@
                     placeholder="Ej. Cumplir estrictamente con los PNO del área, reportar desviaciones, llenar bitácoras bajo principios ALCOA+..."></textarea>
             </div>
         </div>
-
-        <div class="footer" style="margin-top: 20px;">
-            <div style="font-weight: bold; margin-bottom: 5px;">FO-AD-01 | Versión: 1.0 | Perfil y Descripción de Puesto
-                | Xelle Scientific | Página 1 de 2</div>
-            <div class="copyright-footer">
-                El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido
-                por los derechos de autor, por lo que está prohibida su reproducción total o parcial.
-            </div>
-        </div>
-
-        <div style="page-break-before: always;"></div>
-
-        <div class="header-main" style="margin-top:0;">
-            <p style="text-align:right; font-size:9px; font-weight:bold; color:#64748b;">Folio: <span
-                    id="sync-folio">FO-AD-01-000</span> | Página 2 de 2</p>
-        </div>
-
         <div class="section-header">4. PERFIL DE INGRESO (REQUISITOS MÍNIMOS)</div>
         <div class="section">
             <table class="no-border-table">
@@ -456,6 +479,7 @@
                 por los derechos de autor, por lo que está prohibida su reproducción total o parcial.
             </div>
         </div>
+        
     </div>
 
     <script>

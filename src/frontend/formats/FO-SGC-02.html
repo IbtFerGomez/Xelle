@@ -1,1309 +1,223 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <title>FO-SGC-02 Matriz de Responsabilidades</title>
-    <link rel="stylesheet" href="format-styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="format-app.js"></script>
+    <title>FO-SGC-02 Índice de Carpetas</title>
     <style>
-        /* Impresión Horizontal para tablas anchas */
-        @page {
-            size: landscape;
-            margin: 0.5cm;
-        }
-
-        .section-header {
-            background-color: #1E3A5F;
-            color: white;
-            padding: 5px 10px;
-            font-weight: bold;
-            font-size: 12px;
-            margin-top: 15px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        .compact-table th {
-            background-color: #1E3A5F;
-            color: white;
-            font-size: 10px;
-            padding: 6px;
-            text-align: center;
-        }
-
-        .compact-table td {
-            font-size: 10px;
-            padding: 4px;
-            vertical-align: middle;
-        }
-
-        .compact-table input {
-            font-size: 10px;
-        }
-
-        .btn-add {
-            background: #e2e8f0;
-            border: 1px dashed #94a3b8;
-            width: 100%;
-            font-size: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 5px;
-            margin-top: 5px;
-        }
-
-        .row-actions {
-            display: flex;
-            gap: 4px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .btn-row-action {
-            padding: 2px 6px;
-            font-size: 9px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-edit {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .btn-edit:hover {
-            background: #2563eb;
-        }
-
-        .btn-delete {
-            background: #ef4444;
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background: #dc2626;
-        }
-
-        .btn-save {
-            background: #10b981;
-            color: white;
-        }
-
-        .btn-save:hover {
-            background: #059669;
-        }
-
-        .btn-cancel {
-            background: #6b7280;
-            color: white;
-        }
-
-        .btn-cancel:hover {
-            background: #4b5563;
-        }
-
-        .drag-handle {
-            cursor: move;
-            padding: 2px 6px;
-            font-size: 11px;
-            color: #6b7280;
-            user-select: none;
-        }
-
-        .drag-handle:hover {
-            color: #1e3a5f;
-        }
-
-        .dragging {
-            opacity: 0.5;
-            background: #fef3c7;
-        }
-
-        .drag-over {
-            border-top: 2px solid #2E9D82;
-        }
-
-        tbody tr {
-            transition: background-color 0.2s;
-        }
-
-        tbody tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        /* REGLA ESTRICTA: Placeholders invisibles al imprimir */
-        @media print {
-
-            .global-controls,
-            .no-print {
-                display: none !important;
-            }
-
-            ::-webkit-input-placeholder {
-                color: transparent !important;
-            }
-
-            :-moz-placeholder {
-                color: transparent !important;
-            }
-
-            ::-moz-placeholder {
-                color: transparent !important;
-            }
-
-            :-ms-input-placeholder {
-                color: transparent !important;
-            }
-
-            ::placeholder {
-                color: transparent !important;
-            }
-
-            /* Permitir que las tablas y secciones se partan entre páginas */
-            .section {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
-            }
-
-            table,
-            .compact-table {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
-            }
-
-            thead {
-                display: table-header-group !important;
-            }
-
-            tr,
-            tbody tr {
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-            }
-
-            .section-title {
-                page-break-after: avoid !important;
-                break-after: avoid !important;
-            }
-        }
+        @page { size: landscape; margin: 1cm; }
+        body { font-family: 'Arial', sans-serif; background-color: #f1f5f9; padding: 20px; }
+        .sheet { background: white; width: 100%; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); box-sizing: border-box; }
+        .qms-header { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .qms-header td { border: 1px solid #1E3A5F; padding: 10px; vertical-align: middle; }
+        .qms-logo { width: 25%; text-align: center; }
+        .qms-title { width: 50%; text-align: center; font-size: 16px; font-weight: 900; color: #1E3A5F; }
+        .qms-meta { width: 25%; font-size: 10px; line-height: 1.4; color: #1e293b; }
+        table.index-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        table.index-table th { background-color: #1E3A5F; color: white; font-size: 11px; padding: 8px; border: 1px solid #94a3b8; }
+        table.index-table td { border: 1px solid #cbd5e1; padding: 6px; font-size: 11px; vertical-align: top; }
+        .folder-title { font-weight: bold; background-color: #f8fafc; color: #1E3A5F; }
+        .format-list { margin: 0; padding-left: 15px; }
+        .format-list li { margin-bottom: 3px; }
+        @media print { body { background: transparent; padding: 0; } .sheet { box-shadow: none; padding: 0; } }
     </style>
 </head>
+<body>
+    <div class="sheet">
+        <table class="qms-header">
+            <tr>
+                <td class="qms-logo">
+                    <svg viewBox="0 0 320 80" style="width: 120px; height: auto;">
+                        <g transform="translate(0,-2) scale(0.85)">
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                        </g>
+                        <text x="90" y="42" font-family="Arial Black" font-weight="900" font-size="34" fill="#1E3A5F">XELLE</text>
+                        <text x="91" y="68" font-family="Arial" font-weight="700" font-size="19" fill="#1E3A5F" letter-spacing="2">SCIENTIFIC</text>
+                    </svg>
+                </td>
+                <td class="qms-title">ÍNDICE DE CARPETAS<br><span style="font-size:12px; font-weight:normal;">(Asignación de Formatos por Recopilador Físico)</span></td>
+                <td class="qms-meta">
+                    <strong>Código:</strong> FO-SGC-02<br>
+                    <strong>Versión:</strong> 2.0<br>
+                    <strong>Vigencia:</strong> ENE 2026<br>
+                    <strong>Página:</strong> 1 de 1
+                </td>
+            </tr>
+        </table>
 
-<body id="doc-fo-sgc-02">
-    <div class="global-controls no-print">
-        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
-        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
+        <table class="index-table">
+            <thead>
+                <tr>
+                    <th width="35%">Nombre del Recopilador / Carpeta Física</th>
+                    <th width="15%">Área Custodia</th>
+                    <th width="50%">Formatos Contenidos (Código y Nombre)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE CONTROL DE MUESTREO Y RETENCIÓN</td>
+                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-LC-32</strong> Registro de Ingreso de Muestras de Retención</li>
+                            <li><strong>FO-LC-33</strong> Bitácora de Control de Muestras de Retención</li>
+                            <li><strong>FO-LC-34</strong> Bitácora de Muestreos de Producto Terminado</li>
+                            <li><strong>FO-LC-46</strong> Formato de Registro Muestreo Producto Biológico</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE INGRESO, RECEPCIÓN Y EVALUACIÓN DE TEJIDOS (PLACENTAS)</td>
+                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-LC-16</strong> Resumen Ejecutivo de Recepción Lote (Cover Sheet)</li>
+                            <li><strong>FO-LC-17</strong> Recepción de Muestras y Datos Clínicos</li>
+                            <li><strong>FO-LC-18</strong> Evaluación Macroscópica de Tejido</li>
+                            <li><strong>FO-LC-19</strong> Liberación y Control de Calidad de Placentas</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE INSPECCIÓN, ACONDICIONAMIENTO Y DISPOSICIÓN DE PRODUCTO</td>
+                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-LC-31</strong> Acondicionamiento y Registro de Lote (Acelular)</li>
+                            <li><strong>FO-LC-35</strong> Bitácora Maestra de Disposición y Estatus de Lotes</li>
+                            <li><strong>FO-LC-47</strong> Registro Revisión de Calidad de Muestreo</li>
+                            <li><strong>FO-LC-48</strong> Registro de Resultados Analíticos y Dictamen de Lote</li>
+                            <li><strong>FO-OP-20</strong> Liberación para Almacén</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE CONTROL DE PROCESOS CELULARES, CULTIVO Y CRIOPRESERVACIÓN</td>
+                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-LC-20</strong> Procesamiento de Placenta y Cultivo Inicial</li>
+                            <li><strong>FO-LC-21</strong> Bitácora de Cultivo y Mantenimiento Celular</li>
+                            <li><strong>FO-LC-22</strong> Registro de Criopreservación Banco Celular</li>
+                            <li><strong>FO-LC-23</strong> Bitácora de Criopreservación</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE DOSIFICACIÓN DE CÉLULAS Y EXOSOMAS</td>
+                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-LC-24</strong> Dosificación (Células)</li>
+                            <li><strong>FO-LC-25</strong> Dosificación de Exosomas</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE PROCESAMIENTO DE PLACENTAS PARA PRODUCCIÓN (LIOFILIZACIÓN)</td>
+                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-LC-14</strong> Registro Histórico de Placentas Liberadas</li>
+                            <li><strong>FO-LC-42</strong> Bitácora de Liofilización de Placenta</li>
+                            <li><strong>FO-LC-45</strong> Embalaje y Envío a Esterilización</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE ANÁLISIS Y DICTAMEN MICROBIOLÓGICO</td>
+                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-QA-06</strong> Informe de Ensayo Microbiológico de Exosomas</li>
+                            <li><strong>FO-LC-41</strong> Control Microbiológico de Muestras</li>
+                            <li><strong>FO-LC-44</strong> Liberación Microbiológica Flasks y Crioviales</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE MONITOREO DIARIO DE EQUIPOS DE LABORATORIO</td>
+                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-OP-04</strong> Registro Temperatura Refrigerador</li>
+                            <li><strong>FO-OP-05</strong> Registro Temperatura Congelador</li>
+                            <li><strong>FO-OP-08</strong> Registro Temperatura Incubadora</li>
+                            <li><strong>FO-OP-09</strong> Registro CO2 Incubadora</li>
+                            <li><strong>FO-OP-12</strong> Registro Temperatura Ultracongelador</li>
+                            <li><strong>FO-OP-18</strong> Registro Uso Cabina Bioseguridad</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">ASEGURAMIENTO DE CALIDAD, DESVIACIONES Y CAPA</td>
+                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-LC-32-B</strong> Salida y Disposición de Muestras</li>
+                            <li><strong>FO-OP-51 / FO-OP-52 / FO-LC-54</strong> Desviaciones y PNC</li>
+                            <li><strong>FO-QA-08 / FO-QA-09</strong> Destrucción y CAPA</li>
+                            <li><strong>FO-QA-12 / 14 / 15 / 16 / 17</strong> Bitácoras de QA y Capacitación</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE BITÁCORA CONTROL AMBIENTAL Y MANTENIMIENTO</td>
+                    <td style="text-align:center;">Operaciones (OP)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-OP-07 / 19 / 37</strong> Temperatura, Humedad y Limpieza</li>
+                            <li><strong>FO-LC-27 / 30 / 36 / 55 / 56</strong> Control y Monitoreo de Equipos/Áreas</li>
+                            <li><strong>FO-QA-13 / 15</strong> Monitoreo Ambiental y Mantenimiento</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">BITÁCORAS OPERATIVAS Y CONTROL DE PROCESOS</td>
+                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-LC-26</strong> Bitácora de Esterilización</li>
+                            <li><strong>FO-LC-28</strong> Registro de Uso de Equipos</li>
+                            <li><strong>FO-LC-40 / 40-B</strong> Preparación de Medios y Soluciones</li>
+                            <li><strong>FO-LC-43</strong> Liofilización de Medio Condicionado</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE CONTROL DE PLAGAS Y FAUNA NOCIVA</td>
+                    <td style="text-align:center;">Operaciones (OP)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-OP-57</strong> Reporte de Control de Plagas</li>
+                            <li><strong>FO-OP-58</strong> Revisión y Colocación de Trampas</li>
+                            <li><strong>FO-OP-59</strong> Bitácora de Fumigaciones</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE MANEJO DE RPBI Y RESIDUOS PELIGROSOS</td>
+                    <td style="text-align:center;">Operaciones (OP)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-OP-49</strong> Bitácora de Almacenamiento Temporal de RPBI</li>
+                            <li><strong>FO-OP-50</strong> Manifiesto de Residuos Peligrosos</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="folder-title">SISTEMA DE GESTIÓN DE LA CALIDAD Y NOTAS DE REMISIÓN</td>
+                    <td style="text-align:center;">Operaciones (OP)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li>Políticas, Procedimientos, Manuales del SGC</li>
+                            <li>Notas de Remisión (Logística)</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
-    <div class="container" style="max-width:100%; width:100%;">
-        <div class="header-top">
-            <div class="logo-container">
-                <svg viewBox="0 0 320 80">
-                    <defs>
-                        <style>
-                            .t {
-                                font-family: 'Arial Black', sans-serif;
-                                font-weight: 900;
-                                fill: #1D1D1B
-                            }
-
-                            .s {
-                                font-family: 'Arial', sans-serif;
-                                font-weight: 700;
-                                fill: #1D1D1B;
-                                letter-spacing: 2px
-                            }
-
-                            .c {
-                                fill: #2E9D82
-                            }
-                        </style>
-                    </defs>
-                    <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13" />
-                        <circle class="c" cx="75" cy="75" r="13" />
-                        <path class="c"
-                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
-                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
-                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
-                        fill="#1D1D1B">®</text>
-                </svg>
-            </div>
-            <div class="registry-container">
-                <label>Registro Matriz</label>
-                <div class="registry-wrapper">
-                    <span class="registry-prefix">FO-SGC-02-</span>
-                    <input type="text" id="reg-matriz" class="registry-input generate-barcode"
-                        data-target="barcode-matriz" data-prefix="FO-SGC-02-" placeholder="000">
-                </div>
-                <input type="date" class="registry-date">
-                <svg id="barcode-matriz" class="barcode-svg"></svg>
-            </div>
-        </div>
-
-        <div class="header-main">
-            <h1>MATRIZ DE RESPONSABILIDADES Y FIRMAS DEL SISTEMA DE GESTIÓN DE CALIDAD</h1>
-            <div class="metadata">Código: FO-SGC-02 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
-        </div>
-
-        <div class="section-header">1. CONTROL DE FIRMAS POR FASE Y FORMATO</div>
-        <div class="section">
-            <p style="font-size:10px; color:#666; margin-bottom:10px;">Esta matriz define los puestos autorizados para
-                la Ejecución, Verificación y Liberación en el SGC de Xelle Scientific, alineando los formatos
-                codificados con las responsabilidades operativas.</p>
-
-            <table class="compact-table" id="tbl-matriz">
-                <thead>
-                    <tr>
-                        <th width="3%">⋮⋮</th>
-                        <th width="18%">Fase / Proceso Principal</th>
-                        <th width="23%">Formato (Código y Nombre)</th>
-                        <th width="17%">Ejecución<br>(Quien hace el trabajo)</th>
-                        <th width="17%">Verificación<br>(Quien revisa)</th>
-                        <th width="17%">Autorización Final<br>(Quien aprueba/libera)</th>
-                        <th width="5%" class="no-print">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td rowspan="3" style="font-weight:bold; background:#f1f5f9;">ADMINISTRATIVO</td>
-                        <td><strong>FO-AD-01</strong> Perfil y Descripción de Puesto</td>
-                        <td>Recursos Humanos</td>
-                        <td>Coordinación Administrativa</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-AD-02</strong> Matriz de Competencias y Habilidades</td>
-                        <td>Recursos Humanos</td>
-                        <td>Coordinación Administrativa</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-AD-03</strong> Evaluación de Desempeño y Necesidades de Capacitación</td>
-                        <td>Recursos Humanos / Jefatura Inmediata</td>
-                        <td>Coordinación Administrativa</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="25" style="font-weight:bold; background:#f1f5f9;">OPERACIONES</td>
-                        <td><strong>FO-OP-01</strong> Programa Anual de Mantenimiento</td>
-                        <td>Jefe de Mantenimiento</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-04</strong> Registro Gráfico de Temperatura de Refrigeradores</td>
-                        <td>Operaciones / Almacén</td>
-                        <td>Supervisor de Área / Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-14</strong> Ficha Clínica de Recolección de Tejido Placentario</td>
-                        <td>Médico / Personal Hospitalario</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-15</strong> Registro Maestro de Pedido</td>
-                        <td>Ejecutivo de Operaciones</td>
-                        <td>Coordinación de Operaciones</td>
-                        <td>Gerencia de Operaciones</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-13</strong> Lista de Verificación e Inspección de Recibo de Materia Prima</td>
-                        <td>Personal de Logística / Recepción</td>
-                        <td>Supervisor de Almacén / Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A (Control operativo)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-16</strong> Orden de Surtido y Empaque</td>
-                        <td>Auxiliar de Almacén</td>
-                        <td>Supervisor de Almacén</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-17</strong> Nota de Remisión y Entrega</td>
-                        <td>Almacén / Logística</td>
-                        <td>Coordinación de Embarques</td>
-                        <td>Gerencia de Operaciones</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-20</strong> Liberación Lote para Almacén</td>
-                        <td>Almacén</td>
-                        <td>Control de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-39</strong> Lista de Verificación de Auditoría</td>
-                        <td>Auditor Interno / Externo</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-40</strong> Orden Maestra de Producción</td>
-                        <td>Gerencia de Producción</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-40-B</strong> Expediente de Lote de Producción</td>
-                        <td>Operador de Producción</td>
-                        <td>Supervisor de Producción</td>
-                        <td>Gerencia de Producción</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-41</strong> Recepción de Insumos (Individual)</td>
-                        <td>Personal de Almacén</td>
-                        <td>Supervisor de Almacén</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-42</strong> Recepción de Insumos (Múltiple)</td>
-                        <td>Personal de Almacén</td>
-                        <td>Supervisor de Almacén</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-43</strong> Kárdex de Control de Inventarios</td>
-                        <td>Almacén / Control de Inventarios</td>
-                        <td>Coordinación de Operaciones</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-48</strong> Bitácora de Limpieza y Desinfección</td>
-                        <td>Personal de Limpieza / Operador</td>
-                        <td>Supervisor de Área</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-60</strong> Registro Mensual de Actividades Críticas de Área</td>
-                        <td>Responsable de Área</td>
-                        <td>Coordinación de Operaciones</td>
-                        <td>Gerencia de Operaciones</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-61</strong> Hoja de Vida y Expediente Documental de Equipo</td>
-                        <td>Técnico de Mantenimiento</td>
-                        <td>Jefe de Mantenimiento</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-62</strong> Historial de Modificaciones, Reparaciones y Calibraciones de
-                            Equipo</td>
-                        <td>Técnico de Mantenimiento</td>
-                        <td>Jefe de Mantenimiento</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-55</strong> Expediente de Mantenimiento</td>
-                        <td>Técnico de Mantenimiento</td>
-                        <td>Jefe de Mantenimiento</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-56</strong> Registro de Presión Diferencial</td>
-                        <td>Operador / Técnico de Área</td>
-                        <td>Jefe de Producción / Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-57</strong> Reporte de Control de Plagas y Manejo de Fauna Nociva</td>
-                        <td>Proveedor Autorizado / Mantenimiento</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-58</strong> Registro de Revisión y Colocación de Trampas</td>
-                        <td>Técnico de Mantenimiento / Proveedor</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-59</strong> Bitácora de Fumigaciones y Aplicación Química</td>
-                        <td>Proveedor Autorizado</td>
-                        <td>Aseguramiento de Calidad (Autorización Previa)</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-17</strong> Formato Recepción de Muestras y Datos Clínicos</td>
-                        <td>Recepción de Muestras / Laboratorio</td>
-                        <td>Calidad (Supervisor de Turno)</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-18</strong> Formato Evaluación Macroscópica de Tejido</td>
-                        <td>Técnico de Laboratorio</td>
-                        <td>Calidad (Supervisor en sitio)</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-
-                    <tr>
-                        <td rowspan="16" style="font-weight:bold; background:#f1f5f9;">FLUJO 2: PROCESAMIENTO, BANCO Y
-                            MANUFACTURA</td>
-                        <td><strong>FO-LC-20</strong> Formato Procesamiento de Placenta y Cultivo Inicial</td>
-                        <td>Técnico de Procesamiento</td>
-                        <td>Supervisor de Banco</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-21</strong> Formato Bitácora de Cultivo y Mantenimiento Celular</td>
-                        <td>Especialista de Cultivo Celular</td>
-                        <td>Jefe de Laboratorio</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-22</strong> Formato de Registro de Criopreservación Banco Celular</td>
-                        <td>Operador de Banco Celular</td>
-                        <td>Supervisor de Banco / Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-23</strong> Bitácora de Criopreservación</td>
-                        <td>Operador de Banco Celular</td>
-                        <td>Supervisor de Banco</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-25</strong> Dosificación de Exosomas</td>
-                        <td>Técnico de Laboratorio</td>
-                        <td>Jefe de Laboratorio</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-26</strong> Bitácora de Esterilización</td>
-                        <td>Técnico de Esterilización</td>
-                        <td>Jefe de Laboratorio</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-27</strong> Bitácora de Registro de Control de Equipos</td>
-                        <td>Usuario Responsable del Equipo</td>
-                        <td>Calidad / Metrología</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-28</strong> Bitácora de Registro de Uso de Equipos</td>
-                        <td>Analista / Operador</td>
-                        <td>Jefe de Laboratorio</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-40</strong> Formato de Preparación de Soluciones y Reactivos</td>
-                        <td>Técnico de Laboratorio</td>
-                        <td>Jefe de Laboratorio</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-40-B</strong> Preparación de Soluciones (Formato Alterno B)</td>
-                        <td>Técnico de Laboratorio</td>
-                        <td>Jefe de Laboratorio</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-29</strong> Registro de Lote de Producto Terminado (Celular)</td>
-                        <td>Operador de Banco</td>
-                        <td>Supervisor de Producción / Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-31</strong> Registro de Lote de Producto Terminado (Acelular)</td>
-                        <td>Operador de Producción</td>
-                        <td>Supervisor de Producción</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-42</strong> Liofilización Placenta</td>
-                        <td>Operador de Producción</td>
-                        <td>Supervisor de Producción / Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-43</strong> Liofilización Medio Condicionado</td>
-                        <td>Operador de Producción</td>
-                        <td>Supervisor de Producción / Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-30</strong> Bitácora Recolección Medios Condicionados</td>
-                        <td>Técnico de Laboratorio / Producción</td>
-                        <td>Supervisor de Producción</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-45</strong> Envío a Esterilización</td>
-                        <td>Operador de Producción / Almacén</td>
-                        <td>Control de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-
-                    <tr>
-                        <td rowspan="17" style="font-weight:bold; background:#f1f5f9;">FLUJO 3: CONTROL, MUESTREO Y
-                            LIBERACIÓN</td>
-                        <td><strong>FO-LC-46</strong> Registro de Muestreo de Producto Biológico</td>
-                        <td>Inspector de Calidad</td>
-                        <td>Analista de Laboratorio / Jefe CC</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-47</strong> Registro de Revisión de Calidad de Muestreo</td>
-                        <td>Analista / Operador</td>
-                        <td>Jefe de Laboratorio / Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-19</strong> Formato Liberación y Control de Calidad de Placentas</td>
-                        <td>Analista de Laboratorio</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-41</strong> Formato de Control Microbiológico</td>
-                        <td>Analista Microbiología</td>
-                        <td>Jefe de Laboratorio / Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-44</strong> Liberación Microbiológica de Flasks y Viales</td>
-                        <td>Analista Microbiología</td>
-                        <td>Control de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-48</strong> Registro de Resultados Analíticos y Dictamen de Lote</td>
-                        <td>Analista de Laboratorio</td>
-                        <td>Jefe de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-16</strong> Formato Resumen Ejecutivo de Recepción Lote (Cover Sheet)</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Dirección Operativa</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-24</strong> Formato Registro Diario de Dosificación</td>
-                        <td>Almacén de Producto Terminado</td>
-                        <td>Control de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-32</strong> Registro de Ingreso de Muestras de Retención
-                        </td>
-                        <td>Responsable del Área Afectada</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-32-B</strong> Salida y Disposición de Muestras</td>
-                        <td>Analista de Laboratorio</td>
-                        <td>Jefe de Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-33</strong> Bitácora de Muestras de Retención</td>
-                        <td>Analista de Laboratorio</td>
-                        <td>Jefe de Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-34</strong> Bitácora de Muestreos</td>
-                        <td>Inspector de Calidad</td>
-                        <td>Jefe de Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-49</strong> Orden Maestra y Expediente de Producción</td>
-                        <td>Analista de Laboratorio</td>
-                        <td>Jefe de Laboratorio</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-QA-10</strong> Certificado de Calidad de Producto de Lote (CoA)</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Jefe de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-QA-06</strong> Certificado de Liberación de Exosomas</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Jefe de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-QA-11</strong> Certificado de Liberación de Lote</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Jefe de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-35</strong> Bitácora de Disposición de Lotes</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Dirección Operativa</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-
-                    <tr>
-                        <td rowspan="9" style="font-weight:bold; background:#f1f5f9;">FLUJO 4: NO CONFORME Y DISPOSICIÓN
-                            FINAL</td>
-                        <td><strong>FO-OP-51</strong> Reporte de Producto No Conforme (Desviaciones)</td>
-                        <td>Supervisor del Área Afectada</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-52</strong> Reporte y Manifiesto de Materia Prima No Conforme (MPNC)</td>
-                        <td>Almacén / Calidad (Área que detecta)</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-QA-09</strong> Acción Correctiva y Preventiva (CAPA) - Metodología AMFE</td>
-                        <td>Responsable del Área Afectada</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-54</strong> Reporte de Desviación de Procesos y Equipos</td>
-                        <td>Inspector Calidad / Logística</td>
-                        <td>Jefe de Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-12</strong> Dictamen Técnico de Concesión</td>
-                        <td>Gerencia de Calidad</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-49</strong> Bitácora de Almacenamiento Temporal de RPBI</td>
-                        <td>Almacén / Responsable de RPBI</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-OP-50</strong> Manifiesto de Entrega, Transporte y Recepción de Residuos
-                            Peligrosos</td>
-                        <td>Almacén / Responsable de Residuos</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-50</strong> Manifiesto de Destrucción</td>
-                        <td>Entrega: Xelle Scientific</td>
-                        <td>Recibe: Proveedor RPBI</td>
-                        <td style="color:#666; text-align:center;">N/A (Evidencia legal)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-QA-08</strong> Acta de Destrucción y Disposición Final</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Dirección Operativa</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-
-                    <tr>
-                        <td rowspan="10" style="font-weight:bold; background:#f1f5f9;">FLUJO 5: TRAZABILIDAD HISTÓRICA
-                            SGC</td>
-                        <td><strong>FO-LC-14</strong> Registro Histórico de Placentas Liberadas para Producción</td>
-                        <td>Coordinación SGC</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-LC-15</strong> Registro Histórico de Líneas Liberadas para Producción</td>
-                        <td>Coordinación SGC</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-SGC-01</strong> Matriz de Responsabilidades y Firmas por Módulo</td>
-                        <td>Coordinación SGC</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-SGC-02</strong> Matriz de Responsabilidades y Firmas del SGC</td>
-                        <td>Coordinación SGC</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-SGC-03</strong> Matriz de Formatos Activos</td>
-                        <td>Coordinación SGC</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-SGC-04</strong> Listado Maestro de Formatos</td>
-                        <td>Coordinación SGC</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-SGC-05</strong> Inventario de Equipos e Instrumentos</td>
-                        <td>Coordinación SGC / Mantenimiento</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-SGC-I</strong> Índice de Carpetas del SGC</td>
-                        <td>Coordinación SGC</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-SGC-M</strong> Índice Maestro de Carpetas</td>
-                        <td>Coordinación SGC</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>IT-OP-01</strong> Instructivo de Identificación Visual y Trazabilidad</td>
-                        <td>Coordinación SGC / Operaciones</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-
-                    <tr>
-                        <td rowspan="8" style="font-weight:bold; background:#f1f5f9;">FLUJO 7: GESTIÓN DE CALIDAD,
-                            CAMBIOS Y CAPACITACIÓN</td>
-                        <td><strong>FO-QA-01</strong> Matriz de Riesgos y Oportunidades</td>
-                        <td>Responsable del Proceso</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-QA-07</strong> Solicitud y Control de Cambios</td>
-                        <td>Responsable del Área (Solicitante)</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-QA-12</strong> Bitácora de Uso y Fallas de Equipo</td>
-                        <td>Operador / Usuario del Equipo</td>
-                        <td>Jefe de Área</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-QA-13</strong> Bitácora de Monitoreo Ambiental</td>
-                        <td>Analista de Laboratorio</td>
-                        <td>Jefe de Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-QA-14</strong> Checklist de Seguridad e Higiene</td>
-                        <td>Responsable de Seguridad</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-QA-15</strong> Programa Anual de Mantenimiento</td>
-                        <td>Jefe de Mantenimiento</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-QA-16</strong> Detección de Necesidades de Capacitación (DNC)</td>
-                        <td>Jefe de Área / Recursos Humanos</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>FO-QA-17</strong> Lista de Asistencia y Evaluación</td>
-                        <td>Instructor / Facilitador</td>
-                        <td>Recursos Humanos</td>
-                        <td style="color:#666; text-align:center;">N/A</td>
-                    </tr>
-
-                    <tr>
-                        <td rowspan="16" style="font-weight:bold; background:#f1f5f9;">FLUJO 6: ETIQUETAS DE CONTROL Y
-                            TRAZABILIDAD VISUAL</td>
-                        <td><strong>ET-LC-01</strong> Etiqueta Control Materia Prima</td>
-                        <td>Almacén / Recepción</td>
-                        <td>Control de Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-02</strong> Etiqueta Control Proceso</td>
-                        <td>Operador / Técnico</td>
-                        <td>Supervisor de Área</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-03</strong> Etiqueta Control Producto en Proceso</td>
-                        <td>Operador de Producción</td>
-                        <td>Supervisor de Producción</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-04</strong> Etiqueta Control Producto Terminado</td>
-                        <td>Almacén Producto Terminado</td>
-                        <td>Control de Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-05</strong> Etiqueta Equipo Calibrado/Verificado</td>
-                        <td>Metrología / Mantenimiento</td>
-                        <td>Jefe de Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-06</strong> Etiqueta Muestra Retenida</td>
-                        <td>Analista de Laboratorio</td>
-                        <td>Jefe de Laboratorio</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-07</strong> Etiqueta Cuarentena</td>
-                        <td>Almacén / Control Calidad</td>
-                        <td>Jefe de Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-08</strong> Etiqueta Liberado</td>
-                        <td>Control de Calidad</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-09</strong> Etiqueta Rechazado</td>
-                        <td>Control de Calidad</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-10</strong> Etiqueta Producto No Conforme</td>
-                        <td>Supervisor de Área</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-11</strong> Etiqueta Nacional/Internacional</td>
-                        <td>Almacén / Logística</td>
-                        <td>Coordinación Embarques</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-12</strong> Etiqueta Embarque/Distribución</td>
-                        <td>Logística / Almacén</td>
-                        <td>Coordinación Embarques</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-13</strong> Etiqueta Banco Celular</td>
-                        <td>Operador Banco Celular</td>
-                        <td>Supervisor de Banco</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-LC-15</strong> Etiqueta Esterilización</td>
-                        <td>Operador / Técnico</td>
-                        <td>Supervisor de Área</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-RPBI-01</strong> Etiqueta RPBI Temporal</td>
-                        <td>Responsable RPBI</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td style="color:#666; text-align:center;">N/A (Etiqueta)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ET-RPBI-02</strong> Etiqueta RPBI Disposición Final</td>
-                        <td>Responsable RPBI</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td>Responsable Dirección</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <button class="btn-add no-print" onclick="addRow()">+ AGREGAR NUEVO FORMATO A LA MATRIZ</button>
-        </div>
-
-        <div class="signature-area" style="margin-top: 30px;">
-            <div class="signature-box">
-                <p>Elaboró / Actualizó</p>
-                <input type="text" placeholder="Coordinador SGC">
-                <p>Fecha: <input type="date" class="cedit"></p>
-            </div>
-            <div class="signature-box">
-                <p>Aprobó Matriz Oficial</p>
-                <input type="text" placeholder="Responsable Dirección">
-                <p>Fecha: <input type="date" class="cedit"></p>
-            </div>
-        </div>
-
-        <div class="footer">FO-SGC-02 | MATRIZ DE RESPONSABILIDADES | Versión: 1.0<br>El contenido de este documento es
-            propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor,
-            por lo que está prohibida su reproducción total o parcial.</div>
-    </div>
-
-    <script>
-        // Inicialización cuando se carga el documento
-        document.addEventListener('DOMContentLoaded', function () {
-            initializeTable();
-        });
-
-        function initializeTable() {
-            const tbody = document.getElementById('tbl-matriz').getElementsByTagName('tbody')[0];
-            const rows = tbody.getElementsByTagName('tr');
-
-            // Agregar controles de acción a cada fila existente
-            for (let i = 0; i < rows.length; i++) {
-                addRowControls(rows[i]);
-            }
-        }
-
-        function addRowControls(row) {
-            // Si ya tiene controles, no agregar de nuevo
-            if (row.querySelector('.row-actions')) return;
-
-            // Agregar handle de arrastre al inicio
-            const handleCell = document.createElement('td');
-            handleCell.className = 'drag-handle no-print';
-            handleCell.innerHTML = '⋮⋮';
-            handleCell.draggable = false;
-            row.insertBefore(handleCell, row.firstChild);
-
-            // Agregar celda de acciones al final
-            const actionsCell = document.createElement('td');
-            actionsCell.className = 'no-print';
-            actionsCell.innerHTML = `
-                <div class="row-actions">
-                    <button class="btn-row-action btn-edit" onclick="editRow(this)" title="Editar">✎</button>
-                    <button class="btn-row-action btn-delete" onclick="deleteRow(this)" title="Eliminar">🗑</button>
-                </div>
-            `;
-            row.appendChild(actionsCell);
-
-            // Configurar drag and drop
-            row.draggable = true;
-            row.addEventListener('dragstart', handleDragStart);
-            row.addEventListener('dragover', handleDragOver);
-            row.addEventListener('drop', handleDrop);
-            row.addEventListener('dragend', handleDragEnd);
-        }
-
-        function addRow() {
-            Swal.fire({
-                title: 'Agregar Nuevo Registro',
-                html: `
-                    <div style="text-align: left; padding: 10px;">
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Fase / Proceso:</label>
-                        <input type="text" id="input-fase" class="swal2-input" placeholder="Ej: OPERACIONES" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Formato (Código y Nombre):</label>
-                        <input type="text" id="input-formato" class="swal2-input" placeholder="Ej: FO-XX-XX Nombre" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Ejecución:</label>
-                        <input type="text" id="input-ejecucion" class="swal2-input" placeholder="Puesto ejecutor" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Verificación:</label>
-                        <input type="text" id="input-verificacion" class="swal2-input" placeholder="Puesto verificador" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Autorización Final:</label>
-                        <input type="text" id="input-autorizacion" class="swal2-input" placeholder="Puesto autorizador" style="width:90%; margin:0 0 15px 0;">
-                    </div>
-                `,
-                showCancelButton: true,
-                confirmButtonText: 'Agregar',
-                cancelButtonText: 'Cancelar',
-                confirmButtonColor: '#10b981',
-                cancelButtonColor: '#6b7280',
-                width: '600px',
-                preConfirm: () => {
-                    const fase = document.getElementById('input-fase').value;
-                    const formato = document.getElementById('input-formato').value;
-                    const ejecucion = document.getElementById('input-ejecucion').value;
-                    const verificacion = document.getElementById('input-verificacion').value;
-                    const autorizacion = document.getElementById('input-autorizacion').value;
-
-                    if (!fase || !formato) {
-                        Swal.showValidationMessage('Fase y Formato son obligatorios');
-                        return false;
-                    }
-
-                    return { fase, formato, ejecucion, verificacion, autorizacion };
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const data = result.value;
-                    const tbody = document.getElementById('tbl-matriz').getElementsByTagName('tbody')[0];
-                    const newRow = document.createElement('tr');
-
-                    newRow.innerHTML = `
-                        <td></td>
-                        <td style="font-weight:bold; background:#f1f5f9;">${data.fase}</td>
-                        <td>${data.formato}</td>
-                        <td>${data.ejecucion}</td>
-                        <td>${data.verificacion}</td>
-                        <td>${data.autorizacion}</td>
-                        <td class="no-print"></td>
-                    `;
-
-                    tbody.appendChild(newRow);
-                    addRowControls(newRow);
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Registro agregado',
-                        text: 'El nuevo registro ha sido agregado exitosamente',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                }
-            });
-        }
-
-        function editRow(btn) {
-            const row = btn.closest('tr');
-            const cells = row.getElementsByTagName('td');
-
-            // Índices: 0=drag, 1=fase, 2=formato, 3=ejecución, 4=verificación, 5=autorización, 6=acciones
-            const currentData = {
-                fase: cells[1].textContent.trim(),
-                formato: cells[2].textContent.trim(),
-                ejecucion: cells[3].textContent.trim(),
-                verificacion: cells[4].textContent.trim(),
-                autorizacion: cells[5].textContent.trim()
-            };
-
-            Swal.fire({
-                title: 'Editar Registro',
-                html: `
-                    <div style="text-align: left; padding: 10px;">
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Fase / Proceso:</label>
-                        <input type="text" id="edit-fase" class="swal2-input" value="${currentData.fase}" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Formato (Código y Nombre):</label>
-                        <input type="text" id="edit-formato" class="swal2-input" value="${currentData.formato}" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Ejecución:</label>
-                        <input type="text" id="edit-ejecucion" class="swal2-input" value="${currentData.ejecucion}" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Verificación:</label>
-                        <input type="text" id="edit-verificacion" class="swal2-input" value="${currentData.verificacion}" style="width:90%; margin:0 0 15px 0;">
-                        
-                        <label style="display:block; margin-bottom:5px; font-weight:bold;">Autorización Final:</label>
-                        <input type="text" id="edit-autorizacion" class="swal2-input" value="${currentData.autorizacion}" style="width:90%; margin:0 0 15px 0;">
-                    </div>
-                `,
-                showCancelButton: true,
-                confirmButtonText: 'Guardar',
-                cancelButtonText: 'Cancelar',
-                confirmButtonColor: '#10b981',
-                cancelButtonColor: '#6b7280',
-                width: '600px',
-                preConfirm: () => {
-                    return {
-                        fase: document.getElementById('edit-fase').value,
-                        formato: document.getElementById('edit-formato').value,
-                        ejecucion: document.getElementById('edit-ejecucion').value,
-                        verificacion: document.getElementById('edit-verificacion').value,
-                        autorizacion: document.getElementById('edit-autorizacion').value
-                    };
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const data = result.value;
-                    cells[1].textContent = data.fase;
-                    cells[2].textContent = data.formato;
-                    cells[3].textContent = data.ejecucion;
-                    cells[4].textContent = data.verificacion;
-                    cells[5].textContent = data.autorizacion;
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Registro actualizado',
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
-                }
-            });
-        }
-
-        function deleteRow(btn) {
-            const row = btn.closest('tr');
-            const formato = row.getElementsByTagName('td')[2].textContent.trim();
-
-            Swal.fire({
-                title: '¿Eliminar registro?',
-                html: `¿Está seguro de eliminar:<br><strong>${formato}</strong>?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar',
-                confirmButtonColor: '#ef4444',
-                cancelButtonColor: '#6b7280'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    row.remove();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Registro eliminado',
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
-                }
-            });
-        }
-
-        // Variables para drag and drop
-        let draggedRow = null;
-
-        function handleDragStart(e) {
-            draggedRow = this;
-            this.classList.add('dragging');
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text/html', this.innerHTML);
-        }
-
-        function handleDragOver(e) {
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
-            e.dataTransfer.dropEffect = 'move';
-
-            const target = e.target.closest('tr');
-            if (target && target !== draggedRow) {
-                target.classList.add('drag-over');
-            }
-
-            return false;
-        }
-
-        function handleDrop(e) {
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-
-            const target = e.target.closest('tr');
-            if (draggedRow !== target && target) {
-                const tbody = target.parentNode;
-                const allRows = Array.from(tbody.getElementsByTagName('tr'));
-                const draggedIndex = allRows.indexOf(draggedRow);
-                const targetIndex = allRows.indexOf(target);
-
-                if (draggedIndex < targetIndex) {
-                    target.parentNode.insertBefore(draggedRow, target.nextSibling);
-                } else {
-                    target.parentNode.insertBefore(draggedRow, target);
-                }
-            }
-
-            return false;
-        }
-
-        function handleDragEnd(e) {
-            this.classList.remove('dragging');
-
-            // Remover indicadores visuales de todos los renglones
-            const rows = document.querySelectorAll('#tbl-matriz tbody tr');
-            rows.forEach(row => {
-                row.classList.remove('drag-over');
-            });
-        }
-
-        // Inicializar sistema de persistencia
-        if (typeof App !== 'undefined') {
-            App.init();
-        }
-    </script>
-    <script>
-        let isOfflineMode = false;
-
-        function toggleOfflineMode() {
-            isOfflineMode = !isOfflineMode;
-            const btn = document.getElementById('btn-offline');
-            if (isOfflineMode) {
-                btn.textContent = 'Modo Online';
-                btn.style.backgroundColor = '#f59e0b';
-
-                // Convertir <select> a <input type="text">
-                document.querySelectorAll('select.cedit').forEach(sel => {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.className = sel.className;
-                    input.value = sel.options[sel.selectedIndex]?.text || '';
-                    input.setAttribute('data-original-type', 'select');
-                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
-                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
-                    input.setAttribute('data-select-options', options);
-                    sel.parentNode.replaceChild(input, sel);
-                });
-
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
-                    inp.type = 'text';
-                    inp.placeholder = 'DD/MM/AAAA';
-                });
-
-                // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
-                    inp.type = 'text';
-                    inp.placeholder = 'HH:MM';
-                });
-
-                // Convertir <input type="number"> a <input type="text">
-                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'number');
-                    const currentPlaceholder = inp.placeholder;
-                    inp.type = 'text';
-                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
-                });
-            } else {
-                btn.textContent = 'Modo Offline';
-                btn.style.backgroundColor = '';
-
-                // Restaurar <select> desde <input type="text">
-                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
-                    const sel = document.createElement('select');
-                    sel.className = inp.className;
-                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
-                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
-                    options.forEach(optText => {
-                        const opt = document.createElement('option');
-                        opt.text = optText;
-                        sel.appendChild(opt);
-                    });
-                    const currentValue = inp.value;
-                    for (let i = 0; i < sel.options.length; i++) {
-                        if (sel.options[i].text === currentValue) {
-                            sel.selectedIndex = i;
-                            break;
-                        }
-                    }
-                    inp.parentNode.replaceChild(sel, inp);
-                });
-
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
-
-                // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
-
-                // Restaurar <input type="number">
-                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
-                    inp.type = 'number';
-                    inp.removeAttribute('data-original-type');
-                });
-            }
-        }
-    </script>
 </body>
-
 </html>

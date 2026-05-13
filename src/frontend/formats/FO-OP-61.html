@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-SGC-05 Hoja de Vida y Expediente Documental de Equipo</title>
+    <title>FO-OP-61 Hoja de Vida y Expediente Documental de Equipo</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app.js"></script>
@@ -187,8 +187,8 @@
                 <label>ID Interno de Equipo</label>
                 <div style="display:flex; align-items:center; justify-content:center; gap:5px; margin-bottom:5px;">
                     <span style="font-weight:bold; color:#1E3A5F;">EQ-</span>
-                    <input type="text" id="area-code" class="cedit" placeholder="LC" maxlength="2"
-                        style="width:40px; text-align:center; border:1px solid #ccc; font-weight:bold; text-transform:uppercase;">
+                    <input type="text" id="area-code" class="cedit" placeholder="LCB" maxlength="3"
+                        style="width:50px; text-align:center; border:1px solid #ccc; font-weight:bold; text-transform:uppercase;">
                     <span style="font-weight:bold; color:#1E3A5F;">-</span>
                     <input type="text" id="equip-num" class="cedit" placeholder="001" maxlength="3"
                         style="width:50px; text-align:center; border:1px solid #ccc; font-weight:bold;">
@@ -549,8 +549,12 @@
             const areaCode = document.getElementById('area-code').value.toUpperCase();
             const equipNum = document.getElementById('equip-num').value;
 
-            if (areaCode && equipNum) {
-                const fullCode = 'EQ-' + areaCode + '-' + equipNum;
+            // Solo permitir letras en área y números en equipo
+            const areaCodeClean = areaCode.replace(/[^A-Z]/g, '').padEnd(3, ' ');
+            const equipNumClean = equipNum.replace(/[^0-9]/g, '').padStart(3, '0');
+
+            if (areaCodeClean.trim().length === 3 && equipNumClean.trim().length === 3) {
+                const fullCode = 'EQ-' + areaCodeClean + '-' + equipNumClean;
 
                 // Actualizar código de barras
                 try {
@@ -568,7 +572,7 @@
                 // Sincronizar con página 2
                 document.getElementById('sync-folio').innerText = fullCode;
             } else {
-                document.getElementById('sync-folio').innerText = 'EQ-LC-001';
+                document.getElementById('sync-folio').innerText = 'EQ-LCB-001';
             }
         }
 

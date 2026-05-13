@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ET-LC-12-B - Medio Condicionado V1.2 (5x10cm)</title>
+    <style>
+        /* Configuración de página para impresión */
+        @page {
+            size: letter landscape;
+            margin: 0.5cm;
+            /* Margen mínimo para que no corte la impresora */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Contenedor de la hoja carta */
+        .page-letter {
+            width: 215.9mm;
+            height: 279.4mm;
+            background-color: #ffffff;
+            display: grid;
+            /* 3 columnas x 3 filas para etiquetas en carta apaisada */
+            grid-template-columns: repeat(3, 100mm);
+            grid-template-rows: repeat(3, 80mm);
+            gap: 4mm 4mm;
+            /* Espacio entre etiquetas */
+            justify-content: center;
+            align-content: center;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* DISEÑO ORIGINAL PRESERVADO - Tamaño ajustado a 50x100mm */
+        .etiqueta-container {
+            width: 100mm !important;
+            height: 80mm !important;
+            background-color: #ffffff;
+            border: 1.5px solid #000;
+            padding: 2mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .logo-area {
+            text-align: center;
+            margin-bottom: 2px;
+        }
+
+        .logo-area svg {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+        }
+
+        .logo-text {
+            font-size: 8px;
+            font-weight: bold;
+            vertical-align: middle;
+            margin-left: 2px;
+            color: #2c3e50;
+        }
+
+        .titulo-alerta {
+            text-align: center;
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: 0.2px;
+            margin: 0 0 2px 0;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 1px;
+            border: 1px solid #000;
+        }
+
+        .subtitulo {
+            text-align: center;
+            font-size: 6px;
+            font-weight: bold;
+            margin-bottom: 2px;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .campo {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 2px;
+            font-size: 7px;
+        }
+
+        .campo label {
+            font-weight: bold;
+            white-space: nowrap;
+            margin-right: 3px;
+        }
+
+        .linea {
+            flex-grow: 1;
+            border-bottom: 1px solid #000;
+            height: 10px;
+        }
+
+        .fila-triple {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+        }
+
+        .fila-triple .campo {
+            flex: 1;
+        }
+
+        .caja-estatus {
+            border: 1.5px solid #000;
+            padding: 3px;
+            margin: 4px 0;
+            font-size: 8px;
+            background-color: #fff;
+        }
+
+        .check-group {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 2px;
+            font-weight: bold;
+        }
+
+        .footer-bottom {
+            margin-top: 1px;
+            font-size: 5px;
+            text-align: center;
+            color: #777;
+            border-top: 1px solid #ccc;
+            padding-top: 1px;
+        }
+
+        /* Panel de control solo para pantalla */
+        .no-print {
+            margin: 20px;
+            padding: 15px;
+            background: #2E9D82;
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .print-btn {
+            background: white;
+            color: #2E9D82;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .page-letter {
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="no-print">
+        <h3>Vista Previa: 9 etiquetas por página (10cm x 8cm)</h3>
+        <p>El diseño original se ha mantenido íntegro, solo se ajustó la escala para el nuevo tamaño.</p>
+        <button class="print-btn" onclick="window.print()">🖨️ Imprimir Hoja Carta</button>
+    </div>
+
+    <div class="page-letter">
+        <script>
+            const etiquetaContenido = `
+            <div class="etiqueta-container">
+                <div>
+                    <div class="logo-area">
+                        <svg viewBox="10 10 80 80" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                                <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                                <path fill="#2E9D82"
+                                    d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                            </g>
+                        </svg>
+                        <span class="logo-text">XELLE SCIENTIFIC</span>
+                    </div>
+                    <div class="titulo-alerta">🧪 MEDIO CONDICIONADO RECUPERADO</div>
+                    <div class="subtitulo">TRAZABILIDAD DE SUBPRODUCTO CELULAR</div>
+
+                    <div class="campo" style="margin-top:2px;"><label>Código de Medio:</label>
+                        <div class="linea"></div>
+                    </div>
+
+                    <div class="campo"><label>ID Lote de Origen:</label>
+                        <div class="linea"></div>
+                    </div>
+
+                    <div class="fila-triple">
+                        <div class="campo" style="flex: 2;"><label>Tipo Celular:</label>
+                            <div class="linea"></div>
+                        </div>
+                        <div class="campo"><label>P:</label>
+                            <div class="linea"></div>
+                        </div>
+                    </div>
+
+                    <div class="fila-triple">
+                        <div class="campo" style="flex: 2;"><label>Fecha Recolección:</label>
+                            <div class="linea" style="text-align:center; font-size:6px;">//____</div>
+                        </div>
+                        <div class="campo"><label>Vol:</label>
+                            <div class="linea"></div><span style="margin-left:2px; font-size:6px;">mL</span>
+                        </div>
+                    </div>
+
+                    <div class="caja-estatus">
+                        <div style="text-align: center; border-bottom: 1px solid #000; margin-bottom: 2px; font-size: 5px;">
+                            ESTATUS DE CONTROL DE CALIDAD</div>
+                        <div class="check-group">
+                            <span>☐ CUARENTENA</span>
+                            <span>☐ LIBERADO</span>
+                        </div>
+                    </div>
+
+                    <div class="campo"><label>Fecha de Caducidad:</label>
+                        <div class="linea" style="text-align:center; font-size:6px;">//____</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="campo"><label>Operador Responsable:</label>
+                        <div class="linea"></div>
+                    </div>
+                    <div class="footer-bottom">Código: ET-LC-12-B | Versión: 1.2 | Vigencia: MAR 2026</div>
+                </div>
+            </div>`;
+
+            for (let i = 0; i < 9; i++) {
+                document.write(etiquetaContenido);
+            }
+        </script>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ET-LC-15 - Medio Preparado</title>
+    <style>
+        .print-btn {
+            display: inline-block;
+            margin: 18px 0 12px 0;
+            padding: 8px 18px;
+            background: #1a4a80;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(26, 74, 128, 0.08);
+            transition: background 0.2s;
+        }
+
+        .print-btn:hover {
+            background: #2e9d82;
+        }
+
+        @media print {
+            .print-btn {
+                display: none !important;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                align-items: flex-start;
+            }
+
+            .etiqueta-container {
+                margin: 0;
+                page-break-inside: avoid;
+                box-shadow: none;
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: #f4f7f4;
+        }
+
+        .etiqueta-container {
+            width: 60mm;
+            height: 60mm;
+            background-color: #fff;
+            border: 2.2px solid #1a4a80;
+            padding: 3.5mm 3mm 3mm 3mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(26, 74, 128, 0.08);
+            margin: 2px;
+        }
+
+        .logo-area {
+            text-align: left;
+            margin-bottom: 0.5mm;
+        }
+
+        .logo-area svg {
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+        }
+
+        .logo-text {
+            font-size: 10px;
+            font-weight: bold;
+            vertical-align: middle;
+            margin-left: 4px;
+            color: #1a4a80;
+        }
+
+        .titulo {
+            text-align: center;
+            font-size: 9.2px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            margin: 0 0 2mm 0;
+            background-color: #1a4a80;
+            color: #fff;
+            padding: 1.2mm 1mm;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        .campo {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 3.5mm;
+            font-size: 9.5px;
+        }
+
+        .campo label {
+            font-weight: bold;
+            white-space: nowrap;
+            margin-right: 7px;
+        }
+
+        .linea {
+            flex-grow: 1;
+            border-bottom: 1px solid #1a4a80;
+            height: 16px;
+        }
+
+        .footer-bottom {
+            margin-top: 8px;
+            font-size: 10px;
+            text-align: center;
+            color: #1a4a80;
+            border-top: 1px solid #e9eff7;
+            padding-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimir</button>
+    <div style="display: flex; flex-wrap: wrap; gap: 0; justify-content: flex-start; align-items: flex-start;">
+        <!-- Imprime 12 etiquetas por página A4 (ajustable, 3x4) -->
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <div class="etiqueta-container">
+            <div>
+                <div class="logo-area">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                            <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                            <path fill="#2E9D82"
+                                d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                        </g>
+                    </svg>
+                    <span class="logo-text">XELLE SCIENTIFIC</span>
+                </div>
+                <div class="titulo">ET-LC-15<br>Medio preparado para cultivo</div>
+                <div class="campo"><label>Medio:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Lote:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Fecha prep:</label>
+                    <div class="linea"></div>
+                </div>
+                <div class="campo"><label>Operador:</label>
+                    <div class="linea"></div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="font-size:8.5px;line-height:1.2; margin-top:0.5mm; margin-bottom:0; position:relative; bottom:0;">
+                Xelle Scientific © 2026<br><b>Código: ET-LC-15</b></div>
+        </div>
+        <!-- Puedes copiar y pegar más bloques de .etiqueta-container para imprimir más etiquetas por página -->
+    </div>
+</body>
+
+</html>

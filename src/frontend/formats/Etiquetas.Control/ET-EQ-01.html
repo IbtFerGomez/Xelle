@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ET-EQ-01 Etiqueta Normativa de Equipo</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración de página para impresión de 4 etiquetas por hoja carta en horizontal (landscape) */
+        @page {
+            size: letter landscape;
+            margin: 1cm;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .no-print-zone {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 550px;
+        }
+
+        /* GRID DE IMPRESIÓN: 2 columnas x 2 filas */
+        .print-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 10cm);
+            grid-template-rows: repeat(2, 7cm);
+            gap: 10mm 15mm;
+            background: white;
+            padding: 10mm;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+        }
+
+        /* DISEÑO DE LA ETIQUETA (10x7 cm) */
+        .etiqueta-normativa {
+            width: 10cm;
+            height: 7cm;
+            border: 2.5px solid #1E3A5F;
+            box-sizing: border-box;
+            padding: 3mm;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            position: relative;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .et-header {
+            text-align: center;
+            border-bottom: 2px solid #1E3A5F;
+            padding-bottom: 4px;
+            margin-bottom: 5px;
+        }
+
+        .et-header span {
+            font-size: 11px;
+            font-weight: 900;
+            color: #1D1D1B;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .sub-section-title {
+            background-color: #f1f5f9;
+            font-size: 8px;
+            font-weight: bold;
+            padding: 2px 5px;
+            border: 1px solid #1E3A5F;
+            margin: 4px 0;
+            text-transform: uppercase;
+            color: #1E3A5F;
+        }
+
+        .data-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .f-row {
+            display: flex;
+            align-items: flex-end;
+            font-size: 9px;
+            border-bottom: 0.5px solid #ccc;
+            padding-bottom: 1px;
+        }
+
+        .f-label {
+            font-weight: bold;
+            color: #333;
+            margin-right: 4px;
+            white-space: nowrap;
+            font-size: 8px;
+        }
+
+        .f-value {
+            flex-grow: 1;
+            color: #000;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            font-size: 8.5px;
+            font-weight: bold;
+            padding: 5px 0;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .checkbox {
+            width: 10px;
+            height: 10px;
+            border: 1px solid #000;
+            display: inline-block;
+        }
+
+        .vigencia-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            font-size: 8.5px;
+        }
+
+        .signature-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 8px;
+            margin-top: 8px;
+            border-top: 1px solid #1E3A5F;
+            padding-top: 4px;
+        }
+
+        /* Estilo del pie de página unificado */
+        .footer-unified {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        @media print {
+
+            .no-print-zone,
+            .global-controls {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
+
+            .print-grid {
+                box-shadow: none;
+                padding: 0;
+                margin: auto;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-et-eq-01">
+    <div class="no-print-zone">
+        <h2 style="margin:0; color:#1E3A5F;">Panel de Etiquetas ET-EQ-01 V2.0</h2>
+        <p style="font-size:12px;">Identificación y Estatus Normativo (10x7 cm)</p>
+        <div style="margin: 10px 0;">
+            <input type="text" id="reg-eq01" class="cedit" placeholder="ID (Ej. EQ-LC-01)"
+                oninput="updateBarcode(this.value)"
+                style="padding:5px; text-align:center; border:1px solid #ccc; width:150px; text-transform: uppercase;">
+        </div>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir 4 Etiquetas (BPF)</button>
+    </div>
+
+    <div class="print-grid">
+        <script>
+            const content = `
+            <div class="etiqueta-normativa">
+                <div class="et-header">
+                    <span>XELLE SCIENTIFIC - CONTROL DE EQUIPO</span>
+                    <div style="font-size: 6px; font-weight: normal;">ET-EQ-01 | Versión: 2.0 | Vigencia: Mar 2026</div>
+                </div>
+                
+                <div class="sub-section-title">INFORMACIÓN FIJA (TRAZABILIDAD)</div>
+                <div class="data-fields">
+                    <div class="f-row"><span class="f-label">ID DEL EQUIPO (TAG):</span><span class="f-value">_________________________</span></div>
+                    <div class="f-row"><span class="f-label">NOMBRE:</span><span class="f-value">________________________________</span></div>
+                    <div class="f-row" style="border:none;">
+                        <span class="f-label">MARCA:</span><span class="f-value">__________</span>
+                        <span class="f-label">NO. SERIE:</span><span class="f-value">__________</span>
+                    </div>
+                </div>
+
+                <div class="sub-section-title">ESTATUS OPERATIVO (NOM-059)</div>
+                <div class="status-grid">
+                    <div class="status-item"><div class="checkbox"></div> APROBADO / EN USO</div>
+                    <div class="status-item"><div class="checkbox"></div> LIMPIO Y DESPEJADO</div>
+                    <div class="status-item"><div class="checkbox"></div> FUERA DE SERVICIO</div>
+                    <div class="status-item"><div class="checkbox"></div> EN MANTENIMIENTO</div>
+                </div>
+
+                <div class="sub-section-title">VIGENCIAS DE CUMPLIMIENTO</div>
+                <div class="vigencia-grid">
+                    <div class="f-row"><span class="f-label">ÚLTIMO MANT.:</span><span class="f-value">__/__/__</span></div>
+                    <div class="f-row"><span class="f-label">PRÓX. MANT.:</span><span class="f-value">__/__/__</span></div>
+                </div>
+                <div class="f-row" style="border:none; margin-top:3px;">
+                    <span class="f-label">FECHA PRÓXIMA CALIFICACIÓN (IQ/OQ/PQ):</span><span class="f-value">__/__/__</span>
+                </div>
+
+                <div class="signature-row">
+                    <span>Realizó (Manto.): __________</span>
+                    <span>Vo.Bo. QA: __________</span>
+                </div>
+            </div>`;
+
+            // Generar 4 copias para la hoja carta
+            for (let i = 0; i < 4; i++) { document.write(content); }
+
+            function updateBarcode(val) {
+                // El sistema procesará ET-EQ-01- + val para el código de barras según la nueva regla
+                console.log("Generando código: ET-EQ-01-" + val);
+            }
+        </script>
+    </div>
+
+    <div class="footer-unified no-print-zone" style="box-shadow:none; background:transparent;">
+        <div style="font-weight:bold; color:#1E3A5F;">ET-EQ-01 | Versión: 1.0 (Sistema) | Etiqueta Normativa de Estatus
+            | Xelle Scientific | Página 1 de 1</div>
+        <div style="font-style:italic;">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de
+            C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+            parcial.</div>
+    </div>
+</body>
+
+</html>

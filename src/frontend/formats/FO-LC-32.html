@@ -143,11 +143,11 @@
                 </svg>
             </div>
             <div class="registry-container">
-                <label>Folio de Retención</label>
+                <label>Código Interno</label>
                 <div class="registry-wrapper">
-                    <span class="registry-prefix">MR-</span>
+                    <span class="registry-prefix">FO-LC-32</span>
                     <input type="text" id="reg-mr" class="registry-input generate-barcode cedit"
-                        data-target="barcode-mr" data-prefix="MR-" placeholder="202X-000"
+                        data-target="barcode-mr" data-prefix="FO-LC-32" placeholder="FO-LC-32" value="FO-LC-32"
                         style="font-weight:bold; font-size:14px; text-transform:uppercase;">
                 </div>
                 <svg id="barcode-mr" class="barcode-svg"></svg>
@@ -369,6 +369,22 @@
                 });
             }
         }
+
+        // Forzar el código de barras a FO-LC-32
+        document.addEventListener('DOMContentLoaded', function () {
+            const regInput = document.getElementById('reg-mr');
+            if (regInput) {
+                regInput.value = 'FO-LC-32';
+                if (typeof JsBarcode !== 'undefined') {
+                    JsBarcode("#barcode-mr", "FO-LC-32", {
+                        format: "CODE128",
+                        displayValue: true,
+                        fontSize: 16,
+                        height: 40
+                    });
+                }
+            }
+        });
     </script>
 </body>
 

@@ -68,7 +68,7 @@
         </div>
 
         <div class="section">
-            <div class="section-title">1. INSUMOS Y REACTIVOS UTILIZADOS</div>
+            <div class="section-title summary-header">1. INSUMOS Y REACTIVOS UTILIZADOS</div>
             <table id="tbl-insumos" class="compact-table">
                 <thead>
                     <tr>
@@ -95,7 +95,7 @@
         </div>
 
         <div class="section">
-            <div class="section-title">2. DETALLE DE DOSIFICACIÓN</div>
+            <div class="section-title summary-header">2. DETALLE DE DOSIFICACIÓN</div>
             <table id="tbl-dosis" class="compact-table">
                 <thead>
                     <tr>
@@ -116,7 +116,7 @@
         </div>
 
         <div class="section">
-            <div class="section-title">3. BALANCE FINAL</div>
+            <div class="section-title summary-header">3. BALANCE FINAL</div>
             <table class="compact-table text-center" style="max-width: 600px; margin: 0 auto;">
                 <thead>
                     <tr>
@@ -140,7 +140,11 @@
             <div class="signature-box"><p>Verificó:</p><input class="cedit" placeholder="Firma"></div>
             <div class="signature-box"><p>Autorizó:</p><input class="cedit" placeholder="Firma"></div>
         </div>
+        <div class="footer">FO-LC-25 | Versión: 1.2 | FORMATO REGISTRO DIARIO DE DOSIFICACIÓN DE EXOSOMAS | Xelle Scientific | Página 1 de 1<br>
+            El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, 
+            por lo que está prohibida su reproducción total o parcial.</div>
     </div>
+    
 
     <script>
         const PRESENTACIONES = {
@@ -231,8 +235,6 @@
             document.getElementById('fecha_op').value = today;
             addDosisRow();
         });
-    </script>
-    <script>
         let isOfflineMode = false;
 
         function toggleOfflineMode() {
@@ -323,6 +325,6 @@
             }
         }
     </script>
-    <div class="footer">FO-LC-25 | Versión: 1.2 | FORMATO REGISTRO DIARIO DE DOSIFICACIÓN DE EXOSOMAS | Xelle Scientific | Página 1 de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+    
 </body>
 </html>

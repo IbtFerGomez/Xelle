@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ET-OP-04 Etiqueta de Calibración</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración de página para 10 etiquetas por hoja */
+        @page {
+            size: letter;
+            margin: 1cm;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .no-print-zone {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* GRID DE IMPRESIÓN: 2 columnas x 5 filas */
+        .print-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 5cm);
+            grid-template-rows: repeat(5, 3cm);
+            gap: 10mm 15mm;
+            background: white;
+            padding: 10mm;
+            justify-content: center;
+        }
+
+        /* DISEÑO DE LA ETIQUETA (5x3 cm) */
+        .etiqueta-cal {
+            width: 5cm;
+            height: 3cm;
+            border: 2px solid #2E9D82;
+            /* Verde Calibrado BPF */
+            box-sizing: border-box;
+            padding: 2mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .et-header {
+            text-align: center;
+            border-bottom: 1px solid #2E9D82;
+            padding-bottom: 2px;
+            margin-bottom: 3px;
+        }
+
+        .et-header span {
+            font-size: 8px;
+            font-weight: 900;
+            color: #1E3A5F;
+            display: block;
+        }
+
+        .et-header small {
+            font-size: 6px;
+            color: #666;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-around;
+            font-size: 7px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .data-fields {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .f-row {
+            display: flex;
+            align-items: flex-end;
+            font-size: 7px;
+            border-bottom: 0.5px solid #eee;
+        }
+
+        .f-label {
+            font-weight: bold;
+            width: 40%;
+            white-space: nowrap;
+        }
+
+        .f-value {
+            width: 60%;
+        }
+
+        .et-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 6px;
+            border-top: 1px solid #2E9D82;
+            padding-top: 2px;
+            margin-top: 2px;
+        }
+
+        /* Estilo del pie de página unificado */
+        .footer-unified {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        @media print {
+
+            .no-print-zone,
+            .global-controls {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .print-grid {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-et-mt-01">
+    <div class="no-print-zone">
+        <h2 style="margin:0; color:#2E9D82;">Panel de Etiquetas ET-OP-04</h2>
+        <p style="font-size:12px;">Calibración de Instrumentos (5x3 cm)</p>
+        <div style="margin: 10px 0;">
+            <input type="text" id="reg-op04" class="cedit" placeholder="Folio/ID" oninput="updateBarcode(this.value)"
+                style="padding:5px; text-align:center; border:1px solid #ccc; width:120px;">
+        </div>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir 10 Etiquetas</button>
+    </div>
+
+    <div class="print-grid">
+        <script>
+
+            const content = `
+            <div class="etiqueta-cal">
+                <div class="et-header">
+                    <span>XELLE SCIENTIFIC - METROLOGÍA</span>
+                    <small>ET-OP-04 V1.0 | Vigencia: MAR 2026</small>
+                </div>
+                
+                <div class="status-row">
+                    <span>[ ] CALIBRADO</span>
+                    <span>[ ] VERIFICADO</span>
+                </div>
+
+                <div class="data-fields">
+                    <div class="f-row"><span class="f-label">ID EQUIPO:</span><span class="f-value">________________</span></div>
+                    <div class="f-row"><span class="f-label">FECHA CAL.:</span><span class="f-value">____/____/____</span></div>
+                    <div class="f-row"><span class="f-label">PRÓX. CAL.:</span><span class="f-value">____/____/____</span></div>
+                </div>
+
+                <div class="et-footer">
+                    <span>REALIZÓ: _______</span>
+                    <span>Vo.Bo. QA: _______</span>
+                </div>
+            </div>`;
+
+            for (let i = 0; i < 10; i++) { document.write(content); }
+
+            function updateBarcode(val) {
+                // Función placeholder para que el sistema reconozca la regla ET-OP-04- + Input
+                console.log("Código generado: ET-OP-04-" + val);
+            }
+        </script>
+    </div>
+
+    <div class="footer-unified no-print-zone" style="box-shadow:none; background:transparent;">
+        <div style="font-weight:bold; color:#1E3A5F;">ET-OP-04 | Versión: 1.0 | Etiqueta de Calibración de Instrumentos
+            | Xelle Scientific | Página 1 de 1</div>
+        <div style="font-style:italic;">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de
+            C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+            parcial.</div>
+    </div>
+</body>
+
+</html>

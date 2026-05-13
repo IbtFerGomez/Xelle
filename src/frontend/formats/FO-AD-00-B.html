@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-AD-00-B Catálogo de Firmas e Iniciales V2</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 8px;
+            padding: 3px 4px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 8px;
+            padding: 2px 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            height: 22px;
+        }
+
+        .compact-table input,
+        .compact-table select {
+            font-size: 9px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 8px !important;
+        }
+
+        .info-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #334155;
+            margin-top: 5px;
+        }
+
+        .guide-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .guide-item {
+            font-size: 9.5px;
+            line-height: 1.3;
+            text-align: justify;
+        }
+
+        .guide-item strong {
+            color: #1E3A5F;
+            display: block;
+            margin-bottom: 3px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .footer-unified {
+            margin-top: 20px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 8px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+
+        .footer-unified .control-data {
+            font-weight: bold;
+            color: #1E3A5F;
+            margin-bottom: 3px;
+        }
+
+        .footer-unified .legal-data {
+            color: #475569;
+            font-style: italic;
+        }
+
+
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 10mm 8mm 10mm 8mm;
+                orientation: landscape;
+            }
+
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            /* Oculta el contenido de los selects al imprimir (modo offline muestra input[type=text] en vez de select) */
+            select.cedit,
+            input.cedit[data-original-type="select"] {
+                color: transparent !important;
+                text-shadow: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+
+            /* Oculta los placeholders al imprimir */
+            input::placeholder {
+                color: transparent !important;
+            }
+
+            input::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            input::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            input:-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            input::-ms-input-placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-ad-00-b">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900;" font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700;" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio del Catálogo</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-AD-00-B-</span>
+                    <input type="text" id="reg-ad00b" class="registry-input generate-barcode cedit"
+                        data-target="barcode-ad00b" data-prefix="FO-AD-00-B-" placeholder="202X">
+                </div>
+                <svg id="barcode-ad00b" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>CATÁLOGO DE FIRMAS E INICIALES DEL PERSONAL</h1>
+            <div class="metadata">Código: FO-AD-00-B | Versión: 2.0 | Vigencia: Mar 2026 | Página: 1 de 2</div>
+        </div>
+
+        <div class="section-header">1. OBJETIVO Y ALCANCE</div>
+        <div class="info-box">
+            El control de firmas es una evidencia crítica de cumplimiento y trazabilidad (ALCOA+). Este documento
+            establece el registro oficial de las firmas de todo el personal, vinculando inequívocamente cada trazo a un
+            colaborador específico. Ningún documento carente de una firma registrada en este catálogo tiene validez
+            legal o normativa.
+        </div>
+
+        <div class="section-header">2. DEFINICIONES Y LINEAMIENTOS DE USO</div>
+        <div class="guide-section">
+            <div class="guide-item">
+                <strong>A. Firma Autógrafa (Completa)</strong>
+                Firma oficial y legal. Uso en documentos de alta jerarquía y aprobación final: Carátulas de POEs, Planes
+                de Validación, Contratos y Dictámenes de Liberación de lotes.
+            </div>
+            <div class="guide-item">
+                <strong>B. Firma Corta (Rúbrica)</strong>
+                Versión abreviada para agilizar el flujo en bitácoras de operación (limpieza, monitoreo ambiental),
+                órdenes de producción y registros de muestreo.
+            </div>
+            <div class="guide-item" style="grid-column: span 2;">
+                <strong>C. Iniciales</strong>
+                Letras iniciales (ej. J.P.G.). Uso en correcciones (tachar línea simple, dato correcto, fecha e
+                iniciales), checklists rutinarios y notas al margen.
+            </div>
+        </div>
+
+        <div class="section-header">3. REGISTRO DE PERSONAL (CATÁLOGO OFICIAL)</div>
+        <div class="section">
+            <p style="font-size:8px; color:#666; font-style:italic; margin-bottom:5px;">Instrucción: Llenar con tinta
+                permanente. En caso de baja, no borrar el renglón; colocar fecha en Estatus.</p>
+            <button class="btn btn-mini no-print" onclick="addRow('tbl-catalogo-v2')" style="margin-bottom:5px;">+
+                Agregar Personal</button>
+            <table class="compact-table" id="tbl-catalogo-v2">
+                <thead>
+                    <tr>
+                        <th width="18%">Nombre Completo</th>
+                        <th width="12%">Departamento</th>
+                        <th width="15%">Firma Autógrafa</th>
+                        <th width="15%">Firma Corta</th>
+                        <th width="10%">Iniciales</th>
+                        <th width="10%">Fecha Reg.</th>
+                        <th width="10%">Estatus</th>
+                        <th width="10%">QA</th>
+                        <th width="6%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                        <td style="background-color:#fafafa;"></td>
+                        <td style="background-color:#fafafa;"></td>
+                        <td><input class="cedit" placeholder="J.P.G."></td>
+                        <td><input type="date" class="cedit"></td>
+                        <td><select class="cedit">
+                                <option>Activo</option>
+                                <option>Baja</option>
+                            </select></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-xs"
+                                onclick="deleteRow(this)">Eliminar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">4. PUNTOS CRÍTICOS PARA AUDITORÍA</div>
+        <div class="info-box" style="font-size:8.5px;">
+            • <strong>Obligatoriedad:</strong> Firmas no registradas invalidan el documento ante COFEPRIS/ISO.<br>
+            • <strong>Unicidad:</strong> QA verificará que no existan iniciales idénticas activas.<br>
+            • <strong>Inalterabilidad:</strong> Prohibido sobreescribir o usar corrector. Corregir según BPD (línea
+            simple, dato correcto, iniciales y fecha).
+        </div>
+
+        <div class="section-header">5. FIRMAS DE AUTORIZACIÓN</div>
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:10px; margin-top:10px;">
+            <div class="signature-box" style="flex:1;">
+                <p style="font-weight:bold;">Elaboró Responsable Control Documental(SGC)</p>
+                <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #ccc; margin-top:20px;">
+            </div>
+            <div class="signature-box" style="flex:1;">
+                <p style="font-weight:bold;">Verificó Aseguramiento de calidad (QA)</p>
+                <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #ccc; margin-top:20px;">
+            </div>
+            <div class="signature-box" style="flex:1;">
+                <p style="font-weight:bold;">Aprobó (Responsable dirección)</p>
+                <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #ccc; margin-top:20px;">
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-00-B | Versión: 2.0 | Catálogo de Firmas e Iniciales | Xelle Scientific |
+                Página 2 de 2</div>
+            <div class="legal-data">Protegido por derechos de autor. Prohibida su reproducción total o parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+            // Asegura que la última celda tenga el botón eliminar
+            let lastCell = newRow.querySelector('td.no-print');
+            if (!lastCell) {
+                lastCell = document.createElement('td');
+                lastCell.className = 'no-print';
+                newRow.appendChild(lastCell);
+            }
+            lastCell.innerHTML = '<button class="btn btn-danger btn-xs" onclick="deleteRow(this)">Eliminar</button>';
+            tbody.appendChild(newRow);
+        }
+
+        function deleteRow(btn) {
+            const row = btn.closest('tr');
+            const tbody = row.parentNode;
+            if (tbody.rows.length > 1) {
+                row.remove();
+            } else {
+                // Si es la última fila, solo limpia los campos
+                row.querySelectorAll('input').forEach(input => input.value = '');
+                row.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+            }
+        }
+
+        // --- Modo Offline ---
+        let isOfflineMode = false;
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="date"> a <input type="text">
+                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="date">
+                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-AD-12 Plan Anual de Capacitación V2</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Horizontal para Matriz Anual */
+        @page {
+            size: landscape;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 26cm;
+            margin: 0 auto;
+            background: white;
+            padding: 0.8cm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 8px;
+            padding: 4px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 8.5px;
+            padding: 2px;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+            text-align: center;
+            height: 16px;
+        }
+
+        .compact-table input,
+        .compact-table select {
+            font-size: 8.5px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 1px;
+            box-sizing: border-box;
+            font-family: inherit;
+            text-align: center;
+        }
+
+        .compact-table input:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .row-p {
+            background-color: #fff;
+        }
+
+        .row-r {
+            background-color: #f8fafc;
+            color: #1E3A5F;
+            font-weight: bold;
+        }
+
+        .legend {
+            font-size: 9px;
+            margin-top: 10px;
+            color: #475569;
+            font-style: italic;
+            display: flex;
+            gap: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .p-box {
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+        }
+
+        .r-box {
+            width: 10px;
+            height: 10px;
+            background: #e2e8f0;
+            border: 1px solid #cbd5e1;
+        }
+
+        .footer-unified {
+            margin-top: 20px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 10px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+
+            tr {
+                page-break-inside: avoid;
+            }
+
+            /* Oculta los placeholders en impresión */
+            input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-ad-12">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Plan</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                        font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                        font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio del Plan</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-AD-12-</span>
+                    <input type="text" id="reg-ad12" class="registry-input generate-barcode cedit"
+                        data-target="barcode-ad12" data-prefix="FO-AD-12-" placeholder="202X-V1">
+                </div>
+                <svg id="barcode-ad12" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>PLAN ANUAL DE CAPACITACIÓN</h1>
+            <div class="metadata">Código: FO-AD-12 | Versión: 2.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div
+            style="margin-top: 10px; display: flex; align-items: center; gap: 10px; font-weight: bold; color: #1E3A5F;">
+            AÑO: <input class="cedit"
+                style="width: 80px; border-bottom: 2px solid #1E3A5F; text-align: left; font-size: 14px;" value="2026">
+        </div>
+
+        <div class="section">
+            <table class="compact-table" id="tbl-plan">
+                <thead>
+                    <tr>
+                        <th width="3%" rowspan="2" style="font-size: 10px;">No.</th>
+                        <th width="15%" rowspan="2" style="font-size: 10px;">Curso a Impartir</th>
+                        <th width="10%" rowspan="2" style="font-size: 10px;">Cumplimiento Normativo</th>
+                        <th width="10%" rowspan="2" style="font-size: 10px;">Tipo de Capacitación</th>
+                        <th width="12%" rowspan="2" style="font-size: 10px;">Áreas Involucradas</th>
+                        <th width="2%" rowspan="2">Stat</th>
+                        <th colspan="12">Mes de Impartición</th>
+                    </tr>
+                    <tr>
+                        <th width="3.8%">ENE</th>
+                        <th width="3.8%">FEB</th>
+                        <th width="3.8%">MAR</th>
+                        <th width="3.8%">ABR</th>
+                        <th width="3.8%">MAY</th>
+                        <th width="3.8%">JUN</th>
+                        <th width="3.8%">JUL</th>
+                        <th width="3.8%">AGO</th>
+                        <th width="3.8%">SEP</th>
+                        <th width="3.8%">OCT</th>
+                        <th width="3.8%">NOV</th>
+                        <th width="3.8%">DIC</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-plan">
+                    <tr class="row-p">
+                        <td rowspan="2">1</td>
+                        <td rowspan="2"><input class="cedit" style="text-align:left;"
+                                placeholder="Ej. NOM-059-SSA1-2015"></td>
+                        <td rowspan="2"><input class="cedit" placeholder="Ej. Inducción, BPF / BPD, Técnico, Seguridad">
+                        </td>
+                        <td rowspan="2"><input class="cedit" placeholder="Ej. Interna, Externa"></td>
+                        <td rowspan="2"><input class="cedit" placeholder="Todas / Lab"></td>
+                        <td>P</td>
+                        <script>for (let i = 0; i < 12; i++) document.write('<td><input class="cedit"></td>');</script>
+                    </tr>
+                    <tr class="row-r">
+                        <td>R</td>
+                        <script>for (let i = 0; i < 12; i++) document.write('<td><input class="cedit"></td>');</script>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                * Cumplimiento Normativo: Inducción, BPF / BPD, Técnico, Seguridad
+                <br>* Tipo de Capacitación: Interna, Externa
+            </p>
+            <button
+                style="width: fit-content; background-color: #1E3A5F; height: fit-content; font-size: 10px; color: white"
+                class="btn btn-primary no-print" onclick="addRow('tbody-plan')">+ AGREGAR CURSO AL PLAN ANUAL</button>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="p-box"></div> <strong>P:</strong> Programado (Indicar con 'X')
+            </div>
+            <div class="legend-item">
+                <div class="r-box"></div> <strong>R:</strong> Real (Indicar con 'X' o fecha DD/MM)
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:15px; margin-top:20px;">
+                <div class="signature-box" style="flex:1; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;">ELABORA (RH)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:30px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre y Firma</p>
+                </div>
+                <div class="signature-box" style="flex:1; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;">REVISA (QA)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:30px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre y Firma</p>
+                </div>
+                <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                    <p style="font-weight:bold; font-size:10px; color:#14532d;">AUTORIZA (DIRECCIÓN / RS)</p>
+                    <div style="border-top:1px solid #166534; width:100%; margin-top:30px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre y Firma</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-12 | Versión: 2.0 | Plan Anual de Capacitación | Xelle Scientific | Página 1
+                de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V.
+                Prohibida su reproducción total o parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        let cursoCount = 1;
+        function addRow(tbodyId) {
+            cursoCount++;
+            const tbody = document.getElementById(tbodyId);
+
+            // Fila Programado
+            const trP = document.createElement('tr');
+            trP.className = 'row-p';
+            let colsP = `<td rowspan="2">${cursoCount}</td>
+                        <td rowspan="2"><input class="cedit" style="text-align:left;"></td>
+                        <td rowspan="2"><input class="cedit" placeholder="Ej. Inducción, BPF / BPD, Técnico, Seguridad"></td>
+                        <td rowspan="2"><input class="cedit" placeholder="Ej. Interna, Externa"></td>
+                        <td rowspan="2"><input class="cedit"></td>
+                        <td>P</td>`;
+            for (let i = 0; i < 12; i++) colsP += '<td><input class="cedit"></td>';
+            trP.innerHTML = colsP;
+
+            // Fila Real
+            const trR = document.createElement('tr');
+            trR.className = 'row-r';
+            let colsR = `<td>R</td>`;
+            for (let i = 0; i < 12; i++) colsR += '<td><input class="cedit"></td>';
+            trR.innerHTML = colsR;
+
+            tbody.appendChild(trP);
+            tbody.appendChild(trR);
+        }
+    </script>
+</body>
+
+</html>

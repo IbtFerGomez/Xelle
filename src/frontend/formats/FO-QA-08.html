@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-QA-08 Acta de Destrucción y Disposición Final</title>
+    <title>FO-QA-08 Acta de Destrucción y Disposición Final PNC </title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -244,32 +244,32 @@
             <div class="info-box" style="margin-top:15px;">
                 <strong>Motivo de la Disposición Final / Destrucción (Marque una):</strong>
                 <div class="cbx-group-col">
-                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                    <label style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
                         <span><strong>Producto No Conforme (PNC):</strong> Producto terminado rechazado por Calidad.
                             (Obligatorio: Indicar folio del reporte de desviación FO-LC-51 o FO-OP-51).</span>
                         <input type="radio" name="motivo" class="cedit">
                     </label>
-                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                    <label style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
                         <span><strong>Producto Caduco:</strong> Vencimiento de vida útil en almacén o muestras de
                             retención.</span>
                         <input type="radio" name="motivo" class="cedit">
                     </label>
-                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                    <label style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
                         <span><strong>Merma / Desperdicio Controlado:</strong> Sobrantes de proceso, purgas, o
                             materiales de empaque impresos obsoletos.</span>
                         <input type="radio" name="motivo" class="cedit">
                     </label>
-                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                    <label style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
                         <span><strong>Falla Microbiológica:</strong> Positivo en esterilidad, endotoxinas o
                             micoplasma.</span>
                         <input type="radio" name="motivo" class="cedit">
                     </label>
-                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                    <label style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
                         <span><strong>Excursión Térmica Crítica:</strong> Desviación de temperatura durante
                             almacenamiento que compromete la integridad.</span>
                         <input type="radio" name="motivo" class="cedit">
                     </label>
-                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                    <label style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
                         <span><strong>Defecto Crítico de Empaque/Sellado:</strong> Comprometiendo la esterilidad o
                             trazabilidad.</span>
                         <input type="radio" name="motivo" class="cedit">
@@ -287,7 +287,9 @@
                 </tr>
                 <tr>
                     <td><strong>Justificación Breve:</strong></td>
-                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td><textarea class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; min-height:40px; resize:vertical;"></textarea>
+                    </td>
                 </tr>
             </table>
 
@@ -395,11 +397,11 @@
             <div style="margin-bottom:15px;">
                 <strong>A. Lugar de Destrucción:</strong>
                 <div class="cbx-group-col">
-                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                    <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>Interna (En instalaciones de Xelle Scientific)</span>
                         <input type="radio" name="lugar" class="cedit">
                     </label>
-                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                    <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>Externa (Proveedor autorizado de disposición final)</span>
                         <input type="radio" name="lugar" class="cedit">
                     </label>
@@ -409,7 +411,7 @@
             <div style="margin-bottom:15px; padding-top:10px; border-top:1px solid #e2e8f0;">
                 <strong>B. Método de Inactivación Previa (Para productos de riesgo biológico):</strong>
                 <div class="cbx-group-col">
-                    <label style="display:flex; align-items:flex-start; justify-content:space-between;">
+                    <label style="display:flex; align-items:flex-start; justify-content:space-between;flex-wrap: wrap;">
                         <span>Inactivación Química: Inmersión en Hipoclorito de sodio al
                             <input type="number" class="cedit inline-input" placeholder="%" style="width:40px;"> %
                             por <input type="number" class="cedit inline-input" placeholder="min" style="width:40px;">
@@ -417,14 +419,14 @@
                         </span>
                         <input type="checkbox" class="cedit" style="margin-left:10px;">
                     </label>
-                    <label style="display:flex; align-items:flex-start; justify-content:space-between;">
+                    <label style="display:flex; align-items:flex-start; justify-content:space-between;flex-wrap: wrap;">
                         <span>Inactivación Térmica: Esterilización en Autoclave a 121°C por
                             <input type="number" class="cedit inline-input" placeholder="min" style="width:40px;"> min.
                             Ciclo No. <input class="cedit inline-input" style="width:80px;">
                         </span>
                         <input type="checkbox" class="cedit" style="margin-left:10px;">
                     </label>
-                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                    <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>No aplica inactivación previa (Envío directo a contenedor de RPBI)</span>
                         <input type="checkbox" class="cedit">
                     </label>
@@ -434,26 +436,27 @@
             <div style="margin-bottom:15px; padding-top:10px; border-top:1px solid #e2e8f0;">
                 <strong>C. Método de Destrucción Física (Marcar los aplicables):</strong>
                 <div class="cbx-group-col">
-                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                    <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>Inutilización física (Corte, trituración, ruptura de empaques/viales)</span>
                         <input type="checkbox" class="cedit">
                     </label>
-                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                    <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>Neutralización Química (Ej. Hipoclorito de sodio)</span>
                         <input type="checkbox" class="cedit">
                     </label>
-                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                    <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>Incineración / Disposición como RPBI</span>
                         <input type="checkbox" class="cedit">
                     </label>
-                    <label style="display:flex; align-items:center; justify-content:space-between;">
+                    <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>Destrucción mecánica para evitar falsificación</span>
                         <input type="checkbox" class="cedit">
                     </label>
                     <label style="display:flex; align-items:center; gap:5px;">
                         <span>Otro:</span>
-                        <input class="cedit" style="flex:1; margin-left:5px; border-bottom:1px solid #ccc;">
-                        <input type="checkbox" class="cedit">
+                        <input class="cedit"
+                            style="flex:1; margin-left:5px; border-bottom:1px solid #ccc;flex-wrap: wrap;">
+                        <input type="checkbox" style="width: 80%; flex-wrap: wrap; ">
                     </label>
                 </div>
             </div>
@@ -465,15 +468,15 @@
                         <td width="35%">
                             <strong>Tipo de Contenedor:</strong><br>
                             <div class="cbx-group-col" style="margin-top:5px;">
-                                <label style="display:flex; justify-content:space-between;">
+                                <label style="display:flex; justify-content:space-between;flex-wrap: wrap;">
                                     <span>Bolsa Roja</span>
                                     <input type="radio" name="cont" class="cedit">
                                 </label>
-                                <label style="display:flex; justify-content:space-between;">
+                                <label style="display:flex; justify-content:space-between;flex-wrap: wrap;">
                                     <span>Recipiente Rígido Rojo</span>
                                     <input type="radio" name="cont" class="cedit">
                                 </label>
-                                <label style="display:flex; justify-content:space-between;">
+                                <label style="display:flex; justify-content:space-between;flex-wrap: wrap;">
                                     <span>Bolsa Amarilla</span>
                                     <input type="radio" name="cont" class="cedit">
                                 </label>
@@ -487,11 +490,11 @@
                         <td width="35%">
                             <strong>Etiqueta Colocada:</strong><br>
                             <div class="cbx-group-col" style="margin-top:5px;">
-                                <label style="display:flex; justify-content:space-between;">
+                                <label style="display:flex; justify-content:space-between;flex-wrap: wrap;">
                                     <span>ET-RPBI-01 (Rojo)</span>
                                     <input type="radio" name="etiq" class="cedit">
                                 </label>
-                                <label style="display:flex; justify-content:space-between;">
+                                <label style="display:flex; justify-content:space-between;flex-wrap: wrap;">
                                     <span>ET-RPBI-02 (Amarillo)</span>
                                     <input type="radio" name="etiq" class="cedit">
                                 </label>
@@ -501,23 +504,6 @@
                 </table>
             </div>
 
-            <div style="margin-top:15px; padding-top:10px; border-top:1px dashed #cbd5e1;">
-                <strong>E. Datos del Proveedor Externo (Llenar solo si aplica disposición externa):</strong>
-                <table class="no-border-table" style="margin-top:5px;">
-                    <tr>
-                        <td width="40%"><strong>Empresa Recolectora:</strong></td>
-                        <td width="60%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>No. de Manifiesto Ecológico:</strong></td>
-                        <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Autorización SEMARNAT:</strong></td>
-                        <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
-                    </tr>
-                </table>
-            </div>
         </div>
 
         <div class="section-header">4. DECLARACIÓN JURADA Y FIRMAS DE TESTIGOS</div>

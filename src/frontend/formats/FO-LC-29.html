@@ -3,77 +3,162 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-LC-29 Registro de Lote de Producto Terminado (Celular)</title>
+    <title>FO-LC-29 Bitácora TFF V1</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
-        .section-title {
-            background-color: #2c3e50;
+        /* Configuración Vertical */
+        @page {
+            size: portrait;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 19cm;
+            margin: 0 auto;
+            background: white;
+            padding: 0.8cm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
             color: white;
             padding: 5px 10px;
             font-weight: bold;
+            font-size: 10px;
             margin-top: 15px;
-            font-size: 12px;
+            border-radius: 4px;
+            text-transform: uppercase;
         }
 
-        .calc-output {
-            background-color: #f0f4f8;
-            font-weight: bold;
-            color: #333;
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
         }
 
-        .sig-block {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-            background: #f9f9f9;
-        }
-
-        /* Ocultar placeholders al imprimir */
-        .footer {
+        .compact-table th {
+            background-color: #f1f5f9;
+            color: #1E3A5F;
+            font-size: 9px;
+            padding: 5px;
             text-align: center;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 4px;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+            text-align: center;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 9px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 8px !important;
+        }
+
+        .formula {
+            font-style: italic;
+            color: #475569;
             font-size: 8px;
-            color: #64748b;
-            margin-top: 20px;
+        }
+
+        .footer-unified {
+            margin-top: 25px;
+            border-top: 2px solid #1E3A5F;
             padding-top: 10px;
-            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
         }
 
         @media print {
 
-            input::placeholder,
-            textarea::placeholder {
-                color: transparent !important;
-                opacity: 0 !important;
+            .global-controls,
+            .no-print {
+                display: none !important;
             }
 
-            /* Permitir que las tablas y secciones se partan entre páginas */
-            .section {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
+            body {
+                background: white;
+                padding: 0;
             }
 
-            table,
-            .compact-table {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
+            .container {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
             }
 
-            thead {
-                display: table-header-group !important;
+            .checkbox-label {
+                font-size: 8px;
             }
 
-            tr,
-            tbody tr {
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
+            /* Mostrar checkboxes vacíos en impresión */
+            input[type="checkbox"] {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                width: 13px;
+                height: 13px;
+                border: 1.5px solid #333;
+                border-radius: 2px;
+                background: #fff;
+                display: inline-block;
+                position: relative;
+                vertical-align: middle;
+                margin: 0 3px 0 3px;
             }
 
-            .section-title {
-                page-break-after: avoid !important;
-                break-after: avoid !important;
+            input[type="checkbox"]:checked::after {
+                content: "✔";
+                color: #1E3A5F;
+                font-size: 12px;
+                position: absolute;
+                left: 2px;
+                top: -1px;
+                display: block;
+                width: 13px;
+                height: 13px;
+                text-align: center;
+                line-height: 13px;
+            }
+
+            input[type="checkbox"]::after {
+                content: "";
+                display: block;
             }
         }
     </style>
@@ -82,519 +167,481 @@
 <body id="doc-fo-lc-29">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
-        <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Bitácora</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
 
     <div class="container">
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
                     <defs>
                         <style>
-                            .svg-logo-titulo {
-                                font-family: 'Arial Black', sans-serif;
-                                font-weight: 900;
-                                fill: #1D1D1B
-                            }
-
-                            .svg-logo-subtitulo {
-                                font-family: 'Arial', sans-serif;
-                                font-weight: 700;
-                                fill: #1D1D1B;
-                                letter-spacing: 2px
-                            }
-
-                            .svg-logo-celula {
+                            .c {
                                 fill: #2E9D82
                             }
                         </style>
                     </defs>
-                    <g transform="translate(0, -2) scale(0.85)">
-                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
-                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
-                        <path class="svg-logo-celula"
-                            d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z" />
-                    </g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68"
-                        class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35"
-                        font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                        font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                        font-size="19">SCIENTIFIC</text>
                 </svg>
             </div>
             <div class="registry-container">
-                <label>Folio Diario</label>
+                <label>Folio de Proceso</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-LC-29-</span>
-                    <input type="text" id="reg-29" class="registry-input generate-barcode" data-target="barcode-29"
-                        data-prefix="FO-LC-29-" placeholder="Lote Final">
+                    <input type="text" id="reg-lc29" class="registry-input generate-barcode cedit"
+                        data-target="barcode-lc29" data-prefix="FO-LC-29-" placeholder="FO-LC-29-XX">
                 </div>
-                <input type="date" class="registry-date no-auto-date">
-                <svg id="barcode-29" class="barcode-svg"></svg>
+                <svg id="barcode-lc29" class="barcode-svg" style="height:35px;"></svg>
             </div>
         </div>
 
         <div class="header-main">
-            <h1>REGISTRO DE LOTE DE PRODUCTO TERMINADO (CELULAR)</h1>
-            <div class="metadata">Código: FO-LC-29 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <h1>BITÁCORA DE PROCESO DE FILTRACIÓN FLUJO TANGENCIAL (TFF)</h1>
+            <div class="metadata">Código: FO-LC-29 | Versión: 1.0 | Vigencia: May 2026 | Página: 1 de 1</div>
         </div>
 
-        <div style="margin-bottom:10px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-            <strong>Fecha de Registro Diario:</strong>
-            <input type="date" id="fecha-dia-29" class="cedit" style="width:170px;">
-            <button class="btn btn-primary btn-mini no-print" onclick="pickFo24RecordAndLoad()">Cargar FO-LC-24</button>
-            <button class="btn btn-success btn-mini no-print" onclick="addManualDosis29()">+ Dosis Manual</button>
-        </div>
+        <div class="section-header">1. IDENTIFICACIÓN DEL PROCESO</div>
+        <H3> Registro medio recuperado sin rojo de fenol</H3>
+        <table class="compact-table">
+            <tr>
+                <th width="20%">Lote MRSF:</th>
+                <td width="20%"><input class="cedit" style="font-weight:bold;"></td>
+                <th width="20%">Pasaje:</th>
+                <td width="20%"><input class="cedit"></td>
+                <th width="20%">Fecha liberación</th>
+                <td width="20%"><input type="text" class="cedit"></td>
+            </tr>
+        </table>
+        <table class="compact-table">
+            <tr>
+                <th width="50%">FO-LC-41 liberación</th>
+                <td width="50%"><input class="cedit" placeholder="FO-LC-41-XX"></td>
+                <th width="50%">FO-LC-30 Medios Rcuperados</th>
+                <td width="50%"><input class="cedit" placeholder="FO-LC-30-XX"></td>
 
-        <div class="section">
-            <div class="section-title">1. DOSIS PREPARADAS (INTERRELACIONADO CON FO-LC-24)</div>
-            <table id="tbl-dosis-29" class="compact-table">
-                <thead>
-                    <tr>
-                        <th width="3%">#</th>
-                        <th width="12%">Producto</th>
-                        <th width="15%">Cód. Origen</th>
-                        <th width="10%">Caducidad</th>
-                        <th width="10%">Lote</th>
-                        <th width="8%">Pres.</th>
-                        <th width="8%">No. Células</th>
-                        <th width="8%">Cód. Venta</th>
-                        <th width="14%">CÓDIGO ÚNICO</th>
-                        <th width="9%">Observaciones</th>
-                        <th width="3%" class="no-print"></th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="6" style="text-align:right; font-weight:bold;">TOTAL DOSIS:</td>
-                        <td><input type="number" id="total-dosis-29" class="cedit calc-output" readonly value="0"></td>
-                        <td colspan="4"></td>
-                    </tr>
-                </tfoot>
-            </table>
+            </tr>
+        </table>
 
-            <div style="margin-top:10px; border-top:1px solid #ddd; padding-top:8px;">
-                <table class="compact-table">
-                    <tr>
-                        <td><strong>Células Totales:</strong> <input id="cell-total-29" class="cedit calc-output"
-                                readonly></td>
-                        <td><strong>Volumen Total:</strong> <input id="volume-total-29" class="cedit" placeholder="mL">
-                        </td>
-                        <td><strong>Exos Total:</strong> <input id="exo-total-29" class="cedit calc-output" readonly>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Fecha Fabricación:</strong> <input type="date" id="fecha-fab-29" class="cedit"></td>
-                        <td><strong>Fecha Vencimiento:</strong> <input type="date" id="fecha-venc-29" class="cedit">
-                        </td>
-                        <td></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+        <div class="section-header">2. LIMPIEZA, ESTERILIZACIÓN Y MATERIALES</div>
+        <table class="compact-table">
+            <tr>
+                <th width="50%">Hora Inicio Limpieza:</th>
+                <td width="50%"><input type="text" class="cedit"></td>
+            </tr>
 
-        <div class="section">
-            <div class="section-title">2. COMPONENTES DEL PRODUCTO (GRANEL / ORIGEN)</div>
-            <table id="tbl-componentes" class="compact-table">
-                <thead>
-                    <tr>
-                        <th width="25%">Componente</th>
-                        <th width="20%">Proveedor / Origen</th>
-                        <th width="15%">Lote</th>
-                        <th width="15%">Caducidad</th>
-                        <th width="10%">Cantidad</th>
-                        <th width="10%">Unidad</th>
-                        <th class="no-print" width="5%"></th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <button class="btn btn-primary btn-mini no-print" onclick="addCompRow()">+ Agregar Componente</button>
-        </div>
+        </table>
 
-        <div class="section">
-            <div class="section-title">3. MATERIALES DE ACONDICIONAMIENTO</div>
-            <table id="tbl-materiales" class="compact-table">
-                <thead>
-                    <tr>
-                        <th width="25%">Producto</th>
-                        <th width="20%">Tipo</th>
-                        <th width="15%">Lote</th>
-                        <th width="15%">Caducidad</th>
-                        <th width="15%">Cantidad</th>
-                        <th class="no-print" width="5%"></th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <button class="btn btn-primary btn-mini no-print" onclick="addMatRow()">+ Agregar Material</button>
-        </div>
+        <table class="compact-table">
+            <tr>
+                <th width="20%">Lote Membrana Hydrosart 30kD:</th>
+                <td width="30%"><input class="cedit" placeholder="Hydrosart 30kD"></td>
 
-        <div class="section">
-            <div class="section-title">5. REGISTRO DE INSPECCIÓN Y CONTROL</div>
-            <div style="margin-bottom: 5px;">
-                <strong>Lote:</strong> <input class="cedit" style="width: 200px;" placeholder="Lote proceso...">
-                <strong>REF:</strong> <input class="cedit" style="width: 150px;" placeholder="Referencia SOP...">
-            </div>
-            <table id="tbl-control" class="compact-table">
-                <thead>
-                    <tr>
-                        <th width="5%">ID (#)</th>
-                        <th width="30%">Muestra / Verificación (Parámetro)</th>
-                        <th width="10%">Código</th>
-                        <th width="20%">Especificación</th>
-                        <th width="10%">Resultado</th>
-                        <th width="15%">Observaciones</th>
-                        <th width="10%">Responsable</th>
-                        <th class="no-print"></th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <button class="btn btn-primary btn-mini no-print" onclick="addControlRow()">+ Control</button>
-        </div>
+            </tr>
+            <tr>
+                <th width="20%">Fecha preparación NaOH 1M,</th>
+                <td width="30%"><input class="cedit" placeholder="Hydrosart 30kD"></td>
+            </tr>
+        </table>
 
-        <div class="section">
-            <div class="section-title">6. RECONCILIACIÓN DE PRODUCTO</div>
-            <table class="compact-table">
+        <table class="compact-table">
+            <thead>
                 <tr>
-                    <td width="40%"><strong>Total Producto Terminado Obtenido (Suma Unidades):</strong></td>
-                    <td><input type="number" id="cant-real" class="cedit" oninput="calcYield()" placeholder="0"></td>
+                    <th width="33%">Reactivo / Insumo</th>
+                    <th width="33%">Lote del Reactivo</th>
+                    <th width="34%">Caducidad</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>NaCl 0.9%</td>
+                    <td><input class="cedit">
+                    <td></td>
                 </tr>
                 <tr>
-                    <td><strong>Mermas / Descarte Justificado:</strong></td>
-                    <td><input type="number" class="cedit" placeholder="0"></td>
+                    <td>Agua Inyectable</td>
+                    <td><input class="cedit">
+                    <td></td>
                 </tr>
                 <tr>
-                    <td><strong>Causas:</strong></td>
-                    <td><textarea class="cedit" rows="1" placeholder="Explique las causas..."></textarea></td>
+                    <td>Escamas NaOH</td>
+                    <td><input class="cedit">
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th width="33%">Reactivo / Insumo</th>
+                    <th width="33%">Volumen</th>
+                    <th width="34%">Etapa / Tiempo</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>NaCl 0.9%</td>
+                    <td><input class="cedit"></td>
+                    <td>Limpieza (5 min)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="margin:25px 500px; font-size: 10px; width: max-content;" justify-content: center; display: flex;
+            gap: 10px; align-items: center;>
+            <span><strong>Muestra POSITIVA:</strong> <input type="checkbox" class="cedit"
+                    style="width: max-content;"></span>
+
+        </div>
+
+
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th width="33%">Reactivo / Insumo</th>
+                    <th width="33%">Volumen</th>
+                    <th width="34%">Etapa / Tiempo</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>NaOH 1M 50°C</td>
+                    <td><input class="cedit"></td>
+                    <td>Sanitización (5-10 min)</td>
                 </tr>
                 <tr>
-                    <td style="background-color: #e8f6f3;"><strong>% Rendimiento:</strong></td>
-                    <td style="background-color: #e8f6f3;"><input id="yield-percent" class="cedit calc-output" readonly>
-                    </td>
+                    <td>NaOH 1M</td>
+                    <td><input class="cedit"></td>
+                    <td>Sanitización (5-10 min)</td>
                 </tr>
-            </table>
-            <div style="margin-top:5px;"><strong>Conclusión:</strong> <label><input type="radio" name="yield_status">
-                    Dentro de límites</label> <label><input type="radio" name="yield_status"> Fuera de límites</label>
+                <tr>
+                    <td>Agua inyectable desinfección</td>
+                    <td><input class="cedit"></td>
+                    <td>Sanitización (5-10 min)</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <div class="section-header">3. PRUEBA DE FLUJO DE AGUA LIMPIA (CLEAN WATER FLUX - CWF)</div>
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th>Presión Feed (bar)</th>
+                    <th>Volumen (mL)</th>
+                    <th>Tiempo (s)</th>
+                    <th>CWF (mL/s) <span class="formula">V/t</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="number" step="0.1" class="cedit"></td>
+                    <td><input type="number" class="cedit"></td>
+                    <td><input type="number" class="cedit"></td>
+                    <td><input class="cedit" readonly style="background:#f8fafc;"></td>
+                </tr>
+                <tr>
+                    <td><input type="number" step="0.1" class="cedit"></td>
+                    <td><input type="number" class="cedit"></td>
+                    <td><input type="number" class="cedit"></td>
+                    <td><input class="cedit" readonly style="background:#f8fafc;"></td>
+                </tr>
+                <tr>
+                    <td><input type="number" step="0.1" class="cedit"></td>
+                    <td><input type="number" class="cedit"></td>
+                    <td><input type="number" class="cedit"></td>
+                    <td><input class="cedit" readonly style="background:#f8fafc;"></td>
+                </tr>
+                <tr>
+                    <td><input type="number" step="0.1" class="cedit"></td>
+                    <td><input type="number" class="cedit"></td>
+                    <td><input type="number" class="cedit"></td>
+                    <td><input class="cedit" readonly style="background:#f8fafc;"></td>
+                </tr>
+                <tr>
+                    <td><input type="number" step="0.1" class="cedit"></td>
+                    <td><input type="number" class="cedit"></td>
+                    <td><input type="number" class="cedit"></td>
+                    <td><input class="cedit" readonly style="background:#f8fafc;"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="compact-table">
+            <tr>
+                <th width="50%">Promedio:</th>
+                <td width="50%"><input type="text" class="cedit"></td>
+            </tr>
+        </table>
+
+        <!-- footer -->
+            <div class="footer-unified" style="padding: 20px;">
+                <div class="control-data">FO-LC-29 | Versión: 1.0 | Bitácora Proceso TFF | Xelle Scientific | Página 1
+                    de 2
+                </div>
+                <div class="legal-data">Este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V. Prohibida su
+                    reproducción total o parcial.</div>
             </div>
+             <!-- FIN footer -->
+
+            
+        <div class="section-header">4. MONITOREO DE FILTRACIÓN (Q PERM / Q RET)</div>
+        <table class="compact-table">
+            <tr>
+                <th width="50%">Hora Inicio Filtración:</th>
+                <td width="50%"><input type="text" class="cedit"></td>
+            </tr>
+
+        </table>
+
+
+        <div style="margin:10px 500px; font-size: 10px; width: max-content;" justify-content: center; display: flex;
+            gap: 10px; align-items: center;>
+            <span><strong>Muestra NEGATIVA:</strong> <input type="checkbox" class="cedit"
+                    style="width: max-content;"></span>
+
         </div>
 
+        <table class="compact-table">
+            <tr>
+                <th width="50%">Volumen NaCl 0.9% desinfección:</th>
+                <td width="50%"><input type="text" class="cedit"></td>
+            </tr>
+
+        </table>
+        <div style="margin:10px 500px; font-size: 10px; width: max-content;" justify-content: center; display: flex;
+            gap: 10px; align-items: center;>
+            <span><strong>Muestra NEGATIVA 2:</strong> <input type="checkbox" class="cedit"
+                    style="width: max-content;"></span>
+
+        </div>
+
+        <table class="compact-table">
+            <tr>
+                <th width="50%">Volumen inicial MSRF:</th>
+                <td width="50%"><input type="text" class="cedit"></td>
+            </tr>
+            <tr>
+                <th width="50%">Flujo Q perm:</th>
+                <td width="50%"><input type="text" class="cedit"></td>
+            </tr>
+
+        </table>
+        <H3> Flujo Permeado (Qp) </H3>
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th rowspan="5" style="width: 10%;">Número</th>
+                    <th rowspan="5" style="width: 20%;">P feed (bar)</th>
+                    <th rowspan="5" style="width: 20%;">Vel bomba</th>
+                    <th rowspan="5" style="width: 20%;">Vol. (mL)</th>
+                    <th rowspan="5" style="width: 10%;">Tiempo (s)</th>
+                    <th rowspan="5" style="width: 20%;">Q perm (mL/s) <span class="formula">V/t</span></th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" class="cedit" value="1"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="cedit" value="2"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="cedit" value="3"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="cedit" value="4"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="cedit" value="5"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="cedit" value="6"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <H3> Flujo Retenido (Qr) </H3>
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th rowspan="5" style="width: 10%;">Número</th>
+                    <th rowspan="5" style="width: 20%;">P feed (bar)</th>
+                    <th rowspan="5" style="width: 20%;">Vel bomba</th>
+                    <th rowspan="5" style="width: 20%;">Vol. (mL)</th>
+                    <th rowspan="5" style="width: 10%;">Tiempo (s)</th>
+                    <th rowspan="5" style="width: 20%;">Q perm (mL/s) <span class="formula">V/t</span></th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" class="cedit" value="1"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="cedit" value="2"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="cedit" value="3"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="cedit" value="4"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="cedit" value="5"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="cedit" value="6"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table class="compact-table">
+            <tr>
+                <th width="50%">Volumen Final:</th>
+                <td width="50%"><input type="text" class="cedit"></td>
+            </tr>
+            <tr>
+                <th width="50%">Factor dil (Vf/Vi):</th>
+                <td width="50%"><input type="text" class="cedit"></td>
+            </tr>
+
+        </table>
+
+        <table class="compact-table">
+            <tr>
+                <th width="50%">Hora fin TFF:</th>
+                <td width="50%"><input type="text" class="cedit"></td>
+            </tr>
+
+        </table>
+        <div class="section-header">5.Limpieza</div>
+        <table class="compact-table">
+            <tr>
+                <th width="20%">Vol. NaOH 1M 50°C:</th>
+                <td width="13%"><input class="cedit"> mL</td>
+                <th width="20%">Vol. NaOH 1M TA:</th>
+                <td width="14%"><input class="cedit"> mL</td>
+            </tr>
+            <tr>
+
+                <th width="20%">Vol. NaCl 0.9% limpieza:</th>
+                <td width="14%"><input class="cedit"> mL</td>
+                <th width="20%">Vol. EtOH 20% limpieza:</th>
+                <td width="13%"><input class="cedit"> mL</td>
+            </tr>
+            <tr>
+                <th colspan="4" class="text-left">Pérdida de Proceso (Hold-up volume / Merma):</th>
+                <td colspan="2"><input class="cedit" placeholder="Calcular mL"></td>
+            </tr>
+        </table>
+        <table class="compact-table">
+            <tr>
+                <th width="50%">Hora fin:</th>
+                <td width="50%"><input type="text" class="cedit"></td>
+            </tr>
+
+        </table>
+        <div class="section-header">6. FIRMAS DE CONFORMIDAD</div>
         <div class="section">
-            <div class="section-title">7. VERIFICACIONES Y APROBACIONES</div>
-            <div class="sig-block">
-                <p><strong>Operador(es):</strong></p>
-                <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
-                        class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
-                        type="text" class="cedit" style="flex:1" placeholder="Firma"><span
-                        style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div>
-            </div>
-            <div class="sig-block">
-                <p><strong>Supervisor:</strong> Verificó Proc: <label><input type="checkbox"> Sí</label> <label><input
-                            type="checkbox"> No</label></p>
-                <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
-                        class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
-                        type="text" class="cedit" style="flex:1" placeholder="Firma"><span
-                        style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div>
-            </div>
-            <div class="sig-block">
-                <p><strong>Calidad (Liberación):</strong> Datos completos/Cumple: <label><input type="checkbox">
-                        Sí</label> <label><input type="checkbox"> No</label></p>
-                <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
-                        class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
-                        type="text" class="cedit" style="flex:1" placeholder="Firma"><span
-                        style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div>
-            </div>
-            <div class="sig-block">
-                <p><strong>Responsable Dirección (Autorización Final):</strong></p>
-                <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
-                        class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
-                        type="text" class="cedit" style="flex:1" placeholder="Firma"><span
-                        style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div>
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:20px;">
+                <div class="signature-box" style="flex:1; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;">EJECUTÓ (ANALISTA TFF)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+                </div>
+                <div class="signature-box" style="flex:1; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;">VERIFICÓ (SUPERVISOR)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+                </div>
             </div>
         </div>
 
-        <div class="section">
-            <div class="section-title">8. OBSERVACIONES</div>
-            <textarea class="cedit" rows="3" placeholder="Ninguna"></textarea>
+        <div class="footer-unified">
+            <div class="control-data">FO-LC-29 | Versión: 1.0 | Bitácora Proceso TFF | Xelle Scientific | Página 2 de 2
+            </div>
+            <div class="legal-data">Este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V. Prohibida su
+                reproducción total o parcial.</div>
         </div>
-
-        <div class="footer">FO-LC-29 | REGISTRO DE LOTE DE PRODUCTO TERMINADO (CELULAR) | Versión: 1.0<br>El contenido
-            de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los
-            derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
-
-    <script>
-        function calcTotalTeorico() {
-            const totalDosis = document.querySelectorAll('#tbl-dosis-29 tbody tr').length;
-            document.getElementById('total-dosis-29').value = totalDosis;
-            if (!document.getElementById('cant-real').value) document.getElementById('cant-real').value = totalDosis;
-            calcYield();
-        }
-
-        function calcYield() {
-            const teo = parseFloat(document.getElementById('total-dosis-29').value);
-            const real = parseFloat(document.getElementById('cant-real').value);
-            const res = (teo > 0 && real >= 0) ? ((real / teo) * 100).toFixed(2) + '%' : '';
-            document.getElementById('yield-percent').value = res;
-        }
-
-        function getFo24RecordsByDate(fecha) {
-            const raw = localStorage.getItem('xelle_fo_lc_24_records');
-            if (!raw) return [];
-            try {
-                const list = JSON.parse(raw);
-                if (!Array.isArray(list)) return [];
-                return list
-                    .filter(r => r && r.fechaOperacion === fecha)
-                    .sort((a, b) => String(b.savedAt || '').localeCompare(String(a.savedAt || '')));
-            } catch (e) {
-                return [];
-            }
-        }
-
-        function parseCellNumber(value) {
-            if (!value) return 0;
-            const normalized = String(value).replace(',', '.').replace(/[^0-9.\-]/g, '');
-            return parseFloat(normalized) || 0;
-        }
-
-        function updateResumenDosis(rows, fechaOperacion) {
-            let totalCelulas = 0;
-            let totalExos = 0;
-            let maxCad = '';
-
-            rows.forEach(row => {
-                totalCelulas += parseCellNumber(row.numeroCelulas);
-                if ((row.producto || '').trim() === 'Exosomas') totalExos += 1;
-                if (row.caducidad && (!maxCad || row.caducidad > maxCad)) maxCad = row.caducidad;
-            });
-
-            document.getElementById('cell-total-29').value = totalCelulas ? totalCelulas.toFixed(2) : '0';
-            document.getElementById('exo-total-29').value = totalExos;
-            if (fechaOperacion) document.getElementById('fecha-fab-29').value = fechaOperacion;
-            document.getElementById('fecha-venc-29').value = maxCad || '';
-        }
-
-        function renderDailyRows(rows, fechaOperacion) {
-            const tbody = document.getElementById('tbl-dosis-29').querySelector('tbody');
-            tbody.innerHTML = '';
-
-            if (!Array.isArray(rows) || rows.length === 0) {
-                document.getElementById('total-dosis-29').value = 0;
-                document.getElementById('cell-total-29').value = '0';
-                document.getElementById('exo-total-29').value = '0';
-                calcYield();
-                return;
-            }
-
-            rows.forEach((rowData, idx) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><input class="cedit" readonly value="${idx + 1}"></td>
-                    <td><input class="cedit" readonly value="${rowData.producto || ''}"></td>
-                    <td><textarea class="cedit" rows="1" readonly>${rowData.origen || ''}</textarea></td>
-                    <td><input class="cedit" readonly value="${rowData.caducidad || ''}"></td>
-                    <td><input class="cedit" readonly value="${rowData.lote || ''}"></td>
-                    <td><input class="cedit" readonly value="${(rowData.presentacion === 'Especial' ? ('Especial: ' + (rowData.presentacionEspecial || 'Sin especificar')) : (rowData.presentacion || ''))}"></td>
-                    <td><input class="cedit" readonly value="${rowData.numeroCelulas || ''}"></td>
-                    <td><input class="cedit" readonly value="${rowData.codigoVenta || ''}"></td>
-                    <td><input class="cedit" readonly value="${rowData.codigoUnico || ''}"></td>
-                    <td><textarea class="cedit" rows="1" readonly>${rowData.observaciones || ''}</textarea></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove(); reindexDosis29(); calcTotalTeorico();">x</button></td>
-                `;
-                tbody.appendChild(row);
-            });
-
-            reindexDosis29();
-            calcTotalTeorico();
-            updateResumenDosis(rows, fechaOperacion);
-        }
-
-        function reindexDosis29() {
-            document.querySelectorAll('#tbl-dosis-29 tbody tr').forEach((row, idx) => {
-                const input = row.querySelector('td:first-child input');
-                if (input) input.value = idx + 1;
-            });
-        }
-
-        function addManualDosis29() {
-            const tbody = document.querySelector('#tbl-dosis-29 tbody');
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td><input class="cedit" value="${tbody.children.length + 1}"></td>
-                <td><input class="cedit" placeholder="Producto"></td>
-                <td><textarea class="cedit" rows="1" placeholder="Cód. Origen"></textarea></td>
-                <td><input type="date" class="cedit"></td>
-                <td><input class="cedit" placeholder="Lote"></td>
-                <td><input class="cedit" placeholder="Presentación"></td>
-                <td><input class="cedit" placeholder="No. Células"></td>
-                <td><input class="cedit" placeholder="Cód. Venta"></td>
-                <td><input class="cedit" placeholder="Código único"></td>
-                <td><textarea class="cedit" rows="1" placeholder="Observaciones"></textarea></td>
-                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove(); reindexDosis29(); calcTotalTeorico();">x</button></td>
-            `;
-            tbody.appendChild(row);
-            reindexDosis29();
-            calcTotalTeorico();
-        }
-
-        function pickFo24RecordAndLoad() {
-            const fecha = document.getElementById('fecha-dia-29').value;
-            if (!fecha) {
-                Swal.fire({ icon: 'info', title: 'Selecciona una fecha', timer: 1200, showConfirmButton: false });
-                return;
-            }
-
-            const records = getFo24RecordsByDate(fecha);
-            if (!records.length) {
-                renderDailyRows([], fecha);
-                Swal.fire({ icon: 'warning', title: 'No hay registros FO-LC-24 para esa fecha', timer: 1500, showConfirmButton: false });
-                return;
-            }
-
-            const options = {};
-            records.forEach((record, idx) => {
-                const folio = record.folio || 'SIN-FOLIO';
-                const hora = (record.savedAt || '').replace('T', ' ').substring(0, 16);
-                options[idx] = `${folio} | ${hora}`;
-            });
-
-            Swal.fire({
-                title: 'Selecciona el FO-LC-24',
-                input: 'select',
-                inputOptions: options,
-                inputPlaceholder: 'Selecciona un registro',
-                showCancelButton: true,
-                confirmButtonText: 'Cargar'
-            }).then(result => {
-                if (!result.isConfirmed || result.value === '') return;
-                const selected = records[Number(result.value)];
-                const rows = Array.isArray(selected?.dosisRows) ? selected.dosisRows : [];
-                renderDailyRows(rows, selected?.fechaOperacion || fecha);
-            });
-        }
-
-        window.loadDailyDosificacion = pickFo24RecordAndLoad;
-
-        function addCompRow() {
-            const tbody = document.getElementById('tbl-componentes').querySelector('tbody');
-            const row = document.createElement('tr');
-            row.innerHTML = `<td><input class="cedit" placeholder="Comp..."></td><td><input class="cedit" placeholder="Prov..."></td><td><input class="cedit" placeholder="Lot..."></td><td><input type="date" class="cedit"></td><td><input type="number" class="cedit" placeholder="0"></td><td><input class="cedit" placeholder="Ud"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
-            tbody.appendChild(row);
-        }
-        function addMatRow() {
-            const tbody = document.getElementById('tbl-materiales').querySelector('tbody');
-            const row = document.createElement('tr');
-            row.innerHTML = `<td><input class="cedit" placeholder="Prod..."></td><td><select class="cedit"><option>Envase Prim</option><option>Envase Sec</option><option>Otros</option></select></td><td><input class="cedit" placeholder="Lote"></td><td><input type="date" class="cedit"></td><td><input type="number" class="cedit" placeholder="Cant"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
-            tbody.appendChild(row);
-        }
-        function addControlRow() {
-            const tbody = document.getElementById('tbl-control').querySelector('tbody');
-            const idNum = tbody.children.length + 1;
-            const row = document.createElement('tr');
-            row.innerHTML = `<td><input type="number" class="cedit text-center" value="${idNum}"></td><td><textarea class="cedit" rows="2" placeholder="Parámetro..."></textarea></td><td><input class="cedit" placeholder="Cód"></td><td><input class="cedit" placeholder="Espec"></td><td><input class="cedit" placeholder="Res"></td><td><input class="cedit" placeholder="Obs"></td><td><input class="cedit" placeholder="Resp"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
-            tbody.appendChild(row);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const fechaDia = document.getElementById('fecha-dia-29');
-            if (fechaDia) fechaDia.valueAsDate = new Date();
-            addCompRow();
-            addMatRow();
-            addControlRow();
-        });
-    </script>
-    <script>
-        let isOfflineMode = false;
-
-        function toggleOfflineMode() {
-            isOfflineMode = !isOfflineMode;
-            const btn = document.getElementById('btn-offline');
-            if (isOfflineMode) {
-                btn.textContent = 'Modo Online';
-                btn.style.backgroundColor = '#f59e0b';
-
-                // Convertir <select> a <input type="text">
-                document.querySelectorAll('select.cedit').forEach(sel => {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.className = sel.className;
-                    input.value = sel.options[sel.selectedIndex]?.text || '';
-                    input.setAttribute('data-original-type', 'select');
-                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
-                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
-                    input.setAttribute('data-select-options', options);
-                    sel.parentNode.replaceChild(input, sel);
-                });
-
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
-                    inp.type = 'text';
-                    inp.placeholder = 'DD/MM/AAAA';
-                });
-
-                // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
-                    inp.type = 'text';
-                    inp.placeholder = 'HH:MM';
-                });
-
-                // Convertir <input type="number"> a <input type="text">
-                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'number');
-                    const currentPlaceholder = inp.placeholder;
-                    inp.type = 'text';
-                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
-                });
-            } else {
-                btn.textContent = 'Modo Offline';
-                btn.style.backgroundColor = '';
-
-                // Restaurar <select> desde <input type="text">
-                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
-                    const sel = document.createElement('select');
-                    sel.className = inp.className;
-                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
-                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
-                    options.forEach(optText => {
-                        const opt = document.createElement('option');
-                        opt.text = optText;
-                        sel.appendChild(opt);
-                    });
-                    const currentValue = inp.value;
-                    for (let i = 0; i < sel.options.length; i++) {
-                        if (sel.options[i].text === currentValue) {
-                            sel.selectedIndex = i;
-                            break;
-                        }
-                    }
-                    inp.parentNode.replaceChild(sel, inp);
-                });
-
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
-
-                // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
-
-                // Restaurar <input type="number">
-                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
-                    inp.type = 'number';
-                    inp.removeAttribute('data-original-type');
-                });
-            }
-        }
-    </script>
 </body>
 
 </html>

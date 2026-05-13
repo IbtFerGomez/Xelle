@@ -76,24 +76,30 @@
 
         .radio-group label {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             font-size: 10px;
             cursor: pointer;
-            gap: 10px;
             width: 100%;
+            justify-content: flex-start;
+            padding: 0;
+            margin: 0;
         }
 
         .radio-group label span {
-            flex: 1;
-            min-width: 50%;
+            display: inline-block;
+            width: 50%;
+            min-width: 220px;
+            max-width: 350px;
             text-align: justify;
             line-height: 1.4;
+            margin-right: 10px;
         }
 
-        .radio-group input {
-            margin-top: 2px;
+        .radio-group input[type="radio"] {
+            margin-left: 0;
+            margin-right: 0;
             flex-shrink: 0;
-            margin-left: auto;
+            align-self: center;
         }
 
         .cbx-group {
@@ -262,15 +268,15 @@
                 style="background-color: #f8fafc; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; margin-bottom: 10px;">
                 <strong>Tipo de Desviación (Marque una):</strong>
                 <div class="radio-group" style="margin-top: 8px;">
-                    <label><span><strong>Falla de Equipo Crítico:</strong>
-                            (Ej. Autoclave, HVAC, Campana, Ultracongelador, Liofilizadora).</span><input type="radio"
-                            name="tipo_desv" class="cedit"></label>
-                    <label><span><strong>Falla de Proceso /
-                                Parámetro:</strong> (Ej. Excursión de temperatura, pérdida de vacío, RPM fuera de
-                            rango).</span><input type="radio" name="tipo_desv" class="cedit"></label>
-                    <label><span><strong>Falla de Servicios /
-                                Instalaciones:</strong> (Ej. Corte de luz, caída de presión de agua/aire
-                            comprimido).</span><input type="radio" name="tipo_desv" class="cedit"></label>
+                    <label><span><strong>Falla de Equipo Crítico:</strong> (Ej. Autoclave, HVAC, Campana,
+                            Ultracongelador, Liofilizadora).</span><input type="radio" name="tipo_desv"
+                            class="cedit"></label>
+                    <label><span><strong>Falla de Proceso / Parámetro:</strong> (Ej. Excursión de temperatura, pérdida
+                            de vacío, RPM fuera de rango).</span><input type="radio" name="tipo_desv"
+                            class="cedit"></label>
+                    <label><span><strong>Falla de Servicios / Instalaciones:</strong> (Ej. Corte de luz, caída de
+                            presión de agua/aire comprimido).</span><input type="radio" name="tipo_desv"
+                            class="cedit"></label>
                 </div>
             </div>
 
@@ -438,21 +444,17 @@
             <strong>Dictamen del Lote Afectado:</strong>
             <div class="radio-group"
                 style="background-color:#f8fafc; border:1px solid #cbd5e1; padding:10px; border-radius:4px; margin-bottom:15px;">
-                <label style="color:#166534;"><span><strong>Aprobado para
-                            continuar:</strong> La falla fue contenida y no afectó las propiedades
-                        fisicoquímicas/biológicas
-                        del producto.</span><input type="radio" name="dictamen" class="cedit"></label>
-                <label style="color:#b45309;"><span><strong>Reproceso
-                            Autorizado:</strong> Se autoriza filtrar/esterilizar o re-acondicionar nuevamente (Anexar
-                        justificación y protocolo de reproceso).</span><input type="radio" name="dictamen"
-                        class="cedit"></label>
-                <label style="color:#991b1b;"><span><strong>Rechazo
-                            Definitivo:</strong> Destrucción del lote por compromiso crítico de esterilidad/calidad
-                        (Vincular a FO-QA-08 Acta de Destrucción).</span><input type="radio" name="dictamen"
-                        class="cedit"></label>
-                <label><span><strong>No Aplica:</strong> No había producto
-                        involucrado durante la falla del equipo/servicio.</span><input type="radio" name="dictamen"
-                        class="cedit"></label>
+                <label style="color:#166534;"><span><strong>Aprobado para continuar:</strong> La falla fue contenida y
+                        no afectó las propiedades fisicoquímicas/biológicas del producto.</span><input type="radio"
+                        name="dictamen" class="cedit"></label>
+                <label style="color:#b45309;"><span><strong>Reproceso Autorizado:</strong> Se autoriza
+                        filtrar/esterilizar o re-acondicionar nuevamente (Anexar justificación y protocolo de
+                        reproceso).</span><input type="radio" name="dictamen" class="cedit"></label>
+                <label style="color:#991b1b;"><span><strong>Rechazo Definitivo:</strong> Destrucción del lote por
+                        compromiso crítico de esterilidad/calidad (Vincular a FO-QA-08 Acta de
+                        Destrucción).</span><input type="radio" name="dictamen" class="cedit"></label>
+                <label><span><strong>No Aplica:</strong> No había producto involucrado durante la falla del
+                        equipo/servicio.</span><input type="radio" name="dictamen" class="cedit"></label>
             </div>
 
             <strong>Acciones requeridas para liberar el EQUIPO para uso futuro:</strong><br>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-09 Registro Gráfico Incubadora CO2</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        @page {
+            size: letter landscape;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e5e7eb;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        html {
+            background: #e5e7eb;
+        }
+
+        /* Contenedor Único con Scroll */
+        .container {
+            width: 26cm;
+            margin: 32px auto;
+            background: white;
+            padding: 0.8cm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+            min-height: 90vh;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 4px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 2px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 9px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        /* Gráficas */
+        .grid-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            table-layout: fixed;
+        }
+
+        .grid-table th,
+        .grid-table td {
+            border: 1px solid #cbd5e1;
+            font-size: 8px;
+            text-align: center;
+            height: 16px;
+            padding: 0;
+        }
+
+        .grid-table th {
+            background-color: #f1f5f9;
+            color: #1E3A5F;
+        }
+
+        .nc-row {
+            background-color: #fee2e2;
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .target-row {
+            background-color: #f0fdf4;
+            font-weight: bold;
+            border: 2px solid #166534 !important;
+        }
+
+        .day-col {
+            width: 22px;
+        }
+
+        .label-col {
+            width: 80px;
+            font-weight: bold;
+        }
+
+        /* Celdas interactivas de la gráfica */
+        .graph-cell {
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            color: #1e3a5f;
+            padding: 0 !important;
+        }
+
+        .graph-cell:hover {
+            background-color: #e2e8f0 !important;
+        }
+
+        .footer-unified {
+            margin-top: auto;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 8px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        /* Separador de página visual (Solo punteado en pantalla, quiebre real en impresión) */
+        .print-page-break {
+            display: block;
+            width: 100%;
+            border-top: 3px dashed #1E3A5F;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .print-page-break::before {
+            content: "✂ Corte de Página de Impresión";
+            position: absolute;
+            top: -9px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 0 10px;
+            font-size: 10px;
+            color: #1E3A5F;
+            font-style: italic;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+                width: 100%;
+                min-height: 0;
+                padding: 0;
+                margin: 0;
+            }
+
+            .print-page-break {
+                page-break-before: always;
+                border-top: none;
+                margin: 0;
+            }
+
+            .print-page-break::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-09-v4">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+    </div>
+
+    <div class="container">
+
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900;" font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700;" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-09-</span>
+                    <input type="text" id="reg-op09v4" class="registry-input generate-barcode cedit"
+                        data-target="barcode-v4" data-prefix="FO-OP-09-" placeholder="TAG-MM/AA">
+                </div>
+                <svg id="barcode-v4" class="barcode-svg" style="height:30px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>REGISTRO GRÁFICO DE PARÁMETROS DE INCUBADORA DE CO<sub>2</sub></h1>
+            <div class="metadata">Código: FO-OP-09 | Versión: 2.0 | Vigencia: Mar 2026 | Página: 1 de 2</div>
+        </div>
+
+
+        <div class="section-header">1. IDENTIFICACIÓN DEL EQUIPO</div>
+        <div class="section">
+            <table class="no-border-table" style="font-size: 10px;">
+                <tr>
+                    <td width="33%"><strong>ID Incubadora (TAG):</strong> <input class="cedit"
+                            style="width:120px; border-bottom:1px solid #000;"></td>
+                    <td width="33%"><strong>Marca / Modelo:</strong> <input class="cedit"
+                            style="width:140px; border-bottom:1px solid #000;" placeholder="Marca / Modelo:"></td>
+                    <td width="33%"><strong>Mes / Año:</strong> <input class="cedit"
+                            style="width:100px; border-bottom:1px solid #000;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>Ubicación:</strong> <input class="cedit"
+                            style="width:70%; border-bottom:1px solid #000;"></td>
+                    <td><strong>Responsable:</strong> <input class="cedit"
+                </tr>
+            </table>
+            <p style="font-size: 9px; margin-top: 5px;"><strong>Especificaciones:</strong> Temp: 37°C ± 0.5°C | Conc.
+                CO<sub>2</sub>: 5% ± 0.2% | <i>Instrucciones: AM (•), PM (x)</i></p>
+        </div>
+
+        <div class="section-header" style="font-size: 9px;">TABLA 1. GRÁFICA DE REGISTRO DIARIO DE TEMPERATURA (°C)
+        </div>
+        <table class="grid-table">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="label-col">Límite / Día</th>
+                    <script>for (let i = 1; i <= 31; i++) document.write(`<th colspan="2" class="day-col">${i}</th>`);</script>
+                </tr>
+                <tr>
+                    <script>for (let i = 1; i <= 31; i++) document.write('<th style="font-size:6px; padding:0; width:11px;">M</th><th style="font-size:6px; padding:0; width:11px;">T</th>');</script>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="nc-row">
+                    <td class="label-col">≥ 37.6 (NC)</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">37.5</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">37.4</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">37.3</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">37.2</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">37.1</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr class="target-row">
+                    <td class="label-col">37.0 (Target)</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">36.9</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">36.8</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">36.7</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">36.6</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">36.5</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr class="nc-row">
+                    <td class="label-col">≤ 36.4 (NC)</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr style="height: 25px;">
+                    <td class="label-col">Iniciales Opr.</td>
+                    <script>for (let i = 1; i <= 31; i++) document.write('<td colspan="2"><input class="cedit"></td>');</script>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-header" style="font-size: 9px; margin-top: 20px;">TABLA 2. GRÁFICA DE REGISTRO DIARIO DE
+            CONCENTRACIÓN DE CO<sub>2</sub> (%)</div>
+        <table class="grid-table">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="label-col">Límite / Día</th>
+                    <script>for (let i = 1; i <= 31; i++) document.write(`<th colspan="2" class="day-col">${i}</th>`);</script>
+                </tr>
+                <tr>
+                    <script>for (let i = 1; i <= 31; i++) document.write('<th style="font-size:6px; padding:0; width:11px;">M</th><th style="font-size:6px; padding:0; width:11px;">T</th>');</script>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="nc-row">
+                    <td class="label-col">≥ 5.3 (NC)</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">5.2</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">5.1</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr class="target-row">
+                    <td class="label-col">5.0 (Target)</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">4.9</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr>
+                    <td class="label-col">4.8</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr class="nc-row">
+                    <td class="label-col">≤ 4.7 (NC)</td>
+                    <script>for (let i = 1; i <= 62; i++) document.write('<td class="graph-cell" onclick="toggleDot(this)"></td>');</script>
+                </tr>
+                <tr style="height: 25px;">
+                    <td class="label-col">Iniciales Opr.</td>
+                    <script>for (let i = 1; i <= 31; i++) document.write('<td colspan="2"><input class="cedit"></td>');</script>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-header">TABLA 3. CONTROL DE VERIFICACIÓN (FIRMAS Y PCC)</div>
+        <p style="font-size:8px; color:#666; margin-bottom:4px;">El operador debe firmar y validar que los Puntos
+            Críticos (PCC) se cumplen en cada turno.</p>
+        <div style="display: flex; gap: 10px;">
+            <div style="flex: 1;">
+                <table class="compact-table" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th width="10%">DÍA</th>
+                            <th width="25%">Inic. (AM)</th>
+                            <th width="25%">Inic. (PM)</th>
+                            <th width="15%">PCC Ok?</th>
+                            <th width="25%">Obs.</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-firmas-1">
+                    </tbody>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <table class="compact-table" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th width="10%">DÍA</th>
+                            <th width="25%">Inic. (AM)</th>
+                            <th width="25%">Inic. (PM)</th>
+                            <th width="15%">PCC Ok?</th>
+                            <th width="25%">Obs.</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-firmas-2">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top: 20px;">
+            <div class="signature-box" style="flex:1;">
+                <p style="font-weight:bold; margin-bottom:2px;">Revisión Mensual Operaciones</p>
+                <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">"Confirmo que el registro
+                    gráfico está completo y veraz."</p>
+                <input class="cedit" placeholder="Nombre, Firma y Fecha"
+                    style="border-top:1px solid #ccc; border-radius:0;">
+            </div>
+
+            <div class="signature-box" style="flex:1; background-color: #f8fafc;">
+                <p style="font-weight:bold; color:#1E3A5F; margin-bottom:2px;">Dictamen Aseguramiento de Calidad</p>
+                <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">"Registro sin excursiones /
+                    Excursiones cerradas con desviación."</p>
+                <input class="cedit" placeholder="Nombre, Firma y Fecha"
+                    style="border-top:1px solid #1E3A5F; border-radius:0; background:transparent;">
+            </div>
+        </div>
+
+        <div class="footer-unified">
+
+            <div class="control-data">FO-OP-09 | Versión: 2.0 | Registro Gráfico de Parámetros de Incubadora de
+                CO<sub>2</sub> | Xelle Scientific | Página 1 y 2</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor.</div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (document.getElementById('tbody-firmas-1')) generarTablasFirmasPCC();
+        });
+
+        // Generar las tablas de firmas PCC
+        function generarTablasFirmasPCC() {
+            let html1 = '';
+            let html2 = '';
+            const rowTemplate = (dia) => `
+            <tr>
+                <td style="font-weight:bold; background-color:#f1f5f9;">${dia}</td>
+                <td><input class="cedit"></td>
+                <td><input class="cedit"></td>
+                <td>
+                    <select class="cedit" style="font-weight:bold;">
+                        <option value=""></option>
+                        <option value="S" style="color:#166534;">S</option>
+                        <option value="N" style="color:#991b1b;">N</option>
+                    </select>
+                </td>
+                <td><input class="cedit"></td>
+            </tr>`;
+            for (let i = 1; i <= 31; i++) {
+                if (i <= 16) {
+                    html1 += rowTemplate(i);
+                } else {
+                    html2 += rowTemplate(i);
+                }
+            }
+            document.getElementById('tbody-firmas-1').innerHTML = html1;
+            document.getElementById('tbody-firmas-2').innerHTML = html2;
+        }
+
+        // Permitir marcar/desmarcar con un punto al hacer click
+        function toggleDot(cell) {
+            cell.innerHTML = cell.innerHTML === '•' ? '' : '•';
+        }
+    </script>
+</body>
+
+</html>

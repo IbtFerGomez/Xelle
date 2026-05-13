@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-48 Bitácora de Limpieza y Desinfección (Offline)</title>
+    <link rel="stylesheet" href="../format-styles.css">
+    <style>
+        /* Copia los estilos relevantes del original */
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 9px; padding: 4px; text-align: center; vertical-align: middle; }
+        .compact-table td { font-size: 9px; padding: 3px; vertical-align: middle; text-align: center; }
+        .compact-table input { font-size: 9px; text-align: center; width: 100%; border: none; background: transparent; }
+        .btn-add { background: #e2e8f0; border: 1px dashed #94a3b8; width: 100%; font-size: 10px; font-weight: bold; cursor: pointer; padding: 5px; margin-top: 5px; }
+        @media print { .global-controls, .no-print { display: none !important; } ::-webkit-input-placeholder { color: transparent !important; } :-moz-placeholder { color: transparent !important; } ::-moz-placeholder { color: transparent !important; } :-ms-input-placeholder { color: transparent !important; } ::placeholder { color: transparent !important; } }
+    </style>
+</head>
+<body id="doc-fo-op-48-offline">
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <!-- ...SVG LOGO... -->
+            </div>
+            <div class="registry-container">
+                <label>Folio Registro</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-48-</span>
+                    <input type="text" class="registry-input" placeholder="000">
+                </div>
+                <input type="text" class="registry-date" placeholder="DD/MM/AAAA">
+            </div>
+        </div>
+        <div class="header-main">
+            <h1>BITÁCORA DE LIMPIEZA Y DESINFECCIÓN DE ÁREAS Y EQUIPOS</h1>
+            <div class="metadata">Código: FO-OP-48 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+        </div>
+        <div style="margin-top:10px; font-size:11px;">
+            <strong>Ubicación (Área / Cuarto):</strong> <input class="cedit" style="width:50%; border-bottom:1px solid #ccc; font-weight:bold;" placeholder="Ej. Área Blanca / Pasillo B">
+        </div>
+        <div class="section-header">1. REGISTRO DE SANITIZACIÓN (DIARIA / SEMANAL / PROFUNDA)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px; text-align:justify;">Instrucciones: Registre la actividad inmediatamente después de realizarla. Asegúrese de anotar el lote del desinfectante utilizado para garantizar la trazabilidad en caso de un hallazgo microbiológico. * Área o Equipo Limpiado (Áreas / Superficies / Equipos)</p>
+            <table class="compact-table" id="tbl-limpieza">
+                <thead>
+                    <tr>
+                        <th width="8%">Fecha</th>
+                        <th width="8%">Hora</th>
+                        <th width="15%">Área o Equipo Limpiado</th>
+                        <th width="14%">Tipo de Limpieza</th>
+                        <th width="15%">Agente Sanitizante Utilizado</th>
+                        <th width="12%">Lote del Sanitizante</th>
+                        <th width="14%">Ejecutó<br>(Nombre y Firma)</th>
+                        <th width="12%">Verificó QA / Sup<br>(Firma)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                        <td><input type="text" class="cedit" placeholder="HH:MM"></td>
+                        <td><input class="cedit" placeholder="Superficie / Eq."></td>
+                        <td><input class="cedit" placeholder="Rutinaria / Profunda / Cambio Lote"></td>
+                        <td><input class="cedit" placeholder="Ej. Etanol 70%"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                        <td><input type="text" class="cedit" placeholder="HH:MM"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-limpieza')">+ AGREGAR FILA DE LIMPIEZA</button>
+        </div>
+        <div class="section-header">2. REGISTRO DE PREPARACIÓN DE DESINFECTANTES (DILUCIONES)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Llenar únicamente si el desinfectante no viene listo para usar y requiere dilución en planta.</p>
+            <table class="compact-table" id="tbl-prep">
+                <thead>
+                    <tr>
+                        <th width="15%">Fecha de Prep.</th>
+                        <th width="30%">Agente Comercial</th>
+                        <th width="15%">Concentración Final (%)</th>
+                        <th width="15%">Volumen Preparado (L)</th>
+                        <th width="15%">Fecha de Caducidad (Solución)</th>
+                        <th width="10%">Preparó (Iniciales)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                        <td><input class="cedit" placeholder="Ej. Hipoclorito / Cloro"></td>
+                        <td><input class="cedit" placeholder="%"></td>
+                        <td><input class="cedit" placeholder="Litros"></td>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-prep')">+ AGREGAR PREPARACIÓN</button>
+        </div>
+        <div class="footer">FO-OP-48 | Versión: 1.0 | Bitácora de Limpieza y Desinfección de Áreas y Equipos | Xelle Scientific<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+    <script>
+        function addRow(id) {
+            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
+            let r = t.rows[0].cloneNode(true);
+            r.querySelectorAll('input').forEach(i => { i.value = ''; });
+            t.appendChild(r);
+        }
+    </script>
+</body>
+</html>

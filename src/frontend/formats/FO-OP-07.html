@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-07 Registro de Temperatura y Humedad</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 4px 8px;
+            font-weight: bold;
+            font-size: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 8.5px;
+            padding: 4px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 2px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            height: 18px;
+        }
+
+        .compact-table input,
+        .compact-table select {
+            font-size: 9px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .info-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            line-height: 1.3;
+            color: #334155;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .limits-box {
+            border: 1.5px solid #1E3A5F;
+            padding: 8px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #fff;
+        }
+
+        .limit-item {
+            text-align: center;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        /* Estilos del Footer Unificado y Legal */
+        .footer-unified {
+            margin-top: 15px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 5px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+
+        .footer-unified .control-data {
+            font-weight: bold;
+            color: #1E3A5F;
+            margin-bottom: 3px;
+        }
+
+        .footer-unified .legal-data {
+            color: #475569;
+            font-style: italic;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-07">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Mes / Año de Monitoreo</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-07-</span>
+                    <input type="text" id="reg-op07" class="registry-input generate-barcode cedit"
+                        data-target="barcode-op07" data-prefix="FO-OP-07-" placeholder="MM/AAAA"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-op07" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>REGISTRO DE TEMPERATURA Y HUMEDAD RELATIVA EN ÁREAS</h1>
+            <div class="metadata">Código: FO-OP-07 | Versión: 2.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. IDENTIFICACIÓN DEL EQUIPO Y RANGOS DE ACEPTACIÓN</div>
+        <div class="section">
+            <table class="no-border-table" style="margin-bottom: 5px;">
+                <tr>
+                    <td width="20%"><strong>Termohigrómetro (ID/Serie):</strong></td>
+                    <td width="30%"><input class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td width="20%"><strong>Vigencia Calibración:</strong></td>
+                    <td width="30%"><input type="month" class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Ubicación Específica:</strong></td>
+                    <td colspan="1">
+                        <textarea class="cedit ubicacion-especifica" rows="2"
+                            placeholder="Ej. Almacén de Producto Terminado / Laboratorio de Cultivo"></textarea>
+                    </td>
+                    <td><strong>Mes/Año:</strong></td>
+                    <td><input type="month" class="cedit" style="width:80%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+
+            <div class="limits-box">
+                <div class="limit-item">LÍMITES TEMPERATURA:<br> <input class="cedit"
+                        style="width:50px; border-bottom:1px dashed #1E3A5F;" placeholder="00"> °C a <input
+                        class="cedit" style="width:50px; border-bottom:1px dashed #1E3A5F;" placeholder="00"> °C</div>
+                <div class="limit-item">LÍMITES HUMEDAD (%HR):<br> <input class="cedit"
+                        style="width:50px; border-bottom:1px dashed #1E3A5F;" placeholder="00"> % a <input class="cedit"
+                        style="width:50px; border-bottom:1px dashed #1E3A5F;" placeholder="00"> %</div>
+            </div>
+        </div>
+
+        <div class="section-header">2. PUNTOS CRÍTICOS DE CONTROL (PCC)</div>
+        <div class="section">
+            <div class="info-box">
+                <strong>[PCC-1]</strong> El equipo se encuentra encendido y la pantalla es legible. |
+                <strong>[PCC-2]</strong> El sensor no está obstruido por materiales o equipos de proceso. |
+                <strong>[PCC-3]</strong> No existen desviaciones previas sin reportar.
+            </div>
+        </div>
+
+        <div class="section-header">3. BITÁCORA DE MONITOREO DIARIO (AM / PM)</div>
+        <div class="section" style="display: flex; gap: 10px; margin-top: 5px;">
+            <table class="compact-table" style="flex: 1;">
+                <thead>
+                    <tr>
+                        <th rowspan="2" width="8%">Día</th>
+                        <th colspan="3">LECTURA AM</th>
+                        <th colspan="3">LECTURA PM</th>
+                    </tr>
+                    <tr>
+                        <th width="15%">Temp</th>
+                        <th width="15%">%HR</th>
+                        <th width="16%">Firma</th>
+                        <th width="15%">Temp</th>
+                        <th width="15%">%HR</th>
+                        <th width="16%">Firma</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-1">
+                </tbody>
+            </table>
+            <table class="compact-table" style="flex: 1;">
+                <thead>
+                    <tr>
+                        <th rowspan="2" width="8%">Día</th>
+                        <th colspan="3">LECTURA AM</th>
+                        <th colspan="3">LECTURA PM</th>
+                    </tr>
+                    <tr>
+                        <th width="15%">Temp</th>
+                        <th width="15%">%HR</th>
+                        <th width="16%">Firma</th>
+                        <th width="15%">Temp</th>
+                        <th width="15%">%HR</th>
+                        <th width="16%">Firma</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-2">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">4. GESTIÓN DE EXCURSIONES Y FALLAS</div>
+        <div class="section">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="15%">Fecha / Hora</th>
+                        <th width="15%">Parámetro</th>
+                        <th width="15%">Valor Det.</th>
+                        <th width="40%">Acción Correctiva Tomada</th>
+                        <th width="15%">Folio (OP-51)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">5. VALIDACIÓN Y CIERRE MENSUAL</div>
+        <div class="section">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:10px; margin-top:10px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">REALIZÓ</p>
+                    <span style="font-size:8px;">(Operador/Responsable)</span>
+                    <input class="cedit" placeholder="Firma"
+                        style="border-top:1px solid #ccc; border-radius:0; margin-top:20px;">
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">VERIFICÓ</p>
+                    <span style="font-size:8px;">(Aseguramiento de Calidad)</span>
+                    <input class="cedit" placeholder="Firma"
+                        style="border-top:1px solid #ccc; border-radius:0; margin-top:20px;">
+                </div>
+                <div class="signature-box" style="flex:1; background-color:#f0fdf4;">
+                    <p style="font-weight:bold;">AUTORIZÓ</p>
+                    <span style="font-size:8px;">(Responsable Dirección)</span>
+                    <input class="cedit" placeholder="Firma"
+                        style="border-top:1px solid #166534; border-radius:0; margin-top:20px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-OP-07 | Versión: 2.0 | Registro de Temperatura y Humedad Relativa en Áreas |
+                Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        // Generador de filas para el monitoreo
+        function fillTables() {
+            const tb1 = document.getElementById('tbody-1');
+            const tb2 = document.getElementById('tbody-2');
+            let rows1 = '', rows2 = '';
+
+            for (let i = 1; i <= 31; i++) {
+                const row = `<tr><td>${i}</td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>`;
+                if (i <= 16) rows1 += row; else rows2 += row;
+            }
+            tb1.innerHTML = rows1;
+            tb2.innerHTML = rows2;
+        }
+        fillTables();
+    </script>
+</body>
+
+</html>

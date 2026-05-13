@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-OP-05 Registro Gráfico de Temperatura de Congeladores</title>
@@ -8,66 +9,231 @@
     <script src="format-app.js"></script>
     <style>
         /* Orientación Horizontal para la gráfica de 31 días */
-        @page { size: landscape; margin: 1cm; }
+        @page {
+            size: landscape;
+            margin: 1cm;
+        }
 
-        .section-header { background-color: #1E3A5F; color: white; padding: 4px 8px; font-weight: bold; font-size: 10px; margin-top: 10px; border-radius: 4px; text-transform: uppercase; }
-        .compact-table th { background-color: #1E3A5F; color: white; font-size: 9px; padding: 4px; text-align: center; border: 1px solid #cbd5e1; }
-        .compact-table td { font-size: 9px; padding: 2px; text-align: center; border: 1px solid #cbd5e1; }
-        .compact-table input, .compact-table select, .compact-table textarea { font-size: 9px; text-align: center; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
-        .compact-table input:focus, .compact-table select:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
-        
-        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 5px; margin-top: 5px; }
-        .text-left { text-align: left !important; padding-left: 5px !important; }
-        
-        .alert-box { background-color: #fef2f2; border: 1px dashed #991b1b; padding: 8px; border-radius: 4px; font-size: 10px; color: #991b1b; margin-top: 8px; margin-bottom: 8px; font-weight: bold; }
-        
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 2px 6px;
+            font-weight: bold;
+            font-size: 10px;
+            margin-top: 4px;
+            margin-bottom: 2px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 2px 2px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 1px 2px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 9px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 3px;
+            margin-top: 2px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .alert-box {
+            background-color: #fef2f2;
+            border: 1px dashed #991b1b;
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: #991b1b;
+            margin-top: 4px;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
         /* Estilos específicos para la Gráfica */
-        .graph-table { width: 100%; border-collapse: collapse; margin-top: 5px; table-layout: fixed; }
-        .graph-table th, .graph-table td { border: 1px solid #cbd5e1; text-align: center; vertical-align: middle; }
-        .graph-table th { background-color: #1E3A5F; color: white; }
-        .graph-cell { cursor: pointer; font-size: 12px; font-weight: bold; color: #1e3a5f; padding: 0 !important; height: 12px; }
-        .graph-cell:hover { background-color: #e2e8f0 !important; }
-        .bg-risk { background-color: #fee2e2; }
-        .bg-normal { background-color: #ffffff; }
+        .graph-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2px;
+            table-layout: fixed;
+        }
+
+        .graph-table th,
+        .graph-table td {
+            border: 1px solid #cbd5e1;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .graph-table th {
+            background-color: #1E3A5F;
+            color: white;
+        }
+
+        .graph-cell {
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            color: #1e3a5f;
+            padding: 0 !important;
+            height: 12px;
+        }
+
+        .graph-cell:hover {
+            background-color: #e2e8f0 !important;
+        }
+
+        .bg-risk {
+            background-color: #fee2e2;
+        }
+
+        .bg-normal {
+            background-color: #ffffff;
+        }
 
         /* Estilos del Footer Unificado y Legal */
-        .footer-unified { 
-            margin-top: 15px; 
-            border-top: 2px solid #1E3A5F; 
-            padding-top: 5px; 
-            text-align: center; 
-            font-size: 9px; /* Mismo tamaño para todo el footer */
-            line-height: 1.4;
+        .footer-unified {
+            margin-top: 6px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 2px;
+            text-align: center;
+            font-size: 9px;
+            /* Mismo tamaño para todo el footer */
+            line-height: 1.3;
             page-break-inside: avoid;
         }
-        .footer-unified .control-data { font-weight: bold; color: #1E3A5F; margin-bottom: 3px; }
-        .footer-unified .legal-data { color: #475569; font-style: italic; }
+
+        .footer-unified .control-data {
+            font-weight: bold;
+            color: #1E3A5F;
+            margin-bottom: 3px;
+        }
+
+        .footer-unified .legal-data {
+            color: #475569;
+            font-style: italic;
+        }
 
         @media print {
-            .global-controls, .no-print { display: none !important; }
-            ::-webkit-input-placeholder { color: transparent !important; }
-            ::placeholder { color: transparent !important; }
-            body { font-size: 10px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .container { padding: 0; max-width: 100%; box-shadow: none; border: none; }
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            body {
+                font-size: 10px;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .container {
+                padding: 0;
+                max-width: 100%;
+                box-shadow: none;
+                border: none;
+            }
+
+            .section {
+                margin-bottom: 4px !important;
+            }
+
+            /* Evitar salto de página después de la segunda tabla de firmas */
+            .compact-table,
+            #tbody-firmas-2,
+            #tbody-firmas-2 tr,
+            #tbody-firmas-2 td {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }
         }
     </style>
 </head>
+
 <body id="doc-fo-op-05">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir Registro</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
-    
-    <div class="container">
-        <div class="header-top">
+
+    <div class="container" style="padding-top: 4px; padding-bottom: 4px;">
+        <div class="header-top" style="margin-bottom: 4px;">
             <div class="logo-container">
                 <svg viewBox="0 0 320 80">
-                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
                     <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13"/>
-                        <circle class="c" cx="75" cy="75" r="13"/>
-                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
                     </g>
                     <text x="90" y="42" class="t" font-size="34">XELLE</text>
                     <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
@@ -77,34 +243,47 @@
                 <label>Folio</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-OP-05-</span>
-                    <input type="text" id="reg-op05" class="registry-input generate-barcode cedit" data-target="barcode-op05" data-prefix="FO-OP-05-" placeholder="000" style="font-size:12px;">
+                    <input type="text" id="reg-op05" class="registry-input generate-barcode cedit"
+                        data-target="barcode-op05" data-prefix="FO-OP-05-" placeholder="000" style="font-size:12px;">
                 </div>
                 <svg id="barcode-op05" class="barcode-svg" style="height:30px;"></svg>
             </div>
         </div>
 
-        <div class="header-main">
+        <div class="header-main" style="margin-bottom: 4px;">
             <h1 style="font-size:14px;">REGISTRO GRÁFICO DE TEMPERATURA DE CONGELADORES</h1>
-            <div class="metadata">Código: FO-OP-05 | Versión: 1.0 | Vigencia: Mar 2026 | Área: Laboratorio / Almacén | Página: 1 de 1</div>
+            <div class="metadata">Código: FO-OP-05 | Versión: 2.0 | Vigencia: Mar 2026 | Área: Laboratorio / Almacén |
+                Página: 1 de 1</div>
         </div>
 
         <div class="section-header">1. DATOS DEL EQUIPO Y PUNTOS CRÍTICOS (PCC)</div>
-        <div class="section">
+        <div class="section" style="margin-bottom: 4px;">
             <table class="no-border-table" style="margin-bottom: 5px;">
                 <tr>
                     <td width="10%"><strong>Mes / Año:</strong></td>
-                    <td width="15%"><input type="month" class="cedit" style="border-bottom:1px solid #1E3A5F; font-weight:bold; color:#1E3A5F; font-size:12px; width:100%;"></td>
+                    <td width="15%"><input type="month" class="cedit"
+                            style="border-bottom:1px solid #1E3A5F; font-weight:bold; color:#1E3A5F; font-size:12px; width:100%;">
+                    </td>
                     <td width="10%"><strong>Equipo:</strong></td>
-                    <td width="25%"><input class="cedit" style="border-bottom:1px solid #ccc; width:100%; font-weight:bold;"></td>
+                    <td width="20%"><input class="cedit"
+                            style="border-bottom:1px solid #ccc; width:100%; font-weight:bold;"></td>
                     <td width="10%"><strong>ID/Serie:</strong></td>
                     <td width="10%"><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
                     <td width="10%"><strong>Rango Op:</strong></td>
-                    <td width="10%"><input class="cedit" value="-10° a -20°C" style="border-bottom:1px solid #ccc; width:100%; font-weight:bold; color:#b45309;"></td>
+                    <td width="10%"><input class="cedit" value="-20° a -40°C"
+                            style="border-bottom:1px solid #ccc; width:100%; font-weight:bold; color:#b45309;"></td>
+                </tr>
+                <tr>
+                    <td width="10%"><strong>Área / Ubicación:</strong></td>
+                    <td colspan="7"><input class="cedit"
+                            style="border-bottom:1px solid #ccc; width:100%; font-weight:bold;"></td>
                 </tr>
             </table>
-            
-            <div style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 6px; border-radius: 4px; font-size: 9px; color:#334155;">
-                <strong>Puntos Críticos a verificar diariamente (Marque ✓ en la sección de firmas si cumple):</strong><br>
+
+            <div
+                style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 6px; border-radius: 4px; font-size: 9px; color:#334155;">
+                <strong>Puntos Críticos a verificar diariamente (Marque ✓ en la sección de firmas si
+                    cumple):</strong><br>
                 <strong>[PCC-1]</strong> Puerta herméticamente cerrada (sin fugas de frío). &nbsp;|&nbsp;
                 <strong>[PCC-2]</strong> Interior limpio, sin formación excesiva de hielo/escarcha. &nbsp;|&nbsp;
                 <strong>[PCC-3]</strong> Producto distribuido correctamente sin obstruir el flujo de aire.
@@ -112,32 +291,45 @@
         </div>
 
         <div class="section-header">2. GRÁFICA DE REGISTRO DIARIO DE TEMPERATURA</div>
-        <div class="section">
-            <p style="font-size:8px; color:#666; margin-bottom:2px;">Instrucciones: Marque con un punto (•) en la intersección de la temperatura observada y el turno (M=Mañana, T=Tarde). Una los puntos con una línea para formar la gráfica de tendencia.</p>
+        <div class="section" style="margin-bottom: 4px;">
+            <p style="font-size:8px; color:#666; margin-bottom:2px;">Instrucciones: Marque con un punto (•) en la
+                intersección de la temperatura observada y el turno (M=Mañana, T=Tarde). Una los puntos con una línea
+                para formar la gráfica de tendencia.</p>
             <table class="graph-table" id="tabla-grafica">
                 <thead id="thead-grafica">
-                    </thead>
+                </thead>
                 <tbody id="tbody-grafica">
-                    </tbody>
+                </tbody>
             </table>
         </div>
 
         <div class="section-header">3. CONTROL DE VERIFICACIÓN Y REPORTE DE EXCURSIONES</div>
-        <div class="section">
+        <div class="section" style="margin-bottom: 4px;">
             <div style="display: flex; gap: 15px;">
-                
+
                 <div style="flex: 1.5;">
-                    <p style="font-size:8px; color:#666; margin-bottom:4px;">El operador debe firmar y validar que los Puntos Críticos (PCC) se cumplen en cada turno.</p>
+                    <p style="font-size:8px; color:#666; margin-bottom:4px;">El operador debe firmar y validar que los
+                        Puntos Críticos (PCC) se cumplen en cada turno.</p>
                     <div style="display: flex; gap: 5px;">
                         <table class="compact-table" style="width:100%;">
                             <thead>
-                                <tr><th width="10%">DÍA</th><th width="30%">Inic. (M)</th><th width="30%">Inic. (T)</th><th width="30%">PCC Ok? (S/N)</th></tr>
+                                <tr>
+                                    <th width="10%">DÍA</th>
+                                    <th width="30%">Inic. (M)</th>
+                                    <th width="30%">Inic. (T)</th>
+                                    <th width="30%">PCC Ok? (S/N)</th>
+                                </tr>
                             </thead>
                             <tbody id="tbody-firmas-1"></tbody>
                         </table>
                         <table class="compact-table" style="width:100%;">
                             <thead>
-                                <tr><th width="10%">DÍA</th><th width="30%">Inic. (M)</th><th width="30%">Inic. (T)</th><th width="30%">PCC Ok? (S/N)</th></tr>
+                                <tr>
+                                    <th width="10%">DÍA</th>
+                                    <th width="30%">Inic. (M)</th>
+                                    <th width="30%">Inic. (T)</th>
+                                    <th width="30%">PCC Ok? (S/N)</th>
+                                </tr>
                             </thead>
                             <tbody id="tbody-firmas-2"></tbody>
                         </table>
@@ -146,7 +338,8 @@
 
                 <div style="flex: 1;">
                     <div class="alert-box" style="margin-top: 0;">
-                        🚨 EXCURSIONES: Si la gráfica toca la zona roja, detenga el uso, avise a Calidad y registre el evento.
+                        🚨 EXCURSIONES: Si la gráfica toca la zona roja, detenga el uso, avise a Calidad y registre el
+                        evento.
                     </div>
                     <table class="compact-table" id="tbl-excursiones">
                         <thead>
@@ -170,14 +363,23 @@
                         </tbody>
                     </table>
 
-                    <div style="margin-top: 15px; border: 1px solid #cbd5e1; border-radius: 4px;">
-                        <div style="background-color: #1E3A5F; color: white; font-size: 9px; font-weight: bold; text-align: center; padding: 4px;">
-                            CIERRE Y VALIDACIÓN MENSUAL
-                        </div>
-                        <div style="padding: 10px; background-color: #f8fafc;">
-                            <p style="font-weight:bold; font-size:9px; margin-bottom:15px; color:#1E3A5F;">Dictamen Aseguramiento de Calidad:</p>
-                            <input class="cedit" placeholder="Nombre, Firma y Fecha" style="border-top:1px solid #1E3A5F; border-radius:0; background:transparent;">
-                            <p style="font-size:7px; color:#666; margin-top:5px; text-align:center;">"Registro validado. Excursiones (si aplican) cerradas con desviación."</p>
+                    <div style="margin-top: 15px; border: 1px solid #cbd5e1; border-radius: 4px; background: #fff;">
+                        <div style="display:flex; justify-content:space-between; gap:20px; padding: 10px;">
+                            <div class="signature-box" style="flex:1;">
+                                <p style="font-weight:bold; margin-bottom:2px;">Revisión Mensual Operaciones</p>
+                                <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">"Confirmo
+                                    que el registro gráfico está completo y veraz."</p>
+                                <input class="cedit" placeholder="Nombre, Firma y Fecha"
+                                    style="border-top:1px solid #ccc; border-radius:0;">
+                            </div>
+                            <div class="signature-box" style="flex:1; background-color: #f8fafc;">
+                                <p style="font-weight:bold; color:#1E3A5F; margin-bottom:2px;">Dictamen Aseguramiento de
+                                    Calidad</p>
+                                <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">"Registro
+                                    sin excursiones / Excursiones cerradas con desviación."</p>
+                                <input class="cedit" placeholder="Nombre, Firma y Fecha"
+                                    style="border-top:1px solid #1E3A5F; border-radius:0; background:transparent;">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -186,25 +388,28 @@
         </div>
 
         <div class="footer-unified">
-            <div class="control-data">FO-OP-05 | Versión: 1.0 | Registro Gráfico de Temperatura de Congeladores | Xelle Scientific | Página 1 de 1</div>
-            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+            <div class="control-data">FO-OP-05 | Versión: 2.0 | Registro Gráfico de Temperatura de Congeladores | Xelle
+                Scientific | Página 1 de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
         </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             generarGrafica();
             generarTablasFirmas();
         });
 
         function generarGrafica() {
             const temps = [];
-            // Rango de -5 a -25 (Adaptado a congeladores)
-            temps.push({ val: "≥ -5.0", bg: "bg-risk" });
-            for(let i = -6; i >= -24; i--) {
+            // Rango de -20 a -40 (Adaptado a congeladores)
+            temps.push({ val: "≥ -20.0", bg: "bg-risk" });
+            for (let i = -21; i >= -39; i--) {
                 temps.push({ val: i.toFixed(1), bg: "bg-normal" });
             }
-            temps.push({ val: "≤ -25.0", bg: "bg-risk" });
+            temps.push({ val: "≤ -40.0", bg: "bg-risk" });
 
             // Construir thead (1 a 31)
             let thead = '<tr><th rowspan="2" style="width:40px; font-size:8px;">Temp (°C)</th>';
@@ -238,7 +443,7 @@
         function generarTablasFirmas() {
             let html1 = '';
             let html2 = '';
-            
+
             const rowTemplate = (dia) => `
                 <tr>
                     <td style="font-weight:bold; background-color:#f1f5f9;">${dia}</td>
@@ -268,4 +473,5 @@
         }
     </script>
 </body>
+
 </html>

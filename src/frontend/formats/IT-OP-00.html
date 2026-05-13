@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT-OP-00 - Manual General de Etiquetado - Xelle Scientific</title>
+    <style>
+        .global-controls {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 12px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+            border: 2px solid #3498db;
+            cursor: move;
+            user-select: none;
+            min-width: 130px;
+        }
+
+        @media print {
+            .global-controls {
+                display: none !important;
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #23313f;
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f3f7fc;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0b1f3a, #1a4a80);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-radius: 8px 8px 0 0;
+            gap: 24px;
+        }
+
+        .logo {
+            flex-shrink: 0;
+        }
+
+        .logo svg {
+            width: 60px;
+            height: 60px;
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        h2 {
+            border-bottom: 2px solid #1a4a80;
+            color: #12325a;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #e9eff7;
+            color: #0b1f3a;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: #e9eff7;
+            color: #12325a;
+            font-weight: bold;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8em;
+            text-align: center;
+            color: #1a4a80;
+            border-top: 1px solid #e9eff7;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="global-controls">
+        <button onclick="window.print()"
+            style="padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; color: white; font-size: 13px; width: 100%; transition: all 0.2s ease; text-align: center; background-color: #2c3e50;">Imprimir</button>
+    </div>
+    <header>
+        <div class="logo">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                    <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                    <path fill="#2E9D82"
+                        d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                </g>
+            </svg>
+        </div>
+        <div class="header-content">
+            <h1>IT-OP-00 - Manual General de Etiquetado</h1>
+            <p>Detalle integral de uso, formato y supervisión de todas las etiquetas del sistema Xelle Scientific</p>
+        </div>
+    </header>
+    <div class="container">
+        <h2>1. Introducción</h2>
+        <p>Este manual integra la información de todas las etiquetas utilizadas en Xelle Scientific, especificando su
+            uso, formato relacionado y el responsable de su supervisión. Es la referencia principal para la correcta
+            aplicación y control de etiquetas en procesos, equipos, materiales y residuos.</p>
+        <h2>2. Catálogo de Etiquetas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Uso y Función</th>
+                    <th>Formato Relacionado</th>
+                    <th>Responsable de Supervisión</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight">ET-LC-01</td>
+                    <td>Muestreado</td>
+                    <td>Indica que el material ha sido abierto para muestreo por Control de Calidad.</td>
+                    <td>FO-LC-46, FO-LC-34, FO-LC-47, FO-QA-19</td>
+                    <td>Control de Calidad</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-02</td>
+                    <td>Liberado</td>
+                    <td>Producto aprobado, listo para uso o distribución.</td>
+                    <td>FO-LC-48, FO-LC-19</td>
+                    <td>Control de Calidad</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-03</td>
+                    <td>Cuarentena</td>
+                    <td>Material pendiente de dictamen o análisis.</td>
+                    <td>FO-LC-17, FO-LC-18</td>
+                    <td>Almacén / Control de Calidad</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-04</td>
+                    <td>Rechazado</td>
+                    <td>Material o producto no conforme, debe segregarse.</td>
+                    <td>FO-LC-51, FO-LC-52,FO-QA-19</td>
+                    <td>Control de Calidad</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-05</td>
+                    <td>MP Placenta</td>
+                    <td>Identificación de materia prima placenta en recepción.</td>
+                    <td>FO-LC-17</td>
+                    <td>Logística / Almacén</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-06</td>
+                    <td>MPNC Placenta</td>
+                    <td>Placenta no conforme, rechazada por criterios logísticos o biológicos.</td>
+                    <td>FO-LC-20</td>
+                    <td>Control de Calidad</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-07</td>
+                    <td>PNC - Rechazo General</td>
+                    <td>Producto no conforme distinto a placenta.</td>
+                    <td>FO-QA-03</td>
+                    <td>Control de Calidad</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-08</td>
+                    <td>Insumo Aprobado</td>
+                    <td>Control de inventario para insumos aprobados.</td>
+                    <td>FO-LC-18, FO-QA-18-B</td>
+                    <td>Almacén</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-09</td>
+                    <td>Contramuestra</td>
+                    <td>Muestra de retención, prohibida su venta.</td>
+                    <td>FO-LC-32-B, FO-LC-32, FO-LC-33</td>
+                    <td>Control de Calidad</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-10</td>
+                    <td>Contenedor Retenciones</td>
+                    <td>Identifica contenedores de muestras de retención.</td>
+                    <td>FO-LC-32-B, FO-LC-32, FO-LC-33</td>
+                    <td>Control de Calidad</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-11</td>
+                    <td>Muestra en Análisis</td>
+                    <td>Muestra bajo análisis, no manipular.</td>
+                    <td>FO-LC-19, FO-LC-46, FO-LC-34</td>
+                    <td>Control de Calidad</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-12</td>
+                    <td>Medio Condicionado</td>
+                    <td>Medio recuperado de cultivo celular.</td>
+                    <td>FO-LC-30, FO-LC-43</td>
+                    <td>Laboratorio</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-12-B</td>
+                    <td>Medio Condicionado (Backup)</td>
+                    <td>Medio recuperado de cultivo celular. Version 2</td>
+                    <td>FO-LC-30, FO-LC-43</td>
+                    <td>Laboratorio</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-13</td>
+                    <td>Exosomas Recuperados</td>
+                    <td>Frascos de exosomas, indica método y concentración.</td>
+                    <td>FO-LC-18</td>
+                    <td>Laboratorio</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-14</td>
+                    <td>Medio Liofilizado</td>
+                    <td>Insumo en polvo, control de humedad.</td>
+                    <td>FO-LC-42, FO-LC-43</td>
+                    <td>Laboratorio</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-LC-15</td>
+                    <td>Medio preparado</td>
+                    <td>Medio preparado para uso en cultivo. Registro de Fecha y operador</td>
+                    <td>FO-LC-40, FO-LC-40-B</td>
+                    <td>Laboratorio</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-RPBI-01</td>
+                    <td>RPBI Rojo</td>
+                    <td>Residuos punzocortantes y cultivos.</td>
+                    <td>FO-LC-50, FO-OP-49, FO-OP-51, FO-OP-52,FO-QA-19, FO-QA-08</td>
+                    <td>Residuos Peligrosos</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-RPBI-02</td>
+                    <td>RPBI Amarillo</td>
+                    <td>Residuos patológicos (placentas, tejidos).</td>
+                    <td>FO-LC-50, FO-OP-49, FO-OP-51, FO-OP-52,FO-QA-19, FO-QA-08</td>
+                    <td>Residuos Peligrosos</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-OP-01</td>
+                    <td>Equipo Calibrado</td>
+                    <td>Equipo calibrado/verificado, apto para uso.</td>
+                    <td>FO-OP-01, FO-SGC-05</td>
+                    <td>Metrología / SGC</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-OP-02</td>
+                    <td>Fuera de Servicio</td>
+                    <td>Equipo fuera de servicio, prohíbe su uso.</td>
+                    <td>FO-OP-01, FO-SGC-05</td>
+                    <td>Metrología / SGC</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-OP-03</td>
+                    <td>Equipo en Mantenimiento</td>
+                    <td>Equipo en mantenimiento preventivo/correctivo.</td>
+                    <td>FO-OP-01, FO-SGC-05</td>
+                    <td>Metrología / SGC</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-OP-04</td>
+                    <td>Etiqueta de Calibración</td>
+                    <td>Colocada tras calibración de instrumentos críticos.</td>
+                    <td>FO-OP-01, FO-SGC-05</td>
+                    <td>Metrología / SGC</td>
+                </tr>
+                <tr>
+                    <td class="highlight">ET-EQ-01</td>
+                    <td>Identificación Interna de Equipo</td>
+                    <td>Identificación única de activos/equipos, incluye código de inventario y área responsable.</td>
+                    <td>FO-OP-01, FO-SGC-05</td>
+                    <td>SGC / Patrimonio</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>3. Instrucciones Generales de Etiquetado</h2>
+        <ul>
+            <li>Verifique que la etiqueta corresponda al material, equipo o área antes de colocarla.</li>
+            <li>Complete todos los campos requeridos en la etiqueta (fechas, responsable, lote, etc.).</li>
+            <li>Coloque la etiqueta en un lugar visible y protegido de daño o contaminación.</li>
+            <li>Las etiquetas deben ser supervisadas y auditadas periódicamente por el responsable asignado.</li>
+            <li>En caso de duda, consulte al área de SGC o Control de Calidad.</li>
+        </ul>
+        <h2>4. Control y Trazabilidad</h2>
+        <p>Todas las etiquetas deben ser registradas en el sistema de control interno, indicando fecha de colocación,
+            responsable y motivo. La trazabilidad es obligatoria para auditorías y revisiones de calidad.</p>
+        <div class="footer">
+            <div class="signature-area"
+                style="margin-top: 40px; display: flex; justify-content: space-between; gap: 24px;">
+                <div style="flex:1; text-align:center;">
+                    <div style="font-weight:bold; font-size:15px; margin-bottom:18px;">Elaboró</div>
+                    <div style="min-height:40px; border-bottom:1.5px solid #23313f; margin-bottom:6px;"></div>
+                    <div style="font-size:13px; color:#555;">Coordinación SGC</div>
+                    <div style="font-size:12px; color:#888; margin-top:4px;">Nombre y Firma</div>
+                </div>
+                <div style="flex:1; text-align:center;">
+                    <div style="font-weight:bold; font-size:15px; margin-bottom:18px;">Revisó</div>
+                    <div style="min-height:40px; border-bottom:1.5px solid #23313f; margin-bottom:6px;"></div>
+                    <div style="font-size:13px; color:#555;">Aseguramiento de Calidad</div>
+                    <div style="font-size:12px; color:#888; margin-top:4px;">Nombre y Firma</div>
+                </div>
+                <div style="flex:1; text-align:center;">
+                    <div style="font-weight:bold; font-size:15px; margin-bottom:18px;">Aprobó</div>
+                    <div style="min-height:40px; border-bottom:1.5px solid #23313f; margin-bottom:6px;"></div>
+                    <div style="font-size:13px; color:#555;">Responsable Dirección </div>
+                    <div style="font-size:12px; color:#888; margin-top:4px;">Nombre y Firma</div>
+                </div>
+            </div>
+            <div class="footer">
+                <p><strong>IT-OP-00</strong> - Manual General de Etiquetado</p>
+                <p>Propiedad de Xelle Scientific © 2026 | Aseguramiento de Calidad | Versión 1.0</p>
+                <p style="margin-top: 10px; font-size: 0.9em;">Este documento es propiedad de "Xelle Scientific",
+                    S.A.P.I.
+                    de C.V. y está protegido por derechos de autor.</p>
+            </div>
+        </div>
+</body>
+
+</html>

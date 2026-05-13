@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-AD-08 Requisición de Personal</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Vertical */
+        @page { size: portrait; margin: 1cm; }
+        
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        .container { width: 19cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        
+        .compact-table th { background-color: #f1f5f9; color: #1E3A5F; font-size: 10px; padding: 6px; text-align: left; border: 1px solid #cbd5e1; }
+        .compact-table td { font-size: 10px; padding: 5px; vertical-align: middle; border: 1px solid #cbd5e1; }
+        .compact-table input, .compact-table select, .compact-table textarea { font-size: 10px; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
+        .compact-table textarea { resize: none; overflow: hidden; }
+        
+        .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; padding: 5px; }
+        .checkbox-item { display: flex; align-items: center; gap: 4px; font-size: 9.5px; }
+
+        .footer-unified { 
+            margin-top: 25px; border-top: 2px solid #1E3A5F; padding-top: 10px; 
+            text-align: center; font-size: 9px; line-height: 1.4; color: #475569;
+        }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body id="doc-fo-ad-08">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Requisición</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs><style>.c { fill: #2E9D82 }</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Control de Vacante</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-AD-08-</span>
+                    <input type="text" id="reg-ad08" class="registry-input generate-barcode cedit" 
+                           data-target="barcode-ad08" data-prefix="FO-AD-08-" placeholder="202X-00">
+                </div>
+                <svg id="barcode-ad08" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>REQUISICIÓN DE PERSONAL</h1>
+            <div class="metadata">Código: FO-AD-08 | Versión: 2.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. DATOS DEL SOLICITANTE</div>
+        <table class="compact-table" style="width: 100%; margin-top: 5px;">
+            <tr>
+                <th width="20%">Nombre del Solicitante:</th>
+                <td width="40%"><input class="cedit"></td>
+                <th width="15%">Puesto:</th>
+                <td width="25%"><input class="cedit"></td>
+            </tr>
+            <tr>
+                <th>Área / Departamento:</th>
+                <td><input class="cedit"></td>
+                <th>Fecha de Solicitud:</th>
+                <td><input type="text" class="cedit"></td>
+            </tr>
+        </table>
+
+        <div class="section-header">2. DATOS DE LA VACANTE A CUBRIR</div>
+        <table class="compact-table" style="width: 100%; margin-top: 5px;">
+            <tr>
+                <th width="25%">Motivo del requerimiento:</th>
+                <td colspan="3">
+                    <div class="checkbox-group">
+                        <label class="checkbox-item"><input type="checkbox" class="cedit" style="width: min-content;"> Nueva Creación</label>
+                        <label class="checkbox-item"><input type="checkbox" class="cedit" style="width: min-content;"> Sustitución / Baja</label>
+                        <label class="checkbox-item"><input type="checkbox" class="cedit" style="width: min-content;"> Incapacidad / Temporal</label>
+                        <label class="checkbox-item"><input type="checkbox" class="cedit" style="width: min-content;"> Otros</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Reemplaza a (si aplica):</th>
+                <td width="30%"><input class="cedit"></td>
+                <th width="20%">No. de Vacantes:</th>
+                <td width="25%"><input type="text" class="cedit" ></td>
+            </tr>
+            <tr>
+                <th>Tipo de contrato:</th>
+                <td><input type="text" class="cedit"></td>
+                <th>Cubrir con personal:</th>
+                <td><input type="text" class="cedit"></td>
+            </tr>
+        </table>
+
+        <div class="section-header">3. PERFIL REQUERIDO Y FUNCIONES</div>
+        <table class="compact-table" style="width: 100%; margin-top: 5px;">
+            <tr>
+                <th width="25%">Nivel Académico:</th>
+                <td><input class="cedit" placeholder="Ej. Licenciatura en Biología, Ing. Química..."></td>
+            </tr>
+            <tr>
+                <th>Experiencia requerida:</th>
+                <td><input class="cedit" placeholder="Años y áreas específicas"></td>
+            </tr>
+            <tr>
+                <th>Principales funciones a desempeñar:</th>
+                <td><textarea class="cedit" rows="3" placeholder="Describa las responsabilidades clave del puesto..."></textarea></td>
+            </tr>
+            <tr>
+                <th>Comentarios adicionales:</th>
+                <td><textarea class="cedit" rows="2"></textarea></td>
+            </tr>
+        </table>
+
+        <div class="section-header">4. AUTORIZACIÓN Y RECEPCIÓN</div>
+        <div class="section">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:15px; margin-top:20px;">
+                <div class="signature-box" style="flex:1; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;">ELABORA (SOLICITANTE)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre y Firma</p>
+                </div>
+                <div class="signature-box" style="flex:1; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;">AUTORIZA (DIRECCIÓN / RS)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre y Firma</p>
+                </div>
+                <div class="signature-box" style="flex:1; text-align:center; background-color:#f8fafc;">
+                    <p style="font-weight:bold; font-size:10px;">RECIBE (RECURSOS HUMANOS)</p>
+                    <div style="border-top:1px solid #1E3A5F; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-08 | Versión: 2.0 | Requisición de Personal | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V. Prohibida su reproducción total o parcial.</div>
+        </div>
+    </div>
+</body>
+</html>

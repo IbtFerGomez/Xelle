@@ -149,7 +149,7 @@
         </div>
 
         <div class="section">
-            <div class="section-title">SECCIÓN 1: BITÁCORA REGISTRO PROCESO ESTERILIZACIÓN</div>
+            <div class="section-title summary-header">SECCIÓN 1: BITÁCORA REGISTRO PROCESO ESTERILIZACIÓN</div>
             <table id="tbl-esterilizacion" class="compact-table">
                 <thead>
                     <tr>
@@ -198,29 +198,46 @@
             const rowCount = tbody.children.length + 1;
             const row = document.createElement('tr');
 
-            row.innerHTML = `
-                <td style="text-align:center;">${rowCount}</td>
-                <td><input class="cedit"></td>
-                <td><input type="number" class="cedit"></td>
-                <td><input class="cedit"></td>
-                <td>
-                    <select class="cedit">
-                        <option value="CS">CS</option>
-                        <option value="CH">CH</option>
-                    </select>
-                </td>
-                <td><input class="cedit" placeholder="Ej. 121°C/15min"></td>
-                <td><input type="date" class="cedit"></td>
-                <td>
-                    <select class="cedit" style="font-weight:bold;">
-                        <option value="ST">ST</option>
-                        <option value="NS">NS</option>
-                    </select>
-                </td>
-                <td><input class="cedit"></td>
-                <td><input class="cedit"></td>
-                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="removeSterilizationRow(this)">x</button></td>
-            `;
+            // Si está en modo offline, solo inputs
+            if (window.isOfflineMode) {
+                row.innerHTML = `
+                    <td style="text-align:center;">${rowCount}</td>
+                    <td><input class="cedit" value=""></td>
+                    <td><input class="cedit" value=""></td>
+                    <td><input class="cedit" value=""></td>
+                    <td><input class="cedit" value=""></td>
+                    <td><input class="cedit" value=""></td>
+                    <td><input class="cedit" value=""></td>
+                    <td><input class="cedit" value=""></td>
+                    <td><input class="cedit" value=""></td>
+                    <td><input class="cedit" value=""></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="removeSterilizationRow(this)">x</button></td>
+                `;
+            } else {
+                row.innerHTML = `
+                    <td style="text-align:center;">${rowCount}</td>
+                    <td><input class="cedit"></td>
+                    <td><input type="number" class="cedit"></td>
+                    <td><input class="cedit"></td>
+                    <td>
+                        <select class="cedit">
+                            <option value="CS">CS</option>
+                            <option value="CH">CH</option>
+                        </select>
+                    </td>
+                    <td><input class="cedit" placeholder="Ej. 121°C/15min"></td>
+                    <td><input type="date" class="cedit"></td>
+                    <td>
+                        <select class="cedit" style="font-weight:bold;">
+                            <option value="ST">ST</option>
+                            <option value="NS">NS</option>
+                        </select>
+                    </td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="removeSterilizationRow(this)">x</button></td>
+                `;
+            }
             tbody.appendChild(row);
         }
 
@@ -240,9 +257,11 @@
     </script>
     <script>
         let isOfflineMode = false;
+        window.isOfflineMode = isOfflineMode;
 
         function toggleOfflineMode() {
             isOfflineMode = !isOfflineMode;
+            window.isOfflineMode = isOfflineMode;
             const btn = document.getElementById('btn-offline');
             if (isOfflineMode) {
                 btn.textContent = 'Modo Online';
