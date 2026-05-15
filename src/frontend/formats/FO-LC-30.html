@@ -261,12 +261,16 @@
 
         <div class="signature-area">
             <div class="signature-box">
-                <p>Ejecutó (Técnico de Banco Celular)</p>
+                <p>EJECUCIÓN (Técnico de Laboratorio / Producción)</p>
                 <input type="text" class="cedit" placeholder="Nombre y Firma">
             </div>
             <div class="signature-box">
-                <p>Verificó (Supervisor de Calidad)</p>
+                <p>VERIFICACIÓN (Supervisor de Producción)</p>
                 <input type="text" class="cedit" placeholder="Nombre y Firma">
+            </div>
+            <div class="signature-box">
+                <p>AUTORIZACIÓN FINAL (N/A - Control operativo)</p>
+                <input type="text" class="cedit" placeholder="No aplica">
             </div>
         </div>
 
@@ -292,97 +296,97 @@
         }
         }
         </script>
-    <script>
-        let isOfflineMode = false;
+        <script>
+            let isOfflineMode = false;
 
-        function toggleOfflineMode() {
-            isOfflineMode = !isOfflineMode;
-            const btn = document.getElementById('btn-offline');
-            if (isOfflineMode) {
-                btn.textContent = 'Modo Online';
-                btn.style.backgroundColor = '#f59e0b';
+            function toggleOfflineMode() {
+                isOfflineMode = !isOfflineMode;
+                const btn = document.getElementById('btn-offline');
+                if (isOfflineMode) {
+                    btn.textContent = 'Modo Online';
+                    btn.style.backgroundColor = '#f59e0b';
 
-                // Convertir <select> a <input type="text">
-                document.querySelectorAll('select.cedit').forEach(sel => {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.className = sel.className;
-                    input.value = sel.options[sel.selectedIndex]?.text || '';
-                    input.setAttribute('data-original-type', 'select');
-                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
-                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
-                    input.setAttribute('data-select-options', options);
-                    sel.parentNode.replaceChild(input, sel);
-                });
-
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
-                    inp.type = 'text';
-                    inp.placeholder = 'DD/MM/AAAA';
-                });
-
-                // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
-                    inp.type = 'text';
-                    inp.placeholder = 'HH:MM';
-                });
-
-                // Convertir <input type="number"> a <input type="text">
-                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'number');
-                    const currentPlaceholder = inp.placeholder;
-                    inp.type = 'text';
-                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
-                });
-            } else {
-                btn.textContent = 'Modo Offline';
-                btn.style.backgroundColor = '';
-
-                // Restaurar <select> desde <input type="text">
-                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
-                    const sel = document.createElement('select');
-                    sel.className = inp.className;
-                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
-                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
-                    options.forEach(optText => {
-                        const opt = document.createElement('option');
-                        opt.text = optText;
-                        sel.appendChild(opt);
+                    // Convertir <select> a <input type="text">
+                    document.querySelectorAll('select.cedit').forEach(sel => {
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.className = sel.className;
+                        input.value = sel.options[sel.selectedIndex]?.text || '';
+                        input.setAttribute('data-original-type', 'select');
+                        if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                        const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                        input.setAttribute('data-select-options', options);
+                        sel.parentNode.replaceChild(input, sel);
                     });
-                    const currentValue = inp.value;
-                    for (let i = 0; i < sel.options.length; i++) {
-                        if (sel.options[i].text === currentValue) {
-                            sel.selectedIndex = i;
-                            break;
+
+                    // Convertir <input type="date"> a <input type="text">
+                    document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                        inp.setAttribute('data-original-type', 'date');
+                        inp.type = 'text';
+                        inp.placeholder = 'DD/MM/AAAA';
+                    });
+
+                    // Convertir <input type="time"> a <input type="text">
+                    document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                        inp.setAttribute('data-original-type', 'time');
+                        inp.type = 'text';
+                        inp.placeholder = 'HH:MM';
+                    });
+
+                    // Convertir <input type="number"> a <input type="text">
+                    document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                        inp.setAttribute('data-original-type', 'number');
+                        const currentPlaceholder = inp.placeholder;
+                        inp.type = 'text';
+                        if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                    });
+                } else {
+                    btn.textContent = 'Modo Offline';
+                    btn.style.backgroundColor = '';
+
+                    // Restaurar <select> desde <input type="text">
+                    document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                        const sel = document.createElement('select');
+                        sel.className = inp.className;
+                        if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                        const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                        options.forEach(optText => {
+                            const opt = document.createElement('option');
+                            opt.text = optText;
+                            sel.appendChild(opt);
+                        });
+                        const currentValue = inp.value;
+                        for (let i = 0; i < sel.options.length; i++) {
+                            if (sel.options[i].text === currentValue) {
+                                sel.selectedIndex = i;
+                                break;
+                            }
                         }
-                    }
-                    inp.parentNode.replaceChild(sel, inp);
-                });
+                        inp.parentNode.replaceChild(sel, inp);
+                    });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
+                    // Restaurar <input type="date">
+                    document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                        inp.type = 'date';
+                        inp.placeholder = '';
+                        inp.removeAttribute('data-original-type');
+                    });
 
-                // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
+                    // Restaurar <input type="time">
+                    document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                        inp.type = 'time';
+                        inp.placeholder = '';
+                        inp.removeAttribute('data-original-type');
+                    });
 
-                // Restaurar <input type="number">
-                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
-                    inp.type = 'number';
-                    inp.removeAttribute('data-original-type');
-                });
+                    // Restaurar <input type="number">
+                    document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                        inp.type = 'number';
+                        inp.removeAttribute('data-original-type');
+                    });
+                }
             }
-        }
-    </script>
+        </script>
 </body>
 
 </html>

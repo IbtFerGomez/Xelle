@@ -194,188 +194,179 @@
             </table>
         </div>
 
-        <div class="section-header">2. PUNTOS CRÍTICOS DE CONTROL (CUMPLIMIENTO NOM-059 / NOM-241)</div>
+        <div class="section-header">2. PUNTOS CRÍTICOS DE CONTROL Y TRAZABILIDAD (CUMPLIMIENTO NOM-059 / NOM-241)</div>
         <div class="section">
             <table class="compact-table" id="tabla-auditoria-op39">
                 <thead>
                     <tr>
-                        <th width="6%">No.</th>
-                        <th width="39%">Punto a Evaluar / Referencia Normativa</th>
-                        <th width="15%">Cumple (S/N/NA)</th>
-                        <th width="40%">Hallazgo / Evidencia Objetiva</th>
+                        <th width="4%">No.</th>
+                        <th width="30%">Punto a Evaluar / Referencia Normativa</th>
+                        <th width="12%">Cumple (S/N/NA)</th>
+                        <th width="34%">Hallazgo / Evidencia Objetiva</th>
+                        <th width="20%">Trazabilidad / Folios Relacionados</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="group-header">
-                        <td colspan="4">Buenas Prácticas de Documentación (BPD) y ALCOA+</td>
+                        <td colspan="5">Buenas Prácticas de Documentación (BPD) y ALCOA+</td>
                     </tr>
                     <tr>
                         <td class="check-number"></td>
-                        <td><strong>Integridad de Datos:</strong> ¿Los expedientes y bitácoras del área se llenan en
-                            tiempo real, sin uso de corrector, ni lápiz?</td>
+                        <td><strong>Integridad de Datos:</strong> ¿Los expedientes y bitácoras del área se llenan en tiempo real, sin uso de corrector, ni lápiz?</td>
                         <td><select class="cedit status-select" id="check-bpd-corrector">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
                                 <option value="NO">NO</option>
                                 <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" id="obs-bpd-corrector" rows="2"
-                                placeholder="Revisar bitácoras físicas recientes..."></textarea></td>
+                        <td><textarea class="cedit" id="obs-bpd-corrector" rows="2" placeholder="Revisar bitácoras físicas recientes..."></textarea></td>
+                        <td><input class="cedit" id="folio-bpd-corrector" placeholder="Ej: FO-OP-40-B, FO-OP-39" /></td>
                     </tr>
                     <tr>
                         <td class="check-number"></td>
-                        <td><strong>Correcciones Autorizadas:</strong> ¿Los errores de registro se corrigen con una
-                            línea simple, fecha y firma/iniciales de quien corrige?</td>
+                        <td><strong>Correcciones Autorizadas:</strong> ¿Los errores de registro se corrigen con una línea simple, fecha y firma/iniciales de quien corrige?</td>
                         <td><select class="cedit status-select" id="check-bpd-errores">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
                                 <option value="NO">NO</option>
                                 <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" id="obs-bpd-errores" rows="2"
-                                placeholder="Verificar correcciones en FO-OP-40-B..."></textarea></td>
+                        <td><textarea class="cedit" id="obs-bpd-errores" rows="2" placeholder="Verificar correcciones en FO-OP-40-B..."></textarea></td>
+                        <td><input class="cedit" id="folio-bpd-errores" placeholder="Ej: FO-OP-40-B" /></td>
                     </tr>
 
                     <tr class="group-header">
-                        <td colspan="4">Trazabilidad y Liberación de Producto</td>
+                        <td colspan="5">Trazabilidad y Liberación de Producto</td>
                     </tr>
                     <tr>
                         <td class="check-number"></td>
-                        <td><strong>Trazabilidad de Lote:</strong> ¿El FO-LC-16 (Cover Sheet del lote) vincula
-                            correctamente las materias primas con el producto final y sus rendimientos?</td>
+                        <td><strong>Trazabilidad de Lote:</strong> ¿El FO-LC-16 (Cover Sheet del lote) vincula correctamente las materias primas con el producto final y sus rendimientos?</td>
                         <td><select class="cedit status-select" id="check-trazabilidad">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
                                 <option value="NO">NO</option>
                                 <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" id="obs-trazabilidad" rows="2"
-                                placeholder="Referenciar Folios revisados..."></textarea>
-                        </td>
+                        <td><textarea class="cedit" id="obs-trazabilidad" rows="2" placeholder="Referenciar Folios revisados, lotes y materias primas..."></textarea></td>
+                        <td><input class="cedit" id="folio-trazabilidad" placeholder="Ej: FO-LC-16, Lote: 2026-001, MP: MP-123" /></td>
                     </tr>
                     <tr>
                         <td class="check-number"></td>
-                        <td><strong>Liberación Legal:</strong> ¿Los lotes de producto terminado liberados cuentan con el
-                            FO-QA-03 y la firma del Responsable Sanitario en el CoA (FO-QA-10)?</td>
+                        <td><strong>Liberación Legal:</strong> ¿Los lotes de producto terminado liberados cuentan con el FO-QA-03 y la firma del Responsable Sanitario en el CoA (FO-QA-10)?</td>
                         <td><select class="cedit status-select" id="check-liberacion">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
                                 <option value="NO">NO</option>
                                 <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" id="obs-liberacion" rows="2"
-                                placeholder="Indicar folios de CoA revisados..."></textarea></td>
+                        <td><textarea class="cedit" id="obs-liberacion" rows="2" placeholder="Indicar folios de CoA revisados, FO-QA-03, FO-QA-10..."></textarea></td>
+                        <td><input class="cedit" id="folio-liberacion" placeholder="Ej: FO-QA-03, FO-QA-10, Lote: 2026-001" /></td>
                     </tr>
 
                     <tr class="group-header">
-                        <td colspan="4">Equipos y Metrología</td>
+                        <td colspan="5">Equipos y Metrología</td>
                     </tr>
                     <tr>
                         <td class="check-number"></td>
-                        <td><strong>Identificación y Calibración:</strong> ¿Los equipos críticos (básculas, termómetros)
-                            tienen etiquetas de calibración vigentes visibles (ET-MT-01)?</td>
+                        <td><strong>Identificación y Calibración:</strong> ¿Los equipos críticos (básculas, termómetros) tienen etiquetas de calibración vigentes visibles (ET-MT-01)?</td>
                         <td><select class="cedit status-select" id="check-equipos-cal">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
                                 <option value="NO">NO</option>
                                 <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" id="obs-equipos-cal" rows="2"
-                                placeholder="Verificar equipos en el área física..."></textarea></td>
+                        <td><textarea class="cedit" id="obs-equipos-cal" rows="2" placeholder="Verificar equipos en el área física..."></textarea></td>
+                        <td><input class="cedit" id="folio-equipos-cal" placeholder="Ej: ET-MT-01, Equipo: EQ-001" /></td>
                     </tr>
 
                     <tr class="group-header">
-                        <td colspan="4">Cadena de Frío y Recepción de Materiales</td>
+                        <td colspan="5">Cadena de Frío y Recepción de Materiales</td>
                     </tr>
                     <tr>
                         <td class="check-number"></td>
-                        <td><strong>Cadena de Frío:</strong> ¿Se cuenta con registros diarios de temperatura (FO-OP-04)
-                            sin excursiones fuera de rango (o con desviación levantada si las hay)?</td>
+                        <td><strong>Cadena de Frío:</strong> ¿Se cuenta con registros diarios de temperatura (FO-OP-04) sin excursiones fuera de rango (o con desviación levantada si las hay)?</td>
                         <td><select class="cedit status-select" id="check-cadena-frio">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
                                 <option value="NO">NO</option>
                                 <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" id="obs-cadena-frio" rows="2"
-                                placeholder="Verificar refrigeradores/ultracongeladores..."></textarea></td>
+                        <td><textarea class="cedit" id="obs-cadena-frio" rows="2" placeholder="Verificar refrigeradores/ultracongeladores..."></textarea></td>
+                        <td><input class="cedit" id="folio-cadena-frio" placeholder="Ej: FO-OP-04, Equipo: RF-001" /></td>
                     </tr>
                     <tr>
                         <td class="check-number"></td>
-                        <td><strong>Muestras de Retención:</strong> ¿Las muestras de retención obligatorias están
-                            debidamente resguardadas y conciliadas en el FO-LC-32?</td>
+                        <td><strong>Muestras de Retención:</strong> ¿Las muestras de retención obligatorias están debidamente resguardadas y conciliadas en el FO-LC-32?</td>
                         <td><select class="cedit status-select" id="check-retencion">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
                                 <option value="NO">NO</option>
                                 <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" id="obs-retencion" rows="2"
-                                placeholder="Verificar inventario físico en muestroteca..."></textarea></td>
+                        <td><textarea class="cedit" id="obs-retencion" rows="2" placeholder="Verificar inventario físico en muestroteca..."></textarea></td>
+                        <td><input class="cedit" id="folio-retencion" placeholder="Ej: FO-LC-32, Muestra: MR-001" /></td>
                     </tr>
 
                     <tr class="group-header">
-                        <td colspan="4">Gestión de Riesgos, Desviaciones y CAPA</td>
+                        <td colspan="5">Gestión de Riesgos, Desviaciones y CAPA</td>
                     </tr>
                     <tr>
                         <td class="check-number"></td>
-                        <td><strong>Producto No Conforme (PNC):</strong> ¿El material o producto rechazado está
-                            físicamente en cuarentena/rechazo, etiquetado y registrado en el FO-OP-51?
-                        </td>
+                        <td><strong>Producto No Conforme (PNC):</strong> ¿El material o producto rechazado está físicamente en cuarentena/rechazo, etiquetado y registrado en el FO-OP-51?</td>
                         <td><select class="cedit status-select" id="check-pnc">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
                                 <option value="NO">NO</option>
                                 <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" id="obs-pnc" rows="2"
-                                placeholder="Inspeccionar área de Cuarentena/Rechazados..."></textarea></td>
+                        <td><textarea class="cedit" id="obs-pnc" rows="2" placeholder="Inspeccionar área de Cuarentena/Rechazados..."></textarea></td>
+                        <td><input class="cedit" id="folio-pnc" placeholder="Ej: FO-OP-51, Lote: 2026-002" /></td>
                     </tr>
                     <tr>
                         <td class="check-number"></td>
-                        <td><strong>CAPA y Acciones:</strong> ¿Las desviaciones críticas cuentan con un folio CAPA
-                            (FO-QA-09) y las acciones se están ejecutando en el tiempo establecido?</td>
+                        <td><strong>CAPA y Acciones:</strong> ¿Las desviaciones críticas cuentan con un folio CAPA (FO-QA-09) y las acciones se están ejecutando en el tiempo establecido?</td>
                         <td><select class="cedit status-select" id="check-riesgos">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
                                 <option value="NO">NO</option>
                                 <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" id="obs-riesgos" rows="2"
-                                placeholder="Listar folios CAPA activos..."></textarea></td>
+                        <td><textarea class="cedit" id="obs-riesgos" rows="2" placeholder="Listar folios CAPA activos..."></textarea></td>
+                        <td><input class="cedit" id="folio-riesgos" placeholder="Ej: FO-QA-09, CAPA: 2026-003" /></td>
                     </tr>
 
                     <tr class="group-header">
-                        <td colspan="4">Capacitación e Higiene del Personal</td>
+                        <td colspan="5">Capacitación e Higiene del Personal</td>
                     </tr>
                     <tr>
                         <td class="check-number"></td>
-                        <td><strong>Competencia del Personal:</strong> ¿El personal que ejecuta labores críticas en el
-                            momento de la auditoría cuenta con su Matriz de Competencias (FO-HR-04) aprobada?</td>
+                        <td><strong>Competencia del Personal:</strong> ¿El personal que ejecuta labores críticas en el momento de la auditoría cuenta con su Matriz de Competencias (FO-HR-04) aprobada?</td>
                         <td><select class="cedit status-select" id="check-personal-cap">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
                                 <option value="NO">NO</option>
                                 <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" id="obs-personal-cap" rows="2"
-                                placeholder="Solicitar evidencia al azar de un operador..."></textarea></td>
+                        <td><textarea class="cedit" id="obs-personal-cap" rows="2" placeholder="Solicitar evidencia al azar de un operador..."></textarea></td>
+                        <td><input class="cedit" id="folio-personal-cap" placeholder="Ej: FO-HR-04, Operador: OP-001" /></td>
                     </tr>
                     <tr>
                         <td class="check-number"></td>
-                        <td><strong>Limpieza de Áreas (FO-OP-61):</strong> ¿Los registros de limpieza profunda y
-                            sanitización coinciden con el programa establecido?</td>
+                        <td><strong>Limpieza de Áreas (FO-OP-61):</strong> ¿Los registros de limpieza profunda y sanitización coinciden con el programa establecido?</td>
                         <td><select class="cedit status-select" id="check-limpieza">
                                 <option value=""></option>
                                 <option value="SI">SÍ</option>
                                 <option value="NO">NO</option>
                                 <option value="NA">N/A</option>
                             </select></td>
-                        <td><textarea class="cedit" id="obs-limpieza" rows="2"
-                                placeholder="Verificar FO-OP-59 y FO-OP-61..."></textarea></td>
+                        <td><textarea class="cedit" id="obs-limpieza" rows="2" placeholder="Verificar FO-OP-59 y FO-OP-61..."></textarea></td>
+                        <td><input class="cedit" id="folio-limpieza" placeholder="Ej: FO-OP-59, FO-OP-61" /></td>
                     </tr>
                 </tbody>
             </table>
+            <div style="margin-top:10px; font-size:11px; color:#1E3A5F;">
+                <strong>Instrucción de Trazabilidad:</strong> Para cada punto, registre los folios/documentos, lotes, materias primas, equipos o personas involucradas que permitan rastrear el origen y destino de la evidencia. Ejemplo: "Lote: 2026-001, FO-LC-16, MP: MP-123".
+            </div>
         </div>
 
         <div class="section-header">3. CIERRE Y DICTAMEN DE AUDITORÍA</div>
@@ -392,15 +383,22 @@
         </div>
 
         <div class="section" style="margin-top: 30px;">
-            <div class="signature-box">
-                <p>Auditor Lider (Aseguramiento de Calidad)</p>
-                <input type="text" class="cedit" id="firma-auditor" placeholder="Firma">
-                <p>Nombre y Fecha</p>
-            </div>
-            <div class="signature-box">
-                <p>Auditado (Responsable de Área)</p>
-                <input type="text" class="cedit" id="firma-auditado" placeholder="Firma">
-                <p>Nombre y Fecha</p>
+            <div class="signature-area" style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;">
+                <div class="signature-box">
+                    <p><strong>Ejecución</strong><br><span style="font-size:10px;">Auditor Interno / Externo</span></p>
+                    <input type="text" class="cedit" id="firma-ejecucion" placeholder="Firma y Nombre">
+                    <p>Fecha: <input type="date" class="cedit"></p>
+                </div>
+                <div class="signature-box">
+                    <p><strong>Verificación</strong><br><span style="font-size:10px;">Aseguramiento de Calidad</span></p>
+                    <input type="text" class="cedit" id="firma-verificacion" placeholder="Firma y Nombre">
+                    <p>Fecha: <input type="date" class="cedit"></p>
+                </div>
+                <div class="signature-box">
+                    <p><strong>Autorización Final</strong><br><span style="font-size:10px;">Responsable Dirección</span></p>
+                    <input type="text" class="cedit" id="firma-autorizacion" placeholder="Firma y Nombre">
+                    <p>Fecha: <input type="date" class="cedit"></p>
+                </div>
             </div>
         </div>
 

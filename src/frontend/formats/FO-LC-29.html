@@ -366,18 +366,7 @@
                     <td><input type="number" class="cedit"></td>
                     <td><input class="cedit" readonly style="background:#f8fafc;"></td>
                 </tr>
-                <tr>
-                    <td><input type="number" step="0.1" class="cedit"></td>
-                    <td><input type="number" class="cedit"></td>
-                    <td><input type="number" class="cedit"></td>
-                    <td><input class="cedit" readonly style="background:#f8fafc;"></td>
-                </tr>
-                <tr>
-                    <td><input type="number" step="0.1" class="cedit"></td>
-                    <td><input type="number" class="cedit"></td>
-                    <td><input type="number" class="cedit"></td>
-                    <td><input class="cedit" readonly style="background:#f8fafc;"></td>
-                </tr>
+
             </tbody>
         </table>
 
@@ -389,54 +378,44 @@
         </table>
 
         <!-- footer -->
-            <div class="footer-unified" style="padding: 20px;">
-                <div class="control-data">FO-LC-29 | Versión: 1.0 | Bitácora Proceso TFF | Xelle Scientific | Página 1
-                    de 2
-                </div>
-                <div class="legal-data">Este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V. Prohibida su
-                    reproducción total o parcial.</div>
+        <div class="footer-unified" style="padding: 20px;">
+            <div class="control-data">FO-LC-29 | Versión: 1.0 | Bitácora Proceso TFF | Xelle Scientific | Página 1
+                de 2
             </div>
-             <!-- FIN footer -->
+            <div class="legal-data">Este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V. Prohibida su
+                reproducción total o parcial.</div>
+        </div>
+        <!-- FIN footer -->
 
-            
+
         <div class="section-header">4. MONITOREO DE FILTRACIÓN (Q PERM / Q RET)</div>
+
         <table class="compact-table">
             <tr>
-                <th width="50%">Hora Inicio Filtración:</th>
-                <td width="50%"><input type="text" class="cedit"></td>
+                <th width="20%">Hora Inicio Filtración:</th>
+                <td width="13%"><input class="cedit"> HH:MM</td>
+                <th width="20%"><span style="width: fit-content;"><strong>MUESTRA NEGATIVA:</strong> <input
+                            type="checkbox" class="cedit" style="width: max-content;"></span></th>
+
+            </tr>
+
+        </table>
+
+        <table class="compact-table">
+            <tr>
+                <th width="20%">Volumen NaCl 0.9% desinfección:</th>
+                <td width="13%"><input class="cedit"> HH:MM</td>
+                <th width="20%"><span style="width: fit-content;"><strong>MUESTRA NEGATIVA 2:</strong> <input
+                            type="checkbox" class="cedit" style="width: max-content;"></span></th>
+
             </tr>
 
         </table>
 
 
-        <div style="margin:10px 500px; font-size: 10px; width: max-content;" justify-content: center; display: flex;
-            gap: 10px; align-items: center;>
-            <span><strong>Muestra NEGATIVA:</strong> <input type="checkbox" class="cedit"
-                    style="width: max-content;"></span>
-
-        </div>
-
         <table class="compact-table">
             <tr>
-                <th width="50%">Volumen NaCl 0.9% desinfección:</th>
-                <td width="50%"><input type="text" class="cedit"></td>
-            </tr>
-
-        </table>
-        <div style="margin:10px 500px; font-size: 10px; width: max-content;" justify-content: center; display: flex;
-            gap: 10px; align-items: center;>
-            <span><strong>Muestra NEGATIVA 2:</strong> <input type="checkbox" class="cedit"
-                    style="width: max-content;"></span>
-
-        </div>
-
-        <table class="compact-table">
-            <tr>
-                <th width="50%">Volumen inicial MSRF:</th>
-                <td width="50%"><input type="text" class="cedit"></td>
-            </tr>
-            <tr>
-                <th width="50%">Flujo Q perm:</th>
+                <th width="50%">Volumen inicial MRSF:</th>
                 <td width="50%"><input type="text" class="cedit"></td>
             </tr>
 
@@ -479,32 +458,14 @@
                     <td><input type="text" class="cedit"></td>
                     <td><input type="text" class="cedit"></td>
                 </tr>
-                <tr>
-                    <td><input type="text" class="cedit" value="4"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="cedit" value="5"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="cedit" value="6"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                </tr>
 
             </tbody>
+        </table>
+        <table class="compact-table">
+            <tr>
+                <th width="50%">Promedio:</th>
+                <td width="50%"><input type="text" class="cedit"></td>
+            </tr>
         </table>
 
         <H3> Flujo Retenido (Qr) </H3>
@@ -545,34 +506,17 @@
                     <td><input type="text" class="cedit"></td>
                     <td><input type="text" class="cedit"></td>
                 </tr>
-                <tr>
-                    <td><input type="text" class="cedit" value="4"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="cedit" value="5"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="cedit" value="6"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                    <td><input type="text" class="cedit"></td>
-                </tr>
+
 
             </tbody>
         </table>
 
+        <table class="compact-table">
+            <tr>
+                <th width="50%">Promedio:</th>
+                <td width="50%"><input type="text" class="cedit"></td>
+            </tr>
+        </table>
         <table class="compact-table">
             <tr>
                 <th width="50%">Volumen Final:</th>
@@ -607,10 +551,7 @@
                 <th width="20%">Vol. EtOH 20% limpieza:</th>
                 <td width="13%"><input class="cedit"> mL</td>
             </tr>
-            <tr>
-                <th colspan="4" class="text-left">Pérdida de Proceso (Hold-up volume / Merma):</th>
-                <td colspan="2"><input class="cedit" placeholder="Calcular mL"></td>
-            </tr>
+
         </table>
         <table class="compact-table">
             <tr>
@@ -619,16 +560,33 @@
             </tr>
 
         </table>
+
+        <table class="compact-table">
+
+            <tr>
+                <th colspan="4" class="text-left">Lote Concentrado:</th>
+                <td colspan="2"><input class="cedit" placeholder="Calcular mL"></td>
+            </tr>
+            <tr>
+                <th colspan="4" class="text-left">Almacenamiento (°C):</th>
+                <td colspan="2"><input class="cedit" placeholder="Calcular mL"></td>
+            </tr>
+        </table>
         <div class="section-header">6. FIRMAS DE CONFORMIDAD</div>
         <div class="section">
             <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:20px;">
                 <div class="signature-box" style="flex:1; text-align:center;">
-                    <p style="font-weight:bold; font-size:10px;">EJECUTÓ (ANALISTA TFF)</p>
+                    <p style="font-weight:bold; font-size:10px;">EJECUCIÓN (Operador de Banco / Producción)</p>
                     <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
                     <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
                 </div>
                 <div class="signature-box" style="flex:1; text-align:center;">
-                    <p style="font-weight:bold; font-size:10px;">VERIFICÓ (SUPERVISOR)</p>
+                    <p style="font-weight:bold; font-size:10px;">VERIFICACIÓN (Supervisor de Producción / Calidad)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+                </div>
+                <div class="signature-box" style="flex:1; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;">AUTORIZACIÓN FINAL (Responsable Dirección)</p>
                     <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
                     <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
                 </div>

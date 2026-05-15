@@ -18,6 +18,29 @@
             border-top: 1px solid #e2e8f0;
         }
 
+        /* Orientación de impresión por defecto: vertical (portrait) */
+        @media print {
+            @page {
+                size: portrait;
+            }
+        }
+
+        /* Orientación horizontal (landscape) cuando se aplica la clase .landscape-print al body */
+        body.landscape-print {
+            /* No afecta la pantalla, solo para impresión */
+        }
+
+        @media print {
+            body.landscape-print {
+                /* Forzar landscape solo cuando la clase está presente */
+            }
+
+            body.landscape-print @page {
+                size: landscape;
+            }
+        }
+        
+
         @media print {
 
             .global-controls,
@@ -94,6 +117,8 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
+        <button class="btn btn-secondary" onclick="togglePrintOrientation()" id="btn-orientacion">Orientación:
+            Vertical</button>
         <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
 
@@ -193,6 +218,19 @@
     </div>
 
     <script>
+        // Alternar orientación de impresión entre vertical y horizontal
+        function togglePrintOrientation() {
+            const body = document.body;
+            const btn = document.getElementById('btn-orientacion');
+            if (body.classList.contains('landscape-print')) {
+                body.classList.remove('landscape-print');
+                btn.textContent = 'Orientación: Vertical';
+            } else {
+                body.classList.add('landscape-print');
+                btn.textContent = 'Orientación: Horizontal';
+            }
+        }
+
         function addSterilizationRow() {
             const tbody = document.getElementById('tbl-esterilizacion').querySelector('tbody');
             const rowCount = tbody.children.length + 1;
@@ -253,6 +291,9 @@
             if (document.querySelector('#tbl-esterilizacion tbody').children.length === 0) {
                 for (let i = 0; i < 4; i++) addSterilizationRow();
             }
+            // Asegurar que el botón de orientación esté en estado inicial
+            const btn = document.getElementById('btn-orientacion');
+            if (btn) btn.textContent = document.body.classList.contains('landscape-print') ? 'Orientación: Horizontal' : 'Orientación: Vertical';
         });
     </script>
     <script>

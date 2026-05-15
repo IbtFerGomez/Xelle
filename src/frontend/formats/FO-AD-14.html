@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-AD-14 Solicitud de Curso Extraordinario</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Vertical */
+        @page { size: portrait; margin: 1cm; }
+        
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        .container { width: 19cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
+        
+        .compact-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .compact-table th { background-color: #f1f5f9; color: #1E3A5F; font-size: 10px; padding: 6px; text-align: left; border: 1px solid #cbd5e1; vertical-align: middle; }
+        .compact-table td { font-size: 10px; padding: 5px; border: 1px solid #cbd5e1; vertical-align: middle; }
+        
+        .compact-table input, .compact-table select, .compact-table textarea { font-size: 10px; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
+        .compact-table textarea { resize: none; overflow: hidden; }
+        .compact-table input:focus, .compact-table select:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+
+        .text-center { text-align: center !important; }
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 5px; margin-top: 5px; color: #1E3A5F; }
+
+        .footer-unified { 
+            margin-top: 25px; border-top: 2px solid #1E3A5F; padding-top: 10px; 
+            text-align: center; font-size: 9px; line-height: 1.4; color: #475569;
+        }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body id="doc-fo-ad-14">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Solicitud</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs><style>.c { fill: #2E9D82 }</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Solicitud</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-AD-14-</span>
+                    <input type="text" id="reg-ad14" class="registry-input generate-barcode cedit" 
+                           data-target="barcode-ad14" data-prefix="FO-AD-14-" placeholder="202X-00">
+                </div>
+                <svg id="barcode-ad14" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>SOLICITUD DE CURSO EXTRAORDINARIO</h1>
+            <div class="metadata">Código: FO-AD-14 | Versión: 2.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. DATOS DEL SOLICITANTE</div>
+        <table class="compact-table">
+            <tr>
+                <th width="20%">Solicitante:</th>
+                <td width="50%"><input class="cedit" style="font-weight:bold;"></td>
+                <th width="10%">Fecha:</th>
+                <td width="20%"><input type="text" class="cedit"></td>
+            </tr>
+            <tr>
+                <th>Área:</th>
+                <td><input class="cedit"></td>
+                <th>Puesto:</th>
+                <td><input class="cedit"></td>
+            </tr>
+        </table>
+
+        <div class="section-header">2. DATOS DEL CURSO REQUERIDO</div>
+        <table class="compact-table">
+            <tr>
+                <th width="25%">Nombre del Curso:</th>
+                <td colspan="3"><input class="cedit" style="font-weight:bold; font-size:11px;"></td>
+            </tr>
+            <tr>
+                <th width="25%">Tipo de curso:</th>
+                <td width="25%">
+                    <input type="text" class="cedit" placeholder="Presencial, en línea, mixto...">
+                </td>
+                <th width="25%">Fecha en que se requiere:</th>
+                <td width="25%"><input type="text" class="cedit"></td>
+            </tr>
+        </table>
+
+        <div class="section-header">3. JUSTIFICACIÓN Y BENEFICIOS</div>
+        <table class="compact-table">
+            <tr>
+                <th style="text-align: center;">Motivo del curso extraordinario requerido</th>
+            </tr>
+            <tr>
+                <td><textarea class="cedit" rows="25" placeholder="Describa la necesidad operativa, normativa o técnica por la cual se requiere este curso fuera del Plan Anual de Capacitación..."></textarea></td>
+            </tr>
+            <tr>
+                <th style="text-align: center;">Beneficios esperados para la organización / colaborador</th>
+            </tr>
+            <tr>
+                <td><textarea class="cedit" rows="28" placeholder="¿Qué impacto tendrá esta capacitación en los procesos, la calidad o la eficiencia del área?"></textarea></td>
+            </tr>
+        </table>
+
+        <div class="section-header">4. CURSO DIRIGIDO A LOS SIGUIENTES COLABORADORES</div>
+        <table class="compact-table" id="tbl-participantes">
+            <thead>
+                <tr>
+                    <th width="10%" class="text-center" style="background-color: #1E3A5F; color: white;">No.</th>
+                    <th width="50%" class="text-center" style="background-color: #1E3A5F; color: white;">Nombre del Colaborador</th>
+                    <th width="35%" class="text-center" style="background-color: #1E3A5F; color: white;">Puesto</th>
+                    <th width="5%" class="no-print" style="background-color: #1E3A5F; color: white;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center row-num">1</td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit"></td>
+                    <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-participantes')">x</button></td>
+                </tr>
+                <tr>
+                    <td class="text-center row-num">2</td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit"></td>
+                    <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-participantes')">x</button></td>
+                </tr>
+                <tr>
+                    <td class="text-center row-num">3</td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit"></td>
+                    <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-participantes')">x</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn-add no-print" onclick="addRowNumbered('tbl-participantes')">+ AGREGAR COLABORADOR</button>
+
+        <div class="section-header">5. AUTORIZACIÓN</div>
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:15px; margin-top:20px;">
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">ELABORÓ (RESPONSABLE DE ÁREA)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:9px; margin-top:5px;">Nombre y Firma</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">AUTORIZÓ (DIRECCIÓN / RS)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:9px; margin-top:5px;">Nombre y Firma</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                <p style="font-weight:bold; font-size:10px; color:#14532d;">RECIBIÓ (RECURSOS HUMANOS)</p>
+                <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+                <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-14 | Versión: 2.0 | Solicitud de Curso Extraordinario | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V. Prohibida su reproducción total o parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if(row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => { 
+                const numCell = row.querySelector('.row-num');
+                if(numCell) numCell.innerText = index + 1; 
+            });
+        }
+    </script>
+</body>
+</html>

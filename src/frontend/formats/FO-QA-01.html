@@ -158,17 +158,11 @@
                         <td><input class="cedit"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
-                        <td>
-                            <select class="cedit">
-                                <option value=""></option><option value="ALTA">Alta</option><option value="MEDIA">Media</option><option value="BAJA">Baja</option>
-                            </select>
-                        </td>
+                        <td> <input class="cedit"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                         <td><input class="cedit"></td>
                         <td>
-                            <select class="cedit">
-                                <option value="ABIERTA">Abierta</option><option value="CERRADA">Cerrada</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Pendiente/En Progreso/Completada">
                         </td>
                         <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
                     </tr>
@@ -182,11 +176,11 @@
             <table class="no-border-table">
                 <tr>
                     <td width="30%"><strong>Fecha de Sesión de Evaluación:</strong></td>
-                    <td width="20%"><input type="date" class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td width="20%"><input type="text" class="cedit" style="border-bottom:1px solid #ccc;"></td>
                     <td width="35%" style="text-align:right;"><strong>¿Se identificaron riesgos que requieran CAPA?</strong></td>
                     <td width="15%">
-                        <label style="font-size:9px;"><input type="checkbox" class="cedit"> Sí</label>
-                        <label style="font-size:9px; margin-left:10px;"><input type="checkbox" class="cedit"> No</label>
+                        <label style="font-size:9px;" ><input type="checkbox" class="cedit" style="width: min-content;"> Sí</label>
+                        <label style="font-size:9px; margin-left:10px;"><input type="checkbox" class="cedit" style="width: min-content;"> No</label>
                     </td>
                 </tr>
             </table>
