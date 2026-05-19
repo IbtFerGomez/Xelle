@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-02-REG Lista de Verificación de Auditoría - Regulación Sanitaria</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        @page { size: portrait; margin: 1cm; }
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        .container { width: 19cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .sub-header { background-color: #f8fafc; color: #1E3A5F; padding: 4px 8px; font-weight: bold; font-size: 10px; margin-top: 10px; border-left: 4px solid #2E9D82; text-transform: uppercase; }
+        .compact-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 9px; padding: 6px; text-align: center; border: 1px solid #cbd5e1; vertical-align: middle; }
+        .compact-table td { font-size: 9px; padding: 5px; border: 1px solid #cbd5e1; vertical-align: middle; }
+        .compact-table input, .compact-table textarea { font-size: 9px; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
+        .compact-table textarea { resize: none; overflow: hidden; }
+        .compact-table input:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+        .text-center { text-align: center !important; }
+        .text-left { text-align: left !important; padding-left: 6px !important; }
+        .alcoa-badge { display: inline-block; padding: 2px 4px; background: #e0f2fe; color: #0369a1; font-weight: bold; border-radius: 3px; font-size: 8.5px; }
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 6px; margin-top: 5px; color: #1E3A5F; }
+        .footer-unified { margin-top: 25px; border-top: 2px solid #1E3A5F; padding-top: 10px; text-align: center; font-size: 9px; line-height: 1.4; color: #475569; }
+        @media print { .global-controls, .no-print { display: none !important; } body { background: white; padding: 0; } .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; } }
+     @media print {input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+<body id="doc-fo_qa_02_reg">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs><style>.c { fill: #2E9D82 }</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Código de Auditoría</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-02-REG-</span>
+                    <input type="text" id="reg-fo_qa_02_reg" class="registry-input generate-barcode cedit" data-target="barcode-fo_qa_02_reg" data-prefix="FO-QA-02-REG-" placeholder="2026-01">
+                </div>
+                <svg id="barcode-fo_qa_02_reg" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>LISTA DE VERIFICACIÓN DE AUDITORÍA: REGULACIÓN SANITARIA</h1>
+            <div class="metadata">Código: FO-QA-02-REG | Versión: 1.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <!-- 1. DATOS GENERALES -->
+        <div class="section-header">1. DATOS GENERALES DE LA EVALUACIÓN</div>
+        <table class="compact-table">
+            <tr>
+                <th width="20%">Departamento:</th>
+                <td width="40%"><input class="cedit" value="Regulación Sanitaria" readonly style="font-weight: bold; color: #1E3A5F;"></td>
+                <th width="15%">Fecha Evaluación:</th>
+                <td width="25%"><input type="text" class="cedit"></td>
+            </tr>
+            <tr>
+                <th>Auditor (Ref. FO-AD-00-B):</th>
+                <td><input class="cedit" placeholder="Nombre e ID de firma"></td>
+                <th>Responsable Auditado:</th>
+                <td><input class="cedit" placeholder="Nombre del líder de área"></td>
+            </tr>
+            <tr>
+                <th>Folio Programa (FO-QA-20):</th>
+                <td><input class="cedit" placeholder="Ejem: PROG-AUD-2026"></td>
+                <th>Estatus de Cierre:</th>
+                <td><input class="cedit" placeholder="Ejem: Conforme / CAPA Necesaria" style="font-weight: bold;"></td>
+            </tr>
+        </table>
+    <div
+            style="font-size: 9px; border: 1px solid #1E3A5F; padding: 5px; margin-top: 8px; border-radius: 4px; background-color: #f0f4ff;">
+            <p><strong>Estatus Cierre:</strong></p>
+            <p> 1.- Aceptable (Sin Desviaciones Críticas)</p>
+            <p>2.- Mejora Requerida (CAPA Necesaria)</p>
+            <p>3.- Crítico (Acción Inmediata)</p>
+
+        </div>
+        <!-- 2. CHECKLIST ESPECÍFICO -->
+        <div class="section-header">2. CRITERIOS ESPECÍFICOS DEL DEPARTAMENTO</div>
+        <p style="font-size: 9px; color:#1E3A5F; margin-bottom: 10px">Checklist de auditoria por área
+            para garantizar la integridad, calidad y trazabilidad de los datos en entornos regulados en los
+            sistemas de calidad la industria farmacéutica y de dispositivos médicos en un marco de mejores
+            prácticas de documentación</p>
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th width="5%">No.</th>
+                    <th width="65%">Punto de Control / Criterio Operacional a Auditar</th>
+                    <th width="10%">Dictamen</th>
+                    <th width="20%">Evidencia Objetiva</th>
+                </tr>
+            </thead>
+            <tbody>
+                                <tr>
+                    <td class="text-center">1</td>
+                    <td class="text-left">¿La Licencia Sanitaria del establecimiento y los Avisos de Responsable Sanitario ante COFEPRIS se encuentran vigentes y visibles?</td>
+                    <td><input class="cedit text-center" placeholder="C / NC / NA"></td>
+                    <td><input class="cedit" placeholder="Evidencia"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">2</td>
+                    <td class="text-left">¿Existe un control y seguimiento estricto de las sumisiones, prórrogas y respuestas a requerimientos de la autoridad sanitaria?</td>
+                    <td><input class="cedit text-center" placeholder="C / NC / NA"></td>
+                    <td><input class="cedit" placeholder="Evidencia"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">3</td>
+                    <td class="text-left">¿Los expedientes técnicos de los productos o procesos se encuentran actualizados de acuerdo con el marco regulatorio vigente?</td>
+                    <td><input class="cedit text-center" placeholder="C / NC / NA"></td>
+                    <td><input class="cedit" placeholder="Evidencia"></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <!-- 3. CHECKLIST ALCOA+ BASE -->
+        <div class="section-header">3. INTEGRIDAD DE DATOS BASE (ALCOA+)</div>
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th width="5%">No.</th>
+                    <th width="15%">Principio</th>
+                    <th width="50%">Pregunta de Control de Datos</th>
+                    <th width="10%">Dictamen (C/NC)</th>
+                    <th width="20%">Observaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="text-center">A1</td><td class="text-center"><span class="alcoa-badge">Atribuible</span></td><td class="text-left">¿Cada registro en papel o sistema digital identifica plenamente al firmante autorizado (correlación vs FO-AD-00-B)?</td><td><input class="cedit text-center" placeholder="C / NC"></td><td><input class="cedit"></td></tr>
+                <tr><td class="text-center">A2</td><td class="text-center"><span class="alcoa-badge">Legible</span></td><td class="text-left">¿Los registros manuales son indelebles y las correcciones respetan la regla del trazo único, fecha e iniciales?</td><td><input class="cedit text-center" placeholder="C / NC"></td><td><input class="cedit"></td></tr>
+                <tr><td class="text-center">A3</td><td class="text-center"><span class="alcoa-badge">Contemporáneo</span></td><td class="text-left">¿La documentación se realiza en tiempo real y síncrono al momento de la ejecución de la actividad, sin borradores?</td><td><input class="cedit text-center" placeholder="C / NC"></td><td><input class="cedit"></td></tr>
+                <tr><td class="text-center">A4</td><td class="text-center"><span class="alcoa-badge">Original</span></td><td class="text-left">¿Se conserva y resguarda el formato primario de captura de información ("raw data") o copias verdaderas verificadas?</td><td><input class="cedit text-center" placeholder="C / NC"></td><td><input class="cedit"></td></tr>
+                <tr><td class="text-center">A5</td><td class="text-center"><span class="alcoa-badge">Preciso</span></td><td class="text-left">¿Los registros representan con exactitud los valores reales obtenidos, libres de alteraciones informales?</td><td><input class="cedit text-center" placeholder="C / NC"></td><td><input class="cedit"></td></tr>
+            </tbody>
+        </table>
+
+        <!-- 4. SIGNATARIOS -->
+        <div class="section-header">4. PANEL DE AUTORIZACIÓN Y CIERRE</div>
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:15px; margin-top:15px;">
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">AUDITOR EVALUADOR</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:30px;"></div>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">LÍDER DE DEPARTAMENTO</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:30px;"></div>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                <p style="font-weight:bold; font-size:10px; color:#14532d;">RESPONSABLE SANITARIO / RESPONSABLE DIRECCIÓN / QA</p>
+                <div style="border-top:1px solid #166534; width:100%; margin-top:30px;"></div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer-unified">
+            <div class="control-data">FO-QA-02-REG | Versión: 1.0 | Lista de Verificación de Auditoría por Departamento | Xelle Scientific</div>
+            <div class="legal-data">Propiedad exclusiva de Xelle Scientific, S.A.P.I. de C.V. Quedan prohibidas las copias no controladas de este documento.</div>
+        </div>
+    </div>
+</body>
+</html>

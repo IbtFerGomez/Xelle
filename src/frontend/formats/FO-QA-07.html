@@ -104,6 +104,26 @@
             ::placeholder {
                 color: transparent !important;
             }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
+
+            input:not([type="checkbox"]):not([type="radio"]),
+            textarea {
+                border: 1px solid #cbd5e1 !important;
+                padding: 2px 4px !important;
+                border-radius: 0 !important;
+            }
+
+            textarea {
+                border: 1px solid #000 !important;
+                background: #fff !important;
+                -webkit-appearance: none;
+                appearance: none;
+            }
+
         }
     </style>
 </head>
@@ -157,7 +177,7 @@
                     <input type="text" id="reg-qa07" class="registry-input generate-barcode" data-target="barcode-qa07"
                         data-prefix="FO-QA-07-" placeholder="CC-202X-000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-qa07" class="barcode-svg"></svg>
             </div>
         </div>
@@ -180,16 +200,27 @@
             <div style="margin-top:10px;">
                 <strong>Clasificación del Cambio (Marque una):</strong>
                 <div class="cbx-group">
-                    <label><input type="radio" name="clase" class="cedit"> Documental (PNO, Formatos,
-                        Instructivos)</label>
-                    <label><input type="radio" name="clase" class="cedit"> Equipos / Sistemas Críticos /
+                    <label><input type="radio" name="clase" class="cedit" style="width: fit-content; margin: 8px 5px;">
+                        Documental (PNO,
+                        Formatos,Instructivos)</label>
+                    <label><input type="radio" name="clase" class="cedit" style="width: fit-content; margin: 8px 5px;">
+                        Equipos /
+                        Sistemas Críticos /
                         Instalaciones</label>
-                    <label><input type="radio" name="clase" class="cedit"> Proceso de Manufactura / Laboratorio</label>
-                    <label><input type="radio" name="clase" class="cedit"> Materias Primas / Insumos / Cambio de
+                    <label><input type="radio" name="clase" class="cedit" style="width: fit-content; margin: 8px 5px;">
+                        Proceso de
+                        Manufactura / Laboratorio</label>
+                    <label><input type="radio" name="clase" class="cedit" style="width: fit-content; margin: 8px 5px;">
+                        Materias Primas /
+                        Insumos / Cambio de
                         Proveedor</label>
+                </div>
+                <div>
+
                     <label style="display:flex; align-items:center;">
-                        <input type="radio" name="clase" class="cedit"> Otro: <input class="cedit"
-                            style="flex:1; margin-left:5px; border-bottom:1px solid #ccc;">
+                        <input type="radio" name="clase" class="cedit" style="width: fit-content; margin: 8px 5px;">
+                        Otro: <textarea class="cedit" rows="2"
+                            style="border:1px solid #cbd5e1; padding:5px; margin-left: 10px; width: 1000px;"></textarea>
                     </label>
                 </div>
             </div>
@@ -199,19 +230,19 @@
         <div class="section">
             <div style="margin-bottom:10px;">
                 <strong>Elemento a Modificar (Nombre, Código y Versión Actual, si aplica):</strong>
-                <input class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
+                <input class="cedit" style="width:100%; border:2px solid #cbd5e1;">
             </div>
             <div style="margin-bottom:10px;">
                 <strong>Situación Actual (¿Cómo se hace/está ahora?):</strong>
-                <textarea class="cedit" rows="2" style="width:100%; border:1px solid #cbd5e1; padding:5px;"></textarea>
+                <textarea class="cedit" rows="2" style="width:100%; border:2px solid #cbd5e1; padding:5px;"></textarea>
             </div>
             <div style="margin-bottom:10px;">
                 <strong>Situación Propuesta (¿Qué cambio se propone?):</strong>
-                <textarea class="cedit" rows="2" style="width:100%; border:1px solid #cbd5e1; padding:5px;"></textarea>
+                <textarea class="cedit" rows="2" style="width:100%; border:2px solid #cbd5e1; padding:5px;"></textarea>
             </div>
             <div>
                 <strong>Justificación (¿Por qué es necesario este cambio?):</strong>
-                <textarea class="cedit" rows="2" style="width:100%; border:1px solid #cbd5e1; padding:5px;"></textarea>
+                <textarea class="cedit" rows="2" style="width:100%; border:2px solid #cbd5e1; padding:5px;"></textarea>
             </div>
         </div>
 
@@ -240,7 +271,7 @@
                         <td><input class="cedit"></td>
                     </tr>
                     <tr>
-                        <td class="text-left">¿Capacitación del Personal (DNC / FO-HR-01)?</td>
+                        <td class="text-left">¿Capacitación del Personal (DNC)?</td>
                         <td><input type="radio" name="imp_3" class="cedit"></td>
                         <td><input type="radio" name="imp_3" class="cedit"></td>
                         <td><input class="cedit"></td>
@@ -261,12 +292,7 @@
             </table>
         </div>
 
-        <div class="page-break">
-            <div class="header-main" style="margin-top:0;">
-                <p style="text-align:right; font-size:9px; font-weight:bold; color:#64748b;">Folio: <span
-                        id="sync-folio">FO-QA-07-</span> | Página 2 de 2</p>
-            </div>
-
+        <div>
             <div class="section-header">4. PLAN DE ACCIÓN E IMPLEMENTACIÓN</div>
             <div class="section">
                 <table class="compact-table" id="tbl-accion">
@@ -285,24 +311,24 @@
                             <td>1</td>
                             <td><input class="cedit" placeholder="Ej. Actualizar formato y emitir Nueva Versión"></td>
                             <td><input class="cedit"></td>
-                            <td><input type="date" class="cedit"></td>
-                            <td><input type="date" class="cedit"></td>
+                            <td><input type="text" class="cedit"></td>
+                            <td><input type="text" class="cedit"></td>
                             <td><input class="cedit"></td>
                         </tr>
                         <tr>
                             <td>2</td>
                             <td><input class="cedit" placeholder="Ej. Capacitar al personal en la nueva versión"></td>
                             <td><input class="cedit"></td>
-                            <td><input type="date" class="cedit"></td>
-                            <td><input type="date" class="cedit"></td>
+                            <td><input type="text" class="cedit"></td>
+                            <td><input type="text" class="cedit"></td>
                             <td><input class="cedit"></td>
                         </tr>
                         <tr>
                             <td>3</td>
                             <td><input class="cedit" placeholder="Ej. Retirar y destruir versiones obsoletas"></td>
                             <td><input class="cedit"></td>
-                            <td><input type="date" class="cedit"></td>
-                            <td><input type="date" class="cedit"></td>
+                            <td><input type="text" class="cedit"></td>
+                            <td><input type="text" class="cedit"></td>
                             <td><input class="cedit"></td>
                         </tr>
                     </tbody>
@@ -311,30 +337,36 @@
             </div>
 
             <div class="section-header">5. REVISIÓN Y APROBACIÓN DEL CAMBIO</div>
-            <div class="section">
-                <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-bottom:10px;">Ningún cambio puede ser
-                    implementado sin la firma de Aseguramiento de Calidad y el Responsable Sanitario.</p>
-                <div class="signature-area" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <div class="signature-box">
-                        <p>Solicitante (Propone)</p>
-                        <input type="text" class="cedit" placeholder="Nombre y Firma"><br>
-                        Fecha: <input type="date" class="cedit" style="width:100px;">
-                    </div>
-                    <div class="signature-box">
-                        <p>Gerencia / Jefatura de Área</p>
-                        <input type="text" class="cedit" placeholder="Nombre y Firma"><br>
-                        Fecha: <input type="date" class="cedit" style="width:100px;">
-                    </div>
-                    <div class="signature-box">
-                        <p>Aseguramiento de Calidad</p>
-                        <input type="text" class="cedit" placeholder="Nombre y Firma"><br>
-                        Fecha: <input type="date" class="cedit" style="width:100px;">
-                    </div>
-                    <div class="signature-box">
-                        <p>Responsable Sanitario (Autoriza)</p>
-                        <input type="text" class="cedit" placeholder="Nombre y Firma"><br>
-                        Fecha: <input type="date" class="cedit" style="width:100px;">
-                    </div>
+
+
+            <div class="signature-area">
+                <div class="signature-box">
+                    <p><strong>Solicitante </strong></p>
+                    <p style="font-size:9px; margin:5px 0;">(Propone)</p>
+                    <input type="text" placeholder="Nombre completo" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Puesto" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Firma y Fecha" class="cedit">
+                </div>
+                <div class="signature-box">
+                    <p><strong> Verificación Aseguramiento de Calidad</strong></p>
+                    <p style="font-size:9px; margin:5px 0;">(Control de Calidad / QA)</p>
+                    <input type="text" placeholder="Nombre completo" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Puesto" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Firma y Fecha" class="cedit">
+                </div>
+                <div class="signature-box">
+                    <p><strong> Verificación Gerencia / Jefatura de Área</strong></p>
+                    <p style="font-size:9px; margin:5px 0;">(Control de Calidad / QA)</p>
+                    <input type="text" placeholder="Nombre completo" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Puesto" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Firma y Fecha" class="cedit">
+                </div>
+                <div class="signature-box">
+                    <p><strong>Autorización Final</strong></p>
+                    <p style="font-size:9px; margin:5px 0;">(Responsable Sanitario / Responsable Dirección)</p>
+                    <input type="text" placeholder="Nombre completo" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Puesto" class="cedit" style="margin-bottom:5px;">
+                    <input type="text" placeholder="Firma y Fecha" class="cedit">
                 </div>
             </div>
 
@@ -344,8 +376,10 @@
                     confirmando el cierre de actividades.</p>
                 <div style="margin-bottom:10px;">
                     <strong>¿El cambio fue efectivo y se cerraron todas las tareas?</strong>
-                    <label style="margin-left:10px;"><input type="radio" name="efec" class="cedit"> Sí</label>
-                    <label style="margin-left:10px;"><input type="radio" name="efec" class="cedit"> No</label>
+                    <label style="margin-left:10px;"><input type="radio" name="efec" class="cedit"
+                            style="width: min-content;"> Sí</label>
+                    <label style="margin-left:10px;"><input type="radio" name="efec" class="cedit"
+                            style="width: min-content;"> No</label>
                 </div>
                 <div style="margin-bottom:10px;">
                     <strong>Observaciones Finales:</strong><br>
@@ -356,7 +390,7 @@
                     <tr>
                         <td width="50%"><strong>Nombre y Firma (QA):</strong><br><input class="cedit"
                                 style="border-bottom:1px solid #ccc;"></td>
-                        <td width="50%"><strong>Fecha de Cierre:</strong><br><input type="date" class="cedit"></td>
+                        <td width="50%"><strong>Fecha de Cierre:</strong><br><input type="text" class="cedit"></td>
                     </tr>
                 </table>
             </div>
@@ -400,9 +434,9 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
@@ -446,9 +480,9 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

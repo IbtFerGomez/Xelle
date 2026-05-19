@@ -202,7 +202,7 @@
                     <input type="text" id="reg-qa08" class="registry-input generate-barcode" data-target="barcode-qa08"
                         data-prefix="FO-QA-08-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-qa08" class="barcode-svg"></svg>
             </div>
         </div>
@@ -220,20 +220,20 @@
             <table class="no-border-table">
                 <tr>
                     <td width="20%"><strong>Fecha de Ejecución:</strong></td>
-                    <td width="30%"><input type="date" class="cedit"></td>
+                    <td width="30%"><input type="text" class="cedit"></td>
                     <td width="15%"><strong>Hora:</strong></td>
-                    <td width="35%"><input type="time" class="cedit"></td>
+                    <td width="35%"><input type="text" class="cedit"></td>
                 </tr>
                 <tr>
                     <td><strong>Área que Solicita:</strong></td>
                     <td colspan="3">
                         <div class="cbx-group">
-                            <label><input type="radio" name="area_sol" class="cedit"><span>Almacén</span></label>
-                            <label><input type="radio" name="area_sol" class="cedit"><span>Producción</span></label>
-                            <label><input type="radio" name="area_sol" class="cedit"><span>Control de
+                            <label><input type="radio" name="area_sol" class="cedit" style="width: max-content;"><span>Almacén</span></label>
+                            <label><input type="radio" name="area_sol" class="cedit" style="width: max-content;"><span>Producción</span></label>
+                            <label><input type="radio" name="area_sol" class="cedit" style="width: max-content;"><span>Control de
                                     Calidad</span></label>
                             <label style="flex: 1;">
-                                <input type="radio" name="area_sol" class="cedit"><span>Otra:</span>
+                                <input type="radio" name="area_sol" class="cedit" style="width: max-content;"><span>Otra:</span>
                                 <input class="cedit" style="flex:1; margin-left:5px; border-bottom:1px solid #ccc;">
                             </label>
                         </div>
@@ -246,33 +246,33 @@
                 <div class="cbx-group-col">
                     <label style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
                         <span><strong>Producto No Conforme (PNC):</strong> Producto terminado rechazado por Calidad.
-                            (Obligatorio: Indicar folio del reporte de desviación FO-LC-51 o FO-OP-51).</span>
-                        <input type="radio" name="motivo" class="cedit">
+                            (Obligatorio: Indicar folio del reporte de desviación FO-OP-51).</span>
+                        <input type="radio" name="motivo" class="cedit" style="width: min-content; margin-right: 300px;">
                     </label>
                     <label style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
                         <span><strong>Producto Caduco:</strong> Vencimiento de vida útil en almacén o muestras de
                             retención.</span>
-                        <input type="radio" name="motivo" class="cedit">
+                        <input type="radio" name="motivo" class="cedit" style="width: min-content; margin-right: 300px;">
                     </label>
                     <label style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
                         <span><strong>Merma / Desperdicio Controlado:</strong> Sobrantes de proceso, purgas, o
                             materiales de empaque impresos obsoletos.</span>
-                        <input type="radio" name="motivo" class="cedit">
+                        <input type="radio" name="motivo" class="cedit" style="width: min-content; margin-right: 300px;">
                     </label>
                     <label style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
                         <span><strong>Falla Microbiológica:</strong> Positivo en esterilidad, endotoxinas o
                             micoplasma.</span>
-                        <input type="radio" name="motivo" class="cedit">
+                        <input type="radio" name="motivo" class="cedit" style="width: min-content; margin-right: 300px;">
                     </label>
                     <label style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
                         <span><strong>Excursión Térmica Crítica:</strong> Desviación de temperatura durante
                             almacenamiento que compromete la integridad.</span>
-                        <input type="radio" name="motivo" class="cedit">
+                        <input type="radio" name="motivo" class="cedit" style="width: min-content; margin-right: 300px;">
                     </label>
                     <label style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap;">
                         <span><strong>Defecto Crítico de Empaque/Sellado:</strong> Comprometiendo la esterilidad o
                             trazabilidad.</span>
-                        <input type="radio" name="motivo" class="cedit">
+                        <input type="radio" name="motivo" class="cedit" style="width: min-content; margin-right: 300px;">
                     </label>
                 </div>
             </div>
@@ -298,9 +298,9 @@
                 <table class="no-border-table" style="margin-top:8px;">
                     <tr>
                         <td width="50%">Folio de Reporte de Desviación / OOS: <input class="cedit inline-input"
-                                style="width:120px;" placeholder="FO-LC-51-..."></td>
+                                style="width: 400px;" placeholder="FO-LC-51-..."></td>
                         <td width="50%">Folio de CAPA Asociada (FO-QA-09): <input class="cedit inline-input"
-                                style="width:120px;" placeholder="FO-QA-09-..."></td>
+                                style="width:400px;" placeholder="FO-QA-09-..."></td>
                     </tr>
                 </table>
             </div>
@@ -327,7 +327,7 @@
                         <td><strong>Área que ejecutó la Segregación:</strong></td>
                         <td><input class="cedit"></td>
                         <td><strong>Fecha de Ingreso a Cuarentena:</strong></td>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
                     </tr>
                 </table>
             </div>
@@ -399,11 +399,11 @@
                 <div class="cbx-group-col">
                     <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>Interna (En instalaciones de Xelle Scientific)</span>
-                        <input type="radio" name="lugar" class="cedit">
+                        <input type="radio" name="lugar" class="cedit" style="width: min-content; margin-right: 500px;">
                     </label>
                     <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>Externa (Proveedor autorizado de disposición final)</span>
-                        <input type="radio" name="lugar" class="cedit">
+                        <input type="radio" name="lugar" class="cedit" style="width: min-content; margin-right: 500px;">
                     </label>
                 </div>
             </div>
@@ -413,22 +413,22 @@
                 <div class="cbx-group-col">
                     <label style="display:flex; align-items:flex-start; justify-content:space-between;flex-wrap: wrap;">
                         <span>Inactivación Química: Inmersión en Hipoclorito de sodio al
-                            <input type="number" class="cedit inline-input" placeholder="%" style="width:40px;"> %
-                            por <input type="number" class="cedit inline-input" placeholder="min" style="width:40px;">
+                            <input type="number" class="cedit inline-input" placeholder="%" style="width: 80px;" > %
+                            por <input type="number" class="cedit inline-input" placeholder="min" style="width:80px;">
                             min.
                         </span>
-                        <input type="checkbox" class="cedit" style="margin-left:10px;">
+                        <input type="checkbox" class="cedit" style="margin-left:10px;"style="width: min-content; margin-right: 500px;">
                     </label>
                     <label style="display:flex; align-items:flex-start; justify-content:space-between;flex-wrap: wrap;">
                         <span>Inactivación Térmica: Esterilización en Autoclave a 121°C por
-                            <input type="number" class="cedit inline-input" placeholder="min" style="width:40px;"> min.
+                            <input type="number" class="cedit inline-input" placeholder="min" style="width:80px;"> min.
                             Ciclo No. <input class="cedit inline-input" style="width:80px;">
                         </span>
-                        <input type="checkbox" class="cedit" style="margin-left:10px;">
+                        <input type="checkbox" class="cedit" style="margin-left:10px;" style="width: min-content; margin-right: 500px;">
                     </label>
                     <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>No aplica inactivación previa (Envío directo a contenedor de RPBI)</span>
-                        <input type="checkbox" class="cedit">
+                        <input type="checkbox" class="cedit" style="width: min-content; margin-right: 500px;">
                     </label>
                 </div>
             </div>
@@ -438,25 +438,25 @@
                 <div class="cbx-group-col">
                     <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>Inutilización física (Corte, trituración, ruptura de empaques/viales)</span>
-                        <input type="checkbox" class="cedit">
+                        <input type="checkbox" class="cedit" style="width: min-content; margin-right: 500px;">
                     </label>
                     <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>Neutralización Química (Ej. Hipoclorito de sodio)</span>
-                        <input type="checkbox" class="cedit">
+                        <input type="checkbox" class="cedit" style="width: min-content; margin-right: 500px;">
                     </label>
                     <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>Incineración / Disposición como RPBI</span>
-                        <input type="checkbox" class="cedit">
+                        <input type="checkbox" class="cedit" style="width: min-content; margin-right: 500px;">
                     </label>
                     <label style="display:flex; align-items:center; justify-content:space-between;flex-wrap: wrap;">
                         <span>Destrucción mecánica para evitar falsificación</span>
-                        <input type="checkbox" class="cedit">
+                        <input type="checkbox" class="cedit" style="width: min-content; margin-right: 500px;">
                     </label>
                     <label style="display:flex; align-items:center; gap:5px;">
                         <span>Otro:</span>
                         <input class="cedit"
                             style="flex:1; margin-left:5px; border-bottom:1px solid #ccc;flex-wrap: wrap;">
-                        <input type="checkbox" style="width: 80%; flex-wrap: wrap; ">
+                        <input type="checkbox" style="width: 75%; flex-wrap: wrap; " style="width: min-content; margin-right: 500px;">
                     </label>
                 </div>
             </div>
@@ -470,15 +470,15 @@
                             <div class="cbx-group-col" style="margin-top:5px;">
                                 <label style="display:flex; justify-content:space-between;flex-wrap: wrap;">
                                     <span>Bolsa Roja</span>
-                                    <input type="radio" name="cont" class="cedit">
+                                    <input type="radio" name="cont" class="cedit" style="width: min-content; margin-right: 100px;">
                                 </label>
-                                <label style="display:flex; justify-content:space-between;flex-wrap: wrap;">
+                                <label style="display:flex; justify-content:space-between;flex-wrap: wrap;" >
                                     <span>Recipiente Rígido Rojo</span>
-                                    <input type="radio" name="cont" class="cedit">
+                                    <input type="radio" name="cont" class="cedit" style="width: min-content; margin-right: 100px;">
                                 </label>
                                 <label style="display:flex; justify-content:space-between;flex-wrap: wrap;">
                                     <span>Bolsa Amarilla</span>
-                                    <input type="radio" name="cont" class="cedit">
+                                    <input type="radio" name="cont" class="cedit" style="width: min-content;margin-right: 100px;">
                                 </label>
                             </div>
                         </td>
@@ -492,11 +492,11 @@
                             <div class="cbx-group-col" style="margin-top:5px;">
                                 <label style="display:flex; justify-content:space-between;flex-wrap: wrap;">
                                     <span>ET-RPBI-01 (Rojo)</span>
-                                    <input type="radio" name="etiq" class="cedit">
+                                    <input type="radio" name="etiq" class="cedit" style="width: min-content;margin-right: 100px;">
                                 </label>
                                 <label style="display:flex; justify-content:space-between;flex-wrap: wrap;">
                                     <span>ET-RPBI-02 (Amarillo)</span>
-                                    <input type="radio" name="etiq" class="cedit">
+                                    <input type="radio" name="etiq" class="cedit"style="width: min-content;margin-right: 100px;">
                                 </label>
                             </div>
                         </td>
@@ -594,15 +594,15 @@
                 });
 
                 // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                document.querySelectorAll('input[type="text"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
 
                 // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
+                document.querySelectorAll('input[type="text"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'HH:MM';
                 });
@@ -640,8 +640,8 @@
                 });
 
                 // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

@@ -201,7 +201,7 @@
                     <input type="text" id="reg-qa-09" class="registry-input generate-barcode"
                         data-target="barcode-qa-09" data-prefix="FO-QA-09-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-qa-09" class="barcode-svg"></svg>
             </div>
         </div>
@@ -239,7 +239,8 @@
                    
                 </div>
             </div>
-            <textarea class="cedit" rows="3" style="width:100%; margin-top:10px;"
+            <label for="DetallesEvento"> Descripción Detallada del Evento: </label>
+            <textarea id="DetallesEvento" class="cedit" rows="3" style="width:100%; margin-top:10px;"
                 placeholder="Descripción Detallada del Evento..."></textarea>
         </div>
 
@@ -313,31 +314,31 @@
                         <td><textarea class="cedit" rows="2"></textarea></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
                     </tr>
                     <tr>
                         <td><textarea class="cedit" rows="2"></textarea></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
                     </tr>
                     <tr>
                         <td><textarea class="cedit" rows="2"></textarea></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
                     </tr>
                     <tr>
                         <td><textarea class="cedit" rows="2"></textarea></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
                     </tr>
                     <tr>
                         <td><textarea class="cedit" rows="2"></textarea></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
                     </tr>
                 </tbody>
             </table>
@@ -438,7 +439,7 @@
                 <td><textarea class="cedit" rows="2"></textarea></td>
                 <td><input class="cedit"></td>
                 <td><input class="cedit"></td>
-                <td><input type="date" class="cedit"></td>
+                <td><input type="text" class="cedit"></td>
             `;
             tbody.appendChild(newRow);
         }

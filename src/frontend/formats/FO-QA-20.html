@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-20 Programa de Auditoría</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Horizontal (Landscape) para Calendario Anual */
+        @page {
+            size: A4 landscape;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 26cm;
+            margin: 0 auto;
+            background: white;
+            padding: 0.8cm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            table-layout: fixed;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 7.5px;
+            padding: 4px 2px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+            line-height: 1.1;
+        }
+
+        .compact-table td {
+            font-size: 8px;
+            padding: 2px;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+            text-align: center;
+            min-height: 18px;
+            height: auto;
+            overflow: hidden;
+        }
+
+        .compact-table input {
+            font-size: 8px;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            border: none;
+            background: transparent;
+            padding: 1px;
+            box-sizing: border-box;
+            font-family: inherit;
+            text-align: center;
+            line-height: 1.1;
+            display: block;
+        }
+
+        .compact-table .cell-input {
+            font-size: 7px;
+            padding: 0;
+            height: 12px;
+        }
+
+        .compact-table input:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .compact-table textarea {
+            font-size: 8px;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            border: none;
+            background: transparent;
+            padding: 1px;
+            box-sizing: border-box;
+            font-family: inherit;
+            text-align: left;
+            resize: none;
+            min-height: 16px;
+            line-height: 1.2;
+        }
+
+        .compact-table .textarea-expand {
+            resize: vertical;
+            overflow-y: auto;
+            min-height: 18px;
+            max-height: 120px;
+        }
+
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 4px !important;
+        }
+
+        .week-col {
+            width: 1.25%;
+        }
+
+        .month-th {
+            font-size: 7px !important;
+            letter-spacing: 0.5px;
+        }
+
+        .week-th {
+            font-size: 6.5px !important;
+            color: #cbd5e1;
+            background-color: #0f172a;
+        }
+
+        .legend-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 8px;
+            font-size: 9px;
+            margin-top: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-around;
+            font-weight: bold;
+            color: #1E3A5F;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+            color: #1E3A5F;
+        }
+
+        .footer-unified {
+            margin-top: 20px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 10px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 1cm;
+            }
+
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+            }
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .compact-table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-qa-20">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Programa</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                        font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                        font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio del Programa</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-20-</span>
+                    <input type="text" id="reg-qa20" class="registry-input generate-barcode cedit"
+                        data-target="barcode-qa20" data-prefix="FO-QA-20-" placeholder="202X-00">
+                </div>
+                <svg id="barcode-qa20" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>PROGRAMA DE AUDITORÍA</h1>
+            <div class="metadata">Código: FO-QA-20 | Versión: 1.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div
+            style="margin-top: 10px; display: flex; align-items: center; gap: 10px; font-weight: bold; color: #1E3A5F; font-size: 12px;">
+            AÑO DEL PROGRAMA: <input class="cedit"
+                style="width: 80px; border-bottom: 2px solid #1E3A5F; text-align: left; font-size: 12px; padding: 2px;"
+                value="2026">
+        </div>
+
+        <div class="legend-box">
+            <span>NOMENCLATURA:</span>
+            <span>[ AI ] = Auditoría Interna</span>
+            <span>[ AP ] = Auditoría a Proveedores</span>
+            <span>[ PA ] = Preparación de Auditoría</span>
+            <span>[ X ] = Realizado</span>
+        </div>
+
+        <div class="section">
+            <table class="compact-table" id="tbl-auditoria">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="width: 2%;">No.</th>
+                        <th rowspan="2" style="width: 15%;">Procedimiento / Actividad / Sitio</th>
+                        <th rowspan="2" style="width: 11%;">Criterio a Auditar<br><span
+                                style="font-size: 6px; font-weight:normal;">(Norma / ISO / PNO)</span></th>
+                        <th rowspan="2" style="width: 10%;">Equipo Auditor</th>
+                        <th colspan="4" class="month-th">ENE</th>
+                        <th colspan="4" class="month-th">FEB</th>
+                        <th colspan="4" class="month-th">MAR</th>
+                        <th colspan="4" class="month-th">ABR</th>
+                        <th colspan="4" class="month-th">MAY</th>
+                        <th colspan="4" class="month-th">JUN</th>
+                        <th colspan="4" class="month-th">JUL</th>
+                        <th colspan="4" class="month-th">AGO</th>
+                        <th colspan="4" class="month-th">SEP</th>
+                        <th colspan="4" class="month-th">OCT</th>
+                        <th colspan="4" class="month-th">NOV</th>
+                        <th colspan="4" class="month-th">DIC</th>
+                        <th rowspan="2" style="width: 2%;" class="no-print"></th>
+                    </tr>
+                    <tr>
+                        <script>
+                            for (let i = 0; i < 12; i++) {
+                                document.write('<th class="week-th" colspan="1">1</th><th class="week-th" colspan="1">2</th><th class="week-th" colspan="1">3</th><th class="week-th" colspan="1">4</th>');
+                            }
+                        </script>
+                    </tr>
+                </thead>
+                <tbody id="tbody-auditoria">
+                    <tr>
+                        <td class="row-num">1</td>
+                        <td><input class="cedit text-left" placeholder="Ej. Procesos TFF"></td>
+                        <td><textarea class="cedit textarea-expand" placeholder="NOM-059"rows="4"></textarea></td>
+                        <td><textarea class="cedit textarea-expand" rows="4"></textarea></td>
+                        <script>
+                            for (let i = 0; i < 48; i++) {
+                                document.write('<td></td>');/* <input class="cedit cell-input" style="font-weight:bold; color:#0369a1; width:fit-content;"> */
+                            }
+                        </script>
+                        <td class="no-print"><button class="btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-auditoria')"
+                                style="padding:0; width:12px; height:12px; font-size:8px;">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">2</td>
+                        <td><input class="cedit text-left"></td>
+                        <td><textarea class="cedit textarea-expand" rows="4"></textarea></td>
+                        <td><textarea class="cedit textarea-expand" rows="4"></textarea></td>
+                        <script>
+                            for (let i = 0; i < 48; i++) {
+                                document.write('<td></td>');/* <input class="cedit cell-input" style="font-weight:bold; color:#0369a1; width:fit-content;"> */
+                            }
+                        </script>
+                        <td class="no-print"><button class="btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-auditoria')"
+                                style="padding:0; width:12px; height:12px; font-size:8px;">x</button></td>
+                    </tr>
+                        
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRowNumbered('tbl-auditoria')">+ AGREGAR AUDITORÍA AL
+                PROGRAMA</button>
+        </div>
+
+        <div class="section">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:20px;">
+                <div class="signature-box" style="flex:1; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;">ELABORÓ (ASEGURAMIENTO DE CALIDAD)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:30px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+                </div>
+                <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                    <p style="font-weight:bold; font-size:10px; color:#14532d;">AUTORIZÓ (DIRECCIÓN / RESPONSABLE
+                        SANITARIO)</p>
+                    <div style="border-top:1px solid #166534; width:100%; margin-top:30px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-QA-20 | Versión: 1.0 | Programa de Auditoría | Xelle Scientific | Página 1 de 1
+            </div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V.
+                Prohibida su reproducción total o parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = `${Math.max(textarea.scrollHeight, 18)}px`;
+        }
+
+        function initExpandableTextareas(scope = document) {
+            scope.querySelectorAll('.textarea-expand').forEach(textarea => {
+                autoResizeTextarea(textarea);
+                textarea.addEventListener('input', () => autoResizeTextarea(textarea));
+            });
+        }
+
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            newRow.querySelectorAll('textarea').forEach(textarea => {
+                textarea.value = '';
+                textarea.style.height = 'auto';
+            });
+            tbody.appendChild(newRow);
+            initExpandableTextareas(newRow);
+            updateNumbers(tableId);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if (row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                const numCell = row.querySelector('.row-num');
+                if (numCell) numCell.innerText = index + 1;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initExpandableTextareas();
+        });
+    </script>
+</body>
+
+</html>

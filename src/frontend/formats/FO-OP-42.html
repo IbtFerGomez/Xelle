@@ -101,7 +101,15 @@
                 color: transparent !important;
             }
         }
-        .footer { text-align: center; font-size: 8px; color: #64748b; margin-top: 20px; padding-top: 10px; border-top: 1px solid #e2e8f0; }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
     </style>
 </head>
 
@@ -154,7 +162,7 @@
                     <input type="text" id="reg-42" class="registry-input generate-barcode" data-target="barcode-42"
                         data-prefix="FO-OP-42-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-42" class="barcode-svg"></svg>
             </div>
         </div>
@@ -169,9 +177,9 @@
             <table class="no-border-table">
                 <tr>
                     <td width="20%"><strong>Fecha de Recepción:</strong></td>
-                    <td width="30%"><input type="date" class="cedit"></td>
+                    <td width="30%"><input type="text" class="cedit"></td>
                     <td width="20%"><strong>Hora de Ingreso:</strong></td>
-                    <td width="30%"><input type="time" class="cedit"> hrs.</td>
+                    <td width="30%"><input type="text" class="cedit"> hrs.</td>
                 </tr>
                 <tr>
                     <td><strong>Proveedor(es):</strong></td>
@@ -197,7 +205,7 @@
         <div class="section">
             <p style="font-size:9px; color:#666; margin-bottom:5px;">Evalúe cada partida. <strong>(Física =
                     Empaque/Etiqueta OK | CoA = Anexo/Conforme)</strong>. Estatus: A=Aprobado | R=Rechazado |
-                C=Cuarentena.</p>
+                C=Cuarentena. | Conforme / no conforme (C / NC)</p>
 
             <table class="compact-table" id="tbl-partidas">
                 <thead>
@@ -223,30 +231,26 @@
                         <td><input class="cedit" placeholder="Cant:"><br><input class="cedit" placeholder="Bultos:">
                         </td>
                         <td><input type="number" step="0.1" class="cedit" placeholder="°C"><br>
-                            <select class="cedit" style="font-size:8px;">
-                                <option>Ambiente</option>
-                                <option>Refri</option>
-                                <option>Congel.</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Condición" style="font-size:8px;">
                         </td>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
+                        <td><input type="text" class="cedit" style="font-size:8px;"></td>
                         <td>
                             <div class="radio-group">
-                                <label><input type="radio" class="cedit"> C</label>
-                                <label><input type="radio" class="cedit"> NC</label>
+                                <label><input type="radio" class="cedit" style="width: fit-content;"> C</label>
+                                <label><input type="radio" class="cedit" style="width: fit-content;"> NC</label>
                             </div>
                         </td>
                         <td>
                             <div class="radio-group">
-                                <label><input type="radio" class="cedit"> C</label>
-                                <label><input type="radio" class="cedit"> NC</label>
+                                <label><input type="radio" class="cedit" style="width: fit-content;"> C</label>
+                                <label><input type="radio" class="cedit" style="width: fit-content;"> NC</label>
                             </div>
                         </td>
                         <td>
                             <div class="radio-group">
-                                <label style="color:#166534;"><input type="radio" class="cedit"> A</label>
-                                <label style="color:#991b1b;"><input type="radio" class="cedit"> R</label>
-                                <label style="color:#b45309;"><input type="radio" class="cedit"> C</label>
+                                <label style="color:#166534;"><input type="radio" class="cedit"style="width: fit-content;"> A</label>
+                                <label style="color:#991b1b;"><input type="radio" class="cedit" style="width: fit-content;"> R</label>
+                                <label style="color:#b45309;"><input type="radio" class="cedit" style="width: fit-content;"> C</label>
                             </div>
                         </td>
                         <td class="no-print"><span onclick="delRow(this)"
@@ -260,7 +264,7 @@
         <div class="section-header">3. OBSERVACIONES Y DESVIACIONES</div>
         <div class="section">
             <p style="font-size:9px; color:#666; margin-bottom:5px;">Especifique el motivo de cualquier partida marcada
-                como "NC", "Rechazada (R)" o "En Cuarentena (C)".</p>
+                como "NC", "Rechazada (R)" o "En Cuarentena (C)". </p>
             <table class="no-border-table" id="tbl-observaciones">
                 <tbody>
                     <tr>
@@ -290,6 +294,11 @@
                 <input type="text" placeholder="Nombre y Firma" class="cedit">
             </div>
         </div>
+        <div class="footer">FO-OP-42 | Versión: 1.0 | RECEPCIÓN Y APROBACIÓN DE MATERIAS PRIMAS E INSUMOS MULTIPLES |
+            Xelle Scientific | Página 1 de 1<br>El contenido de este documento es propiedad de &quot;Xelle
+            Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida
+            su reproducción total o parcial.</div>
+
     </div>
 
     <script>
@@ -425,8 +434,8 @@
             });
 
             // Convertir <input type="date"> a <input type="text">
-            document.querySelectorAll('input[type="date"].cedit').forEach(inp => {
-                inp.setAttribute('data-original-type', 'date');
+            document.querySelectorAll('input[type="text"].cedit').forEach(inp => {
+                inp.setAttribute('data-original-type', 'text');
                 inp.type = 'text';
                 inp.placeholder = 'DD/MM/AAAA';
             });
@@ -472,8 +481,8 @@
             });
 
             // Restaurar <input type="date">
-            document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                inp.type = 'date';
+            document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                inp.type = 'text';
                 inp.placeholder = '';
                 inp.removeAttribute('data-original-type');
             });
@@ -514,15 +523,15 @@
                 });
 
                 // Convertir inputs de fecha
-                lastRow.querySelectorAll('input[type="date"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                lastRow.querySelectorAll('input[type="text"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
 
                 // Convertir inputs de hora
-                lastRow.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
+                lastRow.querySelectorAll('input[type="text"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'HH:MM';
                 });
@@ -537,7 +546,6 @@
             }
         };
     </script>
-    <div class="footer">FO-OP-42 | Versión: 1.0 | RECEPCIÓN Y APROBACIÓN DE MATERIAS PRIMAS E INSUMOS MULTIPLES | Xelle Scientific | Página 1 de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
 </body>
 
 </html>

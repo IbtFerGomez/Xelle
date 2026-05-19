@@ -14,9 +14,11 @@
             padding: 5px 10px;
             font-weight: bold;
             font-size: 11px;
-            margin-top: 15px;
+            margin-top: 8px;
+            margin-bottom: 8px;
             border-radius: 4px;
             text-transform: uppercase;
+            page-break-inside: avoid;
         }
 
         .sub-header {
@@ -41,10 +43,11 @@
 
         .compact-table td {
             font-size: 10px;
-            padding: 4px;
+            padding: 3px;
             vertical-align: middle;
             text-align: center;
             border: 1px solid #cbd5e1;
+            margin: 0;
         }
 
         .compact-table input,
@@ -74,8 +77,9 @@
             font-size: 10px;
             font-weight: bold;
             cursor: pointer;
-            padding: 5px;
-            margin-top: 5px;
+            padding: 3px;
+            margin-top: 3px;
+            margin-bottom: 0;
         }
 
         .text-left {
@@ -100,12 +104,13 @@
         .info-box {
             background-color: #f8fafc;
             border: 1px solid #cbd5e1;
-            padding: 8px;
+            padding: 6px 8px;
             border-radius: 4px;
             font-size: 9px;
-            line-height: 1.4;
+            line-height: 1.3;
             color: #334155;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            margin-top: 5px;
         }
 
         .conclusion-section {
@@ -123,8 +128,6 @@
             align-items: stretch;
             gap: 12px;
         }
-
-
 
         .conclusion-section .radio-group label {
             display: flex;
@@ -174,13 +177,14 @@
 
         /* Estilos del Footer Unificado y Legal */
         .footer-unified {
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-bottom: 0;
             border-top: 2px solid #1E3A5F;
             padding-top: 8px;
+            padding-bottom: 5px;
             text-align: center;
             font-size: 9px;
-            /* Tamaño unificado para todo el pie de página */
-            line-height: 1.4;
+            line-height: 1.3;
             page-break-inside: avoid;
         }
 
@@ -206,18 +210,54 @@
 
             ::-webkit-input-placeholder {
                 color: transparent !important;
+                opacity: 0 !important;
+            }
+
+            :-ms-input-placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
+            }
+
+            :-moz-placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
+            }
+
+            ::-moz-placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
             }
 
             ::placeholder {
                 color: transparent !important;
+                opacity: 0 !important;
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+                opacity: 0 !important;
             }
 
             .section {
-                page-break-inside: auto !important;
+                margin: 0;
+                padding: 8px 0;
+                margin: 0 !important;
+                padding: 0 !important;
             }
 
             tr {
                 page-break-inside: avoid !important;
+            }
+
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .container {
+                margin: 0 !important;
+                padding: 0 !important;
             }
         }
     </style>
@@ -300,18 +340,33 @@
                 </tr>
                 <tr>
                     <td><strong>Fecha de Auditoría:</strong></td>
-                    <td width="25%"><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
+                    <td colspan="2"><input type="text" class="cedit" style="border-bottom:1px solid #ccc;">
                     </td>
-                    <td width="25%" style="text-align: right; padding-right: 10px;"><strong>Horario:</strong></td>
-                    <td width="25%">
+
+                </tr>
+                <tr>
+                    <td><strong>Horario:</strong></td>
+                    <td colspan="2">
                         <div style="display:flex; align-items:center;">
-                            Inicio: <input type="time" class="cedit"
-                                style="width:70px; border-bottom:1px solid #ccc; margin:0 5px;">
-                            Fin: <input type="time" class="cedit"
-                                style="width:70px; border-bottom:1px solid #ccc; margin-left:5px;">
+                            Inicio (HH:MM): <input type="text" class="cedit"
+                                style="width: 200px; border-bottom:1px solid #ccc; margin:0 5px;">
+                            Fin (HH:MM): <input type="text" class="cedit"
+                                style="width: 200px; border-bottom:1px solid #ccc; margin-left:5px;">
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <th>Folio del Programa Anual (Ref. FO-QA-20):</th>
+                    <td>
+                        <input class="cedit" placeholder="PROG-AUD-2026" style="font-weight: bold; color: #1E3A5F;">
+                    </td>
+                    <th>ID de Registro de Auditor (Ref. FO-AD-00-B):</th>
+                    <td>
+                        <input class="cedit" placeholder="EMP-QA-04" style="text-align: center;">
+                    </td>
+                </tr>
+
+
             </table>
         </div>
 
@@ -323,7 +378,7 @@
                 la sección de hallazgos.
             </div>
 
-            <table class="compact-table" style="margin-bottom: 15px;">
+            <table class="compact-table" style="margin-bottom: 3px;">
                 <thead>
                     <tr>
                         <th width="50%">Punto de Inspección (Requisito Normativo)</th>
@@ -339,34 +394,33 @@
                     <tr>
                         <td class="text-left">¿El personal cuenta con la versión vigente y autorizada de los PNOs en su
                             área? (Sin copias piratas/obsoletas)</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="PNOs revisados:"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                     </tr>
                     <tr>
-                        <td class="text-left">¿Los reportes de Desviación y CAPAs (FO-QA-09) están siendo cerrados en
+                        <td class="text-left">¿El Índice Maestro de Formatos Activos coincide físicamente con las
+                            versiones
+                            impresas y en uso dentro de las áreas productivas y laboratorios?</td>
+                        <td><input type="text" class="cedit" placeholder="PNOs revisados:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿El personal que firma las bitácoras y registros operativos se encuentra
+                            registrado,
+                            vigente y autorizado en el Catálogo de Firmas</td>
+                        <td><input type="text" class="cedit" placeholder="PNOs revisados:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Los reportes de Desviación y CAPAs (FO-QA-019) están siendo cerrados en
                             los tiempos comprometidos?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Reportes revisados:"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                     </tr>
                     <tr>
-                        <td class="text-left">¿La Matriz de Riesgos (FO-QA-20) está actualizada e incluye los riesgos
+                        <td class="text-left">¿La Matriz de Riesgos (FO-QA-01) está actualizada e incluye los riesgos
                             recientes del área?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Matriz de riesgos revisada:"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                     </tr>
 
@@ -374,36 +428,42 @@
                         <td colspan="3" class="sub-header">B. PERSONAL Y CAPACITACIÓN (Carpeta HR)</td>
                     </tr>
                     <tr>
-                        <td class="text-left">¿El personal del área cuenta con su Perfil de Puesto (FO-HR-03) firmado?
+                        <td class="text-left">¿El personal del área cuenta con su Perfil de Puesto (FO-AD-01) firmado?
                             (Revisar expediente al azar)</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Perfil de puesto revisado:"></td>
                         <td><input class="cedit text-left" placeholder="Expediente revisado: "></td>
                     </tr>
                     <tr>
-                        <td class="text-left">¿La Matriz de Competencias (FO-HR-04) demuestra que los operadores están
+                        <td class="text-left">¿La Matriz de Competencias (FO-AD-02) demuestra que los operadores están
                             calificados para los equipos que operan?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Matriz de competencias revisada:"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                     </tr>
                     <tr>
                         <td class="text-left">¿El personal de áreas limpias cumple con los requisitos de higiene (uñas
                             cortas, sin maquillaje/joyería, EPP correcto)?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Requisitos de higiene revisados:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿El personal cuenta con Descriptiva de Puesto firmada, Convenio de
+                            Confidencialidad y
+                            Expediente completo?</td>
+                        <td><input type="text" class="cedit" placeholder="Requisitos de higiene revisados:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Existe evidencia de cumplimiento del Plan Anual de Capacitación,
+                            incluyendo evaluaciones de eficacia y listas
+                            de difusión de nuevos PNOs?</td>
+                        <td><input type="text" class="cedit" placeholder="Requisitos de higiene revisados:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Las bajas de personal cuentan con el checklist de cierre y revocación de
+                            accesos
+                            digitales/físicos completo?</td>
+                        <td><input type="text" class="cedit" placeholder="Requisitos de higiene revisados:"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                     </tr>
 
@@ -411,56 +471,44 @@
                         <td colspan="3" class="sub-header">C. INSTALACIONES, EQUIPOS Y METROLOGÍA (Carpeta MT y OP)</td>
                     </tr>
                     <tr>
-                        <td class="text-left">¿Se cumple con el Programa Anual de Mantenimiento (FO-MT-01) en los meses
+                        <td class="text-left">¿Se cumple con el Programa Anual de Mantenimiento (FO-OP-01) en los meses
                             correspondientes?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Programa de mantenimiento revisado:"></td>
                         <td><input class="cedit text-left" placeholder="Verificar equipo: "></td>
                     </tr>
                     <tr>
                         <td class="text-left">¿Los instrumentos de medición muestran etiquetas de calibración vigentes
-                            (ET-MT-01) e inventario (FO-MT-03)?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                            (ET-OP-01), Identificación y estatus control de equipo (ET-EQ-01) e inventario (ET-OP-03)?
+                        </td>
+                        <td><input type="text" class="cedit" placeholder="Instrumentos revisados:"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                     </tr>
                     <tr>
-                        <td class="text-left">¿Las bitácoras de limpieza de áreas (FO-OP-61) y control de plagas
-                            (FO-OP-60) están al día?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td class="text-left">¿Las bitácoras de limpieza de áreas (FO-OP-19) y control de plagas
+                            (FO-OP-57) están al día?</td>
+                        <td><input type="text" class="cedit" placeholder="Bitácoras revisadas:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Los vehículos de transporte de material biológico cuentan con registro de
+                            limpieza previa y kilometraje
+                            cruzado con folios de envío?</td>
+                        <td><input type="text" class="cedit" placeholder="Bitácoras revisadas:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Se encuentran actualizadas las bitácoras de los equipos críticos
+                            (Incubadoras, Cabinas de Bioseguridad, Refrigeradores)
+                            sin espacios en blanco?</td>
+                        <td><input type="text" class="cedit" placeholder="Bitácoras revisadas:"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="footer-unified">
-            <div class="control-data">FO-QA-02 | Versión: 1.0 | Cuestionario Maestro de Auditoría Interna al SGC | Xelle
-                Scientific | Página 1 de 2</div>
-            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
-                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
-                parcial.</div>
-        </div>
 
-        <div style="page-break-before: always;"></div>
 
-        <div class="header-main" style="margin-top:0;">
-            <p style="text-align:right; font-size:9px; font-weight:bold; color:#64748b;">Folio de Auditoría: <span
-                    id="sync-folio">FO-QA-02-000</span> | Página 2 de 2</p>
-        </div>
 
         <div class="section">
             <table class="compact-table">
@@ -478,34 +526,39 @@
                     <tr>
                         <td class="text-left">¿Se realiza el Despeje de Línea antes de cada proceso y se registra
                             adecuadamente?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Despeje de línea registrado:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Cada Orden de Producción / Expediente de Lote (FO-OP-40-B o FO-LC-49)
+                            incluye lotes de insumos, cantidades, responsables y tiempos de cada etapa?</td>
+                        <td><input type="text" class="cedit" placeholder="Expedientes revisados:"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                     </tr>
                     <tr>
                         <td class="text-left">¿Los materiales en el Almacén respetan el sistema Primeras Caducidades,
                             Primeras Salidas (FEFO)?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Materiales revisados:"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                     </tr>
                     <tr>
                         <td class="text-left">¿El producto en cuarentena o rechazado está físicamente segregado e
                             identificado con etiquetas rojas/amarillas?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Producto segregado e identificado:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿El proceso de Filtración por Flujo Tangencial (TFF) cuenta con los
+                            registros de CWF, Q Permeado y
+                            Q Retentado documentados en tiempo real?</td>
+                        <td><input type="text" class="cedit" placeholder="Producto segregado e identificado:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Se tiene trazabilidad de los lotes de todos los insumos (NaCl, NaOH,
+                            Membrana) utilizados en la limpieza y
+                            esterilización de equipos?</td>
+                        <td><input type="text" class="cedit" placeholder="Producto segregado e identificado:"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                     </tr>
 
@@ -515,46 +568,93 @@
                     <tr>
                         <td class="text-left">¿Las muestras de retención coinciden físicamente con el registro de
                             entradas y salidas (FO-LC-32)?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Muestras revisadas:"></td>
                         <td><input class="cedit text-left" placeholder="Inventario Lote: "></td>
                     </tr>
                     <tr>
                         <td class="text-left">¿Los reactivos de laboratorio están rotulados con su fecha de apertura y
                             fecha de caducidad?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Reactivos revisados:"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                     </tr>
                     <tr>
                         <td class="text-left">¿Las excursiones de temperatura en refrigeradores (FO-OP-04) fueron
                             investigadas y reportadas?</td>
-                        <td><select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">SÍ</option>
-                                <option value="N" style="color:#991b1b;">NO</option>
-                                <option value="NA">N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Excursiones revisadas:"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                     </tr>
+                    <tr>
+                        <td class="text-left">¿Las excursiones de temperatura en congeladores (FO-OP-05) fueron
+                            investigadas y reportadas?</td>
+                        <td><input type="text" class="cedit" placeholder="Excursiones revisadas:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="sub-header">F. TRAZABILIDAD INTEGRAL DEL LOTE Y LIBERACIÓN (Carpetas OP,
+                            LC y QA)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿La recepción de materia prima y materiales (FO-OP-14 / FO-OP-41 /
+                            FO-OP-42)
+                            mantiene trazabilidad completa de proveedor, lote, caducidad, condición de arribo y decisión
+                            de recepción?</td>
+                        <td><input type="text" class="cedit" placeholder="Recepciones revisadas:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Existe correlación documental entre lote de materia prima, lote en
+                            proceso,
+                            lote de producto terminado y etiquetas aplicadas (IT-OP-01 / registros de empaque)?</td>
+                        <td><input type="text" class="cedit" placeholder="Lotes trazados:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿El muestreo, retención y disposición de muestras (FO-LC-32 y FO-LC-32-B)
+                            permiten reconstruir historial de entrada, ubicación, salida y motivo de disposición por
+                            lote?</td>
+                        <td><input type="text" class="cedit" placeholder="Muestras trazadas:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿El dictamen analítico del lote (FO-LC-48) es congruente con registros del
+                            proceso y se soporta con datos primarios íntegros y firmados?</td>
+                        <td><input type="text" class="cedit" placeholder="Dictámenes revisados:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿La liberación final (FO-QA-10 / FO-QA-11 / FO-OP-20, según aplique)
+                            referencia correctamente el lote, estatus, criterio de aceptación y autorización sanitaria?
+                        </td>
+                        <td><input type="text" class="cedit" placeholder="Liberaciones revisadas:"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                    </tr>
+
+
+                    <!-- /*Agregar nuevos puntos de inspección aquí siguiendo el mismo formato*/ -->
+
                 </tbody>
             </table>
         </div>
-
+        <div class="footer-unified">
+            <div class="control-data">FO-QA-02 | Versión: 1.0 | Cuestionario Maestro de Auditoría Interna al
+                SGC | Xelle
+                Scientific | Página 2 de 3</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific",
+                S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción
+                total o
+                parcial.</div>
+        </div>
+        <br>
+        <br>
+        <br>
         <div class="section-header">3. CONSOLIDADO DE NO CONFORMIDADES (HALLAZGOS)</div>
         <div class="section">
-            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-bottom:5px;">Describa detalladamente
-                cualquier incumplimiento detectado ("NO" en el Checklist). Cada punto listado aquí requiere la apertura
-                de una Acción Correctiva o Preventiva (CAPA).</p>
-            <table class="compact-table" id="tbl-hallazgos">
+            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-bottom:3px; margin-top:0;">Describa
+                detalladamente cualquier incumplimiento detectado ("NO" en el Checklist). Cada punto listado aquí
+                requiere la apertura de una Acción Correctiva o Preventiva (CAPA).</p>
+            <table class="compact-table" id="tbl-hallazgos" style="margin-top: 3px; margin-bottom: 3px;">
                 <thead>
                     <tr>
                         <th width="5%">No.</th>
@@ -569,20 +669,11 @@
                     <tr>
                         <td class="row-num" style="font-weight:bold;">01</td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="MENOR">Menor</option>
-                                <option value="MAYOR" style="color:#b45309;">Mayor</option>
-                                <option value="CRITICA" style="color:#991b1b;">Crítica</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Clasificación del hallazgo">
                         </td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#991b1b;">SÍ</option>
-                                <option value="N">NO</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Requiere CAPA (S/N)">
                         </td>
                         <td class="no-print"><button class="btn btn-danger btn-mini"
                                 onclick="delRowNumbered(this, 'tbl-hallazgos')">x</button></td>
@@ -590,20 +681,47 @@
                     <tr>
                         <td class="row-num" style="font-weight:bold;">02</td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="MENOR">Menor</option>
-                                <option value="MAYOR" style="color:#b45309;">Mayor</option>
-                                <option value="CRITICA" style="color:#991b1b;">Crítica</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Clasificación del hallazgo">
                         </td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#991b1b;">SÍ</option>
-                                <option value="N">NO</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Requiere CAPA (S/N)">
+                        </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-hallazgos')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">03</td>
+                        <td>
+                            <input type="text" class="cedit" placeholder="Clasificación del hallazgo">
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td>
+                            <input type="text" class="cedit" placeholder="Requiere CAPA (S/N)">
+                        </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-hallazgos')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">04</td>
+                        <td>
+                            <input type="text" class="cedit" placeholder="Clasificación del hallazgo">
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td>
+                            <input type="text" class="cedit" placeholder="Requiere CAPA (S/N)">
+                        </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-hallazgos')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">05</td>
+                        <td>
+                            <input type="text" class="cedit" placeholder="Clasificación del hallazgo">
+                        </td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td>
+                            <input type="text" class="cedit" placeholder="Requiere CAPA (S/N)">
                         </td>
                         <td class="no-print"><button class="btn btn-danger btn-mini"
                                 onclick="delRowNumbered(this, 'tbl-hallazgos')">x</button></td>
@@ -615,20 +733,20 @@
 
         <div class="section-header">4. CONCLUSIÓN DE LA AUDITORÍA</div>
         <div class="section conclusion-section">
-            <p style="font-size:9px; color:#666; margin-bottom:10px;">Evaluación general del área auditada con respecto
-                al cumplimiento de las Buenas Prácticas.</p>
+            <p style="font-size:9px; color:#666; margin-bottom:5px; margin-top:0;">Evaluación general del área auditada
+                con respecto al cumplimiento de las Buenas Prácticas.</p>
 
             <div class="radio-group"
                 style="background-color:#f8fafc; border:1px solid #cbd5e1; padding:15px; border-radius:4px;">
                 <label style="color:#166534; font-weight:bold; font-size:11px;">
-                    <input type="radio" name="conclusion" class="cedit"> SATISFACTORIO
+                    <input type="radio" name="conclusion" class="cedit" style="width: fit-content;"> SATISFACTORIO
                     <span style="font-size:10px; font-weight:normal; color:#334155; margin-left:10px;">El área opera
                         bajo control normativo. Las desviaciones son menores y no afectan la calidad del
                         producto.</span>
                 </label>
                 <div class="option-divider" style="border-top:1px dashed #cbd5e1; margin:8px 0;"></div>
                 <label style="color:#b45309; font-weight:bold; font-size:11px;">
-                    <input type="radio" name="conclusion" class="cedit"> CONDICIONADO
+                    <input type="radio" name="conclusion" class="cedit" style="width: fit-content;"> CONDICIONADO
                     <span style="font-size:10px; font-weight:normal; color:#334155; margin-left:10px;">Existen
                         desviaciones mayores que requieren atención. Se programará auditoría de seguimiento en <input
                             type="number" class="cedit"
@@ -636,7 +754,7 @@
                 </label>
                 <div class="option-divider" style="border-top:1px dashed #cbd5e1; margin:8px 0;"></div>
                 <label style="color:#991b1b; font-weight:bold; font-size:11px;">
-                    <input type="radio" name="conclusion" class="cedit"> CRÍTICO
+                    <input type="radio" name="conclusion" class="cedit" style="width: fit-content;"> CRÍTICO
                     <span style="font-size:10px; font-weight:normal; color:#334155; margin-left:10px;">Desviaciones
                         críticas que comprometen la calidad. Se recomienda detener operaciones hasta el cierre de los
                         CAPAs.</span>
@@ -654,73 +772,89 @@
                         auditoría se realizó con objetividad e independencia.</p>
                     <input class="cedit" placeholder="Nombre y Firma"
                         style="border-top:1px solid #ccc; border-radius:0;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:120px;"></p>
                 </div>
                 <div class="signature-box" style="flex:1; background-color: #fffbeb; border: 1px solid #b45309;">
-                    <p style="font-weight:bold; margin-bottom: 5px; color:#991b1b;">Responsable del Área Auditada</p>
+                    <p style="font-weight:bold; margin-bottom: 5px; color:#991b1b;">Responsable Auditoria</p>
                     <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">Acepto los hallazgos y
                         me comprometo a ejecutar las acciones correctivas.</p>
                     <input class="cedit" placeholder="Nombre y Firma"
                         style="border-top:1px solid #b45309; border-radius:0; background:transparent;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:120px; background:transparent;"></p>
                 </div>
                 <div class="signature-box" style="flex:1; background-color:#f0fdf4; border-color:#166534;">
-                    <p style="font-weight:bold; color:#14532d; margin-bottom: 5px;">Vo.Bo. Responsable Sanitario</p>
+                    <p style="font-weight:bold; color:#14532d; margin-bottom: 5px;">Vo.Bo. Responsable dirección</p>
                     <p style="font-size:8px; color:#666; margin-bottom:15px; text-align:center;">Enterado de los
                         resultados de la auditoría interna.</p>
                     <input class="cedit" placeholder="Nombre y Firma"
                         style="border-top:1px solid #166534; border-radius:0; background:transparent;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:120px; background:transparent;"></p>
                 </div>
             </div>
         </div>
 
         <div class="footer-unified">
-            <div class="control-data">FO-QA-02 | Versión: 1.0 | Cuestionario Maestro de Auditoría Interna al SGC | Xelle
-                Scientific | Página 2 de 2</div>
-            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
-                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
-                parcial.</div>
-        </div>
-    </div>
+            <div class="footer-unified" style="margin-bottom:2px;">
+                <div class="control-data" style="margin-bottom:1px;">FO-QA-02 | Versión: 1.0 | Cuestionario Maestro de
+                    Auditoría Interna al SGC | Xelle Scientific | Página 3 de 3</div>
+                <div class="legal-data" style="margin:0;">El contenido de este documento es propiedad de "Xelle
+                    Scientific", S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está
+                    prohibida su reproducción total o parcial.</div>
+            </div>
 
-    <script>
-        // Sincronizar Folio
-        document.getElementById('reg-qa02').addEventListener('input', function () {
-            let val = this.value;
-            document.getElementById('sync-folio').innerText = val ? 'FO-QA-02-' + val : 'FO-QA-02-000';
-        });
+            <script>
+                // Evita que los placeholders se impriman: se quitan antes de imprimir y se restauran después.
+                window.addEventListener('beforeprint', function () {
+                    document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(function (el) {
+                        el.dataset.printPlaceholder = el.getAttribute('placeholder') || '';
+                        el.removeAttribute('placeholder');
+                    });
+                });
 
-        // Add row and update numbers
-        function addRowNumbered(tableId) {
-            const tbody = document.getElementById(tableId).querySelector('tbody');
-            const newRow = tbody.rows[0].cloneNode(true);
-            newRow.querySelectorAll('textarea').forEach(textarea => textarea.value = '');
-            newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
-            tbody.appendChild(newRow);
-            updateNumbers(tableId);
-        }
+                window.addEventListener('afterprint', function () {
+                    document.querySelectorAll('input[data-print-placeholder], textarea[data-print-placeholder]').forEach(function (el) {
+                        el.setAttribute('placeholder', el.dataset.printPlaceholder);
+                        delete el.dataset.printPlaceholder;
+                    });
+                });
 
-        // Delete row and update numbers
-        function delRowNumbered(btn, tableId) {
-            const row = btn.closest('tr');
-            if (row.parentNode.rows.length > 1) {
-                row.remove();
-                updateNumbers(tableId);
-            }
-        }
+                // Sincronizar Folio
+                document.getElementById('reg-qa02').addEventListener('input', function () {
+                    let val = this.value;
+                    document.getElementById('sync-folio').innerText = val ? 'FO-QA-02-' + val : 'FO-QA-02-000';
+                });
 
-        function updateNumbers(tableId) {
-            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
-            rows.forEach((row, index) => {
-                const numCell = row.querySelector('.row-num');
-                if (numCell) {
-                    let num = index + 1;
-                    numCell.innerText = num < 10 ? '0' + num : num;
+                // Add row and update numbers
+                function addRowNumbered(tableId) {
+                    const tbody = document.getElementById(tableId).querySelector('tbody');
+                    const newRow = tbody.rows[0].cloneNode(true);
+                    newRow.querySelectorAll('input').forEach(input => input.value = '');
+                    newRow.querySelectorAll('textarea').forEach(textarea => textarea.value = '');
+                    newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+                    tbody.appendChild(newRow);
+                    updateNumbers(tableId);
                 }
-            });
-        }
-    </script>
+
+                // Delete row and update numbers
+                function delRowNumbered(btn, tableId) {
+                    const row = btn.closest('tr');
+                    if (row.parentNode.rows.length > 1) {
+                        row.remove();
+                        updateNumbers(tableId);
+                    }
+                }
+
+                function updateNumbers(tableId) {
+                    const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+                    rows.forEach((row, index) => {
+                        const numCell = row.querySelector('.row-num');
+                        if (numCell) {
+                            let num = index + 1;
+                            numCell.innerText = num < 10 ? '0' + num : num;
+                        }
+                    });
+                }
+            </script>
 </body>
 
 </html>

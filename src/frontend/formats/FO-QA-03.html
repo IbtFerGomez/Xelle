@@ -228,10 +228,11 @@
                 </svg>
             </div>
             <div class="registry-container">
-                <label>Número de Lote</label>
+                <label>ID Documento</label>
                 <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-03-</span>
                     <input type="text" id="reg-lote" class="registry-input generate-barcode cedit"
-                        data-target="barcode-lote" placeholder="LOTE-000"
+                        data-target="barcode-lote" data-prefix="FO-QA-03-" placeholder="000"
                         style="font-weight:bold; font-size:14px; text-transform:uppercase;">
                 </div>
                 <svg id="barcode-lote" class="barcode-svg" style="height:35px;"></svg>
@@ -261,9 +262,9 @@
                 </tr>
                 <tr>
                     <td><strong>Fecha de Fabricación:</strong></td>
-                    <td><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td><input type="text" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
                     <td><strong>Fecha de Caducidad:</strong></td>
-                    <td><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td><input type="text" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
                 </tr>
             </table>
         </div>
@@ -282,28 +283,16 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="text-left">Las materias primas críticas cuentan con dictamen de liberación previo
-                            (FO-OP-41 / FO-OP-42 / CoA).</td>
+                        <td class="text-left">Las materias primas críticas cuentan con dictamen de liberación previo.</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                           <input type="text" class="cedit">
                         </td>
                         <td><input class="cedit"></td>
                     </tr>
                     <tr>
-                        <td class="text-left">El área y los equipos cuentan con limpieza profunda vigente (FO-OP-48 /
-                            FO-SGC-05).</td>
+                        <td class="text-left">El área y los equipos cuentan con limpieza profunda vigente.</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                            <input type="text" class="cedit">
                         </td>
                         <td><input class="cedit"></td>
                     </tr>
@@ -311,12 +300,7 @@
                         <td class="text-left">Los instrumentos de medición (básculas, termómetros) tienen calibración
                             vigente.</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                           <input type="text" class="cedit">
                         </td>
                         <td><input class="cedit"></td>
                     </tr>
@@ -324,12 +308,7 @@
                         <td class="text-left">Se realizó el Despeje de Línea: No hay restos de lotes anteriores ni
                             documentos ajenos al proceso actual.</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                           <input type="text" class="cedit">
                         </td>
                         <td><input class="cedit"></td>
                     </tr>
@@ -357,15 +336,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="text-left">La Orden de Producción (FO-OP-40-B) está siendo llenada en tiempo real
-                            (ALCOA+) y sin tachaduras no autorizadas.</td>
+                        <td class="text-left">La Orden de Producción está siendo llenada en tiempo real
+                             y sin tachaduras no autorizadas.</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                            <input type="text" class="cedit">
                         </td>
                         <td><input class="cedit"></td>
                     </tr>
@@ -373,12 +347,7 @@
                         <td class="text-left">Los parámetros críticos (ej. Temp, RPM, Tiempo) se mantuvieron dentro de
                             los rangos de la Fórmula Maestra.</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                            <input type="text" class="cedit">
                         </td>
                         <td><input class="cedit"></td>
                     </tr>
@@ -386,12 +355,7 @@
                         <td class="text-left">El Monitoreo Ambiental del cuarto limpio / campana indica parámetros
                             aceptables (Presión diferencial, partículas).</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                            <input type="text" class="cedit">
                         </td>
                         <td><input class="cedit" placeholder="Ver FO-OP-56"></td>
                     </tr>
@@ -399,12 +363,7 @@
                         <td class="text-left">¿Hubo alguna desviación durante el proceso? En caso afirmativo, ¿se cerró
                             el folio correspondiente?</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                            <input type="text" class="cedit">
                         </td>
                         <td><input class="cedit" placeholder="Folio FO-OP-51: _________"></td>
                     </tr>
@@ -428,11 +387,7 @@
 
         <div style="page-break-before: always;"></div>
 
-        <div class="header-main" style="margin-top:0;">
-            <p style="text-align:right; font-size:9px; font-weight:bold; color:#64748b;">Lote en Revisión: <span
-                    id="sync-lote" style="color:#b45309;">LOTE-000</span> | Página 2 de 2</p>
-        </div>
-
+     
         <div class="section-header">4. ETAPA 3: PRODUCTO TERMINADO Y ACONDICIONAMIENTO</div>
         <div class="section">
             <p style="font-size:9px; color:#666; margin-bottom:5px;">Inspección física del vial/empaque final y revisión
@@ -450,12 +405,7 @@
                         <td class="text-left">Inspección Visual (AQL): Los viales están libres de partículas visibles,
                             el color es el esperado y los cierres son herméticos.</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                            <input type="text" class="cedit"> 
                         </td>
                         <td><input class="cedit"></td>
                     </tr>
@@ -463,12 +413,7 @@
                         <td class="text-left">Etiquetado: La etiqueta corresponde al producto, el número de lote y la
                             caducidad están impresos correctamente y son legibles.</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                           <input type="text" class="cedit">
                         </td>
                         <td><input class="cedit"></td>
                     </tr>
@@ -476,12 +421,7 @@
                         <td class="text-left">Conciliación de Materiales: El cálculo de etiquetas impresas vs. usadas y
                             mermas está dentro del límite permitido (± 1%).</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                            <input type="text" class="cedit">
                         </td>
                         <td><input class="cedit"></td>
                     </tr>
@@ -489,12 +429,9 @@
                         <td class="text-left">Resultados Analíticos: El Certificado de Análisis (CoA) del producto
                             terminado cumple con todas las especificaciones de liberación.</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                            <input type="text" class="cedit"
+                                style="width:100%; border-bottom:1px solid #ccc; text-align:center;"
+                                placeholder="S/N/NA">
                         </td>
                         <td><input class="cedit" placeholder="FO-QA-06"></td>
                     </tr>
@@ -502,12 +439,9 @@
                         <td class="text-left">Se ingresaron las muestras de retención obligatorias a la muestroteca
                             (FO-LC-32).</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S" style="color:#166534;">S</option>
-                                <option value="N" style="color:#991b1b;">N</option>
-                                <option value="NA">NA</option>
-                            </select>
+                            <input type="text" class="cedit"
+                                style="width:100%; border-bottom:1px solid #ccc; text-align:center;"
+                                placeholder="S/N/NA">
                         </td>
                         <td><input class="cedit" placeholder="FO-LC-32"></td>
                     </tr>
@@ -523,14 +457,14 @@
             <div class="dictamen-options">
                 <label class="dictamen-option" style="color:#166534; border-color:#86efac; background-color:#f0fdf4;">
                     <span class="dictamen-option-title">
-                        <input type="radio" name="dictamen" class="cedit"> APROBADO PARA LIBERACIÓN
+                        <input type="radio" name="dictamen" class="cedit" style="width: fit-content;"> APROBADO PARA LIBERACIÓN
                     </span>
                     <span class="dictamen-option-description">El lote cumple con las especificaciones técnicas y los
                         requisitos de BPF. Se autoriza su distribución y uso.</span>
                 </label>
                 <label class="dictamen-option" style="color:#991b1b; border-color:#fca5a5; background-color:#fef2f2;">
                     <span class="dictamen-option-title">
-                        <input type="radio" name="dictamen" class="cedit"> RECHAZADO / CUARENTENA
+                        <input type="radio" name="dictamen" class="cedit" style="width: fit-content;"> RECHAZADO / CUARENTENA
                     </span>
                     <span class="dictamen-option-description">El lote presenta desviaciones críticas no resueltas o
                         fallas analíticas. No puede ser comercializado.</span>
@@ -550,7 +484,7 @@
                         documentalmente el lote.</p>
                     <input class="cedit" placeholder="Nombre y Firma"
                         style="border-top:1px solid #ccc; border-radius:0;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:120px;"></p>
                 </div>
                 <div class="signature-box" style="flex:1; background-color: #f0fdf4; border-color: #166534;">
                     <p style="font-weight:bold; color:#14532d; margin-bottom: 5px;">Autorizó Liberación Final
@@ -559,7 +493,7 @@
                         completo y conforme a normativa.</p>
                     <input class="cedit" placeholder="Nombre y Firma"
                         style="border-top:1px solid #166534; border-radius:0; background:transparent;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:120px; background:transparent;"></p>
                 </div>
             </div>
         </div>

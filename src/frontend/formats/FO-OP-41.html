@@ -126,7 +126,7 @@
                     <input type="text" id="reg-41" class="registry-input generate-barcode" data-target="barcode-41"
                         data-prefix="FO-OP-41-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-41" class="barcode-svg"></svg>
             </div>
         </div>
@@ -141,9 +141,9 @@
             <table class="no-border-table">
                 <tr>
                     <td width="20%"><strong>Fecha de Recepción:</strong></td>
-                    <td width="30%"><input type="date" class="cedit"></td>
+                    <td width="30%"><input type="text" class="cedit"></td>
                     <td width="20%"><strong>Hora:</strong></td>
-                    <td width="30%"><input type="time" class="cedit"> hrs.</td>
+                    <td width="30%"><input type="text" class="cedit"> hrs.</td>
                 </tr>
                 <tr>
                     <td><strong>Proveedor / Fabricante:</strong></td>
@@ -179,9 +179,9 @@
             <div style="margin-top:10px;">
                 <strong>Condiciones de Entrega:</strong>
                 <div class="cbx-group">
-                    <label><input type="radio" name="cond_entrega" class="cedit"> Ambiente</label>
-                    <label><input type="radio" name="cond_entrega" class="cedit"> Refrigeración (2-8°C)</label>
-                    <label><input type="radio" name="cond_entrega" class="cedit"> Congelación (&lt;-20°C)</label>
+                    <label><input type="radio" name="cond_entrega" class="cedit" style="width: min-content;"> Ambiente</label>
+                    <label><input type="radio" name="cond_entrega" class="cedit" style="width: min-content;"> Refrigeración (2-8°C)</label>
+                    <label><input type="radio" name="cond_entrega" class="cedit" style="width: min-content;"> Congelación (&lt;-20°C)</label>
                 </div>
             </div>
             <div style="margin-top:10px;">
@@ -243,11 +243,11 @@
             <div style="border: 2px solid #1E3A5F; padding: 10px; background-color: #f8fafc; border-radius: 4px;">
                 <strong style="font-size:11px;">DICTAMEN:</strong>
                 <div class="cbx-group" style="flex-direction: column; gap: 8px; margin-top: 5px;">
-                    <label style="color:#166534; font-weight:bold;"><input type="radio" name="dictamen" class="cedit">
+                    <label style="color:#166534; font-weight:bold;"><input type="radio" name="dictamen" class="cedit" style="width: min-content;">
                         APROBADO (LIBERADO PARA USO): Etiqueta VERDE (ET-AL-05).</label>
-                    <label style="color:#991b1b; font-weight:bold;"><input type="radio" name="dictamen" class="cedit">
+                    <label style="color:#991b1b; font-weight:bold;"><input type="radio" name="dictamen" class="cedit" style="width: min-content;">
                         RECHAZADO (PNC): Etiqueta ROJA (ET-PNC-02) y segregar.</label>
-                    <label style="color:#b45309; font-weight:bold;"><input type="radio" name="dictamen" class="cedit">
+                    <label style="color:#b45309; font-weight:bold;"><input type="radio" name="dictamen" class="cedit" style="width: min-content;">
                         EN CUARENTENA: Pendiente de análisis interno. Etiqueta AMARILLA (ET-LC-03).</label>
                 </div>
             </div>
@@ -268,6 +268,8 @@
                 <input type="text" placeholder="Nombre y Firma" class="cedit">
             </div>
         </div>
+        <div class="footer">FO-OP-41 | Versión: 1.0 | RECEPCIÓN Y APROBACIÓN DE MATERIAS PRIMAS E INSUMOS | Xelle Scientific | Página 1 de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+
     </div>
 
     <script>
@@ -293,16 +295,16 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
 
                 // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
+                document.querySelectorAll('input[type="text"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'HH:MM';
                 });
@@ -340,8 +342,8 @@
                 });
 
                 // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
@@ -361,7 +363,6 @@
             }
         }
     </script>
-    <div class="footer">FO-OP-41 | Versión: 1.0 | RECEPCIÓN Y APROBACIÓN DE MATERIAS PRIMAS E INSUMOS | Xelle Scientific | Página 1 de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
-</body>
+    </body>
 
 </html>

@@ -143,6 +143,27 @@
                 box-shadow: none;
                 padding: 0;
             }
+
+            /* Oculta el placeholder de los inputs de fecha al imprimir */
+            input[placeholder]::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            input[placeholder]:-moz-placeholder {
+                color: transparent !important;
+            }
+
+            input[placeholder]::-moz-placeholder {
+                color: transparent !important;
+            }
+
+            input[placeholder]:-ms-input-placeholder {
+                color: transparent !important;
+            }
+
+            input[placeholder]::placeholder {
+                color: transparent !important;
+            }
         }
     </style>
 </head>
@@ -231,7 +252,7 @@
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit" placeholder="dd/mm/aaaa"></td>
                     <td><input class="cedit" disabled></td>
                     <td class="no-print"><button class="btn-danger btn-mini"
                             onclick="delRowNumbered(this, 'tbl-difusion')">x</button></td>
@@ -241,7 +262,7 @@
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit" placeholder="dd/mm/aaaa"></td>
                     <td><input class="cedit" disabled></td>
                     <td class="no-print"><button class="btn-danger btn-mini"
                             onclick="delRowNumbered(this, 'tbl-difusion')">x</button></td>
@@ -251,7 +272,7 @@
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit" placeholder="dd/mm/aaaa"></td>
                     <td><input class="cedit" disabled></td>
                     <td class="no-print"><button class="btn-danger btn-mini"
                             onclick="delRowNumbered(this, 'tbl-difusion')">x</button></td>
@@ -261,7 +282,7 @@
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit" placeholder="dd/mm/aaaa"></td>
                     <td><input class="cedit" disabled></td>
                     <td class="no-print"><button class="btn-danger btn-mini"
                             onclick="delRowNumbered(this, 'tbl-difusion')">x</button></td>
@@ -271,7 +292,7 @@
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit" placeholder="dd/mm/aaaa"></td>
                     <td><input class="cedit" disabled></td>
                     <td class="no-print"><button class="btn-danger btn-mini"
                             onclick="delRowNumbered(this, 'tbl-difusion')">x</button></td>
@@ -281,7 +302,7 @@
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit" placeholder="dd/mm/aaaa"></td>
                     <td><input class="cedit" disabled></td>
                     <td class="no-print"><button class="btn-danger btn-mini"
                             onclick="delRowNumbered(this, 'tbl-difusion')">x</button></td>
@@ -291,7 +312,7 @@
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit" placeholder="dd/mm/aaaa"></td>
                     <td><input class="cedit" disabled></td>
                     <td class="no-print"><button class="btn-danger btn-mini"
                             onclick="delRowNumbered(this, 'tbl-difusion')">x</button></td>
@@ -301,7 +322,7 @@
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit" placeholder="dd/mm/aaaa"></td>
                     <td><input class="cedit" disabled></td>
                     <td class="no-print"><button class="btn-danger btn-mini"
                             onclick="delRowNumbered(this, 'tbl-difusion')">x</button></td>
@@ -311,14 +332,37 @@
         <button class="btn-add no-print" onclick="addRowNumbered('tbl-difusion')">+ AGREGAR FILA DE
             PARTICIPANTE</button>
 
-        <div class="section-header">3. VALIDACIÓN Y CIERRE DOCUMENTAL</div>
-        <div class="signature-area" style="display:flex; justify-content:center; gap:50px; margin-top:20px;">
-            <div class="signature-box" style="width: 300px; text-align:center;">
-                <p style="font-weight:bold; font-size:10px;">ELABORÓ / DIFUNDIÓ (CONTROL DOCUMENTAL)</p>
-                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
-                <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+
+
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:15px; margin-top:20px;">
+
+            <div class="signature-area" style="display:flex; justify-content:center; gap:50px; margin-top:20px;">
+                <div class="signature-box" style="width: 300px; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;">Elaboración y difusión<br><span
+                            style='font-size:9px;'>(Responsable Control Documental)</span></p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+
+                </div>
+                <div class="signature-box" style="width: 300px; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;"> Control de difusión <br>
+(Control de Calidad / QA)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+
+                </div>
+                
+                <div class="signature-box" style="width: 300px; text-align:center;">
+                    <p style="font-weight:bold; font-size:10px;">Autorización Final<br><span
+                            style='font-size:9px;'>(Responsable Dirección)</span></p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+
+                </div>
             </div>
         </div>
+
+
 
         <div class="footer-unified">
             <div class="control-data">FO-AD-17 | Versión: 2.0 | Lista de Difusión de Documentos | Xelle Scientific |

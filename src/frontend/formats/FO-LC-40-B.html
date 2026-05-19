@@ -64,6 +64,47 @@
             font-size: 11px;
         }
 
+        .double-verification-section {
+            margin-top: 14px;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: #f8fafc;
+        }
+
+        .double-verification-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .double-verification-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .double-verification-item label {
+            display: block;
+            font-size: 9px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 4px;
+        }
+
+        .double-verification-item input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        @media print {
+            .double-verification-section {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }
+        }
+
         /* Estilos para columna de firmas en impresión */
         @media print {
             .firma-cell {
@@ -158,7 +199,7 @@
                         <th style="width: 30%;">Lotes / Cantidad</th>
                         <th style="width: 80px;">Vol. Final</th>
                         <th style="width: 80px;">Caducidad</th>
-                        <th style="width: 15%;">Realizó / Verificó</th>
+                        <th style="width: 120px;">Fecha liberación calidad</th>
                         <th class="no-print" style="width: 30px;"></th>
                     </tr>
                 </thead>
@@ -166,6 +207,20 @@
             </table>
 
             <button class="btn btn-primary btn-mini no-print" onclick="addMedioRow()">+ Agregar Preparación</button>
+
+            <div class="double-verification-section">
+                <div class="double-verification-title">Firma y doble verificación</div>
+                <div class="double-verification-grid">
+                    <div class="double-verification-item">
+                        <label>Realizó</label>
+                        <input class="cedit" placeholder="Nombre y firma">
+                    </div>
+                    <div class="double-verification-item">
+                        <label>Verificó</label>
+                        <input class="cedit" placeholder="Nombre y firma">
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="footer">FO-LC-40-B | PREP MEDIOS | Versión: 1.0<br>El contenido de este documento es propiedad de
@@ -181,15 +236,12 @@
             row.innerHTML = `
                 <td style='vertical-align:top; text-align:center; font-weight:bold; color:#666;' class='row-number'></td>
                 <td style='vertical-align:top'><input type='date' class='cedit'></td>
-                <td style='vertical-align:top'><textarea class='cedit' rows='3'></textarea></td>
+                <td style='vertical-align:top'><textarea class='cedit' rows='1'></textarea></td>
                 <td style='vertical-align:top'><input class='cedit' placeholder='Lote...'></td>
                 <td style='vertical-align:top' class='col-ingredientes'><textarea class='cedit' rows='4' placeholder='Ej: DMEM (L:123) - 500ml...'></textarea></td>
                 <td style='vertical-align:top'><input class='cedit'></td>
                 <td style='vertical-align:top'><input type='date' class='cedit'></td>
-                <td style='vertical-align:top' class='firma-cell'>
-                    <input class='cedit firma-input' placeholder='Realizó' style='margin-bottom:5px; border-bottom:1px solid #eee;'>
-                    <input class='cedit firma-input' placeholder='Verificó'>
-                </td>
+                <td style='vertical-align:top'><input type='date' class='cedit'></td>
                 <td class='no-print' style='vertical-align:top'><button class='btn-danger btn-mini' onclick='removeRow(this)'>x</button></td>
             `;
             updateRowNumbers();
