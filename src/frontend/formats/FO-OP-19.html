@@ -177,16 +177,17 @@
                 <thead>
                     <tr>
                         <th rowspan="2" width="5%">DÍA</th>
-                        <th colspan="5" width="40%">SUPERFICIES (Marcar)</th>
+                        <th colspan="5" width="35%">SUPERFICIES (Marcar)</th>
+                        <th rowspan="2" width="10%">RETIRO DE BASURA</th>
                         <th rowspan="2" width="30%">SANITIZANTE / LOTE</th>
-                        <th rowspan="2" width="25%">REALIZÓ (Firma / Inic.)</th>
+                        <th rowspan="2" width="20%">REALIZÓ (Firma / Inic.)</th>
                     </tr>
                     <tr>
-                        <th width="8%">PISOS</th>
-                        <th width="8%">PAREDES</th>
-                        <th width="8%">TECHOS</th>
-                        <th width="8%">MESAS</th>
-                        <th width="8%">EQUIPOS</th>
+                        <th width="7%">PISOS</th>
+                        <th width="7%">PAREDES</th>
+                        <th width="7%">TECHOS</th>
+                        <th width="7%">MESAS</th>
+                        <th width="7%">EQUIPOS</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-limpieza">
@@ -230,6 +231,7 @@
             for (let i = 1; i <= 31; i++) {
                 rows += `<tr>
                     <td style="font-weight:bold; background-color:#f8fafc;">${i}</td>
+                    <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
