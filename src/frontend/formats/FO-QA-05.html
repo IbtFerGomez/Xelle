@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-QA-05 Checklist Semanal de QA</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Horizontal (Landscape) */
+        @page {
+            size: landscape;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 26cm;
+            margin: 0 auto;
+            background: white;
+            padding: 0.8cm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 6px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 5px;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .compact-table input,
+        .compact-table textarea {
+            font-size: 9px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table textarea {
+            resize: none;
+            overflow: hidden;
+        }
+
+        .compact-table input:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 6px !important;
+        }
+
+        .alcoa-badge {
+            display: inline-block;
+            padding: 2px 4px;
+            background: #fef2f2;
+            color: #991b1b;
+            font-weight: bold;
+            border-radius: 3px;
+            font-size: 8.5px;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 6px;
+            margin-top: 5px;
+            color: #1E3A5F;
+        }
+
+        .info-box {
+            background-color: #f0fdfa;
+            border: 1px solid #5eead4;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            color: #115e59;
+            margin-top: 8px;
+            line-height: 1.3;
+        }
+
+        .footer-unified {
+            margin-top: 25px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 10px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        .week-col {
+            width: 5%;
+            text-align: center;
+            background-color: #f1f5f9;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-qa-05">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Checklist</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                        font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                        font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Control de QA</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-QA-05-</span>
+                    <input type="text" id="reg-qa05" class="registry-input generate-barcode cedit"
+                        data-target="barcode-qa05" data-prefix="FO-QA-05-" placeholder="202X-MM">
+                </div>
+                <svg id="barcode-qa05" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>CHECKLIST DE EVALUACIÓN SEMANAL DE PUNTOS CRÍTICOS (QA)</h1>
+            <div class="metadata">Código: FO-QA-05 | Versión: 2.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <!-- 1. DATOS GENERALES -->
+        <div class="info-box">
+            <strong>Instrucciones Normativas (NOM-059 / NOM-241):</strong> El Departamento de Aseguramiento de Calidad
+            (QA) debe realizar recorridos semanales para verificar el cumplimiento in situ de los registros críticos
+            operacionales y principios de integridad de datos (ALCOA+). Indique <strong>C (Cumple)</strong>, <strong>NC
+                (No Cumple)</strong> o <strong>N/A</strong> en la semana evaluada. Toda No Conformidad (NC) debe generar
+            una desviación.
+        </div>
+
+        <table class="compact-table" style="margin-bottom: 10px;">
+            <tr>
+                <th width="15%">Mes Evaluado:</th>
+                <td width="20%"><input type="text" class="cedit"></td>
+                <th width="15%">Inspector de Calidad:</th>
+                <td width="50%"><input class="cedit" placeholder="Nombre del Auditor / Inspector QA"></td>
+            </tr>
+        </table>
+
+        <!-- 2. CHECKLIST SEMANAL -->
+        <div class="section-header">1. MATRIZ DE REVISIÓN SEMANAL DE PUNTOS CRÍTICOS</div>
+        <table class="compact-table" id="tbl-checklist">
+            <thead>
+                <tr>
+                    <th width="12%">Área</th>
+                    <th width="33%">Punto Crítico a Evaluar (Criterio de Aceptación)</th>
+                    <th width="10%">Formato de Referencia</th>
+                    <th class="week-col">Sem 1</th>
+                    <th class="week-col">Sem 2</th>
+                    <th class="week-col">Sem 3</th>
+                    <th class="week-col">Sem 4</th>
+                    <th class="week-col">Sem 5</th>
+                    <th width="20%">Observaciones / Evidencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center" style="font-weight:bold;">Equipos críticos</td>
+                    <td class="text-left">¿Los registros de monitoreo de temperatura, humedad y CO2 se encuentran llenos
+                        diariamente, sin espacios en blanco y dentro de rango?</td>
+                    <td class="text-center"><span class="alcoa-badge">FO-OP-04/09</span></td>
+                    <td><input class="cedit text-center" placeholder="C/NC"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="font-weight:bold;">Instalaciones</td>
+                    <td class="text-left">¿Las bitácoras de limpieza y sanitización de áreas blancas reflejan la
+                        rotación de desinfectantes y están firmadas al momento de ejecutarse?</td>
+                    <td class="text-center"><span class="alcoa-badge">FO-OP-19</span></td>
+                    <td><input class="cedit text-center" placeholder="C/NC"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="font-weight:bold;">Bioseguridad</td>
+                    <td class="text-left">¿Se registra el uso, limpieza y horas de exposición de lámpara UV en la cabina
+                        de bioseguridad tras cada operación?</td>
+                    <td class="text-center"><span class="alcoa-badge">FO-OP-18</span></td>
+                    <td><input class="cedit text-center" placeholder="C/NC"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="font-weight:bold;">Almacén / Insumos</td>
+                    <td class="text-left">¿La recepción de reactivos/insumos críticos se documenta al momento de llegada
+                        e incluye control de cadena de frío y etiquetas de cuarentena?</td>
+                    <td class="text-center"><span class="alcoa-badge">FO-OP-12</span><br><span
+                            class="alcoa-badge">FO-OP-41/42</span></td>
+                    <td><input class="cedit text-center" placeholder="C/NC"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="font-weight:bold;">Lab. Cultivo Celular</td>
+                    <td class="text-left">¿Los procesos de expansión celular y preparación de medios tienen completa
+                        trazabilidad de lotes de insumos utilizados sin omisiones?</td>
+                    <td class="text-center"><span class="alcoa-badge">FO-LC-41</span><br><span
+                            class="alcoa-badge">FO-LC-12</span></td>
+                    <td><input class="cedit text-center" placeholder="C/NC"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="font-weight:bold;">Muestreo y Retenciones</td>
+                    <td class="text-left">¿Las bitácoras de muestroteca se encuentran actualizadas y las muestras de
+                        retención están debidamente identificadas, selladas y almacenadas en las condiciones requeridas?
+                    </td>
+                    <td class="text-center"><span class="alcoa-badge">FO-LC-32</span></td>
+                    <td><input class="cedit text-center" placeholder="C/NC"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="font-weight:bold;">Logística</td>
+                    <td class="text-left">¿Los vehículos cuentan con bitácora de limpieza previa y registro cruzado de
+                        kilometraje vs folio de envío para rastrear cadena de frío?</td>
+                    <td class="text-center"><span class="alcoa-badge">FO-OP-17</span><br><span
+                            class="alcoa-badge">FO-OP-41/42</span></td>
+                    <td><input class="cedit text-center" placeholder="C/NC"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="font-weight:bold;">Gestión de Desviaciones y CAPA</td>
+                    <td class="text-left">¿Se da seguimiento en tiempo a los reportes de desviación y se documenta la
+                        revisión o cierre de las Acciones Correctivas/Preventivas (CAPA) implementadas?</td>
+                    <td class="text-center"><span class="alcoa-badge">FO-OP-51</span><br><span
+                            class="alcoa-badge">FO-QA-09</span></td>
+                    <td><input class="cedit text-center" placeholder="C/NC"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit"></td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="font-weight:bold;">SGC (Integridad ALCOA)</td>
+                    <td class="text-left">¿Todas las correcciones en registros físicos cumplen con la regla de 1 línea,
+                        firma, fecha y justificación, evitando corrector o notas extraoficiales?</td>
+                    <td class="text-center"><span class="alcoa-badge">FO-QA-02-SGC</span></td>
+                    <td><input class="cedit text-center" placeholder="C/NC"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit"></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn-add no-print" onclick="addRow('tbl-checklist')">+ AGREGAR PUNTO DE REVISIÓN</button>
+
+        <!-- 3. SEGUIMIENTO DE DESVIACIONES -->
+        <div class="section-header" style="margin-top: 15px;">2. REGISTRO DE DESVIACIONES DETECTADAS DURANTE LA REVISIÓN
+        </div>
+        <table class="compact-table" id="tbl-desviaciones">
+            <thead>
+                <tr>
+                    <th width="10%">Semana</th>
+                    <th width="20%">Área / Proceso Afectado</th>
+                    <th width="50%">Descripción de la No Conformidad (Hallazgo)</th>
+                    <th width="20%">Reporte de Desviación Levantado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Ej. Sem 2"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit text-left" placeholder="Describa el hallazgo..."></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn-add no-print" onclick="addRow('tbl-desviaciones')">+ AGREGAR DESVIACIÓN</button>
+
+        <!-- 4. FIRMAS Y CIERRE MENSUAL -->
+        <div class="section-header" style="margin-top: 15px;">3. APROBACIÓN DEL REPORTE MENSUAL</div>
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:15px; margin-top:15px;">
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">EJECUTÓ (INSPECTOR / AUDITOR QA)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                <p style="font-weight:bold; font-size:10px; color:#14532d;">VISTO BUENO (RESPONSABLE SANITARIO / GTE.
+                    CALIDAD)</p>
+                <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+                <p style="font-size:9px; margin-top:5px;">Nombre, Firma y Fecha</p>
+            </div>
+        </div>
+
+        <!-- FOOTER UNIFICADO -->
+        <div class="footer-unified">
+            <div class="control-data">FO-QA-05 | Versión: 2.0 | Checklist Semanal de Evaluación de Puntos Críticos |
+                Xelle Scientific</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V.
+                Documento confidencial.</div>
+        </div>
+    </div>
+
+    <script>
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <title>FO-QA-13 Bitácora de Monitoreo Ambiental</title>
@@ -8,534 +7,215 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app.js"></script>
     <style>
-        .section-header {
-            background-color: #1E3A5F;
-            color: white;
-            padding: 5px 10px;
-            font-weight: bold;
-            font-size: 11px;
-            margin-top: 15px;
-            border-radius: 4px;
-            text-transform: uppercase;
+        /* Configuración Horizontal (Landscape) para capturar la matriz de datos técnicos */
+        @page { size: landscape; margin: 1cm; }
+        
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        .container { width: 26cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .compact-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 8px; padding: 5px 2px; text-align: center; border: 1px solid #cbd5e1; vertical-align: middle; line-height: 1.1; }
+        .compact-table td { font-size: 8px; padding: 2px; border: 1px solid #cbd5e1; vertical-align: middle; text-align: center; }
+        
+        .compact-table input { font-size: 8px; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; text-align: center; }
+        .compact-table input:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+
+        .text-center { text-align: center !important; }
+        .text-left { text-align: left !important; padding-left: 6px !important; }
+        
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 6px; margin-top: 5px; color: #1E3A5F; }
+        
+        .info-box { background-color: #f0fdfa; border: 1px solid #5eead4; padding: 8px; border-radius: 4px; font-size: 8.5px; color: #115e59; margin-top: 10px; line-height: 1.3; text-align: justify; }
+        .legend-box { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 8px; border-radius: 4px; font-size: 8px; color: #1e293b; margin-top: 5px; line-height: 1.3; }
+
+        .group-th { background-color: #0f172a !important; color: #cbd5e1 !important; font-size: 7.5px !important; text-transform: uppercase; }
+        .inner-table { width: 100%; border-collapse: collapse; font-size: 7.5px; margin-top: 3px; }
+        .inner-table th, .inner-table td { border: 1px solid #cbd5e1; padding: 2px 4px; text-align: center; }
+        .inner-table th { background-color: #f1f5f9; color: #1E3A5F; }
+
+        .footer-unified { 
+            margin-top: 20px; border-top: 2px solid #1E3A5F; padding-top: 10px; 
+            text-align: center; font-size: 9px; line-height: 1.4; color: #475569;
         }
 
-        .compact-table th {
-            background-color: #1E3A5F;
-            color: white;
-            font-size: 10px;
-            padding: 6px;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .compact-table td {
-            font-size: 10px;
-            padding: 5px;
-            vertical-align: middle;
-            text-align: center;
-        }
-
-        .compact-table input {
-            font-size: 10px;
-            text-align: center;
-            width: 100%;
-            border: none;
-            background: transparent;
-        }
-
-        .radio-group {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            font-size: 10px;
-        }
-
-        .cbx-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 5px;
-            font-size: 10px;
-        }
-
-        .limit-col {
-            background-color: #f1f5f9;
-            font-weight: bold;
-            font-size: 9px;
-        }
-
-        /* REGLA ESTRICTA: Placeholders invisibles al imprimir */
         @media print {
-
-            .global-controls,
-            .no-print {
-                display: none !important;
-            }
-
-            ::-webkit-input-placeholder {
-                color: transparent !important;
-            }
-
-            :-moz-placeholder {
-                color: transparent !important;
-            }
-
-            ::-moz-placeholder {
-                color: transparent !important;
-            }
-
-            :-ms-input-placeholder {
-                color: transparent !important;
-            }
-
-            ::placeholder {
-                color: transparent !important;
-            }
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
         }
-
-        .footer {
-            text-align: center;
-            font-size: 8px;
-            color: #64748b;
-            margin-top: 20px;
-            padding-top: 10px;
-            padding-left: 16px;
-            padding-right: 16px;
-            border-top: 1px solid #e2e8f0;
-            width: 100vw;
-            max-width: 100vw;
-            margin-left: 0;
-            margin-right: 0;
-            box-sizing: border-box;
-            background: #fff;
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            z-index: 100;
+         @media print {input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
         }
     </style>
 </head>
-
 <body id="doc-fo-qa-13">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
-        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Bitácora</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
-        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
-
+    
     <div class="container">
-
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80">
-                    <defs>
-                        <style>
-                            .t {
-                                font-family: 'Arial Black', sans-serif;
-                                font-weight: 900;
-                                fill: #1D1D1B
-                            }
-
-                            .s {
-                                font-family: 'Arial', sans-serif;
-                                font-weight: 700;
-                                fill: #1D1D1B;
-                                letter-spacing: 2px
-                            }
-
-                            .c {
-                                fill: #2E9D82
-                            }
-                        </style>
-                    </defs>
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs><style>.c { fill: #2E9D82 }</style></defs>
                     <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13" />
-                        <circle class="c" cx="75" cy="75" r="13" />
-                        <path class="c"
-                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
-                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
-                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
-                        fill="#1D1D1B">®</text>
+                        <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
                 </svg>
             </div>
             <div class="registry-container">
-                <label>Folio Monitoreo</label>
+                <label>Folio del Registro</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-QA-13-</span>
-                    <input type="text" id="reg-qa13" class="registry-input generate-barcode" data-target="barcode-qa13"
-                        data-prefix="FO-QA-13-" placeholder="000">
+                    <input type="text" id="reg-qa13" class="registry-input generate-barcode cedit" 
+                           data-target="barcode-qa13" data-prefix="FO-QA-13-" placeholder="00x">
                 </div>
-                <input type="date" class="registry-date">
-                <svg id="barcode-qa13" class="barcode-svg"></svg>
+                <svg id="barcode-qa13" class="barcode-svg" style="height:35px;"></svg>
             </div>
         </div>
 
         <div class="header-main">
             <h1>BITÁCORA DE MONITOREO AMBIENTAL (PARTÍCULAS Y MICROBIOLOGÍA)</h1>
-            <div class="metadata">Código: FO-QA-13 | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+            <div class="metadata">Código: FO-QA-13 | Versión: 4.0 | Vigencia: May 2026 | Página: 1 de 1</div>
         </div>
 
-        <div class="section-header">1. DATOS DEL ÁREA Y EQUIPO</div>
-        <div class="section">
-            <table class="no-border-table">
-                <tr>
-                    <td width="20%"><strong>Fecha de Muestreo:</strong></td>
-                    <td width="30%"><input type="date" class="cedit"></td>
-                    <td width="20%"><strong>Hora de Inicio:</strong></td>
-                    <td width="30%"><input type="time" class="cedit"> hrs.</td>
-                </tr>
-                <tr>
-                    <td><strong>Área Evaluada:</strong></td>
-                    <td colspan="3">
-                        <div class="cbx-group">
-                            <label><input type="radio" name="area" class="cedit"> Cabina Flujo Laminar (Clase A / ISO
-                                5)</label>
-                            <label><input type="radio" name="area" class="cedit"> Cuarto Limpio (Clase B / ISO
-                                7)</label>
-                            <label><input type="radio" name="area" class="cedit"> Cuarto Limpio (Clase C / ISO
-                                8)</label>
-                            <label style="display:flex; align-items:center;">
-                                <input type="radio" name="area" class="cedit"> Otro: <input class="cedit"
-                                    style="flex:1; margin-left:5px; border-bottom:1px solid #ccc;">
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Estado del Ára:</strong></td>
-                    <td colspan="3">
-                        <div class="cbx-group">
-                            <label><input type="radio" name="estado" class="cedit"> En Reposo (Sin
-                                personal/operación)</label>
-                            <label><input type="radio" name="estado" class="cedit"> En Operación (Durante
-                                manufactura)</label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Contador Partículas ID:</strong></td>
-                    <td><input class="cedit" style="border-bottom:1px solid #ccc;"></td>
-                    <td><strong>Vigencia Calibración:</strong></td>
-                    <td><input type="date" class="cedit"></td>
-                </tr>
-            </table>
+        <div class="info-box">
+            <strong>Instrucciones de Llenado Obligatorias (NOM-059 / ISO 14644 / ISO 9001):</strong> Transcriba las lecturas obtenidas del contador de partículas y de las incubaciones microbiológicas. Compare los valores contra las tablas de referencia inferiores según la clasificación (Clase A, B, C) y condición (R / O) del área. Anote en Dictamen: <strong>C</strong> (Cumple), <strong>A</strong> (Alerta) o <strong>NC</strong> (No Cumple). Si el dictamen es <strong>NC</strong>, levante inmediatamente un reporte de Desviación/CAPA.
         </div>
 
-        <div class="section-header">2. MONITOREO FÍSICO (CONTEO DE PARTÍCULAS NO VIABLES)</div>
+        <div class="legend-box" style="display: flex; gap: 15px;">
+            <div style="flex: 1.2;">
+                <strong style="color: #1E3A5F;">TABLA 1: LÍMITES PARA PARTÍCULAS NO VIABLES (MÁXIMO PERMITIDO POR m³)</strong>
+                <table class="inner-table">
+                    <thead>
+                        <tr><th>Clasificación</th><th>Condición del Área</th><th>Límite ≥ 0.5 µm</th><th>Límite ≥ 5.0 µm</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td rowspan="2" style="font-weight:bold;">Clase A (ISO 5)</td><td>R (En Reposo)</td><td>3,520</td><td>20</td></tr>
+                        <tr><td>O (En Operación)</td><td>3,520</td><td>20</td></tr>
+                        <tr><td rowspan="2" style="font-weight:bold;">Clase B (ISO 7)</td><td>R (En Reposo)</td><td>3,520</td><td>29</td></tr>
+                        <tr><td>O (En Operación)</td><td>352,000</td><td>2,900</td></tr>
+                        <tr><td rowspan="2" style="font-weight:bold;">Clase C (ISO 8)</td><td>R (En Reposo)</td><td>352,000</td><td>2,900</td></tr>
+                        <tr><td>O (En Operación)</td><td>3,520,000</td><td>29,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="flex: 1;">
+                <strong style="color: #1E3A5F;">TABLA 2: LÍMITES MICROBIOLÓGICOS (UFC)</strong>
+                <table class="inner-table">
+                    <thead>
+                        <tr><th>Clasificación</th><th>Aire (Placas 4h)</th><th>Superficies</th><th>Guantes</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style="font-weight:bold;">Clase A</td><td>&lt; 1 UFC</td><td>&lt; 1 UFC</td><td>&lt; 1 UFC</td></tr>
+                        <tr><td style="font-weight:bold;">Clase B</td><td>10 UFC</td><td>5 UFC</td><td>5 UFC</td></tr>
+                        <tr><td style="font-weight:bold;">Clase C</td><td>100 UFC</td><td>50 UFC</td><td>N/A (Bata: 5-10)</td></tr>
+                    </tbody>
+                </table>
+                <div style="margin-top: 4px; font-size: 7.5px; line-height: 1.2;">
+                    <strong>Nomenclatura Áreas (Módulo LCA-LAI):</strong><br>
+                    LCA (Acondicionamiento) | LCB (Calidad/Bioprocesos) | LCE (Expansión) | LCC (CEyE) | LCL (Almacén) | LEX (Exclusa) | LAI (Cambiador Lab)
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">2. REGISTRO DE LECTURAS AMBIENTALES</div>
         <div class="section">
-            <p style="font-size:9px; color:#666; margin-bottom:5px;">Registre las lecturas del contador de partículas en
-                los puntos críticos predefinidos del área (Resultados por m³).</p>
-            <table class="compact-table">
+            <table class="compact-table" id="tbl-monitoreo">
                 <thead>
                     <tr>
-                        <th width="20%">Punto de Muestreo</th>
-                        <th width="15%" class="limit-col">Límite<br>(≥ 0.5 µm)</th>
-                        <th width="15%">Resultado<br>(≥ 0.5 µm)</th>
-                        <th width="15%" class="limit-col">Límite<br>(≥ 5.0 µm)</th>
-                        <th width="15%">Resultado<br>(≥ 5.0 µm)</th>
-                        <th width="20%">¿Cumple? (Sí/No)</th>
+                        <th rowspan="2" width="6%">Fecha</th>
+                        <th rowspan="2" width="4%">Hora</th>
+                        <th rowspan="2" width="5%">Área<br>(Código)</th>
+                        <th rowspan="2" width="5%">Condición<br>(R / O)</th>
+                        <th colspan="2" class="group-th">Partículas ≥ 0.5 µm</th>
+                        <th colspan="2" class="group-th">Partículas ≥ 5.0 µm</th>
+                        <th colspan="3" class="group-th">Microbiología Viable (UFC)</th>
+                        <th rowspan="2" width="5%">Dictamen<br>(C/A/NC)</th>
+                        <th rowspan="2" width="8%">Folio CAPA<br>(Si aplica)</th>
+                        <th rowspan="2" width="5%">Iniciales /<br>Firma</th>
+                        <th rowspan="2" width="3%" class="no-print"></th>
+                    </tr>
+                    <tr>
+                        <th width="7%">Lectura</th>
+                        <th width="7%">Límite transcr.</th>
+                        <th width="7%">Lectura</th>
+                        <th width="7%">Límite transcr.</th>
+                        <th width="7%">Aire</th>
+                        <th width="7%">Superficie</th>
+                        <th width="7%">Guantes / Personal</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="text-align:left; padding-left:10px;">1. Centro de Cabina</td>
-                        <td class="limit-col"><input class="cedit limit-col" placeholder="Ej. 3,520"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td class="limit-col"><input class="cedit limit-col" placeholder="Ej. 20"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label style="color:#166534;"><input type="radio" name="pnv_1" class="cedit"> Sí</label>
-                                <label style="color:#991b1b;"><input type="radio" name="pnv_1" class="cedit"> No</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; padding-left:10px;">2. Lateral Izquierdo</td>
-                        <td class="limit-col"><input class="cedit limit-col"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td class="limit-col"><input class="cedit limit-col"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label style="color:#166534;"><input type="radio" name="pnv_2" class="cedit"> Sí</label>
-                                <label style="color:#991b1b;"><input type="radio" name="pnv_2" class="cedit"> No</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; padding-left:10px;">3. Lateral Derecho</td>
-                        <td class="limit-col"><input class="cedit limit-col"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td class="limit-col"><input class="cedit limit-col"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label style="color:#166534;"><input type="radio" name="pnv_3" class="cedit"> Sí</label>
-                                <label style="color:#991b1b;"><input type="radio" name="pnv_3" class="cedit"> No</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; padding-left:10px;">4. Centro de Habitación</td>
-                        <td class="limit-col"><input class="cedit limit-col"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td class="limit-col"><input class="cedit limit-col"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label style="color:#166534;"><input type="radio" name="pnv_4" class="cedit"> Sí</label>
-                                <label style="color:#991b1b;"><input type="radio" name="pnv_4" class="cedit"> No</label>
-                            </div>
-                        </td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: LCE" style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input class="cedit text-center" placeholder="R / O"></td>
+                        <td><input type="text" class="cedit text-center" placeholder="Lectura"></td>
+                        <td><input type="text" class="cedit text-center" placeholder="Límite"></td>
+                        <td><input type="text" class="cedit text-center" placeholder="Lectura"></td>
+                        <td><input type="text" class="cedit text-center" placeholder="Límite"></td>
+                        <td><input type="text" class="cedit text-center" placeholder="UFC"></td>
+                        <td><input type="text" class="cedit text-center" placeholder="UFC"></td>
+                        <td><input class="cedit text-center" placeholder="UFC / N/A"></td>
+                        <td><input class="cedit text-center" placeholder="C/A/NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="FO-OP-51-XX"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
                     </tr>
                 </tbody>
             </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-monitoreo')">+ AGREGAR LECTURA DE MONITOREO AMBIENTAL</button>
         </div>
 
-        <div class="section-header">3. MONITOREO MICROBIOLÓGICO (PARTÍCULAS VIABLES)</div>
-        <div class="section">
-            <p style="font-size:9px; color:#666; margin-bottom:5px;">Registro de exposición de placas de agar (TSA/SDA)
-                para aire, superficies y guantes del personal.</p>
-            <table class="compact-table">
-                <thead>
-                    <tr>
-                        <th width="15%">Punto de Muestreo</th>
-                        <th width="12%">Tipo de Muestra</th>
-                        <th width="12%">Lote de Medio</th>
-                        <th width="18%">Fecha/Hora de Incubación</th>
-                        <th width="15%">Fecha de Lectura<br>(48-72h)</th>
-                        <th width="13%">Resultado<br>(UFC/placa)</th>
-                        <th width="15%">¿Cumple Límite?</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input class="cedit" placeholder="ID Placa"></td>
-                        <td>Aire (Sedimentación)</td>
-                        <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit" style="width:45%; font-size:8px;"> <input type="time"
-                                class="cedit" style="width:45%;"></td>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label style="color:#166534;"><input type="radio" name="pv_1" class="cedit"> Sí</label>
-                                <label style="color:#991b1b;"><input type="radio" name="pv_1" class="cedit"> No</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit" placeholder="ID Placa"></td>
-                        <td>Aire (Sedimentación)</td>
-                        <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit" style="width:45%; font-size:8px;"> <input type="time"
-                                class="cedit" style="width:45%;"></td>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label style="color:#166534;"><input type="radio" name="pv_2" class="cedit"> Sí</label>
-                                <label style="color:#991b1b;"><input type="radio" name="pv_2" class="cedit"> No</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit" placeholder="ID Placa"></td>
-                        <td>Superficie (Contacto)</td>
-                        <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit" style="width:45%; font-size:8px;"> <input type="time"
-                                class="cedit" style="width:45%;"></td>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label style="color:#166534;"><input type="radio" name="pv_3" class="cedit"> Sí</label>
-                                <label style="color:#991b1b;"><input type="radio" name="pv_3" class="cedit"> No</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit" placeholder="ID Placa"></td>
-                        <td>Superficie (Contacto)</td>
-                        <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit" style="width:45%; font-size:8px;"> <input type="time"
-                                class="cedit" style="width:45%;"></td>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label style="color:#166534;"><input type="radio" name="pv_4" class="cedit"> Sí</label>
-                                <label style="color:#991b1b;"><input type="radio" name="pv_4" class="cedit"> No</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit" placeholder="Operador"></td>
-                        <td>Personal (Guante Der)</td>
-                        <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit" style="width:45%; font-size:8px;"> <input type="time"
-                                class="cedit" style="width:45%;"></td>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label style="color:#166534;"><input type="radio" name="pv_5" class="cedit"> Sí</label>
-                                <label style="color:#991b1b;"><input type="radio" name="pv_5" class="cedit"> No</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit" placeholder="Operador"></td>
-                        <td>Personal (Guante Izq)</td>
-                        <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit" style="width:45%; font-size:8px;"> <input type="time"
-                                class="cedit" style="width:45%;"></td>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td>
-                            <div class="radio-group">
-                                <label style="color:#166534;"><input type="radio" name="pv_6" class="cedit"> Sí</label>
-                                <label style="color:#991b1b;"><input type="radio" name="pv_6" class="cedit"> No</label>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-top:5px;">(Nota: UFC = Unidades Formadoras
-                de Colonias. Los límites de alerta y acción dependen de la clasificación del área según la NOM-241).</p>
-        </div>
-
-        <div class="section-header">4. OBSERVACIONES Y DESVIACIONES</div>
-        <div class="section">
-            <p style="font-size:9px; color:#666; margin-bottom:5px;">Si algún punto excede los límites de alerta o
-                acción, anote inmediatamente el folio del reporte de desviación o CAPA abierto.</p>
-            <div style="margin-top: 5px;">
-                <strong>Folio Desviación / CAPA (Si aplica):</strong> <input class="cedit"
-                    style="width:200px; border-bottom:1px solid #ccc;">
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:20px;">
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">EJECUTÓ (MONITOR AMBIENTAL)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Veracidad del muestreo y lectura de equipos en piso</p>
             </div>
-            <textarea class="cedit" rows="2" style="width:100%; border:1px solid #ccc; margin-top:5px;"
-                placeholder="Notas adicionales..."></textarea>
-        </div>
-
-        <div class="section-header">5. REVISIÓN Y DICTAMEN FINAL DEL ÁREA</div>
-        <div class="signature-area" style="margin-top: 20px;">
-            <div class="signature-box">
-                <p>Muestreo Realizado por</p>
-                <input type="text" placeholder="Nombre y Firma" class="cedit">
-                <p>Fecha: <input type="date" class="cedit"></p>
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">SUPERVISOR DE ÁREA (REVISÓ)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Validación de condiciones operativas y limpieza previa</p>
             </div>
-            <div class="signature-box">
-                <p>Lectura Microbiológica por</p>
-                <input type="text" placeholder="Nombre y Firma" class="cedit">
-                <p>Fecha: <input type="date" class="cedit"></p>
-            </div>
-            <div class="signature-box">
-                <p>Dictamen y Liberación de Área (QA)</p>
-                <input type="text" placeholder="Nombre y Firma" class="cedit">
-                <p>Fecha: <input type="date" class="cedit"></p>
+            <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                <p style="font-weight:bold; font-size:10px; color:#14532d;">ASEGURAMIENTO DE CALIDAD (LIBERÓ)</p>
+                <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#14532d;">Dictamen Final y Evaluación de Tendencias del Sistema</p>
             </div>
         </div>
 
+        <div class="footer-unified">
+            <div class="control-data">FO-QA-13 | Versión: 4.0 | Bitácora de Monitoreo Ambiental | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V. Prohibida su reproducción total o parcial sin autorización del SGC.</div>
+        </div>
     </div>
+
     <script>
-        let isOfflineMode = false;
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+        }
 
-        function toggleOfflineMode() {
-            isOfflineMode = !isOfflineMode;
-            const btn = document.getElementById('btn-offline');
-            if (isOfflineMode) {
-                btn.textContent = 'Modo Online';
-                btn.style.backgroundColor = '#f59e0b';
-
-                // Convertir <select> a <input type="text">
-                document.querySelectorAll('select.cedit').forEach(sel => {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.className = sel.className;
-                    input.value = sel.options[sel.selectedIndex]?.text || '';
-                    input.setAttribute('data-original-type', 'select');
-                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
-                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
-                    input.setAttribute('data-select-options', options);
-                    sel.parentNode.replaceChild(input, sel);
-                });
-
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
-                    inp.type = 'text';
-                    inp.placeholder = 'DD/MM/AAAA';
-                });
-
-                // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
-                    inp.type = 'text';
-                    inp.placeholder = 'HH:MM';
-                });
-
-                // Convertir <input type="number"> a <input type="text">
-                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'number');
-                    const currentPlaceholder = inp.placeholder;
-                    inp.type = 'text';
-                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
-                });
-            } else {
-                btn.textContent = 'Modo Offline';
-                btn.style.backgroundColor = '';
-
-                // Restaurar <select> desde <input type="text">
-                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
-                    const sel = document.createElement('select');
-                    sel.className = inp.className;
-                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
-                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
-                    options.forEach(optText => {
-                        const opt = document.createElement('option');
-                        opt.text = optText;
-                        sel.appendChild(opt);
-                    });
-                    const currentValue = inp.value;
-                    for (let i = 0; i < sel.options.length; i++) {
-                        if (sel.options[i].text === currentValue) {
-                            sel.selectedIndex = i;
-                            break;
-                        }
-                    }
-                    inp.parentNode.replaceChild(sel, inp);
-                });
-
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
-
-                // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
-
-                // Restaurar <input type="number">
-                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
-                    inp.type = 'number';
-                    inp.removeAttribute('data-original-type');
-                });
+        function delRow(btn) {
+            const row = btn.closest('tr');
+            if(row.parentNode.rows.length > 1) {
+                row.remove();
             }
         }
     </script>
-    <div class="footer">
-        FO-QA-13 | Versión: 1.0 | BITÁCORA DE MONITOREO AMBIENTAL (PARTÍCULAS Y MICROBIOLOGÍA) | Xelle Scientific |
-        Página 1 de 1<br>
-        El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por los
-        derechos de autor, por lo que está prohibida su reproducción total o parcial.
-    </div>
 </body>
-
 </html>

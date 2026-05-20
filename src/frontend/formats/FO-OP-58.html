@@ -1,528 +1,272 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-58 Registro de Revisión y Colocación de Trampas</title>
+    <title>FO-OP-58 Monitoreo y Control de Fauna Nociva</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app.js"></script>
     <style>
-        .section-header {
-            background-color: #1E3A5F;
-            color: white;
-            padding: 5px 10px;
-            font-weight: bold;
-            font-size: 11px;
-            margin-top: 15px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
+        /* Configuración Horizontal (Landscape) para Análisis de Datos */
+        @page { size: landscape; margin: 1cm; }
+        
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        .container { width: 26cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
 
-        .compact-table th {
-            background-color: #1E3A5F;
-            color: white;
-            font-size: 10px;
-            padding: 6px;
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #cbd5e1;
-        }
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .compact-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 8px; padding: 5px; text-align: center; border: 1px solid #cbd5e1; vertical-align: middle; }
+        .compact-table td { font-size: 8px; padding: 4px; border: 1px solid #cbd5e1; vertical-align: middle; }
+        
+        .compact-table input, .compact-table textarea { font-size: 8px; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
+        .compact-table textarea { resize: none; overflow: hidden; }
+        .compact-table input:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
 
-        .compact-table td {
-            font-size: 10px;
-            padding: 4px;
-            vertical-align: middle;
-            text-align: center;
-            border: 1px solid #cbd5e1;
-        }
+        .text-center { text-align: center !important; }
+        .text-left { text-align: left !important; padding-left: 6px !important; }
+        
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 6px; margin-top: 5px; color: #1E3A5F; }
+        
+        .info-box { background-color: #f0fdfa; border: 1px solid #5eead4; padding: 8px; border-radius: 4px; font-size: 9px; color: #115e59; margin-top: 10px; line-height: 1.3; text-align: justify; display: flex; gap: 15px;}
+        .legend-box { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 8px; border-radius: 4px; font-size: 8px; color: #1e293b; margin-top: 5px; }
+        
+        .risk-table { width: 100%; font-size: 8px; border-collapse: collapse; margin-top: 5px; }
+        .risk-table th { background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; padding: 4px; text-align: left; }
+        .risk-table td { border: 1px solid #cbd5e1; padding: 4px; }
 
-        .compact-table input,
-        .compact-table select,
-        .compact-table textarea {
-            font-size: 10px;
-            text-align: center;
-            width: 100%;
-            border: none;
-            background: transparent;
-            padding: 2px;
-            box-sizing: border-box;
-            font-family: inherit;
-        }
-
-        .compact-table input:focus,
-        .compact-table select:focus,
-        .compact-table textarea:focus {
-            background-color: #f8fafc;
-            outline: 1px dashed #3b82f6;
-        }
-
-        .btn-add {
-            background: #e2e8f0;
-            border: 1px dashed #94a3b8;
-            width: 100%;
-            font-size: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 5px;
-            margin-top: 5px;
-        }
-
-        .text-left {
-            text-align: left !important;
-            padding-left: 5px !important;
-        }
-
-        .alert-box {
-            background-color: #fef2f2;
-            border: 1px dashed #991b1b;
-            padding: 10px;
-            border-radius: 4px;
-            font-size: 11px;
-            color: #991b1b;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .footer {
-            text-align: center;
-            font-size: 8px;
-            color: #64748b;
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px solid #e2e8f0;
+        .footer-unified { 
+            margin-top: 20px; border-top: 2px solid #1E3A5F; padding-top: 10px; 
+            text-align: center; font-size: 9px; line-height: 1.4; color: #475569;
         }
 
         @media print {
-
-            .global-controls,
-            .no-print {
-                display: none !important;
-            }
-
-            ::-webkit-input-placeholder {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
+        }
+         @media print {input::placeholder,
+            textarea::placeholder {
                 color: transparent !important;
-            }
-
-            ::placeholder {
-                color: transparent !important;
-            }
-
-            .section {
-                page-break-inside: auto !important;
-            }
-
-            tr {
-                page-break-inside: avoid !important;
             }
         }
     </style>
 </head>
-
 <body id="doc-fo-op-58">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
-        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Registro</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
-        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
-
-    <div class="container" style="max-width:100%; width:100%;">
+    
+    <div class="container">
+        <!-- HEADER MODULAR -->
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80">
-                    <defs>
-                        <style>
-                            .t {
-                                font-family: 'Arial Black', sans-serif;
-                                font-weight: 900;
-                                fill: #1D1D1B
-                            }
-
-                            .s {
-                                font-family: 'Arial', sans-serif;
-                                font-weight: 700;
-                                fill: #1D1D1B;
-                                letter-spacing: 2px
-                            }
-
-                            .c {
-                                fill: #2E9D82
-                            }
-                        </style>
-                    </defs>
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs><style>.c { fill: #2E9D82 }</style></defs>
                     <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13" />
-                        <circle class="c" cx="75" cy="75" r="13" />
-                        <path class="c"
-                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                        <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
                     </g>
-                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
-                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
-                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
                 </svg>
             </div>
             <div class="registry-container">
-                <label>Folio de Revisión</label>
+                <label>Folio del Registro</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-OP-58-</span>
-                    <input type="text" id="reg-op58" class="registry-input generate-barcode cedit"
-                        data-target="barcode-op58" data-prefix="FO-OP-58-" placeholder="000"
-                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                    <input type="text" id="reg-op58" class="registry-input generate-barcode cedit" 
+                           data-target="barcode-op58" data-prefix="FO-OP-58-" placeholder="202X-MM">
                 </div>
-                <svg id="barcode-op58" class="barcode-svg"></svg>
+                <svg id="barcode-op58" class="barcode-svg" style="height:35px;"></svg>
             </div>
         </div>
 
         <div class="header-main">
-            <h1>REGISTRO DE REVISIÓN Y COLOCACIÓN DE TRAMPAS</h1>
-            <div class="metadata">Código: FO-OP-58 | Versión: 1.0 | Vigencia: Mar 2026 | Frecuencia: Semanal / Quincenal
-                | Página: 1 de 1</div>
+            <h1>MONITOREO Y CONTROL DE FAUNA NOCIVA (REVISIÓN DE TRAMPAS)</h1>
+            <div class="metadata">Código: FO-OP-58 | Versión: 3.0 | Vigencia: May 2026 | Página: 1 de 1</div>
         </div>
 
-        <div class="section-header">1. CONTROL DE ESTACIONES CEBADERAS Y TRAMPAS</div>
-        <div class="section">
-            <table class="no-border-table" style="margin-bottom: 10px;">
-                <tr>
-                    <td width="15%"><strong>Fecha de Revisión:</strong></td>
-                    <td width="30%"><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
-                    </td>
-                    <td width="20%"><strong>Técnico Asignado:</strong></td>
-                    <td width="35%"><input class="cedit"
-                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold;"></td>
-                </tr>
-            </table>
+        <!-- 1. DATOS GENERALES Y NORMATIVA -->
+        <div class="info-box">
+            <div style="flex: 2;">
+                <strong>Instrucciones Normativas (NOM-059 / NOM-251 / ISO 9001):</strong> Inspeccione cada dispositivo de control instalado. Registre el <strong>conteo exacto</strong> de hallazgos. Identifique la especie (si es posible). Si el número excede los límites establecidos en la tabla de evaluación, clasifique el riesgo como "C" y levante un <strong>Reporte de Desviación/CAPA</strong> de forma obligatoria para evitar contaminación cruzada. <em>Nota: Utilice únicamente los códigos definidos en la leyenda inferior.</em>
+            </div>
+            <div style="flex: 1.5; background: white; padding: 5px; border-radius: 3px; border: 1px solid #cbd5e1;">
+                <table class="risk-table">
+                    <tr><th>Área (Clasificación)</th><th>Límite Alerta (A)</th><th>Límite Acción / Crítico (C)</th></tr>
+                    <tr><td>Áreas Blancas (Limpias)</td><td>0 Hallazgos</td><td>>0 (Cualquier plaga)</td></tr>
+                    <tr><td>Almacenes / Áreas Grises</td><td>1-2 Insectos</td><td>>2 Voladores / >0 Roedor</td></tr>
+                    <tr><td>Exteriores / Perímetro</td><td>1-5 Insectos</td><td>>5 Voladores / >1 Roedor</td></tr>
+                </table>
+            </div>
+        </div>
 
+        <table class="compact-table" style="margin-top: 10px; margin-bottom: 5px;">
+            <tr>
+                <th width="15%">Fecha Revisión:</th>
+                <td width="20%"><input type="text" class="cedit"></td>
+                <th width="15%">Ejecutado por (Empresa/Interno):</th>
+                <td width="50%"><input class="cedit" placeholder="Nombre del inspector o empresa externa contratada"></td>
+            </tr>
+        </table>
+
+        <!-- LEYENDA DE CÓDIGOS PARA EVITAR SELECTORES -->
+        <div class="legend-box">
+            <strong style="color: #1E3A5F;">CÓDIGOS PARA EL LLENADO DE LA TABLA:</strong><br>
+            <div style="display: flex; justify-content: space-between; margin-top: 4px;">
+                <div><strong>[TD] Tipo Dispositivo:</strong> LU = Luz UV/Goma | CE = Cebadero Ext. | TM = Trampa Mecánica</div>
+                <div><strong>[ET] Estatus Trampa:</strong> F = Funcional | GR = Goma Reemplazada | D = Dañada/Fundida</div>
+                <div><strong>[TH] Tipo Hallazgo:</strong> 0 = Ninguno | V = Volador | R = Rastrero | RO = Roedor</div>
+                <div><strong>[NR] Nivel Riesgo:</strong> B = Bajo | A = Alerta | C = Crítico (Requiere CAPA)</div>
+            </div>
+        </div>
+
+        <!-- 2. MATRIZ DE REVISIÓN Y CONTEO (PUNTOS CRÍTICOS) -->
+        <div class="section-header">1. REGISTRO DE INSPECCIÓN, CONTEO DE PLAGAS Y PUNTOS CRÍTICOS</div>
+        <div class="section">
             <table class="compact-table" id="tbl-trampas">
                 <thead>
                     <tr>
-                        <th width="10%">ID Trampa<br><span style="font-size:8px; font-weight:normal;">(Según
-                                Croquis)</span></th>
-                        <th width="20%">Ubicación Física<br><span style="font-size:8px; font-weight:normal;">(Ej.
-                                Almacén M.P., Pasillo ext.)</span></th>
-                        <th width="15%">Tipo de Trampa</th>
-                        <th width="12%">Estatus de la Trampa</th>
-                        <th width="13%">Actividad Detectada<br><span
-                                style="font-size:8px; font-weight:normal;">(Captura)</span></th>
-                        <th width="20%">Acción Realizada<br><span style="font-size:8px; font-weight:normal;">(Ej. Cambio
-                                de cebo/pegamento)</span></th>
-                        <th width="7%">Iniciales Técnico</th>
-                        <th width="3%" class="no-print"></th>
+                        <th width="6%">ID Trampa</th>
+                        <th width="12%">Ubicación Física</th>
+                        <th width="6%">[TD]<br>Dispositivo</th>
+                        <th width="6%">[ET]<br>Estatus</th>
+                        <th width="8%">Conteo<br>Exacto (#)</th>
+                        <th width="6%">[TH]<br>Hallazgo</th>
+                        <th width="16%">Identificación Específica (Especie / Detalle)</th>
+                        <th width="6%">[NR]<br>Riesgo</th>
+                        <th width="20%">Acción Correctiva Inmediata / Observaciones</th>
+                        <th width="4%" class="no-print"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input class="cedit" value="T-01" style="font-weight:bold;"></td>
-                        <td><input class="cedit text-left"></td>
-                        <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="GOMA">Trampa de Goma</option>
-                                <option value="MECANICA">Trampa Mecánica</option>
-                                <option value="CEBO">Cebo Exterior</option>
-                                <option value="OTRO">Otra</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="INTACTA" style="color:#166534;">Intacta</option>
-                                <option value="DANADA" style="color:#991b1b;">Dañada</option>
-                                <option value="FALTANTE" style="color:#b45309;">Faltante</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="NINGUNA" style="color:#166534;">Ninguna</option>
-                                <option value="INSECTO" style="color:#b45309;">Insecto</option>
-                                <option value="ROEDOR" style="color:#991b1b;">Roedor</option>
-                            </select>
-                        </td>
-                        <td><input class="cedit text-left"></td>
-                        <td><input class="cedit"></td>
-                        <td class="no-print"><button class="btn btn-danger btn-mini"
-                                onclick="this.closest('tr').remove()">x</button></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit" value="T-02" style="font-weight:bold;"></td>
-                        <td><input class="cedit text-left"></td>
-                        <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="GOMA">Trampa de Goma</option>
-                                <option value="MECANICA">Trampa Mecánica</option>
-                                <option value="CEBO">Cebo Exterior</option>
-                                <option value="OTRO">Otra</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="INTACTA" style="color:#166534;">Intacta</option>
-                                <option value="DANADA" style="color:#991b1b;">Dañada</option>
-                                <option value="FALTANTE" style="color:#b45309;">Faltante</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="NINGUNA" style="color:#166534;">Ninguna</option>
-                                <option value="INSECTO" style="color:#b45309;">Insecto</option>
-                                <option value="ROEDOR" style="color:#991b1b;">Roedor</option>
-                            </select>
-                        </td>
-                        <td><input class="cedit text-left"></td>
-                        <td><input class="cedit"></td>
-                        <td class="no-print"><button class="btn btn-danger btn-mini"
-                                onclick="this.closest('tr').remove()">x</button></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit" value="T-03" style="font-weight:bold;"></td>
-                        <td><input class="cedit text-left"></td>
-                        <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="GOMA">Trampa de Goma</option>
-                                <option value="MECANICA">Trampa Mecánica</option>
-                                <option value="CEBO">Cebo Exterior</option>
-                                <option value="OTRO">Otra</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="INTACTA" style="color:#166534;">Intacta</option>
-                                <option value="DANADA" style="color:#991b1b;">Dañada</option>
-                                <option value="FALTANTE" style="color:#b45309;">Faltante</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="NINGUNA" style="color:#166534;">Ninguna</option>
-                                <option value="INSECTO" style="color:#b45309;">Insecto</option>
-                                <option value="ROEDOR" style="color:#991b1b;">Roedor</option>
-                            </select>
-                        </td>
-                        <td><input class="cedit text-left"></td>
-                        <td><input class="cedit"></td>
-                        <td class="no-print"><button class="btn btn-danger btn-mini"
-                                onclick="this.closest('tr').remove()">x</button></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit" value="T-04" style="font-weight:bold;"></td>
-                        <td><input class="cedit text-left"></td>
-                        <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="GOMA">Trampa de Goma</option>
-                                <option value="MECANICA">Trampa Mecánica</option>
-                                <option value="CEBO">Cebo Exterior</option>
-                                <option value="OTRO">Otra</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="INTACTA" style="color:#166534;">Intacta</option>
-                                <option value="DANADA" style="color:#991b1b;">Dañada</option>
-                                <option value="FALTANTE" style="color:#b45309;">Faltante</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="NINGUNA" style="color:#166534;">Ninguna</option>
-                                <option value="INSECTO" style="color:#b45309;">Insecto</option>
-                                <option value="ROEDOR" style="color:#991b1b;">Roedor</option>
-                            </select>
-                        </td>
-                        <td><input class="cedit text-left"></td>
-                        <td><input class="cedit"></td>
-                        <td class="no-print"><button class="btn btn-danger btn-mini"
-                                onclick="this.closest('tr').remove()">x</button></td>
-                    </tr>
-                    <tr>
-                        <td><input class="cedit" value="T-05" style="font-weight:bold;"></td>
-                        <td><input class="cedit text-left"></td>
-                        <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="GOMA">Trampa de Goma</option>
-                                <option value="MECANICA">Trampa Mecánica</option>
-                                <option value="CEBO">Cebo Exterior</option>
-                                <option value="OTRO">Otra</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="INTACTA" style="color:#166534;">Intacta</option>
-                                <option value="DANADA" style="color:#991b1b;">Dañada</option>
-                                <option value="FALTANTE" style="color:#b45309;">Faltante</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="NINGUNA" style="color:#166534;">Ninguna</option>
-                                <option value="INSECTO" style="color:#b45309;">Insecto</option>
-                                <option value="ROEDOR" style="color:#991b1b;">Roedor</option>
-                            </select>
-                        </td>
-                        <td><input class="cedit text-left"></td>
-                        <td><input class="cedit"></td>
-                        <td class="no-print"><button class="btn btn-danger btn-mini"
-                                onclick="this.closest('tr').remove()">x</button></td>
+                        <td><input class="cedit text-center" placeholder="Luz-01"></td>
+                        <td><input class="cedit text-center" placeholder="Pasillo Exclusa"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: LU"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: F"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="Ej. 0"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: V"></td>
+                        <td><input class="cedit text-left" placeholder="Ej: Mosca doméstica / Araña"></td>
+                        <td><input class="cedit text-center" placeholder="B/A/C" style="font-weight:bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Limpieza, cambio de goma, etc."></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
                     </tr>
                 </tbody>
             </table>
-            <button class="btn-add no-print" onclick="addRow('tbl-trampas')">+ AGREGAR TRAMPA AL REGISTRO</button>
+            <button class="btn-add no-print" onclick="addRow('tbl-trampas')">+ AGREGAR TRAMPA O DISPOSITIVO A LA REVISIÓN</button>
+        </div>
 
-            <div class="alert-box">
-                ⚠️ NOTA DE BPF: Queda estrictamente prohibido el uso de cebos químicos tóxicos en áreas interiores
-                (Zonas de Producción y Almacén). Sólo se permite el uso de trampas mecánicas o de goma en interiores.
+        <!-- 3. REPORTE DE RIESGOS, CAPA Y TENDENCIAS -->
+        <div class="section-header">2. EVALUACIÓN DE PUNTOS CRÍTICOS, TENDENCIAS Y TRAZABILIDAD CAPA</div>
+        
+        <table class="compact-table" style="margin-top: 5px;">
+            <tr>
+                <th width="30%">Resumen Total de Capturas del Periodo:</th>
+                <td width="17%">Voladores: <input type="number" class="cedit" style="width: 40px; border-bottom: 1px solid #ccc;"></td>
+                <td width="17%">Rastreros: <input type="number" class="cedit" style="width: 40px; border-bottom: 1px solid #ccc;"></td>
+                <td width="17%">Roedores: <input type="number" class="cedit" style="width: 40px; border-bottom: 1px solid #ccc;"></td>
+                <td width="19%">¿Tendencia en aumento? <input class="cedit" placeholder="SI / NO" style="width: 40px; border-bottom: 1px solid #ccc;"></td>
+            </tr>
+        </table>
+
+        <table class="compact-table" id="tbl-riesgos" style="margin-top: 5px;">
+            <thead>
+                <tr>
+                    <th width="30%">Hallazgos Críticos Detectados (Área Comprometida)</th>
+                    <th width="15%">Reporte Desviación / CAPA</th>
+                    <th width="55%">Medida Preventiva / Control de Contaminación Cruzada (Acción por QA)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Si Nivel de Riesgo = C, anote el área"></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                    <td><input class="cedit text-left" placeholder="Acciones tomadas para evitar impacto en el proceso o producto"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Si Nivel de Riesgo = C, anote el área"></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                    <td><input class="cedit text-left" placeholder="Acciones tomadas para evitar impacto en el proceso o producto"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Si Nivel de Riesgo = C, anote el área"></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                    <td><input class="cedit text-left" placeholder="Acciones tomadas para evitar impacto en el proceso o producto"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Si Nivel de Riesgo = C, anote el área"></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                    <td><input class="cedit text-left" placeholder="Acciones tomadas para evitar impacto en el proceso o producto"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Si Nivel de Riesgo = C, anote el área"></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                    <td><input class="cedit text-left" placeholder="Acciones tomadas para evitar impacto en el proceso o producto"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Si Nivel de Riesgo = C, anote el área"></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                    <td><input class="cedit text-left" placeholder="Acciones tomadas para evitar impacto en el proceso o producto"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Si Nivel de Riesgo = C, anote el área"></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                    <td><input class="cedit text-left" placeholder="Acciones tomadas para evitar impacto en el proceso o producto"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Si Nivel de Riesgo = C, anote el área"></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                    <td><input class="cedit text-left" placeholder="Acciones tomadas para evitar impacto en el proceso o producto"></td>
+                </tr>
+                
+
+            </tbody>
+        </table>
+
+        <!-- FIRMAS DE VALIDACIÓN -->
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:20px;">
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">EJECUTÓ (TÉCNICO O PROVEEDOR)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Veracidad del conteo en piso y revisión física</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">SUPERVISOR DE ÁREA (REVISÓ)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Conformidad de los trabajos y reemplazos realizados</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                <p style="font-weight:bold; font-size:10px; color:#14532d;">ASEGURAMIENTO DE CALIDAD (QA)</p>
+                <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#14532d;">Validación de Riesgos ALCOA+, Tendencias y Cierre CAPA</p>
             </div>
         </div>
 
-        <div class="section-header">2. FIRMAS DE VERIFICACIÓN</div>
-        <div class="section">
-            <div class="signature-area" style="display:flex; justify-content:space-around; gap:20px; margin-top: 15px;">
-                <div class="signature-box" style="flex:1;">
-                    <p style="font-weight:bold;">Firma del Técnico Evaluador</p>
-                    <div style="height: 30px;"></div>
-                    <input class="cedit" placeholder="Nombre y Firma"
-                        style="border-top: 1px solid #ccc; border-radius: 0;">
-                </div>
-                <div class="signature-box" style="flex:1;">
-                    <p style="font-weight:bold;">Firma Verificador (Mantenimiento / QA)</p>
-                    <div style="height: 30px;"></div>
-                    <input class="cedit" placeholder="Nombre y Firma"
-                        style="border-top: 1px solid #ccc; border-radius: 0;">
-                </div>
-            </div>
+        <!-- FOOTER UNIFICADO -->
+        <div class="footer-unified">
+            <div class="control-data">FO-OP-58 | Versión: 3.0 | Monitoreo y Control de Fauna Nociva | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V. Prohibida su reproducción total o parcial.</div>
         </div>
-
-        <div class="footer">FO-OP-58 | Versión: 1.0 | Registro de Revisión y Colocación de Trampas | Xelle Scientific |
-            Página 1 de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de
-            C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
-            parcial.</div>
     </div>
 
     <script>
         function addRow(tableId) {
             const tbody = document.getElementById(tableId).querySelector('tbody');
             const newRow = tbody.rows[0].cloneNode(true);
-
-            // Limpiar inputs
             newRow.querySelectorAll('input').forEach(input => input.value = '');
-            // Limpiar selects
-            newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
-
-            // Autonumerar T-XX
-            const rowCount = tbody.rows.length + 1;
-            const idInput = newRow.querySelector('input[value^="T-"]');
-            if (idInput) {
-                idInput.value = 'T-' + rowCount.toString().padStart(2, '0');
-            }
-
             tbody.appendChild(newRow);
         }
-    </script>
-    <script>
-        let isOfflineMode = false;
 
-        function toggleOfflineMode() {
-            isOfflineMode = !isOfflineMode;
-            const btn = document.getElementById('btn-offline');
-            if (isOfflineMode) {
-                btn.textContent = 'Modo Online';
-                btn.style.backgroundColor = '#f59e0b';
-
-                // Convertir <select> a <input type="text">
-                document.querySelectorAll('select.cedit').forEach(sel => {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.className = sel.className;
-                    input.value = sel.options[sel.selectedIndex]?.text || '';
-                    input.setAttribute('data-original-type', 'select');
-                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
-                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
-                    input.setAttribute('data-select-options', options);
-                    sel.parentNode.replaceChild(input, sel);
-                });
-
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
-                    inp.type = 'text';
-                    inp.placeholder = 'DD/MM/AAAA';
-                });
-
-                // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
-                    inp.type = 'text';
-                    inp.placeholder = 'HH:MM';
-                });
-
-                // Convertir <input type="number"> a <input type="text">
-                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'number');
-                    const currentPlaceholder = inp.placeholder;
-                    inp.type = 'text';
-                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
-                });
-            } else {
-                btn.textContent = 'Modo Offline';
-                btn.style.backgroundColor = '';
-
-                // Restaurar <select> desde <input type="text">
-                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
-                    const sel = document.createElement('select');
-                    sel.className = inp.className;
-                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
-                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
-                    options.forEach(optText => {
-                        const opt = document.createElement('option');
-                        opt.text = optText;
-                        sel.appendChild(opt);
-                    });
-                    const currentValue = inp.value;
-                    for (let i = 0; i < sel.options.length; i++) {
-                        if (sel.options[i].text === currentValue) {
-                            sel.selectedIndex = i;
-                            break;
-                        }
-                    }
-                    inp.parentNode.replaceChild(sel, inp);
-                });
-
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
-
-                // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
-
-                // Restaurar <input type="number">
-                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
-                    inp.type = 'number';
-                    inp.removeAttribute('data-original-type');
-                });
+        function delRow(btn) {
+            const row = btn.closest('tr');
+            if(row.parentNode.rows.length > 1) {
+                row.remove();
             }
         }
     </script>
 </body>
-
 </html>
