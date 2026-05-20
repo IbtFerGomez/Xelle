@@ -129,8 +129,7 @@
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
-        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
-    </div>
+       </div>
 
     <div class="container" style="max-width:100%; width:100%;">
         <div class="header-top">
@@ -233,12 +232,7 @@
                         <td style="text-align:left; padding-left: 10px;">Expediente de Manufactura (Orden de Producción
                             completa y firmada)</td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="SI">SÍ</option>
-                                <option value="NO">NO</option>
-                                <option value="NA">N/A</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Sí / No / N/A">
                         </td>
                         <td><input class="cedit" placeholder="Ver FO-OP-40 Folio:"></td>
                     </tr>
@@ -246,12 +240,7 @@
                         <td style="text-align:left; padding-left: 10px;">Expediente de Acondicionamiento (Orden de
                             Empaque y despeje de línea)</td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="SI">SÍ</option>
-                                <option value="NO">NO</option>
-                                <option value="NA">N/A</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Sí / No / N/A">
                         </td>
                         <td><input class="cedit" placeholder="Ver FO-LC-24 / FO-LC-45 Folio:"></td>
                     </tr>
@@ -259,12 +248,7 @@
                         <td style="text-align:left; padding-left: 10px;">Certificado de Análisis (CoA) aprobado y dentro
                             de especificaciones</td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="SI">SÍ</option>
-                                <option value="NO">NO</option>
-                                <option value="NA">N/A</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Sí / No / N/A">
                         </td>
                         <td><input class="cedit" placeholder="Ver FO-QA-10 Folio:"></td>
                     </tr>
@@ -272,12 +256,7 @@
                         <td style="text-align:left; padding-left: 10px;">Desviaciones, Resultados Fuera de
                             Especificación (OOS) o Controles de Cambio resueltos y cerrados</td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="SI">SÍ</option>
-                                <option value="NO">NO</option>
-                                <option value="NA">N/A</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Sí / No / N/A">
                         </td>
                         <td><input class="cedit" placeholder="Ver FO-OP-51, FO-QA-09 (N/A si no hubo)"></td>
                     </tr>
@@ -285,12 +264,7 @@
                         <td style="text-align:left; padding-left: 10px;">Monitoreo Ambiental y controles de cuartos
                             limpios conformes</td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="SI">SÍ</option>
-                                <option value="NO">NO</option>
-                                <option value="NA">N/A</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Sí / No / N/A">
                         </td>
                         <td><input class="cedit" placeholder="Ver FO-QA-13 Folio:"></td>
                     </tr>
@@ -298,12 +272,7 @@
                         <td style="text-align:left; padding-left: 10px;">Muestras de Retención resguardadas
                             correctamente</td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="SI">SÍ</option>
-                                <option value="NO">NO</option>
-                                <option value="NA">N/A</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Sí / No / N/A">
                         </td>
                         <td><input class="cedit" placeholder="Ver FO-LC-33"></td>
                     </tr>
@@ -333,11 +302,11 @@
 
         <div class="signature-area" style="margin-top: 30px;">
             <div class="signature-box">
-                <p>Revisión de Expediente (Aseguramiento de Calidad)</p>
+                <p>Revisión de Expediente <br>Aseguramiento de Calidad</p>
                 <input type="text" placeholder="Nombre y Firma">
             </div>
             <div class="signature-box">
-                <p>Responsable Sanitario / Liberación Final</p>
+                <p>Responsable Sanitario / Responsable dirección <br> Liberación Final</p>
                 <input type="text" placeholder="Nombre y Firma">
             </div>
         </div>

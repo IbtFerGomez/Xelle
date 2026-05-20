@@ -103,8 +103,7 @@
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
-        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
-    </div>
+        </div>
 
     <div class="container" style="max-width:100%; width:100%;">
         <div class="header-top">
@@ -147,7 +146,7 @@
                     <input type="text" id="reg-qa12" class="registry-input generate-barcode" data-target="barcode-qa12"
                         data-prefix="FO-QA-12-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-qa12" class="barcode-svg"></svg>
             </div>
         </div>
@@ -160,110 +159,16 @@
         <div
             style="margin-top:10px; padding: 10px; background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 4px; display: flex; gap: 20px;">
             <div style="flex: 1; font-size: 12px;">
-                <strong>Equipo:</strong> <input class="cedit"
+                <strong>Área / Ubicación</strong> <input class="cedit"
                     style="width: 70%; border-bottom: 1px solid #1E3A5F; font-weight: bold; background: transparent;"
-                    placeholder="Nombre del Equipo">
+                    placeholder="Nombre del Área / Ubicación ">
             </div>
-            <div style="flex: 1; font-size: 12px;">
-                <strong>ID / No. Serie:</strong> <input class="cedit"
-                    style="width: 70%; border-bottom: 1px solid #1E3A5F; font-weight: bold; background: transparent;"
-                    placeholder="Identificador Interno">
-            </div>
+            
         </div>
 
-        <div class="section-header">1. REGISTRO DIARIO DE USO Y OPERACIÓN</div>
+        <div class="section-header">1. REPORTE DE FALLAS Y MANTENIMIENTO CORRECTIVO</div>
         <div class="section">
-            <p style="font-size:9px; color:#666; margin-bottom:5px; text-align:justify;">Instrucción: Registre cada uso
-                del equipo. Si el equipo cuenta con parámetros críticos (ej. Temperatura, RPM, Presión), anótelos en la
-                columna correspondiente. Si detecta un ruido extraño, error en pantalla o falla, regístrelo
-                inmediatamente en la columna de anomalías.</p>
-            <table class="compact-table" id="tbl-uso">
-                <thead>
-                    <tr>
-                        <th width="8%">Fecha</th>
-                        <th width="8%">Hora Inicio</th>
-                        <th width="8%">Hora Fin</th>
-                        <th width="20%">Actividad Realizada / Lote de Producto</th>
-                        <th width="16%">Parámetros de Operación<br><span style="font-weight:normal; font-size:8px;">(Si
-                                aplica)</span></th>
-                        <th width="16%">Falla o Anomalía Detectada<br><span
-                                style="font-weight:normal; font-size:8px;">(Especifique)</span></th>
-                        <th width="11%">Firma del Operador</th>
-                        <th width="11%">Firma del Supervisor / QA</th>
-                        <th width="2%" class="no-print"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input type="time" class="cedit"></td>
-                        <td><input type="time" class="cedit"></td>
-                        <td><input class="cedit" placeholder="Lote / Proceso"></td>
-                        <td><input class="cedit" placeholder="Ej. 121°C / 20 min"></td>
-                        <td><input class="cedit" placeholder="Ninguna o Especifique"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="no-print"><span onclick="delRow(this)"
-                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
-                    </tr>
-                    <tr>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input type="time" class="cedit"></td>
-                        <td><input type="time" class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="no-print"><span onclick="delRow(this)"
-                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
-                    </tr>
-                    <tr>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input type="time" class="cedit"></td>
-                        <td><input type="time" class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="no-print"><span onclick="delRow(this)"
-                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
-                    </tr>
-                    <tr>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input type="time" class="cedit"></td>
-                        <td><input type="time" class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="no-print"><span onclick="delRow(this)"
-                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
-                    </tr>
-                    <tr>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input type="time" class="cedit"></td>
-                        <td><input type="time" class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td class="no-print"><span onclick="delRow(this)"
-                                style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="btn-add no-print" onclick="addRow('tbl-uso')">+ AGREGAR REGISTRO DE USO</button>
-        </div>
-
-        <div class="section-header">2. REPORTE DE FALLAS Y MANTENIMIENTO CORRECTIVO</div>
-        <div class="section">
-            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-bottom:5px;">Llene esta sección únicamente
-                si el equipo presentó una falla que impidió su funcionamiento o requirió la intervención de
-                Mantenimiento/Proveedor.</p>
+            
             <table class="compact-table" id="tbl-fallas">
                 <thead>
                     <tr>
@@ -280,33 +185,33 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input class="cedit" placeholder="Detalle la anomalía..."></td>
+                        <td><input type="text" class="cedit" style="font-size:8px;"></td>
+                        <td><textarea class="cedit" placeholder="Detalle la anomalía..."></textarea> </td>
                         <td><input class="cedit"></td>
                         <td>
                             <div class="radio-group">
-                                <label style="color:#991b1b;"><input type="radio" class="cedit"> Sí</label>
-                                <label style="color:#166534;"><input type="radio" class="cedit"> No</label>
+                                <label style="color:#991b1b;"><input type="radio" class="cedit" style="width: min-content;"> Sí</label>
+                                <label style="color:#166534;"><input type="radio" class="cedit" style="width: min-content;"> No</label>
                             </div>
                         </td>
                         <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
+                        <td><input type="text" class="cedit" style="font-size:8px;"></td>
                         <td><input class="cedit"></td>
                         <td class="no-print"><span onclick="delRow(this)"
                                 style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
                     </tr>
                     <tr>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
-                        <td><input class="cedit"></td>
+                        <td><input type="text" class="cedit" style="font-size:8px;"></td>
+                        <td><textarea class="cedit" placeholder="Detalle la anomalía..."></textarea> </td>
                         <td><input class="cedit"></td>
                         <td>
                             <div class="radio-group">
-                                <label style="color:#991b1b;"><input type="radio" class="cedit"> Sí</label>
-                                <label style="color:#166534;"><input type="radio" class="cedit"> No</label>
+                                <label style="color:#991b1b;"><input type="radio" class="cedit" style="width: min-content;"> Sí</label>
+                                <label style="color:#166534;"><input type="radio" class="cedit" style="width: min-content;"> No</label>
                             </div>
                         </td>
                         <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit" style="font-size:8px;"></td>
+                        <td><input type="text" class="cedit" style="font-size:8px;"></td>
                         <td><input class="cedit"></td>
                         <td class="no-print"><span onclick="delRow(this)"
                                 style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
@@ -316,8 +221,8 @@
             <button class="btn-add no-print" onclick="addRow('tbl-fallas')">+ AGREGAR REPORTE DE FALLA</button>
         </div>
 
-        <div class="footer">FO-QA-12 | Versión: 1.0 | Bitácora de Uso y Fallas de Equipo | Xelle Scientific | Página 1
-            de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y
+        <div class="footer">FO-QA-12 | Versión: 1.0 | Bitácora de Uso y Fallas de Equipo | Xelle Scientific | Página 2
+            de 2<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y
             está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 
@@ -382,9 +287,9 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
@@ -428,9 +333,9 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

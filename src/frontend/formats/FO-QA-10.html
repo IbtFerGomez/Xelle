@@ -109,6 +109,18 @@
                 page-break-after: avoid !important;
                 break-after: avoid !important;
             }
+
+            /* Sobrescribe el estilo global de impresión para mantener el borde del textarea */
+            input.cedit,
+            textarea,
+            textarea.cedit {
+                border: 1px solid #000 !important;
+                background: #fff !important;
+                padding: 4px 6px !important;
+                border-radius: 2px !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
     </style>
 </head>
@@ -162,7 +174,7 @@
                     <input type="text" id="reg-qa10" class="registry-input generate-barcode" data-target="barcode-qa10"
                         data-prefix="FO-QA-10-" placeholder="LOTE000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-qa10" class="barcode-svg"></svg>
             </div>
         </div>
@@ -185,9 +197,9 @@
                 </tr>
                 <tr>
                     <td><strong>Fecha Manufactura:</strong></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
                     <td><strong>Fecha Caducidad:</strong></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
                 </tr>
                 <tr>
                     <td><strong>Tamaño del Lote:</strong></td>
@@ -272,7 +284,7 @@
             revisión auditada.
 
             <div class="liberado-box">
-                DECISIÓN FINAL: ✅ PRODUCTO LIBERADO PARA DISTRIBUCIÓN
+                DECISIÓN FINAL: ✅ PRODUCTO LIBERADO
             </div>
         </div>
 
@@ -347,9 +359,9 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
@@ -393,9 +405,9 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
