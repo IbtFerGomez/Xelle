@@ -248,13 +248,13 @@
             <table class="no-border-table" style="margin-bottom: 10px;">
                 <tr>
                     <td width="20%"><strong>Fecha del Nacimiento:</strong></td>
-                    <td width="30%"><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;">
+                    <td width="30%"><input type="text" class="cedit" style="width:100%; border-bottom:1px solid #ccc;" style="width: min-content;">
                     </td>
                     <td width="15%"><strong>Tipo de Parto:</strong></td>
                     <td width="35%">
                         <div class="radio-group-row">
-                            <label><input type="radio" name="tipo_parto" class="cedit"> Cesárea</label>
-                            <label><input type="radio" name="tipo_parto" class="cedit"> Parto Vaginal</label>
+                            <label><input type="radio" name="tipo_parto" class="cedit" style="width: min-content;"> Cesárea</label>
+                            <label><input type="radio" name="tipo_parto" class="cedit" style="width: min-content;"> Parto Vaginal</label>
                         </div>
                     </td>
                 </tr>
@@ -262,8 +262,8 @@
                     <td><strong>Sexo del Neonato:</strong></td>
                     <td>
                         <div class="radio-group-row">
-                            <label><input type="radio" name="sexo" class="cedit"> Femenino</label>
-                            <label><input type="radio" name="sexo" class="cedit"> Masculino</label>
+                            <label><input type="radio" name="sexo" class="cedit" style="width: min-content;"> Femenino</label>
+                            <label><input type="radio" name="sexo" class="cedit" style="width: min-content;"> Masculino</label>
                         </div>
                     </td>
                     <td><strong>Salud del Neonato:</strong></td>
@@ -282,8 +282,8 @@
                     <td colspan="2">
                         <div style="display:flex; align-items:center; gap:10px;">
                             <span>¿Requirió reanimación o UCIN?</span>
-                            <label><input type="radio" name="ucin" class="cedit"> Sí</label>
-                            <label><input type="radio" name="ucin" class="cedit"> No</label>
+                            <label><input type="radio" name="ucin" class="cedit" style="width: min-content;" style="width: min-content;"> Sí</label>
+                            <label><input type="radio" name="ucin" class="cedit" style="width: min-content;" style="width: min-content;"> No</label>
                         </div>
                     </td>
                 </tr>
@@ -291,7 +291,6 @@
 
         </div>
 
-        <div style="page-break-before: always; margin-top:20px;"></div>
 
         <div class="header-main" style="margin-top:0;"></div>
 
@@ -300,18 +299,14 @@
             <table class="no-border-table" style="margin-bottom:10px;">
                 <tr>
                     <td width="50%"><strong>Hora de recolección:</strong></td>
-                    <td width="50%"><input type="time" class="cedit"
+                    <td width="50%"><input type="text" class="cedit"
                             style="border-bottom:1px solid #ccc; font-weight:bold;"></td>
                 </tr>
                 <tr>
                     <td colspan="1"><strong>¿Se siguió debido procedimiento de recolección y mantenimiento de
                             esterilidad?</strong></td>
                     <td colspan="1">
-                        <select class="cedit" style="font-weight:bold;">
-                            <option value=""></option>
-                            <option value="S">Sí</option>
-                            <option value="N">No</option>
-                        </select>
+                        <input type="text" placeholder="Si/No">
                     </td>
                 </tr>
             </table>
@@ -329,43 +324,28 @@
                     <tr>
                         <td class="text-left">¿Se drenó la sangre del cordón umbilical antes del empaque?</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S">Sí</option>
-                                <option value="N">No</option>
-                            </select>
+                            <input type="text" class="cedit" style="font-weight:bold;" placeholder="Si/No">
                         </td>
                     </tr>
                     <tr>
                         <td class="text-left">¿La placenta se colocó en la bolsa estéril primaria y se selló
                             correctamente?</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S">Sí</option>
-                                <option value="N">No</option>
-                            </select>
+                            <input type="text" class="cedit" style="font-weight:bold;" placeholder="Si/No">
                         </td>
                     </tr>
                     <tr>
                         <td class="text-left">¿Se colocaron los geles refrigerantes (Ice Packs) en la hielera sin tocar
                             directamente el tejido?</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S">Sí</option>
-                                <option value="N">No</option>
-                            </select>
+                           <input type="text" class="cedit" style="font-weight:bold;" placeholder="Si/No">
                         </td>
                     </tr>
                     <tr>
                         <td class="text-left">¿Se extrajeron los tubos de sangre materna para Serología (VIH, VHB, VHC,
                             VDRL)?</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="S">Sí</option>
-                                <option value="N">No</option>
+                            <input type="text" class="cedit" style="font-weight:bold;" placeholder="Si/No">
                             </select>
                         </td>
                     </tr>
@@ -379,13 +359,13 @@
                 documentos se entreguen al chofer/transportista dentro del sobre:</p>
             <div class="radio-group-row"
                 style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 4px;">
-                <label><input type="checkbox" class="cedit"> Consentimiento Informado (Firmado por la madre).</label>
-                <label><input type="checkbox" class="cedit"> Copia de Identificación Oficial de la madre.</label>
-                <label><input type="checkbox" class="cedit"> Resultados de Serología Infecciosa (Si se hicieron previos
+                <label><input type="checkbox" class="cedit" style="width: min-content;"> Consentimiento Informado (Firmado por la madre).</label>
+                <label><input type="checkbox" class="cedit"style="width: min-content;"> Copia de Identificación Oficial de la madre.</label>
+                <label><input type="checkbox" class="cedit"style="width: min-content;"> Resultados de Serología Infecciosa (Si se hicieron previos
                     al parto).</label>
-                <label><input type="checkbox" class="cedit"> Tubos de muestra de sangre materna (Si el laboratorio de
+                <label><input type="checkbox" class="cedit"style="width: min-content;"> Tubos de muestra de sangre materna (Si el laboratorio de
                     Xelle hará la serología).</label>
-                <label><input type="checkbox" class="cedit"> Este formato (FO-OP-13) debidamente firmado.</label>
+                <label><input type="checkbox" class="cedit"style="width: min-content;"> Este formato (FO-OP-13) debidamente firmado.</label>
             </div>
         </div>
 
@@ -468,9 +448,9 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
@@ -514,16 +494,16 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
 
                 // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

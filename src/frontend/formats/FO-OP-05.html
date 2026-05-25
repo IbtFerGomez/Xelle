@@ -261,7 +261,7 @@
             <table class="no-border-table" style="margin-bottom: 5px;">
                 <tr>
                     <td width="10%"><strong>Mes / Año:</strong></td>
-                    <td width="15%"><input type="month" class="cedit"
+                    <td width="15%"><input type="text" class="cedit"
                             style="border-bottom:1px solid #1E3A5F; font-weight:bold; color:#1E3A5F; font-size:12px; width:100%;">
                     </td>
                     <td width="10%"><strong>Equipo:</strong></td>
@@ -331,7 +331,8 @@
                                     <th width="30%">PCC Ok? (S/N)</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbody-firmas-2"></tbody>
+                            <tbody id="tbody-firmas-2">
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -450,11 +451,7 @@
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
                     <td>
-                        <select class="cedit" style="font-weight:bold;">
-                            <option value=""></option>
-                            <option value="S" style="color:#166534;">S</option>
-                            <option value="N" style="color:#991b1b;">N</option>
-                        </select>
+                    <input type="text" placeholder="Si/No">
                     </td>
                 </tr>`;
 

@@ -8,6 +8,10 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app.js"></script>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         @page {
             size: landscape;
             margin: 0.5cm;
@@ -19,13 +23,50 @@
         }
 
         body {
+            margin: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+            overflow-x: hidden;
         }
 
         .container {
             flex: 1 0 auto;
+            width: 100%;
+            max-width: 100%;
+            padding: 10px 8px 0;
+            overflow-x: hidden;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .logo-container,
+        .registry-container {
+            min-width: 0;
+        }
+
+        .logo-container svg,
+        .barcode-svg {
+            overflow: visible;
+        }
+
+        .compact-table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .compact-table th,
+        .compact-table td {
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
         .section-header {
@@ -59,6 +100,8 @@
             font-size: 9px;
             text-align: center;
             width: 100%;
+            max-width: 100%;
+            min-width: 0;
             border: none;
             background: transparent;
         }
@@ -83,6 +126,18 @@
         }
 
         @media print {
+
+            html,
+            body,
+            .container {
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow: visible !important;
+            }
+
+            .container {
+                padding: 2mm 0 0 !important;
+            }
 
             .global-controls,
             .no-print {
@@ -126,51 +181,50 @@
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
-        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
 
-    <div class="container" style="max-width:100%; width:100%;">
+    <div class="container">
         <div class="header-top">
             <div class="logo-container">
                 <svg viewBox="0 0 320 80">
                     <defs>
                         <style>
-                            .t {
+                            .svg-logo-titulo {
                                 font-family: 'Arial Black', sans-serif;
                                 font-weight: 900;
                                 fill: #1D1D1B
                             }
 
-                            .s {
+                            .svg-logo-subtitulo {
                                 font-family: 'Arial', sans-serif;
                                 font-weight: 700;
                                 fill: #1D1D1B;
                                 letter-spacing: 2px
                             }
 
-                            .c {
+                            .svg-logo-celula {
                                 fill: #2E9D82
                             }
                         </style>
                     </defs>
                     <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13" />
-                        <circle class="c" cx="75" cy="75" r="13" />
-                        <path class="c"
+                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
+                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
+                        <path class="svg-logo-celula"
                             d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
-                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
-                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
-                        fill="#1D1D1B">®</text>
+                    </g><text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text><text x="91" y="68"
+                        class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text><text x="215" y="35"
+                        font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
                 </svg>
             </div>
             <div class="registry-container">
                 <label>Folio Programa</label>
                 <div class="registry-wrapper">
-                    <span class="registry-prefix">FO-QA-15-</span>
+                    <span class="registry-prefix">FO-QA-15</span>
                     <input type="text" id="reg-qa15" class="registry-input generate-barcode" data-target="barcode-qa15"
                         data-prefix="FO-QA-15-" placeholder="000">
                 </div>
-                <input type="text" class="registry-date" placeholder="DD/MM/YYYY">
+                <input type="text" class="registry-date">
                 <svg id="barcode-qa15" class="barcode-svg"></svg>
             </div>
         </div>
@@ -203,14 +257,14 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input class="cedit" value="EQ-001" style="font-weight:bold;"></td>
-                        <td><input class="cedit" value="Autoclave"></td>
-                        <td><input class="cedit" value="Acondicionamiento"></td>
-                        <td><input class="cedit" value="Semestral"></td>
-                        <td><input class="cedit" value="M / C / Q"></td>
-                        <td><input class="cedit" value="Mayo / Nov"></td>
+                        <td><input class="cedit" placeholder="EQ-001" style="font-weight:bold;"></td>
+                        <td><input class="cedit" placeholder="Autoclave"></td>
+                        <td><input class="cedit" placeholder="Acondicionamiento"></td>
+                        <td><input class="cedit" placeholder="Semestral"></td>
+                        <td><input class="cedit" placeholder="M / C / Q"></td>
+                        <td><input class="cedit" placeholder="Mayo / Nov"></td>
                         <td><input type="text" class="cedit" style="font-size:8px;" placeholder="DD/MM/YYYY"></td>
-                        <td><input class="cedit" value="Proveedor Externo"></td>
+                        <td><input class="cedit" placeholder="Proveedor Externo"></td>
                         <td><input class="cedit"></td>
                         <td>
                             <div class="radio-group">
@@ -222,14 +276,14 @@
                                 style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
                     </tr>
                     <tr>
-                        <td><input class="cedit" value="EQ-002" style="font-weight:bold;"></td>
-                        <td><input class="cedit" value="Báscula Analítica"></td>
-                        <td><input class="cedit" value="Pesaje"></td>
-                        <td><input class="cedit" value="Anual"></td>
-                        <td><input class="cedit" value="C"></td>
-                        <td><input class="cedit" value="Marzo"></td>
+                        <td><input class="cedit" placeholder="EQ-002" style="font-weight:bold;"></td>
+                        <td><input class="cedit" placeholder="Báscula Analítica"></td>
+                        <td><input class="cedit" placeholder="Pesaje"></td>
+                        <td><input class="cedit" placeholder="Anual"></td>
+                        <td><input class="cedit" placeholder="C"></td>
+                        <td><input class="cedit" placeholder="Marzo"></td>
                         <td><input type="text" class="cedit" style="font-size:8px;" placeholder="DD/MM/YYYY"></td>
-                        <td><input class="cedit" value="Laboratorio Acreditado"></td>
+                        <td><input class="cedit" placeholder="Laboratorio Acreditado"></td>
                         <td><input class="cedit"></td>
                         <td>
                             <div class="radio-group">
@@ -241,14 +295,14 @@
                                 style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
                     </tr>
                     <tr>
-                        <td><input class="cedit" value="EQ-003" style="font-weight:bold;"></td>
-                        <td><input class="cedit" value="Cabina Flujo Laminar"></td>
-                        <td><input class="cedit" value="Cuarto Limpio"></td>
-                        <td><input class="cedit" value="Semestral"></td>
-                        <td><input class="cedit" value="M / C"></td>
-                        <td><input class="cedit" value="Jun / Dic"></td>
+                        <td><input class="cedit" placeholder="EQ-003" style="font-weight:bold;"></td>
+                        <td><input class="cedit" placeholder="Cabina Flujo Laminar"></td>
+                        <td><input class="cedit" placeholder="Cuarto Limpio"></td>
+                        <td><input class="cedit" placeholder="Semestral"></td>
+                        <td><input class="cedit" placeholder="M / C"></td>
+                        <td><input class="cedit" placeholder="Jun / Dic"></td>
                         <td><input type="text" class="cedit" style="font-size:8px;" placeholder="DD/MM/YYYY"></td>
-                        <td><input class="cedit" value="Proveedor Externo"></td>
+                        <td><input class="cedit" placeholder="Proveedor Externo"></td>
                         <td><input class="cedit"></td>
                         <td>
                             <div class="radio-group">
@@ -260,14 +314,14 @@
                                 style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
                     </tr>
                     <tr>
-                        <td><input class="cedit" value="EQ-004" style="font-weight:bold;"></td>
-                        <td><input class="cedit" value="Refrigerador (2-8°C)"></td>
-                        <td><input class="cedit" value="Almacén Insumos"></td>
-                        <td><input class="cedit" value="Anual"></td>
-                        <td><input class="cedit" value="M / C"></td>
-                        <td><input class="cedit" value="Febrero"></td>
+                        <td><input class="cedit" placeholder="EQ-004" style="font-weight:bold;"></td>
+                        <td><input class="cedit" placeholder="Refrigerador (2-8°C)"></td>
+                        <td><input class="cedit" placeholder="Almacén Insumos"></td>
+                        <td><input class="cedit" placeholder="Anual"></td>
+                        <td><input class="cedit" placeholder="M / C"></td>
+                        <td><input class="cedit" placeholder="Febrero"></td>
                         <td><input type="text" class="cedit" style="font-size:8px;" placeholder="DD/MM/YYYY"></td>
-                        <td><input class="cedit" value="Mantenimiento Interno"></td>
+                        <td><input class="cedit" placeholder="Mantenimiento Interno"></td>
                         <td><input class="cedit"></td>
                         <td>
                             <div class="radio-group">
@@ -279,14 +333,14 @@
                                 style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
                     </tr>
                     <tr>
-                        <td><input class="cedit" value="EQ-005" style="font-weight:bold;"></td>
-                        <td><input class="cedit" value="Ultracongelador (-80°C)"></td>
-                        <td><input class="cedit" value="Bancos Celulares"></td>
-                        <td><input class="cedit" value="Semestral"></td>
-                        <td><input class="cedit" value="M / C"></td>
-                        <td><input class="cedit" value="Ene / Jul"></td>
+                        <td><input class="cedit" placeholder="EQ-005" style="font-weight:bold;"></td>
+                        <td><input class="cedit" placeholder="Ultracongelador (-80°C)"></td>
+                        <td><input class="cedit" placeholder="Bancos Celulares"></td>
+                        <td><input class="cedit" placeholder="Semestral"></td>
+                        <td><input class="cedit" placeholder="M / C"></td>
+                        <td><input class="cedit" placeholder="Ene / Jul"></td>
                         <td><input type="text" class="cedit" style="font-size:8px;" placeholder="DD/MM/YYYY"></td>
-                        <td><input class="cedit" value="Proveedor Externo"></td>
+                        <td><input class="cedit" placeholder="Proveedor Externo"></td>
                         <td><input class="cedit"></td>
                         <td>
                             <div class="radio-group">
@@ -298,14 +352,14 @@
                                 style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
                     </tr>
                     <tr>
-                        <td><input class="cedit" value="EQ-006" style="font-weight:bold;"></td>
-                        <td><input class="cedit" value="Contador de Partículas"></td>
-                        <td><input class="cedit" value="Calidad"></td>
-                        <td><input class="cedit" value="Anual"></td>
-                        <td><input class="cedit" value="C"></td>
-                        <td><input class="cedit" value="Abril"></td>
+                        <td><input class="cedit" placeholder="EQ-006" style="font-weight:bold;"></td>
+                        <td><input class="cedit" placeholder="Contador de Partículas"></td>
+                        <td><input class="cedit" placeholder="Calidad"></td>
+                        <td><input class="cedit" placeholder="Anual"></td>
+                        <td><input class="cedit" placeholder="C"></td>
+                        <td><input class="cedit" placeholder="Abril"></td>
                         <td><input type="text" class="cedit" style="font-size:8px;" placeholder="DD/MM/YYYY"></td>
-                        <td><input class="cedit" value="Laboratorio Acreditado"></td>
+                        <td><input class="cedit" placeholder="Laboratorio Acreditado"></td>
                         <td><input class="cedit"></td>
                         <td>
                             <div class="radio-group">
@@ -317,14 +371,14 @@
                                 style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
                     </tr>
                     <tr>
-                        <td><input class="cedit" value="EQ-007" style="font-weight:bold;"></td>
-                        <td><input class="cedit" value="Llenadora de Geles"></td>
-                        <td><input class="cedit" value="Envasado"></td>
-                        <td><input class="cedit" value="Trimestral"></td>
-                        <td><input class="cedit" value="M"></td>
-                        <td><input class="cedit" value="Mar/Jun/Sep/Dic"></td>
+                        <td><input class="cedit" placeholder="EQ-007" style="font-weight:bold;"></td>
+                        <td><input class="cedit" placeholder="Llenadora de Geles"></td>
+                        <td><input class="cedit" placeholder="Envasado"></td>
+                        <td><input class="cedit" placeholder="Trimestral"></td>
+                        <td><input class="cedit" placeholder="M"></td>
+                        <td><input class="cedit" placeholder="Mar/Jun/Sep/Dic"></td>
                         <td><input type="text" class="cedit" style="font-size:8px;" placeholder="DD/MM/YYYY"></td>
-                        <td><input class="cedit" value="Mantenimiento Interno"></td>
+                        <td><input class="cedit" placeholder="Mantenimiento Interno"></td>
                         <td><input class="cedit"></td>
                         <td>
                             <div class="radio-group">
@@ -469,12 +523,12 @@
                     if (sel.style.cssText) input.style.cssText = sel.style.cssText;
                     const options = Array.from(sel.options).map(opt => opt.text).join('|');
                     input.setAttribute('data-select-options', options);
-                    sel.parentNode.replaceChild(input, sel);
+                    sel.paxrentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
@@ -518,9 +572,9 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

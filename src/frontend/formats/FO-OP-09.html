@@ -197,6 +197,11 @@
                 display: none;
             }
         }
+         @media print {input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
+        }
     </style>
 </head>
 
@@ -462,11 +467,7 @@
                 <td><input class="cedit"></td>
                 <td><input class="cedit"></td>
                 <td>
-                    <select class="cedit" style="font-weight:bold;">
-                        <option value=""></option>
-                        <option value="S" style="color:#166534;">S</option>
-                        <option value="N" style="color:#991b1b;">N</option>
-                    </select>
+                    <input type="text" class="cedit" style="width:100%; text-align:center;" placeholder="Sí / No">
                 </td>
                 <td><input class="cedit"></td>
             </tr>`;

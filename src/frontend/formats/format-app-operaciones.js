@@ -461,6 +461,26 @@ const AppCom = {
     FO_OP_15: {
         init: function () {
             if (document.querySelector('#tbl-pedidos tbody').children.length === 0) this.addPedidoRow();
+            this.ensureAutoBarcode();
+        },
+        ensureAutoBarcode: async function () {
+            const barcodeInput = document.querySelector('.generate-barcode');
+            if (!barcodeInput) return;
+
+            const hasValue = Boolean(String(barcodeInput.value || '').trim());
+            const hasInstance = Boolean(AppCom.Universal.getInstanceCode());
+            if (hasValue || hasInstance) {
+                if (hasValue) barcodeInput.dispatchEvent(new Event('input'));
+                return;
+            }
+
+            try {
+                const uniqueCode = await AppCom.Universal.resolveOrCreateInstanceCode(document.body.id);
+                AppCom.Universal.setInstanceCode(uniqueCode);
+                AppCom.Universal.ensureBarcodeValueFromCode(uniqueCode);
+            } catch (e) {
+                console.warn('No se pudo autogenerar el folio de FO-OP-15', e);
+            }
         },
         addPedidoRow: function () {
             const r = document.createElement('tr');

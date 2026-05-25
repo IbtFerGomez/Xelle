@@ -34,7 +34,7 @@
             padding: 5px;
             vertical-align: middle;
             text-align: left;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #94a3b8;
         }
 
         .compact-table input,
@@ -189,7 +189,7 @@
             <table class="no-border-table">
                 <tr>
                     <td width="20%"><strong>Fecha de Ejecución:</strong></td>
-                    <td width="30%"><input type="date" class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td width="30%"><input type="text" class="cedit" style="border-bottom:1px solid #ccc;"></td>
                     <td width="20%"><strong>Lote(s) Involucrado(s):</strong></td>
                     <td width="30%"><input class="cedit"
                             style="width:100%; border-bottom:1px solid #ccc; font-weight:bold;"></td>
@@ -252,11 +252,13 @@
                     <span><strong>Física:</strong> Ruptura intencional de viales y destrucción total de
                         etiquetas.</span>
                 </label>
-                <div style="border:1px solid #cbd5e1; padding:8px; border-radius:4px; background:#fff;">
+                
+            </div>
+            <br>
+            <div style="border:1px solid #cbd5e1; padding:8px; border-radius:4px; background:#fff;">
                     <span style="font-size:9px; font-weight:bold;">Procedimiento:</span>
                     <textarea class="cedit" rows="2" style="font-size:9px;"></textarea>
                 </div>
-            </div>
         </div>
 
         <div class="section-header">4. DISPOSICIÓN FINAL (TRAZABILIDAD RPBI)</div>
@@ -288,21 +290,21 @@
                     <span style="font-size:7px;">"Inactivado según PNO."</span>
                     <input class="cedit"
                         style="border-top:1px solid #ccc; border-radius:0; margin-top:20px;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:100px;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:100px;"></p>
                 </div>
                 <div class="signature-box" style="flex:1;">
                     <p style="font-weight:bold;">VERIFICÓ (QA)</p>
                     <span style="font-size:7px;">"Testigo de destrucción."</span>
                     <input class="cedit"
                         style="border-top:1px solid #ccc; border-radius:0; margin-top:20px;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:100px;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:100px;"></p>
                 </div>
                 <div class="signature-box" style="flex:1; background-color:#f0fdf4;">
                     <p style="font-weight:bold; color:#14532d;">AUTORIZÓ (Responsable dirección)</p>
                     <span style="font-size:7px;">"Baja regulatoria aprobada."</span>
                     <input class="cedit"
                         style="border-top:1px solid #166534; border-radius:0; margin-top:20px; background:transparent;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:100px; background:transparent;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:100px; background:transparent;"></p>
                 </div>
             </div>
         </div>
@@ -334,15 +336,15 @@
                     input.setAttribute('data-select-options', options);
                     sel.parentNode.replaceChild(input, sel);
                 });
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
-                // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'HH:MM';
                 });
@@ -376,15 +378,15 @@
                     }
                     inp.parentNode.replaceChild(sel, inp);
                 });
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
                 // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-RS-01 Registro de Quejas y Satisfacción del Cliente</title>
@@ -7,54 +8,175 @@
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app.js"></script>
     <style>
-        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; }
-        
-        .compact-table th { background-color: #1E3A5F; color: white; font-size: 9px; padding: 6px; text-align: center; border: 1px solid #cbd5e1; }
-        .compact-table td { font-size: 9px; padding: 4px; vertical-align: middle; text-align: center; border: 1px solid #cbd5e1; }
-        .compact-table input, .compact-table select, .compact-table textarea { font-size: 9px; text-align: center; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
-        
-        .info-box { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 4px; font-size: 9px; line-height: 1.4; color: #334155; margin-top: 5px; }
-        .text-left { text-align: left !important; padding-left: 5px !important; }
-        
-        .trend-analysis { border: 1px solid #cbd5e1; padding: 10px; border-radius: 4px; background-color: #fff; display: flex; flex-direction: column; gap: 10px; }
-        .trend-item { display: flex; align-items: center; font-size: 10px; gap: 10px; }
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 6px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 9px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .info-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #334155;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .trend-analysis {
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .trend-item {
+            display: flex;
+            align-items: center;
+            font-size: 10px;
+            gap: 10px;
+        }
 
         /* Estilos del Footer Unificado y Legal */
-        .footer-unified { 
-            margin-top: 20px; 
-            border-top: 2px solid #1E3A5F; 
-            padding-top: 8px; 
-            text-align: center; 
-            font-size: 9px; 
+        .footer-unified {
+            margin-top: 20px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 8px;
+            text-align: center;
+            font-size: 9px;
             line-height: 1.4;
             page-break-inside: avoid;
         }
-        .footer-unified .control-data { font-weight: bold; color: #1E3A5F; margin-bottom: 3px; }
-        .footer-unified .legal-data { color: #475569; font-style: italic; }
+
+        .footer-unified .control-data {
+            font-weight: bold;
+            color: #1E3A5F;
+            margin-bottom: 3px;
+        }
+
+        .footer-unified .legal-data {
+            color: #475569;
+            font-style: italic;
+        }
 
         @media print {
-            .global-controls, .no-print { display: none !important; }
-            .container { max-width: 100%; width: 100%; border: none; box-shadow: none; }
-            .section { page-break-inside: avoid; }
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+         @media print {input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
         }
     </style>
 </head>
+
 <body id="doc-fo-rs-01">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
-    
+
     <div class="container">
         <div class="header-top">
             <div class="logo-container">
                 <svg viewBox="0 0 320 80">
-                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
                     <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13"/>
-                        <circle class="c" cx="75" cy="75" r="13"/>
-                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
                     </g>
                     <text x="90" y="42" class="t" font-size="34">XELLE</text>
                     <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
@@ -64,12 +186,9 @@
                 <label>Registro de Atención</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-RS-01-</span>
-                    <input type="text" id="reg-rs01" 
-                           class="registry-input generate-barcode cedit" 
-                           data-target="barcode-rs01" 
-                           data-prefix="FO-RS-01-" 
-                           placeholder="202X" 
-                           style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                    <input type="text" id="reg-rs01" class="registry-input generate-barcode cedit"
+                        data-target="barcode-rs01" data-prefix="FO-RS-01-" placeholder="202X"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
                 </div>
                 <svg id="barcode-rs01" class="barcode-svg" style="height:35px;"></svg>
             </div>
@@ -82,7 +201,8 @@
 
         <div class="section-header">1. SECCIÓN A: REGISTRO DE QUEJAS (RECLAMOS TÉCNICOS O COMERCIALES)</div>
         <div class="section">
-            <p style="font-size:9px; font-style:italic; margin-bottom:5px;">Instrucción: Cada entrada debe generar un folio de investigación interno (CAPA) si afecta la calidad del producto.</p>
+            <p style="font-size:9px; font-style:italic; margin-bottom:5px;">Instrucción: Cada entrada debe generar un
+                folio de investigación interno (CAPA) si afecta la calidad del producto.</p>
             <table class="compact-table" id="tbl-quejas">
                 <thead>
                     <tr>
@@ -93,67 +213,96 @@
                         <th width="10%">Clasificación</th>
                         <th width="13%">Folio Invest. (FO-QA-09)</th>
                         <th width="10%">Estatus</th>
+                        <th width="0%" class="no-print"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
                         <td><input class="cedit text-left"></td>
                         <td><input class="cedit"></td>
-                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><textarea class="cedit text-left" rows="4"></textarea></td>
                         <td>
-                            <select class="cedit">
-                                <option value="CALIDAD">Calidad</option>
-                                <option value="SERVICIO">Servicio</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Técnica, Comercial, Logística...">
                         </td>
                         <td><input class="cedit" placeholder="CAPA-XXXX"></td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value="ABIERTA">Abierta</option>
-                                <option value="CERRADA">Cerrada</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Abierta, En Proceso, Cerrada...">
                         </td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">x</button></td>
                     </tr>
-                    </tbody>
+                </tbody>
             </table>
+            <button class="btn-add no-print" onclick="addRowQuejas()">+ AGREGAR LÍNEA DE QUEJA</button>
         </div>
 
         <div class="section-header">2. SECCIÓN B: EVALUACIÓN DE SATISFACCIÓN (ENCUESTAS)</div>
         <div class="section">
-            <table class="compact-table">
+            <table class="compact-table" id="tbl-satisfaccion">
                 <thead>
                     <tr>
-                        <th width="20%">Periodo Evaluado</th>
-                        <th width="20%">No. Encuestas Aplicadas</th>
-                        <th width="20%">Puntaje Promedio (1-10)</th>
+                        <th width="15%">Periodo Evaluado (De)</th>
+                        <th width="15%">Periodo Evaluado (A)</th>
+                        <th width="15%">No. Encuestas Aplicadas</th>
+                        <th width="15%">Puntaje Promedio (1-10)</th>
                         <th width="40%">Principales Áreas de Mejora Detectadas</th>
+                        <th width="0%" class="no-print"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>1er Semestre</strong></td>
+                        <td><input type="text" class="cedit" title="De"></td>
+                        <td><input type="text" class="cedit" title="A"></td>
                         <td><input type="number" class="cedit"></td>
                         <td><input type="number" step="0.1" class="cedit"></td>
                         <td><textarea class="cedit text-left" rows="2"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td><strong>2do Semestre</strong></td>
-                        <td><input type="number" class="cedit"></td>
-                        <td><input type="number" step="0.1" class="cedit"></td>
-                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="this.closest('tr').remove()">x</button></td>
                     </tr>
                 </tbody>
             </table>
+            <button class="btn-add no-print" onclick="addRowSatisfaccion()">+ AGREGAR LÍNEA DE SATISFACCIÓN</button>
         </div>
 
         <div class="section-header">3. PROTOCOLO DE RESOLUCIÓN DE QUEJAS (FLUJO CRÍTICO)</div>
         <div class="section">
             <div class="info-box">
                 <strong>1. Recepción:</strong> Registro en menos de 24h. <br>
-                <strong>2. Evaluación de Riesgo:</strong> Si la queja involucra fallas en esterilidad o eventos adversos, notificar inmediatamente al <strong>Responsable Sanitario</strong> (Tecnovigilancia).<br>
-                <strong>3. Contención:</strong> Solicitar devolución y poner en cuarentena el inventario remanente del lote afectado.<br>
-                <strong>4. Respuesta:</strong> Resolución final al cliente en un plazo máximo de <strong>10 días hábiles</strong>.
+                <strong>2. Evaluación de Riesgo:</strong> Si la queja involucra fallas en esterilidad o eventos
+                adversos, notificar inmediatamente al <strong>Responsable Sanitario</strong> (Tecnovigilancia).<br>
+                <strong>3. Contención:</strong> Solicitar devolución y poner en cuarentena el inventario remanente del
+                lote afectado.<br>
+                <strong>4. Respuesta:</strong> Resolución final al cliente en un plazo máximo de <strong>10 días
+                    hábiles</strong>.
+            </div>
+            <div style="margin-top:10px;">
+                <table class="compact-table" id="tbl-historial-pasos">
+                    <thead>
+                        <tr>
+                            <th width="12%">Fecha</th>
+                            <th width="20%">Paso</th>
+                            <th width="18%">Responsable</th>
+                            <th width="15%">Estatus</th>
+                            <th width="35%">Observaciones / Evidencia</th>
+                            <th width="0%" class="no-print"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="cedit"></td>
+                            <td><input class="cedit text-left" placeholder="Ej. Recepción, Evaluación, Contención...">
+                            </td>
+                            <td><input class="cedit text-left" placeholder="Nombre o área"></td>
+                            <td><input class="cedit" placeholder="Abierto, En proceso, Cerrado"></td>
+                            <td><textarea class="cedit text-left" rows="2"
+                                    placeholder="Detalle de actividad, evidencia o folio"></textarea></td>
+                            <td class="no-print"><button class="btn btn-danger btn-mini"
+                                    onclick="this.closest('tr').remove()">x</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn-add no-print" onclick="addRowHistorialPasos()">+ AGREGAR PASO AL HISTORIAL</button>
             </div>
         </div>
 
@@ -162,17 +311,18 @@
             <div class="trend-analysis">
                 <div class="trend-item">
                     <span>¿Hay recurrencia en un lote específico?</span>
-                    <label><input type="radio" name="rec_lote" class="cedit"> Sí</label>
-                    <label><input type="radio" name="rec_lote" class="cedit"> No</label>
+                    <label><input type="radio" name="rec_lote" class="cedit" style="width: min-content;"> Sí</label>
+                    <label><input type="radio" name="rec_lote" class="cedit" style="width: min-content;"> No</label>
                 </div>
                 <div class="trend-item">
                     <span>¿Hay fallas recurrentes en el servicio de logística?</span>
-                    <label><input type="radio" name="rec_log" class="cedit"> Sí</label>
-                    <label><input type="radio" name="rec_log" class="cedit"> No</label>
+                    <label><input type="radio" name="rec_log" class="cedit" style="width: min-content;"> Sí</label>
+                    <label><input type="radio" name="rec_log" class="cedit" style="width: min-content;"> No</label>
                 </div>
                 <div style="font-size:10px;">
                     <strong>Acción Global Sugerida:</strong>
-                    <input class="cedit" style="width:75%; border-bottom:1px solid #ccc; margin-left:10px;" placeholder="Ej. Cambio de transportista, re-capacitación de personal...">
+                    <input class="cedit" style="width:75%; border-bottom:1px solid #ccc; margin-left:10px;"
+                        placeholder="Ej. Cambio de transportista, re-capacitación de personal...">
                 </div>
             </div>
         </div>
@@ -183,25 +333,78 @@
                 <div class="signature-box" style="flex:1;">
                     <p style="font-weight:bold;">Atención al Cliente</p>
                     <span style="font-size:8px;">(Elaboró)</span>
-                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:20px;">
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #ccc; border-radius:0; margin-top:20px;">
                 </div>
                 <div class="signature-box" style="flex:1;">
                     <p style="font-weight:bold;">Aseguramiento de Calidad</p>
                     <span style="font-size:8px;">(Revisó)</span>
-                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:20px;">
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #ccc; border-radius:0; margin-top:20px;">
                 </div>
                 <div class="signature-box" style="flex:1; background-color:#f8fafc;">
                     <p style="font-weight:bold;">Dirección General</p>
                     <span style="font-size:8px;">(Vo.Bo.)</span>
-                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #1E3A5F; border-radius:0; margin-top:20px;">
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #1E3A5F; border-radius:0; margin-top:20px;">
                 </div>
             </div>
         </div>
 
         <div class="footer-unified">
-            <div class="control-data">FO-RS-01 | Versión: 1.0 | Registro de Quejas y Satisfacción del Cliente | Xelle Scientific | Página 1 de 1</div>
-            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+            <div class="control-data">FO-RS-01 | Versión: 1.0 | Registro de Quejas y Satisfacción del Cliente | Xelle
+                Scientific | Página 1 de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
         </div>
     </div>
+
+    <script>
+        function addRowQuejas() {
+            const tbody = document.getElementById('tbl-quejas').querySelector('tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" class="cedit"></td>
+                <td><input class="cedit text-left"></td>
+                <td><input class="cedit"></td>
+                <td><textarea class="cedit text-left" rows="4"></textarea></td>
+                <td><input type="text" class="cedit" placeholder="Técnica, Comercial, Logística..."></td>
+                <td><input class="cedit" placeholder="CAPA-XXXX"></td>
+                <td><input type="text" class="cedit" placeholder="Abierta, En Proceso, Cerrada..."></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+            tbody.appendChild(newRow);
+        }
+
+        function addRowSatisfaccion() {
+            const tbody = document.getElementById('tbl-satisfaccion').querySelector('tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" class="cedit" title="De"></td>
+                <td><input type="text" class="cedit" title="A"></td>
+                <td><input type="text" class="cedit"></td>
+                <td><input type="text" step="0.1" class="cedit"></td>
+                <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+            tbody.appendChild(newRow);
+        }
+
+        function addRowHistorialPasos() {
+            const tbody = document.getElementById('tbl-historial-pasos').querySelector('tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" class="cedit"></td>
+                <td><input class="cedit text-left" placeholder="Ej. Recepción, Evaluación, Contención..."></td>
+                <td><input class="cedit text-left" placeholder="Nombre o área"></td>
+                <td><input class="cedit" placeholder="Abierto, En proceso, Cerrado"></td>
+                <td><textarea class="cedit text-left" rows="2" placeholder="Detalle de actividad, evidencia o folio"></textarea></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+            tbody.appendChild(newRow);
+        }
+    </script>
 </body>
+
 </html>

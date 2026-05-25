@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-AD-18 Lista de Asistencia a Reunión</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Vertical (Portrait) */
+        @page { size: portrait; margin: 1cm; }
+        
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        .container { width: 19cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .compact-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 9px; padding: 6px; text-align: center; border: 1px solid #cbd5e1; vertical-align: middle; }
+        .compact-table td { height: 35px; font-size: 9px; padding: 5px; border: 1px solid #cbd5e1; vertical-align: middle; }
+        
+        .compact-table input, .compact-table textarea { font-size: 9px; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
+        .compact-table textarea { resize: none; overflow: hidden; }
+        .compact-table input:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+
+        .text-center { text-align: center !important; }
+        .text-left { text-align: left !important; padding-left: 6px !important; }
+        
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 6px; margin-top: 5px; color: #1E3A5F; }
+        
+        .info-box { background-color: #f0fdfa; border: 1px solid #5eead4; padding: 8px; border-radius: 4px; font-size: 9px; color: #115e59; margin-top: 10px; line-height: 1.3; text-align: justify; }
+        .legend-box { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 8px; border-radius: 4px; font-size: 8.5px; color: #1e293b; margin-top: 5px; line-height: 1.3; }
+
+        .footer-unified { 
+            margin-top: 25px; border-top: 2px solid #1E3A5F; padding-top: 10px; 
+            text-align: center; font-size: 9px; line-height: 1.4; color: #475569;
+        }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
+        }
+         @media print {input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+<body id="doc-fo-ad-18">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Lista</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER MODULAR -->
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs><style>.c { fill: #2E9D82 }</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Asistencia</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-AD-18-</span>
+                    <input type="text" id="reg-ad18" class="registry-input generate-barcode cedit" 
+                           data-target="barcode-ad18" data-prefix="FO-AD-18-" placeholder="202X-00">
+                </div>
+                <svg id="barcode-ad18" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>LISTA DE ASISTENCIA A REUNIÓN / CAPACITACIÓN</h1>
+            <div class="metadata">Código: FO-AD-18 | Versión: 1.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <!-- INSTRUCCIONES Y LEYENDAS NORMATIVAS (ISO 9001 / BPF) -->
+        <div class="info-box">
+            <strong>Instrucciones de Llenado Obligatorias (Cumplimiento ALCOA+ / ISO 9001):</strong> Este formato constituye la evidencia auditable de la ejecución de reuniones de coordinación, comités técnicos o capacitaciones. Cada participante debe escribir de su puño y letra su nombre, iniciales y plasmar su firma física. No se permiten firmas a ruego, tachaduras ni uso de corrector. Escriba las siglas correspondientes a su departamento según la tabla inferior.
+        </div>
+
+        <div class="legend-box">
+            <strong style="color: #1E3A5F;">NOCIONES Y ABREVIATURAS DE ÁREAS (Escribir en columna "Área"):</strong><br>
+            <div style="margin-top: 4px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px;">
+                <div><strong>LCA:</strong> Lab. y Calidad / Acondicionamiento</div>
+                <div><strong>LCB:</strong> Lab. y Calidad / Calidad y Bioprocesos</div>
+                <div><strong>LCE:</strong> Lab. y Calidad / Expansión Celular</div>
+                <div><strong>LCC:</strong> Lab. y Calidad / CEyE</div>
+                <div><strong>LCL:</strong> Lab. y Calidad / Almacén</div>
+                <div><strong>LEX:</strong> Lab. y Calidad / Exclusa</div>
+                <div><strong>LAI:</strong> Lab. e Ingreso Cambiador a Lab.</div>
+                <div><strong>LAc:</strong> Lab. y Calidad / Administración y Compras</div>
+            </div>
+        </div>
+
+        <!-- 1. DATOS DE LA REUNIÓN -->
+        <div class="section-header">1. DATOS GENERALES DE LA REUNIÓN</div>
+        <table class="compact-table">
+            <tr>
+                <th width="15%">Tema / Tema Central:</th>
+                <td colspan="3"><input class="cedit text-left" placeholder="Título completo de la sesión o capacitación" style="font-weight: bold; color: #1E3A5F;"></td>
+            </tr>
+            <tr>
+                <th width="15%">Fecha:</th>
+                <td width="35%"><input type="text" class="cedit"></td>
+                <th width="15%">Lugar / Sala:</th>
+                <td width="35%"><input class="cedit text-left" placeholder="Ubicación física o sala de juntas"></td>
+            </tr>
+            <tr>
+                <th>Hora Inicio:</th>
+                <td><input type="text" class="cedit"></td>
+                <th>Hora Fin:</th>
+                <td><input type="text" class="cedit"></td>
+            </tr>
+            <tr>
+                <th>Facilitador / Ponente:</th>
+                <td colspan="3"><input class="cedit text-left" placeholder="Nombre completo y puesto del organizador"></td>
+            </tr>
+        </table>
+
+        <!-- 2. REGISTRO DE PARTICIPANTES -->
+        <div class="section-header">2. REGISTRO DE PARTICIPANTES Y FIRMAS</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-asistencia">
+                <thead>
+                    <tr>
+                        <th width="5%">No.</th>
+                        <th width="40%">Nombre Completo del Colaborador</th>
+                        <th width="15%">Área (Siglas)</th>
+                        <th width="15%">Puesto</th>
+                        <th width="25%">Firma / Rúbrica</th>
+                        <th width="4%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center row-num">1</td>
+                        <td><input class="cedit text-left" placeholder="Nombre Apellido Apellido"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: LCE" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Puesto operativo"></td>
+                        <td><input class="cedit text-center" placeholder="Firma Física en Impresión" disabled style="background-color: #fafafa;"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-asistencia')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">2</td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: LCB"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center" disabled style="background-color: #fafafa;"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-asistencia')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">3</td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: LEX"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center" disabled style="background-color: #fafafa;"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-asistencia')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">4</td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center" disabled style="background-color: #fafafa;"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-asistencia')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">5</td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center" disabled style="background-color: #fafafa;"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-asistencia')">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRowNumbered('tbl-asistencia')">+ AGREGAR COLABORADOR A LA LISTA</button>
+        </div>
+
+        <!-- SIGNATARIOS DE CIERRE -->
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:25px;">
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">RESPONSABLE DE LA REUNIÓN (ORGANIZA)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Nombre, Firma y Fecha</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                <p style="font-weight:bold; font-size:10px; color:#14532d;">ASEGURAMIENTO DE CALIDAD / CONTROL DOC.</p>
+                <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#14532d;">Validación y Cierre del Registro en Expediente</p>
+            </div>
+        </div>
+
+        <!-- FOOTER UNIFICADO -->
+        <div class="footer-unified">
+            <div class="control-data">FO-AD-18 | Versión: 1.0 | Lista de Asistencia a Reunión / Capacitación | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V. Prohibida su reproducción parcial o total.</div>
+        </div>
+    </div>
+
+    <script>
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => {
+                if(!input.hasAttribute('disabled')) {
+                    input.value = '';
+                }
+            });
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if(row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => { 
+                const numCell = row.querySelector('.row-num');
+                if(numCell) numCell.innerText = index + 1; 
+            });
+        }
+    </script>
+</body>
+</html>

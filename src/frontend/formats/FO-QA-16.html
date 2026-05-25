@@ -34,6 +34,7 @@
             padding: 4px;
             vertical-align: middle;
             text-align: center;
+            border: #94a3b8 1px solid;
         }
 
         .compact-table input,
@@ -181,7 +182,7 @@
                     <input type="text" id="reg-qa16" class="registry-input generate-barcode" data-target="barcode-qa16"
                         data-prefix="FO-QA-16-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-qa16" class="barcode-svg"></svg>
             </div>
         </div>
@@ -207,9 +208,9 @@
                 </tr>
                 <tr>
                     <td><strong>Fecha de Ingreso:</strong></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
                     <td><strong>Fecha Evaluación DNC:</strong></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
                 </tr>
             </table>
             <div style="margin-top:10px;">
@@ -244,11 +245,7 @@
                         <td><input type="number" class="cedit" min="1" max="3" placeholder="3"></td>
                         <td><input type="number" class="cedit" min="0" max="3" placeholder="1"></td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="SI">Sí</option>
-                                <option value="NO">No</option>
-                            </select>
+                            <input type="text" class="cedit" list="brecha-options" placeholder="Sí o No">
                         </td>
                         <td><input class="cedit" placeholder="ALTA (1 mes)"></td>
                         <td class="no-print"><span onclick="delRow(this)"
@@ -260,11 +257,7 @@
                         <td><input type="number" class="cedit" min="1" max="3" placeholder="2"></td>
                         <td><input type="number" class="cedit" min="0" max="3" placeholder="2"></td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="SI">Sí</option>
-                                <option value="NO" selected>No</option>
-                            </select>
+                           <input type="text" class="cedit" list="brecha-options" placeholder="Sí o No">
                         </td>
                         <td><input class="cedit" placeholder="MANTENIMIENTO"></td>
                         <td class="no-print"><span onclick="delRow(this)"
@@ -276,11 +269,7 @@
                         <td><input type="number" class="cedit" min="1" max="3" placeholder="3"></td>
                         <td><input type="number" class="cedit" min="0" max="3" placeholder="0"></td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="SI">Sí</option>
-                                <option value="NO">No</option>
-                            </select>
+                            <input type="text" class="cedit" list="brecha-options" placeholder="Sí o No">
                         </td>
                         <td><input class="cedit" placeholder="URGENTE (Inmediata)"></td>
                         <td class="no-print"><span onclick="delRow(this)"
@@ -291,11 +280,7 @@
                         <td><input type="number" class="cedit" min="1" max="3"></td>
                         <td><input type="number" class="cedit" min="0" max="3"></td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="SI">Sí</option>
-                                <option value="NO">No</option>
-                            </select>
+                            <input type="text" class="cedit" list="brecha-options" placeholder="Sí o No">
                         </td>
                         <td><input class="cedit"></td>
                         <td class="no-print"><span onclick="delRow(this)"
@@ -324,13 +309,9 @@
                     <tr>
                         <td><input class="cedit" style="text-align:left; padding-left:5px;"></td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="Interno">Interno</option>
-                                <option value="Externo">Externo</option>
-                            </select>
+                            <input type="text" class="cedit" list="modalidades" placeholder="Ej. Interno o Externo">
                         </td>
-                        <td><input type="month" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td class="no-print"><span onclick="delRow(this)"
                                 style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
@@ -338,13 +319,9 @@
                     <tr>
                         <td><input class="cedit" style="text-align:left; padding-left:5px;"></td>
                         <td>
-                            <select class="cedit">
-                                <option value=""></option>
-                                <option value="Interno">Interno</option>
-                                <option value="Externo">Externo</option>
-                            </select>
+                            <input type="text" class="cedit" list="modalidades" placeholder="Ej. Interno o Externo">
                         </td>
-                        <td><input type="month" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td class="no-print"><span onclick="delRow(this)"
                                 style="color:red;cursor:pointer;font-weight:bold;">×</span></td>
@@ -420,9 +397,9 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
@@ -466,9 +443,9 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

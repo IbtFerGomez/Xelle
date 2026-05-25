@@ -100,6 +100,11 @@
                 break-after: avoid !important;
             }
         }
+         @media print {input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
+        }
     </style>
 </head>
 
@@ -151,7 +156,7 @@
                     <input type="text" id="reg-op-15" class="registry-input generate-barcode"
                         data-target="barcode-op-15" data-prefix="FO-OP-15-" placeholder="001">
                 </div>
-                <input type="date" class="registry-date no-auto-date">
+                <input type="text" class="registry-date no-auto-date">
                 <svg id="barcode-op-15" class="barcode-svg"></svg>
             </div>
         </div>
@@ -178,7 +183,7 @@
             <table class="no-border-table">
                 <tr>
                     <td width="70%"><strong>Razón Social / Cliente:</strong> <input class="cedit"></td>
-                    <td width="30%"><strong>Fecha Solicitud:</strong> <input type="date" class="cedit"></td>
+                    <td width="30%"><strong>Fecha Solicitud:</strong> <input type="text" class="cedit"></td>
                 </tr>
                 <tr>
                     <td><strong>Dirección Fiscal:</strong> <input class="cedit"></td>
@@ -205,7 +210,7 @@
                 </thead>
                 <tbody></tbody>
             </table>
-            <button class="btn btn-primary btn-mini no-print" onclick="addPedidoRow()">+ Agregar Producto</button>
+            <button class="btn btn-primary btn-mini no-print" onclick="addPedidoRowInputs()">+ Agregar Producto</button>
         </div>
 
         <div class="section">
@@ -228,10 +233,62 @@
             </div>
         </div>
 
-        <div class="footer">FO-OP-15 | PEDIDO MAESTRO | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-OP-15 | PEDIDO MAESTRO | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
     <script>
         let isOfflineMode = false;
+
+        function convertTableSelectsToInputs(scope) {
+            const root = scope || document;
+            root.querySelectorAll('table tbody select').forEach(sel => {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = sel.className || 'cedit';
+                input.value = sel.options[sel.selectedIndex]?.text || '';
+                input.placeholder = sel.getAttribute('placeholder') || '';
+                if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                sel.parentNode.replaceChild(input, sel);
+            });
+        }
+
+        function addPedidoRowInputs() {
+            const tbody = document.querySelector('#tbl-pedidos tbody');
+            if (!tbody) return;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="number" class="cedit" min="0" step="1" placeholder="0"></td>
+                <td><input type="text" class="cedit" placeholder="Producto"></td>
+                <td><input type="text" class="cedit" placeholder="Presentacion"></td>
+                <td><input type="text" class="cedit" placeholder="Origen o ruta"></td>
+                <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                <td class="no-print"><button type="button" class="btn btn-mini" onclick="removePedidoRow(this)">Eliminar</button></td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        function removePedidoRow(button) {
+            const row = button.closest('tr');
+            if (row) row.remove();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            convertTableSelectsToInputs(document);
+
+            const tbody = document.querySelector('#tbl-pedidos tbody');
+            if (tbody && tbody.children.length === 0) {
+                addPedidoRowInputs();
+            }
+
+            if (tbody) {
+                const observer = new MutationObserver(function () {
+                    convertTableSelectsToInputs(tbody);
+                });
+                observer.observe(tbody, { childList: true, subtree: true });
+            }
+        });
 
         function toggleOfflineMode() {
             isOfflineMode = !isOfflineMode;
@@ -253,9 +310,9 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
@@ -299,9 +356,9 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

@@ -52,6 +52,25 @@
                 display: none !important;
             }
 
+            input[type="checkbox"] {
+                -webkit-appearance: checkbox !important;
+                appearance: checkbox !important;
+                width: 12px !important;
+                height: 12px !important;
+                border: 1.5px solid #333 !important;
+                display: inline-block !important;
+                visibility: visible !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            textarea.cedit {
+                border: 1px solid #64748b !important;
+                color: #1E3A5F !important;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
             ::-webkit-input-placeholder {
                 color: transparent !important;
             }
@@ -98,6 +117,7 @@
                 page-break-after: avoid !important;
                 break-after: avoid !important;
             }
+
         }
     </style>
 </head>
@@ -150,7 +170,7 @@
                     <input type="text" id="reg-14" class="registry-input generate-barcode" data-target="barcode-14"
                         data-prefix="FO-OP-14-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-14" class="barcode-svg"></svg>
             </div>
         </div>
@@ -179,13 +199,13 @@
                     <td><strong>Nombre del Donante:</strong></td>
                     <td><input class="cedit"></td>
                     <td><strong>Fecha de Recolección:</strong></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
                 </tr>
                 <tr>
                     <td><strong>Fecha de Recepción:</strong></td>
-                    <td><input type="date" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
                     <td><strong>Hora de Recepción:</strong></td>
-                    <td><input type="time" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
                 </tr>
             </table>
         </div>
@@ -205,51 +225,31 @@
                     <tr>
                         <td>A. Integridad del Embalaje</td>
                         <td>Contenedor primario y secundario sin daños, derrames o rupturas</td>
-                        <td><select class="cedit" onchange="checkStatus(this)">
-                                <option>CUMPLE</option>
-                                <option>NO CUMPLE</option>
-                                <option>N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Cumple/No Cumple"></td>
                         <td><input class="cedit" placeholder="Condición visual..."></td>
                     </tr>
                     <tr>
                         <td>B. Temperatura de Llegada</td>
                         <td>Verificación de cadena de frío aplicable al tipo de tejido</td>
-                        <td><select class="cedit" onchange="checkStatus(this)">
-                                <option>CUMPLE</option>
-                                <option>NO CUMPLE</option>
-                                <option>N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Cumple/No Cumple"></td>
                         <td><input class="cedit" type="number" placeholder="°C" style="width:60px"></td>
                     </tr>
                     <tr>
                         <td>C. Documentación Legal</td>
                         <td>Consentimiento informado, responsiva médica, historia clínica</td>
-                        <td><select class="cedit" onchange="checkStatus(this)">
-                                <option>CUMPLE</option>
-                                <option>NO CUMPLE</option>
-                                <option>N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Cumple/No Cumple"></td>
                         <td><input class="cedit" placeholder="Faltantes..."></td>
                     </tr>
                     <tr>
                         <td>D. Muestra Sanguínea / Tubos</td>
                         <td>Recepción de muestras para serología viral u otros estudios</td>
-                        <td><select class="cedit" onchange="checkStatus(this)">
-                                <option>CUMPLE</option>
-                                <option>NO CUMPLE</option>
-                                <option>N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Cumple/No Cumple"></td>
                         <td><input class="cedit" placeholder="Cant. / Tipo"></td>
                     </tr>
                     <tr>
                         <td>E. Solución de Transporte</td>
                         <td>Volumen adecuado, coloración normal, sin turbidez extrema</td>
-                        <td><select class="cedit" onchange="checkStatus(this)">
-                                <option>CUMPLE</option>
-                                <option>NO CUMPLE</option>
-                                <option>N/A</option>
-                            </select></td>
+                        <td><input type="text" class="cedit" placeholder="Cumple/No Cumple"></td>
                         <td><input class="cedit" placeholder="Aspecto..."></td>
                     </tr>
                 </tbody>
@@ -268,15 +268,29 @@
                 <div style="width:100%;text-align:center;">
                     <label style="font-weight:bold;display:block; margin-bottom:5px;">DECISIÓN DE RECEPCIÓN DE
                         CALIDAD:</label>
-                    <select class="cedit"
-                        style="font-size:14px;padding:8px;width:70%;font-weight:bold;text-align:center;">
-                        <option value="ACEPTADO">ACEPTADO: Cumple con todos los criterios. Liberado para procesamiento
-                            (Fase 2).</option>
-                        <option value="RECHAZADO">RECHAZADO: No cumple criterios. Requiere formato de destrucción.
-                        </option>
-                        <option value="CUARENTENA">EN CUARENTENA: Pendiente de resolución de desviaciones documentales.
-                        </option>
-                    </select>
+
+                    <div style="display: flex; justify-content: center; width: 100%;">
+                        <div
+                            style="border: 1px solid #64748b; padding: 10px; max-width: 600px; width: 100%; align-items: center; margin: 0 auto; border-radius: 4px; background-color: #f1f5f9; justify-content: center; display: flex; flex-direction: column;">
+                            <strong>Checklist Final:</strong><br>
+                            <label><input type="checkbox"
+                                    style="color: #166534;margin-bottom: 15px; width: fit-content;"><strong
+                                    style="color: #166534;"> ACEPTADO: Cumple con todos los
+                                    criterios. Liberado para procesamiento
+                                    (Fase 2). </strong></label><br>
+                            <label><input type="checkbox"
+                                    style="color: #651b16; margin-bottom: 15px; width: fit-content;"> <strong
+                                    style="color: #651b16;">RECHAZADO: No cumple criterios.
+                                    Requiere formato de destrucción.</strong></label><br>
+                            <label><input type="checkbox"
+                                    style="color: #4c3802; margin-bottom: 15px; width: fit-content;"><strong
+                                    style="color: #f7b90d;"> EN CUARENTENA: Pendiente de
+                                    resolución de desviaciones documentales.</strong></label>
+
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -327,9 +341,9 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
@@ -373,23 +387,23 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
 
-                // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
 
-                // Restaurar <input type="number">
-                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
-                    inp.type = 'number';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.removeAttribute('data-original-type');
                 });
             }

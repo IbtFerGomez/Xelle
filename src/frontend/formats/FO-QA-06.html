@@ -43,8 +43,10 @@
             padding: 4px;
             vertical-align: middle;
             text-align: center;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #94a3b8;
+            
         }
+        
 
         .compact-table input,
         .compact-table select,
@@ -212,8 +214,7 @@
                 <tr>
                     <td width="20%"><strong>Producto:</strong></td>
                     <td width="30%"><input class="cedit"
-                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:14px;"
-                            value="SOLUCIÓN CON EXOSOMAS"></td>
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:14px;"></td>
                     <td width="20%"><strong>Número de Lote:</strong></td>
                     <td width="30%"><input class="cedit"
                             style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; color:#b45309;"
@@ -229,9 +230,9 @@
                 </tr>
                 <tr>
                     <td><strong>Fecha de Fabricación:</strong></td>
-                    <td><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td><input type="text" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
                     <td><strong>Fecha de Caducidad:</strong></td>
-                    <td><input type="date" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td><input type="text" class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
                 </tr>
             </table>
         </div>
@@ -254,10 +255,12 @@
                         <td colspan="6" class="sub-header">Análisis Físico-Químico (Interno)</td>
                     </tr>
                     <tr>
-                        <td class="text-left" style="font-weight:bold;">Apariencia / Color</td>
-                        <td>Solución transparente e incolora, libre de partículas visibles.</td>
-                        <td><input class="cedit"></td>
-                        <td>Inspección Visual</td>
+                        <td class="text-left" style="font-weight:bold;"><input class="cedit"
+                                placeholder="Apariencia / Color" style="font-weight:bold; text-align:left;"></td>
+                        <td><input class="cedit"
+                                placeholder="Solución transparente e incolora, libre de partículas visibles."></td>
+                        <td><input class="cedit" placeholder="Resultado obtenido"></td>
+                        <td><input class="cedit" placeholder="Inspección Visual"></td>
                         <td>
                             <select class="cedit" style="font-weight:bold;">
                                 <option value=""></option>
@@ -269,10 +272,11 @@
                                 onclick="this.closest('tr').remove()">x</button></td>
                     </tr>
                     <tr>
-                        <td class="text-left" style="font-weight:bold;">pH</td>
+                        <td class="text-left" style="font-weight:bold;"><input class="cedit" placeholder="pH"
+                                style="font-weight:bold; text-align:left;"></td>
                         <td><input class="cedit" placeholder="Ej. 7.0 - 7.4"></td>
-                        <td><input class="cedit"></td>
-                        <td>Potenciómetro</td>
+                        <td><input class="cedit" placeholder="Resultado obtenido"></td>
+                        <td><input class="cedit" placeholder="Potenciómetro"></td>
                         <td>
                             <select class="cedit" style="font-weight:bold;">
                                 <option value=""></option>
@@ -282,16 +286,24 @@
                         </td>
                         <td class="no-print"><button class="btn btn-danger btn-mini"
                                 onclick="this.closest('tr').remove()">x</button></td>
+                    </tr>
+                    <tr class="no-print">
+                        <td colspan="6">
+                            <button class="btn-add" onclick="addRowFisicoQuimico()">+ AGREGAR RENGLON
+                                FÍSICO-QUÍMICO</button>
+                        </td>
                     </tr>
 
                     <tr>
                         <td colspan="6" class="sub-header">Análisis Microbiológico y de Seguridad Biológica</td>
                     </tr>
                     <tr>
-                        <td class="text-left" style="font-weight:bold; color:#1E3A5F;">Esterilidad</td>
-                        <td>Ausencia de crecimiento microbiano (Bacterias y Hongos) en 14 días.</td>
+                        <td class="text-left" style="font-weight:bold; color:#1E3A5F;"><input class="cedit"
+                                placeholder="Esterilidad" style="font-weight:bold; text-align:left;"></td>
+                        <td><input class="cedit"
+                                placeholder="Ausencia de crecimiento microbiano (Bacterias y Hongos) en 14 días."></td>
                         <td><input class="cedit" placeholder="Sin crecimiento"></td>
-                        <td>Prueba Interna<br><span style="font-size:8px; font-weight:bold;">(FO-LC-41)</span></td>
+                        <td><input class="cedit" placeholder="Prueba Interna (FO-LC-41)"></td>
                         <td>
                             <select class="cedit" style="font-weight:bold;">
                                 <option value=""></option>
@@ -303,11 +315,12 @@
                                 onclick="this.closest('tr').remove()">x</button></td>
                     </tr>
                     <tr>
-                        <td class="text-left" style="font-weight:bold; color:#1E3A5F;">Determinación de Endotoxinas
-                            Bacterianas</td>
-                        <td>No contiene más de 1.0 UE / mL</td>
+                        <td class="text-left" style="font-weight:bold; color:#1E3A5F;"><input class="cedit"
+                                placeholder="Determinación de Endotoxinas Bacterianas"
+                                style="font-weight:bold; text-align:left;"></td>
+                        <td><input class="cedit" placeholder="No contiene más de 1.0 UE / mL"></td>
                         <td><input class="cedit" placeholder="< 1.0 UE / mL" style="font-weight:bold;"></td>
-                        <td>Lab. Externo Autorizado<br><span style="font-size:8px;">(MGA 0316, FEUM)</span></td>
+                        <td><input class="cedit" placeholder="Lab. Externo Autorizado (MGA 0316, FEUM)"></td>
                         <td>
                             <select class="cedit" style="font-weight:bold;">
                                 <option value=""></option>
@@ -322,8 +335,6 @@
             </table>
             <button class="btn-add no-print" onclick="addRow('tbl-resultados')">+ AGREGAR PARÁMETRO DE ANÁLISIS</button>
         </div>
-
-        <div style="page-break-before: always; margin-top:20px;"></div>
 
         <div class="section-header">3. REVISIÓN DEL EXPEDIENTE DE LOTE (QA)</div>
         <div class="section">
@@ -342,33 +353,24 @@
                         <td class="text-left">Orden de Producción y Acondicionamiento debidamente firmada y conciliada.
                         </td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="OK" style="color:#166534;">OK (Completo)</option>
-                                <option value="NO">Faltante</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Aprobado /No aprobado"
+                                style="font-weight:bold;">
                         </td>
                         <td><input class="cedit" placeholder="FO-OP-40-B"></td>
                     </tr>
                     <tr>
                         <td class="text-left">Reporte Interno de Prueba de Esterilidad sin desviaciones.</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="OK" style="color:#166534;">OK (Completo)</option>
-                                <option value="NO">Faltante</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Aprobado /No aprobado"
+                                style="font-weight:bold;">
                         </td>
                         <td><input class="cedit" placeholder="FO-LC-41"></td>
                     </tr>
                     <tr>
                         <td class="text-left">Informe Analítico de Laboratorio Externo (Endotoxinas / EMA / SADER).</td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="OK" style="color:#166534;">OK (Completo)</option>
-                                <option value="NO">Faltante</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Aprobado /No aprobado"
+                                style="font-weight:bold;">
                         </td>
                         <td><input class="cedit" placeholder="Folio Lab. Externo"></td>
                     </tr>
@@ -376,17 +378,18 @@
                         <td class="text-left">Desviaciones o No Conformidades asociadas al lote cerradas (Si aplica).
                         </td>
                         <td>
-                            <select class="cedit" style="font-weight:bold;">
-                                <option value=""></option>
-                                <option value="NA">No Aplica</option>
-                                <option value="OK" style="color:#166534;">OK (Cerradas)</option>
-                                <option value="NO" style="color:#991b1b;">Abiertas</option>
-                            </select>
+                            <input type="text" class="cedit" placeholder="Aprobado /No aprobado"
+                                style="font-weight:bold;">
                         </td>
                         <td><input class="cedit" placeholder="N/A o Folio FO-OP-51"></td>
                     </tr>
                 </tbody>
             </table>
+            <div style="margin-bottom:10px;">
+                <strong>Restricciones o Notas Adicionales:</strong>
+                <textarea class="cedit" rows="2"
+                    style="width:100%; border:1px solid #64748b; padding:5px; box-sizing:border-box; margin-top:5px;"></textarea>
+            </div>
         </div>
 
         <div class="section-header">4. DICTAMEN FINAL DE LIBERACIÓN</div>
@@ -420,11 +423,7 @@
                 </div>
             </div>
 
-            <div style="margin-bottom:10px;">
-                <strong>Restricciones o Notas Adicionales:</strong>
-                <textarea class="cedit" rows="2"
-                    style="width:100%; border:1px solid #ccc; padding:5px; box-sizing:border-box; margin-top:5px;"></textarea>
-            </div>
+
         </div>
 
         <div class="section-header">5. FIRMAS DE AUTORIZACIÓN</div>
@@ -435,19 +434,19 @@
                     <p style="font-weight:bold; margin-bottom: 25px;">Analista de Control de Calidad</p>
                     <input class="cedit" placeholder="Nombre y Firma"
                         style="border-top:1px solid #94a3b8; border-radius:0;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:100px;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:100px;"></p>
                 </div>
                 <div class="signature-box" style="flex:1;">
                     <p style="font-weight:bold; margin-bottom: 25px;">Supervisor de Aseguramiento (QA)</p>
                     <input class="cedit" placeholder="Nombre y Firma"
                         style="border-top:1px solid #94a3b8; border-radius:0;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:100px;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:100px;"></p>
                 </div>
                 <div class="signature-box" style="flex:1; background-color:#f0fdf4; border-color:#166534;">
                     <p style="font-weight:bold; color:#14532d; margin-bottom: 25px;">RESPONSABLE DIRECCION</p>
                     <input class="cedit" placeholder="Nombre y Firma"
                         style="border-top:1px solid #166534; border-radius:0; background:transparent;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:100px; background:transparent;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:100px; background:transparent;"></p>
                 </div>
             </div>
         </div>
@@ -459,18 +458,51 @@
     </div>
 
     <script>
+        function addRowFisicoQuimico() {
+            const tbody = document.getElementById('tbl-resultados').querySelector('tbody');
+            const sectionHeader = Array.from(tbody.querySelectorAll('tr')).find(row =>
+                row.querySelector('.sub-header')?.textContent.includes('Análisis Microbiológico y de Seguridad Biológica')
+            );
+
+            if (!sectionHeader) return;
+
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td class="text-left" style="font-weight:bold;"><input class="cedit" placeholder="Parámetro Analizado" style="font-weight:bold; text-align:left;"></td>
+                <td><input class="cedit" placeholder="Especificación / Límite"></td>
+                <td><input class="cedit" placeholder="Resultado obtenido"></td>
+                <td><input class="cedit" placeholder="Método / Referencia"></td>
+                <td>
+                    <select class="cedit" style="font-weight:bold;">
+                        <option value=""></option>
+                        <option value="PASA" style="color:#166534;">CUMPLE</option>
+                        <option value="FALLA" style="color:#991b1b;">NO CUMPLE</option>
+                    </select>
+                </td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+
+            tbody.insertBefore(newRow, sectionHeader);
+        }
+
         function addRow(tableId) {
             const tbody = document.getElementById(tableId).querySelector('tbody');
-            // Clona la última fila para no arrastrar encabezados intermedios
-            const rows = tbody.querySelectorAll('tr');
-            const lastRow = rows[rows.length - 1];
-
-            if (lastRow) {
-                const newRow = lastRow.cloneNode(true);
-                newRow.querySelectorAll('input, textarea').forEach(input => input.value = '');
-                newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
-                tbody.appendChild(newRow);
-            }
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td class="text-left"><input class="cedit" placeholder="Parámetro Analizado" style="text-align:left;"></td>
+                <td><input class="cedit" placeholder="Especificación / Límite"></td>
+                <td><input class="cedit" placeholder="Resultado Obtenido"></td>
+                <td><input class="cedit" placeholder="Método / Referencia"></td>
+                <td>
+                    <select class="cedit" style="font-weight:bold;">
+                        <option value=""></option>
+                        <option value="PASA" style="color:#166534;">CUMPLE</option>
+                        <option value="FALLA" style="color:#991b1b;">NO CUMPLE</option>
+                    </select>
+                </td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+            tbody.appendChild(newRow);
         }
     </script>
     <script>
@@ -496,23 +528,23 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
 
                 // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
+                document.querySelectorAll('input[type="text"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'HH:MM';
                 });
 
                 // Convertir <input type="number"> a <input type="text">
-                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'number');
+                document.querySelectorAll('input[type="text"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     const currentPlaceholder = inp.placeholder;
                     inp.type = 'text';
                     if (currentPlaceholder) inp.placeholder = currentPlaceholder;
@@ -542,9 +574,9 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

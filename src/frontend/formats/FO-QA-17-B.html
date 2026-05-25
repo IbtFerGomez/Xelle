@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-QA-17 Evaluación del Curso Impartido</title>
@@ -9,7 +10,7 @@
     <style>
         @page {
             size: A4;
-            margin: 15mm 12mm;
+            margin: 10mm 10mm;
             background-color: #ffffff;
         }
 
@@ -18,7 +19,8 @@
             margin: 0;
             padding: 0;
             color: #1e293b;
-            line-height: 1.4;
+            line-height: 1.25;
+            font-size: 10px;
         }
 
         .container {
@@ -30,10 +32,10 @@
         .section-header {
             background-color: #1E3A5F;
             color: white;
-            padding: 5px 10px;
+            padding: 4px 8px;
             font-weight: bold;
-            font-size: 11px;
-            margin-top: 15px;
+            font-size: 10px;
+            margin-top: 10px;
             border-radius: 4px;
             text-transform: uppercase;
         }
@@ -41,23 +43,24 @@
         .compact-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 8px;
+            margin-top: 5px;
         }
 
         .compact-table th {
             background-color: #f1f5f9;
             color: #1E3A5F;
-            font-size: 10px;
-            padding: 6px;
+            font-size: 9px;
+            padding: 4px;
             text-align: center;
             border: 1px solid #cbd5e1;
         }
 
         .compact-table td {
-            font-size: 10px;
-            padding: 6px;
+            font-size: 9px;
+            padding: 4px;
             border: 1px solid #cbd5e1;
             vertical-align: middle;
+            border: #94a3b8 1px solid;
         }
 
         .compact-table input[type="text"],
@@ -66,7 +69,7 @@
             border: none;
             background: transparent;
             font-family: inherit;
-            font-size: 10px;
+            font-size: 9px;
         }
 
         .compact-table input:focus,
@@ -88,19 +91,19 @@
         .instruction-box {
             background-color: #f8fafc;
             border: 1px solid #cbd5e1;
-            padding: 10px;
+            padding: 8px;
             font-size: 9px;
             color: #475569;
-            margin-top: 10px;
+            margin-top: 6px;
             border-radius: 4px;
         }
 
         .footer-unified {
-            margin-top: 25px;
+            margin-top: 14px;
             border-top: 2px solid #1E3A5F;
-            padding-top: 10px;
+            padding-top: 6px;
             text-align: center;
-            font-size: 9px;
+            font-size: 8px;
             color: #475569;
         }
 
@@ -116,10 +119,44 @@
 
         .no-border-table td {
             border: none;
-            padding: 4px 0;
+            padding: 2px 0;
+        }
+
+        .header-main h1 {
+            margin: 6px 0 2px;
+            font-size: 18px;
+            line-height: 1.15;
+        }
+
+        .header-main .metadata {
+            font-size: 9px;
+            line-height: 1.2;
+        }
+
+        .registry-container label {
+            font-size: 10px;
+        }
+
+        .barcode-svg {
+            height: 30px !important;
+        }
+
+        @media print {
+            .container {
+                max-width: none;
+            }
+
+            .section-header {
+                break-after: avoid;
+            }
+
+            .compact-table {
+                break-inside: avoid;
+            }
         }
     </style>
 </head>
+
 <body id="doc-fo-qa-17">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
@@ -131,20 +168,31 @@
         <div class="header-top">
             <div class="logo-container">
                 <svg viewBox="0 0 320 80" style="width: 180px;">
-                    <defs><style>.c { fill: #2E9D82 }</style></defs>
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
                     <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
-                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
                     </g>
-                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
-                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                        font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                        font-size="19">SCIENTIFIC</text>
                 </svg>
             </div>
             <div class="registry-container">
                 <label>Registro de Evaluación</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-QA-17-</span>
-                    <input type="text" id="reg-qa17" class="registry-input generate-barcode cedit" data-target="barcode-qa17" data-prefix="FO-QA-17-" placeholder="CUR-00">
+                    <input type="text" id="reg-qa17" class="registry-input generate-barcode cedit"
+                        data-target="barcode-qa17" data-prefix="FO-QA-17-" placeholder="00x">
                 </div>
                 <svg id="barcode-qa17" class="barcode-svg" style="height:35px;"></svg>
             </div>
@@ -156,12 +204,13 @@
         </div>
 
         <!-- DATOS GENERALES -->
-        <table class="no-border-table" style="width: 100%; margin-top: 10px; font-size: 10px;">
+        <table class="no-border-table" style="width: 100%; margin-top: 6px; font-size: 9px;">
             <tr>
                 <td width="15%"><strong>Nombre del curso:</strong></td>
                 <td width="50%" style="border-bottom: 1px solid #cbd5e1;"><input type="text" class="cedit"></td>
                 <td width="10%" style="text-align: right;"><strong>Fecha:</strong></td>
-                <td width="25%" style="border-bottom: 1px solid #cbd5e1; text-align: center;"><input type="text" class="cedit" placeholder="DD / MM / AAAA"></td>
+                <td width="25%" style="border-bottom: 1px solid #cbd5e1; text-align: center;"><input type="text"
+                        class="cedit" placeholder="DD / MM / AAAA"></td>
             </tr>
             <tr>
                 <td><strong>Instructor:</strong></td>
@@ -170,7 +219,8 @@
         </table>
 
         <div class="instruction-box">
-            <strong>Instrucciones:</strong> Marque con una “X” el número que mejor califique su respuesta a cada oración, en una escala del 1 al 4, donde:<br>
+            <strong>Instrucciones:</strong> Marque con una “X” el número que mejor califique su respuesta a cada
+            oración, en una escala del 1 al 4, donde:<br>
             <strong>1: Mal | 2: Regular | 3: Bien | 4: Excelente</strong>
         </div>
 
@@ -187,10 +237,34 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>1. Se avisó del curso de capacitación oportunamente</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
-                <tr><td>2. El tiempo asignado a la sesión fue suficiente</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
-                <tr><td>3. El canal de comunicación para dar aviso fue conveniente</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
-                <tr><td>4. El espacio físico cumple con las necesidades</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
+                <tr>
+                    <td>1. Se avisó del curso de capacitación oportunamente</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td>2. El tiempo asignado a la sesión fue suficiente</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td>3. El canal de comunicación para dar aviso fue conveniente</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td>4. El espacio físico cumple con las necesidades</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
             </tbody>
         </table>
 
@@ -207,10 +281,34 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>1. Calidad de la información presentada</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
-                <tr><td>2. Aplicación al puesto y responsabilidades</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
-                <tr><td>3. Uso apropiado de materiales de apoyo</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
-                <tr><td>4. Los materiales fueron interesantes y novedosos</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
+                <tr>
+                    <td>1. Calidad de la información presentada</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td>2. Aplicación al puesto y responsabilidades</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td>3. Uso apropiado de materiales de apoyo</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td>4. Los materiales fueron interesantes y novedosos</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
             </tbody>
         </table>
 
@@ -227,37 +325,72 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>1. El audio / tono de voz fue adecuado</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
-                <tr><td>2. El lenguaje utilizado fue de fácil entendimiento</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
-                <tr><td>3. Ayudó a la comprensión con ejemplos</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
-                <tr><td>4. Demostró tener dominio del tema</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
-                <tr><td>5. Fomentó la participación del grupo</td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td><td class="rating-cell"><input type="text" class="cedit text-center"></td></tr>
+                <tr>
+                    <td>1. El audio / tono de voz fue adecuado</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td>2. El lenguaje utilizado fue de fácil entendimiento</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td>3. Ayudó a la comprensión con ejemplos</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td>4. Demostró tener dominio del tema</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td>5. Fomentó la participación del grupo</td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                    <td class="rating-cell"><input type="text" class="cedit text-center"></td>
+                </tr>
             </tbody>
         </table>
 
         <!-- SECCIÓN IV -->
         <div class="section-header">IV. Comentarios y/o sugerencias</div>
-        <div style="margin-top: 8px;">
-            <textarea class="cedit" rows="4" style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 10px; font-size: 10px; font-family: inherit; resize: none;" placeholder="¿Qué fue lo que más le agradó? ¿Qué sugerencias tiene para mejorar?"></textarea>
+        <div style="margin-top: 6px;">
+            <textarea class="cedit" rows="3"
+                style="width: 100%; border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px; font-size: 9px; font-family: inherit; resize: none;"
+                placeholder="¿Qué fue lo que más le agradó? ¿Qué sugerencias tiene para mejorar?"></textarea>
         </div>
 
-        <div style="margin-top: 20px; font-size: 9px; text-align: center; color: #475569;">
+        <div style="margin-top: 10px; font-size: 8px; text-align: center; color: #475569;">
             <em>¡Gracias por contestar esta encuesta! Su opinión es muy valiosa para nosotros.</em>
         </div>
 
         <!-- CIERRE -->
-        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 30px;">
+        <div style="display: flex; justify-content: center; gap: 30px; margin-top: 16px;">
             <div style="width: 250px; text-align: center;">
-                <div style="border-top: 1px solid #000; margin-top: 25px;"></div>
-                <p style="font-size: 9px; font-weight: bold; margin-top: 5px;">VERIFICÓ (CAPACITACIÓN / QA)</p>
+                <div style="border-top: 1px solid #000; margin-top: 18px;"></div>
+                <p style="font-size: 8px; font-weight: bold; margin-top: 4px;">VERIFICÓ (CAPACITACIÓN / QA)</p>
             </div>
         </div>
 
         <!-- FOOTER UNIFICADO -->
         <div class="footer-unified">
-            <div class="control-data">FO-QA-17 | Versión: 1.0 | Evaluación del Curso Impartido | Xelle Scientific | Página 1 de 1</div>
-            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V. Prohibida su reproducción parcial o total.</div>
+            <div class="control-data">FO-QA-17 | Versión: 1.0 | Evaluación del Curso Impartido | Xelle Scientific |
+                Página 1 de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I. de C.V.
+                Prohibida su reproducción parcial o total.</div>
         </div>
     </div>
 </body>
+
 </html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Portada General del Sistema de Gestión de Calidad - Xelle Scientific</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Vertical (Portrait) para Portada de Sistema */
+        @page {
+            size: portrait;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            border: 5px solid #1E3A5F;
+        }
+
+        .top-line {
+            height: 8px;
+            background: linear-gradient(to right, #2E9D82, #1E3A5F);
+            width: 100%;
+            margin-bottom: 20px;
+
+        }
+
+        .container {
+            width: 19cm;
+            min-height: 25.5cm;
+            margin: 0 auto;
+            background: white;
+            padding: 2cm 1.5cm;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            border: 1px solid #e2e8f0;
+        }
+
+        .legal-box {
+            border: 2px dashed #94a3b8;
+            padding: 18px;
+            background-color: #fff;
+            font-size: 10px;
+            color: #334155;
+            line-height: 1.5;
+            border-radius: 8px;
+        }
+
+        .legal-name {
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            color: #1E3A5F;
+            letter-spacing: 1.5px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .legal-title {
+            font-weight: bold;
+            text-align: center;
+            color: #1E3A5F;
+            margin-top: 8px;
+            margin-bottom: 6px;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .legal-hr {
+            border: 0;
+            border-top: 1px dashed #cbd5e1;
+            margin: 2px 0;
+        }
+
+        /* Contenedor del Logo Grande */
+        .mega-logo-area {
+            text-align: center;
+            margin-top: .5cm;
+            width: 100%;
+        }
+
+        .mega-logo-area svg {
+            width: 12cm;
+            /* Logo de gran escala */
+            max-width: 100%;
+            height: auto;
+        }
+
+        .subtitle-system {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 5px;
+            letter-spacing: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Bloque de Título Principal */
+        .main-title-box {
+            border-top: 4px solid #1E3A5F;
+            border-bottom: 4px solid #1E3A5F;
+            color: #1E3A5F;
+            padding: 40px 20px;
+            text-align: center;
+            margin: 1cm 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .main-title-box h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 900;
+            line-height: 1.3;
+        }
+
+        .main-title-box h2 {
+            margin: 10px 0 0 0;
+            font-size: 15px;
+            color: #2E9D82;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        /* Tabla de Identificación del Documento */
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+            margin-bottom: 1cm;
+        }
+
+        .compact-table th {
+            background-color: #f1f5f9;
+            color: #1E3A5F;
+            font-size: 10px;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+            text-transform: uppercase;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 8px;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .compact-table input {
+            font-size: 10px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+            text-align: center;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        .compact-table input:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        /* Aviso de Restricción Legal */
+        .legal-notice {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 15px;
+            text-align: center;
+            font-size: 9.5px;
+            color: #475569;
+            line-height: 1.5;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0.6cm;
+            }
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            html,
+            body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background: white !important;
+            }
+
+            body {
+                border: 3px solid #1E3A5F;
+                box-sizing: border-box;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                margin: 0;
+                padding: 1.05cm 0.85cm;
+                min-height: auto;
+                gap: 0.35cm;
+            }
+
+            .top-line {
+                height: 6px;
+                margin-bottom: 12px;
+            }
+
+            .mega-logo-area {
+                margin-top: 0.2cm;
+            }
+
+            .mega-logo-area svg {
+                width: 10.8cm;
+            }
+
+            .subtitle-system {
+                font-size: 10px;
+                letter-spacing: 3px;
+            }
+
+            .main-title-box {
+                margin: 0.55cm 0;
+                padding: 24px 14px;
+            }
+
+            .main-title-box h1 {
+                font-size: 24px;
+                line-height: 1.2;
+            }
+
+            .main-title-box h2 {
+                font-size: 12px;
+                letter-spacing: 2px;
+                line-height: 1.35;
+            }
+
+            .compact-table {
+                margin-bottom: 0.55cm;
+            }
+
+            .compact-table th,
+            .compact-table td,
+            .compact-table input {
+                font-size: 9.5px;
+                padding: 6px;
+            }
+
+            .legal-box {
+                padding: 12px;
+            }
+
+            .legal-title {
+                margin-top: 4px;
+                margin-bottom: 4px;
+            }
+
+            .legal-notice {
+                font-size: 8.6px;
+                line-height: 1.35;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-portada-sgc">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar Registro</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Portada</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar Campos</button>
+    </div>
+
+    <div class="container">
+        <div class="mega-logo-area">
+            <div class="top-line"></div>
+            <svg viewBox="0 0 320 80">
+                <defs>
+                    <style>
+                        .c {
+                            fill: #2E9D82
+                        }
+                    </style>
+                </defs>
+                <g transform="translate(0,-2) scale(0.85)">
+                    <circle class="c" cx="25" cy="25" r="13" />
+                    <circle class="c" cx="75" cy="75" r="13" />
+                    <path class="c"
+                        d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                </g>
+                <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                    font-size="34">XELLE</text>
+                <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                    font-size="19">SCIENTIFIC</text>
+            </svg>
+            <div class="subtitle-system">Sistema Integral de Gestión de Calidad</div>
+        </div>
+
+        <div class="main-title-box">
+            <h1>Documentación Maestra del Sistema</h1>
+            <h2>Compendio Regulatorio GxP / ISO 9001:2015 / BUENAS PRÁCTICAS DE DOCUMENTACIÓN (NOM-059 / 241)</h2>
+        </div>
+
+        <div style="width: 100%; margin: 0; padding: 0;">
+            <div class="section-header">Información de Control del Sistema</div>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="35%">Entidad / Organización</th>
+                        <th width="25%">Clave del Sistema</th>
+                        <th width="20%">Edición Global</th>
+                        <th width="20%">Año de Vigencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="cedit" value="Xelle Scientific, S.A.P.I. de C.V."></td>
+                        <td><input class="cedit" value="SGC-XELLE-2026" style="color: #1E3A5F;"></td>
+                        <td><input class="cedit" value="Versión 1.0"></td>
+                        <td><input class="cedit" value="2026 - 2028"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="legal-box">
+            <div class="legal-title">AVISO DE CONFIDENCIALIDAD</div>
+            <div class="legal-notice">
+                <strong>DOCUMENTO MAESTRO CONTROLADO</strong><br>
+                Este compendio resguarda la estructura regulatoria,
+                políticas, manuales, procedimientos e instructivos de trabajo aplicables a los bioprocesos
+                y operaciones del establecimiento. Queda prohibida la alteración, copiado, escaneo o
+                distribución parcial o total de esta carpeta sin la debida autorización por escrito de
+                la Dirección de Aseguramiento de Calidad y el Responsable Sanitario.
+                El contenido de los documentos es propiedad de
+                <strong>"Xelle Scientific", S.A.P.I., de C. V.</strong>, y está protegido por los derechos
+                de autor, por lo que está prohibida su reproducción total o parcial.
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+
+</body>
+
+</html>

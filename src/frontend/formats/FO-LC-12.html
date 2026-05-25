@@ -82,6 +82,14 @@
                 page-break-after: avoid !important;
                 break-after: avoid !important;
             }
+
+            textarea,
+            textarea.cedit {
+                border: 1px solid #e2e8f0 !important;
+                background: #fff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
     </style>
 </head>
@@ -90,7 +98,6 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
 
     <div class="container">
@@ -134,7 +141,7 @@
                     <input type="text" id="reg-12" class="registry-input generate-barcode" data-target="barcode-12"
                         data-prefix="FO-LC-12-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-12" class="barcode-svg"></svg>
             </div>
         </div>
@@ -149,7 +156,7 @@
             <table class="no-border-table">
                 <tr>
                     <td><strong>Folio MPNC Asociado:</strong> <input class="cedit" placeholder="Ref. FO-OP-52"></td>
-                    <td><strong>Fecha Solicitud:</strong> <input type="date" class="cedit"></td>
+                    <td><strong>Fecha Solicitud:</strong> <input type="text" class="cedit"></td>
                 </tr>
                 <tr>
                     <td><strong>ID Material / Lote:</strong> <input class="cedit"></td>
@@ -178,27 +185,18 @@
                 <tbody>
                     <tr>
                         <td>¿Afecta la Esterilidad?</td>
-                        <td><select class="cedit">
-                                <option>NO</option>
-                                <option>SÍ (Rechazar)</option>
-                            </select></td>
-                        <td><input class="cedit"></td>
+                        <td><input type="text" class="cedit" placeholder="Si/No"></td>
+                        <td><textarea class="cedit" placeholder="Comentario..."></textarea></td>
                     </tr>
                     <tr>
                         <td>¿Afecta la Viabilidad / Potencia?</td>
-                        <td><select class="cedit">
-                                <option>NO</option>
-                                <option>SÍ</option>
-                            </select></td>
-                        <td><input class="cedit"></td>
+                        <td><input type="text" class="cedit" placeholder="Si/No"></td>
+                        <td><textarea class="cedit" placeholder="Comentario..."></textarea></td>
                     </tr>
                     <tr>
                         <td>¿Afecta la Identidad del Producto?</td>
-                        <td><select class="cedit">
-                                <option>NO</option>
-                                <option>SÍ</option>
-                            </select></td>
-                        <td><input class="cedit"></td>
+                        <td><input type="text" class="cedit" placeholder="Si/No"></td>
+                        <td><textarea class="cedit" placeholder="Comentario..."></textarea></td>
                     </tr>
                 </tbody>
             </table>
@@ -209,11 +207,10 @@
             style="border:2px solid #1E3A5F; padding:15px; text-align:center; background-color:#f8fafc;">
             <label style="font-weight:bold; display:block; margin-bottom:5px;">DECISIÓN DEL RESPONSABLE
                 DIRECCIÓN:</label>
-            <select class="cedit" style="font-size:16px; font-weight:bold; padding:5px;">
-                <option value="">- SELECCIONAR -</option>
-                <option value="APROBADO">AUTORIZAR USO BAJO CONCESIÓN</option>
-                <option value="DENEGADO">DENEGAR (PROCEDER A DESTRUCCIÓN)</option>
-            </select>
+                <input type="text" class="cedit" placeholder="Nombre del Responsable Dirección" style="margin-bottom:10px; width:80%; font-size:14px; font-weight:bold;">
+            
+                <textarea class="cedit" rows="4" style="width:100%; border:1px solid #ccc;"
+                    placeholder="Decisión del Responsable Dirección { AUTORIZAR USO BAJO CONCESIÓN  |  DENEGAR (PROCEDER A DESTRUCCIÓN)  |   OTRO }"></textarea>
         </div>
 
         <div class="signature-area">
@@ -255,9 +252,9 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
@@ -301,9 +298,9 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

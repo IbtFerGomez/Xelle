@@ -69,7 +69,7 @@
                            class="registry-input generate-barcode cedit" 
                            data-target="barcode-op10" 
                            data-prefix="FO-OP-10-" 
-                           placeholder="202X-00" 
+                           placeholder="00X" 
                            style="font-weight:bold; font-size:14px; text-transform:uppercase;">
                 </div>
                 <svg id="barcode-op10" class="barcode-svg" style="height:35px;"></svg>
@@ -88,7 +88,7 @@
                     <td width="20%"><strong>Fabricante / Distribuidor:</strong></td>
                     <td width="50%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc; font-weight:bold;"></td>
                     <td width="15%"><strong>Fecha de Devolución:</strong></td>
-                    <td width="15%"><input type="date" class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td width="15%"><input type="text" class="cedit" style="border-bottom:1px solid #ccc;"></td>
                 </tr>
                 <tr>
                     <td><strong>Dirección:</strong></td>
@@ -122,7 +122,7 @@
                         <td><input class="cedit"></td>
                         <td><input class="cedit text-left"></td>
                         <td><input class="cedit"></td>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
                         <td><input class="cedit"></td>
                         <td><input class="cedit text-left"></td>
                         <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-devolucion')">x</button></td>
@@ -139,19 +139,19 @@
                     <p style="font-weight:bold;">ELABORA</p>
                     <span style="font-size:8px;">(Almacén / Logística)</span>
                     <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:25px;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:120px;"></p>
                 </div>
                 <div class="signature-box" style="flex:1;">
                     <p style="font-weight:bold;">AUTORIZA</p>
                     <span style="font-size:8px;">(Compras / Finanzas)</span>
                     <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:25px;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:120px;"></p>
                 </div>
                 <div class="signature-box" style="flex:1; background-color:#f0fdf4;">
                     <p style="font-weight:bold; color:#14532d;">APRUEBA</p>
                     <span style="font-size:8px;">(Aseguramiento de Calidad)</span>
                     <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #166534; border-radius:0; margin-top:25px; background:transparent;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
+                    <p>Fecha: <input type="text" class="cedit" style="width:120px; background:transparent;"></p>
                 </div>
             </div>
         </div>
