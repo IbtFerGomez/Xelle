@@ -320,7 +320,6 @@
                    
                 </tbody>
             </table>
-            <button class="btn-add no-print" onclick="prefillInventoryArb2026(true)">CARGAR EQUIPOS DESDE INVENTARIO ARB2026</button>
             <button class="btn-add no-print" onclick="addRowNumbered('tbl-mantenimiento')">+ AGREGAR EQUIPO /
                 MANTENIMIENTO AL PROGRAMA</button>
         </div>
@@ -390,102 +389,6 @@
                 if (numCell) numCell.innerText = index + 1;
             });
         }
-
-        const inventoryArb2026 = [
-            { equipo: 'Cabina bioseguridad BCD-16513 NU-540-300', id: 'EQ-LCE-001', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Cabina bioseguridad 1500 Serie A2 Clase II', id: 'EQ-LCE-002', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Incubadora de CO2 In-VitroCell NU-8600', id: 'EQ-LCE-003', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Incubadora de CO2 In-VitroCell NU-8600', id: 'EQ-LCE-004', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Incubadora de CO2 In-VitroCell NU-8600', id: 'EQ-LCE-005', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Incubadora de CO2 Forma serie II 3110', id: 'EQ-LCE-006', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Bano Maria electrico ZCK165B', id: 'EQ-LCE-007', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Centrifuga digital de mesa VE-4000', id: 'EQ-LCE-008', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Microscopio binocular invertido de fases AE-2000', id: 'EQ-LCE-009', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Centrifuga refrigerada Sirena 0,6L', id: 'EQ-LCE-010', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Termohigrometro calibrado Traceable 4040cc', id: 'EQ-LCE-011', frecuencia: 'Anual', tipo: 'Calibracion' },
-            { equipo: 'Pipete controller', id: 'EQ-LCE-012', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Pipete controller', id: 'EQ-LCE-013', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Centrifuga ICB FUGE IV', id: 'EQ-LCE-014', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Balanza analitica Nimbus', id: 'EQ-LCE-015', frecuencia: 'Anual', tipo: 'Calibracion' },
-            { equipo: 'Vortex mixer V-3', id: 'EQ-LCE-016', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Bomba DEVILBISS 7305D', id: 'EQ-LCE-017', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Refrigerador ICEHAUS RV-2PS-SS-01', id: 'EQ-LCA-001', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Termohigrometro calibrado Traceable 4040cc', id: 'EQ-LCA-002', frecuencia: 'Anual', tipo: 'Calibracion' },
-            { equipo: 'Congelador ultrabaja temperatura Blizzard NU-99578J', id: 'EQ-LCA-003', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Empacadora al vacio TORREY EVD-4', id: 'EQ-LCA-004', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Pistola impresora de inyeccion de tinta TOAUTO', id: 'EQ-LCA-005', frecuencia: 'Anual', tipo: 'Preventivo' },
-            { equipo: 'Congelador horizontal Mabe CHM11B', id: 'EQ-LCA-006', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Dosificadora peristaltica DARA SX-50', id: 'EQ-LCA-007', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Estufa universal UN30', id: 'EQ-LCC-001', frecuencia: 'Anual', tipo: 'Calificacion / Preventivo' },
-            { equipo: 'Autoclave vertical BKQ-B II', id: 'EQ-LCC-002', frecuencia: 'Anual', tipo: 'Calificacion / Preventivo' },
-            { equipo: 'Termohigrometro calibrado Traceable 4040cc', id: 'EQ-LCC-003', frecuencia: 'Anual', tipo: 'Calibracion' },
-            { equipo: 'Termohigrometro calibrado Traceable 4040cc', id: 'EQ-LAI-001', frecuencia: 'Anual', tipo: 'Calibracion' },
-            { equipo: 'Termohigrometro calibrado Traceable 4040cc', id: 'EQ-LES-001', frecuencia: 'Anual', tipo: 'Calibracion' },
-            { equipo: 'Refrigerador vertical acero inoxidable Imbera', id: 'EQ-LCB-001', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Termometro-higrometro HTC-2', id: 'EQ-LCB-002', frecuencia: 'Anual', tipo: 'Calibracion' },
-            { equipo: 'Incubadora de CO2 Forma serie II 3110 T ambiente', id: 'EQ-LCB-003', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Incubadora de CO2 Forma serie II 3110 a 30C', id: 'EQ-LCB-004', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Cabina de seguridad biologica NuAire NU-430-600', id: 'EQ-LCB-005', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Microondas Daewoo KOR-164H', id: 'EQ-LCB-006', frecuencia: 'Anual', tipo: 'Preventivo' },
-            { equipo: 'Ultracentrifuga Beckman L8-80M', id: 'EQ-LCB-007', frecuencia: 'Anual', tipo: 'Correctivo / Preventivo' },
-            { equipo: 'Liofilizador BK-FD10', id: 'EQ-LCB-008', frecuencia: 'Anual', tipo: 'Calificacion / Preventivo' },
-            { equipo: 'Colector automatico de fracciones AFC V2', id: 'EQ-LCB-009', frecuencia: 'Anual', tipo: 'Calibracion / Preventivo' },
-            { equipo: 'Bomba peristaltica MasterFlex 7555-00', id: 'EQ-LCB-010', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Bomba de vacio 2XZ-2', id: 'EQ-LCB-011', frecuencia: '200 h uso', tipo: 'Preventivo' },
-            { equipo: 'Tamiz vibratorio electrico VEVOR', id: 'EQ-LCB-012', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Licuadora Waring MX1300XTX', id: 'EQ-LCB-013', frecuencia: 'Anual', tipo: 'Preventivo' },
-            { equipo: 'Agitador de placas calefactoras Cimarec+', id: 'EQ-LCB-014', frecuencia: 'Anual', tipo: 'Calibracion / Preventivo' },
-            { equipo: 'Sistema de medicion TRPS qNano Gold', id: 'EQ-LCB-015', frecuencia: 'Anual', tipo: 'Calibracion / Preventivo' },
-            { equipo: 'Laptop Dell Inspiron 15 5502', id: 'EQ-LCB-016', frecuencia: 'Anual', tipo: 'Preventivo' },
-            { equipo: 'Pipette controller AHN pipet4u Oasis', id: 'EQ-LCB-017', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' },
-            { equipo: 'Bascula Crownful K210H', id: 'EQ-LCB-018', frecuencia: 'Anual', tipo: 'Calibracion' },
-            { equipo: 'Autoclave portatil Luzeren YX-280B24', id: 'EQ-LCB-019', frecuencia: 'Anual', tipo: 'Calificacion / Preventivo' },
-            { equipo: 'Soporte Sartocon Slice 200', id: 'EQ-LCB-020', frecuencia: 'Anual', tipo: 'Preventivo / Calibracion' }
-        ];
-
-        function isMaintenanceTableEmpty(tableId) {
-            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
-            for (const row of rows) {
-                const cells = row.querySelectorAll('td input');
-                for (const input of cells) {
-                    if (input.value && input.value.trim() !== '') {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        function setMaintenanceRowData(row, item) {
-            const inputs = row.querySelectorAll('td input');
-            if (inputs.length < 8) return;
-            inputs[0].value = item.equipo;
-            inputs[1].value = item.id;
-            inputs[2].value = item.frecuencia;
-            inputs[3].value = item.tipo;
-        }
-
-        function prefillInventoryArb2026(force) {
-            const tableId = 'tbl-mantenimiento';
-            const tbody = document.getElementById(tableId).querySelector('tbody');
-            if (!force && !isMaintenanceTableEmpty(tableId)) return;
-
-            const template = tbody.rows[0].cloneNode(true);
-            tbody.innerHTML = '';
-
-            inventoryArb2026.forEach((item) => {
-                const row = template.cloneNode(true);
-                row.querySelectorAll('input').forEach(input => input.value = '');
-                setMaintenanceRowData(row, item);
-                tbody.appendChild(row);
-            });
-
-            updateNumbers(tableId);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            prefillInventoryArb2026(false);
-        });
     </script>
     <script>
         let isOfflineMode = false;
