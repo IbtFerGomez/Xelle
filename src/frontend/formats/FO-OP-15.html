@@ -61,8 +61,8 @@
                 text-align: center;
                 padding: 10px 0;
                 border-top: 1px solid #eee;
-                font-size: 9px !important;
-                color: #000 !important;
+                font-size: 9px ;
+                color: #000 ;
             }
 
             body {
@@ -70,39 +70,42 @@
             }
 
             .no-print {
-                display: none !important;
+                display: none ;
             }
 
             /* Permitir que las tablas y secciones se partan entre páginas */
             .section {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
+                page-break-inside: auto ;
+                break-inside: auto ;
             }
 
             table,
             .compact-table {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
+                page-break-inside: auto ;
+                break-inside: auto ;
             }
 
             thead {
-                display: table-header-group !important;
+                display: table-header-group ;
             }
 
             tr,
             tbody tr {
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
+                page-break-inside: avoid ;
+                break-inside: avoid ;
             }
 
             .section-title {
-                page-break-after: avoid !important;
-                break-after: avoid !important;
+                page-break-after: avoid ;
+                break-after: avoid ;
             }
         }
-         @media print {input::placeholder,
+
+        @media print {
+
+            input::placeholder,
             textarea::placeholder {
-                color: transparent !important;
+                color: transparent ;
             }
         }
     </style>
@@ -230,7 +233,7 @@
             <div class="signature-box">
                 <p>Autorizó (Gerencia de Operaciones):</p><input type="text">
                 <p>Firma</p>
-            </div>
+            </div>  
         </div>
 
         <div class="footer">FO-OP-15 | PEDIDO MAESTRO | Versión: 1.0<br>El contenido de este documento es propiedad de
@@ -276,6 +279,44 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             convertTableSelectsToInputs(document);
+
+            const barcodeInput = document.querySelector('.generate-barcode');
+            if (barcodeInput) {
+                const renderBarcode = function () {
+                    const targetId = barcodeInput.dataset.target;
+                    const prefix = barcodeInput.dataset.prefix || '';
+                    const value = String(barcodeInput.value || '').trim();
+                    const normalizedValue = prefix && value.startsWith(prefix)
+                        ? value.slice(prefix.length)
+                        : value;
+                    if (!targetId || !window.JsBarcode) return;
+
+                    if (normalizedValue !== value) {
+                        barcodeInput.value = normalizedValue;
+                    }
+
+                    if (!normalizedValue) {
+                        const targetEl = document.getElementById(targetId);
+                        if (targetEl) targetEl.innerHTML = '';
+                        return;
+                    }
+
+                    try {
+                        JsBarcode(`#${targetId}`, prefix + normalizedValue, {
+                            format: 'CODE128',
+                            height: 30,
+                            displayValue: true,
+                            fontSize: 10,
+                            margin: 0
+                        });
+                    } catch (e) {
+                        console.warn('No se pudo renderizar el código de barras en FO-OP-15', e);
+                    }
+                };
+
+                barcodeInput.addEventListener('input', renderBarcode);
+                renderBarcode();
+            }
 
             const tbody = document.querySelector('#tbl-pedidos tbody');
             if (tbody && tbody.children.length === 0) {

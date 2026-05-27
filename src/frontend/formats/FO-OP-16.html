@@ -44,21 +44,29 @@
         /* Estilo para fijar el footer al final de la hoja en impresión */
         @media print {
             .footer {
-                position: fixed;
-                bottom: 0;
-                left: 0;
+                position: static;
                 width: 100%;
                 background-color: white;
                 text-align: center;
-                padding: 10px 0;
+                padding: 10px 0 0 0;
                 border-top: 1px solid #eee;
                 font-size: 9px !important;
                 color: #000 !important;
+                margin-top: 16px !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
             }
 
             /* Espacio para evitar que el contenido se encime al footer */
             body {
-                padding-bottom: 50px;
+                padding-bottom: 0;
+                height: auto !important;
+                overflow: visible !important;
+            }
+
+            .container {
+                min-height: auto !important;
+                overflow: visible !important;
             }
 
             .no-print {
@@ -90,7 +98,21 @@
             .section-title {
                 page-break-after: avoid !important;
                 break-after: avoid !important;
+                background-color: var(--secondary-color) !important;
+                color: #fff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
+
+            .signature-area {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+            ::placeholder {
+                color: transparent !important;
+            }
+        
+
         }
     </style>
 </head>
@@ -143,7 +165,7 @@
                     <input type="text" id="reg-op-16" class="registry-input generate-barcode"
                         data-target="barcode-op-16" data-prefix="FO-OP-16-" placeholder="001">
                 </div>
-                <input type="date" class="registry-date no-auto-date">
+                <input type="text" class="registry-date no-auto-date">
                 <svg id="barcode-op-16" class="barcode-svg"></svg>
             </div>
         </div>
@@ -162,7 +184,7 @@
                     <td><strong>Cliente Destino:</strong> <input class="cedit"></td>
                 </tr>
                 <tr>
-                    <td><strong>Fecha Surtido:</strong> <input type="date" class="cedit"></td>
+                    <td><strong>Fecha Surtido:</strong> <input type="text" class="cedit"></td>
                     <td><strong>Responsable Operaciones:</strong> <input class="cedit"></td>
                 </tr>
             </table>
@@ -247,6 +269,52 @@
     <script>
         let isOfflineMode = false;
 
+        function initFoOp16Barcode() {
+            const barcodeInput = document.querySelector('.generate-barcode');
+            if (!barcodeInput) return;
+
+            const renderBarcode = function () {
+                const targetId = barcodeInput.dataset.target;
+                const prefix = barcodeInput.dataset.prefix || '';
+                const rawValue = String(barcodeInput.value || '').trim();
+                const normalizedValue = prefix && rawValue.startsWith(prefix)
+                    ? rawValue.slice(prefix.length)
+                    : rawValue;
+
+                if (normalizedValue !== rawValue) {
+                    barcodeInput.value = normalizedValue;
+                }
+
+                const targetEl = targetId ? document.getElementById(targetId) : null;
+                if (!targetEl) return;
+
+                if (!normalizedValue) {
+                    targetEl.innerHTML = '';
+                    return;
+                }
+
+                if (!window.JsBarcode) return;
+
+                try {
+                    JsBarcode(`#${targetId}`, prefix + normalizedValue, {
+                        format: 'CODE128',
+                        height: 30,
+                        displayValue: true,
+                        fontSize: 10,
+                        margin: 0
+                    });
+                } catch (error) {
+                    console.warn('No se pudo renderizar el código de barras en FO-OP-16', error);
+                }
+            };
+
+            barcodeInput.addEventListener('input', renderBarcode);
+            window.addEventListener('beforeprint', renderBarcode);
+            renderBarcode();
+        }
+
+        document.addEventListener('DOMContentLoaded', initFoOp16Barcode);
+
         function toggleOfflineMode() {
             isOfflineMode = !isOfflineMode;
             const btn = document.getElementById('btn-offline');
@@ -267,9 +335,9 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
@@ -313,23 +381,23 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
 
-                // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
 
-                // Restaurar <input type="number">
-                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
-                    inp.type = 'number';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.removeAttribute('data-original-type');
                 });
             }
