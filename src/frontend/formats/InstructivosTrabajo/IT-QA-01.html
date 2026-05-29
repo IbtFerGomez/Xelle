@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>IT-QA-01 Puntos Críticos de Control</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        @page {
+            size: portrait;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 19cm;
+            margin: 0 auto;
+            background: white;
+            padding: 0.8cm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 6px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 5px;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .info-box {
+            background-color: #f0fdfa;
+            border: 1px solid #5eead4;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 9.5px;
+            color: #115e59;
+            margin-top: 10px;
+            line-height: 1.4;
+            text-align: justify;
+        }
+
+        .content-box {
+            border: 1px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 10px;
+            line-height: 1.5;
+            color: #1e293b;
+            margin-top: 10px;
+            background-color: #f8fafc;
+            text-align: justify;
+        }
+
+        .footer-unified {
+            margin-top: 25px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 10px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        .cedit {
+            font-size: 9px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+            text-align: center;
+            border-bottom: 1px dotted #94a3b8;
+        }
+
+        .cedit:focus {
+            background-color: #e2e8f0;
+            outline: none;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+            input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
+        }
+        
+    </style>
+</head>
+
+<body id="doc-it-qa-01">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Instructivo</button>
+    </div>
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                        font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                        font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Control Documental</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">IT-QA-01-</span>
+                    <input type="text" id="reg-itqa01" class="registry-input generate-barcode cedit"
+                        data-target="barcode-itqa01" data-prefix="IT-QA-01-" value="001">
+                </div>
+                <svg id="barcode-itqa01" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>INSTRUCTIVO DE MONITOREO DE PUNTOS CRÍTICOS DE CONTROL (PCC)</h1>
+            <div class="metadata">Código: IT-QA-01 | Versión: 1.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="info-box">
+            <strong>Objetivo (NOM-059-SSA1):</strong> Proveer a los operadores y supervisores los lineamientos
+            obligatorios para identificar, monitorear y registrar los Puntos Críticos de Control (PCC) dentro de las
+            áreas de bioprocesos y logística, con el fin de prevenir alteraciones que impacten la calidad y viabilidad
+            del producto celular.
+        </div>
+
+        <div class="section-header">1. MATRIZ DE PUNTOS CRÍTICOS (PCC) EN XELLE SCIENTIFIC</div>
+        <table class="compact-table" style="margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th width="18%">Área / Proceso</th>
+                    <th width="22%">Equipo / Sistema</th>
+                    <th width="30%">Punto Crítico (PCC) a Monitorear</th>
+                    <th width="30%">Límite Operativo / Requisito</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight:bold;">Expansión Celular</td>
+                    <td>Incubadoras CO2</td>
+                    <td style="text-align: left; padding-left: 5px;">Niveles de Temperatura y CO2</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Temp: 37°C ±
+                        0.5°C<br>CO2: 5% ± 0.2%</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Áreas Blancas</td>
+                    <td>Sistema HVAC</td>
+                    <td style="text-align: left; padding-left: 5px;">Presión Diferencial y Calidad del Aire</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Cascada positiva
+                        (>10 Pa entre cuartos limpios)</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Bioprocesos</td>
+                    <td>Cabinas de Bioseguridad</td>
+                    <td style="text-align: left; padding-left: 5px;">Flujo Laminar y Limpieza</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Velocidad flujo
+                        descendente dentro de especificación</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Logística / Almacén</td>
+                    <td>Cadena de Frío</td>
+                    <td style="text-align: left; padding-left: 5px;">Temperatura de conservación</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Refrigeración: 2 a
+                        8°C<br>Congelación: &lt; -20°C</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Recepción de Muestras</td>
+                    <td>Ingreso Materia Prima (FO-LC-17)</td>
+                    <td style="text-align: left; padding-left: 5px;">Integridad de embalaje e identificación documental
+                    </td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Sin daño visible +
+                        documentación completa + temperatura de recepción en rango 2 a 8°C</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Muestreo Producto Terminado</td>
+                    <td>Bitácora de Muestreo (FO-LC-34)</td>
+                    <td style="text-align: left; padding-left: 5px;">Cadena de frío durante traslado de muestra</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Temp. inicial y
+                        final de hielera: 2 a 8°C (fuera de rango = rechazo automático)</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Muestreo Producto Terminado</td>
+                    <td>Bitácora de Muestreo (FO-LC-34)</td>
+                    <td style="text-align: left; padding-left: 5px;">Representatividad y prevención de congelación</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Muestreo
+                        estratificado (superior/media/inferior) + uso obligatorio de separadores entre gel y vial</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Incubación Especial</td>
+                    <td>Incubadora 35°C (FO-OP-09-A / FO-OP-09-B)</td>
+                    <td style="text-align: left; padding-left: 5px;">Estabilidad térmica y trazabilidad de lecturas</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Rango 34.5°C a
+                        35.5°C + registro AM/PM completo sin omisiones (FO-OP-09-A)</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Monitoreo Ambiental</td>
+                    <td>Monitoreo Temp/HR (FO-OP-07)</td>
+                    <td style="text-align: left; padding-left: 5px;">Condición operativa del equipo y sensor</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Equipo encendido y
+                        legible + sensor no obstruido + sin desviaciones previas abiertas</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Liberación de Línea Celular</td>
+                    <td>Control de Calidad (FO-LC-16 / FO-LC-19)</td>
+                    <td style="text-align: left; padding-left: 5px;">Criterios microbiológicos y bioseguridad</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Micoplasma/PCRm
+                        negativo + esterilidad negativa + endotoxinas &lt; 5.0 EU/mL</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Liberación de Línea Celular</td>
+                    <td>Citometría y Viabilidad (FO-LC-16)</td>
+                    <td style="text-align: left; padding-left: 5px;">Viabilidad y desempeño celular</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Viabilidad celular
+                        &gt; 70% + PMM (TMRE) &gt; 75%</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Retención / Contramuestra</td>
+                    <td>Muestras de Retención (FO-LC-33)</td>
+                    <td style="text-align: left; padding-left: 5px;">Conservación bajo condiciones equivalentes al
+                        producto</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Misma cadena de
+                        frío del producto terminado (2 a 8°C o criopreservación validada)</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Disposición de Lotes</td>
+                    <td>Estatus y Segregación (FO-LC-35)</td>
+                    <td style="text-align: left; padding-left: 5px;">Control de estatus y trazabilidad de destino</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Solo estatus
+                        autorizados (CUARENTENA/LIBERADO/RECHAZADO/DEVUELTO/RETIRADO) + destino obligatorio para
+                        trazabilidad</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Integridad de Datos (Transversal)</td>
+                    <td>Registros críticos FO-OP / FO-LC / FO-QA</td>
+                    <td style="text-align: left; padding-left: 5px;">Cumplimiento ALCOA+ en captura de evidencia</td>
+                    <td style="text-align: left; padding-left: 5px; color:#991b1b; font-weight:bold;">Registros
+                        atribuibles, legibles, contemporáneos, originales y precisos; sin tachaduras ni omisiones</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-header">2. INSTRUCCIONES DE ACCIÓN ANTE DESVIACIÓN DE UN PCC</div>
+        <div class="content-box">
+            Un PCC fuera de especificación (OOS - Out of Specification) se considera una violación directa a las Buenas
+            Prácticas de Fabricación y un riesgo inminente para el producto.
+            <br><br><strong>Procedimiento Inmediato:</strong>
+            <ol style="margin-top: 8px;">
+                <li><strong>Detener la Operación:</strong> No continúe procesando, almacenando o distribuyendo si el
+                    parámetro está fuera de los límites operativos descritos.</li>
+                <li><strong>Aislar / Cuarentenar:</strong> Identifique físicamente el producto, insumo o lote afectado
+                    con la etiqueta roja de RECHAZO o CUARENTENA para evitar su uso accidental.</li>
+                <li><strong>Notificar a QA:</strong> Informe inmediatamente a la Jefatura de Área y a Aseguramiento de
+                    Calidad.</li>
+                <li><strong>Documentar:</strong> Levante el <strong>Reporte de Desviación y Plan de Acción
+                        (FO-OP-51)</strong> documentando la hora exacta, el valor crítico leído y el lote involucrado.
+                </li>
+            </ol>
+        </div>
+
+        <div class="section-header">3. TRAZABILIDAD DOCUMENTAL DE MONITOREO (VINCULACIÓN CON FORMATOS)</div>
+        <table class="compact-table" style="margin-top: 5px;">
+            <thead>
+                <tr>
+                    <th width="20%">Formato</th>
+                    <th width="30%">Qué se monitorea</th>
+                    <th width="15%">Frecuencia mínima</th>
+                    <th width="35%">Criterio crítico / acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight:bold;">FO-OP-07</td>
+                    <td style="text-align:left;">Temperatura y humedad relativa por área, con verificación PCC-1/PCC-2/PCC-3.</td>
+                    <td>AM y PM</td>
+                    <td style="text-align:left;">Si hay excursión de rango o falla de PCC, registrar acción correctiva y folio FO-OP-51.</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">FO-OP-09-A</td>
+                    <td style="text-align:left;">Registro gráfico de incubadora 35°C.</td>
+                    <td>AM y PM</td>
+                    <td style="text-align:left;">Temperatura fuera de 34.5°C-35.5°C (zona NC) requiere detener uso y abrir FO-OP-51.</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">FO-LC-34</td>
+                    <td style="text-align:left;">Cadena de frío de muestreo, estratificación y uso de separadores.</td>
+                    <td>Por evento de muestreo</td>
+                    <td style="text-align:left;">Temperatura inicial/final de hielera 2°C-8°C; fuera de rango = rechazo de muestra.</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">FO-LC-16 / FO-LC-19</td>
+                    <td style="text-align:left;">Liberación y control de calidad (viabilidad, PMM, microbiología y panel viral).</td>
+                    <td>Por lote</td>
+                    <td style="text-align:left;">Liberar solo con criterios cumplidos (ej. viabilidad > 70%, PMM > 75%, microbiología negativa).</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">FO-LC-33 / FO-LC-35</td>
+                    <td style="text-align:left;">Retención/contramuestra y estatus final de lotes (cuarentena, liberado, rechazado, devuelto, retirado).</td>
+                    <td>Ingreso/baja y actualización de estatus</td>
+                    <td style="text-align:left;">Asegurar segregación, trazabilidad de destino y reconciliación de cantidades documentadas.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-header" style="margin-top: 20px;">REGISTRO DE LECTURA Y COMPRENSIÓN (PERSONAL INVOLUCRADO)
+        </div>
+        <table class="compact-table" style="margin-top: 5px;">
+            <thead>
+                <tr>
+                    <th width="35%">Nombre del Colaborador</th>
+                    <th width="25%">Área</th>
+                    <th width="20%">Fecha</th>
+                    <th width="20%">Firma de Enterado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-left" placeholder="Nombre completo"></td>
+                    <td><input class="cedit"></td>
+                    <td><input type="text" class="cedit" style="border:none;"></td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:20px;">
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">ELABORÓ (SGC)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                <p style="font-weight:bold; font-size:10px; color:#14532d;">AUTORIZÓ (ASEGURAMIENTO DE CALIDAD)</p>
+                <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">IT-QA-01 | Versión: 1.0 | Puntos Críticos de Control | Xelle Scientific</div>
+            <div class="legal-data">Uso interno obligatorio. Prohibida su reproducción.</div>
+        </div>
+    </div>
+</body>
+
+</html>

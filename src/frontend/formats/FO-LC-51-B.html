@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-LC-51-B Bitácora Histórica de Reemplazo y Control de Gases Críticos</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Horizontal (Landscape) para Bitácora de Seguimiento Histórico */
+        @page {
+            size: landscape;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #1e293b;
+        }
+
+        .container {
+            width: 26cm;
+            margin: 0 auto;
+            background: white;
+            padding: 0.8cm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-left: 4px solid #2E9D82;
+        }
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            table-layout: fixed;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 7.5px;
+            padding: 4px 2px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+            line-height: 1.2;
+        }
+
+        .compact-table td {
+            font-size: 8px;
+            padding: 3px 2px;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+            text-align: center;
+            height: 20px;
+        }
+
+        .compact-table input {
+            font-size: 8px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+            text-align: center;
+        }
+
+        .compact-table input:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 4px !important;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 6px;
+            margin-top: 5px;
+            color: #1E3A5F;
+        }
+
+        .info-box {
+            background-color: #f0fdfa;
+            border: 1px solid #5eead4;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 8.5px;
+            color: #115e59;
+            margin-top: 10px;
+            line-height: 1.3;
+            text-align: justify;
+        }
+
+        .legend-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 6px;
+            border-radius: 4px;
+            font-size: 8px;
+            color: #1e293b;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        .group-th {
+            background-color: #0f172a !important;
+            color: #cbd5e1 !important;
+            font-size: 7px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .footer-unified {
+            margin-top: 20px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 10px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        /* Layout con display: table para evitar Flexbox/Grid a nivel de body en WeasyPrint */
+        .signature-table-layout {
+            display: table;
+            width: 100%;
+            margin-top: 20px;
+            border-spacing: 15px 0;
+        }
+
+        .signature-cell {
+            display: table-cell;
+            width: 33.33%;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .signature-box-inner {
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: #92929294 !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-lc-51-b">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar Seguimiento</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Histórico</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <!-- HEADER MODULAR -->
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                        font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                        font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio del Registro Secuencial</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-LC-51-B-</span>
+                    <input type="text" id="reg-lc51b" class="registry-input generate-barcode cedit"
+                        data-target="barcode-lc51b" data-prefix="FO-LC-51-B-" placeholder="202X-HIST">
+                </div>
+                <svg id="barcode-lc51b" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>BITÁCORA HISTÓRICA DE REEMPLAZO Y CONTROL DE GASES CRÍTICOS (CO₂)</h1>
+            <div class="metadata">Código: FO-LC-51-B | Versión: 3.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <!-- INDICACIONES DE OPERACIÓN -->
+        <div class="info-box">
+            <strong>Instrucciones para el Seguimiento Histórico (NOM-241-SSA1 / NOM-059-SSA1):</strong> Registre de
+            forma cronológica y consecutiva cada reemplazo de cilindro ejecutado en la planta. Esta bitácora sirve como
+            el historial de trazabilidad de insumos y comportamiento de los sistemas incubadores. Utilice estrictamente
+            los códigos alfanuméricos autorizados en la leyenda inferior. No deje celdas en blanco.
+        </div>
+
+        <div class="legend-box" style="display: flex; justify-content: space-between;">
+            <div><strong>[MR] Causa Retiro:</strong> V = Vacío | CAD = Caducado | FAL = Válvula Dañada | MP = Preventivo
+            </div>
+            <div><strong>[GP] Pureza Gas:</strong> MED = Grado Médico/Cultivo (≥99.5%) | IND = Industrial (Rechazo)
+            </div>
+            <div><strong>[EVAL] Checklist:</strong> C = Cumple al 100% los 4 puntos de seguridad (Fijación, Purga,
+                Manómetros y Hermeticidad) | NC = No Cumple</div>
+        </div>
+
+        <!-- MATRIZ HISTÓRICA DE SEGUIMIENTO -->
+        <div class="section-header">1. HISTORIAL CRONOLÓGICO DE CAMBIOS DE CILINDROS</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-historico-gases">
+                <thead>
+                    <tr>
+                        <th rowspan="2" width="6%">Fecha</th>
+                        <th rowspan="2" width="4%">Hora</th>
+                        <!-- <th rowspan="2" width="7%">ID Incubadora<br>(FO-SGC-05)</th> -->
+                        <th colspan="3" class="group-th">Contenedor Saliente (Retirado)</th>
+                        <th colspan="5" class="group-th">Contenedor Entrante (Instalado)</th>
+                        <th rowspan="2" width="4%">Verif.<br>[EVAL]</th>
+                        <th colspan="3" class="group-th">Monitoreo Post-Cambio</th>
+                        <th rowspan="2" width="5%">Iniciales<br>Operador</th>
+                        <th rowspan="2" width="10%">Observaciones /<br>Folio CAPA</th>
+                        <th rowspan="2" width="3%" class="no-print"></th>
+                    </tr>
+                    <tr>
+                        <th width="7%">ID Tanque</th>
+                        <th width="4%">PSI Fin</th>
+                        <th width="3%">[MR]</th>
+                        <th width="7%">ID Tanque</th>
+                        <th width="6%">Lote Gas</th>
+                        <th width="5%">Caducidad</th>
+                        <th width="3%">[GP]</th>
+                        <th width="4%">PSI Ini</th>
+                        <th width="4%">Hora</th>
+                        <th width="4%">% CO₂</th>
+                        <th width="4%">¿A-Z?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="cedit" style="font-size:7.5px;"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <!-- <td><input class="cedit text-center" placeholder="EQ-LCE-003" -->
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <!-- Saliente -->
+                        <td><input class="cedit text-center" placeholder="S-9912"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="0"></td>
+                        <td><input class="cedit text-center" placeholder="V" style="font-weight: bold;"></td>
+                        <!-- Entrante -->
+                        <td><input class="cedit text-center" placeholder="E-1123" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="LT-042"></td>
+                        <td><input class="cedit text-center" placeholder="DD/MM/AA" style="font-size:7px;"></td>
+                        <td><input class="cedit text-center" placeholder="MED" style="font-weight: bold;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="1800"></td>
+                        <!-- Eval -->
+                        <td><input class="cedit text-center" placeholder="C" style="font-weight: bold;"></td>
+                        <!-- Monitoreo -->
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="number" step="0.1" class="cedit text-center" placeholder="5.0"></td>
+                        <td><input class="cedit text-center" placeholder="SI"></td>
+                        <!-- Cierre Fila -->
+                        <td><input class="cedit text-center" placeholder="Analista"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna / N/A"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit" style="font-size:7.5px;"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <!-- <td><input class="cedit text-center" placeholder="EQ-LCE-004" -->
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <!-- Saliente -->
+                        <td><input class="cedit text-center"></td>
+                        <td><input type="text" class="cedit text-center"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <!-- Entrante -->
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-center" style="font-size:7px;"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <td><input type="number" class="cedit text-center"></td>
+                        <!-- Eval -->
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <!-- Monitoreo -->
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="number" step="0.1" class="cedit text-center"></td>
+                        <td><input class="cedit text-center"></td>
+                        <!-- Cierre Fila -->
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRow('tbl-historico-gases')">+ REGISTRAR NUEVO EVENTO DE CAMBIO
+                EN EL HISTÓRICO</button>
+        </div>
+
+        <!-- PANEL DE FIRMAS Y VERIFICACIÓN DE HOJA (CONFORME A FO-SGC-01) -->
+        <div class="signature-table-layout">
+            <div class="signature-cell">
+                <div class="signature-box-inner">
+                    <p style="font-weight:bold; font-size:10px; margin: 0 0 5px 0;">RECOPILÓ (ANALISTA / OPERADOR)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:8px; margin-top:5px; color:#475569; margin-bottom: 0;">Firma de concordancia de
+                        ingresos en tiempo real</p>
+                </div>
+            </div>
+            <div class="signature-cell">
+                <div class="signature-box-inner">
+                    <p style="font-weight:bold; font-size:10px; margin: 0 0 5px 0;">VERIFICÓ HOJA (SUPERVISOR DE
+                        CULTIVO)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:8px; margin-top:5px; color:#475569; margin-bottom: 0;">Validación técnica de
+                        estabilidad del display</p>
+                </div>
+            </div>
+            <div class="signature-cell">
+                <div class="signature-box-inner" style="background-color:#f0fdf4; border-color: #5eead4;">
+                    <p style="font-weight:bold; font-size:10px; color:#14532d; margin: 0 0 5px 0;">REVISÓ Y ARCHIVÓ
+                        (ASEGURAMIENTO DE CALIDAD)</p>
+                    <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:8px; margin-top:5px; color:#14532d; margin-bottom: 0;">Conciliación e Integridad
+                        de Datos ALCOA+</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER UNIFICADO -->
+        <div class="footer-unified">
+            <div class="control-data">FO-LC-51-B | Versión: 3.0 | Bitácora Histórica de Reemplazo y Control de Gases
+                Críticos | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">Este documento es propiedad de Xelle Scientific, S.A.P.I. de C.V. Prohibida su
+                alteración o reproducción total o parcial sin autorización del SGC.</div>
+        </div>
+    </div>
+
+    <script>
+        function addRow(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+        }
+
+        function delRow(btn) {
+            const row = btn.closest('tr');
+            if (row.parentNode.rows.length > 1) {
+                row.remove();
+            }
+        }
+    </script>
+</body>
+
+</html>

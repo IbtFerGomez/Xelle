@@ -259,7 +259,7 @@
                     <input type="text" id="reg-matriz" class="registry-input generate-barcode"
                         data-target="barcode-matriz" data-prefix="FO-SGC-01-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-matriz" class="barcode-svg"></svg>
             </div>
         </div>
@@ -1183,12 +1183,12 @@
             <div class="signature-box">
                 <p>Elaboró / Actualizó</p>
                 <input type="text" placeholder="Coordinador SGC">
-                <p>Fecha: <input type="date" class="cedit"></p>
+                <p>Fecha: <input type="text" class="cedit"></p>
             </div>
             <div class="signature-box">
                 <p>Aprobó Matriz Oficial</p>
                 <input type="text" placeholder="Responsable Dirección">
-                <p>Fecha: <input type="date" class="cedit"></p>
+                <p>Fecha: <input type="text" class="cedit"></p>
             </div>
         </div>
 
@@ -1537,16 +1537,16 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
 
                 // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

@@ -18,30 +18,27 @@
             border-top: 1px solid #e2e8f0;
         }
 
-        /* Orientación de impresión por defecto: vertical (portrait) */
+
+
+
         @media print {
+
             @page {
-                size: portrait;
-            }
-        }
-
-        /* Orientación horizontal (landscape) cuando se aplica la clase .landscape-print al body */
-        body.landscape-print {
-            /* No afecta la pantalla, solo para impresión */
-        }
-
-        @media print {
-            body.landscape-print {
-                /* Forzar landscape solo cuando la clase está presente */
+                size: A4 portrait;
+                margin: 8mm;
             }
 
-            body.landscape-print @page {
-                size: landscape;
+            html,
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
             }
-        }
-        
 
-        @media print {
+            .container {
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
 
             .global-controls,
             .no-print {
@@ -94,20 +91,65 @@
                 page-break-after: avoid !important;
                 break-after: avoid !important;
             }
+
+            #tbl-esterilizacion {
+                table-layout: fixed;
+                width: 100%;
+                font-size: 9px !important;
+            }
+
+            #tbl-esterilizacion thead th {
+                padding: 2px 1px !important;
+                font-size: 9px !important;
+                line-height: 1.1 !important;
+            }
+
+            /* Salto forzado a la segunda página después del renglón 25 */
+            #tbl-esterilizacion tbody tr:nth-child(25) {
+                page-break-after: always !important;
+                break-after: page !important;
+            }
+
+            #tbl-esterilizacion tbody td {
+                height: 14px !important;
+                min-height: 14px !important;
+                padding: 1px !important;
+            }
+
+            #tbl-esterilizacion tbody td input {
+                height: 12px !important;
+                min-height: 12px !important;
+                padding: 0 2px !important;
+                font-size: 9px !important;
+                line-height: 1 !important;
+            }
+
+            .signature-area {
+                margin-top: 8px !important;
+            }
+
+            .signature-box p,
+            .signature-box input {
+                margin: 2px 0 !important;
+            }
+
+            .footer {
+                margin-top: 8px !important;
+                padding-top: 6px !important;
+            }
         }
 
         /* Aumentar altura de las filas de la tabla */
         #tbl-esterilizacion tbody td {
-            height: 30px !important;
-            min-height: 30px !important;
+            height: 26px !important;
+            min-height: 26px !important;
             vertical-align: middle;
         }
 
-        #tbl-esterilizacion tbody td input,
-        #tbl-esterilizacion tbody td select {
-            height: 26px !important;
-            min-height: 26px !important;
-            padding: 4px;
+        #tbl-esterilizacion tbody td input {
+            height: 22px !important;
+            min-height: 22px !important;
+            padding: 3px;
             line-height: 1.4;
         }
     </style>
@@ -117,8 +159,6 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
-        <button class="btn btn-secondary" onclick="togglePrintOrientation()" id="btn-orientacion">Orientación:
-            Vertical</button>
         <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
     </div>
 
@@ -170,7 +210,7 @@
 
         <div class="header-main">
             <h1>BITÁCORA DE ESTERILIZACIÓN</h1>
-            <div class="metadata">Código: FO-LC-26 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <div class="metadata">Código: FO-LC-26 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 2</div>
         </div>
 
         <div class="section">
@@ -218,18 +258,7 @@
     </div>
 
     <script>
-        // Alternar orientación de impresión entre vertical y horizontal
-        function togglePrintOrientation() {
-            const body = document.body;
-            const btn = document.getElementById('btn-orientacion');
-            if (body.classList.contains('landscape-print')) {
-                body.classList.remove('landscape-print');
-                btn.textContent = 'Orientación: Vertical';
-            } else {
-                body.classList.add('landscape-print');
-                btn.textContent = 'Orientación: Horizontal';
-            }
-        }
+        const TARGET_PRINT_ROWS = 50;
 
         function addSterilizationRow() {
             const tbody = document.getElementById('tbl-esterilizacion').querySelector('tbody');
@@ -257,26 +286,29 @@
                     <td><input class="cedit"></td>
                     <td><input type="number" class="cedit"></td>
                     <td><input class="cedit"></td>
-                    <td>
-                        <select class="cedit">
-                            <option value="CS">CS</option>
-                            <option value="CH">CH</option>
-                        </select>
-                    </td>
+                    <td><input class="cedit" placeholder="CS/CH"></td>
                     <td><input class="cedit" placeholder="Ej. 121°C/15min"></td>
                     <td><input type="date" class="cedit"></td>
-                    <td>
-                        <select class="cedit" style="font-weight:bold;">
-                            <option value="ST">ST</option>
-                            <option value="NS">NS</option>
-                        </select>
-                    </td>
+                    <td><input class="cedit" style="font-weight:bold;" placeholder="ST/NS"></td>
                     <td><input class="cedit"></td>
                     <td><input class="cedit"></td>
                     <td class="no-print"><button class="btn btn-danger btn-mini" onclick="removeSterilizationRow(this)">x</button></td>
                 `;
             }
             tbody.appendChild(row);
+        }
+
+        function ensureSterilizationRows(totalRows = TARGET_PRINT_ROWS) {
+            const tbody = document.getElementById('tbl-esterilizacion').querySelector('tbody');
+            while (tbody.children.length < totalRows) {
+                addSterilizationRow();
+            }
+            while (tbody.children.length > totalRows) {
+                tbody.removeChild(tbody.lastElementChild);
+            }
+            Array.from(tbody.children).forEach((row, index) => {
+                row.cells[0].textContent = index + 1;
+            });
         }
 
         function removeSterilizationRow(btn) {
@@ -288,12 +320,11 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            if (document.querySelector('#tbl-esterilizacion tbody').children.length === 0) {
-                for (let i = 0; i < 4; i++) addSterilizationRow();
-            }
-            // Asegurar que el botón de orientación esté en estado inicial
-            const btn = document.getElementById('btn-orientacion');
-            if (btn) btn.textContent = document.body.classList.contains('landscape-print') ? 'Orientación: Horizontal' : 'Orientación: Vertical';
+            ensureSterilizationRows();
+        });
+
+        window.addEventListener('beforeprint', () => {
+            ensureSterilizationRows();
         });
     </script>
     <script>
@@ -307,19 +338,6 @@
             if (isOfflineMode) {
                 btn.textContent = 'Modo Online';
                 btn.style.backgroundColor = '#f59e0b';
-
-                // Convertir <select> a <input type="text">
-                document.querySelectorAll('select.cedit').forEach(sel => {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.className = sel.className;
-                    input.value = sel.options[sel.selectedIndex]?.text || '';
-                    input.setAttribute('data-original-type', 'select');
-                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
-                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
-                    input.setAttribute('data-select-options', options);
-                    sel.parentNode.replaceChild(input, sel);
-                });
 
                 // Convertir <input type="date"> a <input type="text">
                 document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
@@ -345,27 +363,6 @@
             } else {
                 btn.textContent = 'Modo Offline';
                 btn.style.backgroundColor = '';
-
-                // Restaurar <select> desde <input type="text">
-                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
-                    const sel = document.createElement('select');
-                    sel.className = inp.className;
-                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
-                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
-                    options.forEach(optText => {
-                        const opt = document.createElement('option');
-                        opt.text = optText;
-                        sel.appendChild(opt);
-                    });
-                    const currentValue = inp.value;
-                    for (let i = 0; i < sel.options.length; i++) {
-                        if (sel.options[i].text === currentValue) {
-                            sel.selectedIndex = i;
-                            break;
-                        }
-                    }
-                    inp.parentNode.replaceChild(sel, inp);
-                });
 
                 // Restaurar <input type="date">
                 document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {

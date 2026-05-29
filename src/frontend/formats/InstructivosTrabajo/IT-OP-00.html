@@ -111,6 +111,22 @@
             border-radius: 3px;
         }
 
+        .note-box {
+            margin: 20px 0;
+            padding: 16px 18px;
+            background-color: #f3f8ff;
+            border-left: 4px solid #1a4a80;
+            border-radius: 6px;
+        }
+
+        .note-box p {
+            margin: 0 0 8px;
+        }
+
+        .note-box p:last-child {
+            margin-bottom: 0;
+        }
+
         .footer {
             margin-top: 40px;
             font-size: 0.8em;
@@ -148,6 +164,8 @@
         <p>Este manual integra la información de todas las etiquetas utilizadas en Xelle Scientific, especificando su
             uso, formato relacionado y el responsable de su supervisión. Es la referencia principal para la correcta
             aplicación y control de etiquetas en procesos, equipos, materiales y residuos.</p>
+        <p>El catálogo se actualizó con base en las etiquetas activas de la carpeta <strong>Etiquetas.Control</strong>
+            y en las referencias cruzadas presentes en los formatos e instructivos vigentes del sistema documental.</p>
         <h2>2. Catálogo de Etiquetas</h2>
         <table>
             <thead>
@@ -247,7 +265,7 @@
                 <tr>
                     <td class="highlight">ET-LC-12-B</td>
                     <td>Medio Condicionado (Backup)</td>
-                    <td>Medio recuperado de cultivo celular. Version 2</td>
+                    <td>Variante de impresión para medio recuperado de cultivo celular en presentación alternativa.</td>
                     <td>FO-LC-30, FO-LC-43</td>
                     <td>Laboratorio</td>
                 </tr>
@@ -267,24 +285,24 @@
                 </tr>
                 <tr>
                     <td class="highlight">ET-LC-15</td>
-                    <td>Medio preparado</td>
-                    <td>Medio preparado para uso en cultivo. Registro de Fecha y operador</td>
+                    <td>Medio preparado para cultivo</td>
+                    <td>Medio preparado para uso en cultivo. Requiere registrar lote, fecha de preparación y operador.</td>
                     <td>FO-LC-40, FO-LC-40-B</td>
                     <td>Laboratorio</td>
                 </tr>
                 <tr>
                     <td class="highlight">ET-RPBI-01</td>
                     <td>RPBI Rojo</td>
-                    <td>Residuos punzocortantes y cultivos.</td>
-                    <td>FO-LC-50, FO-OP-49, FO-OP-51, FO-OP-52,FO-QA-19, FO-QA-08</td>
-                    <td>Residuos Peligrosos</td>
+                    <td>Código de control para residuos punzocortantes, cultivos, cepas y residuos no anatómicos.</td>
+                    <td>FO-LC-20, FO-LC-50, FO-OP-49, FO-OP-51, FO-OP-52, FO-QA-08, FO-QA-19</td>
+                    <td>Residuos Peligrosos / Calidad</td>
                 </tr>
                 <tr>
                     <td class="highlight">ET-RPBI-02</td>
                     <td>RPBI Amarillo</td>
-                    <td>Residuos patológicos (placentas, tejidos).</td>
-                    <td>FO-LC-50, FO-OP-49, FO-OP-51, FO-OP-52,FO-QA-19, FO-QA-08</td>
-                    <td>Residuos Peligrosos</td>
+                    <td>Código de control para placentas y residuos patológicos o anatómicos.</td>
+                    <td>FO-LC-20, FO-LC-50, FO-OP-49, FO-OP-51, FO-OP-52, FO-QA-08, FO-QA-19</td>
+                    <td>Residuos Peligrosos / Calidad</td>
                 </tr>
                 <tr>
                     <td class="highlight">ET-OP-01</td>
@@ -302,10 +320,10 @@
                 </tr>
                 <tr>
                     <td class="highlight">ET-OP-03</td>
-                    <td>Equipo en Mantenimiento</td>
-                    <td>Equipo en mantenimiento preventivo/correctivo.</td>
-                    <td>FO-OP-01, FO-SGC-05</td>
-                    <td>Metrología / SGC</td>
+                    <td>Identificación de Equipo</td>
+                    <td>Identificación única de activos y equipos; permite controlar inventario, estatus y vigencias.</td>
+                    <td>FO-OP-01, FO-SGC-05, FO-QA-02</td>
+                    <td>SGC / Patrimonio</td>
                 </tr>
                 <tr>
                     <td class="highlight">ET-OP-04</td>
@@ -316,13 +334,20 @@
                 </tr>
                 <tr>
                     <td class="highlight">ET-EQ-01</td>
-                    <td>Identificación Interna de Equipo</td>
-                    <td>Identificación única de activos/equipos, incluye código de inventario y área responsable.</td>
-                    <td>FO-OP-01, FO-SGC-05</td>
+                    <td>Identificación Normativa de Equipo</td>
+                    <td>Identificación única de activos y equipos con trazabilidad normativa, responsable y vigencias.</td>
+                    <td>FO-OP-01, FO-SGC-05, FO-QA-02</td>
                     <td>SGC / Patrimonio</td>
                 </tr>
             </tbody>
         </table>
+        <div class="note-box">
+            <p><strong>Notas de control del catálogo:</strong></p>
+            <p>ET-LC-12-B y la variante ET-LC-14-7x7 corresponden a presentaciones alternativas de impresión para
+                etiquetas activas del sistema.</p>
+            <p>ET-RPBI-01 y ET-RPBI-02 se mantienen como códigos vigentes de control y trazabilidad documental, aunque
+                actualmente no cuentan con archivo HTML individual dentro de <strong>Etiquetas.Control</strong>.</p>
+        </div>
         <h2>3. Instrucciones Generales de Etiquetado</h2>
         <ul>
             <li>Verifique que la etiqueta corresponda al material, equipo o área antes de colocarla.</li>

@@ -140,7 +140,23 @@
     <script src="assets/js/config/users.js"></script>
     <script src="assets/js/core/core.js"></script>
     <script>
+        const TEMP_BYPASS_LOGIN = true;
+
         $(document).ready(function () {
+            if (TEMP_BYPASS_LOGIN) {
+                const tempSession = {
+                    id: 0,
+                    username: 'preview_user',
+                    name: 'Preview User',
+                    role: 'superadmin',
+                    access: ['all']
+                };
+
+                Core.Data.set(KEYS.SESSION, tempSession);
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
             $('#loginForm').on('submit', function (e) {
                 e.preventDefault();
                 const u = $('#txtUser').val();

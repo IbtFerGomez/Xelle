@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT-OP-01 - Manual Completo de Identificación Visual y Trazabilidad - Xelle Scientific</title>
+    <style>
+        :root {
+            --navy-900: #0b1f3a;
+            --navy-800: #12325a;
+            --navy-700: #1a4a80;
+            --navy-100: #e9eff7;
+            --navy-050: #f3f7fc;
+            --text-main: #23313f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            background-color: var(--navy-050);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--navy-900), var(--navy-700));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--navy-700);
+            color: var(--navy-800);
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--navy-100);
+            color: var(--navy-900);
+            font-weight: bold;
+        }
+
+        .status-box {
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .amarillo {
+            background-color: #ffcc00;
+            color: #333;
+        }
+
+        .verde {
+            background-color: #28a745;
+        }
+
+        .rojo {
+            background-color: #dc3545;
+        }
+
+        .naranja {
+            background-color: #fd7e14;
+        }
+
+        .highlight {
+            background-color: var(--navy-100);
+            color: var(--navy-800);
+            font-weight: bold;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .pcc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pcc-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .pcc-list li::before {
+            content: '⚠️';
+            position: absolute;
+            left: 0;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8em;
+            text-align: center;
+            color: var(--navy-700);
+            border-top: 1px solid var(--navy-100);
+            padding-top: 20px;
+        }
+
+        @media print {
+            .global-controls {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="global-controls"
+        style="position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 1000; background: rgba(255, 255, 255, 0.95); padding: 15px 12px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25); border: 2px solid #3498db; cursor: move; user-select: none; min-width: 130px;">
+        <button onclick="window.print()"
+            style="padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; color: white; font-size: 13px; width: 100%; transition: all 0.2s ease; text-align: center; background-color: #2c3e50;">Imprimir</button>
+    </div>
+
+    <header style="display: flex; align-items: center; gap: 24px; text-align: left;">
+        <div style="flex-shrink:0;">
+            <svg viewBox="0 0 100 100" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                    <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                    <path fill="#2E9D82"
+                        d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                </g>
+            </svg>
+        </div>
+        <div style="flex:1;">
+            <h1 style="margin:0; font-size:24px;">XELLE SCIENTIFIC</h1>
+            <p style="margin:0;">Manual Completo de Identificación Visual y Trazabilidad</p>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">IT-OP-01 - Sistema Integral de Etiquetado</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <h2>1. Objetivo y Alcance</h2>
+        <p>Este instructivo consolida la identificacion visual y la trazabilidad documental de las etiquetas activas en
+            Xelle Scientific. La informacion fue integrada a partir de los formatos vigentes en <strong>src/frontend/formats</strong>
+            y de la carpeta <strong>Etiquetas.Control</strong>, por lo que este documento solo referencia codigos y archivos
+            verificables en el repositorio.</p>
+        <p>Su alcance cubre tres familias de control: etiquetas de lote y materiales (ET-LC), etiquetas operativas y de
+            metrologia (ET-OP) y etiqueta normativa de equipo (ET-EQ). No se incluyen codigos no presentes en la carpeta
+            de etiquetas.</p>
+
+        <h2>2. Semaforo de Estatus y Trazabilidad de Lotes</h2>
+        <p>Estas etiquetas gobiernan el flujo fisico de recepcion, muestreo, liberacion, rechazo y aprobacion de
+            materiales o productos en proceso.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Color / Familia</th>
+                    <th>Estatus</th>
+                    <th>Codigo</th>
+                    <th>Uso operativo verificado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><div class="status-box naranja">Muestreado</div></td>
+                    <td><strong>CONTROL CC</strong></td>
+                    <td>ET-LC-01</td>
+                    <td>Indica que el material fue abierto o intervenido para muestreo por Control de Calidad.</td>
+                </tr>
+                <tr>
+                    <td><div class="status-box verde">Liberado</div></td>
+                    <td><strong>APROBADO</strong></td>
+                    <td>ET-LC-02</td>
+                    <td>Producto o material conforme, listo para uso interno, liberacion o distribucion.</td>
+                </tr>
+                <tr>
+                    <td><div class="status-box amarillo">Cuarentena</div></td>
+                    <td><strong>PENDIENTE</strong></td>
+                    <td>ET-LC-03</td>
+                    <td>Material pendiente de dictamen, analisis o decision de liberacion tras recepcion o proceso.</td>
+                </tr>
+                <tr>
+                    <td><div class="status-box rojo">Rechazado</div></td>
+                    <td><strong>NO CONFORME</strong></td>
+                    <td>ET-LC-04</td>
+                    <td>Segregacion fisica de material o producto rechazado. Debe vincularse al registro de desviacion o rechazo.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">Recepcion</span></td>
+                    <td><strong>MATERIA PRIMA</strong></td>
+                    <td>ET-LC-05</td>
+                    <td>Identificacion de placenta en recepcion con datos de origen, recoleccion y condicion de arribo.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">Recepcion</span></td>
+                    <td><strong>MP NO CONFORME</strong></td>
+                    <td>ET-LC-06</td>
+                    <td>Placenta rechazada por criterios logisticos, macroscopicos o biologicos; se asocia al descarte documental.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">Calidad</span></td>
+                    <td><strong>PNC GENERAL</strong></td>
+                    <td>ET-LC-07</td>
+                    <td>Producto no conforme distinto a placenta. Se utiliza para identificar rechazo general de proceso o producto.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">Almacen</span></td>
+                    <td><strong>INSUMO APROBADO</strong></td>
+                    <td>ET-LC-08</td>
+                    <td>Control de inventario de insumos aprobados con lote, recepcion, caducidad y condiciones de almacenamiento.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>3. Etiquetas de Retencion, Analisis y Subproductos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre vigente</th>
+                    <th>Uso operativo verificado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="highlight">ET-LC-09</span></td>
+                    <td><strong>Contramuestra</strong></td>
+                    <td>Muestra de retencion. Prohibida su venta; se conserva como respaldo del lote y evidencia de seguimiento.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-10</span></td>
+                    <td><strong>Contenedor Retenciones</strong></td>
+                    <td>Identifica el contenedor o zona donde se custodian contramuestras y material de retencion.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-11</span></td>
+                    <td><strong>Muestra en Analisis</strong></td>
+                    <td>Bloquea la manipulacion de muestras activas durante pruebas de Control de Calidad.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-12</span></td>
+                    <td><strong>Medio Condicionado</strong></td>
+                    <td>Trazabilidad de medio recuperado de cultivo celular para almacenamiento y uso controlado.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-12-B</span></td>
+                    <td><strong>Medio Condicionado (Formato alterno)</strong></td>
+                    <td>Version alternativa del mismo control de medio condicionado; se usa cuando la presentacion fisica requiere otro tamano.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-13</span></td>
+                    <td><strong>Exosomas</strong></td>
+                    <td>Etiqueta para concentrados o frascos de exosomas con datos de identificacion y control de almacenamiento.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-14</span></td>
+                    <td><strong>Medio Liofilizado</strong></td>
+                    <td>Etiqueta de insumo liofilizado; existe tambien una presentacion ET-LC-14 en 7x7 para necesidades de impresion especificas.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-LC-15</span></td>
+                    <td><strong>Medio preparado para cultivo</strong></td>
+                    <td>Controla medio listo para uso, con fecha, operador y ventana de empleo del preparado.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>4. Etiquetas Operativas, Metrologia e Inventario</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Nombre vigente</th>
+                    <th>Campos o controles visibles en la etiqueta</th>
+                    <th>Uso normativo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="highlight">ET-OP-01</span></td>
+                    <td><strong>Equipo Calibrado</strong></td>
+                    <td>ID del equipo, fecha de calibracion, proxima calibracion, origen interno/externo y firma responsable.</td>
+                    <td>Confirma que el equipo esta calibrado o verificado y puede utilizarse.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-OP-02</span></td>
+                    <td><strong>Fuera de Servicio</strong></td>
+                    <td>ID del equipo, motivo del bloqueo, fecha de bloqueo, reporte y firma de QA.</td>
+                    <td>Prohibe el uso del equipo hasta liberacion formal por el area competente.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-OP-03</span></td>
+                    <td><strong>Identificacion de Equipo</strong></td>
+                    <td>Clave EQ, nombre, marca/modelo, numero de serie, estatus y fechas de mantenimiento/calibracion.</td>
+                    <td>Control de inventario operativo y trazabilidad basica del activo en campo.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-OP-04</span></td>
+                    <td><strong>Etiqueta de Calibracion</strong></td>
+                    <td>ID de equipo, fecha de calibracion, proxima calibracion, realizo y visto bueno de QA.</td>
+                    <td>Etiqueta compacta para instrumentos criticos, colocada tras la calibracion.</td>
+                </tr>
+                <tr>
+                    <td><span class="highlight">ET-EQ-01</span></td>
+                    <td><strong>Etiqueta Normativa de Equipo</strong></td>
+                    <td>Tag del equipo, nombre, marca, serie, estatus operativo, mantenimiento y proxima calificacion.</td>
+                    <td>Integra identificacion normativa, estatus operativo y vigencias en una sola pieza visual.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>5. Matriz de Relacion Etiqueta - Formato - Responsable</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Formato(s) relacionado(s) verificados</th>
+                    <th>Responsable primario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>ET-LC-01</td><td>FO-LC-34, FO-LC-46, FO-LC-47</td><td>Control de Calidad</td></tr>
+                <tr><td>ET-LC-02</td><td>FO-LC-19, FO-LC-48</td><td>Control de Calidad</td></tr>
+                <tr><td>ET-LC-03</td><td>FO-LC-17, FO-LC-18</td><td>Almacen / Control de Calidad</td></tr>
+                <tr><td>ET-LC-04</td><td>FO-QA-03</td><td>Control de Calidad</td></tr>
+                <tr><td>ET-LC-05</td><td>FO-LC-17</td><td>Logistica / Almacen</td></tr>
+                <tr><td>ET-LC-06</td><td>FO-LC-20</td><td>Control de Calidad</td></tr>
+                <tr><td>ET-LC-07</td><td>FO-QA-03</td><td>Control de Calidad</td></tr>
+                <tr><td>ET-LC-08</td><td>FO-LC-18, FO-QA-18</td><td>Almacen</td></tr>
+                <tr><td>ET-LC-09</td><td>FO-LC-32, FO-LC-32-B, FO-LC-33</td><td>Control de Calidad</td></tr>
+                <tr><td>ET-LC-10</td><td>FO-LC-32, FO-LC-32-B, FO-LC-33</td><td>Control de Calidad</td></tr>
+                <tr><td>ET-LC-11</td><td>FO-LC-19, FO-LC-34, FO-LC-46</td><td>Control de Calidad</td></tr>
+                <tr><td>ET-LC-12</td><td>FO-LC-30, FO-LC-43</td><td>Laboratorio</td></tr>
+                <tr><td>ET-LC-12-B</td><td>FO-LC-30, FO-LC-43</td><td>Laboratorio</td></tr>
+                <tr><td>ET-LC-13</td><td>FO-LC-18</td><td>Laboratorio</td></tr>
+                <tr><td>ET-LC-14</td><td>FO-LC-42, FO-LC-43</td><td>Laboratorio</td></tr>
+                <tr><td>ET-LC-15</td><td>FO-LC-40, FO-LC-40-B</td><td>Laboratorio</td></tr>
+                <tr><td>ET-OP-01</td><td>FO-OP-01, FO-SGC-05</td><td>Metrologia / SGC</td></tr>
+                <tr><td>ET-OP-02</td><td>FO-OP-01, FO-SGC-05</td><td>Metrologia / QA</td></tr>
+                <tr><td>ET-OP-03</td><td>FO-OP-01, FO-SGC-05, FO-QA-02</td><td>Metrologia / Patrimonio</td></tr>
+                <tr><td>ET-OP-04</td><td>FO-OP-01, FO-SGC-05, FO-QA-02</td><td>Metrologia</td></tr>
+                <tr><td>ET-EQ-01</td><td>FO-OP-01, FO-SGC-05, FO-QA-02</td><td>SGC / Patrimonio</td></tr>
+            </tbody>
+        </table>
+
+        <h2>6. Flujo de Control y Puntos Criticos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Etapa</th>
+                    <th>Documentos de soporte</th>
+                    <th>Etiquetas aplicables</th>
+                    <th>Punto critico de control</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Recepcion de materia prima</td>
+                    <td>FO-LC-17</td>
+                    <td>ET-LC-05, ET-LC-03, ET-LC-06</td>
+                    <td>Confirmar origen, integridad, temperatura y decision de aceptacion o rechazo.</td>
+                </tr>
+                <tr>
+                    <td>Procesamiento y control de insumos</td>
+                    <td>FO-LC-18, FO-QA-18</td>
+                    <td>ET-LC-03, ET-LC-08, ET-LC-13</td>
+                    <td>Relacionar lote, proveedor, caducidad y condicion de uso del insumo o material en proceso.</td>
+                </tr>
+                <tr>
+                    <td>Muestreo y analisis</td>
+                    <td>FO-LC-34, FO-LC-46, FO-LC-47, FO-LC-19</td>
+                    <td>ET-LC-01, ET-LC-11</td>
+                    <td>Evitar mezcla o uso indebido de muestras activas y conservar trazabilidad del analisis.</td>
+                </tr>
+                <tr>
+                    <td>Liberacion o rechazo</td>
+                    <td>FO-LC-19, FO-LC-48, FO-QA-03</td>
+                    <td>ET-LC-02, ET-LC-04, ET-LC-07</td>
+                    <td>La etiqueta final debe coincidir con el dictamen documentado y el estatus fisico del lote.</td>
+                </tr>
+                <tr>
+                    <td>Retencion y custodia</td>
+                    <td>FO-LC-32, FO-LC-32-B, FO-LC-33</td>
+                    <td>ET-LC-09, ET-LC-10</td>
+                    <td>Ubicacion, tiempo de retencion y condiciones de almacenamiento deben ser recuperables.</td>
+                </tr>
+                <tr>
+                    <td>Subproductos y preparados</td>
+                    <td>FO-LC-30, FO-LC-40, FO-LC-40-B, FO-LC-42, FO-LC-43</td>
+                    <td>ET-LC-12, ET-LC-12-B, ET-LC-14, ET-LC-15</td>
+                    <td>Mantener identificacion clara de origen, presentacion, fecha de preparacion y condicion del material.</td>
+                </tr>
+                <tr>
+                    <td>Metrologia e inventario</td>
+                    <td>FO-OP-01, FO-SGC-05, FO-QA-02</td>
+                    <td>ET-OP-01, ET-OP-02, ET-OP-03, ET-OP-04, ET-EQ-01</td>
+                    <td>Todo equipo debe mostrar un estatus visible y consistente con mantenimiento, calibracion e identificacion.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>7. Reglas de Aplicacion</h2>
+        <ul class="pcc-list">
+            <li>Aplicar solo etiquetas existentes en la carpeta Etiquetas.Control y compatibles con el formato fuente del proceso.</li>
+            <li>No colocar una etiqueta sin completar el registro asociado cuando el codigo depende de dictamen, muestreo, recepcion o calibracion.</li>
+            <li>La etiqueta fisica debe coincidir con el estatus documental del lote, muestra, insumo o equipo en el momento de la revision.</li>
+            <li>Cuando exista mas de una presentacion del mismo control, como ET-LC-12 y ET-LC-12-B o ET-LC-14 en formato alterno, debe conservarse el mismo criterio de trazabilidad.</li>
+            <li>En auditorias, IT-OP-01 sirve como referencia maestra para correlacionar lote, etiqueta aplicada y formato respaldo.</li>
+        </ul>
+
+        <h2>8. Resumen de Codigos Activos</h2>
+        <ul class="pcc-list">
+            <li><strong>ET-LC-01 a ET-LC-04:</strong> Semaforo de muestreo, liberacion, cuarentena y rechazo.</li>
+            <li><strong>ET-LC-05 a ET-LC-08:</strong> Recepcion, rechazo de materia prima y aprobacion de insumos.</li>
+            <li><strong>ET-LC-09 a ET-LC-15:</strong> Retencion, analisis, medios, exosomas y preparados de laboratorio.</li>
+            <li><strong>ET-OP-01 a ET-OP-04:</strong> Estatus operativo, calibracion y control de equipos.</li>
+            <li><strong>ET-EQ-01:</strong> Etiqueta normativa integral para identificacion y vigencias del equipo.</li>
+        </ul>
+
+        <div class="signature-area" style="margin-top: 40px; display: flex; justify-content: space-between; gap: 24px;">
+            <div style="flex:1; text-align:center;">
+                <div style="font-weight:bold; font-size:15px; margin-bottom:18px;">Elaboró</div>
+                <div style="min-height:40px; border-bottom:1.5px solid #23313f; margin-bottom:6px;"></div>
+                <div style="font-size:13px; color:#555;">Coordinación SGC</div>
+                <div style="font-size:12px; color:#888; margin-top:4px;">Nombre y Firma</div>
+            </div>
+            <div style="flex:1; text-align:center;">
+                <div style="font-weight:bold; font-size:15px; margin-bottom:18px;">Revisó</div>
+                <div style="min-height:40px; border-bottom:1.5px solid #23313f; margin-bottom:6px;"></div>
+                <div style="font-size:13px; color:#555;">Aseguramiento de Calidad</div>
+                <div style="font-size:12px; color:#888; margin-top:4px;">Nombre y Firma</div>
+            </div>
+            <div style="flex:1; text-align:center;">
+                <div style="font-weight:bold; font-size:15px; margin-bottom:18px;">Aprobó</div>
+                <div style="min-height:40px; border-bottom:1.5px solid #23313f; margin-bottom:6px;"></div>
+                <div style="font-size:13px; color:#555;">Responsable Dirección </div>
+                <div style="font-size:12px; color:#888; margin-top:4px;">Nombre y Firma</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>IT-OP-01</strong> - Manual Completo de Identificacion Visual y Trazabilidad</p>
+            <p>Propiedad de Xelle Scientific © 2026 | Aseguramiento de Calidad | Version 2.1</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Este manual integra 21 etiquetas activas verificadas en la carpeta Etiquetas.Control</p>
+            <br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está
+            protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.
+        </div>
+    </div>
+    <script>
+        // Hacer la barra de controles draggable
+        (function () {
+            const controlBar = document.querySelector('.global-controls');
+            if (!controlBar) return;
+
+            let isDragging = false;
+            let currentX, currentY, initialX, initialY;
+            let xOffset = 0, yOffset = 0;
+
+            controlBar.addEventListener('mousedown', dragStart);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+            controlBar.addEventListener('touchstart', dragStart);
+            document.addEventListener('touchmove', drag);
+            document.addEventListener('touchend', dragEnd);
+
+            function dragStart(e) {
+                if (e.target.tagName === 'BUTTON') return;
+                if (e.type === 'touchstart') {
+                    initialX = e.touches[0].clientX - xOffset;
+                    initialY = e.touches[0].clientY - yOffset;
+                } else {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                }
+                isDragging = true;
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                if (e.type === 'touchmove') {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+                xOffset = currentX;
+                yOffset = currentY;
+                controlBar.style.transform = `translate(${currentX}px, calc(-50% + ${currentY}px))`;
+            }
+
+            function dragEnd() {
+                isDragging = false;
+            }
+        })();
+    </script>
+
+</body>
+
+</html>

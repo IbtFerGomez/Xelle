@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT-OP-02 - Manual Descriptivo de Uso de Formatos - Xelle Scientific</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #23313f;
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f3f7fc;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0b1f3a, #1a4a80);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-radius: 8px 8px 0 0;
+            gap: 24px;
+        }
+
+        .logo {
+            flex-shrink: 0;
+        }
+
+        .logo svg {
+            width: 60px;
+            height: 60px;
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        h2 {
+            border-bottom: 2px solid #1a4a80;
+            color: #12325a;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #e9eff7;
+            color: #0b1f3a;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: #e9eff7;
+            color: #12325a;
+            font-weight: bold;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8em;
+            text-align: center;
+            color: #1a4a80;
+            border-top: 1px solid #e9eff7;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                    <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                    <path fill="#2E9D82"
+                        d="M 15.81,65.81 C 28.54,53.08 33.74,59.19 46.46,46.46 C 59.19,33.74 53.08,28.54 65.81,15.81 A 13 13 0 1 1 84.19,34.19 C 71.46,46.92 66.26,40.81 53.54,53.54 C 40.81,66.26 46.92,71.46 34.19,84.19 A 13 13 0 1 1 15.81,65.81 Z" />
+                </g>
+            </svg>
+        </div>
+        <div class="header-content">
+            <h1>IT-OP-02 - Manual Descriptivo de Uso de Formatos</h1>
+            <p>Guía detallada de cada formato, responsable de uso y revisión, y formatos relacionados en Xelle
+                Scientific</p>
+        </div>
+    </header>
+    <div class="container">
+        <h2>1. Introducción</h2>
+        <p>Este manual describe el propósito, uso, responsable y revisión de los formatos activos en el sistema Xelle
+            Scientific. La información fue consolidada a partir de los formatos FO-* vigentes en
+            <strong>Manual completo de Formatos del Sistema de Gestion de Calidad (SGC)</strong> para asegurar trazabilidad documental y cumplimiento normativo.
+        </p>
+
+        <h2>2. Matriz General por Familia de Formatos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Familia</th>
+                    <th>Alcance</th>
+                    <th>Responsable de Uso</th>
+                    <th>Responsable de Revisión</th>
+                    <th>Formatos Base Relacionados</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight">FO-AD</td>
+                    <td>Administración, RH, compras, dirección y control interno.</td>
+                    <td>Administración / RH</td>
+                    <td>Dirección / QA</td>
+                    <td>FO-AD-00, FO-AD-04, FO-AD-07, FO-AD-12</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC</td>
+                    <td>Laboratorio, control de lotes, muestreo, liberación y disposición.</td>
+                    <td>Laboratorio / Operaciones</td>
+                    <td>Control de Calidad / QA</td>
+                    <td>FO-LC-17, FO-LC-18, FO-LC-19, FO-LC-48, FO-LC-50</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-OP</td>
+                    <td>Operación, producción, almacenamiento, mantenimiento y condiciones ambientales.</td>
+                    <td>Operaciones / Almacén / Mantenimiento</td>
+                    <td>QA / Responsable de Área</td>
+                    <td>FO-OP-12, FO-OP-15, FO-OP-16, FO-OP-40, FO-OP-51</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-QA</td>
+                    <td>Aseguramiento de calidad, auditoría, CAPA, certificados y monitoreo.</td>
+                    <td>Aseguramiento de Calidad</td>
+                    <td>Responsable Sanitario / Dirección</td>
+                    <td>FO-QA-01, FO-QA-02, FO-QA-09, FO-QA-10, FO-QA-11</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-SGC</td>
+                    <td>Sistema de gestión documental y control maestro.</td>
+                    <td>Coordinación SGC</td>
+                    <td>Dirección / QA</td>
+                    <td>FO-SGC-01, FO-SGC-03, FO-SGC-04</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-RS</td>
+                    <td>Regulación sanitaria, quejas y eventos adversos.</td>
+                    <td>Regulación Sanitaria / Atención al Cliente</td>
+                    <td>QA / Responsable Sanitario</td>
+                    <td>FO-RS-01, FO-RS-02</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LG</td>
+                    <td>Logística de transporte y distribución.</td>
+                    <td>Logística</td>
+                    <td>QA / Operaciones</td>
+                    <td>FO-LG-01, FO-LG-01-B</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>3. Catálogo Descriptivo de Formatos (Consolidado)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Descripción de Uso</th>
+                    <th>Responsable de Uso</th>
+                    <th>Responsable de Revisión</th>
+                    <th>Formatos Relacionados</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight">FO-AD-00 / FO-AD-00-B</td>
+                    <td>Matriz Maestra de Puestos y Catálogo de Firmas</td>
+                    <td>Define roles, responsabilidades y validación de firmas/iniciales autorizadas.</td>
+                    <td>Administración / RH</td>
+                    <td>Dirección / QA</td>
+                    <td>FO-SGC-01, FO-SGC-03</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-AD-01 a FO-AD-03</td>
+                    <td>Perfil de Puesto, Competencias y Evaluación</td>
+                    <td>Control de perfiles, habilidades y desempeño/capacitación del personal.</td>
+                    <td>Administración / RH</td>
+                    <td>Dirección / QA</td>
+                    <td>FO-AD-12, FO-QA-16, FO-QA-17</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-AD-04 a FO-AD-07</td>
+                    <td>Proveedores, Auditoría Interna y Revisión por Dirección</td>
+                    <td>Gestión de proveedores y seguimiento de auditorías/revisiones directivas.</td>
+                    <td>Administración / Compras / QA</td>
+                    <td>Dirección</td>
+                    <td>FO-QA-02, FO-QA-20</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-AD-08 a FO-AD-19</td>
+                    <td>Requisiciones, inducción, confidencialidad, minutas y control de difusión</td>
+                    <td>Soporta procesos administrativos y evidencia de capacitación/comunicación.</td>
+                    <td>Administración / RH</td>
+                    <td>Dirección / QA</td>
+                    <td>FO-AD-12, FO-AD-18, FO-AD-19</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC-12, FO-LC-14, FO-LC-15, FO-LC-16</td>
+                    <td>Dictamen, Históricos y Liberación de Línea Celular</td>
+                    <td>Consolidan evaluación histórica y liberación documental de líneas celulares.</td>
+                    <td>Laboratorio / Control de Calidad</td>
+                    <td>QA / Responsable Sanitario</td>
+                    <td>FO-LC-17, FO-LC-18, FO-LC-19</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC-17, FO-LC-18, FO-LC-19, FO-LC-20</td>
+                    <td>Recepción, Macro, Calidad y Procesamiento</td>
+                    <td>Documentan ingreso de muestras, revisión macro, control de calidad y procesamiento.</td>
+                    <td>Logística / Laboratorio / Control de Calidad</td>
+                    <td>QA / Responsable de Área</td>
+                    <td>FO-OP-13, FO-OP-14, FO-QA-10</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC-21 a FO-LC-24</td>
+                    <td>Bitácoras de CrioBanco, Crio y Dosificación</td>
+                    <td>Controlan trazabilidad de conservación, movimientos y dosificación de producto.</td>
+                    <td>Laboratorio</td>
+                    <td>Control de Calidad</td>
+                    <td>FO-LC-31, FO-QA-10</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC-25, FO-LC-26, FO-LC-27, FO-LC-28</td>
+                    <td>Dosificación Exosomas, Esterilización y Control/Uso de Equipos</td>
+                    <td>Aseguran preparación, esterilidad y uso trazable de equipos críticos.</td>
+                    <td>Laboratorio / Operaciones</td>
+                    <td>QA / Mantenimiento</td>
+                    <td>FO-QA-12, FO-QA-15, FO-OP-01</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC-29, FO-LC-30, FO-LC-31</td>
+                    <td>Lote Celular, Medios Condicionados y Lote Acelular</td>
+                    <td>Registro maestro por lote durante producción y recuperación de medios.</td>
+                    <td>Operaciones / Laboratorio</td>
+                    <td>Control de Calidad / QA</td>
+                    <td>FO-LC-46, FO-LC-47, FO-LC-48, FO-QA-10</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC-32, FO-LC-32-B, FO-LC-33</td>
+                    <td>Muestras de Retención (Ingreso, Salida y Bitácora)</td>
+                    <td>Control de retenciones para análisis, investigación y auditoría.</td>
+                    <td>Control de Calidad</td>
+                    <td>QA</td>
+                    <td>FO-LC-34, FO-QA-11</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC-34, FO-LC-35</td>
+                    <td>Muestreos y Disposición de Lotes</td>
+                    <td>Evidencia muestreo, dictamen y disposición final por estatus de lote.</td>
+                    <td>Control de Calidad / Almacén</td>
+                    <td>QA / Dirección</td>
+                    <td>CAL-MUE-002, FO-LC-50, FO-QA-08</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC-40, FO-LC-40-B, FO-LC-41, FO-LC-42, FO-LC-43, FO-LC-44, FO-LC-45</td>
+                    <td>Preparación de Medios, Micro, Liofilización, Liberación de Flasks y Embalaje</td>
+                    <td>Registros de proceso en etapas de preparación, acondicionamiento y empaque.</td>
+                    <td>Laboratorio / Operaciones</td>
+                    <td>Control de Calidad</td>
+                    <td>FO-OP-40, FO-QA-11</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LC-46, FO-LC-47, FO-LC-48, FO-LC-49, FO-LC-50</td>
+                    <td>Muestreo Biológico, Revisión QC, Dictamen de Lote, Orden Maestra y Manifiesto</td>
+                    <td>Abarca desde muestreo y revisión analítica hasta liberación y disposición final.</td>
+                    <td>Control de Calidad / Operaciones</td>
+                    <td>QA / Responsable Sanitario</td>
+                    <td>FO-QA-10, FO-QA-11, FO-QA-19, FO-OP-50</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-LG-01, FO-LG-01-B</td>
+                    <td>Bitácora de Control de Flotilla y Transporte</td>
+                    <td>Seguimiento operativo de transporte, unidad y condiciones logísticas.</td>
+                    <td>Logística</td>
+                    <td>Operaciones / QA</td>
+                    <td>FO-OP-17, FO-OP-20</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-OP-01, FO-OP-01-B</td>
+                    <td>Programa Anual de Mantenimiento</td>
+                    <td>Planeación y evidencia de mantenimiento preventivo/correctivo de equipos.</td>
+                    <td>Mantenimiento</td>
+                    <td>QA / Dirección</td>
+                    <td>FO-QA-12, FO-QA-15, FO-OP-55</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-OP-03 a FO-OP-10</td>
+                    <td>Control Operativo de Ambiente, Incubación y Devoluciones</td>
+                    <td>Registros de temperatura, humedad, pasajes, incubadoras y devoluciones.</td>
+                    <td>Operaciones / Almacén</td>
+                    <td>QA / Control de Calidad</td>
+                    <td>FO-OP-12, FO-QA-13</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-OP-12, FO-OP-13, FO-OP-14</td>
+                    <td>Recepción de Materiales y MP</td>
+                    <td>Captura de recepción y verificación clínica/documental de materia prima.</td>
+                    <td>Almacén / Logística</td>
+                    <td>Control de Calidad / QA</td>
+                    <td>FO-LC-17, FO-LC-18</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-OP-15, FO-OP-16, FO-OP-17, FO-OP-18, FO-OP-19, FO-OP-20</td>
+                    <td>Pedido Maestro, Surtido, Remisión, Limpieza y Liberación de Almacén</td>
+                    <td>Control integral de flujo operativo desde surtido hasta salida/documentación.</td>
+                    <td>Operaciones / Almacén</td>
+                    <td>QA / Responsable de Área</td>
+                    <td>FO-LC-45, FO-LC-49, FO-OP-40</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-OP-39, FO-OP-40, FO-OP-40-B</td>
+                    <td>Auditoría y Expediente/Orden Maestra de Producción</td>
+                    <td>Evidencia auditorías y expediente documental del lote en producción.</td>
+                    <td>Operaciones / Calidad</td>
+                    <td>QA / Dirección</td>
+                    <td>IT-OP-01, FO-QA-02, FO-QA-11</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-OP-41, FO-OP-42, FO-OP-43</td>
+                    <td>Recepción de Insumos y Kárdex de Inventario</td>
+                    <td>Control de ingresos y movimientos de inventario por insumo/lote.</td>
+                    <td>Almacén</td>
+                    <td>QA / Operaciones</td>
+                    <td>FO-OP-12, FO-OP-20</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-OP-48, FO-OP-49, FO-OP-50</td>
+                    <td>Limpieza y Gestión de RPBI/Residuos</td>
+                    <td>Evidencia limpieza, almacenamiento temporal y manifiesto de residuos peligrosos.</td>
+                    <td>Operaciones / Servicios Generales</td>
+                    <td>QA / Responsable Sanitario</td>
+                    <td>FO-QA-08, FO-QA-19, FO-LC-50</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-OP-51, FO-OP-52, FO-OP-54</td>
+                    <td>Desviaciones y MPNC</td>
+                    <td>Investigación y registro de no conformidades de producto/proceso.</td>
+                    <td>Operaciones / QA</td>
+                    <td>Responsable Sanitario / Dirección</td>
+                    <td>FO-QA-09, FO-QA-11</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-OP-55, FO-OP-56, FO-OP-57, FO-OP-58, FO-OP-59, FO-OP-60, FO-OP-61, FO-OP-62</td>
+                    <td>Mantenimiento, Presión Diferencial, Plagas y Expediente de Equipo</td>
+                    <td>Control técnico del estado de infraestructura/equipo y variables ambientales críticas.</td>
+                    <td>Mantenimiento / Operaciones</td>
+                    <td>QA / Dirección</td>
+                    <td>FO-OP-01, FO-QA-12, FO-QA-15</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-QA-01, FO-QA-02 y variantes de área</td>
+                    <td>Matriz de Riesgos y Auditoría Interna</td>
+                    <td>Identificación de riesgos y ejecución de auditoría por área funcional.</td>
+                    <td>Aseguramiento de Calidad</td>
+                    <td>Dirección / Responsable Sanitario</td>
+                    <td>FO-QA-20, FO-OP-39</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-QA-03, FO-QA-05, FO-QA-06</td>
+                    <td>Inspección, Checklist QA y Liberación de Exosomas</td>
+                    <td>Verificación de calidad en proceso y certificación de liberación especializada.</td>
+                    <td>Aseguramiento de Calidad</td>
+                    <td>Responsable Sanitario</td>
+                    <td>FO-LC-48, FO-QA-10</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-QA-07, FO-QA-08, FO-QA-09</td>
+                    <td>Control de Cambios, Disposición Final y CAPA-AMFE</td>
+                    <td>Gestiona cambios, acciones correctivas y evidencia de destrucción/disposición.</td>
+                    <td>Aseguramiento de Calidad</td>
+                    <td>Dirección / Responsable Sanitario</td>
+                    <td>FO-OP-50, FO-OP-51, FO-OP-52</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-QA-10, FO-QA-11</td>
+                    <td>Certificado de Calidad y Certificado de Liberación de Lote</td>
+                    <td>Emisión documental final para liberar lote conforme a requisitos regulatorios.</td>
+                    <td>Aseguramiento de Calidad</td>
+                    <td>Responsable Sanitario / Dirección</td>
+                    <td>FO-LC-31, FO-LC-46, FO-LC-47, FO-LC-48, FO-OP-40</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-QA-12, FO-QA-13, FO-QA-14, FO-QA-15</td>
+                    <td>Equipos, Ambiente, Seguridad e Higiene y Mantenimiento</td>
+                    <td>Monitorea condiciones críticas, seguridad e historial de mantenimiento.</td>
+                    <td>QA / Operaciones</td>
+                    <td>Dirección</td>
+                    <td>FO-OP-01, FO-OP-56</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-QA-16, FO-QA-17, FO-QA-17-B</td>
+                    <td>Capacitación, Asistencia y Evaluación de Cursos</td>
+                    <td>Gestión de competencias y evidencia de formación del personal.</td>
+                    <td>QA / RH</td>
+                    <td>Dirección / QA</td>
+                    <td>FO-AD-12, FO-AD-18</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-QA-18, FO-QA-19, FO-QA-20</td>
+                    <td>Liberación Interna, Acta de Destrucción y Programa de Auditoría</td>
+                    <td>Asegura disposición controlada y planeación anual de auditorías.</td>
+                    <td>Aseguramiento de Calidad</td>
+                    <td>Responsable Sanitario / Dirección</td>
+                    <td>FO-LC-50, FO-OP-50, FO-QA-02</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-RS-01, FO-RS-02</td>
+                    <td>Quejas y Eventos Adversos</td>
+                    <td>Registro de seguimiento postcomercialización y farmacovigilancia aplicable.</td>
+                    <td>Regulación Sanitaria / Atención al Cliente</td>
+                    <td>QA / Responsable Sanitario</td>
+                    <td>FO-QA-07, FO-QA-09</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-SGC-01, FO-SGC-02</td>
+                    <td>Matriz de Responsabilidades e Índice de Carpetas</td>
+                    <td>Estructura documental y asignación de responsabilidades del sistema.</td>
+                    <td>Coordinación SGC</td>
+                    <td>Dirección / QA</td>
+                    <td>FO-SGC-03, FO-SGC-04</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-SGC-03, FO-SGC-03-B, FO-SGC-04</td>
+                    <td>Control Maestro de Formatos y Documentos</td>
+                    <td>Listado y control de altas, bajas y versiones vigentes de formatos.</td>
+                    <td>Coordinación SGC</td>
+                    <td>Dirección / QA</td>
+                    <td>FO-SGC-01, FO-SGC-02</td>
+                </tr>
+                <tr>
+                    <td class="highlight">FO-SGC-05, FO-SGC-06</td>
+                    <td>Inventario de Equipos y Hoja de Vida de Termómetro</td>
+                    <td>Trazabilidad metrológica e historial de equipos críticos.</td>
+                    <td>SGC / Mantenimiento / QA</td>
+                    <td>Dirección / QA</td>
+                    <td>FO-QA-12, FO-QA-15, FO-OP-61</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>4. Instrucciones Generales</h2>
+        <ul>
+            <li>Verifique que el formato corresponda al proceso y etapa antes de su llenado.</li>
+            <li>Complete todos los campos requeridos y asegure la legibilidad de la información.</li>
+            <li>El responsable de uso debe firmar y entregar el formato al responsable de revisión.</li>
+            <li>Los formatos deben archivarse y estar disponibles para auditoría y trazabilidad.</li>
+            <li>Para detalle fino de códigos activos, versión y vigencia, consulte FO-SGC-03 y FO-SGC-04.</li>
+        </ul>
+        <div class="footer">
+            <div class="signature-area"
+                style="margin-top: 40px; display: flex; justify-content: space-between; gap: 24px;">
+                <div style="flex:1; text-align:center;">
+                    <div style="font-weight:bold; font-size:15px; margin-bottom:18px;">Elaboró</div>
+                    <div style="min-height:40px; border-bottom:1.5px solid #23313f; margin-bottom:6px;"></div>
+                    <div style="font-size:13px; color:#555;">Coordinación SGC</div>
+                    <div style="font-size:12px; color:#888; margin-top:4px;">Nombre y Firma</div>
+                </div>
+                <div style="flex:1; text-align:center;">
+                    <div style="font-weight:bold; font-size:15px; margin-bottom:18px;">Revisó</div>
+                    <div style="min-height:40px; border-bottom:1.5px solid #23313f; margin-bottom:6px;"></div>
+                    <div style="font-size:13px; color:#555;">Aseguramiento de Calidad</div>
+                    <div style="font-size:12px; color:#888; margin-top:4px;">Nombre y Firma</div>
+                </div>
+                <div style="flex:1; text-align:center;">
+                    <div style="font-weight:bold; font-size:15px; margin-bottom:18px;">Aprobó</div>
+                    <div style="min-height:40px; border-bottom:1.5px solid #23313f; margin-bottom:6px;"></div>
+                    <div style="font-size:13px; color:#555;">Responsable Dirección </div>
+                    <div style="font-size:12px; color:#888; margin-top:4px;">Nombre y Firma</div>
+                </div>
+            </div>
+            <p><strong>IT-OP-02</strong> - Manual Descriptivo de Uso de Formatos</p>
+            <p>Propiedad de Xelle Scientific © 2026 | Aseguramiento de Calidad | Versión 1.0</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Este manual es propiedad de "Xelle Scientific", S.A.P.I., de
+                C. V., y está protegido por derechos de autor.</p>
+        </div>
+    </div>
+</body>
+
+</html>
