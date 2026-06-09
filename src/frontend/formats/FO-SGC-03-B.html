@@ -6,69 +6,63 @@
     <title>FO-SGC-03-B Control Maestro de Documentos y Formatos</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="format-app.js"></script>
+    <script src="format-catalog-data.js"></script>
     <style>
+        @page {
+            size: landscape;
+            margin: 0.5cm;
+        }
+
         .section-header {
             background-color: #1E3A5F;
-            color: white;
-            padding: 5px 10px;
+            color: #fff;
+            padding: 6px 10px;
             font-weight: bold;
             font-size: 11px;
-            margin-top: 15px;
+            margin-top: 14px;
+            margin-bottom: 10px;
             border-radius: 4px;
             text-transform: uppercase;
         }
 
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9px;
+        }
+
         .compact-table th {
             background-color: #1E3A5F;
-            color: white;
-            font-size: 10px;
-            padding: 6px;
+            color: #fff;
+            font-size: 9px;
+            padding: 6px 4px;
             text-align: center;
             border: 1px solid #cbd5e1;
         }
 
         .compact-table td {
-            font-size: 10px;
+            font-size: 9px;
             padding: 4px;
-            vertical-align: middle;
-            text-align: center;
             border: 1px solid #cbd5e1;
+            vertical-align: middle;
         }
 
-        .compact-table input,
-        .compact-table select,
-        .compact-table textarea {
-            font-size: 10px;
-            text-align: center;
+        .table-edit {
             width: 100%;
             border: none;
             background: transparent;
+            font-size: 9px;
             padding: 2px;
             box-sizing: border-box;
-            font-family: inherit;
         }
 
-        .compact-table input:focus,
-        .compact-table select:focus,
-        .compact-table textarea:focus {
-            background-color: #f8fafc;
+        .table-edit:focus {
             outline: 1px dashed #3b82f6;
+            background: #f8fafc;
         }
 
-        .text-left {
-            text-align: left !important;
-            padding-left: 8px !important;
-        }
-
-        .btn-add {
-            background: #e2e8f0;
-            border: 1px dashed #94a3b8;
-            width: 100%;
-            font-size: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 5px;
-            margin-top: 5px;
+        .compact-table tbody tr:nth-child(even) {
+            background-color: #f8fafc;
         }
 
         .footer-unified {
@@ -76,20 +70,16 @@
             border-top: 2px solid #1E3A5F;
             padding-top: 8px;
             text-align: center;
-            font-size: 9px;
+            font-size: 8px;
             line-height: 1.4;
             page-break-inside: avoid;
+            color: #475569;
         }
 
         .footer-unified .control-data {
             font-weight: bold;
             color: #1E3A5F;
             margin-bottom: 3px;
-        }
-
-        .footer-unified .legal-data {
-            color: #475569;
-            font-style: italic;
         }
 
         @media print {
@@ -99,15 +89,27 @@
                 display: none !important;
             }
 
-            .container {
-                max-width: 100%;
-                width: 100%;
-                border: none;
-                box-shadow: none;
+            .section-header,
+            .compact-table th {
+                background-color: #1E3A5F !important;
+                color: #fff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
 
-            .section {
-                page-break-inside: avoid;
+            .compact-table tbody tr:nth-child(even) {
+                background-color: #f8fafc !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
             }
         }
     </style>
@@ -117,103 +119,106 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
     </div>
-    <div class="container">
+
+    <div class="container" style="max-width:100%; width:100%;">
         <div class="header-main">
             <h1>CONTROL MAESTRO DE DOCUMENTOS Y FORMATOS</h1>
-            <div class="metadata">Código: FO-SGC-03-B | Versión: 1.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+            <div class="metadata">Código: FO-SGC-03-B | Versión: 2.0 | Vigencia: JUN 2026 | Página: 1 de 1</div>
         </div>
-        <div class="section-header">LISTADO DE DOCUMENTOS Y FORMATOS</div>
+
+        <div class="section-header">1. Inventario de Formatos Activos</div>
         <div class="section">
+            <p style="font-size:10px; color:#64748b; margin:0 0 10px;">
+                Tabla reconstruida con base en todos los archivos FO-*.html existentes en la carpeta de formatos.
+            </p>
             <table class="compact-table" id="tbl-documentos">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Código</th>
-                        <th>Tipo</th>
-                        <th>Nombre del Documento</th>
-                        <th>Versión</th>
-                        <th>Vigencia</th>
-                        <th>Estado</th>
-                        <th>Próxima Revisión</th>
-                        <th>Sustituye a</th>
-                        <th>Motivo del Cambio</th>
-                        <th>Acciones</th>
+                        <th width="3%">#</th>
+                        <th width="8%">Código</th>
+                        <th width="8%">Tipo</th>
+                        <th width="21%">Nombre del Documento</th>
+                        <th width="11%">Área</th>
+                        <th width="5%">Versión</th>
+                        <th width="8%">Vigencia</th>
+                        <th width="7%">Estado</th>
+                        <th width="8%">Próxima Revisión</th>
+                        <th width="12%">Ubicación Maestro</th>
+                        <th width="7%">Sustituye a</th>
+                        <th width="12%">Motivo del Cambio</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Las filas se llenarán automáticamente con JS o manualmente -->
-                </tbody>
+                <tbody></tbody>
             </table>
-            <button class="btn-add no-print" onclick="addRow('tbl-documentos')">+ AGREGAR DOCUMENTO</button>
         </div>
+
         <div class="footer-unified">
-            <div class="control-data">FO-SGC-03-B | Versión: 1.0 | Control Maestro de Documentos y Formatos | Xelle
+            <div class="control-data">FO-SGC-03-B | Versión: 2.0 | Control Maestro de Documentos y Formatos | Xelle
                 Scientific | Página 1 de 1</div>
-            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
-                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
-                parcial.</div>
+            <div>El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está
+                protegido por los derechos de autor; queda prohibida su reproducción total o parcial.</div>
         </div>
     </div>
+
     <script>
-        function addRow(tableId) {
-            const tbody = document.getElementById(tableId).querySelector('tbody');
-            const rowCount = tbody.rows.length + 1;
-            const row = tbody.insertRow();
-            row.innerHTML = `<td>${rowCount}</td><td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit text-left'></td><td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit'></td><td class='no-print'><button class='btn btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`;
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
-        // Llenado automático de la tabla con los archivos HTML de la carpeta formats
-        document.addEventListener('DOMContentLoaded', function () {
-            // Lista de archivos generada automáticamente (por limitación de JS en navegador local, debe mantenerse actualizada)
-            const archivos = [
-                "FO-LC-12.html", "FO-LC-14.html", "FO-LC-15.html", "FO-LC-16.html", "FO-LC-17.html", "FO-LC-18.html", "FO-LC-19.html", "FO-LC-20.html", "FO-LC-21.html", "FO-LC-22.html", "FO-LC-23.html", "FO-LC-24.html", "FO-LC-25.html", "FO-LC-26.html", "FO-LC-27.html", "FO-LC-28.html", "FO-LC-30.html", "FO-LC-31.html", "FO-LC-32.html", "FO-LC-32-B.html", "FO-LC-33.html", "FO-LC-34.html", "FO-LC-35.html", "FO-LC-40.html", "FO-LC-40-B.html", "FO-LC-41.html", "FO-LC-42.html", "FO-LC-43.html", "FO-LC-44.html", "FO-LC-45.html", "FO-LC-46.html", "FO-LC-47.html", "FO-LC-48.html", "FO-LC-49.html", "FO-LC-50.html", "FO-AD-00.html", "FO-AD-00-B.html", "FO-AD-01.html", "FO-AD-02.html", "FO-AD-03.html", "FO-AD-04.html", "FO-AD-05.html", "FO-AD-06.html", "FO-AD-07.html", "digitalizar-word.html",
-                "FO-OP-01.html", "FO-OP-04.html", "FO-OP-05.html", "FO-OP-07.html", "FO-OP-08.html", "FO-OP-09.html", "FO-OP-09-A.html", "FO-OP-09-B.html", "FO-OP-10.html", "FO-OP-13.html", "FO-OP-14.html", "FO-OP-15.html", "FO-OP-16.html", "FO-OP-17.html", "FO-OP-18.html", "FO-OP-19.html", "FO-OP-20.html", "FO-OP-39.html", "FO-OP-40.html", "FO-OP-40-B.html", "FO-OP-41.html", "FO-OP-42.html", "FO-OP-43.html", "FO-OP-48.html", "FO-OP-49.html", "FO-OP-50.html", "FO-OP-51.html", "FO-OP-52.html", "FO-OP-54.html", "FO-OP-55.html", "FO-OP-56.html", "FO-OP-57.html", "FO-OP-58.html", "FO-OP-59.html", "FO-OP-60.html", "FO-OP-61.html", "FO-OP-62.html",
-                "FO-QA-01.html", "FO-QA-02.html", "FO-QA-03.html", "FO-QA-06.html", "FO-QA-07.html", "FO-QA-08.html", "FO-QA-09.html", "FO-QA-10.html", "FO-QA-11.html", "FO-QA-12.html", "FO-QA-13.html", "FO-QA-14.html", "FO-QA-15.html", "FO-QA-16.html", "FO-QA-17.html", "FO-QA-18.html", "FO-QA-18-B.html", "FO-QA-19.html",
-                "FO-RS-01.html", "FO-RS-02.html",
-                "FO-SGC-01.html", "FO-SGC-02.html", "FO-SGC-03.html", "FO-SGC-04.html", "FO-SGC-05.html", "FO-SGC-06.html", "FO-SGC-I.html", "FO-SGC-M.html",
-                "IT-OP-00.html", "IT-OP-01.html", "IT-OP-02.html",
-            ];
-            const tbody = document.getElementById('tbl-documentos').querySelector('tbody');
-            archivos.forEach((archivo, idx) => {
-                const codigo = archivo.replace('.html', '');
-                const tipo = codigo.startsWith('FO-') ? 'Formato' : 'Documento';
-                const nombre = codigo.replace(/-/g, ' ');
-                // Intentar extraer metadata de los archivos HTML (solo si se sirve por http)
-                fetch(ubicacion).then(resp => resp.text()).then(html => {
-                    // Buscar metadata en el HTML
-                    let version = '', vigencia = '', estado = 'Vigente';
-                    // Buscar línea con <div class="metadata">...
-                    const metaMatch = html.match(/<div class=\"metadata\">([^<]+)<\/div>/i);
-                    if (metaMatch) {
-                        const meta = metaMatch[1];
-                        // Versión
-                        const versionMatch = meta.match(/Versi[óo]n: ([^|]+)/i);
-                        if (versionMatch) version = versionMatch[1].trim();
-                        // Vigencia
-                        const vigenciaMatch = meta.match(/Vigencia: ([^|]+)/i);
-                        if (vigenciaMatch) vigencia = vigenciaMatch[1].trim();
-                        // Estado (si viene en metadata)
-                        const estadoMatch = meta.match(/Estado: ([^|]+)/i);
-                        if (estadoMatch) estado = estadoMatch[1].trim();
-                    }
-                    // Si no hay metadata, buscar en el footer
-                    if (!version || !vigencia) {
-                        const footerMatch = html.match(/Versi[óo]n: ([^|<]+)/i);
-                        if (footerMatch) version = version || footerMatch[1].trim();
-                        const vigMatch = html.match(/Vigencia: ([^|<]+)/i);
-                        if (vigMatch) vigencia = vigencia || vigMatch[1].trim();
-                    }
-                    // Insertar fila
-                    const row = tbody.insertRow();
-                    row.innerHTML = `<td>${idx + 1}</td><td><input class='cedit' value='${codigo}'></td><td><input class='cedit' value='${tipo}'></td><td><input class='cedit text-left' value='${nombre}'></td><td><input class='cedit' value='${version}'></td><td><input class='cedit' value='${vigencia}'></td><td><input class='cedit' value='${estado}'></td><td><input class='cedit' value=''></td><td><input class='cedit' value=''></td><td class='no-print'><button class='btn btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`;
-                }).catch(() => {
-                    // Si no se puede leer el archivo, dejar campos vacíos
-                    const row = tbody.insertRow();
-                    row.innerHTML = `<td>${idx + 1}</td><td><input class='cedit' value='${codigo}'></td><td><input class='cedit' value='${tipo}'></td><td><input class='cedit text-left' value='${nombre}'></td><td><input class='cedit'></td><td><input class='cedit'></td><td><input class='cedit' value='Vigente'></td><td><input class='cedit'></td><td><input class='cedit'></td><td class='no-print'><button class='btn btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`;
-                });
+        function safeValue(value, fallback = 'N/A') {
+            if (value === null || value === undefined) return fallback;
+            const text = String(value).trim();
+            return text === '' ? fallback : text;
+        }
+
+        function editInput(rowCode, fieldName, value) {
+            const inputId = `fo_sgc_03_b_${rowCode}_${fieldName}`.replace(/[^a-zA-Z0-9_]/g, '_');
+            return `<input id="${inputId}" class="cedit table-edit" value="${escapeHtml(safeValue(value))}">`;
+        }
+
+        function sortByCode(a, b) {
+            return a.code.localeCompare(b.code, 'es', { numeric: true, sensitivity: 'base' });
+        }
+
+        function renderMasterControl() {
+            const source = Array.isArray(window.FORMAT_CATALOG) ? [...window.FORMAT_CATALOG] : [];
+            source.sort(sortByCode);
+
+            const tbody = document.querySelector('#tbl-documentos tbody');
+            tbody.innerHTML = '';
+
+            source.forEach((item, index) => {
+                const row = document.createElement('tr');
+                const code = safeValue(item.code);
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${editInput(code, 'code', code)}</td>
+                    <td>${editInput(code, 'type', safeValue(item.type, 'Formato'))}</td>
+                    <td>${editInput(code, 'name', safeValue(item.name))}</td>
+                    <td>${editInput(code, 'area', safeValue(item.area))}</td>
+                    <td>${editInput(code, 'version', safeValue(item.version, '1.0'))}</td>
+                    <td>${editInput(code, 'vigencia', safeValue(item.vigencia))}</td>
+                    <td>${editInput(code, 'estado', safeValue(item.estado, 'Vigente'))}</td>
+                    <td>${editInput(code, 'proxima', safeValue(item.proximaRevision))}</td>
+                    <td>${editInput(code, 'ubicacion', safeValue(item.ubicacionMaestro))}</td>
+                    <td>${editInput(code, 'sustituye', safeValue(item.sustituyeA))}</td>
+                    <td>${editInput(code, 'motivo', safeValue(item.motivoCambio))}</td>
+                `;
+                tbody.appendChild(row);
             });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            renderMasterControl();
+            if (typeof App !== 'undefined' && App.Universal && typeof App.Universal.ensureFieldIds === 'function') {
+                App.Universal.ensureFieldIds(document.body.id);
+            }
         });
     </script>
 </body>

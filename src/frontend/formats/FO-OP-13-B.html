@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-13 Ficha Clínica de Recolección de Tejido Placentario</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 5px;
+            font-size: 11px;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+        }
+
+        .radio-group-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            font-size: 11px;
+        }
+
+        .alert-box {
+            background-color: #fef2f2;
+            border: 1px dashed #991b1b;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: #991b1b;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: justify;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-13">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Ficha</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Código del Documento</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-13-</span>
+                    <input type="text" id="reg-op13" class="registry-input generate-barcode cedit"
+                        data-target="barcode-op13" data-prefix="FO-OP-13-" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-op13" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>FICHA CLÍNICA DE RECOLECCIÓN DE TEJIDO PLACENTARIO</h1>
+            <div class="metadata">Código: FO-OP-13 | Versión: 1.0 | Vigencia: Mar 2026 | Área: Médica / Hospitalaria |
+                Página: 1 de 2</div>
+        </div>
+
+        <div class="alert-box">
+            Instrucción para el personal médico: Este formato debe ser llenado previo al procedimiento o
+            inmediatamente después de la recolección del tejido y debe serempacado junto con la placenta en el Kit de
+            Transporte.
+        </div>
+
+        <div class="section-header">1. DATOS DE LA DONANTE (MADRE)</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Nombre Completo:</strong></td>
+                    <td width="80%" colspan="5"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:12px;"></td>
+                </tr>
+                <tr>
+                    <td><strong>ID Donante:</strong></td>
+                    <td colspan="5">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span class="registry-prefix">FCD-</span>
+                            <input type="text" id="id-donante" class="registry-input cedit"
+                                data-target="barcode-donante" data-prefix="FCD-" placeholder="000"
+                                style="font-weight:bold; font-size:14px; text-transform:uppercase; max-width:100px;">
+                            <svg id="barcode-donante" class="barcode-svg"></svg>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%"><strong>Edad:</strong></td>
+                    <td width="15%"><input type="number" class="cedit" style="width:50%; border-bottom:1px solid #ccc;">
+                        años</td>
+                    <td width="20%"><strong>Grupo Sanguíneo y Rh:</strong></td>
+                    <td width="15%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td width="15%"><strong>SDG (Semanas):</strong></td>
+                    <td width="15%"><input type="number" class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Hospital / Clínica:</strong></td>
+                    <td colspan="5"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Médico Tratante:</strong></td>
+                    <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td><strong>Cédula Prof.:</strong></td>
+                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+
+        </div>
+
+        <div class="section-header">2. DATOS DEL PARTO Y NEONATO</div>
+        <div class="section">
+            <table class="no-border-table" style="margin-bottom: 10px;">
+                <tr>
+                    <td width="20%"><strong>Fecha del Nacimiento:</strong></td>
+                    <td width="30%"><input type="text" class="cedit" style="width:100%; border-bottom:1px solid #ccc;" style="width: min-content;">
+                    </td>
+                    <td width="15%"><strong>Tipo de Parto:</strong></td>
+                    <td width="35%">
+                        <div class="radio-group-row">
+                            <label><input type="radio" name="tipo_parto" class="cedit" style="width: min-content;"> Cesárea</label>
+                            <label><input type="radio" name="tipo_parto" class="cedit" style="width: min-content;"> Parto Vaginal</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Sexo del Neonato:</strong></td>
+                    <td>
+                        <div class="radio-group-row">
+                            <label><input type="radio" name="sexo" class="cedit" style="width: min-content;"> Femenino</label>
+                            <label><input type="radio" name="sexo" class="cedit" style="width: min-content;"> Masculino</label>
+                        </div>
+                    </td>
+                    <td><strong>Salud del Neonato:</strong></td>
+                    <td>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span>Apgar:</span>
+                            <input type="text" class="cedit"
+                                style="width:30px; border-bottom:1px solid #ccc; text-align:center;"> /
+                            <input type="text" class="cedit"
+                                style="width:30px; border-bottom:1px solid #ccc; text-align:center;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span>¿Requirió reanimación o UCIN?</span>
+                            <label><input type="radio" name="ucin" class="cedit" style="width: min-content;" style="width: min-content;"> Sí</label>
+                            <label><input type="radio" name="ucin" class="cedit" style="width: min-content;" style="width: min-content;"> No</label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+
+        <div class="header-main" style="margin-top:0;"></div>
+
+        <div class="section-header">3. RECOLECCIÓN DE LA PLACENTA Y MUESTRAS</div>
+        <div class="section">
+            <table class="no-border-table" style="margin-bottom:10px;">
+                <tr>
+                    <td width="50%"><strong>Hora de recolección:</strong></td>
+                    <td width="50%"><input type="text" class="cedit"
+                            style="border-bottom:1px solid #ccc; font-weight:bold;"></td>
+                </tr>
+                <tr>
+                    <td colspan="1"><strong>¿Se siguió debido procedimiento de recolección y mantenimiento de
+                            esterilidad?</strong></td>
+                    <td colspan="1">
+                        <input type="text" placeholder="Si/No">
+                    </td>
+                </tr>
+            </table>
+
+            <p style="font-size:10px; font-weight:bold; color:#1E3A5F; margin-bottom:5px;">Checklist de Recolección
+                (Llenado por Enfermería/Médico):</p>
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th width="70%">Actividad de Procuración</th>
+                        <th width="30%">Cumplió (S/N)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-left">¿Se drenó la sangre del cordón umbilical antes del empaque?</td>
+                        <td>
+                            <input type="text" class="cedit" style="font-weight:bold;" placeholder="Si/No">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿La placenta se colocó en la bolsa estéril primaria y se selló
+                            correctamente?</td>
+                        <td>
+                            <input type="text" class="cedit" style="font-weight:bold;" placeholder="Si/No">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Se colocaron los geles refrigerantes (Ice Packs) en la hielera sin tocar
+                            directamente el tejido?</td>
+                        <td>
+                           <input type="text" class="cedit" style="font-weight:bold;" placeholder="Si/No">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">¿Se extrajeron los tubos de sangre materna para Serología (VIH, VHB, VHC,
+                            VDRL)?</td>
+                        <td>
+                            <input type="text" class="cedit" style="font-weight:bold;" placeholder="Si/No">
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">4. DOCUMENTACIÓN ANEXA AL KIT DE TRANSPORTE</div>
+        <div class="section">
+            <p style="font-size:10px; color:#1E3A5F; font-weight:bold; margin-bottom:5px;">Verifique que los siguientes
+                documentos se entreguen al chofer/transportista dentro del sobre:</p>
+            <div class="radio-group-row"
+                style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 4px;">
+                <label><input type="checkbox" class="cedit" style="width: min-content;"> Consentimiento Informado (Firmado por la madre).</label>
+                <label><input type="checkbox" class="cedit"style="width: min-content;"> Copia de Identificación Oficial de la madre.</label>
+                <label><input type="checkbox" class="cedit"style="width: min-content;"> Resultados de Serología Infecciosa (Si se hicieron previos
+                    al parto).</label>
+                <label><input type="checkbox" class="cedit"style="width: min-content;"> Tubos de muestra de sangre materna (Si el laboratorio de
+                    Xelle hará la serología).</label>
+                <label><input type="checkbox" class="cedit"style="width: min-content;"> Este formato (FO-OP-13) debidamente firmado.</label>
+            </div>
+        </div>
+
+        <div class="section-header">5. FIRMAS DE AUTORIZACIÓN Y ENTREGA LEGAL</div>
+        <div class="section">
+            <p style="font-size:10px; text-align:justify; margin-bottom:15px; font-style:italic;">
+                <strong>Declaración del Médico:</strong> Certifico que el tejido placentario fue recolectado bajo
+                técnicas asépticas estándar, empacado según las instrucciones del Kit Xelle Scientific, y que los datos
+                clínicos reflejados son correctos.
+            </p>
+
+            <div class="signature-area"
+                style="display:flex; justify-content:space-between; gap:15px; margin-top: 15px;">
+                
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold; margin-bottom: 28px;"> Procurador/ Responsable de entrega:</p>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #94a3b8; border-radius:0;">
+                </div>
+                <div class="signature-box" style="flex:1; background-color:#f0fdf4; border-color:#166534;">
+                    <p style="font-weight:bold; color:#14532d; margin-bottom: 28px;">Recibe (Transportista / Logística)
+                    </p>
+                    <input class="cedit" placeholder="Nombre, Firma y Fecha/Hora"
+                        style="border-top:1px solid #166534; border-radius:0; background:transparent;">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">FO-OP-13 | Versión: 1.0 | Ficha Clínica de Recolección de Tejido Placentario | Xelle
+            Scientific | Página 2 de 2<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;,
+            S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción
+            total o parcial.</div>
+    </div>
+
+    <script>
+        // Sincronizar Código del Documento entre paginas
+        document.getElementById('reg-op13').addEventListener('input', function () {
+            let val = this.value;
+            document.getElementById('sync-folio').innerText = val ? 'FO-OP-13-' + val : 'FO-OP-13-000';
+            JsBarcode('#barcode-op13', val ? 'FO-OP-13-' + val : 'FO-OP-13-000', { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
+        });
+        // Inicializar vacío
+        JsBarcode('#barcode-op13', 'FO-OP-13-000', { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
+
+        // Generar código de barras para ID Donante
+        document.getElementById('id-donante').addEventListener('input', function () {
+            let val = this.value;
+            let code = val ? 'FCD-' + val : 'FCD-000';
+            JsBarcode('#barcode-donante', code, { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
+        });
+        // Inicializar vacío
+        JsBarcode('#barcode-donante', 'FCD-000', { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
+    </script>
+    <script>
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,26 +1,111 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>FO-SGC-02 Índice de Carpetas</title>
     <style>
-        @page { size: landscape; margin: 1cm; }
-        body { font-family: 'Arial', sans-serif; background-color: #f1f5f9; padding: 20px; }
-        .sheet { background: white; width: 100%; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); box-sizing: border-box; }
-        .qms-header { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        .qms-header td { border: 1px solid #1E3A5F; padding: 10px; vertical-align: middle; }
-        .qms-logo { width: 25%; text-align: center; }
-        .qms-title { width: 50%; text-align: center; font-size: 16px; font-weight: 900; color: #1E3A5F; }
-        .qms-meta { width: 25%; font-size: 10px; line-height: 1.4; color: #1e293b; }
-        table.index-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        table.index-table th { background-color: #1E3A5F; color: white; font-size: 11px; padding: 8px; border: 1px solid #94a3b8; }
-        table.index-table td { border: 1px solid #cbd5e1; padding: 6px; font-size: 11px; vertical-align: top; }
-        .folder-title { font-weight: bold; background-color: #f8fafc; color: #1E3A5F; }
-        .format-list { margin: 0; padding-left: 15px; }
-        .format-list li { margin-bottom: 3px; }
-        @media print { body { background: transparent; padding: 0; } .sheet { box-shadow: none; padding: 0; } }
+        @page {
+            size: landscape;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f5f9;
+            padding: 20px;
+        }
+
+        .sheet {
+            background: white;
+            width: 100%;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .qms-header {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .qms-header td {
+            border: 1px solid #1E3A5F;
+            padding: 10px;
+            vertical-align: middle;
+        }
+
+        .qms-logo {
+            width: 25%;
+            text-align: center;
+        }
+
+        .qms-title {
+            width: 50%;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 900;
+            color: #1E3A5F;
+        }
+
+        .qms-meta {
+            width: 25%;
+            font-size: 10px;
+            line-height: 1.4;
+            color: #1e293b;
+        }
+
+        table.index-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table.index-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 11px;
+            padding: 8px;
+            border: 1px solid #94a3b8;
+        }
+
+        table.index-table td {
+            border: 1px solid #cbd5e1;
+            padding: 6px;
+            font-size: 11px;
+            vertical-align: top;
+        }
+
+        .folder-title {
+            font-weight: bold;
+            background-color: #f8fafc;
+            color: #1E3A5F;
+        }
+
+        .format-list {
+            margin: 0;
+            padding-left: 15px;
+        }
+
+        .format-list li {
+            margin-bottom: 3px;
+        }
+
+        @media print {
+            body {
+                background: transparent;
+                padding: 0;
+            }
+
+            .sheet {
+                box-shadow: none;
+                padding: 0;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="sheet">
         <table class="qms-header">
@@ -30,16 +115,21 @@
                         <g transform="translate(0,-2) scale(0.85)">
                             <circle fill="#2E9D82" cx="25" cy="25" r="13" />
                             <circle fill="#2E9D82" cx="75" cy="75" r="13" />
-                            <path fill="#2E9D82" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                            <path fill="#2E9D82"
+                                d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
                         </g>
-                        <text x="90" y="42" font-family="Arial Black" font-weight="900" font-size="34" fill="#1E3A5F">XELLE</text>
-                        <text x="91" y="68" font-family="Arial" font-weight="700" font-size="19" fill="#1E3A5F" letter-spacing="2">SCIENTIFIC</text>
+                        <text x="90" y="42" font-family="Arial Black" font-weight="900" font-size="34"
+                            fill="#1E3A5F">XELLE</text>
+                        <text x="91" y="68" font-family="Arial" font-weight="700" font-size="19" fill="#1E3A5F"
+                            letter-spacing="2">SCIENTIFIC</text>
                     </svg>
                 </td>
-                <td class="qms-title">ÍNDICE DE CARPETAS<br><span style="font-size:12px; font-weight:normal;">(Asignación de Formatos por Recopilador Físico)</span></td>
+                <td class="qms-title">ÍNDICE DE CARPETAS<br><span
+                        style="font-size:12px; font-weight:normal;">(Asignación de Formatos por Recopilador
+                        Físico)</span></td>
                 <td class="qms-meta">
                     <strong>Código:</strong> FO-SGC-02<br>
-                    <strong>Versión:</strong> 2.0<br>
+                    <strong>Versión:</strong> 1.0<br>
                     <strong>Vigencia:</strong> ENE 2026<br>
                     <strong>Página:</strong> 1 de 1
                 </td>
@@ -68,7 +158,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="folder-title">REGISTROS OPERATIVOS DE INGRESO, RECEPCIÓN Y EVALUACIÓN DE TEJIDOS (PLACENTAS)</td>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE INGRESO, RECEPCIÓN Y EVALUACIÓN DE TEJIDOS
+                        (PLACENTAS)</td>
                     <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
                     <td>
                         <ul class="format-list">
@@ -80,7 +171,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="folder-title">REGISTROS OPERATIVOS DE INSPECCIÓN, ACONDICIONAMIENTO Y DISPOSICIÓN DE PRODUCTO</td>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE INSPECCIÓN, ACONDICIONAMIENTO Y DISPOSICIÓN DE
+                        PRODUCTO</td>
                     <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
                     <td>
                         <ul class="format-list">
@@ -93,7 +185,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="folder-title">REGISTROS OPERATIVOS DE CONTROL DE PROCESOS CELULARES, CULTIVO Y CRIOPRESERVACIÓN</td>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE CONTROL DE PROCESOS CELULARES, CULTIVO Y
+                        CRIOPRESERVACIÓN</td>
                     <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
                     <td>
                         <ul class="format-list">
@@ -115,7 +208,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="folder-title">REGISTROS OPERATIVOS DE PROCESAMIENTO DE PLACENTAS PARA PRODUCCIÓN (LIOFILIZACIÓN)</td>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE PROCESAMIENTO DE PLACENTAS PARA PRODUCCIÓN
+                        (LIOFILIZACIÓN)</td>
                     <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
                     <td>
                         <ul class="format-list">
@@ -220,4 +314,5 @@
         </table>
     </div>
 </body>
+
 </html>

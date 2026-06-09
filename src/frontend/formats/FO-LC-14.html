@@ -101,6 +101,13 @@
             .footer {
                 page-break-before: auto !important;
             }
+            input::placeholder,
+            textarea::placeholder {
+                color: #b3b3b382 !important;
+            }
+            td{
+                height: 20px !important;
+            }
         }
 
         .section-header {
@@ -167,7 +174,7 @@
                     <input type="text" id="reg-14" class="registry-input generate-barcode" data-target="barcode-14"
                         data-prefix="FO-LC-14-" placeholder="001">
                 </div>
-                <input type="date" class="registry-date no-auto-date">
+                <input type="text" class="registry-date no-auto-date">
                 <svg id="barcode-14" class="barcode-svg"></svg>
             </div>
         </div>
@@ -194,15 +201,12 @@
                 <tbody>
                     <tr>
                         <td><input class="cedit" placeholder="TPL.XX..."></td>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
                         <td><input class="cedit" placeholder="Folio..."></td>
-                        <td><input class="cedit"></td>
-                        <td><select class="cedit">
-                                <option>NEGATIVO (Aprobado)</option>
-                                <option>POSITIVO (Rechazado)</option>
-                            </select></td>
-                        <td><input type="date" class="cedit"></td>
-                        <td><input class="cedit"></td>
+                        <td><input class="cedit" placeholder="ID..."></td>
+                        <td><input type="text" class="cedit" placeholder="NEG (Apr) | POS (Rech)"></td>
+                        <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                        <td><input class="cedit" placeholder="Nombre..."></td>
                         <td class="no-print"><button class="btn-delete" onclick="deleteRow(this)"
                                 style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">🗑️</button>
                         </td>
@@ -279,16 +283,16 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
 
-                // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'HH:MM';
                 });
@@ -325,16 +329,16 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
 
-                // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

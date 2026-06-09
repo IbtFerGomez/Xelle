@@ -65,8 +65,13 @@
             outline: 1px dashed #3b82f6;
         }
 
-        .marker-positive { background-color: #f0fdf4; }
-        .marker-negative { background-color: #fef2f2; }
+        .marker-positive {
+            background-color: #f0fdf4;
+        }
+
+        .marker-negative {
+            background-color: #fef2f2;
+        }
 
         .big-decision-box {
             border: 2px solid #1E3A5F;
@@ -109,12 +114,27 @@
         }
 
         @media print {
+
             .global-controls,
-            .no-print { display: none !important; }
-            ::-webkit-input-placeholder { color: transparent !important; }
-            ::placeholder { color: transparent !important; }
-            .section { page-break-inside: auto !important; }
-            tr { page-break-inside: avoid !important; }
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
         }
     </style>
 </head>
@@ -132,15 +152,29 @@
                 <svg viewBox="0 0 320 80">
                     <defs>
                         <style>
-                            .t { font-family: 'Arial Black', sans-serif; font-weight: 900; fill: #1D1D1B }
-                            .s { font-family: 'Arial', sans-serif; font-weight: 700; fill: #1D1D1B; letter-spacing: 2px }
-                            .c { fill: #2E9D82 }
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
                         </style>
                     </defs>
                     <g transform="translate(0,-2) scale(0.85)">
                         <circle class="c" cx="25" cy="25" r="13" />
                         <circle class="c" cx="75" cy="75" r="13" />
-                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
                     </g>
                     <text x="90" y="42" class="t" font-size="34">XELLE</text>
                     <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
@@ -154,7 +188,7 @@
                         data-target="barcode-res" data-prefix="FO-LC-16-" style="width:100px; font-size:14px;"
                         placeholder="000">
                 </div>
-                <input type="date" class="registry-date cedit">
+                <input type="text" class="registry-date cedit">
             </div>
         </div>
 
@@ -168,15 +202,19 @@
             <table class="no-border-table">
                 <tr>
                     <td width="20%"><strong>Código/ID Paciente:</strong></td>
-                    <td width="30%"><input class="cedit" placeholder="Ej: TPL-33-26-FEB-25" style="border-bottom:1px solid #ccc; width:90%; font-weight:bold;"></td>
+                    <td width="30%"><input class="cedit" placeholder="Ej: TPL-33-26-FEB-25"
+                            style="border-bottom:1px solid #ccc; width:90%; font-weight:bold;"></td>
                     <td width="20%"><strong>Línea Celular:</strong></td>
-                    <td width="30%"><input class="cedit" id="linea-celular-nombre" placeholder="Ej: Células Mesenquimales" style="border-bottom:1px solid #ccc; width:90%;"></td>
+                    <td width="30%"><input class="cedit" id="linea-celular-nombre"
+                            placeholder="Ej: Células Mesenquimales" style="border-bottom:1px solid #ccc; width:90%;">
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Pasaje / Generación:</strong></td>
                     <td><input class="cedit" style="border-bottom:1px solid #ccc; width:90%;"></td>
                     <td><strong>Laboratorio Subcontratado:</strong></td>
-                    <td><input class="cedit" placeholder="Ej: DILETEC / Hematología" style="border-bottom:1px solid #ccc; width:90%;"></td>
+                    <td><input class="cedit" placeholder="Ej: DILETEC / Hematología"
+                            style="border-bottom:1px solid #ccc; width:90%;"></td>
                 </tr>
             </table>
             <div style="text-align: center; margin-top: 10px;">
@@ -186,7 +224,8 @@
 
         <div class="section-header">2. PERFIL INMUNOFENOTÍPICO Y VIABILIDAD (CITOMETRÍA DE FLUJO)</div>
         <div class="section">
-            <p style="font-size:9px; color:#1E3A5F; font-weight:bold; margin-bottom:5px;">A. Marcadores de Superficie Positivos (Criterio de Aceptación: &ge; 95%)</p>
+            <p style="font-size:9px; color:#1E3A5F; font-weight:bold; margin-bottom:5px;">A. Marcadores de Superficie
+                Positivos (Criterio de Aceptación: &ge; 95%)</p>
             <table class="compact-table">
                 <thead>
                     <tr>
@@ -210,7 +249,8 @@
                 </tbody>
             </table>
 
-            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-top:10px; margin-bottom:5px;">B. Marcadores de Superficie Negativos (Criterio de Aceptación: &le; 2%)</p>
+            <p style="font-size:9px; color:#991b1b; font-weight:bold; margin-top:10px; margin-bottom:5px;">B. Marcadores
+                de Superficie Negativos (Criterio de Aceptación: &le; 2%)</p>
             <table class="compact-table">
                 <thead>
                     <tr>
@@ -269,19 +309,32 @@
                         <td style="text-align:left; font-weight:bold;">PCR múltiple (PCRm) Micoplasma</td>
                         <td>Negativo a Myc, Ure y Ach</td>
                         <td><input type="text" class="cedit"></td>
-                        <td><select class="cedit" style="font-weight:bold;"><option></option><option value="CUMPLE">Cumple</option><option value="NO CUMPLE">No Cumple</option></select></td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option></option>
+                                <option value="CUMPLE">Cumple</option>
+                                <option value="NO CUMPLE">No Cumple</option>
+                            </select></td>
                     </tr>
                     <tr>
                         <td style="text-align:left; font-weight:bold;">Esterilidad (Cultivo Bacterias/Hongos)</td>
                         <td>Sin desarrollo / Negativo</td>
                         <td><input type="text" class="cedit"></td>
-                        <td><select class="cedit" style="font-weight:bold;"><option></option><option value="CUMPLE">Cumple</option><option value="NO CUMPLE">No Cumple</option></select></td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option></option>
+                                <option value="CUMPLE">Cumple</option>
+                                <option value="NO CUMPLE">No Cumple</option>
+                            </select></td>
                     </tr>
                     <tr>
                         <td style="text-align:left; font-weight:bold;">Endotoxinas Bacterianas</td>
-                        <td>< 5.0 EU/mL</td>
+                        <td>
+                            < 5.0 EU/mL</td>
                         <td><input type="text" class="cedit"></td>
-                        <td><select class="cedit" style="font-weight:bold;"><option></option><option value="CUMPLE">Cumple</option><option value="NO CUMPLE">No Cumple</option></select></td>
+                        <td><select class="cedit" style="font-weight:bold;">
+                                <option></option>
+                                <option value="CUMPLE">Cumple</option>
+                                <option value="NO CUMPLE">No Cumple</option>
+                            </select></td>
                     </tr>
                 </tbody>
             </table>
@@ -299,117 +352,160 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><select class="cedit"><option></option><option>Confirmada</option><option>No confirmada</option><option>NA / En proceso</option></select></td>
-                        <td><select class="cedit"><option></option><option>Confirmada</option><option>No confirmada</option><option>NA / En proceso</option></select></td>
-                        <td><select class="cedit"><option></option><option>Confirmada</option><option>No confirmada</option><option>NA / En proceso</option></select></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <option>NA / En proceso</option>
+                        </select></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="section big-decision-box">
-            <h3 style="margin:0 0 10px 0; border-bottom:1px solid #1E3A5F; padding-bottom:5px; color:#1E3A5F;">DICTAMEN FINAL DE LIBERACIÓN DE LÍNEA CELULAR</h3>
-            <div style="display:flex; justify-content:space-between; align-items: flex-start; text-align:left; gap:15px;">
-                <div style="flex: 2;">
-                    <label><strong>Observaciones y Resultados de Laboratorio:</strong></label>
-                    <textarea class="cedit" rows="4" style="background:white; margin-top:5px; border:1px solid #ccc; width:100%;"></textarea>
+            <h3 style="margin:0 0 10px 0; border-bottom:1px solid #1E3A5F; padding-bottom:5px; color:#1E3A5F;">DICTAMEN
+                FINAL DE LIBERACIÓN DE LÍNEA CELULAR</h3>
+
+
+            <div style="display:flex; justify-content:space-between;  text-align:left; gap:15px;">
+                <div  style="width:100%; ">
+                    <div >
+                        <label><strong>Observaciones y Resultados de Laboratorio:</strong></label>
+                        <textarea class="cedit" rows="4"
+                            style="background:white; margin-top:5px; border:1px solid #ccc; width:100%;"></textarea>
+                    </div>
                 </div>
-                <div style="flex: 1; text-align:center;">
-                    <label style="display:block; margin-bottom:5px; font-weight:bold;">Estatus de Liberación:</label>
-                    <select class="cedit big-decision-select" onchange="this.style.backgroundColor = (this.value=='LIBERADA') ? '#d4efdf' : (this.value=='RECHAZADA' ? '#fadbd8' : '#fcf3cf')">
-                        <option value="">- SELECCIONAR -</option>
-                        <option value="LIBERADA">APROBADA / LIBERADA</option>
-                        <option value="CUARENTENA">CUARENTENA / RETENIDA</option>
-                        <option value="RECHAZADA">RECHAZADA / PARA DESTRUCCIÓN</option>
-                    </select>
+                
+                <div>
+                    <div class="section">
+                        <div style=" width: 100%;">
+                            <label class="radio-option" style="color:#025415;">
+                                <input type="radio" name="dictamen" class="cedit" style="width: min-content;">
+                                <strong>APROBADA / LIBERADA:</strong> El sistema cumple con los criterios de calidad y
+                                seguridad establecidos. Se autoriza su uso.
+                            </label>
+                            <br>
+
+                            <label class="radio-option" style="color:#b45309;">
+                                <input type="radio" name="dictamen" class="cedit" style="width: min-content;">
+                                <strong>CUARENTENA / RETENIDA</strong> Se requiere atención prioritaria a las No
+                                Conformidades Mayores detectadas. Se requiere auditoría de seguimiento.
+                            </label>
+                            <br>
+                            <label class="radio-option" style="color:#991b1b;">
+                                <input type="radio" name="dictamen" class="cedit" style="width: min-content;">
+                                <strong>RECHAZADA / PARA DESTRUCCIÓN:</strong> Existen riesgos críticos para la calidad
+                                o
+                                legalidad de
+                                la operación. Se recomienda el paro de actividades hasta la mitigación.
+                            </label>
+                        </div>
+                    </div>
+
                 </div>
+            </div>
+
+            <div class="section">
+                <div class="signature-area"
+                    style="display:flex; justify-content:space-between; gap:15px; margin-top: 20px;">
+                    <div class="signature-box" style="flex:1;">
+                        <p style="font-weight:bold; margin-bottom: 25px;">Verificó Resultados Anexos<br><span
+                                style="font-size:9px; font-weight:normal;">(Aseguramiento de Calidad)</span></p>
+                        <input class="cedit" placeholder="Nombre y Firma"
+                            style="border-top:1px solid #94a3b8; border-radius:0;">
+                        <p>Fecha: <input type="text" class="cedit" style="width:120px;"></p>
+                    </div>
+                    <div class="signature-box" style="flex:1; background-color:#f0fdf4; border-color:#166534;">
+                        <p style="font-weight:bold; color:#14532d; margin-bottom: 25px;">Autorizó Liberación<br><span
+                                style="font-size:9px; font-weight:normal;">(Responsable Sanitario)</span></p>
+                        <input class="cedit" placeholder="Nombre y Firma"
+                            style="border-top:1px solid #166534; border-radius:0; background:transparent;">
+                        <p>Fecha: <input type="text" class="cedit" style="width:120px; background:transparent;"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-unified">
+                <div class="control-data">FO-LC-16 | Versión: 3.0 | Formato de Liberación de Línea Celular | Xelle
+                    Scientific | Página 2 de 2</div>
+                <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de
+                    C.
+                    V., y está protegido por los derechos de autor.</div>
             </div>
         </div>
 
-        <div class="section">
-            <div class="signature-area" style="display:flex; justify-content:space-between; gap:15px; margin-top: 20px;">
-                <div class="signature-box" style="flex:1;">
-                    <p style="font-weight:bold; margin-bottom: 25px;">Verificó Resultados Anexos<br><span style="font-size:9px; font-weight:normal;">(Aseguramiento de Calidad)</span></p>
-                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #94a3b8; border-radius:0;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
-                </div>
-                <div class="signature-box" style="flex:1; background-color:#f0fdf4; border-color:#166534;">
-                    <p style="font-weight:bold; color:#14532d; margin-bottom: 25px;">Autorizó Liberación<br><span style="font-size:9px; font-weight:normal;">(Responsable Sanitario)</span></p>
-                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #166534; border-radius:0; background:transparent;">
-                    <p>Fecha: <input type="date" class="cedit" style="width:120px; background:transparent;"></p>
-                </div>
-            </div>
-        </div>
+        <script>
+            document.getElementById('linea-celular-id').addEventListener('input', function () {
+                let val = this.value;
+                let code = val ? 'FO-LC-16-' + val : 'FO-LC-16-000';
+                JsBarcode('#barcode-res', code, { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
+            });
+            JsBarcode('#barcode-res', 'FO-LC-16-000', { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
 
-        <div class="footer-unified">
-            <div class="control-data">FO-LC-16 | Versión: 3.0 | Formato de Liberación de Línea Celular | Xelle Scientific | Página 2 de 2</div>
-            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por los derechos de autor.</div>
-        </div>
-    </div>
-
-    <script>
-        document.getElementById('linea-celular-id').addEventListener('input', function () {
-            let val = this.value;
-            let code = val ? 'FO-LC-16-' + val : 'FO-LC-16-000';
-            JsBarcode('#barcode-res', code, { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
-        });
-        JsBarcode('#barcode-res', 'FO-LC-16-000', { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
-
-        let isOfflineMode = false;
-        function toggleOfflineMode() {
-            isOfflineMode = !isOfflineMode;
-            const btn = document.getElementById('btn-offline');
-            if (isOfflineMode) {
-                // Actualiza el código de barras con el valor del input de Línea Celular (sin prefijo)
-                function updateBarcodeFromLineaCelular() {
-                    const input = document.getElementById('linea-celular-nombre');
-                    let code = input && input.value ? input.value : '';
-                    JsBarcode('#barcode-res', code || ' ', { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
-                }
-                document.getElementById('linea-celular-nombre').addEventListener('input', updateBarcodeFromLineaCelular);
-                // Inicializar barcode vacío
-                updateBarcodeFromLineaCelular();
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.className = sel.className;
-                    input.value = sel.options[sel.selectedIndex]?.text || '';
-                    input.setAttribute('data-original-type', 'select');
-                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
-                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
-                    input.setAttribute('data-select-options', options);
-                    sel.parentNode.replaceChild(input, sel);
-                });
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
-                    inp.type = 'text';
-                    inp.placeholder = 'DD/MM/AAAA';
-                });
-            } else {
-                btn.textContent = 'Modo Offline';
-                btn.style.backgroundColor = '';
-                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
-                    const sel = document.createElement('select');
-                    sel.className = inp.className;
-                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
-                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
-                    options.forEach(optText => {
-                        const opt = document.createElement('option');
-                        opt.text = optText;
-                        sel.appendChild(opt);
-                    });
-                    const currentValue = inp.value;
-                    for (let i = 0; i < sel.options.length; i++) {
-                        if (sel.options[i].text === currentValue) { sel.selectedIndex = i; break; }
+            let isOfflineMode = false;
+            function toggleOfflineMode() {
+                isOfflineMode = !isOfflineMode;
+                const btn = document.getElementById('btn-offline');
+                if (isOfflineMode) {
+                    btn.textContent = 'Modo Online';
+                    btn.style.backgroundColor = '#f59e0b';
+                    // Actualiza el código de barras con el valor del input de Línea Celular (sin prefijo)
+                    function updateBarcodeFromLineaCelular() {
+                        const input = document.getElementById('linea-celular-nombre');
+                        let code = input && input.value ? input.value : '';
+                        JsBarcode('#barcode-res', code || ' ', { format: 'CODE128', width: 2, height: 40, displayValue: true, fontSize: 12 });
                     }
-                    inp.parentNode.replaceChild(sel, inp);
-                });
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
+                    const lineaInput = document.getElementById('linea-celular-nombre');
+                    if (lineaInput) {
+                        lineaInput.addEventListener('input', updateBarcodeFromLineaCelular);
+                    }
+                    // Inicializar barcode vacío
+                    updateBarcodeFromLineaCelular();
+                    document.querySelectorAll('select.cedit').forEach(sel => {
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.className = sel.className;
+                        input.value = sel.options[sel.selectedIndex]?.text || '';
+                        input.setAttribute('data-original-type', 'select');
+                        if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                        const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                        input.setAttribute('data-select-options', options);
+                        sel.parentNode.replaceChild(input, sel);
+                    });
+                    document.querySelectorAll('input.registry-date').forEach(inp => {
+                        inp.setAttribute('data-original-type', 'date-field');
+                        inp.setAttribute('data-original-placeholder', inp.placeholder || '');
+                        inp.type = 'text';
+                        inp.placeholder = 'DD/MM/AAAA';
+                    });
+                } else {
+                    btn.textContent = 'Modo Offline';
+                    btn.style.backgroundColor = '';
+                    document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                        const sel = document.createElement('select');
+                        sel.className = inp.className;
+                        if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                        const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                        options.forEach(optText => {
+                            const opt = document.createElement('option');
+                            opt.text = optText;
+                            sel.appendChild(opt);
+                        });
+                        const currentValue = inp.value;
+                        for (let i = 0; i < sel.options.length; i++) {
+                            if (sel.options[i].text === currentValue) { sel.selectedIndex = i; break; }
+                        }
+                        inp.parentNode.replaceChild(sel, inp);
+                    });
+                    document.querySelectorAll('input[data-original-type="date-field"]').forEach(inp => {
+                        inp.type = 'text';
+                        inp.placeholder = inp.getAttribute('data-original-placeholder') || '';
+                        inp.removeAttribute('data-original-placeholder');
+                        inp.removeAttribute('data-original-type');
+                    });
+                }
             }
-        }
-    </script>
+        </script>
 </body>
+
 </html>

@@ -6,12 +6,24 @@
     <title>FO-SGC-03 Matriz de Formatos Activos</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
+    <script src="format-catalog-data.js"></script>
     <style>
         @page {
             size: landscape;
             margin: 0.5cm;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: #fff;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 14px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
         }
 
         .compact-table {
@@ -22,135 +34,72 @@
 
         .compact-table th {
             background-color: #1E3A5F;
-            color: white;
+            color: #fff;
             font-size: 9px;
             padding: 6px 4px;
             text-align: center;
-            border: 1px solid #ddd;
+            border: 1px solid #cbd5e1;
         }
 
         .compact-table td {
             font-size: 9px;
             padding: 4px;
-            border: 1px solid #ddd;
+            border: 1px solid #cbd5e1;
             vertical-align: middle;
         }
 
+        .table-edit {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 9px;
+            padding: 2px;
+            box-sizing: border-box;
+        }
+
+        .table-edit:focus {
+            outline: 1px dashed #3b82f6;
+            background: #f8fafc;
+        }
+
         .compact-table tbody tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        .compact-table tbody tr:hover {
-            background-color: #e9ecef;
-        }
-
-        .section-header {
-            background-color: #1E3A5F;
-            color: white;
-            padding: 6px 10px;
-            font-weight: bold;
-            font-size: 11px;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            text-transform: uppercase;
+            background-color: #f8fafc;
         }
 
         .stats-box {
-            display: flex;
-            justify-content: space-around;
-            margin: 15px 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
+            margin: 12px 0;
         }
 
         .stat-item {
-            background: #f1f5f9;
+            background: #f8fafc;
             border-left: 4px solid #2E9D82;
-            padding: 10px 15px;
-            flex: 1;
+            padding: 8px 10px;
             text-align: center;
         }
 
         .stat-number {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             color: #1E3A5F;
+            line-height: 1.2;
         }
 
         .stat-label {
-            font-size: 11px;
-            color: #666;
+            font-size: 10px;
+            color: #64748b;
             text-transform: uppercase;
         }
 
-        .row-actions {
-            display: flex;
-            gap: 4px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .btn-row-action {
-            padding: 2px 6px;
-            font-size: 9px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-edit {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .btn-edit:hover {
-            background: #2563eb;
-        }
-
-        .btn-delete {
-            background: #ef4444;
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background: #dc2626;
-        }
-
-        .btn-add {
-            background: #e2e8f0;
-            border: 1px dashed #94a3b8;
-            width: 100%;
-            font-size: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 8px;
-            margin-top: 10px;
-        }
-
-        .btn-add:hover {
-            background: #cbd5e1;
-        }
-
-        .drag-handle {
-            cursor: move;
-            padding: 2px 6px;
-            font-size: 11px;
-            color: #6b7280;
-            user-select: none;
-        }
-
-        .drag-handle:hover {
-            color: #1e3a5f;
-        }
-
-        .dragging {
-            opacity: 0.5;
-            background: #fef3c7;
-        }
-
-        .drag-over {
-            border-top: 2px solid #2E9D82;
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 18px;
+            padding-top: 8px;
+            border-top: 1px solid #e2e8f0;
         }
 
         @media print {
@@ -160,7 +109,6 @@
                 display: none !important;
             }
 
-            /* Forzar impresión de colores de fondo y texto en encabezados y títulos */
             .section-header,
             .compact-table th {
                 background-color: #1E3A5F !important;
@@ -170,96 +118,18 @@
             }
 
             .compact-table tbody tr:nth-child(even) {
-                background-color: #f8f9fa !important;
+                background-color: #f8fafc !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
-            }
-
-            .compact-table tbody tr:hover {
-                background-color: #e9ecef !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-
-            ::-webkit-input-placeholder {
-                color: transparent !important;
-            }
-
-            :-moz-placeholder {
-                color: transparent !important;
-            }
-
-            ::-moz-placeholder {
-                color: transparent !important;
-            }
-
-            :-ms-input-placeholder {
-                color: transparent !important;
-            }
-
-            ::placeholder {
-                color: transparent !important;
-            }
-
-            /* Permitir que las tablas se partan entre páginas */
-            .section {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
-            }
-
-            table,
-            .compact-table {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
             }
 
             thead {
                 display: table-header-group !important;
             }
 
-            /* Solo evitar partir filas individuales */
-            tr,
-            tbody tr {
+            tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
-                page-break-after: auto !important;
-            }
-
-            /* Evitar separar títulos de sección del contenido siguiente */
-            .section-header,
-            .section-title {
-                page-break-after: avoid !important;
-                break-after: avoid !important;
-            }
-
-            .stats-box {
-                page-break-after: avoid !important;
-            }
-        }
-
-        .footer {
-            text-align: center;
-            font-size: 8px;
-            color: #64748b;
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        @media print {
-            .container {
-                padding-bottom: 42px;
-            }
-
-            .footer {
-                position: fixed;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                margin: 0;
-                padding: 6px 10px 0;
-                background: #fff;
-                border-top: 1px solid #d1d5db;
             }
         }
     </style>
@@ -269,7 +139,6 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
         <button class="btn btn-secondary" onclick="exportToCSV()">Exportar CSV</button>
     </div>
 
@@ -321,1409 +190,175 @@
 
         <div class="header-main">
             <h1>MATRIZ DE FORMATOS ACTIVOS DEL SISTEMA DE GESTIÓN DE CALIDAD</h1>
-            <div class="metadata">Código: FO-SGC-03 | Versión: 1 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <div class="metadata">Código: FO-SGC-03 | Versión: 2.0 | Vigencia: JUN 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="stats-box no-print">
             <div class="stat-item">
-                <div class="stat-number">85</div>
+                <div class="stat-number" id="stat-total">0</div>
                 <div class="stat-label">Formatos Activos</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">5</div>
-                <div class="stat-label">Familias (AD, LC, OP, QA, SGC)</div>
+                <div class="stat-number" id="stat-familias">0</div>
+                <div class="stat-label">Familias</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">1</div>
-                <div class="stat-label">Versión Estandarizada</div>
+                <div class="stat-number">V2.0</div>
+                <div class="stat-label">Versión del Formato</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">ENE 2026</div>
-                <div class="stat-label">Vigencia Actual</div>
+                <div class="stat-number">JUN 2026</div>
+                <div class="stat-label">Última Actualización</div>
             </div>
         </div>
 
-        <div class="section-header">1. INVENTARIO DE FORMATOS ACTIVOS</div>
+        <div class="section-header">1. Inventario de Formatos Activos</div>
         <div class="section">
-            <p style="font-size:10px; color:#666; margin-bottom:10px;">
-                Inventario completo de 85 formatos del Sistema de Gestión de Calidad de Xelle Scientific.
-                Todos los formatos están estandarizados a versión 1, vigencia ENE 2026.
+            <p style="font-size:10px; color:#64748b; margin:0 0 10px;">
+                Tabla reconstruida con base en todos los archivos FO-*.html existentes en la carpeta de formatos.
             </p>
-
             <table class="compact-table" id="tbl-formatos">
                 <thead>
                     <tr>
-                        <th width="2%">#</th>
-                        <th width="2%">⋮⋮</th>
-                        <th width="7%">Código</th>
+                        <th width="3%">#</th>
+                        <th width="8%">Código</th>
                         <th width="8%">Tipo</th>
-                        <th width="20%">Nombre del Documento</th>
-                        <th width="10%">Área</th>
+                        <th width="21%">Nombre del Documento</th>
+                        <th width="11%">Área</th>
                         <th width="5%">Versión</th>
-                        <th width="7%">Vigencia</th>
+                        <th width="8%">Vigencia</th>
                         <th width="7%">Estado</th>
                         <th width="8%">Próxima Revisión</th>
-                        <th width="10%">Ubicación Maestro</th>
+                        <th width="12%">Ubicación Maestro</th>
                         <th width="7%">Sustituye a</th>
-                        <th width="15%">Motivo del Cambio</th>
-                        <th width="6%" class="no-print">Acciones</th>
+                        <th width="12%">Motivo del Cambio</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- TABLA COMPLETA Y ORDENADA POR CÓDIGO, GENERADA DESDE FO-SGC-01.html -->
-                    <tr>
-                        <td>1</td>
-                        <td>⋮⋮</td>
-                        <td>FO-AD-01</td>
-                        <td>Formato</td>
-                        <td>Perfil y Descripción de Puesto</td>
-                        <td>Recursos Humanos</td>
-                        <td>1.0</td>
-                        <td>ENE 2026</td>
-                        <td>Vigente</td>
-                        <td>N/A</td>
-                        <td>Recursos Humanos / Físico</td>
-                        <td>N/A</td>
-                        <td>N/A</td>
-                        <td class="no-print"></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>⋮⋮</td>
-                        <td>FO-AD-02</td>
-                        <td>Formato</td>
-                        <td>Matriz de Competencias y Habilidades</td>
-                        <td>Recursos Humanos</td>
-                        <td>1.0</td>
-                        <td>ENE 2026</td>
-                        <td>Vigente</td>
-                        <td>N/A</td>
-                        <td>Recursos Humanos / Físico</td>
-                        <td>N/A</td>
-                        <td>N/A</td>
-                        <td class="no-print"></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>⋮⋮</td>
-                        <td>FO-AD-03</td>
-                        <td>Formato</td>
-                        <td>Evaluación de Desempeño y Necesidades de Capacitación</td>
-                        <td>Recursos Humanos / Jefatura Inmediata</td>
-                        <td>1.0</td>
-                        <td>ENE 2026</td>
-                        <td>Vigente</td>
-                        <td>N/A</td>
-                        <td>Recursos Humanos / Físico</td>
-                        <td>N/A</td>
-                        <td>N/A</td>
-                        <td class="no-print"></td>
-                    </tr>
-                    <!-- ...continúa para todos los registros de FO-SGC-01.html, mapeando a las columnas: Código, Tipo, Nombre del Documento, Área, Versión, Vigencia, Estado, Próxima Revisión, Ubicación Maestro, Sustituye a, Motivo del Cambio ... -->
-                    <tr>
-                        <td>#34</td>
-                        <td>FO-LC-18</td>
-                        <td>FO-LC-18 Macro</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#35</td>
-                        <td>FO-LC-19</td>
-                        <td>FO-LC-19 Calidad</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#36</td>
-                        <td>FO-LC-20</td>
-                        <td>FO-LC-20 Procesamiento</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#37</td>
-                        <td>FO-LC-21</td>
-                        <td>FO-LC-21 Bitácora</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#38</td>
-                        <td>FO-LC-22</td>
-                        <td>FO-LC-22 Crio Banco</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#39</td>
-                        <td>FO-LC-23</td>
-                        <td>FO-LC-23 Bitácora Crio</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#40</td>
-                        <td>FO-LC-24</td>
-                        <td>FO-LC-24 Dosificación</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#41</td>
-                        <td>FO-LC-25</td>
-                        <td>FO-LC-25 Dosificación de Exosomas</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#42</td>
-                        <td>FO-LC-26</td>
-                        <td>FO-LC-26 Esterilización</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#43</td>
-                        <td>FO-LC-27</td>
-                        <td>FO-LC-27 Control Equipos</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#44</td>
-                        <td>FO-LC-28</td>
-                        <td>FO-LC-28 Uso Equipos</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#45</td>
-                        <td>FO-LC-29</td>
-                        <td>FO-LC-29 Registro de Lote de Producto Terminado (Celular)</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#46</td>
-                        <td>FO-LC-30</td>
-                        <td>FO-LC-30 Bitácora de Recolección de Medios Condicionados</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#47</td>
-                        <td>FO-LC-31</td>
-                        <td>FO-LC-31 Lote Acelular</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#48</td>
-                        <td>FO-LC-32</td>
-                        <td>FO-LC-32 Registro de Ingreso de Muestras de Retención</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#49</td>
-                        <td>FO-LC-32-B</td>
-                        <td>FO-LC-32-B Salida y Disposición de Muestras</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#50</td>
-                        <td>FO-LC-33</td>
-                        <td>FO-LC-33 Bitácora de Muestras de Retención</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#51</td>
-                        <td>FO-LC-34</td>
-                        <td>FO-LC-34 Bitácora de Muestreos</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#52</td>
-                        <td>FO-LC-35</td>
-                        <td>FO-LC-35 Bitácora de Disposición de Lotes</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#53</td>
-                        <td>FO-LC-40</td>
-                        <td>FO-LC-40 Prep Medios</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#54</td>
-                        <td>FO-LC-40-B</td>
-                        <td>FO-LC-40-B Prep Medios</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#55</td>
-                        <td>FO-LC-41</td>
-                        <td>FO-LC-41 Micro</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#56</td>
-                        <td>FO-LC-42</td>
-                        <td>FO-LC-42 Liof Placenta</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#57</td>
-                        <td>FO-LC-43</td>
-                        <td>FO-LC-43 Liof MC</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#58</td>
-                        <td>FO-LC-44</td>
-                        <td>FO-LC-44 Lib Flasks</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#59</td>
-                        <td>FO-LC-45</td>
-                        <td>FO-LC-45 Embalaje</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#60</td>
-                        <td>FO-LC-46</td>
-                        <td>FO-LC-46 Registro Muestreo Producto Biológico</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#61</td>
-                        <td>FO-LC-47</td>
-                        <td>FO-LC-47 Revisión Calidad Muestreo</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#62</td>
-                        <td>FO-LC-50</td>
-                        <td>FO-LC-50 FORMATO MANIFIESTO DE ENTREGA, TRANSPORTE Y RECEPCIÓN DE RESIDUOS PELIGROSOS
-                            (GENERADOR)</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#63</td>
-                        <td>FO-OP-01</td>
-                        <td>FO-OP-01 Programa Anual de Mantenimiento</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#64</td>
-                        <td>FO-OP-04</td>
-                        <td>FO-OP-04 Registro Gráfico de Temperatura</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#65</td>
-                        <td>FO-OP-05</td>
-                        <td>FO-OP-05 Registro Gráfico de Temperatura de Congeladores</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#66</td>
-                        <td>FO-OP-07</td>
-                        <td>FO-OP-07 Registro de Temperatura y Humedad</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#67</td>
-                        <td>FO-OP-08</td>
-                        <td>FO-OP-08 Registro Gráfico de Temperatura de Ultracongeladores</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#68</td>
-                        <td>FO-OP-09</td>
-                        <td>FO-OP-09 Registro Gráfico Incubadora CO2</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#69</td>
-                        <td>FO-OP-10</td>
-                        <td>FO-OP-10 Registro de Devolución a Proveedores</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#70</td>
-                        <td>FO-OP-13</td>
-                        <td>FO-OP-13 Lista de Verificación Recepción MP</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#71</td>
-                        <td>FO-OP-14</td>
-                        <td>FO-OP-14 Ficha Clínica de Recolección de Tejido Placentario</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#72</td>
-                        <td>FO-OP-15</td>
-                        <td>FO-OP-15 Pedido Maestro</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#73</td>
-                        <td>FO-OP-16</td>
-                        <td>FO-OP-16 Surtido</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#74</td>
-                        <td>FO-OP-17</td>
-                        <td>FO-OP-17 Remisión</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#75</td>
-                        <td>FO-OP-19</td>
-                        <td>FO-OP-19 Registro de Limpieza de Áreas</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#76</td>
-                        <td>FO-OP-20</td>
-                        <td>FO-OP-20 Liberación Alm</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#77</td>
-                        <td>FO-OP-39</td>
-                        <td>FO-OP-39 Lista de Verificación de Auditoría</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#78</td>
-                        <td>FO-OP-40</td>
-                        <td>FO-OP-40 Orden Maestra de Producción</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#79</td>
-                        <td>FO-OP-40-B</td>
-                        <td>FO-OP-40-B Expediente de Lote de Producción</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#80</td>
-                        <td>FO-OP-41</td>
-                        <td>FO-OP-41 Recepción de Insumos (Individual)</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#81</td>
-                        <td>FO-OP-42</td>
-                        <td>FO-OP-42 Recepción de Insumos (Múltiple)</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#82</td>
-                        <td>FO-OP-43</td>
-                        <td>FO-LC-43 Kárdex de Control de Inventarios</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#83</td>
-                        <td>FO-OP-48</td>
-                        <td>FO-OP-48 Bitácora de Limpieza y Desinfección</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#84</td>
-                        <td>FO-OP-49</td>
-                        <td>FO-OP-49 Bitácora de Almacenamiento Temporal de RPBI</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#85</td>
-                        <td>FO-OP-50</td>
-                        <td>FO-LC-50 FORMATO MANIFIESTO DE ENTREGA, TRANSPORTE Y RECEPCIÓN DE RESIDUOS PELIGROSOS
-                            (GENERADOR)</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#86</td>
-                        <td>FO-OP-51</td>
-                        <td>FO-OP-51 Producto No Conforme (Desviaciones)</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#87</td>
-                        <td>FO-OP-52</td>
-                        <td>FO-OP-52 Reporte de MPNC</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#88</td>
-                        <td>FO-OP-54</td>
-                        <td>FO-OP-54 Reporte de Desviación de Procesos y Equipos</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#89</td>
-                        <td>FO-OP-55</td>
-                        <td>FO-OP-55 Expediente de Mantenimiento</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#90</td>
-                        <td>FO-OP-56</td>
-                        <td>FO-OP-56 Registro de Presión Diferencial</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#91</td>
-                        <td>FO-OP-57</td>
-                        <td>FO-OP-57 Reporte de Control de Plagas y Fauna Nociva</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#92</td>
-                        <td>FO-OP-58</td>
-                        <td>FO-OP-58 Registro de Revisión y Colocación de Trampas</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#93</td>
-                        <td>FO-OP-59</td>
-                        <td>FO-OP-59 Bitácora de Fumigaciones y Aplicación Química</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#94</td>
-                        <td>FO-OP-60</td>
-                        <td>FO-OP-60 Historial de Modificaciones y Calibraciones</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#95</td>
-                        <td>FO-OP-61</td>
-                        <td>FO-OP-61 Hoja de Vida y Expediente Documental de Equipo</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#96</td>
-                        <td>FO-OP-62</td>
-                        <td>FO-OP-62 Historial de Modificaciones y Calibraciones</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#97</td>
-                        <td>FO-QA-01</td>
-                        <td>FO-QA-01 Matriz de Riesgos y Oportunidades</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#98</td>
-                        <td>FO-QA-02</td>
-                        <td>FO-QA-02 Cuestionario Maestro de Auditoría Interna</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#99</td>
-                        <td>FO-QA-03</td>
-                        <td>FO-QA-03 Hoja de Inspección y Liberación de Calidad</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#100</td>
-                        <td>FO-QA-06</td>
-                        <td>FO-QA-06 Certificado de Liberación de Exosomas</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#101</td>
-                        <td>FO-QA-07</td>
-                        <td>FO-QA-07 Solicitud y Control de Cambios</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#102</td>
-                        <td>FO-QA-08</td>
-                        <td>FO-QA-08 Acta de Destrucción y Disposición Final</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#103</td>
-                        <td>FO-QA-09</td>
-                        <td>FO-QA-09 CAPA - Metodología AMFE</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#104</td>
-                        <td>FO-QA-10</td>
-                        <td>FO-QA-10 Certificado de Calidad de Lote (CoA)</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#105</td>
-                        <td>FO-QA-11</td>
-                        <td>FO-QA-11 Certificado de Liberación de Lote</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#106</td>
-                        <td>FO-QA-12</td>
-                        <td>FO-QA-12 Bitácora de Uso y Fallas de Equipo</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#107</td>
-                        <td>FO-QA-13</td>
-                        <td>FO-QA-13 Bitácora de Monitoreo Ambiental</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#108</td>
-                        <td>FO-QA-14</td>
-                        <td>FO-QA-14 Checklist de Seguridad e Higiene</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#109</td>
-                        <td>FO-QA-15</td>
-                        <td>FO-QA-15 Programa Anual de Mantenimiento</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#110</td>
-                        <td>FO-QA-16</td>
-                        <td>FO-QA-16 Detección de Necesidades de Capacitación (DNC)</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#111</td>
-                        <td>FO-QA-17</td>
-                        <td>FO-QA-17 Lista de Asistencia y Evaluación</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#112</td>
-                        <td>FO-QA-18</td>
-                        <td>FO-QA-18 Liberación Interna de Materia Prima</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#113</td>
-                        <td>FO-QA-18-B</td>
-                        <td>FO-QA-18 Acta de Liberación de Lote de Exosomas</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#114</td>
-                        <td>FO-RS-01</td>
-                        <td>FO-RS-01 Registro de Quejas y Satisfacción del Cliente</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#115</td>
-                        <td>FO-RS-02</td>
-                        <td>FO-RS-02 Notificación de Evento Adverso</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#116</td>
-                        <td>FO-SGC-01</td>
-                        <td>FO-SGC-01 Matriz de Responsabilidades por Módulo</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#117</td>
-                        <td>FO-SGC-02</td>
-                        <td>FO-SGC-02 Matriz de Responsabilidades</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#118</td>
-                        <td>FO-SGC-03</td>
-                        <td>FO-SGC-03 Matriz de Formatos Activos</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#119</td>
-                        <td>FO-SGC-04</td>
-                        <td>FO-SGC-04 Listado Maestro de Formatos</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#120</td>
-                        <td>FO-SGC-05</td>
-                        <td>FO-SGC-05 Inventario de Equipos</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#121</td>
-                        <td>FO-SGC-06</td>
-                        <td>FO-SGC-06 Hoja de Vida de Termómetro</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#122</td>
-                        <td>FO-SGC-I</td>
-                        <td>FO-SGC-I Índice de Carpetas del SGC</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>#123</td>
-                        <td>FO-SGC-M</td>
-                        <td>FO-SGC-M Índice Maestro de Carpetas</td>
-                        <td>1</td>
-                        <td>ENE 2026</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
 
-        <div class="section-header">2. FIRMAS Y APROBACIONES</div>
-        <div class="section">
-            <table class="compact-table" style="margin-top:15px;">
-                <thead>
-                    <tr>
-                        <th>Elaboró</th>
-                        <th>Revisó</th>
-                        <th>Autorizó</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <tr style="height:60px;">
-                        <td style="text-align:center; vertical-align:bottom;">
-                            <div style="border-bottom:1px solid #000; width:80%; margin:0 auto 5px;"></div>
-                            Sistema de Gestión de Calidad
-                        </td>
-                        <td style="text-align:center; vertical-align:bottom;">
-                            <div style="border-bottom:1px solid #000; width:80%; margin:0 auto 5px;"></div>
-                            Aseguramiento de Calidad
-                        </td>
-                        <td style="text-align:center; vertical-align:bottom;">
-                            <div style="border-bottom:1px solid #000; width:80%; margin:0 auto 5px;"></div>
-                            Responsable Dirección
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="btn-add no-print" onclick="addRow()">+ AGREGAR NUEVO FORMATO</button>
-        </div>
-
-        <footer class="footer">FO-SGC-03 | Versión: 1 | MATRIZ DE FORMATOS ACTIVOS DEL SISTEMA DE GESTIÓN DE CALIDAD |
-            Xelle
-            Scientific | Página 1 de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;,
-            S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción
-            total
-            o parcial.</footer>
+        <footer class="footer">
+            FO-SGC-03 | Versión: 2.0 | MATRIZ DE FORMATOS ACTIVOS DEL SISTEMA DE GESTIÓN DE CALIDAD | Xelle Scientific
+            | Página 1 de 1<br>
+            El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por
+            derechos de autor.
+        </footer>
     </div>
 
     <script>
-        // Inicialización cuando se carga el documento
-        document.addEventListener('DOMContentLoaded', function () {
-            initializeTable();
-            updateStats();
-        });
-
-        function initializeTable() {
-            const tbody = document.getElementById('tbl-formatos').getElementsByTagName('tbody')[0];
-            const rows = tbody.getElementsByTagName('tr');
-
-            // Agregar controles de acción a cada fila existente
-            for (let i = 0; i < rows.length; i++) {
-                if (rows[i].cells.length > 0 && !rows[i].classList.contains('comment-row')) {
-                    addRowControls(rows[i]);
-                }
-            }
-
-            renumberRows();
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
-        function renumberRows() {
-            const tbody = document.getElementById('tbl-formatos').getElementsByTagName('tbody')[0];
-            const rows = tbody.querySelectorAll('tr:not(.comment-row)');
+        function safeValue(value, fallback = 'N/A') {
+            if (value === null || value === undefined) return fallback;
+            const text = String(value).trim();
+            return text === '' ? fallback : text;
+        }
 
-            rows.forEach((row, index) => {
-                if (row.cells.length > 1) {
-                    row.cells[1].textContent = `#${index + 1}`;
-                }
+        function editInput(rowCode, fieldName, value) {
+            const inputId = `fo_sgc_03_${rowCode}_${fieldName}`.replace(/[^a-zA-Z0-9_]/g, '_');
+            return `<input id="${inputId}" class="cedit table-edit" value="${escapeHtml(safeValue(value))}">`;
+        }
+
+        function sortByCode(a, b) {
+            return a.code.localeCompare(b.code, 'es', { numeric: true, sensitivity: 'base' });
+        }
+
+        function renderTable() {
+            const source = Array.isArray(window.FORMAT_CATALOG) ? [...window.FORMAT_CATALOG] : [];
+            source.sort(sortByCode);
+
+            const tbody = document.querySelector('#tbl-formatos tbody');
+            tbody.innerHTML = '';
+
+            source.forEach((item, index) => {
+                const row = document.createElement('tr');
+                const code = safeValue(item.code);
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${editInput(code, 'code', code)}</td>
+                    <td>${editInput(code, 'type', safeValue(item.type, 'Formato'))}</td>
+                    <td>${editInput(code, 'name', safeValue(item.name))}</td>
+                    <td>${editInput(code, 'area', safeValue(item.area))}</td>
+                    <td>${editInput(code, 'version', safeValue(item.version, '1.0'))}</td>
+                    <td>${editInput(code, 'vigencia', safeValue(item.vigencia))}</td>
+                    <td>${editInput(code, 'estado', safeValue(item.estado, 'Vigente'))}</td>
+                    <td>${editInput(code, 'proxima', safeValue(item.proximaRevision))}</td>
+                    <td>${editInput(code, 'ubicacion', safeValue(item.ubicacionMaestro))}</td>
+                    <td>${editInput(code, 'sustituye', safeValue(item.sustituyeA))}</td>
+                    <td>${editInput(code, 'motivo', safeValue(item.motivoCambio))}</td>
+                `;
+                tbody.appendChild(row);
             });
-        }
 
-        function addRowControls(row) {
-            // Si ya tiene controles, no agregar de nuevo
-            if (row.querySelector('.row-actions')) return;
-
-            // Agregar handle de arrastre al inicio
-            const handleCell = document.createElement('td');
-            handleCell.className = 'drag-handle no-print';
-            handleCell.innerHTML = '⋮⋮';
-            handleCell.draggable = false;
-            row.insertBefore(handleCell, row.firstChild);
-
-            // Agregar celda de acciones al final
-            const actionsCell = document.createElement('td');
-            actionsCell.className = 'no-print';
-            actionsCell.innerHTML = `
-                <div class="row-actions">
-                    <button class="btn-row-action btn-edit" onclick="editRow(this)" title="Editar">✎</button>
-                    <button class="btn-row-action btn-delete" onclick="deleteRow(this)" title="Eliminar">🗑</button>
-                </div>
-            `;
-            row.appendChild(actionsCell);
-
-            // Configurar drag and drop
-            row.draggable = true;
-            row.addEventListener('dragstart', handleDragStart);
-            row.addEventListener('dragover', handleDragOver);
-            row.addEventListener('drop', handleDrop);
-            row.addEventListener('dragend', handleDragEnd);
-        }
-
-        function addRow() {
-            Swal.fire({
-                title: 'Agregar Nuevo Documento',
-                html: `
-                    <div style="text-align: left; padding: 10px;">
-                        <label>Código:</label><input id="input-codigo" class="swal2-input" placeholder="Ej: FO-LC-16">
-                        <label>Tipo:</label><input id="input-tipo" class="swal2-input" placeholder="Ej: Formato, PNO, Manual, Guía, Plan Maestro">
-                        <label>Nombre del Documento:</label><input id="input-nombre" class="swal2-input" placeholder="Ej: Liberación de Línea Celular">
-                        <label>Área:</label><input id="input-area" class="swal2-input" placeholder="Ej: Laboratorio, Calidad, Producción">
-                        <label>Versión:</label><input id="input-version" class="swal2-input" placeholder="Ej: 3.0">
-                        <label>Vigencia:</label><input id="input-vigencia" class="swal2-input" placeholder="Ej: Mar 2026">
-                        <label>Estado:</label><input id="input-estado" class="swal2-input" placeholder="Vigente, Obsoleto, En Revisión">
-                        <label>Próxima Revisión:</label><input id="input-proxima" class="swal2-input" placeholder="Ej: Mar 2028">
-                        <label>Ubicación Maestro:</label><input id="input-ubicacion" class="swal2-input" placeholder="Ej: Calidad / Digital">
-                        <label>Sustituye a:</label><input id="input-sustituye" class="swal2-input" placeholder="Ej: V 2.0">
-                        <label>Motivo del Cambio:</label><input id="input-motivo" class="swal2-input" placeholder="Ej: Inclusión de Citometría">
-                    </div>
-                `,
-                showCancelButton: true,
-                confirmButtonText: 'Agregar',
-                cancelButtonText: 'Cancelar',
-                confirmButtonColor: '#10b981',
-                cancelButtonColor: '#6b7280',
-                width: '700px',
-                preConfirm: () => {
-                    // Recoger valores y poner N/A si vacío
-                    const getVal = id => {
-                        const v = document.getElementById(id).value.trim();
-                        return v === '' ? 'N/A' : v;
-                    };
-                    const codigo = getVal('input-codigo');
-                    const tipo = getVal('input-tipo');
-                    const nombre = getVal('input-nombre');
-                    const area = getVal('input-area');
-                    const version = getVal('input-version');
-                    const vigencia = getVal('input-vigencia');
-                    const estado = getVal('input-estado');
-                    const proxima = getVal('input-proxima');
-                    const ubicacion = getVal('input-ubicacion');
-                    const sustituye = getVal('input-sustituye');
-                    const motivo = getVal('input-motivo');
-                    if (!codigo || !tipo || !nombre || !area) {
-                        Swal.showValidationMessage('Código, Tipo, Nombre y Área son obligatorios');
-                        return false;
-                    }
-                    return { codigo, tipo, nombre, area, version, vigencia, estado, proxima, ubicacion, sustituye, motivo };
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const data = result.value;
-                    const tbody = document.getElementById('tbl-formatos').getElementsByTagName('tbody')[0];
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td>⋮⋮</td>
-                        <td><strong>${data.codigo}</strong></td>
-                        <td>${data.tipo}</td>
-                        <td>${data.nombre}</td>
-                        <td>${data.area}</td>
-                        <td>${data.version}</td>
-                        <td>${data.vigencia}</td>
-                        <td>${data.estado}</td>
-                        <td>${data.proxima}</td>
-                        <td>${data.ubicacion}</td>
-                        <td>${data.sustituye}</td>
-                        <td>${data.motivo}</td>
-                        <td class="no-print"></td>
-                    `;
-                    tbody.appendChild(newRow);
-                    addRowControls(newRow);
-                    renumberRows();
-                    updateStats();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Documento agregado',
-                        timer: 1200,
-                        showConfirmButton: false
-                    });
-                }
-            });
-        }
-
-        function editRow(btn) {
-            const row = btn.closest('tr');
-            const cells = row.getElementsByTagName('td');
-            // Índices: 0=drag, 1=código, 2=tipo, 3=nombre, 4=área, 5=versión, 6=vigencia, 7=estado, 8=próxima, 9=ubicación, 10=sustituye, 11=motivo, 12=acciones
-            const currentData = {
-                codigo: cells[1].textContent.trim(),
-                tipo: cells[2].textContent.trim(),
-                nombre: cells[3].textContent.trim(),
-                area: cells[4].textContent.trim(),
-                version: cells[5].textContent.trim(),
-                vigencia: cells[6].textContent.trim(),
-                estado: cells[7].textContent.trim(),
-                proxima: cells[8].textContent.trim(),
-                ubicacion: cells[9].textContent.trim(),
-                sustituye: cells[10].textContent.trim(),
-                motivo: cells[11].textContent.trim()
-            };
-            Swal.fire({
-                title: 'Editar Documento',
-                html: `
-                    <div style="text-align: left; padding: 10px;">
-                        <label>Código:</label><input id="input-codigo" class="swal2-input" value="${currentData.codigo}">
-                        <label>Tipo:</label><input id="input-tipo" class="swal2-input" value="${currentData.tipo}">
-                        <label>Nombre del Documento:</label><input id="input-nombre" class="swal2-input" value="${currentData.nombre}">
-                        <label>Área:</label><input id="input-area" class="swal2-input" value="${currentData.area}">
-                        <label>Versión:</label><input id="input-version" class="swal2-input" value="${currentData.version}">
-                        <label>Vigencia:</label><input id="input-vigencia" class="swal2-input" value="${currentData.vigencia}">
-                        <label>Estado:</label><input id="input-estado" class="swal2-input" value="${currentData.estado}">
-                        <label>Próxima Revisión:</label><input id="input-proxima" class="swal2-input" value="${currentData.proxima}">
-                        <label>Ubicación Maestro:</label><input id="input-ubicacion" class="swal2-input" value="${currentData.ubicacion}">
-                        <label>Sustituye a:</label><input id="input-sustituye" class="swal2-input" value="${currentData.sustituye}">
-                        <label>Motivo del Cambio:</label><input id="input-motivo" class="swal2-input" value="${currentData.motivo}">
-                    </div>
-                `,
-                showCancelButton: true,
-                confirmButtonText: 'Guardar',
-                cancelButtonText: 'Cancelar',
-                confirmButtonColor: '#10b981',
-                cancelButtonColor: '#6b7280',
-                width: '700px',
-                preConfirm: () => {
-                    const getVal = id => {
-                        const v = document.getElementById(id).value.trim();
-                        return v === '' ? 'N/A' : v;
-                    };
-                    return {
-                        codigo: getVal('input-codigo'),
-                        tipo: getVal('input-tipo'),
-                        nombre: getVal('input-nombre'),
-                        area: getVal('input-area'),
-                        version: getVal('input-version'),
-                        vigencia: getVal('input-vigencia'),
-                        estado: getVal('input-estado'),
-                        proxima: getVal('input-proxima'),
-                        ubicacion: getVal('input-ubicacion'),
-                        sustituye: getVal('input-sustituye'),
-                        motivo: getVal('input-motivo')
-                    };
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const data = result.value;
-                    cells[1].innerHTML = `<strong>${data.codigo}</strong>`;
-                    cells[2].textContent = data.tipo;
-                    cells[3].textContent = data.nombre;
-                    cells[4].textContent = data.area;
-                    cells[5].textContent = data.version;
-                    cells[6].textContent = data.vigencia;
-                    cells[7].textContent = data.estado;
-                    cells[8].textContent = data.proxima;
-                    cells[9].textContent = data.ubicacion;
-                    cells[10].textContent = data.sustituye;
-                    cells[11].textContent = data.motivo;
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Documento actualizado',
-                        timer: 1200,
-                        showConfirmButton: false
-                    });
-                }
-            });
-        }
-
-        function deleteRow(btn) {
-            const row = btn.closest('tr');
-            const codigo = row.getElementsByTagName('td')[1].textContent.trim();
-
-            Swal.fire({
-                title: '¿Eliminar formato?',
-                html: `¿Está seguro de eliminar:<br><strong>${codigo}</strong>?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar',
-                confirmButtonColor: '#ef4444',
-                cancelButtonColor: '#6b7280'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    row.remove();
-                    renumberRows();
-                    updateStats();
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Formato eliminado',
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
-                }
-            });
-        }
-
-        function updateStats() {
-            const tbody = document.getElementById('tbl-formatos').getElementsByTagName('tbody')[0];
-            const rows = tbody.querySelectorAll('tr:not(.comment-row)');
-            const count = rows.length;
-
-            // Actualizar el contador de formatos activos
-            const statNumber = document.querySelector('.stat-number');
-            if (statNumber) {
-                statNumber.textContent = count;
-            }
-        }
-
-        // Variables para drag and drop
-        let draggedRow = null;
-
-        function handleDragStart(e) {
-            draggedRow = this;
-            this.classList.add('dragging');
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text/html', this.innerHTML);
-        }
-
-        function handleDragOver(e) {
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
-            e.dataTransfer.dropEffect = 'move';
-
-            const target = e.target.closest('tr');
-            if (target && target !== draggedRow) {
-                target.classList.add('drag-over');
-            }
-
-            return false;
-        }
-
-        function handleDrop(e) {
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-
-            const target = e.target.closest('tr');
-            if (draggedRow !== target && target) {
-                const tbody = target.parentNode;
-                const allRows = Array.from(tbody.getElementsByTagName('tr'));
-                const draggedIndex = allRows.indexOf(draggedRow);
-                const targetIndex = allRows.indexOf(target);
-
-                if (draggedIndex < targetIndex) {
-                    target.parentNode.insertBefore(draggedRow, target.nextSibling);
-                } else {
-                    target.parentNode.insertBefore(draggedRow, target);
-                }
-
-                renumberRows();
-            }
-
-            return false;
-        }
-
-        function handleDragEnd(e) {
-            this.classList.remove('dragging');
-
-            // Remover indicadores visuales de todos los renglones
-            const rows = document.querySelectorAll('#tbl-formatos tbody tr');
-            rows.forEach(row => {
-                row.classList.remove('drag-over');
-            });
+            const familias = new Set(source.map(item => safeValue(item.code).split('-')[1]).filter(Boolean));
+            document.getElementById('stat-total').textContent = String(source.length);
+            document.getElementById('stat-familias').textContent = String(familias.size);
         }
 
         function exportToCSV() {
-            const table = document.getElementById('tbl-formatos');
-            const rows = table.querySelectorAll('tr');
-            let csv = [];
-            for (let i = 0; i < rows.length; i++) {
-                const row = [], cols = rows[i].querySelectorAll('td, th');
-                // Saltar la primera columna (drag handle) y la última (acciones)
-                for (let j = 1; j < cols.length - 1; j++) {
-                    let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, '').replace(/"/g, '""');
-                    row.push('"' + data + '"');
-                }
-                if (row.length > 0) {
-                    csv.push(row.join(','));
-                }
-            }
-            // Encabezados personalizados
             const headers = [
-                'Código', 'Tipo', 'Nombre del Documento', 'Área', 'Versión', 'Vigencia', 'Estado', 'Próxima Revisión', 'Ubicación Maestro', 'Sustituye a', 'Motivo del Cambio'
+                'Código',
+                'Tipo',
+                'Nombre del Documento',
+                'Área',
+                'Versión',
+                'Vigencia',
+                'Estado',
+                'Próxima Revisión',
+                'Ubicación Maestro',
+                'Sustituye a',
+                'Motivo del Cambio'
             ];
-            csv.unshift(headers.map(h => '"' + h + '"').join(','));
-            const csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
+
+            const rows = [];
+            rows.push(headers.map(value => `"${value}"`).join(','));
+
+            const source = Array.isArray(window.FORMAT_CATALOG) ? [...window.FORMAT_CATALOG] : [];
+            source.sort(sortByCode);
+
+            const tableRows = document.querySelectorAll('#tbl-formatos tbody tr');
+            tableRows.forEach(row => {
+                const inputs = row.querySelectorAll('input.table-edit');
+                if (inputs.length < 11) return;
+                const values = [
+                    safeValue(inputs[0].value),
+                    safeValue(inputs[1].value),
+                    safeValue(inputs[2].value),
+                    safeValue(inputs[3].value),
+                    safeValue(inputs[4].value),
+                    safeValue(inputs[5].value),
+                    safeValue(inputs[6].value),
+                    safeValue(inputs[7].value),
+                    safeValue(inputs[8].value),
+                    safeValue(inputs[9].value),
+                    safeValue(inputs[10].value)
+                ].map(value => `"${String(value).replace(/"/g, '""')}"`);
+                rows.push(values.join(','));
+            });
+
+            const csvFile = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
             const downloadLink = document.createElement('a');
-            downloadLink.download = 'FO-SGC-03_Matriz_Documentos_' + new Date().toISOString().slice(0, 10) + '.csv';
+            downloadLink.download = 'FO-SGC-03_Matriz_Formatos_Activos.csv';
             downloadLink.href = window.URL.createObjectURL(csvFile);
-            downloadLink.style.display = 'none';
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
         }
 
-        // Inicializar sistema de persistencia
-        if (typeof App !== 'undefined') {
-            App.init();
-        }
-    </script>
-    <script>
-        let isOfflineMode = false;
-
-        function toggleOfflineMode() {
-            isOfflineMode = !isOfflineMode;
-            const btn = document.getElementById('btn-offline');
-            if (isOfflineMode) {
-                btn.textContent = 'Modo Online';
-                btn.style.backgroundColor = '#f59e0b';
-
-                // Convertir <select> a <input type="text">
-                document.querySelectorAll('select.cedit').forEach(sel => {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.className = sel.className;
-                    input.value = sel.options[sel.selectedIndex]?.text || '';
-                    input.setAttribute('data-original-type', 'select');
-                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
-                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
-                    input.setAttribute('data-select-options', options);
-                    sel.parentNode.replaceChild(input, sel);
-                });
-
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
-                    inp.type = 'text';
-                    inp.placeholder = 'DD/MM/AAAA';
-                });
-
-                // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
-                    inp.type = 'text';
-                    inp.placeholder = 'HH:MM';
-                });
-
-                // Convertir <input type="number"> a <input type="text">
-                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'number');
-                    const currentPlaceholder = inp.placeholder;
-                    inp.type = 'text';
-                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
-                });
-            } else {
-                btn.textContent = 'Modo Offline';
-                btn.style.backgroundColor = '';
-
-                // Restaurar <select> desde <input type="text">
-                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
-                    const sel = document.createElement('select');
-                    sel.className = inp.className;
-                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
-                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
-                    options.forEach(optText => {
-                        const opt = document.createElement('option');
-                        opt.text = optText;
-                        sel.appendChild(opt);
-                    });
-                    const currentValue = inp.value;
-                    for (let i = 0; i < sel.options.length; i++) {
-                        if (sel.options[i].text === currentValue) {
-                            sel.selectedIndex = i;
-                            break;
-                        }
-                    }
-                    inp.parentNode.replaceChild(sel, inp);
-                });
-
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
-
-                // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
-                    inp.placeholder = '';
-                    inp.removeAttribute('data-original-type');
-                });
-
-                // Restaurar <input type="number">
-                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
-                    inp.type = 'number';
-                    inp.removeAttribute('data-original-type');
-                });
+        document.addEventListener('DOMContentLoaded', function () {
+            renderTable();
+            if (typeof App !== 'undefined' && App.Universal && typeof App.Universal.ensureFieldIds === 'function') {
+                App.Universal.ensureFieldIds(document.body.id);
             }
-        }
+        });
     </script>
 </body>
 

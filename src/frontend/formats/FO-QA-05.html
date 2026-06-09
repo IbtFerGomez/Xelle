@@ -385,6 +385,60 @@
                     <td><input class="cedit text-left" placeholder="Describa el hallazgo..."></td>
                     <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
                 </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Ej. Sem 2"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit text-left" placeholder="Describa el hallazgo..."></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Ej. Sem 2"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit text-left" placeholder="Describa el hallazgo..."></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Ej. Sem 2"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit text-left" placeholder="Describa el hallazgo..."></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Ej. Sem 2"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit text-left" placeholder="Describa el hallazgo..."></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Ej. Sem 2"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit text-left" placeholder="Describa el hallazgo..."></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Ej. Sem 2"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit text-left" placeholder="Describa el hallazgo..."></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Ej. Sem 2"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit text-left" placeholder="Describa el hallazgo..."></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Ej. Sem 2"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit text-left" placeholder="Describa el hallazgo..."></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="Ej. Sem 2"></td>
+                    <td><input class="cedit"></td>
+                    <td><input class="cedit text-left" placeholder="Describa el hallazgo..."></td>
+                    <td><input class="cedit text-center" placeholder="Folio FO-OP-51"></td>
+                </tr>
             </tbody>
         </table>
         <button class="btn-add no-print" onclick="addRow('tbl-desviaciones')">+ AGREGAR DESVIACIÓN</button>
@@ -417,6 +471,24 @@
     <script>
         function addRow(tableId) {
             const tbody = document.getElementById(tableId).querySelector('tbody');
+
+            if (tableId === 'tbl-checklist') {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input class="cedit text-center" placeholder="Área"></td>
+                    <td><input class="cedit text-left" placeholder="Punto crítico a evaluar"></td>
+                    <td><input class="cedit text-center" placeholder="FO-XX-00"></td>
+                    <td><input class="cedit text-center" placeholder="C/NC"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit" placeholder="Observaciones / Evidencia"></td>
+                `;
+                tbody.appendChild(newRow);
+                return;
+            }
+
             const newRow = tbody.rows[0].cloneNode(true);
             newRow.querySelectorAll('input').forEach(input => input.value = '');
             tbody.appendChild(newRow);

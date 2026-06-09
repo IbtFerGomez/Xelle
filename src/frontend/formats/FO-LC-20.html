@@ -145,7 +145,7 @@
                     <input type="text" id="reg-20" class="registry-input generate-barcode" data-target="barcode-20"
                         data-prefix="FO-LC-20-">
                 </div>
-                <input type="date" class="registry-date no-auto-date">
+                <input type="text" class="registry-date no-auto-date">
                 <svg id="barcode-20" class="barcode-svg"></svg>
             </div>
         </div>
@@ -167,9 +167,9 @@
                 </tr>
                 <tr>
                     <td><strong>Fecha Proceso:</strong></td>
-                    <td><input type="date" class="today-date cedit" id="fecha_proceso" onchange="updateAllCodes()"></td>
+                    <td><input type="text" class="today-date cedit" id="fecha_proceso" onchange="updateAllCodes()"></td>
                     <td><strong>Hora Proceso:</strong></td>
-                    <td><input type="time" class="cedit"></td>
+                    <td><input type="text" class="cedit"></td>
                 </tr>
                 <tr>
                     <td><strong>Responsable:</strong></td>
@@ -228,11 +228,7 @@
             <div class="section-title summary-header">4. Congelación Inicial</div>
             <div style="margin-bottom: 10px;">
                 <strong>¿Se congeló muestra?</strong>
-                <select id="freeze-select" style="width: 200px; margin-left: 10px; font-weight: bold;"
-                    onchange="toggleFreezeLocal()">
-                    <option value="No">No</option>
-                    <option value="Si">Sí</option>
-                </select>
+                <input type="text" id="freeze-select" class="cedit" placeholder="Si/No" oninput="toggleFreezeLocal()">
             </div>
             <div id="freeze-container" style="display:none;">
                 <table id="freeze-table" class="compact-table">
@@ -333,8 +329,8 @@
                         <option value="EX">EX</option>
                     </select>
                 </td>
-                <td><input type="date" class="cedit fi-date" onchange="updateAllCodes()"></td>
-                <td><input type="number" class="cedit num-flask" value="1" style="width:40px" oninput="updateAllCodes()"></td>
+                <td><input type="text" class="cedit fi-date" onchange="updateAllCodes()"></td>
+                <td><input type="text" class="cedit num-flask" value="1" style="width:40px" oninput="updateAllCodes()"></td>
                 <td><input class="cedit gen-code auto-generated" readonly></td>
                 <td><select class="cedit recip-select" onchange="updateAllCodes()">${recipientOptions}</select></td>
                 <td class="no-print"><button class="btn btn-danger btn-mini" onclick="removeFlaskRow(this)">x</button></td>
@@ -530,23 +526,23 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
 
-                // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'HH:MM';
                 });
 
-                // Convertir <input type="number"> a <input type="text">
-                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'number');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     const currentPlaceholder = inp.placeholder;
                     inp.type = 'text';
                     if (currentPlaceholder) inp.placeholder = currentPlaceholder;
@@ -576,23 +572,23 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
 
-                // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
 
-                // Restaurar <input type="number">
-                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
-                    inp.type = 'number';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.removeAttribute('data-original-type');
                 });
             }

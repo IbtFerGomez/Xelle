@@ -86,7 +86,7 @@
             <table class="no-border-table">
                 <tr>
                     <td width="20%"><strong>Fecha de Emisión:</strong></td>
-                    <td width="30%"><input type="date" class="cedit" style="border-bottom:1px solid #ccc;"></td>
+                    <td width="30%"><input type="text" class="cedit" style="border-bottom:1px solid #ccc;"></td>
                     <td width="20%"><strong>Folio Auditado:</strong></td>
                     <td width="30%"><input class="cedit" placeholder="Referencia FO-QA-02" style="border-bottom:1px solid #ccc;"></td>
                 </tr>
@@ -107,8 +107,8 @@
         <div class="section">
             <p style="font-size:10px; line-height:1.5;">
                 Evaluar el nivel de cumplimiento del Sistema de Gestión de Calidad frente a las Buenas Prácticas de Fabricación (BPF) y determinar la eficacia de los procesos operativos en el periodo comprendido de 
-                <input type="date" class="cedit" style="width:120px; border-bottom:1px solid #ccc;"> a 
-                <input type="date" class="cedit" style="width:120px; border-bottom:1px solid #ccc;">.
+                <input type="text" class="cedit" style="width:120px; border-bottom:1px solid #ccc;"> a 
+                <input type="text" class="cedit" style="width:120px; border-bottom:1px solid #ccc;">.
             </p>
         </div>
 
@@ -126,7 +126,7 @@
                     <tr>
                         <td class="text-left">Conformidades (Fortalezas):</td>
                         <td><input type="number" class="cedit"></td>
-                        <td><input class="cedit" value="N/A" readonly></td>
+                        <td><input class="cedit"  readonly></td>
                     </tr>
                     <tr>
                         <td class="text-left">Observaciones (Oportunidades de Mejora):</td>
@@ -168,13 +168,13 @@
         <div class="section">
             <div class="conclusion-card">
                 <label class="radio-option">
-                    <input type="radio" name="dictamen" class="cedit"> <strong>SISTEMA EFICAZ:</strong> Se demuestra cumplimiento normativo. Las desviaciones son mínimas y no ponen en riesgo la seguridad del producto.
+                    <input type="radio" name="dictamen" class="cedit" style="width: min-content;"> <strong>SISTEMA EFICAZ:</strong> Se demuestra cumplimiento normativo. Las desviaciones son mínimas y no ponen en riesgo la seguridad del producto.
                 </label>
                 <label class="radio-option" style="color:#b45309;">
-                    <input type="radio" name="dictamen" class="cedit"> <strong>SISTEMA CON DEFICIENCIAS:</strong> Se requiere atención prioritaria a las No Conformidades Mayores detectadas. Se requiere auditoría de seguimiento.
+                    <input type="radio" name="dictamen" class="cedit" style="width: min-content;"> <strong>SISTEMA CON DEFICIENCIAS:</strong> Se requiere atención prioritaria a las No Conformidades Mayores detectadas. Se requiere auditoría de seguimiento.
                 </label>
                 <label class="radio-option" style="color:#991b1b;">
-                    <input type="radio" name="dictamen" class="cedit"> <strong>SISTEMA NO EFICAZ:</strong> Existen riesgos críticos para la calidad o legalidad de la operación. Se recomienda el paro de actividades hasta la mitigación.
+                    <input type="radio" name="dictamen" class="cedit" style="width: min-content;"> <strong>SISTEMA NO EFICAZ:</strong> Existen riesgos críticos para la calidad o legalidad de la operación. Se recomienda el paro de actividades hasta la mitigación.
                 </label>
             </div>
         </div>
@@ -182,7 +182,7 @@
         <div class="section-header">6. PLAN DE SEGUIMIENTO (COMPROMISOS)</div>
         <div class="section">
             <p style="font-size:10px; font-weight:bold;">Fecha límite para la entrega de los planes de acción (CAPA) por parte de los auditados: 
-                <input type="date" class="cedit" style="width:150px; border-bottom:1px solid #1E3A5F;">
+                <input type="text" class="cedit" style="width:150px; border-bottom:1px solid #1E3A5F;">
             </p>
         </div>
 
