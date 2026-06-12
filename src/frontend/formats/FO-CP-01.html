@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-15 Orden de Pedido</title>
+    <title>FO-CP-01 Pedido Maestro</title>
     <link rel="stylesheet" id="op-styles" href="format-styles-operaciones.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -52,11 +52,6 @@
         }
 
         @media print {
-            @page {
-                size: landscape letter;
-                margin: 0.5cm;
-            }
-
             .footer {
                 position: fixed;
                 bottom: 0;
@@ -66,8 +61,8 @@
                 text-align: center;
                 padding: 10px 0;
                 border-top: 1px solid #eee;
-                font-size: 9px;
-                color: #000;
+                font-size: 9px ;
+                color: #000 ;
             }
 
             body {
@@ -75,34 +70,34 @@
             }
 
             .no-print {
-                display: none;
+                display: none ;
             }
 
             /* Permitir que las tablas y secciones se partan entre páginas */
             .section {
-                page-break-inside: auto;
-                break-inside: auto;
+                page-break-inside: auto ;
+                break-inside: auto ;
             }
 
             table,
             .compact-table {
-                page-break-inside: auto;
-                break-inside: auto;
+                page-break-inside: auto ;
+                break-inside: auto ;
             }
 
             thead {
-                display: table-header-group;
+                display: table-header-group ;
             }
 
             tr,
             tbody tr {
-                page-break-inside: avoid;
-                break-inside: avoid;
+                page-break-inside: avoid ;
+                break-inside: avoid ;
             }
 
             .section-title {
-                page-break-after: avoid;
-                break-after: avoid;
+                page-break-after: avoid ;
+                break-after: avoid ;
             }
         }
 
@@ -110,14 +105,13 @@
 
             input::placeholder,
             textarea::placeholder {
-                color: transparent;
+                color: transparent ;
             }
-
         }
     </style>
 </head>
 
-<body id="doc-fo-op-15">
+<body id="doc-FO-CP-01">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
@@ -161,9 +155,9 @@
             <div class="registry-container">
                 <label>No. Pedido (PV)</label>
                 <div class="registry-wrapper">
-                    <span class="registry-prefix">FO-OP-15-</span>
+                    <span class="registry-prefix">FO-CP-01-</span>
                     <input type="text" id="reg-op-15" class="registry-input generate-barcode"
-                        data-target="barcode-op-15" data-prefix="FO-OP-15-" placeholder="001">
+                        data-target="barcode-op-15" data-prefix="FO-CP-01-" placeholder="001">
                 </div>
                 <input type="text" class="registry-date no-auto-date">
                 <svg id="barcode-op-15" class="barcode-svg"></svg>
@@ -171,66 +165,63 @@
         </div>
 
         <div class="header-main">
-            <h1>ORDEN DE PEDIDO. REGISTRO UNICO DE PEDIDOS</h1>
-            <div class="metadata">Código: FO-OP-15 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <h1>REGISTRO MAESTRO DE PEDIDO (OPERACIONES)</h1>
+            <div class="metadata">Código: FO-CP-01 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
-
+<div class="legend-box">
+            <div><strong>Cruce Documental Obligatorio:</strong><br>FO-CP-01 (Orden compra) ➜ FO-OP-15 (Pedido) ➜
+                FO-OP-15-B (Fabricación) ➜ FO-OP-16 (Surtido) ➜ FO-OP-17 (Remision y entrega)</div>
+        </div>
         <div class="section">
-            <div class="section-title">1. Datos Generales</div>
+            <div class="section-title">1. Trazabilidad de Operaciones (Origen)</div>
             <table class="no-border-table">
                 <tr>
-                    <td width="33%"><strong>Cliente:</strong> <input class="cedit"></td>
-                    <td width="33%"><strong>Vendedor / Pedido:</strong> <input class="cedit"></td>
-                    <td width="34%"><strong>Quien recibe:</strong> <input class="cedit"></td>
-                </tr>
-                <tr>
-                    <td width="66%" colspan="2"><strong>Direccion:</strong> <input class="cedit"></td>
-                    <td width="34%">
-                        <strong>Tipo:</strong>
-                        <label><input type="checkbox" class="cedit" style="max-width: fit-content;"> Local</label>
-                        <label style="margin-left: 10px;"><input type="checkbox" class="cedit"
-                                style="max-width: fit-content;"> Foraneo</label>
-                    </td>
+                    <td width="33%"><strong>Ref. Cotización:</strong> <input class="cedit" placeholder="COT-XXXX"></td>
+                    <td width="33%"><strong>Orden de Compra (Cliente):</strong> <input class="cedit"
+                            placeholder="OC-XXXX"></td>
+                    <td width="33%"><strong>Vendedor:</strong> <input class="cedit"></td>
                 </tr>
             </table>
         </div>
 
         <div class="section">
-            <div class="section-title">2. Fechas y Horarios</div>
+            <div class="section-title">2. Datos del Cliente</div>
             <table class="no-border-table">
                 <tr>
-                    <td width="33%"><strong>Fecha y hora solicitud:</strong> <input type="text" class="cedit"
-                            placeholder="DD/MM/AAAA HH:MM"></td>
-                    <td width="33%"><strong>Fecha y hora envio:</strong> <input type="text" class="cedit"
-                            placeholder="DD/MM/AAAA HH:MM"></td>
-                    <td width="34%"><strong>Fecha y hora entrega:</strong> <input type="text" class="cedit"
-                            placeholder="DD/MM/AAAA HH:MM"></td>
+                    <td width="70%"><strong>Razón Social / Cliente:</strong> <input class="cedit"></td>
+                    <td width="30%"><strong>Fecha Solicitud:</strong> <input type="text" class="cedit"></td>
+                </tr>
+                <tr>
+                    <td><strong>Dirección Fiscal:</strong> <input class="cedit"></td>
+                    <td><strong>RFC:</strong> <input class="cedit"></td>
+                </tr>
+                <tr>
+                     <td colspan="2"><strong>Dirección de Entrega:</strong> <textarea name="direccion_entrega" id="direccion_entrega" rows="4"></textarea></td>
                 </tr>
             </table>
         </div>
 
         <div class="section">
-            <div class="section-title">3. Descripcion del Pedido</div>
+            <div class="section-title">3. Detalle del Pedido (Ruta Operativa)</div>
             <table id="tbl-pedidos" class="compact-table">
                 <thead>
                     <tr>
-                        <th width="8%">Cantidad</th>
-                        <th width="24%">Producto</th>
-                        <th width="16%">Presentación</th>
-                        <th width="18%">Origen</th>
-                        <th width="12%">Caducidad</th>
-                        <th width="17%">Observaciones</th>
-                        <th width="5%" class="no-print"></th>
+                        <th width="8%">Cant.</th>
+                        <th width="25%">Producto</th>
+                        <th width="20%">Presentación</th>
+                        <th width="20%">Origen (Ruta)</th>
+                        <th width="20%">Fecha Req. Entrega</th>
+                        <th width="7%" class="no-print"></th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
-            <button class="btn btn-primary btn-mini no-print" onclick="addPedidoRow()">+ Agregar renglón</button>
+            <button class="btn btn-primary btn-mini no-print" onclick="addPedidoRowInputs()">+ Agregar Producto</button>
         </div>
 
         <div class="section">
-            <div class="section-title">4. Observaciones</div>
-            <textarea class="cedit" placeholder="Observaciones adicionales..."></textarea>
+            <div class="section-title">4. Observaciones Ventas</div>
+            <textarea class="cedit" placeholder="Instrucciones especiales para producción o almacén..."></textarea>
         </div>
 
         <div class="signature-area">
@@ -245,15 +236,44 @@
             <div class="signature-box">
                 <p>Autorizó (Gerencia de Operaciones):</p><input type="text">
                 <p>Firma</p>
-            </div>
+            </div>  
         </div>
 
-        <div class="footer">FO-OP-15 | PEDIDO MAESTRO | Versión: 1.0<br>El contenido de este documento es propiedad de
+        <div class="footer">FO-CP-01 | PEDIDO MAESTRO | Versión: 1.0<br>El contenido de este documento es propiedad de
             &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
             está prohibida su reproducción total o parcial.</div>
     </div>
     <script>
         let isOfflineMode = false;
+
+        function convertTableSelectsToInputs(scope) {
+            const root = scope || document;
+            root.querySelectorAll('table tbody select').forEach(sel => {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = sel.className || 'cedit';
+                input.value = sel.options[sel.selectedIndex]?.text || '';
+                input.placeholder = sel.getAttribute('placeholder') || '';
+                if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                sel.parentNode.replaceChild(input, sel);
+            });
+        }
+
+        function addPedidoRowInputs() {
+            const tbody = document.querySelector('#tbl-pedidos tbody');
+            if (!tbody) return;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="number" class="cedit" min="0" step="1" placeholder="0"></td>
+                <td><input type="text" class="cedit" placeholder="Producto"></td>
+                <td><input type="text" class="cedit" placeholder="Presentacion"></td>
+                <td><input type="text" class="cedit" placeholder="Origen o ruta"></td>
+                <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                <td class="no-print"><button type="button" class="btn btn-mini" onclick="removePedidoRow(this)">Eliminar</button></td>
+            `;
+            tbody.appendChild(tr);
+        }
 
         function removePedidoRow(button) {
             const row = button.closest('tr');
@@ -261,6 +281,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
+            convertTableSelectsToInputs(document);
+
             const barcodeInput = document.querySelector('.generate-barcode');
             if (barcodeInput) {
                 const renderBarcode = function () {
@@ -291,12 +313,24 @@
                             margin: 0
                         });
                     } catch (e) {
-                        console.warn('No se pudo renderizar el código de barras en FO-OP-15', e);
+                        console.warn('No se pudo renderizar el código de barras en FO-CP-01', e);
                     }
                 };
 
                 barcodeInput.addEventListener('input', renderBarcode);
                 renderBarcode();
+            }
+
+            const tbody = document.querySelector('#tbl-pedidos tbody');
+            if (tbody && tbody.children.length === 0) {
+                addPedidoRowInputs();
+            }
+
+            if (tbody) {
+                const observer = new MutationObserver(function () {
+                    convertTableSelectsToInputs(tbody);
+                });
+                observer.observe(tbody, { childList: true, subtree: true });
             }
         });
 
@@ -374,8 +408,8 @@
                 });
 
                 // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
-                    inp.type = 'text';
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

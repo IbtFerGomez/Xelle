@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-AL-01 Salida de Almacén para Producción</title>
+    <style>
+        :root {
+            --primary-color: #1E3A5F;
+            --secondary-color: #2E9D82;
+            --danger-color: #dc2626;
+            --success-color: #16a34a;
+            --border-color: #cbd5e1;
+        }
+
+        /* Configuración Horizontal (Landscape) para Tabla de Materiales Extendida */
+        @page {
+            size: landscape;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #1e293b;
+        }
+
+        .container {
+            width: 26cm;
+            margin: 0 auto;
+            background: white;
+            padding: 0.8cm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+            width: 100%;
+            gap: 12px;
+        }
+
+        .logo-container svg {
+            height: 70px;
+            width: auto;
+            display: block;
+        }
+
+        .registry-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            min-width: 290px;
+        }
+
+        .registry-container label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 3px;
+        }
+
+        .registry-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 4px;
+            width: 100%;
+        }
+
+        .registry-prefix {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-right: 6px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .registry-input {
+            font-weight: 700;
+            color: #0f172a;
+            text-align: center;
+            border: 1px dashed #94a3b8;
+            font-size: 13px;
+            width: 140px;
+            padding: 4px 6px;
+            border-radius: 4px;
+        }
+
+        .barcode-svg {
+            max-height: 40px;
+            display: block;
+            margin-top: 2px;
+            width: 100%;
+            background: #fff;
+        }
+
+        .header-main {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .header-main h1 {
+            font-size: 15px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            margin: 0 0 5px;
+        }
+
+        .metadata {
+            font-size: 10px;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-left: 4px solid #2E9D82;
+        }
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 6px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 5px;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .compact-table input,
+        .compact-table textarea {
+            font-size: 9px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+            text-align: center;
+        }
+
+        .compact-table textarea {
+            resize: none;
+            overflow: auto;
+            text-align: left;
+        }
+
+        .compact-table input:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 6px !important;
+        }
+
+        .info-box {
+            background-color: #f0fdfa;
+            border: 1px solid #5eead4;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            color: #115e59;
+            margin-top: 10px;
+            line-height: 1.3;
+            text-align: justify;
+        }
+
+        .legend-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 8.5px;
+            color: #1e293b;
+            margin-top: 5px;
+            line-height: 1.4;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-unified {
+            margin-top: 25px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 10px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        .gray-th {
+            background-color: #f1f5f9 !important;
+            color: #1E3A5F !important;
+            text-align: left !important;
+            padding-left: 8px !important;
+            font-weight: bold;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 6px;
+            margin-top: 5px;
+            color: #1E3A5F;
+        }
+
+        .group-th {
+            background-color: #0f172a !important;
+            color: #cbd5e1 !important;
+            font-size: 8px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .global-controls {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+            border: 2px solid #38bdf8;
+            cursor: move;
+            user-select: none;
+            min-width: 140px;
+        }
+
+        .btn {
+            padding: 10px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            color: white;
+            font-size: 12px;
+            width: 100%;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-mini {
+            padding: 3px 7px;
+            font-size: 10px;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            min-width: auto;
+            border: none;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-al-01">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Formato</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <!-- HEADER MODULAR -->
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                        font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                        font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Salida</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-AL-01-</span>
+                    <input type="text" id="reg-al01" class="registry-input generate-barcode cedit"
+                        data-target="barcode-al01" data-prefix="FO-AL-01-" placeholder="202X-00">
+                </div>
+                <svg id="barcode-al01" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>VALE DE SALIDA DE ALMACÉN PARA ELABORACIÓN DE PRODUCTO (MATERIA PRIMA)</h1>
+            <div class="metadata">Código: FO-AL-01 | Versión: 1.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <!-- INDICACIONES Y LEYENDAS BPF/ISO -->
+        <div class="info-box">
+            <strong>Instrucciones Normativas (NOM-059-SSA1 / ISO 9001):</strong> Este documento garantiza la
+            trazabilidad exacta de los insumos y materias primas utilizados en cada lote de producción. Almacén debe
+            surtir aplicando estrictamente el método <strong>FEFO (Primeras Caducidades, Primeras Salidas)</strong>.
+            Llene los campos con tinta indeleble y utilice los códigos correspondientes. No se permiten celdas en
+            blanco.
+        </div>
+
+        <div class="legend-box">
+            <div><strong>[UM] Unidad de Medida:</strong> PZA = Pieza | ML = Mililitros | L = Litros | MG = Miligramos |
+                G = Gramos</div>
+            <div><strong>[ES] Estatus Surtido:</strong> C = Completo | P = Parcial | NA = No Aplica</div>
+            <div><strong>[EVAL] Verificación GxP:</strong> C = Cumple | NC = No Cumple (Rechazo de entrega)</div>
+        </div>
+
+        <!-- 1. IDENTIFICACIÓN Y TRAZABILIDAD MAESTRA -->
+        <div class="section-header">1. VINCULACIÓN A ORDEN DE PRODUCCIÓN Y LOTE OBJETIVO</div>
+        <table class="compact-table">
+            <tr>
+                <th width="20%" class="gray-th">Orden de Producción (Ref):</th>
+                <td width="30%"><input class="cedit text-center" placeholder="Ej: FO-OP-15-002"
+                        style="font-weight: bold; color: #1E3A5F;"></td>
+                <th width="20%" class="gray-th">Lote de Producto a Elaborar:</th>
+                <td width="30%"><input class="cedit text-center" placeholder="Lote destino del producto final"
+                        style="font-weight: bold;"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">Área Solicitante:</th>
+                <td><input class="cedit text-left" placeholder="Ej: Bioprocesos / Expansión"></td>
+                <th class="gray-th">Fecha y Hora de Solicitud:</th>
+                <td><input type="text" class="cedit text-center"></td>
+            </tr>
+        </table>
+
+        <!-- 2. DESGLOSE DE MATERIA PRIMA -->
+        <div class="section-header">2. LISTADO DE MATERIA PRIMA, INSUMOS Y TRAZABILIDAD DE LOTES</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-materiales">
+                <thead>
+                    <tr>
+                        <th rowspan="2" width="4%">No.</th>
+                        <th rowspan="2" width="10%">Código<br>Interno</th>
+                        <th rowspan="2" width="28%">Nombre de la Materia Prima / Insumo</th>
+                        <th rowspan="2" width="14%">Lote del Insumo<br>(Fundamental)</th>
+                        <th rowspan="2" width="10%">Fecha de<br>Caducidad</th>
+                        <th colspan="2" class="group-th">Cantidades</th>
+                        <th rowspan="2" width="6%">[UM]<br>Unidad</th>
+                        <th rowspan="2" width="6%">[ES]<br>Estatus</th>
+                        <th rowspan="2" width="3%" class="no-print"></th>
+                    </tr>
+                    <tr>
+                        <th width="8%">Solicitada</th>
+                        <th width="8%">Entregada</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center row-num">1</td>
+                        <td><input class="cedit text-center" placeholder="MP-001"></td>
+                        <td><input class="cedit text-left" placeholder="Descripción exacta del insumo"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <td><input type="text" class="cedit" style="font-size:7.5px;"></td>
+                        <td><input type="number" step="any" class="cedit text-center" placeholder="0"></td>
+                        <td><input type="number" step="any" class="cedit text-center" placeholder="0"></td>
+                        <td><input class="cedit text-center" placeholder="PZA/ML" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C/P" style="font-weight: bold;"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-materiales')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">2</td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <td><input type="text" class="cedit" style="font-size:7.5px;"></td>
+                        <td><input type="number" step="any" class="cedit text-center"></td>
+                        <td><input type="number" step="any" class="cedit text-center"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-materiales')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">3</td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <td><input type="text" class="cedit" style="font-size:7.5px;"></td>
+                        <td><input type="number" step="any" class="cedit text-center"></td>
+                        <td><input type="number" step="any" class="cedit text-center"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-materiales')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">4</td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <td><input type="text" class="cedit" style="font-size:7.5px;"></td>
+                        <td><input type="number" step="any" class="cedit text-center"></td>
+                        <td><input type="number" step="any" class="cedit text-center"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-materiales')">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRowNumbered('tbl-materiales')">+ AGREGAR INSUMO / MATERIA
+                PRIMA</button>
+        </div>
+
+        <!-- 3. VERIFICACIÓN DE CALIDAD EN LA ENTREGA -->
+        <div class="section-header">3. CHECKLIST DE DESPEJE Y VERIFICACIÓN EN LA ENTREGA</div>
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th width="6%">No.</th>
+                    <th width="84%">Parámetro BPF Inspeccionado</th>
+                    <th width="10%">[EVAL]</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">1</td>
+                    <td class="text-left">La materia prima / insumo se entrega en su empaque original, íntegro, sin
+                        signos de humedad, roturas o contaminación cruzada.</td>
+                    <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">2</td>
+                    <td class="text-left">Se verifica que el material se encuentre VIGENTE (sin caducar) al momento de
+                        la entrega.</td>
+                    <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">3</td>
+                    <td class="text-left">Almacén garantiza el cumplimiento de rotación FEFO (se entregan los lotes con
+                        la caducidad más próxima).</td>
+                    <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- OBSERVACIONES -->
+        <div style="margin-top: 10px;">
+            <label style="font-size: 9px; font-weight: bold; color: #1E3A5F;">Observaciones (Surtidos parciales o
+                incidencias):</label><br>
+            <textarea class="cedit" rows="6" cols="100"
+                style="border: 1px solid #cbd5e1; border-radius: 3px; text-align: left; padding: 5px;"
+                placeholder="Documente razones de entrega parcial, discrepancias de lote, etc..."></textarea>
+        </div>
+
+        <!-- FIRMAS -->
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:15px; margin-top:25px;">
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">SOLICITÓ (Supervisor Producción)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Firma de Requisición</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">SURTIÓ (ALMACÉN)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Firma de Despacho (FEFO validado)</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">RECIBIÓ DE CONFORMIDAD</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Recepción íntegra en área limpia</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                <p style="font-weight:bold; font-size:10px; color:#14532d;">VERIFICÓ (QA)</p>
+                <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#14532d;">Conciliación de Lotes BPF</p>
+            </div>
+        </div>
+
+        <!-- FOOTER UNIFICADO -->
+        <div class="footer-unified">
+            <div class="control-data">FO-AL-01 | Versión: 1.0 | Salida de Almacén para Elaboración de Producto | Xelle
+                Scientific | Página 1 de 1</div>
+            <div class="legal-data">Este documento es propiedad de Xelle Scientific, S.A.P.I. de C.V. Documento
+                auditable. Prohibida su reproducción.</div>
+        </div>
+    </div>
+
+    <script>
+        const DOC_ID = 'doc-fo-al-01';
+        const STORAGE_KEY = `xelle_${DOC_ID}`;
+
+        function ensureFieldIds() {
+            const fields = Array.from(document.querySelectorAll('input, select, textarea'))
+                .filter(el => el.type !== 'submit' && el.type !== 'button');
+
+            fields.forEach((el, index) => {
+                if (!el.id) {
+                    const base = (el.placeholder || el.name || el.tagName.toLowerCase())
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '_')
+                        .replace(/^_+|_+$/g, '')
+                        .slice(0, 30);
+                    el.id = `fo_al_01_${base || 'field'}_${index}`;
+                }
+            });
+        }
+
+        function getFieldKey(el, index) {
+            return el.id ? `id:${el.id}` : `idx:${index}`;
+        }
+
+        function collectData() {
+            const data = {};
+            const fields = Array.from(document.querySelectorAll('input, select, textarea'))
+                .filter(el => el.type !== 'submit');
+
+            fields.forEach((el, index) => {
+                const key = getFieldKey(el, index);
+                if (el.type === 'checkbox') {
+                    data[key] = el.checked;
+                } else if (el.type === 'radio') {
+                    if (el.checked) data[key] = el.value;
+                } else {
+                    data[key] = el.value;
+                }
+            });
+
+            return data;
+        }
+
+        function applyData(data) {
+            if (!data || typeof data !== 'object') return;
+            const fields = Array.from(document.querySelectorAll('input, select, textarea'))
+                .filter(el => el.type !== 'submit');
+
+            fields.forEach((el, index) => {
+                const key = getFieldKey(el, index);
+                if (!(key in data)) return;
+
+                if (el.type === 'checkbox') {
+                    el.checked = Boolean(data[key]);
+                } else if (el.type === 'radio') {
+                    el.checked = String(el.value) === String(data[key]);
+                } else {
+                    el.value = data[key] ?? '';
+                }
+            });
+        }
+
+        function saveForm() {
+            try {
+                const data = collectData();
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                alert('Formato guardado localmente.');
+            } catch (error) {
+                alert('No se pudo guardar el formato.');
+                console.error(error);
+            }
+        }
+
+        function loadForm() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return;
+
+            try {
+                const data = JSON.parse(raw);
+                applyData(data);
+            } catch (error) {
+                console.error('No se pudo cargar la información guardada:', error);
+            }
+        }
+
+        function clearForm() {
+            const confirmClear = confirm('¿Deseas limpiar todo el formato?');
+            if (!confirmClear) return;
+
+            localStorage.removeItem(STORAGE_KEY);
+            location.reload();
+        }
+
+        function renderSimpleBarcode(svgId, text) {
+            const svg = document.getElementById(svgId);
+            if (!svg) return;
+
+            const value = String(text || '').trim();
+            svg.innerHTML = '';
+            if (!value) return;
+
+            const barHeight = 26;
+            const quietZone = 10;
+            let x = quietZone;
+
+            const start = [2, 1, 2, 1, 2, 1, 2];
+            const stop = [3, 1, 2, 1, 2, 1, 2];
+
+            const drawPattern = (pattern) => {
+                pattern.forEach((w, idx) => {
+                    const width = w;
+                    if (idx % 2 === 0) {
+                        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                        rect.setAttribute('x', x);
+                        rect.setAttribute('y', 2);
+                        rect.setAttribute('width', width);
+                        rect.setAttribute('height', barHeight);
+                        rect.setAttribute('fill', '#0f172a');
+                        svg.appendChild(rect);
+                    }
+                    x += width;
+                });
+            };
+
+            drawPattern(start);
+
+            for (let i = 0; i < value.length; i++) {
+                const code = value.charCodeAt(i);
+                const pattern = [];
+                for (let bit = 0; bit < 7; bit++) {
+                    pattern.push(((code >> bit) & 1) ? 2 : 1);
+                }
+                pattern.push(1);
+                drawPattern(pattern);
+            }
+
+            drawPattern(stop);
+            x += quietZone;
+
+            svg.setAttribute('viewBox', `0 0 ${x} 40`);
+            svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+            const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            label.setAttribute('x', x / 2);
+            label.setAttribute('y', 38);
+            label.setAttribute('text-anchor', 'middle');
+            label.setAttribute('font-size', '8');
+            label.setAttribute('font-family', 'Arial, sans-serif');
+            label.setAttribute('fill', '#334155');
+            label.textContent = value;
+            svg.appendChild(label);
+        }
+
+        function setupBarcode() {
+            const input = document.querySelector('.generate-barcode');
+            if (!input) return;
+
+            const render = () => {
+                const prefix = input.dataset.prefix || '';
+                const normalized = input.value.trim().replace(new RegExp(`^${prefix}`), '');
+                input.value = normalized;
+                renderSimpleBarcode(input.dataset.target, `${prefix}${normalized}`);
+            };
+
+            input.addEventListener('input', render);
+            window.addEventListener('beforeprint', render);
+            render();
+        }
+
+        function setupDraggableControls() {
+            const controlBar = document.querySelector('.global-controls');
+            if (!controlBar) return;
+
+            let isDragging = false;
+            let currentX = 0;
+            let currentY = 0;
+            let initialX = 0;
+            let initialY = 0;
+            let xOffset = 0;
+            let yOffset = 0;
+
+            const dragStart = (e) => {
+                if (e.target.tagName === 'BUTTON') return;
+                if (e.type === 'touchstart') {
+                    initialX = e.touches[0].clientX - xOffset;
+                    initialY = e.touches[0].clientY - yOffset;
+                } else {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                }
+                isDragging = true;
+            };
+
+            const drag = (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+
+                if (e.type === 'touchmove') {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+
+                xOffset = currentX;
+                yOffset = currentY;
+                controlBar.style.transform = `translate(${currentX}px, calc(-50% + ${currentY}px))`;
+            };
+
+            const dragEnd = () => {
+                isDragging = false;
+            };
+
+            controlBar.addEventListener('mousedown', dragStart);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+
+            controlBar.addEventListener('touchstart', dragStart);
+            document.addEventListener('touchmove', drag, { passive: false });
+            document.addEventListener('touchend', dragEnd);
+        }
+
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if (row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                const numCell = row.querySelector('.row-num');
+                if (numCell) numCell.innerText = index + 1;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            ensureFieldIds();
+            loadForm();
+            setupBarcode();
+            setupDraggableControls();
+            updateNumbers('tbl-materiales');
+        });
+    </script>
+</body>
+
+</html>

@@ -135,6 +135,7 @@
                         font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
                 </svg>
             </div>
+
             <div class="registry-container">
                 <label>Folio Remisión</label>
                 <div class="registry-wrapper">
@@ -142,7 +143,7 @@
                     <input type="text" id="reg-op-17" class="registry-input generate-barcode"
                         data-target="barcode-op-17" data-prefix="FO-OP-17-" name="folio_remision" placeholder="001">
                 </div>
-                <input type="date" class="registry-date no-auto-date" name="fecha_folio_remision">
+                <input type="text" class="registry-date no-auto-date">
                 <svg id="barcode-op-17" class="barcode-svg"></svg>
             </div>
         </div>
@@ -151,13 +152,16 @@
             <h1>NOTA DE REMISIÓN Y ENTREGA</h1>
             <div class="metadata">Código: FO-OP-17 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
-
+        <div class="legend-box">
+            <div><strong>Cruce Documental Obligatorio:</strong><br>FO-CP-01 (Orden compra) ➜ FO-OP-15 (Pedido) ➜
+                FO-OP-15-B (Fabricación) ➜ FO-OP-16 (Surtido) ➜ FO-OP-17 (Remision y entrega)</div>
+        </div>
         <div class="section">
             <div class="section-title">1. Datos del Cliente y Referencias</div>
             <table class="no-border-table">
                 <tr>
                     <td><strong>Cliente:</strong> <input class="cedit" name="cliente"></td>
-                    <td><strong>Fecha Envío:</strong> <input type="date" class="cedit" name="fecha_envio"></td>
+                    <td><strong>Fecha Envío:</strong> <input type="text" class="cedit" name="fecha_envio"></td>
                 </tr>
                 <tr>
                     <td><strong>Dirección Entrega:</strong> <input class="cedit" name="direccion_entrega"></td>
@@ -198,10 +202,10 @@
                 </p>
                 <div style="display:flex; justify-content:space-between; align-items:flex-end;">
                     <div style="width:30%">
-                        <strong>Fecha Recepción:</strong> <input type="date" class="cedit" name="fecha_recepcion">
+                        <strong>Fecha Recepción:</strong> <input type="text" class="cedit" name="fecha_recepcion">
                     </div>
                     <div style="width:30%">
-                        <strong>Hora:</strong> <input type="time" class="cedit" name="hora_recepcion">
+                        <strong>Hora:</strong> <input type="text" class="cedit" name="hora_recepcion">
                     </div>
                     <div style="width:30%">
                         <strong>Temp. Recepción:</strong> <input class="cedit" name="temperatura_recepcion"
@@ -231,10 +235,52 @@
             </div>
         </div>
 
-        <div class="footer">FO-OP-17 | REMISIÓN | Versión: 1.0<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        <div class="footer">FO-OP-17 | REMISIÓN | Versión: 1.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
     <script>
         let isOfflineMode = false;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const barcodeInput = document.querySelector('.generate-barcode');
+            if (barcodeInput) {
+                const renderBarcode = function () {
+                    const targetId = barcodeInput.dataset.target;
+                    const prefix = barcodeInput.dataset.prefix || '';
+                    const value = String(barcodeInput.value || '').trim();
+                    const normalizedValue = prefix && value.startsWith(prefix)
+                        ? value.slice(prefix.length)
+                        : value;
+                    if (!targetId || !window.JsBarcode) return;
+
+                    if (normalizedValue !== value) {
+                        barcodeInput.value = normalizedValue;
+                    }
+
+                    if (!normalizedValue) {
+                        const targetEl = document.getElementById(targetId);
+                        if (targetEl) targetEl.innerHTML = '';
+                        return;
+                    }
+
+                    try {
+                        JsBarcode(`#${targetId}`, prefix + normalizedValue, {
+                            format: 'CODE128',
+                            height: 30,
+                            displayValue: true,
+                            fontSize: 10,
+                            margin: 0
+                        });
+                    } catch (e) {
+                        console.warn('No se pudo renderizar el código de barras en FO-OP-17', e);
+                    }
+                };
+
+                barcodeInput.addEventListener('input', renderBarcode);
+                renderBarcode();
+            }
+        });
 
         function toggleOfflineMode() {
             isOfflineMode = !isOfflineMode;

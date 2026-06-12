@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>FO-OP-15-B Acondicionamiento y Fabricación de Dosis</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -504,7 +505,7 @@
 
 
         <div class="legend-box">
-            <div><strong>Cruce Documental Obligatorio:</strong><br>FO-OP-15 (Pedido) ➜
+            <div><strong>Cruce Documental Obligatorio:</strong><br>FO-CP-01 (Orden compra) ➜ FO-OP-15 (Pedido) ➜
                 FO-OP-15-B (Fabricación) ➜ FO-OP-16 (Surtido) ➜ FO-OP-17 (Remision y entrega)</div>
         </div>
 
@@ -518,7 +519,7 @@
             <tr>
 
                 <th class="gray-th">Fecha Acondicionamiento:</th>
-                <td><input type="date" class="cedit text-center" name="fecha_acondicionamiento"></td>
+                <td><input type="text" class="cedit text-center" name="fecha_acondicionamiento"></td>
             </tr>
         </table>
 
@@ -584,10 +585,11 @@
                 </tr>
                 <tr>
                     <td class="text-center">6</td>
-                    <td class="text-left">Verificación de la orden: Lo solicitado corresponde a lo solicitado a pedido y FO-OP-15.</td>
+                    <td class="text-left">Verificación de la orden: Lo solicitado corresponde a lo solicitado a pedido y
+                        FO-OP-15.</td>
                     <td><input type="checkbox" class="cedit" aria-label="Empaque secundario"></td>
                 </tr>
-                
+
             </tbody>
         </table>
 
@@ -651,6 +653,8 @@
         };
         const STORAGE_KEY = 'fo-op-15-b-self-contained';
         const BARCODE_NS = 'http://www.w3.org/2000/svg';
+        const MASTER_DOC_CODE = 'FO-OP-15-B';
+        const MASTER_BARCODE_PREFIX = `${MASTER_DOC_CODE}-`;
 
         function formatDateForSerial(date) {
             const year = date.getFullYear();
@@ -666,8 +670,7 @@
             const input = document.getElementById('reg-op15b');
             if (!input) return '';
             let value = String(input.value || '').trim();
-            const prefix = String(input.dataset.prefix || '').trim();
-            if (prefix && value.startsWith(prefix)) value = value.slice(prefix.length).trim();
+            value = stripMasterCodePrefix(value);
             if (!value) {
                 value = formatDateForSerial(new Date());
                 input.value = value;
@@ -733,10 +736,25 @@
 
         function normalizeBarcodeInput(input) {
             if (!input) return '';
-            const prefix = String(input.dataset.prefix || '').trim();
-            let raw = String(input.value || '').trim();
-            if (prefix && raw.startsWith(prefix)) raw = raw.slice(prefix.length).trim();
+            let raw = stripMasterCodePrefix(input.value);
             if (input.value !== raw) input.value = raw;
+            return raw;
+        }
+
+        function stripMasterCodePrefix(value) {
+            let raw = String(value || '').trim();
+            if (!raw) return '';
+
+            const prefixWithDash = MASTER_BARCODE_PREFIX.toUpperCase();
+            const prefixWithoutDash = MASTER_DOC_CODE.toUpperCase();
+            const upperRaw = raw.toUpperCase();
+
+            if (upperRaw.startsWith(prefixWithDash)) {
+                raw = raw.slice(MASTER_BARCODE_PREFIX.length).trim();
+            } else if (upperRaw.startsWith(prefixWithoutDash)) {
+                raw = raw.slice(MASTER_DOC_CODE.length).replace(/^[-\s]+/, '').trim();
+            }
+
             return raw;
         }
 
@@ -744,9 +762,13 @@
             const input = document.getElementById('reg-op15b');
             const svg = document.getElementById('barcode-op15b');
             if (!input || !svg) return;
-            const serial = normalizeBarcodeInput(input) || ensureMasterFolio();
-            const prefix = String(input.dataset.prefix || '').trim();
-            renderBarcode(svg, `${prefix}${serial}`);
+            const serial = normalizeBarcodeInput(input);
+            if (!serial) {
+                renderBarcode(svg, '');
+                reindexDoseCodes();
+                return;
+            }
+            renderBarcode(svg, `${MASTER_BARCODE_PREFIX}${serial}`);
             reindexDoseCodes();
         }
 
@@ -1038,20 +1060,10 @@
         }
 
         function initForm() {
-            const dateInput = document.getElementById('date-op15b');
-            if (dateInput && !dateInput.value) {
-                const now = new Date();
-                const yyyy = now.getFullYear();
-                const mm = String(now.getMonth() + 1).padStart(2, '0');
-                const dd = String(now.getDate()).padStart(2, '0');
-                dateInput.value = `${yyyy}-${mm}-${dd}`;
-            }
-
             const folioInput = document.getElementById('reg-op15b');
             if (folioInput) {
                 folioInput.addEventListener('input', updateMasterBarcode);
                 folioInput.addEventListener('change', updateMasterBarcode);
-                updateMasterBarcode();
             }
 
             const fechaAcondInput = document.querySelector('input[name="fecha_acondicionamiento"]');
@@ -1067,13 +1079,9 @@
             const tbody = document.querySelector('#tbl-dosis tbody');
             if (tbody && tbody.children.length === 0) addDoseRow();
 
-            if (!loadForm()) {
-                ensureMasterFolio();
-                updateMasterBarcode();
-            }
+            loadForm();
 
             reindexDoseCodes();
-            updateMasterBarcode();
         }
 
         document.addEventListener('DOMContentLoaded', initForm);

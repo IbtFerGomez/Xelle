@@ -61,8 +61,8 @@
                 text-align: center;
                 padding: 10px 0;
                 border-top: 1px solid #eee;
-                font-size: 9px ;
-                color: #000 ;
+                font-size: 9px;
+                color: #000;
             }
 
             body {
@@ -70,34 +70,34 @@
             }
 
             .no-print {
-                display: none ;
+                display: none;
             }
 
             /* Permitir que las tablas y secciones se partan entre páginas */
             .section {
-                page-break-inside: auto ;
-                break-inside: auto ;
+                page-break-inside: auto;
+                break-inside: auto;
             }
 
             table,
             .compact-table {
-                page-break-inside: auto ;
-                break-inside: auto ;
+                page-break-inside: auto;
+                break-inside: auto;
             }
 
             thead {
-                display: table-header-group ;
+                display: table-header-group;
             }
 
             tr,
             tbody tr {
-                page-break-inside: avoid ;
-                break-inside: avoid ;
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
 
             .section-title {
-                page-break-after: avoid ;
-                break-after: avoid ;
+                page-break-after: avoid;
+                break-after: avoid;
             }
         }
 
@@ -105,7 +105,7 @@
 
             input::placeholder,
             textarea::placeholder {
-                color: transparent ;
+                color: transparent;
             }
         }
     </style>
@@ -168,7 +168,10 @@
             <h1>REGISTRO MAESTRO DE PEDIDO (OPERACIONES)</h1>
             <div class="metadata">Código: FO-OP-15 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
-
+        <div class="legend-box">
+            <div><strong>Cruce Documental Obligatorio:</strong><br>FO-CP-01 (Orden compra) ➜ FO-OP-15 (Pedido) ➜
+                FO-OP-15-B (Fabricación) ➜ FO-OP-16 (Surtido) ➜ FO-OP-17 (Remision y entrega)</div>
+        </div>
         <div class="section">
             <div class="section-title">1. Trazabilidad de Operaciones (Origen)</div>
             <table class="no-border-table">
@@ -233,7 +236,7 @@
             <div class="signature-box">
                 <p>Autorizó (Gerencia de Operaciones):</p><input type="text">
                 <p>Firma</p>
-            </div>  
+            </div>
         </div>
 
         <div class="footer">FO-OP-15 | PEDIDO MAESTRO | Versión: 1.0<br>El contenido de este documento es propiedad de
@@ -242,6 +245,18 @@
     </div>
     <script>
         let isOfflineMode = false;
+        const PRODUCT_CATALOG = {
+            'Stem Xelle': ['10 M', '25 M', '50 M', '100 M'],
+            'Stem Ortho': ['10 M', '25 M', '50 M', '100 M'],
+            'Hybrid Xelle': ['10M + 1B', '25M + 2B', '50M + 5B', '60M + 6B', '100M + 10B'],
+            'Hybrid Ortho': ['10M + 1B', '25M + 2B', '50M + 5B', '60M + 6B', '100M + 10B'],
+            'X-Breath Nebulizer': ['Única'],
+            'X-Exosomes': ['3B', '9B', '15B', '30B', '75B', '90B'],
+            'X-Exosomes HA': ['Única'],
+            'X-Implant': ['1 G', '2 G'],
+            'X-Wound Care': ['5 x 5', '10 x 10', '10 x 15'],
+            'Otro': []
+        };
 
         function convertTableSelectsToInputs(scope) {
             const root = scope || document;
@@ -256,20 +271,78 @@
             });
         }
 
+        function buildPedidoProductOptions(selectedValue = '') {
+            const options = ['<option value="">Seleccionar...</option>'];
+            Object.keys(PRODUCT_CATALOG).forEach(product => {
+                options.push(`<option value="${product}"${product === selectedValue ? ' selected' : ''}>${product}</option>`);
+            });
+            return options.join('');
+        }
+
+        function buildPedidoPresentationOptions(product, selectedValue = '') {
+            const options = ['<option value="">Seleccionar...</option>'];
+            const presentations = PRODUCT_CATALOG[product] || [];
+
+            presentations.forEach(item => {
+                options.push(`<option value="${item}"${item === selectedValue ? ' selected' : ''}>${item}</option>`);
+            });
+
+            if (presentations.length > 0) {
+                options.push(`<option value="Especial"${selectedValue === 'Especial' ? ' selected' : ''}>Especial</option>`);
+            }
+
+            return options.join('');
+        }
+
+        function syncPedidoPresentation(productSelect, selectedPresentation = '') {
+            if (!productSelect) return;
+
+            const row = productSelect.closest('tr');
+            const presCell = row ? row.querySelector('.pedido-pres-cell') : null;
+            if (!presCell) return;
+
+            const product = productSelect.value;
+
+            if (product === 'Otro') {
+                const escapedValue = String(selectedPresentation || '').replace(/"/g, '&quot;');
+                presCell.innerHTML = `<input type="text" class="cedit pres-input" placeholder="Presentación libre" value="${escapedValue}">`;
+                return;
+            }
+
+            presCell.innerHTML = `<select class="cedit pres-select">${buildPedidoPresentationOptions(product, selectedPresentation)}</select>`;
+        }
+
+        function createPedidoRow(data = {}) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="number" class="cedit" min="0" step="1" placeholder="0" value="${data.cantidad || ''}"></td>
+                <td>
+                    <select class="cedit prod-select" aria-label="Producto">
+                        ${buildPedidoProductOptions(data.producto || '')}
+                    </select>
+                </td>
+                <td class="pedido-pres-cell"></td>
+                <td><input type="text" class="cedit" placeholder="Origen o ruta" value="${data.origen || ''}"></td>
+                <td><input type="text" class="cedit" placeholder="DD/MM/AAAA" value="${data.fecha || ''}"></td>
+                <td class="no-print"><button type="button" class="btn btn-mini" onclick="removePedidoRow(this)">Eliminar</button></td>
+            `;
+
+            const productSelect = tr.querySelector('.prod-select');
+            const selectedPresentation = data.presentacion || '';
+
+            syncPedidoPresentation(productSelect, selectedPresentation);
+            productSelect.addEventListener('change', function () {
+                syncPedidoPresentation(productSelect, '');
+            });
+
+            return tr;
+        }
+
         function addPedidoRowInputs() {
             const tbody = document.querySelector('#tbl-pedidos tbody');
             if (!tbody) return;
 
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><input type="number" class="cedit" min="0" step="1" placeholder="0"></td>
-                <td><input type="text" class="cedit" placeholder="Producto"></td>
-                <td><input type="text" class="cedit" placeholder="Presentacion"></td>
-                <td><input type="text" class="cedit" placeholder="Origen o ruta"></td>
-                <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                <td class="no-print"><button type="button" class="btn btn-mini" onclick="removePedidoRow(this)">Eliminar</button></td>
-            `;
-            tbody.appendChild(tr);
+            tbody.appendChild(createPedidoRow());
         }
 
         function removePedidoRow(button) {
@@ -278,8 +351,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            convertTableSelectsToInputs(document);
-
             const barcodeInput = document.querySelector('.generate-barcode');
             if (barcodeInput) {
                 const renderBarcode = function () {
@@ -325,7 +396,9 @@
 
             if (tbody) {
                 const observer = new MutationObserver(function () {
-                    convertTableSelectsToInputs(tbody);
+                    if (isOfflineMode) {
+                        convertTableSelectsToInputs(tbody);
+                    }
                 });
                 observer.observe(tbody, { childList: true, subtree: true });
             }
@@ -358,9 +431,9 @@
                     inp.placeholder = 'DD/MM/AAAA';
                 });
 
-                // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'time');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'HH:MM';
                 });
@@ -394,6 +467,11 @@
                             break;
                         }
                     }
+                    if (sel.classList.contains('prod-select')) {
+                        sel.addEventListener('change', function () {
+                            syncPedidoPresentation(sel, '');
+                        });
+                    }
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
@@ -404,9 +482,9 @@
                     inp.removeAttribute('data-original-type');
                 });
 
-                // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
