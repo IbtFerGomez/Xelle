@@ -48,6 +48,10 @@ const AppCom = {
             "X-Wound Care": {
                 lotPre: "XWC",
                 pres: ["5 x 5", "10 x 10", "10 x 15"]
+            },
+            "Otro": {
+                lotPre: "",
+                pres: []
             }
         }
     },
@@ -173,13 +177,28 @@ const AppCom = {
             barcodeInput.value = raw;
             barcodeInput.dispatchEvent(new Event('input'));
         },
+        normalizeBarcodeValue: function (input) {
+            if (!input) return '';
+            const prefix = String(input.dataset?.prefix || '').trim();
+            let raw = String(input.value || '').trim();
+
+            if (prefix && raw.startsWith(prefix)) {
+                raw = raw.slice(prefix.length).trim();
+            }
+
+            if (input.value !== raw) {
+                input.value = raw;
+            }
+
+            return raw;
+        },
         resolveOrCreateInstanceCode: async function (docId) {
             const fromQuery = this.getInstanceCode();
             if (fromQuery) return fromQuery;
 
             const barcodeInput = document.querySelector('.generate-barcode');
             const prefix = barcodeInput?.dataset?.prefix || '';
-            const barcodeValue = String(barcodeInput?.value || '').trim();
+            const barcodeValue = this.normalizeBarcodeValue(barcodeInput);
             if (barcodeValue) return `${prefix}${barcodeValue}`;
 
             const formatType = this.getFormatType(docId);
@@ -195,7 +214,7 @@ const AppCom = {
         persistInstance: async function (docId, data) {
             const barcodeInput = document.querySelector('.generate-barcode');
             const prefix = barcodeInput?.dataset?.prefix || '';
-            const barcodeValue = String(barcodeInput?.value || '').trim();
+            const barcodeValue = this.normalizeBarcodeValue(barcodeInput);
 
             if (!barcodeValue) {
                 throw new Error('Debe ingresar un código de folio único');
@@ -265,10 +284,18 @@ const AppCom = {
         setupBarcodes: function () {
             const process = (input) => {
                 const prefix = input.dataset.prefix || '';
-                const val = input.value;
-                if (val && window.JsBarcode) {
+                const targetId = input.dataset.target;
+                const targetEl = targetId ? document.getElementById(targetId) : null;
+                const val = this.normalizeBarcodeValue(input);
+
+                if (!val) {
+                    if (targetEl) targetEl.innerHTML = '';
+                    return;
+                }
+
+                if (window.JsBarcode) {
                     try {
-                        JsBarcode(`#${input.dataset.target}`, prefix + val, {
+                        JsBarcode(`#${targetId}`, prefix + val, {
                             format: "CODE128",
                             height: 30,
                             displayValue: true,
@@ -444,15 +471,26 @@ const AppCom = {
         onProdChange: function (selectElement) {
             const row = selectElement.closest('tr');
             const val = selectElement.value;
-            const presSelect = row.querySelector('.pres-select');
+            const presCell = row.querySelector('.pres-select, .pres-input')?.parentElement;
 
-            if (!presSelect) return;
-            presSelect.innerHTML = '<option>-</option>';
+            if (!presCell) return;
 
-            if (val && AppCom.config.DB_PRODUCTS[val]) {
-                AppCom.config.DB_PRODUCTS[val].pres.forEach(p => {
-                    presSelect.add(new Option(p, p));
-                });
+            if (val === 'Otro') {
+                presCell.innerHTML = '<input type="text" class="cedit pres-input" placeholder="Presentación libre">';
+                return;
+            }
+
+            const product = AppCom.config.DB_PRODUCTS[val];
+            const presOptions = product ? [...product.pres, 'Especial'] : [];
+            presCell.innerHTML = '<select class="cedit pres-select"><option>-</option></select>';
+
+            const presSelect = presCell.querySelector('.pres-select');
+            presOptions.forEach(p => {
+                presSelect.add(new Option(p, p));
+            });
+
+            if (!val) {
+                presSelect.value = '-';
             }
         }
     },
@@ -489,7 +527,8 @@ const AppCom = {
                 <td><select class="cedit prod-select" onchange="AppCom.Universal.onProdChange(this)"></select></td>
                 <td><select class="cedit pres-select"><option>-</option></select></td>
                 <td><select class="cedit"><option>Stock (Operaciones)</option><option>Producción (Lab)</option></select></td>
-                <td><input type="date" class="cedit"></td>
+                <td><input type="text" class="cedit"></td>
+                <td><input type="text" class="cedit" placeholder="Observaciones"></td>
                 <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
             document.querySelector('#tbl-pedidos tbody').appendChild(r);
             AppCom.Universal.fillProdSelect(r.querySelector('.prod-select'));
@@ -498,7 +537,7 @@ const AppCom = {
             const r = [];
             document.querySelectorAll('#tbl-pedidos tbody tr').forEach(tr => {
                 const i = tr.querySelectorAll('input, select');
-                r.push({ c: i[0].value, p: i[1].value, pr: i[2].value, o: i[3].value, f: i[4].value });
+                r.push({ c: i[0].value, p: i[1].value, pr: i[2].value, o: i[3].value, f: i[4].value, obs: i[5].value });
             });
             return { t_ped: r };
         },
@@ -507,13 +546,16 @@ const AppCom = {
                 const tb = document.querySelector('#tbl-pedidos tbody'); tb.innerHTML = '';
                 d.t_ped.forEach(x => {
                     this.addPedidoRow();
-                    const i = tb.lastElementChild.querySelectorAll('input, select');
-                    i[0].value = x.c;
-                    i[1].value = x.p;
-                    AppCom.Universal.onProdChange(i[1]);
-                    i[2].value = x.pr;
-                    i[3].value = x.o;
-                    i[4].value = x.f;
+                    const row = tb.lastElementChild;
+                    const fields = row.querySelectorAll('input, select');
+                    fields[0].value = x.c;
+                    fields[1].value = x.p;
+                    AppCom.Universal.onProdChange(fields[1]);
+                    const presField = row.querySelector('.pres-select, .pres-input');
+                    if (presField) presField.value = x.pr;
+                    fields[2].value = x.o;
+                    fields[3].value = x.f;
+                    fields[4].value = x.obs || '';
                 });
             }
         }
@@ -529,6 +571,7 @@ const AppCom = {
             r.innerHTML = `
                 <td><select class="cedit prod-select" onchange="AppCom.Universal.onProdChange(this)"></select></td>
                 <td><select class="cedit pres-select"><option>-</option></select></td>
+                <td><input class="cedit" placeholder="Observaciones"></td>
                 <td><input class="cedit" placeholder="Ubicación"></td>
                 <td><input class="cedit" placeholder="Lote"></td>
                 <td><input type="number" class="cedit text-center"></td>
@@ -547,7 +590,7 @@ const AppCom = {
             const r = [];
             document.querySelectorAll('#tbl-picking tbody tr').forEach(tr => {
                 const i = tr.querySelectorAll('input, select');
-                r.push({ p: i[0].value, pr: i[1].value, u: i[2].value, l: i[3].value, cr: i[4].value, cs: i[5].value });
+                r.push({ p: i[0].value, pr: i[1].value, obs: i[2].value, u: i[3].value, l: i[4].value, cr: i[5].value, cs: i[6].value });
             });
             return { t_pick: r };
         },
@@ -560,10 +603,11 @@ const AppCom = {
                     i[0].value = x.p;
                     AppCom.Universal.onProdChange(i[0]);
                     i[1].value = x.pr;
-                    i[2].value = x.u;
-                    i[3].value = x.l;
-                    i[4].value = x.cr;
-                    i[5].value = x.cs;
+                    i[2].value = x.obs;
+                    i[3].value = x.u;
+                    i[4].value = x.l;
+                    i[5].value = x.cr;
+                    i[6].value = x.cs;
                 });
             }
         }
@@ -601,7 +645,7 @@ const AppCom = {
                 <td><select class="cedit prod-select" onchange="AppCom.Universal.onProdChange(this)"></select></td>
                 <td><select class="cedit pres-select"><option>-</option></select></td>
                 <td><input class="cedit" placeholder="Lote"></td>
-                <td><input type="date" class="cedit"></td>
+                <td><input type="text" class="cedit"></td>
                 <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
             document.querySelector('#tbl-remision tbody').appendChild(r);
             AppCom.Universal.fillProdSelect(r.querySelector('.prod-select'));
@@ -619,13 +663,15 @@ const AppCom = {
                 const tb = document.querySelector('#tbl-remision tbody'); tb.innerHTML = '';
                 d.t_rem.forEach(x => {
                     this.addRemisionRow();
-                    const i = tb.lastElementChild.querySelectorAll('input, select');
-                    i[0].value = x.c;
-                    i[1].value = x.p;
-                    AppCom.Universal.onProdChange(i[1]);
-                    i[2].value = x.pr;
-                    i[3].value = x.l;
-                    i[4].value = x.cad;
+                    const row = tb.lastElementChild;
+                    const fields = row.querySelectorAll('input, select');
+                    fields[0].value = x.c;
+                    fields[1].value = x.p;
+                    AppCom.Universal.onProdChange(fields[1]);
+                    const presField = row.querySelector('.pres-select, .pres-input');
+                    if (presField) presField.value = x.pr;
+                    fields[2].value = x.l;
+                    fields[3].value = x.cad;
                 });
             }
         }

@@ -78,6 +78,10 @@
         .compact-table textarea {
             resize: none;
             overflow: hidden;
+            min-height: 38px;
+            line-height: 1.25;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
         }
 
         .compact-table input:focus,
@@ -164,9 +168,12 @@
                 box-shadow: none;
                 padding: 0;
             }
-        
+
         }
-         @media print {input::placeholder,
+
+        @media print {
+
+            input::placeholder,
             textarea::placeholder {
                 color: transparent !important;
             }
@@ -260,9 +267,10 @@
                 <tbody>
                     <tr>
                         <td class="text-center row-num">1</td>
-                        <td><input class="cedit text-left" value="Sanitización de Superficies"></td>
-                        <td><input class="cedit text-left"
-                                value="Aplicación de sanitizante en mesas, manerales y superficies de contacto conforme al PNO vigente">
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Sanitización de superficies de contacto crítico</textarea></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Aplicación de sanitizante autorizado en mesas, manerales y áreas de contacto conforme al PNO vigente; sin residuos visibles.</textarea>
                         </td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
@@ -275,9 +283,10 @@
                     </tr>
                     <tr>
                         <td class="text-center row-num">2</td>
-                        <td><input class="cedit text-left" value="Limpieza de Pisos"></td>
-                        <td><input class="cedit text-left"
-                                value="Barrido y trapeado con agente autorizado; sin residuos visibles ni derrames">
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Limpieza y desinfección de pisos</textarea></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Barrido y trapeado con agente autorizado; sin polvo, derrames ni material acumulado en esquinas o zoclos.</textarea>
                         </td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
@@ -290,9 +299,10 @@
                     </tr>
                     <tr>
                         <td class="text-center row-num">3</td>
-                        <td><input class="cedit text-left" value="Vaciado de botes (Municipal)"></td>
-                        <td><input class="cedit text-left"
-                                value="Recolección y disposición en contenedor municipal designado, con reposición de bolsa">
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Control de residuos municipales</textarea></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Recolección y disposición en contenedor designado, reposición de bolsa y área limpia al finalizar.</textarea>
                         </td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
@@ -305,9 +315,10 @@
                     </tr>
                     <tr>
                         <td class="text-center row-num">4</td>
-                        <td><input class="cedit text-left" value="Vaciado de RPBI (Si aplica)"></td>
-                        <td><input class="cedit text-left"
-                                value="Segregación, cierre y retiro conforme a NOM-087; evidencia de manejo seguro">
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Manejo de RPBI (cuando aplique)</textarea></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Segregación, cierre, identificación y retiro conforme a NOM-087; sin sobrellenado y con evidencia de manejo seguro.</textarea>
                         </td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
@@ -320,9 +331,11 @@
                     </tr>
                     <tr>
                         <td class="text-center row-num">5</td>
-                        <td><input class="cedit text-left" value="Verificación de Manómetros"></td>
-                        <td><input class="cedit text-left"
-                                value="Lectura de presión dentro del rango establecido y sin alarmas activas"></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Verificación de presión diferencial / manómetros</textarea></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Lecturas dentro del rango autorizado para el área; sin alarmas activas y con registro trazable de verificación.</textarea>
+                        </td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
@@ -334,9 +347,11 @@
                     </tr>
                     <tr>
                         <td class="text-center row-num">6</td>
-                        <td><input class="cedit text-left" value="Limpieza de Esclusas"></td>
-                        <td><input class="cedit text-left"
-                                value="Esclusas limpias, desinfectadas y libres de materiales fuera de lugar"></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Control de esclusas y accesos</textarea></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Esclusas limpias, sin obstrucciones, con tapetes/controles sanitarios operativos y flujo de ingreso conforme al procedimiento.</textarea>
+                        </td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
@@ -348,9 +363,10 @@
                     </tr>
                     <tr>
                         <td class="text-center row-num">7</td>
-                        <td><input class="cedit text-left" value="Orden General de Insumos"></td>
-                        <td><input class="cedit text-left"
-                                value="Insumos identificados, acomodados por lote/caducidad y sin material no conforme">
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Control de insumos y materiales</textarea></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Insumos identificados, segregados por estatus, con control de lote/caducidad y sin uso de material no conforme.</textarea>
                         </td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
@@ -363,9 +379,74 @@
                     </tr>
                     <tr>
                         <td class="text-center row-num">8</td>
-                        <td><input class="cedit text-left" value="Aspersión de Sanitizante"></td>
-                        <td><input class="cedit text-left"
-                                value="Aspersión uniforme en áreas definidas con tiempo de contacto según ficha técnica">
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Monitoreo ambiental (temperatura / humedad)</textarea></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Registro de parámetros ambientales del área dentro de límites definidos; acciones inmediatas en caso de tendencia fuera de especificación.</textarea>
+                        </td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="Iniciales"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-actividades')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">9</td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Estado de limpieza de equipos críticos</textarea></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Equipos de uso diario limpios, identificados y sin residuos; evidencia en bitácora correspondiente y estatus visible.</textarea>
+                        </td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="Iniciales"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-actividades')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">10</td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Vigencia de calibración/verificación</textarea></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Instrumentos con etiqueta vigente de calibración/verificación y sin uso de equipos vencidos o fuera de servicio.</textarea>
+                        </td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="Iniciales"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-actividades')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">11</td>
+                        <td><textarea class="cedit text-left auto-grow" rows="2">Estatus de control de plagas</textarea>
+                        </td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Áreas sin evidencia de plaga; trampas y monitoreo al corriente según programa vigente y sin hallazgos críticos abiertos.</textarea>
+                        </td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC"></td>
+                        <td><input class="cedit text-center" placeholder="Iniciales"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-actividades')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">12</td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Gestión documental y desviaciones</textarea></td>
+                        <td><textarea class="cedit text-left auto-grow"
+                                rows="2">Registros semanales completos, legibles y en tiempo (ALCOA+). Toda NC documentada con observación y folio de desviación aplicable.</textarea>
                         </td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
                         <td><input class="cedit text-center" placeholder="C / NC"></td>
@@ -420,6 +501,18 @@
     </div>
 
     <script>
+        function autoResizeTextarea(el) {
+            el.style.height = 'auto';
+            el.style.height = `${el.scrollHeight}px`;
+        }
+
+        function initAutoGrow(scope = document) {
+            scope.querySelectorAll('textarea.auto-grow').forEach((textarea) => {
+                autoResizeTextarea(textarea);
+                textarea.addEventListener('input', () => autoResizeTextarea(textarea));
+            });
+        }
+
         function addRowNumbered(tableId) {
             const tbody = document.getElementById(tableId).querySelector('tbody');
             const newRow = tbody.rows[0].cloneNode(true);
@@ -430,7 +523,12 @@
                     input.value = ''; // Limpia todo para nuevas filas libres
                 }
             });
+            newRow.querySelectorAll('textarea').forEach((textarea) => {
+                textarea.value = '';
+                autoResizeTextarea(textarea);
+            });
             tbody.appendChild(newRow);
+            initAutoGrow(newRow);
             updateNumbers(tableId);
         }
 
@@ -449,6 +547,10 @@
                 if (numCell) numCell.innerText = index + 1;
             });
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initAutoGrow();
+        });
     </script>
 </body>
 

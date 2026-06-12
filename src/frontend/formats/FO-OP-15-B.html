@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-15-B Acondicionamiento y Fabricación de Dosis</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --danger-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --border-color: #d1d5db;
+            --bg-color: #f3f4f6;
+            --input-bg: #ffffff;
+            --ink: #333333;
+            --muted: #666666;
+            --paper: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 12px;
+            background: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: var(--ink);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            background-color: white;
+            width: 95%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 50px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            min-height: 279mm;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .global-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn {
+            color: #fff;
+            min-width: 100px;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-mini {
+            padding: 5px 8px;
+            font-size: 10px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .logo-container svg {
+            width: 205px;
+            max-width: 100%;
+            display: block;
+        }
+
+        .registry-container {
+            min-width: 290px;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .registry-container label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .registry-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+
+        .registry-prefix {
+            font-weight: 700;
+            color: var(--primary-color);
+            white-space: nowrap;
+            margin-right: 5px;
+            font-size: 14px;
+        }
+
+        .registry-input,
+        .registry-date,
+        .cedit,
+        select.cedit,
+        textarea.cedit {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-bg);
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 11px;
+        }
+
+        .registry-input {
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-align: center;
+            border: 1px dashed #ccc;
+            font-size: 14px;
+            width: 100px;
+        }
+
+        .registry-date {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            font-size: 10px;
+            color: #666;
+            text-align: right;
+            width: 110px;
+            background: transparent;
+        }
+
+        .barcode-svg {
+            max-height: 40px;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .barcode-svg text {
+            font-family: Arial, sans-serif;
+        }
+
+        .header-main {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .header-main h1 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        .metadata {
+            margin-top: 5px;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .section-header {
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 5px 10px 5px 25px;
+            font-weight: 700;
+            font-size: 12px;
+            margin: 0 -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            text-transform: uppercase;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #fff;
+            page-break-inside: avoid;
+        }
+
+        .compact-table,
+        .no-border-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            background-color: white;
+            table-layout: fixed;
+        }
+
+        .compact-table th {
+            background: #f8f9fa;
+            color: var(--primary-color);
+            font-size: 11px;
+            padding: 4px 6px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            vertical-align: middle;
+            text-transform: uppercase;
+        }
+
+        .compact-table td,
+        .no-border-table td,
+        .no-border-table th {
+            border: 1px solid var(--border-color);
+            padding: 4px 6px;
+            text-align: left;
+            vertical-align: middle;
+            word-wrap: break-word;
+            font-size: 10px;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea,
+        .no-border-table input,
+        .no-border-table select,
+        .no-border-table textarea {
+            font-size: 11px;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-bg);
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .compact-table textarea,
+        .no-border-table textarea {
+            resize: vertical;
+            min-height: 30px;
+            text-align: left;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus,
+        .no-border-table input:focus,
+        .no-border-table select:focus,
+        .no-border-table textarea:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 6px !important;
+        }
+
+        .info-box {
+            background-color: #f0fdfa;
+            border: 1px solid #5eead4;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            color: #115e59;
+            margin-top: 10px;
+            line-height: 1.3;
+            text-align: justify;
+        }
+
+        .legend-box {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 8.5px;
+            color: var(--ink);
+            margin-top: 5px;
+            line-height: 1.4;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .gray-th {
+            background-color: transparent !important;
+            color: var(--primary-color) !important;
+            text-align: left !important;
+            padding-left: 8px !important;
+            font-weight: bold;
+            border: none !important;
+        }
+
+        .btn-add {
+            background-color: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 6px;
+            margin-top: 5px;
+            color: var(--primary-color);
+        }
+
+        .product-select,
+        .presentation-select {
+            width: 100%;
+            font-size: 11px;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-bg);
+            padding: 6px 8px;
+            border-radius: 4px;
+        }
+
+        .readonly-serial {
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .checklist-table input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            margin: 0 auto;
+            display: block;
+            accent-color: var(--primary-color);
+        }
+
+        .signature-area {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .signature-box {
+            flex: 1;
+            text-align: center;
+        }
+
+        .signature-box p {
+            margin: 0;
+            font-size: 10px;
+        }
+
+        .signature-line {
+            border-top: 1px solid #ccc;
+            width: 100%;
+            margin-top: 35px;
+        }
+
+        .footer-unified {
+            margin-top: 25px;
+            border-top: 2px solid var(--primary-color);
+            padding-top: 10px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: var(--muted);
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-15-b">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="printForm()">Imprimir Formato</button>
+        <button class="btn btn-warning" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" aria-label="Xelle Scientific">
+                    <defs>
+                        <style>
+                            .svg-logo-titulo {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B;
+                            }
+
+                            .svg-logo-subtitulo {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px;
+                            }
+
+                            .svg-logo-celula {
+                                fill: #2E9D82;
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0, -2) scale(0.85)">
+                        <circle class="svg-logo-celula" cx="25" cy="25" r="13" />
+                        <circle class="svg-logo-celula" cx="75" cy="75" r="13" />
+                        <path class="svg-logo-celula"
+                            d="M15.81,65.81C28.54,53.08 33.74,59.19 46.46,46.46C59.19,33.74 53.08,28.54 65.81,15.81A13 13 0 1 1 84.19,34.19C71.46,46.92 66.26,40.81 53.54,53.54C40.81,66.26 46.92,71.46 34.19,84.19A13 13 0 1 1 15.81,65.81Z" />
+                    </g>
+                    <text x="90" y="42" class="svg-logo-titulo" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="svg-logo-subtitulo" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio Maestra</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-15-B-</span>
+                    <input type="text" id="reg-op15b" class="registry-input generate-barcode cedit"
+                        data-target="barcode-op15b" data-prefix="FO-OP-15-B-" placeholder="0001" autocomplete="off">
+                </div>
+                <input type="text" id="date-op15b" class="registry-date cedit" autocomplete="off">
+                <svg id="barcode-op15b" class="barcode-svg" role="img" aria-label="Código de barras del folio"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>ORDEN MAESTRA DE ACONDICIONAMIENTO Y FABRICACIÓN DE DOSIS</h1>
+            <div class="metadata">Código: FO-OP-15-B | Versión: 1.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+
+        <div class="legend-box">
+            <div><strong>Cruce Documental Obligatorio:</strong><br>FO-OP-15 (Pedido) ➜
+                FO-OP-15-B (Fabricación) ➜ FO-OP-16 (Surtido) ➜ FO-OP-17 (Remision y entrega)</div>
+        </div>
+
+        <div class="section-header">1. Trazabilidad y Enlace Administrativo</div>
+        <table class="no-border-table">
+            <tr>
+                <th width="20%" class="gray-th">Ref. Pedido (FO-OP-15):</th>
+                <td width="30%"><input class="cedit text-left" name="ref_pedido" placeholder="Ej: FO-OP-15-0012"
+                        style="font-weight:bold; color:var(--primary-color);"></td>
+            </tr>
+            <tr>
+
+                <th class="gray-th">Fecha Acondicionamiento:</th>
+                <td><input type="date" class="cedit text-center" name="fecha_acondicionamiento"></td>
+            </tr>
+        </table>
+
+        <div class="section-header">2. Matriz de Fabricación y Fraccionamiento de Dosis</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-dosis">
+                <thead>
+                    <tr>
+                        <th width="4%">#</th>
+                        <th width="8%">Cant.</th>
+                        <th width="22%">Producto</th>
+                        <th width="16%">Presentación</th>
+                        <th width="16%">Lote Asignado</th>
+                        <th width="22%">Folio Único / CÓDIGO ÚNICO</th>
+                        <th width="8%">Iniciales<br>Operador</th>
+                        <th width="4%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addDoseRow()">+ AGREGAR LÍNEA DE DOSIS</button>
+        </div>
+
+        <div class="section-header">3. Verificación de Acondicionamiento Primario y Secundario</div>
+        <table class="compact-table checklist-table">
+            <thead>
+                <tr>
+                    <th width="6%">No.</th>
+                    <th width="84%">Atributo de Calidad Inspeccionado</th>
+                    <th width="10%">Ok</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">1</td>
+                    <td class="text-left">Inspección visual del producto: sin partículas extrañas, sin turbidez anómala
+                        y sin cambios de coloración.</td>
+                    <td><input type="checkbox" class="cedit" aria-label="Inspección visual"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">2</td>
+                    <td class="text-left">Integridad del envase primario: vial sin fisuras, fracturas o
+                        defectos visibles.</td>
+                    <td><input type="checkbox" class="cedit" aria-label="Integridad del envase primario"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">3</td>
+                    <td class="text-left">Cierre hermético: engargolado, tapón o casquillo bien sellado y sin señales de
+                        daño o apertura.</td>
+                    <td><input type="checkbox" class="cedit" aria-label="Cierre hermético"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">4</td>
+                    <td class="text-left">Etiquetado normativo: datos legibles de producto, lote, caducidad y
+                        concentración.</td>
+                    <td><input type="checkbox" class="cedit" aria-label="Etiquetado normativo"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">5</td>
+                    <td class="text-left">Empaque secundario: caja, o protección correcta y completa según el
+                        producto.</td>
+                    <td><input type="checkbox" class="cedit" aria-label="Empaque secundario"></td>
+                </tr>
+                <tr>
+                    <td class="text-center">6</td>
+                    <td class="text-left">Verificación de la orden: Lo solicitado corresponde a lo solicitado a pedido y FO-OP-15.</td>
+                    <td><input type="checkbox" class="cedit" aria-label="Empaque secundario"></td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <div class="section-header">4. Observaciones</div>
+        <div style="font-size:9px; color:var(--muted); margin-top:6px; line-height:1.4;">
+            Use este espacio para anotar cualquier detalle, ajuste, incidencia o aclaración relevante del proceso.
+        </div>
+        <textarea class="cedit" name="observaciones" rows="3"
+            placeholder="Documente cualquier eventualidad durante el fraccionamiento, rechazo de viales por defecto de fábrica, etc."
+            style="border:1px solid var(--line); border-radius:4px; padding:8px; text-align:left; margin-top:10px; width:100%;"></textarea>
+
+        <div class="signature-area">
+            <div class="signature-box">
+                <p style="font-weight:bold; font-size:10px;">EJECUTÓ (TÉCNICO / OPERADOR)</p>
+                <div class="signature-line"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Fraccionamiento y Acondicionamiento Físico</p>
+            </div>
+            <div class="signature-box">
+                <p style="font-weight:bold; font-size:10px;">VERIFICÓ (SUPERVISOR PRODUCCIÓN)</p>
+                <div class="signature-line"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Conformidad de Trazabilidad y Lotes</p>
+            </div>
+            <div class="signature-box" style="background:#f0fdf4; padding: 0 6px 6px; border-radius: 4px;">
+                <p style="font-weight:bold; font-size:10px; color:#14532d;">APROBÓ (ASEGURAMIENTO CALIDAD)</p>
+                <div class="signature-line" style="border-top-color:#166534;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#14532d;">Dictamen de Checklist BPF</p>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-OP-15-B | Versión: 1.0 | Acondicionamiento y Fabricación de Dosis | Xelle
+                Scientific | Página 1 de 1</div>
+            <div class="legal-data">Este documento es propiedad de Xelle Scientific, S.A.P.I. de C.V. Documento
+                auditable GxP. Prohibida su reproducción.</div>
+        </div>
+    </div>
+
+    <script>
+        const PRODUCT_CATALOG = {
+            "Stem Xelle": ["10 M", "25 M", "50 M", "100 M"],
+            "Stem Ortho": ["10 M", "25 M", "50 M", "100 M"],
+            "Hybrid Xelle": ["10M + 1B", "25M + 2B", "50M + 5B", "60M + 6B", "100M + 10B"],
+            "Hybrid Ortho": ["10M + 1B", "25M + 2B", "50M + 5B", "60M + 6B", "100M + 10B"],
+            "X-Breath Nebulizer": ["Única"],
+            "X-Exosomes": ["3B", "9B", "15B", "30B", "75B", "90B"],
+            "X-Exosomes HA": ["Única"],
+            "X-Implant": ["1 G", "2 G"],
+            "X-Wound Care": ["5 x 5", "10 x 10", "10 x 15"],
+            "Otro": []
+        };
+        const PRODUCT_LOT_PREFIX = {
+            "Stem Xelle": "XCM",
+            "Hybrid Xelle": "XHY",
+            "Stem Ortho": "XOR",
+            "Hybrid Ortho": "XHO",
+            "X-Exosomes": "EXO",
+            "X-Exosomes HA": "EHA",
+            "X-Breath Nebulizer": "XBN",
+            "X-Implant": "XIM",
+            "X-Wound Care": "XWC"
+        };
+        const STORAGE_KEY = 'fo-op-15-b-self-contained';
+        const BARCODE_NS = 'http://www.w3.org/2000/svg';
+
+        function formatDateForSerial(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+            return `${year}${month}${day}${hours}${minutes}${seconds}`;
+        }
+
+        function ensureMasterFolio() {
+            const input = document.getElementById('reg-op15b');
+            if (!input) return '';
+            let value = String(input.value || '').trim();
+            const prefix = String(input.dataset.prefix || '').trim();
+            if (prefix && value.startsWith(prefix)) value = value.slice(prefix.length).trim();
+            if (!value) {
+                value = formatDateForSerial(new Date());
+                input.value = value;
+            }
+            return value;
+        }
+
+        function renderBarcode(svgElement, code) {
+            if (!svgElement) return;
+            const value = String(code || '').trim();
+            svgElement.innerHTML = '';
+            if (!value) return;
+
+            if (window.JsBarcode) {
+                try {
+                    const selector = `#${svgElement.id}`;
+                    JsBarcode(selector, value, {
+                        format: 'CODE128',
+                        height: 30,
+                        displayValue: true,
+                        fontSize: 10,
+                        margin: 0
+                    });
+                    return;
+                } catch (error) {
+                    console.warn('No se pudo renderizar con JsBarcode, usando respaldo SVG.', error);
+                }
+            }
+
+            const width = 320;
+            const height = 48;
+            const textY = 62;
+            const bits = (`1011${value.split('').map(ch => ch.charCodeAt(0).toString(2).padStart(8, '0')).join('11')}1101`).split('');
+            svgElement.setAttribute('viewBox', `0 0 ${width} 72`);
+            svgElement.setAttribute('preserveAspectRatio', 'none');
+
+            const maxBars = Math.max(bits.length, 1);
+            const moduleWidth = Math.max(1, Math.floor((width - 20) / maxBars));
+            let x = 10;
+
+            bits.forEach(bit => {
+                if (bit === '1') {
+                    const bar = document.createElementNS(BARCODE_NS, 'rect');
+                    bar.setAttribute('x', String(x));
+                    bar.setAttribute('y', '4');
+                    bar.setAttribute('width', String(moduleWidth));
+                    bar.setAttribute('height', String(height));
+                    bar.setAttribute('fill', '#111827');
+                    svgElement.appendChild(bar);
+                }
+                x += moduleWidth;
+            });
+
+            const text = document.createElementNS(BARCODE_NS, 'text');
+            text.setAttribute('x', String(width / 2));
+            text.setAttribute('y', String(textY));
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('font-size', '10');
+            text.setAttribute('fill', '#111827');
+            text.textContent = value;
+            svgElement.appendChild(text);
+        }
+
+        function normalizeBarcodeInput(input) {
+            if (!input) return '';
+            const prefix = String(input.dataset.prefix || '').trim();
+            let raw = String(input.value || '').trim();
+            if (prefix && raw.startsWith(prefix)) raw = raw.slice(prefix.length).trim();
+            if (input.value !== raw) input.value = raw;
+            return raw;
+        }
+
+        function updateMasterBarcode() {
+            const input = document.getElementById('reg-op15b');
+            const svg = document.getElementById('barcode-op15b');
+            if (!input || !svg) return;
+            const serial = normalizeBarcodeInput(input) || ensureMasterFolio();
+            const prefix = String(input.dataset.prefix || '').trim();
+            renderBarcode(svg, `${prefix}${serial}`);
+            reindexDoseCodes();
+        }
+
+        function getPresentationOptions(product) {
+            return PRODUCT_CATALOG[product] || [];
+        }
+
+        function getDateTokenForLot() {
+            const dateInput = document.querySelector('input[name="fecha_acondicionamiento"]');
+            const raw = String(dateInput?.value || '').trim();
+            if (!raw) return '';
+            return raw.replace(/-/g, '').substring(2);
+        }
+
+        function inferLotPrefix(product) {
+            if (!product) return '';
+            if (PRODUCT_LOT_PREFIX[product]) return PRODUCT_LOT_PREFIX[product];
+            const compact = String(product).replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+            return compact.slice(0, 3);
+        }
+
+        function buildAutoAssignedLot(product) {
+            const prefix = inferLotPrefix(product);
+            const dateToken = getDateTokenForLot();
+            if (!prefix || !dateToken) return '';
+            return `${prefix}${dateToken}`;
+        }
+
+        function syncAutoLotForRow(row, force = false) {
+            if (!row) return;
+            const product = row.querySelector('.product-select')?.value || '';
+            const lotInput = row.querySelector('.lot-input');
+            if (!lotInput) return;
+
+            const autoLot = buildAutoAssignedLot(product);
+            if (!autoLot) return;
+
+            const current = String(lotInput.value || '').trim();
+            const isAuto = lotInput.dataset.autoLot === '1';
+            if (force || !current || isAuto) {
+                lotInput.value = autoLot;
+                lotInput.dataset.autoLot = '1';
+            }
+        }
+
+        function buildProductOptions(selectedValue = '') {
+            return ['<option value="">Seleccionar...</option>']
+                .concat(Object.keys(PRODUCT_CATALOG).map(product => `<option value="${product}"${product === selectedValue ? ' selected' : ''}>${product}</option>`))
+                .join('');
+        }
+
+        function buildPresentationOptions(product, selectedValue = '') {
+            const options = getPresentationOptions(product);
+            const base = ['<option value="">Seleccionar...</option>'];
+            if (product === 'Otro') {
+                base.push(`<option value="Libre"${selectedValue ? ' selected' : ''}>Libre</option>`);
+            } else {
+                options.forEach(option => {
+                    base.push(`<option value="${option}"${option === selectedValue ? ' selected' : ''}>${option}</option>`);
+                });
+                if (options.length > 0) {
+                    base.push(`<option value="Especial"${selectedValue === 'Especial' ? ' selected' : ''}>Especial</option>`);
+                }
+            }
+            return base.join('');
+        }
+
+        function createDoseRow(data = {}) {
+            const tr = document.createElement('tr');
+            tr.className = 'dose-row';
+            tr.innerHTML = `
+                <td class="text-center row-index"></td>
+                <td><input type="number" class="cedit text-center qty-input" min="1" value="${data.cantidad || ''}" placeholder="1"></td>
+                <td><select class="product-select cedit" aria-label="Producto">${buildProductOptions(data.producto || '')}</select></td>
+                <td>
+                    <select class="presentation-select cedit" aria-label="Presentación"></select>
+                    <input type="text" class="cedit presentation-free" placeholder="¿Cuál?" style="display:none; margin-top:4px; border:1px solid #2e9d82;">
+                </td>
+                <td><input type="text" class="cedit text-center lot-input" value="${data.lote || ''}"></td>
+                <td><input type="text" class="cedit text-center readonly-serial serial-input" value="${data.serial || ''}"></td>
+                <td><input type="text" class="cedit text-center initials-input" value="${data.iniciales || ''}"></td>
+                <td class="no-print"><button type="button" class="btn btn-danger btn-mini" onclick="removeDoseRow(this)">x</button></td>`;
+
+            const productSelect = tr.querySelector('.product-select');
+            const presentationSelect = tr.querySelector('.presentation-select');
+            const freeInput = tr.querySelector('.presentation-free');
+            const lotInput = tr.querySelector('.lot-input');
+            const serialInput = tr.querySelector('.serial-input');
+
+            const syncPresentation = () => {
+                const product = productSelect.value;
+                const currentPresentation = product === 'Otro'
+                    ? (freeInput.value || data.presentacionLibre || data.presentacion || '')
+                    : (presentationSelect.value || data.presentacion || '');
+
+                presentationSelect.innerHTML = buildPresentationOptions(product, currentPresentation);
+                if (product === 'Otro') {
+                    presentationSelect.style.display = 'none';
+                    freeInput.style.display = 'block';
+                    freeInput.value = currentPresentation;
+                } else {
+                    presentationSelect.style.display = 'block';
+                    if (presentationSelect.value === 'Especial') {
+                        freeInput.style.display = 'block';
+                        if (!freeInput.value) {
+                            freeInput.value = data.presentacionLibre || '';
+                        }
+                    } else {
+                        freeInput.style.display = 'none';
+                        freeInput.value = '';
+                    }
+
+                    const validPres = getPresentationOptions(product);
+                    if (currentPresentation && (validPres.includes(currentPresentation) || currentPresentation === 'Especial')) {
+                        presentationSelect.value = currentPresentation;
+                    } else {
+                        presentationSelect.value = '';
+                    }
+                }
+
+                syncAutoLotForRow(tr);
+                reindexDoseCodes();
+            };
+
+            productSelect.addEventListener('change', syncPresentation);
+            presentationSelect.addEventListener('change', () => {
+                if (productSelect.value !== 'Otro' && presentationSelect.value === 'Especial') {
+                    freeInput.style.display = 'block';
+                    freeInput.focus();
+                } else if (productSelect.value !== 'Otro') {
+                    freeInput.style.display = 'none';
+                    freeInput.value = '';
+                }
+                reindexDoseCodes();
+            });
+
+            freeInput.addEventListener('input', reindexDoseCodes);
+            tr.querySelector('.qty-input')?.addEventListener('input', reindexDoseCodes);
+            lotInput?.addEventListener('input', () => {
+                if (lotInput.dataset.autoLot === '1') {
+                    lotInput.dataset.autoLot = '0';
+                }
+                updateDoseCode(tr);
+            });
+            serialInput?.addEventListener('input', () => {
+                serialInput.dataset.autoSerial = '0';
+            });
+            tr.querySelector('.initials-input')?.addEventListener('input', reindexDoseCodes);
+
+            const expectedAutoLot = buildAutoAssignedLot(productSelect.value);
+            if (expectedAutoLot && String(lotInput?.value || '').trim() === expectedAutoLot) {
+                lotInput.dataset.autoLot = '1';
+            }
+
+            if (!String(data.serial || '').trim()) {
+                if (serialInput) serialInput.dataset.autoSerial = '1';
+            } else if (serialInput) {
+                serialInput.dataset.autoSerial = '0';
+            }
+
+            syncPresentation();
+            return tr;
+        }
+
+        function addDoseRow(data = {}) {
+            document.querySelector('#tbl-dosis tbody').appendChild(createDoseRow(data));
+            reindexDoseCodes();
+        }
+
+        function removeDoseRow(button) {
+            const row = button.closest('tr');
+            const tbody = document.querySelector('#tbl-dosis tbody');
+            if (row && tbody && tbody.rows.length > 1) {
+                row.remove();
+                reindexDoseCodes();
+            }
+        }
+
+        function getDoseRows() {
+            return Array.from(document.querySelectorAll('#tbl-dosis tbody tr')).map(row => {
+                const productSelect = row.querySelector('.product-select');
+                const presentationSelect = row.querySelector('.presentation-select');
+                const freeInput = row.querySelector('.presentation-free');
+                return {
+                    cantidad: row.querySelector('.qty-input')?.value || '',
+                    producto: productSelect?.value || '',
+                    presentacion: productSelect?.value === 'Otro' ? (freeInput?.value || '') : (presentationSelect?.value || ''),
+                    presentacionLibre: productSelect?.value === 'Otro' ? (freeInput?.value || '') : '',
+                    lote: row.querySelector('.lot-input')?.value || '',
+                    serial: row.querySelector('.serial-input')?.value || '',
+                    iniciales: row.querySelector('.initials-input')?.value || ''
+                };
+            });
+        }
+
+        function updateDoseCode(row) {
+            if (!row) return;
+            const serialInput = row.querySelector('.serial-input');
+            if (!serialInput) return;
+
+            if (serialInput.dataset.autoSerial === '0') {
+                return;
+            }
+
+            const lot = String(row.querySelector('.lot-input')?.value || '').trim();
+            const allRows = Array.from(document.querySelectorAll('#tbl-dosis tbody tr'));
+            const index = allRows.indexOf(row) + 1;
+            const sequence = String(index);
+
+            if (!lot) {
+                serialInput.value = '';
+                return;
+            }
+
+            serialInput.value = `${lot.replace(/\s+/g, '')}-${sequence}`;
+        }
+
+        function reindexDoseCodes() {
+            Array.from(document.querySelectorAll('#tbl-dosis tbody tr')).forEach((row, index) => {
+                const indexCell = row.querySelector('.row-index');
+                if (indexCell) indexCell.textContent = String(index + 1);
+                updateDoseCode(row);
+            });
+        }
+
+        function serializeForm() {
+            const fields = {};
+            document.querySelectorAll('input, select, textarea').forEach(el => {
+                const key = el.name || el.id;
+                if (!key) return;
+                fields[key] = el.type === 'checkbox' ? el.checked : el.value;
+            });
+            return { fields, doseRows: getDoseRows() };
+        }
+
+        function applyState(state) {
+            if (!state || typeof state !== 'object') return;
+            const fields = state.fields || {};
+            document.querySelectorAll('input, select, textarea').forEach(el => {
+                const key = el.name || el.id;
+                if (!key || !(key in fields)) return;
+                if (el.type === 'checkbox') el.checked = Boolean(fields[key]);
+                else el.value = fields[key];
+            });
+
+            const tbody = document.querySelector('#tbl-dosis tbody');
+            tbody.innerHTML = '';
+            const rows = Array.isArray(state.doseRows) && state.doseRows.length ? state.doseRows : [{}];
+            rows.forEach(rowData => addDoseRow(rowData));
+            updateMasterBarcode();
+        }
+
+        function saveForm() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(serializeForm()));
+            alert('Formato guardado en este navegador.');
+        }
+
+        function loadForm() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return false;
+            try {
+                applyState(JSON.parse(raw));
+                return true;
+            } catch (error) {
+                console.warn('No se pudo cargar el estado guardado', error);
+                return false;
+            }
+        }
+
+        function clearForm() {
+            if (!confirm('¿Limpiar todo el formulario?')) return;
+            localStorage.removeItem(STORAGE_KEY);
+            location.reload();
+        }
+
+        function printForm() {
+            updateMasterBarcode();
+            window.print();
+        }
+
+        function toggleOfflineMode() {
+            const btn = document.getElementById('btn-offline');
+            const isOffline = btn?.dataset.mode === 'offline';
+            if (btn) {
+                btn.dataset.mode = isOffline ? 'online' : 'offline';
+                btn.textContent = isOffline ? 'Modo Offline' : 'Modo Online';
+                btn.style.backgroundColor = isOffline ? '' : '#f59e0b';
+            }
+        }
+
+        function initForm() {
+            const dateInput = document.getElementById('date-op15b');
+            if (dateInput && !dateInput.value) {
+                const now = new Date();
+                const yyyy = now.getFullYear();
+                const mm = String(now.getMonth() + 1).padStart(2, '0');
+                const dd = String(now.getDate()).padStart(2, '0');
+                dateInput.value = `${yyyy}-${mm}-${dd}`;
+            }
+
+            const folioInput = document.getElementById('reg-op15b');
+            if (folioInput) {
+                folioInput.addEventListener('input', updateMasterBarcode);
+                folioInput.addEventListener('change', updateMasterBarcode);
+                updateMasterBarcode();
+            }
+
+            const fechaAcondInput = document.querySelector('input[name="fecha_acondicionamiento"]');
+            if (fechaAcondInput) {
+                fechaAcondInput.addEventListener('change', () => {
+                    Array.from(document.querySelectorAll('#tbl-dosis tbody tr')).forEach(row => syncAutoLotForRow(row, true));
+                    reindexDoseCodes();
+                });
+            }
+
+            window.addEventListener('beforeprint', updateMasterBarcode);
+
+            const tbody = document.querySelector('#tbl-dosis tbody');
+            if (tbody && tbody.children.length === 0) addDoseRow();
+
+            if (!loadForm()) {
+                ensureMasterFolio();
+                updateMasterBarcode();
+            }
+
+            reindexDoseCodes();
+            updateMasterBarcode();
+        }
+
+        document.addEventListener('DOMContentLoaded', initForm);
+
+        window.saveForm = saveForm;
+        window.printForm = printForm;
+        window.clearForm = clearForm;
+        window.toggleOfflineMode = toggleOfflineMode;
+        window.addDoseRow = addDoseRow;
+        window.removeDoseRow = removeDoseRow;
+    </script>
+</body>
+
+</html>

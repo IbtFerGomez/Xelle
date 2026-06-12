@@ -62,6 +62,7 @@
             overflow: hidden;
             white-space: pre-wrap;
             word-break: break-word;
+            overflow-wrap: anywhere;
             line-height: 1.25;
             min-height: 18px;
         }
@@ -192,7 +193,7 @@
                     <input type="text" id="reg-matriz" class="registry-input generate-barcode"
                         data-target="barcode-matriz" data-prefix="FO-SGC-03-" placeholder="000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-matriz" class="barcode-svg"></svg>
             </div>
         </div>
@@ -304,9 +305,9 @@
                     <td>${index + 1}</td>
                     <td>${editField(code, 'code', code)}</td>
                     <td>${editField(code, 'type', safeValue(item.type, 'Formato'))}</td>
-                    <td>${editField(code, 'name', safeValue(item.name))}</td>
-                    <td>${editField(code, 'area', safeValue(item.area))}</td>
-                    <td>${editField(code, 'version', safeValue(item.version, '1.0'))}</td>
+                    <td>${editField(code, 'name', safeValue(item.name), { tag: 'textarea' })}</td>
+                    <td>${editField(code, 'area', safeValue(item.area), { tag: 'textarea' })}</td>
+                    <td>${editField(code, 'version', '1')}</td>
                     <td>${editField(code, 'vigencia', safeValue(item.vigencia))}</td>
                     <td>${editField(code, 'estado', safeValue(item.estado, 'Vigente'))}</td>
                     <td>${editField(code, 'proxima', '', { emptyValue: true })}</td>
@@ -317,15 +318,18 @@
                 tbody.appendChild(row);
             });
 
-            tbody.querySelectorAll('textarea.table-edit-textarea').forEach(textarea => {
-                const resizeTextarea = () => {
+            const resizeAllTextareas = () => {
+                tbody.querySelectorAll('textarea.table-edit-textarea').forEach(textarea => {
                     textarea.style.height = 'auto';
                     textarea.style.height = `${textarea.scrollHeight}px`;
-                };
+                });
+            };
 
-                textarea.addEventListener('input', resizeTextarea);
-                resizeTextarea();
+            tbody.querySelectorAll('textarea.table-edit-textarea').forEach(textarea => {
+                textarea.addEventListener('input', resizeAllTextareas);
             });
+            resizeAllTextareas();
+            window.addEventListener('beforeprint', resizeAllTextareas);
 
             const familias = new Set(source.map(item => safeValue(item.code).split('-')[1]).filter(Boolean));
             document.getElementById('stat-total').textContent = String(source.length);
