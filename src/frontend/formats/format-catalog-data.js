@@ -826,6 +826,20 @@ window.FORMAT_CATALOG = [
     "motivoCambio": "Actualización de inventario documental"
   },
   {
+    "code": "FO-LC-52",
+    "file": "FO-LC-52.html",
+    "type": "Formato",
+    "name": "Bitácora de Revisión Diaria de CO2",
+    "area": "Laboratorio y Calidad",
+    "version": "1.0",
+    "vigencia": "May 2026",
+    "estado": "Vigente",
+    "proximaRevision": "N/A",
+    "ubicacionMaestro": "src/frontend/formats/FO-LC-52.html",
+    "sustituyeA": "N/A",
+    "motivoCambio": "Actualización de inventario documental"
+  },
+  {
     "code": "FO-LG-01-B",
     "file": "FO-LG-01-B.html",
     "type": "Formato",
@@ -1032,6 +1046,20 @@ window.FORMAT_CATALOG = [
     "estado": "Vigente",
     "proximaRevision": "N/A",
     "ubicacionMaestro": "src/frontend/formats/FO-OP-13.html",
+    "sustituyeA": "N/A",
+    "motivoCambio": "Actualización de inventario documental"
+  },
+  {
+    "code": "FO-OP-13-B",
+    "file": "FO-OP-13-B.html",
+    "type": "Formato",
+    "name": "Ficha Clínica de Recolección de Tejido Placentario - Variante B",
+    "area": "Operaciones",
+    "version": "1.0",
+    "vigencia": "Mar 2026",
+    "estado": "Vigente",
+    "proximaRevision": "N/A",
+    "ubicacionMaestro": "src/frontend/formats/FO-OP-13-B.html",
     "sustituyeA": "N/A",
     "motivoCambio": "Actualización de inventario documental"
   },

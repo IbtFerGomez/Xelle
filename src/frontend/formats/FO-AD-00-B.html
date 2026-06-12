@@ -40,7 +40,8 @@
         }
 
         .compact-table input,
-        .compact-table select {
+        .compact-table select,
+        .compact-table textarea {
             font-size: 9px;
             text-align: center;
             width: 100%;
@@ -49,6 +50,13 @@
             padding: 2px;
             box-sizing: border-box;
             font-family: inherit;
+        }
+
+        .compact-table textarea {
+            min-height: 22px;
+            resize: vertical;
+            overflow: hidden;
+            line-height: 1.2;
         }
 
         .text-left {
@@ -258,8 +266,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input class="cedit text-left"></td>
-                        <td><input class="cedit"></td>
+                        <td><textarea class="cedit text-left" rows="1"></textarea></td>
+                        <td><textarea class="cedit text-left" rows="1"></textarea></td>
                         <td style="background-color:#fafafa;"></td>
                         <td style="background-color:#fafafa;"></td>
                         <td><input class="cedit" placeholder="J.P.G."></td>
@@ -312,6 +320,7 @@
             const tbody = document.getElementById(tableId).querySelector('tbody');
             const newRow = tbody.rows[0].cloneNode(true);
             newRow.querySelectorAll('input').forEach(input => input.value = '');
+            newRow.querySelectorAll('textarea').forEach(textarea => textarea.value = '');
             newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
             // Asegura que la última celda tenga el botón eliminar
             let lastCell = newRow.querySelector('td.no-print');
@@ -332,6 +341,7 @@
             } else {
                 // Si es la última fila, solo limpia los campos
                 row.querySelectorAll('input').forEach(input => input.value = '');
+                row.querySelectorAll('textarea').forEach(textarea => textarea.value = '');
                 row.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
             }
         }

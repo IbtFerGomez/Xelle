@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>FO-SGC-03-B Control Maestro de Documentos y Formatos</title>
     <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app.js"></script>
     <script src="format-catalog-data.js"></script>
     <style>
@@ -56,6 +57,15 @@
             box-sizing: border-box;
         }
 
+        .table-edit-textarea {
+            resize: none;
+            overflow: hidden;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.25;
+            min-height: 18px;
+        }
+
         .table-edit:focus {
             outline: 1px dashed #3b82f6;
             background: #f8fafc;
@@ -63,6 +73,33 @@
 
         .compact-table tbody tr:nth-child(even) {
             background-color: #f8fafc;
+        }
+
+        .stats-box {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .stat-item {
+            background: #f8fafc;
+            border-left: 4px solid #2E9D82;
+            padding: 8px 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1E3A5F;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #64748b;
+            text-transform: uppercase;
         }
 
         .footer-unified {
@@ -119,18 +156,84 @@
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-secondary" onclick="exportToCSV()">Exportar CSV</button>
     </div>
 
     <div class="container" style="max-width:100%; width:100%;">
-        <div class="header-main">
-            <h1>CONTROL MAESTRO DE DOCUMENTOS Y FORMATOS</h1>
-            <div class="metadata">Código: FO-SGC-03-B | Versión: 2.0 | Vigencia: JUN 2026 | Página: 1 de 1</div>
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g><text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s"
+                        font-size="19">SCIENTIFIC</text><text x="215" y="35" font-family="Arial" font-size="10"
+                        fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Registro Control</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-SGC-03-B-</span>
+                    <input type="text" id="reg-control" class="registry-input generate-barcode"
+                        data-target="barcode-control" data-prefix="FO-SGC-03-B-" placeholder="000">
+                </div>
+                <input type="date" class="registry-date">
+                <svg id="barcode-control" class="barcode-svg"></svg>
+            </div>
         </div>
 
-        <div class="section-header">1. Inventario de Formatos Activos</div>
+        <div class="header-main">
+            <h1>CONTROL MAESTRO DE DOCUMENTOS Y FORMATOS</h1>
+            <div class="metadata">Código: FO-SGC-03-B | Versión: 1.0 | Vigencia: JUN 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="stats-box no-print">
+            <div class="stat-item">
+                <div class="stat-number" id="stat-total">0</div>
+                <div class="stat-label">Documentos Activos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="stat-familias">0</div>
+                <div class="stat-label">Familias</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">V1.0</div>
+                <div class="stat-label">Versión del Formato</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">JUN 2026</div>
+                <div class="stat-label">Última Actualización</div>
+            </div>
+        </div>
+
+        <div class="section-header">1. Inventario de Documentos y Formatos</div>
         <div class="section">
             <p style="font-size:10px; color:#64748b; margin:0 0 10px;">
                 Tabla reconstruida con base en todos los archivos FO-*.html existentes en la carpeta de formatos.
+                Inventario vigente: 141 formatos activos.
             </p>
             <table class="compact-table" id="tbl-documentos">
                 <thead>
@@ -154,7 +257,7 @@
         </div>
 
         <div class="footer-unified">
-            <div class="control-data">FO-SGC-03-B | Versión: 2.0 | Control Maestro de Documentos y Formatos | Xelle
+            <div class="control-data">FO-SGC-03-B | Versión: 1.0 | Control Maestro de Documentos y Formatos | Xelle
                 Scientific | Página 1 de 1</div>
             <div>El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está
                 protegido por los derechos de autor; queda prohibida su reproducción total o parcial.</div>
@@ -177,9 +280,18 @@
             return text === '' ? fallback : text;
         }
 
-        function editInput(rowCode, fieldName, value) {
+        function editField(rowCode, fieldName, value, options = {}) {
             const inputId = `fo_sgc_03_b_${rowCode}_${fieldName}`.replace(/[^a-zA-Z0-9_]/g, '_');
-            return `<input id="${inputId}" class="cedit table-edit" value="${escapeHtml(safeValue(value))}">`;
+            const tag = options.tag || 'input';
+            const classes = ['cedit', 'table-edit'];
+            if (tag === 'textarea') {
+                classes.push('table-edit-textarea');
+            }
+            const content = options.emptyValue ? '' : escapeHtml(safeValue(value));
+            const attrs = options.attrs || '';
+            return tag === 'textarea'
+                ? `<textarea id="${inputId}" class="${classes.join(' ')}" rows="1" ${attrs}>${content}</textarea>`
+                : `<input id="${inputId}" class="${classes.join(' ')}" value="${content}" ${attrs}>`;
         }
 
         function sortByCode(a, b) {
@@ -198,20 +310,84 @@
                 const code = safeValue(item.code);
                 row.innerHTML = `
                     <td>${index + 1}</td>
-                    <td>${editInput(code, 'code', code)}</td>
-                    <td>${editInput(code, 'type', safeValue(item.type, 'Formato'))}</td>
-                    <td>${editInput(code, 'name', safeValue(item.name))}</td>
-                    <td>${editInput(code, 'area', safeValue(item.area))}</td>
-                    <td>${editInput(code, 'version', safeValue(item.version, '1.0'))}</td>
-                    <td>${editInput(code, 'vigencia', safeValue(item.vigencia))}</td>
-                    <td>${editInput(code, 'estado', safeValue(item.estado, 'Vigente'))}</td>
-                    <td>${editInput(code, 'proxima', safeValue(item.proximaRevision))}</td>
-                    <td>${editInput(code, 'ubicacion', safeValue(item.ubicacionMaestro))}</td>
-                    <td>${editInput(code, 'sustituye', safeValue(item.sustituyeA))}</td>
-                    <td>${editInput(code, 'motivo', safeValue(item.motivoCambio))}</td>
+                    <td>${editField(code, 'code', code)}</td>
+                    <td>${editField(code, 'type', safeValue(item.type, 'Formato'))}</td>
+                    <td>${editField(code, 'name', safeValue(item.name))}</td>
+                    <td>${editField(code, 'area', safeValue(item.area))}</td>
+                    <td>${editField(code, 'version', safeValue(item.version, '1.0'))}</td>
+                    <td>${editField(code, 'vigencia', safeValue(item.vigencia))}</td>
+                    <td>${editField(code, 'estado', safeValue(item.estado, 'Vigente'))}</td>
+                    <td>${editField(code, 'proxima', '', { emptyValue: true })}</td>
+                    <td>${editField(code, 'ubicacion', '', { emptyValue: true })}</td>
+                    <td>${editField(code, 'sustituye', '', { emptyValue: true })}</td>
+                    <td>${editField(code, 'motivo', item.motivoCambio || '', { tag: 'textarea' })}</td>
                 `;
                 tbody.appendChild(row);
             });
+
+            tbody.querySelectorAll('textarea.table-edit-textarea').forEach(textarea => {
+                const resizeTextarea = () => {
+                    textarea.style.height = 'auto';
+                    textarea.style.height = `${textarea.scrollHeight}px`;
+                };
+
+                textarea.addEventListener('input', resizeTextarea);
+                resizeTextarea();
+            });
+
+            const familias = new Set(source.map(item => safeValue(item.code).split('-')[1]).filter(Boolean));
+            document.getElementById('stat-total').textContent = String(source.length);
+            document.getElementById('stat-familias').textContent = String(familias.size);
+        }
+
+        function exportToCSV() {
+            const headers = [
+                'Código',
+                'Tipo',
+                'Nombre del Documento',
+                'Área',
+                'Versión',
+                'Vigencia',
+                'Estado',
+                'Próxima Revisión',
+                'Ubicación Maestro',
+                'Sustituye a',
+                'Motivo del Cambio'
+            ];
+
+            const rows = [];
+            rows.push(headers.map(value => `"${value}"`).join(','));
+
+            const source = Array.isArray(window.FORMAT_CATALOG) ? [...window.FORMAT_CATALOG] : [];
+            source.sort(sortByCode);
+
+            const tableRows = document.querySelectorAll('#tbl-documentos tbody tr');
+            tableRows.forEach(row => {
+                const fields = row.querySelectorAll('input.table-edit, textarea.table-edit');
+                if (fields.length < 11) return;
+                const values = [
+                    safeValue(fields[0].value),
+                    safeValue(fields[1].value),
+                    safeValue(fields[2].value),
+                    safeValue(fields[3].value),
+                    safeValue(fields[4].value),
+                    safeValue(fields[5].value),
+                    safeValue(fields[6].value),
+                    safeValue(fields[7].value),
+                    safeValue(fields[8].value),
+                    safeValue(fields[9].value),
+                    safeValue(fields[10].value)
+                ].map(value => `"${String(value).replace(/"/g, '""')}"`);
+                rows.push(values.join(','));
+            });
+
+            const csvFile = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+            const downloadLink = document.createElement('a');
+            downloadLink.download = 'FO-SGC-03-B_Control_Maestro_Documentos.csv';
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
         }
 
         document.addEventListener('DOMContentLoaded', function () {

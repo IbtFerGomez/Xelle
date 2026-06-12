@@ -57,6 +57,15 @@
             box-sizing: border-box;
         }
 
+        .table-edit-textarea {
+            resize: none;
+            overflow: hidden;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.25;
+            min-height: 18px;
+        }
+
         .table-edit:focus {
             outline: 1px dashed #3b82f6;
             background: #f8fafc;
@@ -190,7 +199,7 @@
 
         <div class="header-main">
             <h1>MATRIZ DE FORMATOS ACTIVOS DEL SISTEMA DE GESTIÓN DE CALIDAD</h1>
-            <div class="metadata">Código: FO-SGC-03 | Versión: 2.0 | Vigencia: JUN 2026 | Página: 1 de 1</div>
+            <div class="metadata">Código: FO-SGC-03 | Versión: 1.0 | Vigencia: JUN 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="stats-box no-print">
@@ -203,7 +212,7 @@
                 <div class="stat-label">Familias</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">V2.0</div>
+                <div class="stat-number">V1.0</div>
                 <div class="stat-label">Versión del Formato</div>
             </div>
             <div class="stat-item">
@@ -216,6 +225,7 @@
         <div class="section">
             <p style="font-size:10px; color:#64748b; margin:0 0 10px;">
                 Tabla reconstruida con base en todos los archivos FO-*.html existentes en la carpeta de formatos.
+                Inventario vigente: 141 formatos activos.
             </p>
             <table class="compact-table" id="tbl-formatos">
                 <thead>
@@ -239,7 +249,7 @@
         </div>
 
         <footer class="footer">
-            FO-SGC-03 | Versión: 2.0 | MATRIZ DE FORMATOS ACTIVOS DEL SISTEMA DE GESTIÓN DE CALIDAD | Xelle Scientific
+            FO-SGC-03 | Versión: 1.0 | MATRIZ DE FORMATOS ACTIVOS DEL SISTEMA DE GESTIÓN DE CALIDAD | Xelle Scientific
             | Página 1 de 1<br>
             El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por
             derechos de autor.
@@ -262,9 +272,18 @@
             return text === '' ? fallback : text;
         }
 
-        function editInput(rowCode, fieldName, value) {
+        function editField(rowCode, fieldName, value, options = {}) {
             const inputId = `fo_sgc_03_${rowCode}_${fieldName}`.replace(/[^a-zA-Z0-9_]/g, '_');
-            return `<input id="${inputId}" class="cedit table-edit" value="${escapeHtml(safeValue(value))}">`;
+            const tag = options.tag || 'input';
+            const classes = ['cedit', 'table-edit'];
+            if (tag === 'textarea') {
+                classes.push('table-edit-textarea');
+            }
+            const content = options.emptyValue ? '' : escapeHtml(safeValue(value));
+            const attrs = options.attrs || '';
+            return tag === 'textarea'
+                ? `<textarea id="${inputId}" class="${classes.join(' ')}" rows="1" ${attrs}>${content}</textarea>`
+                : `<input id="${inputId}" class="${classes.join(' ')}" value="${content}" ${attrs}>`;
         }
 
         function sortByCode(a, b) {
@@ -283,19 +302,29 @@
                 const code = safeValue(item.code);
                 row.innerHTML = `
                     <td>${index + 1}</td>
-                    <td>${editInput(code, 'code', code)}</td>
-                    <td>${editInput(code, 'type', safeValue(item.type, 'Formato'))}</td>
-                    <td>${editInput(code, 'name', safeValue(item.name))}</td>
-                    <td>${editInput(code, 'area', safeValue(item.area))}</td>
-                    <td>${editInput(code, 'version', safeValue(item.version, '1.0'))}</td>
-                    <td>${editInput(code, 'vigencia', safeValue(item.vigencia))}</td>
-                    <td>${editInput(code, 'estado', safeValue(item.estado, 'Vigente'))}</td>
-                    <td>${editInput(code, 'proxima', safeValue(item.proximaRevision))}</td>
-                    <td>${editInput(code, 'ubicacion', safeValue(item.ubicacionMaestro))}</td>
-                    <td>${editInput(code, 'sustituye', safeValue(item.sustituyeA))}</td>
-                    <td>${editInput(code, 'motivo', safeValue(item.motivoCambio))}</td>
+                    <td>${editField(code, 'code', code)}</td>
+                    <td>${editField(code, 'type', safeValue(item.type, 'Formato'))}</td>
+                    <td>${editField(code, 'name', safeValue(item.name))}</td>
+                    <td>${editField(code, 'area', safeValue(item.area))}</td>
+                    <td>${editField(code, 'version', safeValue(item.version, '1.0'))}</td>
+                    <td>${editField(code, 'vigencia', safeValue(item.vigencia))}</td>
+                    <td>${editField(code, 'estado', safeValue(item.estado, 'Vigente'))}</td>
+                    <td>${editField(code, 'proxima', '', { emptyValue: true })}</td>
+                    <td>${editField(code, 'ubicacion', '', { emptyValue: true })}</td>
+                    <td>${editField(code, 'sustituye', '', { emptyValue: true })}</td>
+                    <td>${editField(code, 'motivo', item.motivoCambio || '', { tag: 'textarea' })}</td>
                 `;
                 tbody.appendChild(row);
+            });
+
+            tbody.querySelectorAll('textarea.table-edit-textarea').forEach(textarea => {
+                const resizeTextarea = () => {
+                    textarea.style.height = 'auto';
+                    textarea.style.height = `${textarea.scrollHeight}px`;
+                };
+
+                textarea.addEventListener('input', resizeTextarea);
+                resizeTextarea();
             });
 
             const familias = new Set(source.map(item => safeValue(item.code).split('-')[1]).filter(Boolean));
@@ -326,20 +355,20 @@
 
             const tableRows = document.querySelectorAll('#tbl-formatos tbody tr');
             tableRows.forEach(row => {
-                const inputs = row.querySelectorAll('input.table-edit');
-                if (inputs.length < 11) return;
+                const fields = row.querySelectorAll('input.table-edit, textarea.table-edit');
+                if (fields.length < 11) return;
                 const values = [
-                    safeValue(inputs[0].value),
-                    safeValue(inputs[1].value),
-                    safeValue(inputs[2].value),
-                    safeValue(inputs[3].value),
-                    safeValue(inputs[4].value),
-                    safeValue(inputs[5].value),
-                    safeValue(inputs[6].value),
-                    safeValue(inputs[7].value),
-                    safeValue(inputs[8].value),
-                    safeValue(inputs[9].value),
-                    safeValue(inputs[10].value)
+                    safeValue(fields[0].value),
+                    safeValue(fields[1].value),
+                    safeValue(fields[2].value),
+                    safeValue(fields[3].value),
+                    safeValue(fields[4].value),
+                    safeValue(fields[5].value),
+                    safeValue(fields[6].value),
+                    safeValue(fields[7].value),
+                    safeValue(fields[8].value),
+                    safeValue(fields[9].value),
+                    safeValue(fields[10].value)
                 ].map(value => `"${String(value).replace(/"/g, '""')}"`);
                 rows.push(values.join(','));
             });
