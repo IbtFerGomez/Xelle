@@ -441,6 +441,27 @@
             textarea::placeholder {
                 color: transparent !important;
             }
+
+            /* Evita que aparezcan flechas de select en la impresión */
+            .product-select,
+            .presentation-select,
+            select.cedit,
+            .compact-table select,
+            .no-border-table select {
+                -webkit-appearance: none !important;
+                -moz-appearance: none !important;
+                appearance: none !important;
+                background-image: none !important;
+                padding-right: 6px !important;
+            }
+
+            .product-select::-ms-expand,
+            .presentation-select::-ms-expand,
+            select.cedit::-ms-expand,
+            .compact-table select::-ms-expand,
+            .no-border-table select::-ms-expand {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -516,10 +537,11 @@
                 <td width="30%"><input class="cedit text-left" name="ref_pedido" placeholder="Ej: FO-OP-15-0012"
                         style="font-weight:bold; color:var(--primary-color);"></td>
             </tr>
-            <tr>
+            <tr width="20%" style="width: 10%;">
 
                 <th class="gray-th">Fecha Acondicionamiento:</th>
-                <td><input type="text" class="cedit text-center" name="fecha_acondicionamiento"></td>
+                <td><input type="date" class="cedit text-center" name="fecha_acondicionamiento"></td>
+                <td><input type="time" class="cedit text-center" name="hora_acondicionamiento"></td>
             </tr>
         </table>
 

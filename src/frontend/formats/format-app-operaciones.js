@@ -338,7 +338,9 @@ const AppCom = {
                         span.className = 'print-only-value';
                         sel.parentNode.insertBefore(span, sel.nextSibling);
                     }
-                    span.textContent = sel.options[sel.selectedIndex]?.text || '';
+                    const selectedText = sel.options[sel.selectedIndex]?.text || '';
+                    // Fallback para casos en los que el value cargado no existe como option
+                    span.textContent = selectedText || String(sel.value || '');
                 });
             });
         },
@@ -653,8 +655,12 @@ const AppCom = {
         getCustomData: function () {
             const r = [];
             document.querySelectorAll('#tbl-remision tbody tr').forEach(tr => {
-                const i = tr.querySelectorAll('input, select');
-                r.push({ c: i[0].value, p: i[1].value, pr: i[2].value, l: i[3].value, cad: i[4].value });
+                const c = tr.querySelector('td:nth-child(1) input')?.value || '';
+                const p = tr.querySelector('.prod-select')?.value || '';
+                const pr = tr.querySelector('.pres-select, .pres-input')?.value || '';
+                const l = tr.querySelector('td:nth-child(4) input')?.value || '';
+                const cad = tr.querySelector('td:nth-child(5) input')?.value || '';
+                r.push({ c, p, pr, l, cad });
             });
             return { t_rem: r };
         },
@@ -664,14 +670,21 @@ const AppCom = {
                 d.t_rem.forEach(x => {
                     this.addRemisionRow();
                     const row = tb.lastElementChild;
-                    const fields = row.querySelectorAll('input, select');
-                    fields[0].value = x.c;
-                    fields[1].value = x.p;
-                    AppCom.Universal.onProdChange(fields[1]);
+                    const cantidadInput = row.querySelector('td:nth-child(1) input');
+                    const productoSelect = row.querySelector('.prod-select');
+                    const loteInput = row.querySelector('td:nth-child(4) input');
+                    const caducidadInput = row.querySelector('td:nth-child(5) input');
+
+                    if (cantidadInput) cantidadInput.value = x.c || '';
+                    if (productoSelect) {
+                        productoSelect.value = x.p || '';
+                        AppCom.Universal.onProdChange(productoSelect);
+                    }
+
                     const presField = row.querySelector('.pres-select, .pres-input');
-                    if (presField) presField.value = x.pr;
-                    fields[2].value = x.l;
-                    fields[3].value = x.cad;
+                    if (presField) presField.value = x.pr || '';
+                    if (loteInput) loteInput.value = x.l || '';
+                    if (caducidadInput) caducidadInput.value = x.cad || '';
                 });
             }
         }

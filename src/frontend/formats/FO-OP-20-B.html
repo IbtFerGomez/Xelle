@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-20 Liberación Alm</title>
+    <title>FO-OP-20-B Liberación Alm</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="format-app.js"></script>
     <style>
-        .section-header, .section-title  {
+        .section-header {
                 background-color: #1E3A5F;
                 color: white;
                 padding: 6px 10px;
@@ -45,6 +45,8 @@
                 display: none !important;
             }
 
+            
+
             /* Permitir que las tablas y secciones se partan entre páginas */
             .section {
                 page-break-inside: auto !important;
@@ -67,23 +69,15 @@
                 break-inside: avoid !important;
             }
 
-           .section-header, .section-title  {
-                background-color: #1E3A5F;
-                color: white;
-                padding: 6px 10px;
-                font-weight: bold;
-                font-size: 11px;
-                margin-top: 15px;
-                border-radius: 4px;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                border-left: 4px solid #2E9D82;
+            .section-title {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
             }
         }
     </style>
 </head>
 
-<body id="doc-fo-op-20">
+<body id="doc-fo-op-20-b">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
@@ -127,22 +121,22 @@
             <div class="registry-container">
                 <label>No. Liberación</label>
                 <div class="registry-wrapper">
-                    <span class="registry-prefix">FO-OP-20-</span>
+                    <span class="registry-prefix">FO-OP-20-B-</span>
                     <input type="text" id="reg-20" class="registry-input generate-barcode" data-target="barcode-20"
-                        data-prefix="FO-OP-20-" placeholder="001">
+                        data-prefix="FO-OP-20-B-" placeholder="001">
                 </div>
-                <input type="date" class="registry-date no-auto-date">
+                <input type="text" class="registry-date no-auto-date">
                 <svg id="barcode-20" class="barcode-svg"></svg>
             </div>
         </div>
 
         <div class="header-main">
-            <h1>LIBERACIÓN LOTE PARA ALMACÉN</h1>
-            <div class="metadata">Código: FO-OP-20 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <h1>LIBERACIÓN LOTE PARA ALMACÉN COSMÉTICOS</h1>
+            <div class="metadata">Código: FO-OP-20-B | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section">
-            <div class="section-title ">1. ALMACENAMIENTO</div>
+            <div class="section-title section-header">1. ALMACENAMIENTO</div>
 
             <div style="margin-bottom: 15px;">
                 <label style="display:block; font-weight:bold; margin-bottom:5px;">Ubicación de Almacenamiento del Lote
@@ -158,7 +152,7 @@
         </div>
 
         <div class="section">
-            <div class="section-title">2. ESPECIFICACIÓN DE ENTREGA</div>
+            <div class="section-title section-header">2. ESPECIFICACIÓN DE ENTREGA</div>
             <table id="tbl-entrega" class="compact-table">
                 <thead>
                     <tr>
@@ -166,7 +160,6 @@
                         <th width="15%">Lote</th>
                         <th width="15%">Caducidad</th>
                         <th width="10%">Cantidad</th>
-                        <th width="15%">Ref FO-LC-31</th>
                         <th width="5%" class="no-print"></th>
                     </tr>
                 </thead>
@@ -175,7 +168,7 @@
             <button class="btn btn-primary btn-mini no-print" onclick="addDeliveryRow()">+ Agregar Fila</button>
         </div>
 
-        <div class="section">
+        <div class="section ">
             <div style="margin-top: 30px; border-top: 2px solid #333; padding-top: 10px;">
                 <p><strong>Responsable de Almacén:</strong></p>
                 <div style="display:flex; gap:15px; align-items:flex-end;">
@@ -189,7 +182,7 @@
                     </div>
                     <div style="flex:1">
                         <label style="font-size:10px;">Fecha:</label>
-                        <input type="date" class="cedit" style="width:100%">
+                        <input type="text" class="cedit" style="width:100%">
                     </div>
                 </div>
                 <p style="margin-top:20px;"><strong>Verificó (Control de Calidad):</strong></p>
@@ -204,7 +197,7 @@
                     </div>
                     <div style="flex:1">
                         <label style="font-size:10px;">Fecha:</label>
-                        <input type="date" class="cedit" style="width:100%">
+                        <input type="text" class="cedit" style="width:100%">
                     </div>
                 </div>
                 <p style="margin-top:20px;"><strong>Autorizó (Responsable Dirección):</strong></p>
@@ -219,13 +212,13 @@
                     </div>
                     <div style="flex:1">
                         <label style="font-size:10px;">Fecha:</label>
-                        <input type="date" class="cedit" style="width:100%">
+                        <input type="text" class="cedit" style="width:100%">
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="footer">FO-OP-20 | LIBERACIÓN ALM | Versión: 1.0<br>El contenido de este documento es propiedad de
+        <div class="footer">FO-OP-20-B | LIBERACIÓN ALM | Versión: 1.0<br>El contenido de este documento es propiedad de
             &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
             está prohibida su reproducción total o parcial.</div>
     </div>
@@ -239,7 +232,6 @@
                 <td><input class="cedit" placeholder="Lote..."></td>
                 <td><input class="cedit" placeholder="Caducidad..."></td>
                 <td><input class="cedit" placeholder="Cant..."></td>
-                <td><input class="cedit" placeholder="Ref 31..."></td>
                 <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
             `;
             tbody.appendChild(row);

@@ -108,10 +108,21 @@
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
+
+            .print-select-value {
+                display: inline-block;
+                width: 100%;
+                min-height: 18px;
+            }
+
+            .print-hide-select {
+                display: none !important;
+            }
+
             ::placeholder {
                 color: transparent !important;
             }
-        
+
 
         }
     </style>
@@ -174,7 +185,7 @@
             <h1>ORDEN DE SURTIDO Y EMPAQUE (OPERACIONES)</h1>
             <div class="metadata">Código: FO-OP-16 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
-<div class="legend-box">
+        <div class="legend-box">
             <div><strong>Cruce Documental Obligatorio:</strong><br>FO-CP-01 (Orden compra) ➜ FO-OP-15 (Pedido) ➜
                 FO-OP-15-B (Fabricación) ➜ FO-OP-16 (Surtido) ➜ FO-OP-17 (Remision y entrega)</div>
         </div>
@@ -272,6 +283,34 @@
     <script>
         let isOfflineMode = false;
 
+        function prepareFoOp16SelectsForPrint() {
+            const pickingRows = document.querySelectorAll('#tbl-picking tbody tr');
+            pickingRows.forEach(row => {
+                row.querySelectorAll('select.prod-select, select.pres-select').forEach(selectEl => {
+                    if (selectEl.nextElementSibling && selectEl.nextElementSibling.classList.contains('print-select-value')) {
+                        return;
+                    }
+
+                    const selectedText = selectEl.options[selectEl.selectedIndex]?.text || '';
+                    const printSpan = document.createElement('span');
+                    printSpan.className = 'print-select-value';
+                    printSpan.textContent = selectedText;
+                    selectEl.classList.add('print-hide-select');
+                    selectEl.insertAdjacentElement('afterend', printSpan);
+                });
+            });
+        }
+
+        function restoreFoOp16SelectsAfterPrint() {
+            document.querySelectorAll('#tbl-picking .print-select-value').forEach(printSpan => {
+                const selectEl = printSpan.previousElementSibling;
+                if (selectEl && selectEl.tagName === 'SELECT') {
+                    selectEl.classList.remove('print-hide-select');
+                }
+                printSpan.remove();
+            });
+        }
+
         function initFoOp16Barcode() {
             const barcodeInput = document.querySelector('.generate-barcode');
             if (!barcodeInput) return;
@@ -316,7 +355,11 @@
             renderBarcode();
         }
 
-        document.addEventListener('DOMContentLoaded', initFoOp16Barcode);
+        document.addEventListener('DOMContentLoaded', () => {
+            initFoOp16Barcode();
+            window.addEventListener('beforeprint', prepareFoOp16SelectsForPrint);
+            window.addEventListener('afterprint', restoreFoOp16SelectsAfterPrint);
+        });
 
         function toggleOfflineMode() {
             isOfflineMode = !isOfflineMode;
