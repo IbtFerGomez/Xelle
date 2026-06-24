@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-17 Remisión</title>
+    <title>FO-OP-17-B Remisión</title>
     <link rel="stylesheet" id="op-styles" href="format-styles-operaciones.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -128,7 +128,7 @@
     </style>
 </head>
 
-<body id="doc-fo-op-17">
+<body id="doc-FO-OP-17-B">
     <div class="global-controls no-print">
         <button class="btn btn-success" onclick="saveForm()">Guardar</button>
         <button class="btn btn-primary" onclick="printForm()">Imprimir</button>
@@ -173,9 +173,9 @@
             <div class="registry-container">
                 <label>Folio Remisión</label>
                 <div class="registry-wrapper">
-                    <span class="registry-prefix">FO-OP-17-</span>
+                    <span class="registry-prefix">FO-OP-17-B-</span>
                     <input type="text" id="reg-op-17" class="registry-input generate-barcode"
-                        data-target="barcode-op-17" data-prefix="FO-OP-17-" name="folio_remision" placeholder="001">
+                        data-target="barcode-op-17" data-prefix="FO-OP-17-B-" name="folio_remision" placeholder="001">
                 </div>
                 <input type="text" class="registry-date no-auto-date">
                 <svg id="barcode-op-17" class="barcode-svg"></svg>
@@ -184,11 +184,11 @@
 
         <div class="header-main">
             <h1>NOTA DE REMISIÓN Y ENTREGA</h1>
-            <div class="metadata">Código: FO-OP-17 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <div class="metadata">Código: FO-OP-17-B | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
         <div class="legend-box">
             <div><strong>Cruce Documental Obligatorio:</strong><br>FO-CP-01 (Orden compra) ➜ FO-OP-15 (Pedido) ➜
-                FO-OP-15-B (Fabricación) ➜ FO-OP-16 (Surtido) ➜ FO-OP-17 (Remision y entrega)</div>
+                FO-OP-15-B (Fabricación) ➜ FO-OP-16 (Surtido) ➜ FO-OP-17-B (Remision y entrega)</div>
         </div>
         <div class="section">
             <div class="section-title">1. Datos del Cliente y Referencias</div>
@@ -239,13 +239,17 @@
                         <strong>Fecha Recepción:</strong> <input type="text" class="cedit" name="fecha_recepcion">
                     </div>
                     <div style="width:30%">
-                        <strong>Hora:</strong> <input type="text" class="cedit" name="hora_recepcion">
+                        <strong>Hora:</strong> <input type="text" class="cedit" name="hora_recepcion" style="width:160px; text-align:center;">
                     </div>
-                    <!-- <div style="width:30%">
+                    <div style="width:30%">
+                        <strong>ID data logger:</strong> <input class="cedit" name="temperatura_recepcion"
+                            style="width:160px; text-align:center;">
+                        
+                        <br>
                         <strong>Temp. Recepción:</strong> <input class="cedit" name="temperatura_recepcion"
                             style="width:60px; text-align:center;">
                         °C
-                    </div> -->
+                    </div>
                 </div>
                 <div
                     style="margin-top:40px; border-top:1px solid #333; width:60%; margin-left:auto; margin-right:auto; text-align:center; padding-top:5px;">
@@ -269,7 +273,7 @@
             </div>
         </div>
 
-        <div class="footer">FO-OP-17 | REMISIÓN | Versión: 1.0<br>El contenido de este documento es propiedad de
+        <div class="footer">FO-OP-17-B | REMISIÓN | Versión: 1.0<br>El contenido de este documento es propiedad de
             &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
             está prohibida su reproducción total o parcial.</div>
     </div>
@@ -307,7 +311,7 @@
                             margin: 0
                         });
                     } catch (e) {
-                        console.warn('No se pudo renderizar el código de barras en FO-OP-17', e);
+                        console.warn('No se pudo renderizar el código de barras en FO-OP-17-B', e);
                     }
                 };
 

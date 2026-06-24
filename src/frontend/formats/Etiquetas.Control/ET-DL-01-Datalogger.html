@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Etiquetas Datalogger (7x3 cm)</title>
+    <style>
+        /* Configuración de Hoja Carta (Letter) sin márgenes para máximo aprovechamiento */
+        @page { 
+            size: letter; 
+            margin: 0.3cm; 
+        }
+        
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background-color: #e2e8f0; 
+            margin: 0; 
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            -webkit-print-color-adjust: exact !important; 
+            print-color-adjust: exact !important; 
+        }
+
+        .no-print {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .no-print button {
+            background-color: #2E9D82;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .no-print button:hover { background-color: #1e705b; }
+
+        /* Contenedor de la Hoja */
+        .sheet {
+            width: 21.59cm; /* Ancho Carta */
+            height: 27.94cm; /* Alto Carta */
+            background-color: white;
+            box-sizing: border-box;
+            padding: 0.2cm;
+            display: grid;
+            /* 3 columnas de 7cm = 21cm, sobran 0.59cm para márgenes */
+            grid-template-columns: repeat(3, 7cm);
+            /* 9 filas de 3cm = 27cm, sobran 0.94cm para márgenes */
+            grid-template-rows: repeat(9, 3cm); 
+            gap: 0.1cm;
+            justify-content: center;
+            align-content: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Diseño Individual de la Etiqueta (7x3 cm) */
+        .label {
+            width: 7cm;
+            height: 3cm;
+            box-sizing: border-box;
+            border: 1px dashed #94a3b8; /* Línea de corte */
+            padding: 4px 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: white;
+        }
+
+        .lbl-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #1E3A5F;
+            padding-bottom: 2px;
+        }
+
+        .lbl-logo {
+            font-size: 8px;
+            font-weight: 900;
+            color: #2E9D82;
+            letter-spacing: 0.5px;
+        }
+
+        .lbl-title {
+            font-size: 8px;
+            font-weight: bold;
+            color: #1E3A5F;
+            text-transform: uppercase;
+        }
+
+        .lbl-row {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 3px;
+        }
+
+        .lbl-key {
+            font-size: 8px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-right: 4px;
+            white-space: nowrap;
+        }
+
+        .lbl-line {
+            flex-grow: 1;
+            border-bottom: 1px solid #475569;
+            height: 8px;
+        }
+
+        .lbl-footer {
+            font-size: 6.5px;
+            text-align: center;
+            color: #64748b;
+            margin-top: 1px;
+        }
+
+        @media print {
+            body { background-color: transparent; padding: 0; }
+            .sheet { box-shadow: none; margin: 0; }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="no-print">
+        <p style="font-size: 12px; margin-top: 0;"><strong>Configuración de Impresión:</strong><br>1. Tamaño de papel: Carta<br>2. Márgenes: <strong>Ninguno / Mínimos</strong><br>3. Escala: 100% (No ajustar)</p>
+        <button onclick="window.print()">🖨️ Imprimir Etiquetas</button>
+    </div>
+
+    <div class="sheet" id="label-container">
+        <!-- Las etiquetas se generan vía JavaScript para no repetir código 27 veces -->
+    </div>
+
+    <script>
+        // Plantilla de la etiqueta BPF
+        const labelHTML = `
+            <div class="label">
+                <div class="lbl-header">
+                    <span class="lbl-logo">XELLE SCIENTIFIC</span>
+                    <span class="lbl-title">DATALOGGER TEMP.</span>
+                </div>
+                <div class="lbl-row" style="margin-top: 3px;">
+                    <span class="lbl-key">ID Logger:</span>
+                    <span class="lbl-line"></span>
+                </div>
+                <div class="lbl-row">
+                    <span class="lbl-key">Ref / Folio:</span>
+                    <span class="lbl-line"></span>
+                </div>
+                <div class="lbl-row">
+                    <span class="lbl-key">Fecha Act:</span>
+                    <span class="lbl-line" style="flex: 2;"></span>
+                    <span class="lbl-key" style="margin-left: 4px;">Hora:</span>
+                    <span class="lbl-line"></span>
+                </div>
+                <div class="lbl-row">
+                    <span class="lbl-key">Activó:</span>
+                    <span class="lbl-line" style="flex: 1;"></span>
+                    <span class="lbl-key" style="margin-left: 4px;">Firma:</span>
+                    <span class="lbl-line" style="flex: 1.5;"></span>
+                </div>
+                <div class="lbl-footer">NO DESPRENDER DURANTE EL TRÁNSITO</div>
+            </div>
+        `;
+
+        // Inyectar 27 etiquetas en la hoja (3 columnas x 9 filas)
+        const container = document.getElementById('label-container');
+        for (let i = 0; i < 27; i++) {
+            container.innerHTML += labelHTML;
+        }
+    </script>
+
+</body>
+</html>

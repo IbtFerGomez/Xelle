@@ -129,7 +129,7 @@
                     <input type="text" id="reg-31" class="registry-input generate-barcode" data-target="barcode-31"
                         data-prefix="FO-LC-31-" placeholder="001">
                 </div>
-                <input type="date" class="registry-date no-auto-date">
+                <input type="text" class="registry-date no-auto-date">
                 <svg id="barcode-31" class="barcode-svg"></svg>
             </div>
         </div>
@@ -151,6 +151,7 @@
                             <option value="HA">X-Exosomes HA</option>
                             <option value="IMPLANT">X-Implant</option>
                             <option value="WOUND">X-Wound Care</option>
+                            <option value="HI_FACTOR">Hi Factor</option>
                         </select>
                     </td>
                     <td width="30%"><strong>Presentación:</strong> <input class="cedit" list="presentaciones-list"
@@ -282,21 +283,21 @@
                 <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
                         class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
                         type="text" class="cedit" style="flex:1" placeholder="Firma"><span
-                        style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div>
+                        style="width:40px;">Fecha:</span> <input type="text" class="cedit" style="width:130px"></div>
             </div>
             <div class="sig-block">
                 <p><strong>VERIFICACIÓN (Supervisor de Producción / Calidad):</strong></p>
                 <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
                         class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
                         type="text" class="cedit" style="flex:1" placeholder="Firma"><span
-                        style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div>
+                        style="width:40px;">Fecha:</span> <input type="text" class="cedit" style="width:130px"></div>
             </div>
             <div class="sig-block">
                 <p><strong>AUTORIZACIÓN FINAL (Responsable Dirección):</strong></p>
                 <div style="display:flex; gap:10px;"><span style="width:50px;">Nombre:</span> <input type="text"
                         class="cedit" style="flex:1" placeholder="Nombre"><span style="width:40px;">Firma:</span> <input
                         type="text" class="cedit" style="flex:1" placeholder="Firma"><span
-                        style="width:40px;">Fecha:</span> <input type="date" class="cedit" style="width:130px"></div>
+                        style="width:40px;">Fecha:</span> <input type="text" class="cedit" style="width:130px"></div>
             </div>
         </div>
         <div class="section">
@@ -352,7 +353,7 @@
         function addCompRow() {
             const tbody = document.getElementById('tbl-componentes').querySelector('tbody');
             const row = document.createElement('tr');
-            row.innerHTML = `<td><input class="cedit" placeholder="Comp..."></td><td><input class="cedit" placeholder="Prov..."></td><td><input class="cedit" placeholder="Lot..."></td><td><input type="date" class="cedit"></td><td><input type="number" class="cedit" placeholder="0"></td><td><input class="cedit" placeholder="Ud"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
+            row.innerHTML = `<td><input class="cedit" placeholder="Comp..."></td><td><input class="cedit" placeholder="Prov..."></td><td><input class="cedit" placeholder="Lot..."></td><td><input type="text" class="cedit"></td><td><input type="number" class="cedit" placeholder="0"></td><td><input class="cedit" placeholder="Ud"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
             tbody.appendChild(row);
         }
         function addMatRow() {
@@ -396,15 +397,15 @@
                     sel.parentNode.replaceChild(input, sel);
                 });
 
-                // Convertir <input type="date"> a <input type="text">
-                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                    inp.setAttribute('data-original-type', 'date');
+                // Convertir <input type="text"> a <input type="text">
+                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'text');
                     inp.type = 'text';
                     inp.placeholder = 'DD/MM/AAAA';
                 });
 
                 // Convertir <input type="time"> a <input type="text">
-                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                document.querySelectorAll('input[type="text"].cedit').forEach(inp => {
                     inp.setAttribute('data-original-type', 'time');
                     inp.type = 'text';
                     inp.placeholder = 'HH:MM';
@@ -442,16 +443,16 @@
                     inp.parentNode.replaceChild(sel, inp);
                 });
 
-                // Restaurar <input type="date">
-                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                    inp.type = 'date';
+                // Restaurar <input type="text">
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });
 
                 // Restaurar <input type="time">
-                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                    inp.type = 'time';
+                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                    inp.type = 'text';
                     inp.placeholder = '';
                     inp.removeAttribute('data-original-type');
                 });

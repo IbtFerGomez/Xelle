@@ -30,6 +30,7 @@
 - 🖨️ **Impresión Optimizada**: CSS específico para impresión de documentos clínicos
 - 📝 **Historial de Auditoría**: Registro completo de todas las operaciones (creación, actualización, eliminación)
 - 🔄 **Actualización Inteligente**: Sobrescritura de campos manteniendo integridad del código único
+- 📶 **Modo Offline**: Soporte de formatos desconectados (carpeta `offLine`) adaptables para llenado local y/o impresión manual.
 
 ---
 
@@ -79,6 +80,7 @@ Xelle/
 │       │   ├── 📄 format-app.js                 # ⭐ JavaScript principal (persistencia)
 │       │   ├── 📄 format-styles.css             # Estilos de formatos
 │       │   └── 📁 Etiquetas.Control/            # Etiquetas (ET-LC-*)
+│   │   └── 📁 offLine/                      # Formatos con soporte para modo offline
 │       └── 📁 assets/
 │           ├── 📁 css/                          # TailwindCSS + theme.css
 │           ├── 📁 js/                           # Scripts frontend
@@ -502,22 +504,13 @@ Genera reportes JSON y CSV en carpeta `about/`.
 
 ### ⚠️ Estado Actual (Desarrollo)
 
-- ❌ **Contraseñas en texto plano**: El sistema NO usa hashing de contraseñas
+- ✅ **Autenticación Segura**: El sistema implementa hashing de contraseñas utilizando BCrypt.
 - ❌ **Credenciales por defecto**: Usuarios seed con contraseñas simples (`123`)
 - ⚠️ **Puertos expuestos**: Backend expuesto en `:8000` sin autenticación robusta
 
 ### ✅ Recomendaciones para Producción
 
-1. **Migrar a hashing seguro**:
-   ```java
-   // Usar BCrypt o Argon2
-   import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-   
-   BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-   String hashedPassword = encoder.encode(plainPassword);
-   ```
-
-2. **Forzar cambio de contraseñas**:
+1. **Forzar cambio de contraseñas**:
    - Implementar flag `force_password_change` en tabla `users`
    - Solicitar cambio en primer login
 
@@ -730,7 +723,7 @@ docker-compose logs -f nginx
 ### Versión 12.0 (Planeada)
 
 - [ ] Migrar autenticación a JWT
-- [ ] Implementar hashing de contraseñas con BCrypt
+- [x] Implementar hashing de contraseñas con BCrypt (Completado)
 - [ ] API pública con documentación Swagger/OpenAPI
 - [ ] Notificaciones en tiempo real (WebSocket)
 - [ ] Panel de estadísticas y reportes

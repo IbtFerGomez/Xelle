@@ -28,28 +28,39 @@
         .compact-table th {
             background-color: #1E3A5F;
             color: white;
-            font-size: 9px;
-            padding: 4px;
+            font-size: 8px;
+            padding: 1px;
+            height: 20px;
+            min-height: 20px;
             text-align: center;
         }
 
         .compact-table td {
-            font-size: 9px;
-            padding: 6px;
+            font-size: 8px;
+            padding: 1px;
+            height: 10px;
+            min-height: 10px;
             vertical-align: middle;
             text-align: center;
         }
 
-        .compact-table input {
-            font-size: 9px;
+        .compact-table tr {
+            height: 10px;
+        }
+
+        .compact-table input,
+        .compact-table textarea,
+        .compact-table select {
+            font-size: 8px;
             text-align: center;
             width: 100%;
             border: none;
+
         }
 
         .status-badge {
             font-weight: bold;
-            padding: 2px 4px;
+            padding: 2px 2px;
             border-radius: 3px;
             font-size: 8px;
         }
@@ -67,6 +78,7 @@
             padding-top: 10px;
             border-top: 1px solid #e2e8f0;
         }
+
 
         @media print {
 
@@ -121,6 +133,29 @@
                 page-break-after: avoid !important;
                 break-after: avoid !important;
             }
+
+            .compact-table th,
+            .compact-table td {
+                font-size: 8px;
+                padding: 1px;
+                line-height: 1;
+                height: 10px;
+                min-height: 10px;
+                vertical-align: middle;
+                text-align: center;
+            }
+
+            .compact-table tr {
+                height: 10px;
+            }
+
+            .compact-table input,
+            .compact-table textarea,
+            .compact-table select {
+                font-size: 8px;
+                line-height: 1;
+            }
+
         }
     </style>
 </head>
@@ -174,7 +209,7 @@
                     <input type="text" id="reg-30" class="registry-input generate-barcode" data-target="barcode-30"
                         data-prefix="FO-LC-30-" placeholder="REC000">
                 </div>
-                <input type="date" class="registry-date">
+                <input type="text" class="registry-date">
                 <svg id="barcode-30" class="barcode-svg"></svg>
             </div>
         </div>
@@ -201,9 +236,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr style="height: 8px; padding: 0;">
                         <td><input class="cedit" placeholder="REC-001"></td>
-                        <td><input type="date" class="cedit"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
                         <td><input class="cedit" placeholder="BC-XXX"></td>
                         <td><input class="cedit" placeholder="P#"></td>
                         <td><input type="number" class="cedit" placeholder="0"></td>
@@ -211,8 +246,189 @@
                         <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
                                 placeholder="Descripción del medio"></textarea></td>
                         <td><input class="cedit" placeholder="Nombre/Firma"></td>
-                        <td><span class="status-badge pcc-alert">CUARENTENA</span></td>
+                        <td><input type="text" class="cedit"></td>
                     </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                     <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="REC-001"></td>
+                        <td><input type="text" class="cedit" placeholder="dd/mm/aa"></td>
+                        <td><input class="cedit" placeholder="BC-XXX"></td>
+                        <td><input class="cedit" placeholder="P#"></td>
+                        <td><input type="number" class="cedit" placeholder="0"></td>
+                        <td><input class="cedit" placeholder="Limpio/Rosado"></td>
+                        <td><textarea class="cedit" rows="2" style="resize:vertical; width:100%; font-size:9px;"
+                                placeholder="Descripción del medio"></textarea></td>
+                        <td><input class="cedit" placeholder="Nombre/Firma"></td>
+                        <td><input type="text" class="cedit"></td>
+                    </tr>
+                   
                 </tbody>
             </table>
             <button class="btn-add no-print" onclick="addRow('tbl-harvest')"
@@ -222,7 +438,7 @@
 
         <div class="section-header">2. ALMACENAMIENTO TEMPORAL Y TRASLADO</div>
         <div class="section">
-            <table class="compact-table" id="tbl-storage">
+            <table class="compact-table compact-table" id="tbl-storage">
                 <thead>
                     <tr>
                         <th width="8%">ID</th>
@@ -234,17 +450,76 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr style="height: 8px; padding: 0;">
                         <td><input class="cedit" placeholder="ALM-001"></td>
-                        <td><input type="time" class="cedit"></td>
-                        <td><input type="number" step="0.1" class="cedit" placeholder="2-8°C"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" step="0.1" class="cedit" placeholder="2-8°C"></td>
                         <td><input class="cedit" placeholder="REF-01"></td>
-                        <td>
-                            <select class="cedit">
-                                <option>SÍ (0.22μm)</option>
-                                <option>NO</option>
-                            </select>
-                        </td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit" placeholder="Sin anomalías detectadas"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="ALM-001"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" step="0.1" class="cedit" placeholder="2-8°C"></td>
+                        <td><input class="cedit" placeholder="REF-01"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit" placeholder="Sin anomalías detectadas"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="ALM-001"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" step="0.1" class="cedit" placeholder="2-8°C"></td>
+                        <td><input class="cedit" placeholder="REF-01"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit" placeholder="Sin anomalías detectadas"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="ALM-001"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" step="0.1" class="cedit" placeholder="2-8°C"></td>
+                        <td><input class="cedit" placeholder="REF-01"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit" placeholder="Sin anomalías detectadas"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="ALM-001"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" step="0.1" class="cedit" placeholder="2-8°C"></td>
+                        <td><input class="cedit" placeholder="REF-01"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit" placeholder="Sin anomalías detectadas"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="ALM-001"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" step="0.1" class="cedit" placeholder="2-8°C"></td>
+                        <td><input class="cedit" placeholder="REF-01"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit" placeholder="Sin anomalías detectadas"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="ALM-001"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" step="0.1" class="cedit" placeholder="2-8°C"></td>
+                        <td><input class="cedit" placeholder="REF-01"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit" placeholder="Sin anomalías detectadas"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="ALM-001"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" step="0.1" class="cedit" placeholder="2-8°C"></td>
+                        <td><input class="cedit" placeholder="REF-01"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit" placeholder="Sin anomalías detectadas"></td>
+                    </tr>
+                    <tr style="height: 8px; padding: 0;">
+                        <td><input class="cedit" placeholder="ALM-001"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" step="0.1" class="cedit" placeholder="2-8°C"></td>
+                        <td><input class="cedit" placeholder="REF-01"></td>
+                        <td><input type="text" class="cedit"></td>
                         <td><input class="cedit" placeholder="Sin anomalías detectadas"></td>
                     </tr>
                 </tbody>
@@ -278,115 +553,115 @@
             este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los
             derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
-    < <script>
-        function addRow(id){
-        let t = document.getElementById(id).getElementsByTagName('tbody')[0];
-        let r = t.rows[0].cloneNode(true);
-        r.querySelectorAll('input').forEach(i => i.value = '');
-        r.querySelectorAll('textarea').forEach(ta => ta.value = '');
-        t.appendChild(r);
+    <script>
+        function addRow(id) {
+            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
+            let r = t.rows[0].cloneNode(true);
+            r.querySelectorAll('input').forEach(i => i.value = '');
+            r.querySelectorAll('textarea').forEach(ta => ta.value = '');
+            t.appendChild(r);
         }
 
         function removeLastRow(id) {
-        let t = document.getElementById(id).getElementsByTagName('tbody')[0];
-        if (t.rows.length > 1) {
-        t.deleteRow(t.rows.length - 1);
-        } else {
-        alert('Debe mantener al menos una fila en la tabla.');
-        }
-        }
-        </script>
-        <script>
-            let isOfflineMode = false;
-
-            function toggleOfflineMode() {
-                isOfflineMode = !isOfflineMode;
-                const btn = document.getElementById('btn-offline');
-                if (isOfflineMode) {
-                    btn.textContent = 'Modo Online';
-                    btn.style.backgroundColor = '#f59e0b';
-
-                    // Convertir <select> a <input type="text">
-                    document.querySelectorAll('select.cedit').forEach(sel => {
-                        const input = document.createElement('input');
-                        input.type = 'text';
-                        input.className = sel.className;
-                        input.value = sel.options[sel.selectedIndex]?.text || '';
-                        input.setAttribute('data-original-type', 'select');
-                        if (sel.style.cssText) input.style.cssText = sel.style.cssText;
-                        const options = Array.from(sel.options).map(opt => opt.text).join('|');
-                        input.setAttribute('data-select-options', options);
-                        sel.parentNode.replaceChild(input, sel);
-                    });
-
-                    // Convertir <input type="date"> a <input type="text">
-                    document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
-                        inp.setAttribute('data-original-type', 'date');
-                        inp.type = 'text';
-                        inp.placeholder = 'DD/MM/AAAA';
-                    });
-
-                    // Convertir <input type="time"> a <input type="text">
-                    document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                        inp.setAttribute('data-original-type', 'time');
-                        inp.type = 'text';
-                        inp.placeholder = 'HH:MM';
-                    });
-
-                    // Convertir <input type="number"> a <input type="text">
-                    document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
-                        inp.setAttribute('data-original-type', 'number');
-                        const currentPlaceholder = inp.placeholder;
-                        inp.type = 'text';
-                        if (currentPlaceholder) inp.placeholder = currentPlaceholder;
-                    });
-                } else {
-                    btn.textContent = 'Modo Offline';
-                    btn.style.backgroundColor = '';
-
-                    // Restaurar <select> desde <input type="text">
-                    document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
-                        const sel = document.createElement('select');
-                        sel.className = inp.className;
-                        if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
-                        const options = inp.getAttribute('data-select-options')?.split('|') || [];
-                        options.forEach(optText => {
-                            const opt = document.createElement('option');
-                            opt.text = optText;
-                            sel.appendChild(opt);
-                        });
-                        const currentValue = inp.value;
-                        for (let i = 0; i < sel.options.length; i++) {
-                            if (sel.options[i].text === currentValue) {
-                                sel.selectedIndex = i;
-                                break;
-                            }
-                        }
-                        inp.parentNode.replaceChild(sel, inp);
-                    });
-
-                    // Restaurar <input type="date">
-                    document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
-                        inp.type = 'date';
-                        inp.placeholder = '';
-                        inp.removeAttribute('data-original-type');
-                    });
-
-                    // Restaurar <input type="time">
-                    document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                        inp.type = 'time';
-                        inp.placeholder = '';
-                        inp.removeAttribute('data-original-type');
-                    });
-
-                    // Restaurar <input type="number">
-                    document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
-                        inp.type = 'number';
-                        inp.removeAttribute('data-original-type');
-                    });
-                }
+            let t = document.getElementById(id).getElementsByTagName('tbody')[0];
+            if (t.rows.length > 1) {
+                t.deleteRow(t.rows.length - 1);
+            } else {
+                alert('Debe mantener al menos una fila en la tabla.');
             }
-        </script>
+        }
+    </script>
+    <script>
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="date"> a <input type="text">
+                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="date">
+                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                    inp.type = 'date';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
+            }
+        }
+    </script>
 </body>
 
 </html>

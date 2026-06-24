@@ -98,6 +98,7 @@
 
         .btn-danger {
             background-color: var(--danger-color);
+            width: fit-content;
         }
 
         .btn-mini {
@@ -614,6 +615,15 @@
 
             </tbody>
         </table>
+            <div>
+                <tr width="20%" style="width: 10%;">
+
+                    <th class="gray-th">Fecha Acondicionamiento:</th>
+                    <td><input type="date" class="cedit text-center" name="fecha_acondicionamiento"></td>
+                    <td><input type="time" class="cedit text-center" name="hora_acondicionamiento"></td>
+                </tr>
+            </div>
+            <br>
 
         <div class="section-header">4. Observaciones</div>
         <div style="font-size:9px; color:var(--muted); margin-top:6px; line-height:1.4;">
@@ -872,7 +882,7 @@
                 <td><input type="text" class="cedit text-center lot-input" value="${data.lote || ''}"></td>
                 <td><input type="text" class="cedit text-center readonly-serial serial-input" value="${data.serial || ''}"></td>
                 <td><input type="text" class="cedit text-center initials-input" value="${data.iniciales || ''}"></td>
-                <td class="no-print"><button type="button" class="btn btn-danger btn-mini" onclick="removeDoseRow(this)">x</button></td>`;
+                <td class="no-print" ><button type="button" class="btn btn-danger btn-mini" onclick="removeDoseRow(this)" style="width: 1%;">x</button></td>`;
 
             const productSelect = tr.querySelector('.product-select');
             const presentationSelect = tr.querySelector('.presentation-select');

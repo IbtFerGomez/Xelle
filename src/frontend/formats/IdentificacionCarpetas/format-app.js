@@ -1,0 +1,1444 @@
+/**
+ * FORMAT-APP.JS - V10.0 FINAL MASTER
+ * - Soporte Completo: FO-LC-17 a FO-LC-45
+ * - Lógica FO-24: Inventario descuenta Reproceso/Devolución. Alerta Eliminación.
+ * - Lógica FO-21: Restaurada (Padre-Hijo, Cosecha, Alimentación).
+ * - Lógica FO-20: Fix toggle congelación.
+ */
+
+const API_URL = '/api';
+
+const App = {
+    config: {
+        recipientTypes: [
+            "Flask 75 cm²", "Flask 175 cm²", "Flask 225 cm²",
+            "Hyper Flask", "Cell Stack", "Bioreactor",
+            "Placa Petri", "Tubo Cónico"
+        ]
+    },
+
+    init: function () {
+        const docId = document.body.id;
+        console.log("Iniciando App V10 para:", docId);
+
+        this.Universal.ensureFieldIds(docId);
+        this.Universal.setupDateInputs();
+        this.Universal.setupBarcodes();
+        this.Universal.setupPrintHandler();
+        this.Universal.setupDraggableControls();
+
+        switch (docId) {
+            case 'doc-fo-lc-ResumenRecepcion': case 'doc-fo-lc-17': case 'doc-fo-lc-18': case 'doc-fo-lc-19': case 'doc-fo-lc-23': break;
+            case 'doc-fo-lc-20': this.Docs.FO_LC_20.init(); break;
+            case 'doc-fo-lc-21': this.Docs.FO_LC_21.init(); break;
+            case 'doc-fo-lc-22': this.Docs.FO_LC_22.init(); break;
+            case 'doc-fo-lc-24': this.Docs.FO_LC_24.init(); break;
+            case 'doc-fo-lc-31': this.Docs.FO_LC_31.init(); break;
+            case 'doc-fo-lc-40': case 'doc-fo-lc-40-b': this.Docs.FO_LC_40.init(); break;
+            case 'doc-fo-lc-41': case 'doc-fo-lc-42': case 'doc-fo-lc-43': case 'doc-fo-lc-44': case 'doc-fo-lc-45':
+                this.Docs.FO_Generic.init(docId); break;
+        }
+
+        setTimeout(() => this.Universal.loadData(docId), 0);
+    },
+
+    Universal: {
+        ensureFieldIds: function (docId) {
+            // Asegurar que cada campo editable tenga un ID único
+            const formatPrefix = String(docId || '').replace(/^doc-/, '').replace(/-/g, '_');
+            const fields = Array.from(document.querySelectorAll('input, select, textarea'))
+                .filter(el => el.type !== 'submit' && el.type !== 'button');
+
+            fields.forEach((el, index) => {
+                // Si el campo no tiene ID, asignar uno único
+                if (!el.id) {
+                    // Intentar generar un ID basado en el contexto del campo
+                    let generatedId = '';
+
+                    // Si tiene un name, usarlo como base
+                    if (el.name) {
+                        generatedId = `${formatPrefix}_${el.name}`;
+                    }
+                    // Si tiene un placeholder descriptivo, usarlo
+                    else if (el.placeholder) {
+                        const cleanPlaceholder = el.placeholder
+                            .toLowerCase()
+                            .replace(/[^a-z0-9]/g, '_')
+                            .substring(0, 30);
+                        generatedId = `${formatPrefix}_${cleanPlaceholder}_${index}`;
+                    }
+                    // Caso contrario, usar el tipo de campo y el índice
+                    else {
+                        const fieldType = el.tagName.toLowerCase();
+                        generatedId = `${formatPrefix}_${fieldType}_${index}`;
+                    }
+
+                    // Asignar el ID generado
+                    el.id = generatedId;
+                }
+            });
+
+            console.log(`✓ IDs únicos asignados a ${fields.length} campos en ${docId}`);
+        },
+        getDocHandler: function (docId) {
+            const key = String(docId || '')
+                .replace(/^doc-/, '')
+                .replace(/-/g, '_')
+                .toUpperCase();
+            return App.Docs[key] || null;
+        },
+        getInstanceCode: function () {
+            const params = new URLSearchParams(window.location.search);
+            return (params.get('instance') || '').trim();
+        },
+        isNewMode: function () {
+            const params = new URLSearchParams(window.location.search);
+            const value = String(params.get('new') || '').trim().toLowerCase();
+            return value === '1' || value === 'true' || value === 'yes';
+        },
+        setInstanceCode: function (instanceCode) {
+            if (!instanceCode) return;
+            const url = new URL(window.location.href);
+            url.searchParams.set('instance', instanceCode);
+            window.history.replaceState({}, '', url.toString());
+        },
+        getStorageKey: function (docId, instanceCode = '') {
+            const code = String(instanceCode || this.getInstanceCode() || '').trim();
+            return code ? `xelle_${docId}_${code}` : `xelle_${docId}`;
+        },
+        getSession: function () {
+            try {
+                return JSON.parse(localStorage.getItem('xelle_session') || 'null') || null;
+            } catch (e) {
+                return null;
+            }
+        },
+        getCurrentUserId: function () {
+            const session = this.getSession();
+            const raw = session?.id ?? session?.userId ?? session?.user_id ?? null;
+            const parsed = Number(raw);
+            return Number.isFinite(parsed) ? parsed : null;
+        },
+        getFormatType: function (docId) {
+            const barcodeInput = document.querySelector('.generate-barcode');
+            const prefix = (barcodeInput?.dataset?.prefix || '').trim();
+            if (prefix) return prefix.replace(/-$/, '');
+            return String(docId || '').replace(/^doc-/, '').toUpperCase();
+        },
+        getFieldKey: function (el, index) {
+            if (el.id) return `id:${el.id}`;
+            if (el.name) return `name:${el.name}`;
+            return `idx:${index}`;
+        },
+        collectData: function () {
+            const data = {};
+            const fields = Array.from(document.querySelectorAll('input, select, textarea'))
+                .filter(el => el.type !== 'submit');
+
+            fields.forEach((el, index) => {
+                const key = this.getFieldKey(el, index);
+                if (el.type === 'checkbox') {
+                    data[key] = el.checked;
+                } else if (el.type === 'radio') {
+                    if (el.checked) data[key] = el.value;
+                } else {
+                    data[key] = el.value;
+                }
+            });
+
+            return data;
+        },
+        applyDataToForm: function (data) {
+            if (!data || typeof data !== 'object') return;
+            const fields = Array.from(document.querySelectorAll('input, select, textarea'))
+                .filter(el => el.type !== 'submit');
+
+            fields.forEach((el, index) => {
+                const key = this.getFieldKey(el, index);
+                if (!(key in data)) return;
+                const value = data[key];
+
+                if (el.type === 'checkbox') {
+                    el.checked = Boolean(value);
+                } else if (el.type === 'radio') {
+                    el.checked = String(el.value) === String(value);
+                } else {
+                    el.value = value ?? '';
+                }
+
+                el.dispatchEvent(new Event('input'));
+                el.dispatchEvent(new Event('change'));
+            });
+        },
+        ensureBarcodeValueFromCode: function (instanceCode) {
+            const barcodeInput = document.querySelector('.generate-barcode');
+            if (!barcodeInput || !instanceCode) return;
+
+            const prefix = barcodeInput.dataset.prefix || '';
+            let raw = instanceCode;
+            if (prefix && instanceCode.startsWith(prefix)) {
+                raw = instanceCode.slice(prefix.length);
+            }
+            barcodeInput.value = raw;
+            barcodeInput.dispatchEvent(new Event('input'));
+        },
+        resolveOrCreateInstanceCode: async function (docId) {
+            const fromQuery = this.getInstanceCode();
+            if (fromQuery) return fromQuery;
+
+            const barcodeInput = document.querySelector('.generate-barcode');
+            const prefix = barcodeInput?.dataset?.prefix || '';
+            const barcodeValue = String(barcodeInput?.value || '').trim();
+            if (barcodeValue) return `${prefix}${barcodeValue}`;
+
+            const formatType = this.getFormatType(docId);
+            const response = await fetch(`${API_URL}/formats/generate-unique-code`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ format_type: formatType })
+            });
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok || !payload.unique_code) {
+                throw new Error(payload.msg || 'No se pudo generar código único');
+            }
+            return String(payload.unique_code).trim();
+        },
+        persistInstance: async function (docId, data) {
+            // El barcode es el identificador único del formato
+            const barcodeInput = document.querySelector('.generate-barcode');
+            const prefix = barcodeInput?.dataset?.prefix || '';
+            const barcodeValue = String(barcodeInput?.value || '').trim();
+
+            if (!barcodeValue) {
+                throw new Error('Debe ingresar un código de folio único');
+            }
+
+            // El uniqueCode es el barcode completo (prefix + valor)
+            const uniqueCode = `${prefix}${barcodeValue}`;
+            const urlInstanceCode = this.getInstanceCode();
+            const userId = this.getCurrentUserId();
+            const formatType = this.getFormatType(docId);
+
+            console.log('💾 Guardando:', {
+                inputValue: barcodeValue,
+                uniqueCode: uniqueCode,
+                urlCode: urlInstanceCode,
+                isUpdate: uniqueCode === urlInstanceCode
+            });
+
+            // Determinar si es actualización o creación nueva
+            // Solo es actualización si el código del input coincide con el de la URL
+            const isUpdate = urlInstanceCode && uniqueCode === urlInstanceCode;
+
+            const payload = {
+                unique_code: uniqueCode,
+                format_type: formatType,
+                status: 'DRAFT',
+                data_payload: data,
+                user_id: userId,
+                notes: ''
+            };
+
+            let response;
+
+            if (isUpdate) {
+                // Actualizar documento existente
+                console.log('📝 Actualizando documento:', uniqueCode);
+                response = await fetch(`${API_URL}/format-instances/${encodeURIComponent(uniqueCode)}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        status: 'DRAFT',
+                        data_payload: data,
+                        user_id: userId
+                    })
+                });
+            } else {
+                // Crear nuevo documento
+                console.log('🆕 Creando nuevo documento:', uniqueCode);
+                response = await fetch(`${API_URL}/format-instances`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            }
+
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(result.msg || 'No se pudo guardar en servidor');
+            }
+
+            // Actualizar la URL con el nuevo código de instancia
+            this.setInstanceCode(uniqueCode);
+            return uniqueCode;
+        },
+        setupDateInputs: function () {
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                // Autollenar solo si no es fecha de registro (clase no-auto-date)
+                if (!input.value && !input.classList.contains('no-auto-date')) input.valueAsDate = new Date();
+            });
+        },
+        setupBarcodes: function () {
+            const process = (input) => {
+                const prefix = input.dataset.prefix || '';
+                const val = input.value;
+                if (val && window.JsBarcode) {
+                    try {
+                        JsBarcode(`#${input.dataset.target}`, prefix + val, { format: "CODE128", height: 30, displayValue: true, fontSize: 10, margin: 0 });
+                    } catch (e) { }
+                }
+
+                // Verificar si el código cambió respecto al de la URL
+                const urlInstanceCode = this.getInstanceCode();
+                const currentCode = `${prefix}${val}`.trim();
+                if (urlInstanceCode && currentCode && urlInstanceCode !== currentCode) {
+                    // El código cambió - se creará un nuevo documento
+                    if (!input.dataset.warningShown) {
+                        input.dataset.warningShown = 'true';
+                        const indicator = document.createElement('span');
+                        indicator.className = 'code-changed-indicator';
+                        indicator.textContent = '🆕 Nuevo documento';
+                        indicator.style.cssText = 'color: #28a745; font-weight: bold; font-size: 11px; margin-left: 10px;';
+                        input.parentElement.appendChild(indicator);
+
+                        setTimeout(() => {
+                            indicator.remove();
+                            delete input.dataset.warningShown;
+                        }, 3000);
+                    }
+                }
+            };
+            document.querySelectorAll('.generate-barcode').forEach(i => {
+                i.addEventListener('input', (e) => process.call(this, e.target));
+                if (i.value) process.call(this, i);
+            });
+        },
+        setupPrintHandler: function () {
+            window.addEventListener('beforeprint', () => {
+                document.querySelectorAll('select').forEach(sel => {
+                    let span = sel.nextElementSibling;
+                    if (!span || !span.classList.contains('print-only-value')) {
+                        span = document.createElement('span');
+                        span.className = 'print-only-value';
+                        sel.parentNode.insertBefore(span, sel.nextSibling);
+                    }
+                    span.textContent = sel.options[sel.selectedIndex]?.text || '';
+                });
+            });
+        },
+        setupDraggableControls: function () {
+            const controlBar = document.querySelector('.global-controls');
+            if (!controlBar) return;
+
+            let isDragging = false;
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+            let xOffset = 0;
+            let yOffset = 0;
+
+            controlBar.addEventListener('mousedown', dragStart);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+
+            // Touch events para dispositivos móviles
+            controlBar.addEventListener('touchstart', dragStart);
+            document.addEventListener('touchmove', drag);
+            document.addEventListener('touchend', dragEnd);
+
+            function dragStart(e) {
+                // No iniciar drag si se hace clic en un botón
+                if (e.target.tagName === 'BUTTON') return;
+
+                if (e.type === 'touchstart') {
+                    initialX = e.touches[0].clientX - xOffset;
+                    initialY = e.touches[0].clientY - yOffset;
+                } else {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                }
+
+                isDragging = true;
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+
+                if (e.type === 'touchmove') {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+
+                xOffset = currentX;
+                yOffset = currentY;
+
+                setTranslate(currentX, currentY, controlBar);
+            }
+
+            function dragEnd() {
+                isDragging = false;
+            }
+
+            function setTranslate(xPos, yPos, el) {
+                el.style.transform = `translate(${xPos}px, calc(-50% + ${yPos}px))`;
+            }
+        },
+        autoResize: function (textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        },
+        saveData: async function () {
+            const docId = document.body.id;
+
+            // Verificar que existe un código de barcode
+            const barcodeInput = document.querySelector('.generate-barcode');
+            const barcodeValue = String(barcodeInput?.value || '').trim();
+
+            if (!barcodeValue) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Debe ingresar un código de folio único antes de guardar',
+                    confirmButtonText: 'Entendido'
+                });
+                return;
+            }
+
+            const data = this.collectData();
+            const docHandler = this.getDocHandler(docId);
+            if (docHandler?.getCustomData) {
+                Object.assign(data, docHandler.getCustomData());
+            }
+
+            try {
+                const instanceCode = await this.persistInstance(docId, data);
+                const instanceKey = this.getStorageKey(docId, instanceCode);
+                localStorage.setItem(instanceKey, JSON.stringify(data));
+
+                // Determinar si fue creación o actualización
+                const urlCode = new URLSearchParams(window.location.search).get('instance');
+                const wasUpdate = urlCode && urlCode === instanceCode;
+
+                Swal.fire({
+                    icon: 'success',
+                    title: wasUpdate ? 'Actualizado' : 'Documento Creado',
+                    text: wasUpdate
+                        ? `Formato actualizado: ${instanceCode}`
+                        : `Nuevo documento guardado: ${instanceCode}`,
+                    timer: 2500,
+                    showConfirmButton: false
+                });
+            } catch (e) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al Guardar',
+                    text: e.message || 'No se pudo guardar el formato',
+                    confirmButtonText: 'Entendido'
+                });
+            }
+        },
+        loadData: async function (docId) {
+            let data = null;
+            const instanceCode = this.getInstanceCode();
+            const isNewMode = this.isNewMode();
+
+            // Si es modo nuevo (nueva tarjeta), no cargar datos previos - documento en blanco
+            if (isNewMode) {
+                console.log('Modo nuevo: Cargando documento en blanco');
+                return;
+            }
+
+            // Si hay un código de instancia específico, cargar desde servidor
+            if (instanceCode) {
+                try {
+                    const response = await fetch(`${API_URL}/format-instances/${encodeURIComponent(instanceCode)}`);
+                    const payload = await response.json().catch(() => ({}));
+                    if (response.ok && payload && payload.data_payload && typeof payload.data_payload === 'object') {
+                        data = payload.data_payload;
+                        this.ensureBarcodeValueFromCode(instanceCode);
+                        localStorage.setItem(this.getStorageKey(docId, instanceCode), JSON.stringify(data));
+                    }
+                } catch (e) {
+                    console.error('Error cargando formato desde servidor:', e);
+                }
+            }
+
+            // Si no hay datos y tenemos un instanceCode, intentar cargar desde localStorage
+            if (!data && instanceCode) {
+                const saved = localStorage.getItem(this.getStorageKey(docId, instanceCode));
+                if (saved) {
+                    try {
+                        data = JSON.parse(saved);
+                    } catch (e) {
+                        data = null;
+                    }
+                }
+            }
+
+            // Si hay datos, aplicarlos al formulario
+            if (data) {
+                const docHandler = this.getDocHandler(docId);
+                if (docHandler?.loadCustomData) docHandler.loadCustomData(data);
+                this.applyDataToForm(data);
+            }
+        },
+        clearForm: function () {
+            Swal.fire({
+                title: '¿Limpiar todo?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'Sí'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const docId = document.body.id;
+                    localStorage.removeItem(this.getStorageKey(docId));
+                    localStorage.removeItem(`xelle_${docId}`);
+                    location.reload();
+                }
+            });
+        },
+        printForm: function () { window.print(); }
+    },
+
+    Docs: {
+        // --- FO-LC-20: PROCESAMIENTO ---
+        FO_LC_20: {
+            init: function () {
+                const tplInput = document.getElementById('tpl-id-input');
+                if (tplInput) tplInput.addEventListener('input', this.updateCodes);
+
+                const freezeSelect = document.getElementById('freeze-select');
+                if (freezeSelect) {
+                    freezeSelect.addEventListener('change', (e) => {
+                        document.getElementById('freeze-container').style.display = (e.target.value === 'Si') ? 'block' : 'none';
+                    });
+                    if (freezeSelect.value === 'Si') document.getElementById('freeze-container').style.display = 'block';
+                }
+
+                if (document.querySelectorAll('#flask-table-body tr').length === 0) {
+                    this.addFlaskRow(); window.addSupplyRow();
+                }
+            },
+            updateCodes: function () {
+                const tpl = document.getElementById('tpl-id-input')?.value || '';
+                const date = document.querySelector('.today-date')?.value || '';
+                const formatDate = (d) => {
+                    if (!d) return 'DDMMAA';
+                    const dt = new Date(d + 'T00:00:00');
+                    const m = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'][dt.getMonth()];
+                    return `${dt.getDate().toString().padStart(2, '0')}${m}${dt.getFullYear().toString().substr(-2)}`;
+                };
+                document.querySelectorAll('#flask-table-body tr').forEach((row, i) => {
+                    const type = row.querySelector('.flask-method').value;
+                    row.querySelector('.code-preview').textContent = `${tpl} ${formatDate(date)} ${type} #${i + 1}`;
+                });
+            },
+            addFlaskRow: function () {
+                const tbody = document.getElementById('flask-table-body');
+                const row = document.createElement('tr');
+                const count = tbody.children.length + 1;
+                const opts = App.config.recipientTypes.map(t => `<option value="${t}">${t}</option>`).join('');
+                row.innerHTML = `
+    <td>${document.getElementById('tpl-id-input')?.value || '---'}</td>
+    <td><select class="flask-method" onchange="App.Docs.FO_LC_20.updateCodes()"><option value="EX">EX</option><option value="DG">DG</option></select></td>
+    <td>${document.querySelector('.today-date')?.value || ''}</td>
+    <td>${count}</td>
+    <td class="code-preview" style="font-weight:bold; color: var(--primary-color);">---</td>
+    <td><select style="width:100%">${opts}</select></td>
+    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove(); App.Docs.FO_LC_20.updateCodes()">X</button></td>
+`;
+                tbody.appendChild(row);
+                this.updateCodes();
+            },
+            getCustomData: function () {
+                const supplies = [], flasks = [], freeze = [];
+                document.querySelectorAll('#supplies-table-body tr').forEach(r => supplies.push(this.scrape(r)));
+                document.querySelectorAll('#flask-table-body tr').forEach(r => flasks.push(this.scrape(r)));
+                document.querySelectorAll('#freeze-table-body tr').forEach(r => freeze.push(this.scrape(r)));
+                return { t_supplies: supplies, t_flasks: flasks, t_freeze: freeze };
+            },
+            scrape: (row) => Array.from(row.querySelectorAll('input, select')).map(i => i.value),
+            loadCustomData: function (data) {
+                if (data.t_supplies) this.restore('supplies-table-body', data.t_supplies, window.addSupplyRow);
+                if (data.t_flasks) this.restore('flask-table-body', data.t_flasks, () => this.addFlaskRow());
+                if (data.t_freeze) this.restore('freeze-table-body', data.t_freeze, window.addFreezeRow);
+            },
+            restore: function (id, data, fn) {
+                const tbody = document.getElementById(id); tbody.innerHTML = '';
+                data.forEach(d => { fn(); const ins = tbody.lastElementChild.querySelectorAll('input, select'); d.forEach((v, i) => { if (ins[i]) ins[i].value = v; }); });
+            }
+        },
+
+        // --- FO-LC-21: BITÁCORA ---
+        FO_LC_21: {
+            init: function () {
+                console.log('FO-LC-21: Inicializando...');
+            },
+            getCustomData: function () {
+                console.log('FO-LC-21: Recopilando datos personalizados...');
+
+                // TABLA 1: Insumos del día (5 filas fijas)
+                const insumos = [];
+                document.querySelectorAll('#tabla-insumos-dia tbody tr').forEach(row => {
+                    const cells = Array.from(row.querySelectorAll('input, select')).map(el => el.value);
+                    insumos.push(cells);
+                });
+
+                // TABLA 2: Flasks Activos (dinámico - 11 columnas)
+                const flasks = [];
+                document.querySelectorAll('#tbody-flasks tr').forEach(row => {
+                    const cells = Array.from(row.querySelectorAll('input, select')).map(el => el.value);
+                    flasks.push(cells);
+                });
+
+                // TABLA 3: Nuevos Flasks/Subcultivo (dinámico - 9 columnas)
+                const nuevos = [];
+                document.querySelectorAll('#tbody-nuevos tr').forEach(row => {
+                    const cells = Array.from(row.querySelectorAll('input, select')).map(el => el.value);
+                    nuevos.push(cells);
+                });
+
+                // TABLA 4: Cosechas (dinámico - 6 columnas)
+                const cosechas = [];
+                document.querySelectorAll('#tbody-cosechas tr').forEach(row => {
+                    const cells = Array.from(row.querySelectorAll('input, select')).map(el => el.value);
+                    cosechas.push(cells);
+                });
+
+                console.log('FO-LC-21: Datos recopilados:', { insumos, flasks, nuevos, cosechas });
+                return {
+                    t_insumos: insumos,
+                    t_flasks: flasks,
+                    t_nuevos: nuevos,
+                    t_cosechas: cosechas
+                };
+            },
+            loadCustomData: function (data) {
+                console.log('FO-LC-21: Cargando datos personalizados...', data);
+
+                // TABLA 1: Insumos del día (5 filas fijas)
+                if (data.t_insumos && Array.isArray(data.t_insumos)) {
+                    const rows = document.querySelectorAll('#tabla-insumos-dia tbody tr');
+                    data.t_insumos.forEach((rowData, index) => {
+                        if (rows[index]) {
+                            const inputs = rows[index].querySelectorAll('input, select');
+                            rowData.forEach((value, colIndex) => {
+                                if (inputs[colIndex]) {
+                                    inputs[colIndex].value = value || '';
+                                }
+                            });
+                        }
+                    });
+                }
+
+                // TABLA 2: Flasks Activos (dinámico)
+                if (data.t_flasks && Array.isArray(data.t_flasks)) {
+                    const tbody = document.getElementById('tbody-flasks');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.t_flasks.forEach(rowData => {
+                            const row = document.createElement('tr');
+                            const recipientOptions = `
+                                <option value="T-25" ${rowData[5] === 'T-25' ? 'selected' : ''}>T-25</option>
+                                <option value="T-75" ${rowData[5] === 'T-75' ? 'selected' : ''}>T-75</option>
+                                <option value="T-175" ${rowData[5] === 'T-175' ? 'selected' : ''}>T-175</option>
+                                <option value="T-225" ${rowData[5] === 'T-225' ? 'selected' : ''}>T-225</option>
+                                <option value="HF" ${rowData[5] === 'HF' ? 'selected' : ''}>HyperFlask</option>
+                                <option value="CS-1" ${rowData[5] === 'CS-1' ? 'selected' : ''}>CS-1</option>
+                                <option value="CS-2" ${rowData[5] === 'CS-2' ? 'selected' : ''}>CS-2</option>
+                                <option value="CS-5" ${rowData[5] === 'CS-5' ? 'selected' : ''}>CS-5</option>
+                            `;
+                            const estadoOptions = `
+                                <option ${rowData[9] === 'ACTIVO' ? 'selected' : ''}>ACTIVO</option>
+                                <option ${rowData[9] === 'CUARENTENA' ? 'selected' : ''}>CUARENTENA</option>
+                                <option ${rowData[9] === 'PARA PASE' ? 'selected' : ''}>PARA PASE</option>
+                                <option ${rowData[9] === 'PARA COSECHA' ? 'selected' : ''}>PARA COSECHA</option>
+                                <option ${rowData[9] === 'CONTAMINADO' ? 'selected' : ''}>CONTAMINADO</option>
+                                <option ${rowData[9] === 'BAJA' ? 'selected' : ''}>BAJA</option>
+                            `;
+                            row.innerHTML = `
+                                <td><input class="cedit code-input auto-code" readonly tabindex="-1" value="${rowData[0] || ''}"></td>
+                                <td><input class="cedit linea-input" placeholder="Ej. TPL32" oninput="autoGenFlaskCode21(this)" value="${rowData[1] || ''}"></td>
+                                <td><input class="cedit pase-input" placeholder="P#" oninput="autoGenFlaskCode21(this)" value="${rowData[2] || ''}"></td>
+                                <td><input type="date" class="cedit" value="${rowData[3] || ''}"></td>
+                                <td><input type="number" class="cedit num-input" value="${rowData[4] || '1'}" style="width:40px" oninput="autoGenFlaskCode21(this)"></td>
+                                <td><select class="cedit recip-select" onchange="autoGenFlaskCode21(this)">${recipientOptions}</select></td>
+                                <td><input class="cedit" style="width:40px" value="${rowData[6] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[7] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[8] || ''}"></td>
+                                <td><select class="cedit">${estadoOptions}</select></td>
+                                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+
+                // TABLA 3: Nuevos Flasks/Subcultivo (dinámico)
+                if (data.t_nuevos && Array.isArray(data.t_nuevos)) {
+                    const tbody = document.getElementById('tbody-nuevos');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.t_nuevos.forEach(rowData => {
+                            const row = document.createElement('tr');
+                            const recipientOptions = `
+                                <option value="T-25" ${rowData[3] === 'T-25' ? 'selected' : ''}>T-25</option>
+                                <option value="T-75" ${rowData[3] === 'T-75' ? 'selected' : ''}>T-75</option>
+                                <option value="T-175" ${rowData[3] === 'T-175' ? 'selected' : ''}>T-175</option>
+                                <option value="T-225" ${rowData[3] === 'T-225' ? 'selected' : ''}>T-225</option>
+                                <option value="HF" ${rowData[3] === 'HF' ? 'selected' : ''}>HyperFlask</option>
+                                <option value="CS-1" ${rowData[3] === 'CS-1' ? 'selected' : ''}>CS-1</option>
+                                <option value="CS-2" ${rowData[3] === 'CS-2' ? 'selected' : ''}>CS-2</option>
+                                <option value="CS-5" ${rowData[3] === 'CS-5' ? 'selected' : ''}>CS-5</option>
+                            `;
+                            row.innerHTML = `
+                                <td><input class="cedit" placeholder="Origen..." value="${rowData[0] || ''}"></td>
+                                <td><input class="cedit linea-input" placeholder="Línea" oninput="autoGenFlaskCode21(this)" value="${rowData[1] || ''}"></td>
+                                <td><input class="cedit pase-input" placeholder="P#" oninput="autoGenFlaskCode21(this)" value="${rowData[2] || ''}"></td>
+                                <td><select class="cedit recip-select" onchange="autoGenFlaskCode21(this)">${recipientOptions}</select></td>
+                                <td><input type="number" class="cedit num-input" value="${rowData[4] || '1'}" style="width:40px" oninput="autoGenFlaskCode21(this)"></td>
+                                <td><input class="cedit code-input auto-code" readonly tabindex="-1" value="${rowData[5] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[6] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[7] || ''}"></td>
+                                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+
+                // TABLA 4: Cosechas (dinámico)
+                if (data.t_cosechas && Array.isArray(data.t_cosechas)) {
+                    const tbody = document.getElementById('tbody-cosechas');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.t_cosechas.forEach(rowData => {
+                            const row = document.createElement('tr');
+                            const destinoOptions = `
+                                <option ${rowData[3] === 'DOSIFICACION' ? 'selected' : ''}>DOSIFICACION</option>
+                                <option ${rowData[3] === 'RESIEMBRA' ? 'selected' : ''}>RESIEMBRA</option>
+                                <option ${rowData[3] === 'CRIOPRESERVACION' ? 'selected' : ''}>CRIOPRESERVACION</option>
+                            `;
+                            row.innerHTML = `
+                                <td><input class="cedit" placeholder="Flask Origen..." value="${rowData[0] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[1] || ''}"></td>
+                                <td><input class="cedit" value="${rowData[2] || ''}"></td>
+                                <td><select class="cedit">${destinoOptions}</select></td>
+                                <td><input class="cedit" value="${rowData[4] || ''}"></td>
+                                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+
+                console.log('FO-LC-21: Datos cargados exitosamente');
+            }
+        },
+
+        // --- FO-LC-22: CRIO ---
+        FO_LC_22: {
+            init: function () { this.renderGrid(); },
+            renderGrid: function () { const c = document.getElementById('cryo-grid'); if (!c || c.children.length > 0) return; for (let i = 1; i <= 100; i++) { const d = document.createElement('div'); d.className = 'cryo-cell p-empty'; d.textContent = i; d.onclick = () => this.toggle(d); c.appendChild(d); } },
+            toggle: function (d) {
+                if (!d.classList.contains('p-empty')) { d.className = 'cryo-cell p-empty'; return; }
+                const p = parseInt(document.getElementById('input-pase').value) || 0;
+                let c = 'p-0-1'; if (p >= 2 && p <= 3) c = 'p-2-3'; if (p >= 4 && p <= 5) c = 'p-4-5'; if (p >= 6 && p <= 7) c = 'p-6-7'; if (p >= 8) c = 'p-8-9';
+                d.className = `cryo-cell ${c}`;
+            },
+            getCustomData: function () { const s = []; document.querySelectorAll('.cryo-cell').forEach(c => s.push(c.className)); return { grid: s }; },
+            loadCustomData: function (d) { if (d.grid) document.querySelectorAll('.cryo-cell').forEach((c, i) => { if (d.grid[i]) c.className = d.grid[i]; }); }
+        },
+
+        // --- FO-LC-24: DOSIS (ACTUALIZADO) ---
+        FO_LC_24: {
+            manualGrandTotals: {
+                vials: false,
+                cells: false
+            },
+            vialManualOverride: {
+                "Stem Xelle": false,
+                "Hybrid Xelle": false,
+                "Stem Ortho": false,
+                "Hybrid Ortho": false,
+                "Exosomas": false
+            },
+            inventoryManualOverride: {
+                "Stem Xelle": false,
+                "Hybrid Xelle": false,
+                "Stem Ortho": false,
+                "Hybrid Ortho": false,
+                "Exosomas": false
+            },
+            productsDB: {
+                "Stem Xelle": { lotPre: "XCM", pres: ["10M", "25M", "50M", "100M", "Especial"] },
+                "Hybrid Xelle": { lotPre: "XHY", pres: ["10M+1B", "25M+2B", "50M+5B", "60M+6B", "100M+10B", "Especial"] },
+                "Stem Ortho": { lotPre: "XOR", pres: ["10M", "25M", "50M", "100M", "Especial"] },
+                "Hybrid Ortho": { lotPre: "XHO", pres: ["10M+1B", "25M+2B", "50M+5B", "60M+6B", "100M+10B", "Especial"] },
+                "Exosomas": { lotPre: "EXO", pres: ["3B", "9B", "15B", "30B", "75B", "90B", "Especial"] }
+            },
+            init: function () {
+                if (document.querySelectorAll('#tbl-dosis tbody tr').length === 0) this.addDosis();
+                const fechaOperacion = document.getElementById('fecha_operacion');
+                if (fechaOperacion) {
+                    fechaOperacion.addEventListener('change', () => {
+                        document.querySelectorAll('#tbl-dosis tbody tr').forEach(r => {
+                            const prodSelect = r.querySelector('.prod-select');
+                            if (prodSelect && prodSelect.value) this.onProd(prodSelect);
+                        });
+                    });
+                }
+                this.calcInventory();
+            },
+            productToFieldId: function (product) {
+                switch (product) {
+                    case 'Stem Xelle': return 'cell-stem';
+                    case 'Hybrid Xelle': return 'cell-hybrid';
+                    case 'Stem Ortho': return 'cell-stem-ortho';
+                    case 'Hybrid Ortho': return 'cell-hybrid-ortho';
+                    case 'Exosomas': return 'cell-exo';
+                    default: return '';
+                }
+            },
+            productToVialFieldId: function (product) {
+                switch (product) {
+                    case 'Stem Xelle': return 'tot-stem';
+                    case 'Hybrid Xelle': return 'tot-hybrid';
+                    case 'Stem Ortho': return 'tot-stem-ortho';
+                    case 'Hybrid Ortho': return 'tot-hybrid-ortho';
+                    case 'Exosomas': return 'tot-exo';
+                    default: return '';
+                }
+            },
+            onCellSummaryInput: function (inputEl) {
+                const fieldToProduct = {
+                    'cell-stem': 'Stem Xelle',
+                    'cell-hybrid': 'Hybrid Xelle',
+                    'cell-stem-ortho': 'Stem Ortho',
+                    'cell-hybrid-ortho': 'Hybrid Ortho',
+                    'cell-exo': 'Exosomas'
+                };
+
+                const product = fieldToProduct[inputEl?.id || ''];
+                if (!product) return;
+
+                const valueMillions = this.parseMillions(inputEl.value);
+                if (valueMillions === null || valueMillions <= 0) {
+                    this.inventoryManualOverride[product] = false;
+                    inputEl.value = '0';
+                } else {
+                    this.inventoryManualOverride[product] = true;
+                    inputEl.value = this.formatCellsDisplay(this.normalizeMillions(valueMillions, product));
+                }
+
+                this.updateGrandTotalCellsFromSummary();
+            },
+            onVialInput: function (inputEl, product) {
+                if (!product) return;
+
+                const n = Number(inputEl?.value);
+                if (!Number.isFinite(n) || n < 0) {
+                    this.vialManualOverride[product] = false;
+                    inputEl.value = '0';
+                } else {
+                    this.vialManualOverride[product] = true;
+                    inputEl.value = String(Math.floor(n));
+                }
+
+                this.updateGrandTotalVialsFromSummary();
+            },
+            onGrandTotalVialsInput: function (inputEl) {
+                const n = Number(inputEl?.value);
+                if (!Number.isFinite(n) || n < 0) {
+                    this.manualGrandTotals.vials = false;
+                    this.calcInventory();
+                    return;
+                }
+
+                this.manualGrandTotals.vials = true;
+                inputEl.value = String(Math.floor(n));
+            },
+            onGrandTotalCellsInput: function (inputEl) {
+                const millions = this.parseMillions(inputEl?.value || '');
+                if (millions === null || millions <= 0) {
+                    this.manualGrandTotals.cells = false;
+                    this.calcInventory();
+                    return;
+                }
+
+                this.manualGrandTotals.cells = true;
+                inputEl.value = this.formatCellsDisplay(millions);
+            },
+            updateGrandTotalCellsFromSummary: function () {
+                const ids = ['cell-stem', 'cell-hybrid', 'cell-stem-ortho', 'cell-hybrid-ortho', 'cell-exo'];
+                const total = ids.reduce((acc, id) => {
+                    const el = document.getElementById(id);
+                    const val = this.parseMillions(el?.value || '0') || 0;
+                    return acc + val;
+                }, 0);
+
+                if (!this.manualGrandTotals.cells) {
+                    document.getElementById('grand-tot-cells').value = this.formatCellsDisplay(total);
+                }
+            },
+            updateGrandTotalVialsFromSummary: function () {
+                const ids = ['tot-stem', 'tot-hybrid', 'tot-stem-ortho', 'tot-hybrid-ortho', 'tot-exo'];
+                const total = ids.reduce((acc, id) => {
+                    const el = document.getElementById(id);
+                    const val = Number(el?.value || '0');
+                    return acc + (Number.isFinite(val) ? val : 0);
+                }, 0);
+
+                if (!this.manualGrandTotals.vials) {
+                    document.getElementById('grand-tot-vials').value = String(Math.floor(total));
+                }
+            },
+            addDosis: function () {
+                const tbody = document.querySelector('#tbl-dosis tbody');
+                const row = document.createElement('tr');
+                const n = tbody.rows.length + 1;
+                // Se agregó un div contenedor para la opción "Especial" en la columna de Pres.
+                row.innerHTML = `
+    <td class="text-center row-num">${n}</td>
+    <td><select class="cedit prod-select" onchange="App.Docs.FO_LC_24.onProd(this)">
+        <option value="">Sel...</option>
+        <option value="Stem Xelle">Stem Xelle</option>
+        <option value="Hybrid Xelle">Hybrid Xelle</option>
+        <option value="Stem Ortho">Stem Ortho</option>
+        <option value="Hybrid Ortho">Hybrid Ortho</option>
+        <option value="Exosomas">Exosomas</option>
+    </select></td>
+    <td><textarea class="cedit origin-input" rows="1" placeholder="Origen" oninput="App.Universal.autoResize(this)"></textarea></td>
+    <td><input type="date" class="cedit"></td>
+    <td><input class="cedit lote-input" placeholder="Lote"></td>
+    <td>
+        <select class="cedit pres-select" onchange="App.Docs.FO_LC_24.onPresChange(this)">
+            <option>-</option>
+        </select>
+        <input type="text" class="cedit special-pres-input" style="display:none; margin-top:2px; border:1px solid #2e9d82;" placeholder="¿Cuál?" oninput="App.Docs.FO_LC_24.syncRowCellCount(this.closest('tr')); App.Docs.FO_LC_24.calcInventory()">
+    </td>
+    <td><input class="cedit cell-count-input" placeholder="No." oninput="App.Docs.FO_LC_24.calcInventory()"></td>
+    <td><input class="cedit" placeholder="Venta"></td>
+    <td><input class="cedit unique-code" style="font-weight:bold;color:#2980b9" placeholder="Auto-generado"></td>
+    <td><textarea class="cedit obs-input" rows="1" placeholder="Observaciones" oninput="App.Universal.autoResize(this); App.Docs.FO_LC_24.calcInventory()"></textarea></td>
+    <td class="no-print"><button class="btn-danger btn-mini" onclick="App.Docs.FO_LC_24.handleDelete(this)">X</button></td>`;
+                tbody.appendChild(row);
+            },
+            onProd: function (s) {
+                const r = s.closest('tr'); const c = this.productsDB[s.value]; const p = r.querySelector('.pres-select');
+                p.innerHTML = '<option value="">-</option>';
+                if (c) c.pres.forEach(x => p.add(new Option(x, x)));
+
+                const d = document.getElementById('fecha_operacion').value;
+                if (d && c) r.querySelector('.lote-input').value = `${c.lotPre}${d.replace(/-/g, '').substring(2)}`;
+                this.updateCode(r); this.calcInventory();
+            },
+            onPresChange: function (s) {
+                const r = s.closest('tr');
+                const specialInput = r.querySelector('.special-pres-input');
+                // Si elige "Especial", muestra el input de texto, si no lo oculta
+                if (s.value === "Especial") {
+                    specialInput.style.display = "block";
+                    specialInput.focus();
+                } else {
+                    specialInput.style.display = "none";
+                    specialInput.value = "";
+                }
+                this.syncRowCellCount(r);
+                this.calcInventory();
+            },
+            parseMillions: function (rawValue) {
+                const raw = String(rawValue || '').trim();
+                if (!raw) return null;
+
+                const clean = raw.replace(',', '.');
+
+                let match = clean.match(/(\d+(?:\.\d+)?)\s*[xX]\s*10\s*[eE]?\s*6/);
+                if (match) return Number(match[1]);
+
+                match = clean.match(/(\d+(?:\.\d+)?)\s*[mM]\b/);
+                if (match) return Number(match[1]);
+
+                const numeric = Number(clean.replace(/[^0-9.\-]/g, ''));
+                if (!Number.isFinite(numeric) || numeric <= 0) return null;
+
+                if (numeric >= 1000000) {
+                    return numeric / 1000000;
+                }
+
+                return numeric;
+            },
+            parseMillionsFromPresentation: function (presentationValue, specialValue) {
+                const base = String(presentationValue || '').trim();
+                if (!base) return null;
+
+                if (base === 'Especial') {
+                    return this.parseMillions(specialValue);
+                }
+
+                const millionPart = base.split('+')[0];
+                return this.parseMillions(millionPart);
+            },
+            normalizeMillions: function (millions, product) {
+                if (!Number.isFinite(millions) || millions <= 0) return 0;
+                if (product === 'Exosomas') return millions;
+                return Math.max(10, millions);
+            },
+            formatMillionsValue: function (millions) {
+                if (!Number.isFinite(millions) || millions <= 0) return '0';
+                if (Number.isInteger(millions)) return String(millions);
+                return millions.toFixed(2).replace(/\.00$/, '').replace(/(\.\d*[1-9])0+$/, '$1');
+            },
+            syncRowCellCount: function (row) {
+                const product = row.querySelector('.prod-select')?.value || '';
+                if (!product || product === 'Exosomas') return;
+
+                const cellInput = row.querySelector('.cell-count-input');
+                const presValue = row.querySelector('.pres-select')?.value || '';
+                const specialPres = row.querySelector('.special-pres-input')?.value || '';
+
+                const inputMillions = this.parseMillions(cellInput?.value || '');
+                const presMillions = this.parseMillionsFromPresentation(presValue, specialPres);
+                const normalized = this.normalizeMillions(inputMillions ?? presMillions ?? 0, product);
+
+                if (cellInput && normalized > 0) {
+                    cellInput.value = `${this.formatMillionsValue(normalized)}M`;
+                }
+            },
+            getRowMillions: function (row) {
+                const product = row.querySelector('.prod-select')?.value || '';
+                if (!product) return 0;
+
+                const cellInput = row.querySelector('.cell-count-input');
+                const presValue = row.querySelector('.pres-select')?.value || '';
+                const specialPres = row.querySelector('.special-pres-input')?.value || '';
+
+                const inputMillions = this.parseMillions(cellInput?.value || '');
+                const presMillions = this.parseMillionsFromPresentation(presValue, specialPres);
+                const rawMillions = inputMillions ?? presMillions ?? 0;
+                const normalized = this.normalizeMillions(rawMillions, product);
+
+                if (cellInput && normalized > 0 && product !== 'Exosomas') {
+                    cellInput.value = `${this.formatMillionsValue(normalized)}M`;
+                }
+
+                return normalized;
+            },
+            formatCellsDisplay: function (millions) {
+                if (!Number.isFinite(millions) || millions <= 0) return '0';
+                return `${this.formatMillionsValue(millions)}x10E6`;
+            },
+            updateCode: function (r) {
+                const l = r.querySelector('.lote-input').value; const n = r.querySelector('.row-num').innerText.padStart(3, '0');
+                if (l) r.querySelector('.unique-code').value = `${l.replace(/\s/g, '')}-${n}`;
+            },
+            handleDelete: function (b) {
+                Swal.fire({ title: '¿Acción?', icon: 'question', showDenyButton: true, showCancelButton: true, confirmButtonText: 'Eliminar Fila', denyButtonText: 'Reproceso/Dev' }).then(r => {
+                    const row = b.closest('tr');
+                    if (r.isConfirmed) { row.remove(); this.reindex(); this.calcInventory(); }
+                    else if (r.isDenied) {
+                        Swal.fire({ input: 'select', inputOptions: { 'Reproceso': 'Reproceso', 'Devolución': 'Devolución' }, title: 'Motivo' }).then(s => {
+                            if (s.value) { row.querySelector('.obs-input').value = s.value; row.style.backgroundColor = '#fdedec'; this.calcInventory(); }
+                        });
+                    }
+                });
+            },
+            reindex: function () { document.querySelectorAll('#tbl-dosis tbody tr').forEach((r, i) => { r.querySelector('.row-num').innerText = i + 1; this.updateCode(r); }); },
+            calcInventory: function () {
+                const t = { "Stem Xelle": 0, "Hybrid Xelle": 0, "Stem Ortho": 0, "Hybrid Ortho": 0, "Exosomas": 0 };
+                const c = { "Stem Xelle": 0, "Hybrid Xelle": 0, "Stem Ortho": 0, "Hybrid Ortho": 0, "Exosomas": 0 };
+                document.querySelectorAll('#tbl-dosis tbody tr').forEach(r => {
+                    const obs = r.querySelector('.obs-input').value;
+                    // Solo excluir si la observación es "Reproceso" o "Devolución"
+                    const shouldExclude = obs && (obs.toLowerCase().includes('reproceso') || obs.toLowerCase().includes('devolución') || obs.toLowerCase().includes('devolucion'));
+                    if (!shouldExclude) {
+                        const p = r.querySelector('.prod-select').value;
+                        if (t[p] !== undefined) {
+                            t[p]++;
+                            c[p] += this.getRowMillions(r);
+                        }
+                    }
+                });
+
+                // Update individual vial counts only if not manually overridden
+                ["Stem Xelle", "Hybrid Xelle", "Stem Ortho", "Hybrid Ortho", "Exosomas"].forEach(product => {
+                    const vialFieldId = this.productToVialFieldId(product);
+                    if (!vialFieldId) return;
+                    const vialFieldEl = document.getElementById(vialFieldId);
+                    if (!vialFieldEl) return;
+
+                    if (!this.vialManualOverride[product]) {
+                        vialFieldEl.value = t[product];
+                    }
+                });
+
+                // Calculate grand total vials from individual fields (respecting manual edits)
+                const hasManualVial = Object.values(this.vialManualOverride).some(Boolean);
+                const computedGrandVials = hasManualVial
+                    ? (Number(document.getElementById('tot-stem')?.value || '0') || 0)
+                    + (Number(document.getElementById('tot-hybrid')?.value || '0') || 0)
+                    + (Number(document.getElementById('tot-stem-ortho')?.value || '0') || 0)
+                    + (Number(document.getElementById('tot-hybrid-ortho')?.value || '0') || 0)
+                    + (Number(document.getElementById('tot-exo')?.value || '0') || 0)
+                    : t["Stem Xelle"] + t["Hybrid Xelle"] + t["Stem Ortho"] + t["Hybrid Ortho"] + t["Exosomas"];
+
+                if (!this.manualGrandTotals.vials) {
+                    document.getElementById('grand-tot-vials').value = computedGrandVials;
+                }
+
+                // Update individual cell counts only if not manually overridden
+                ["Stem Xelle", "Hybrid Xelle", "Stem Ortho", "Hybrid Ortho", "Exosomas"].forEach(product => {
+                    const fieldId = this.productToFieldId(product);
+                    if (!fieldId) return;
+                    const fieldEl = document.getElementById(fieldId);
+                    if (!fieldEl) return;
+
+                    if (!this.inventoryManualOverride[product]) {
+                        fieldEl.value = this.formatCellsDisplay(c[product]);
+                    }
+                });
+
+                // Calculate grand total cells from individual fields (respecting manual edits)
+                const hasManual = Object.values(this.inventoryManualOverride).some(Boolean);
+                const computedGrandCells = hasManual
+                    ? this.formatCellsDisplay(
+                        (this.parseMillions(document.getElementById('cell-stem')?.value || '0') || 0)
+                        + (this.parseMillions(document.getElementById('cell-hybrid')?.value || '0') || 0)
+                        + (this.parseMillions(document.getElementById('cell-stem-ortho')?.value || '0') || 0)
+                        + (this.parseMillions(document.getElementById('cell-hybrid-ortho')?.value || '0') || 0)
+                        + (this.parseMillions(document.getElementById('cell-exo')?.value || '0') || 0)
+                    )
+                    : this.formatCellsDisplay(c["Stem Xelle"] + c["Hybrid Xelle"] + c["Stem Ortho"] + c["Hybrid Ortho"] + c["Exosomas"]);
+
+                if (!this.manualGrandTotals.cells) {
+                    document.getElementById('grand-tot-cells').value = computedGrandCells;
+                }
+            },
+            getCustomData: function () {
+                const dosisRows = [];
+                document.querySelectorAll('#tbl-dosis tbody tr').forEach(r => {
+                    const presValue = r.querySelector('.pres-select')?.value || '';
+                    const specialPres = r.querySelector('.special-pres-input')?.value || '';
+                    dosisRows.push({
+                        producto: r.querySelector('.prod-select')?.value || '',
+                        origen: r.querySelector('.origin-input')?.value || '',
+                        caducidad: r.querySelector('td:nth-child(4) input')?.value || '',
+                        lote: r.querySelector('.lote-input')?.value || '',
+                        presentacion: presValue,
+                        presentacionEspecial: specialPres,
+                        numeroCelulas: r.querySelector('.cell-count-input')?.value || '',
+                        codigoVenta: r.querySelector('td:nth-child(8) input')?.value || '',
+                        codigoUnico: r.querySelector('.unique-code')?.value || '',
+                        observaciones: r.querySelector('.obs-input')?.value || ''
+                    });
+                });
+
+                const insumosRows = [];
+                document.querySelectorAll('#tbl-insumos tbody tr').forEach(r => {
+                    insumosRows.push(Array.from(r.querySelectorAll('input')).map(i => i.value));
+                });
+
+                this.persistDailySummary(dosisRows);
+
+                return {
+                    t_dosis: dosisRows,
+                    t_insumos_24: insumosRows
+                };
+            },
+            loadCustomData: function (data) {
+                // Resetear flags de override manual
+                this.manualGrandTotals = { vials: false, cells: false };
+                this.vialManualOverride = {
+                    "Stem Xelle": false,
+                    "Hybrid Xelle": false,
+                    "Stem Ortho": false,
+                    "Hybrid Ortho": false,
+                    "Exosomas": false
+                };
+                this.inventoryManualOverride = {
+                    "Stem Xelle": false,
+                    "Hybrid Xelle": false,
+                    "Stem Ortho": false,
+                    "Hybrid Ortho": false,
+                    "Exosomas": false
+                };
+
+                if (Array.isArray(data.t_insumos_24)) {
+                    const tbodyInsumos = document.querySelector('#tbl-insumos tbody');
+                    if (tbodyInsumos) {
+                        tbodyInsumos.innerHTML = '';
+                        data.t_insumos_24.forEach(rowData => {
+                            if (typeof window.addInsumoRow24 === 'function') window.addInsumoRow24();
+                            const row = tbodyInsumos.lastElementChild;
+                            if (!row) return;
+                            const inputs = row.querySelectorAll('input');
+                            rowData.forEach((value, idx) => {
+                                if (inputs[idx]) inputs[idx].value = value || '';
+                            });
+                        });
+                    }
+                }
+
+                if (Array.isArray(data.t_dosis)) {
+                    const tbodyDosis = document.querySelector('#tbl-dosis tbody');
+                    if (tbodyDosis) {
+                        tbodyDosis.innerHTML = '';
+                        data.t_dosis.forEach(rowData => {
+                            this.addDosis();
+                            const row = tbodyDosis.lastElementChild;
+                            if (!row) return;
+
+                            const prodSelect = row.querySelector('.prod-select');
+                            const presSelect = row.querySelector('.pres-select');
+                            const specialInput = row.querySelector('.special-pres-input');
+
+                            if (prodSelect) {
+                                prodSelect.value = rowData.producto || '';
+                                this.onProd(prodSelect);
+                            }
+
+                            const cadInput = row.querySelector('td:nth-child(4) input');
+                            const ventaInput = row.querySelector('td:nth-child(8) input');
+
+                            if (row.querySelector('.origin-input')) row.querySelector('.origin-input').value = rowData.origen || '';
+                            if (cadInput) cadInput.value = rowData.caducidad || '';
+                            if (row.querySelector('.lote-input')) row.querySelector('.lote-input').value = rowData.lote || '';
+
+                            if (presSelect) {
+                                presSelect.value = rowData.presentacion || '';
+                                this.onPresChange(presSelect);
+                            }
+                            if (specialInput) specialInput.value = rowData.presentacionEspecial || '';
+
+                            if (row.querySelector('.cell-count-input')) row.querySelector('.cell-count-input').value = rowData.numeroCelulas || '';
+                            if (ventaInput) ventaInput.value = rowData.codigoVenta || '';
+                            if (row.querySelector('.unique-code')) row.querySelector('.unique-code').value = rowData.codigoUnico || '';
+                            if (row.querySelector('.obs-input')) row.querySelector('.obs-input').value = rowData.observaciones || '';
+                        });
+                    }
+                }
+
+                this.reindex();
+                this.calcInventory();
+                this.updateGrandTotalCellsFromSummary();
+            },
+            persistDailySummary: function (dosisRows) {
+                const fechaOperacion = document.getElementById('fecha_operacion')?.value;
+                if (!fechaOperacion || !Array.isArray(dosisRows)) return;
+
+                const reg24Input = document.getElementById('reg-24');
+                let folio = (reg24Input?.value || '').trim();
+                if (!folio) {
+                    const now = new Date();
+                    const hh = String(now.getHours()).padStart(2, '0');
+                    const mm = String(now.getMinutes()).padStart(2, '0');
+                    const ss = String(now.getSeconds()).padStart(2, '0');
+                    folio = `${fechaOperacion.replace(/-/g, '')}${hh}${mm}${ss}`;
+                    if (reg24Input) {
+                        reg24Input.value = folio;
+                        reg24Input.dispatchEvent(new Event('input'));
+                    }
+                }
+                const barcodeCode = `FO-LC-24-${folio}`;
+
+                const grouped = {};
+                dosisRows.forEach(row => {
+                    if (row.observaciones) return;
+                    const producto = (row.producto || '').trim();
+                    if (!producto) return;
+
+                    const presentacionBase = (row.presentacion || '').trim();
+                    const presentacion = presentacionBase === 'Especial'
+                        ? (`Especial: ${(row.presentacionEspecial || '').trim() || 'Sin especificar'}`)
+                        : (presentacionBase || 'Sin especificar');
+
+                    const key = `${producto}||${presentacion}`;
+                    if (!grouped[key]) {
+                        grouped[key] = {
+                            producto,
+                            presentacion,
+                            cantidad: 0,
+                            lotes: new Set(),
+                            codigosUnicos: []
+                        };
+                    }
+
+                    grouped[key].cantidad += 1;
+                    if (row.lote) grouped[key].lotes.add(row.lote);
+                    if (row.codigoUnico) grouped[key].codigosUnicos.push(row.codigoUnico);
+                });
+
+                const items = Object.values(grouped).map(item => ({
+                    producto: item.producto,
+                    presentacion: item.presentacion,
+                    cantidad: item.cantidad,
+                    lotes: Array.from(item.lotes),
+                    codigosUnicos: item.codigosUnicos
+                }));
+
+                const payload = {
+                    fechaOperacion,
+                    folio,
+                    barcodeCode,
+                    generatedAt: new Date().toISOString(),
+                    dosisRows,
+                    items
+                };
+
+                localStorage.setItem(`xelle_fo_lc_24_daily_${fechaOperacion}`, JSON.stringify(payload));
+                localStorage.setItem(`xelle_fo_lc_24_daily_${fechaOperacion}_${folio}`, JSON.stringify(payload));
+                localStorage.setItem('xelle_fo_lc_24_daily_latest', JSON.stringify(payload));
+
+                const recordsRaw = localStorage.getItem('xelle_fo_lc_24_records');
+                let records = [];
+                try {
+                    const parsed = JSON.parse(recordsRaw || '[]');
+                    if (Array.isArray(parsed)) records = parsed;
+                } catch (e) { }
+
+                const idx = records.findIndex(r => (r?.barcodeCode || '') === barcodeCode && (r?.fechaOperacion || '') === fechaOperacion);
+                const record = {
+                    fechaOperacion,
+                    folio,
+                    barcodeCode,
+                    savedAt: payload.generatedAt,
+                    dosisRows,
+                    items
+                };
+
+                if (idx >= 0) records[idx] = record;
+                else records.push(record);
+
+                localStorage.setItem('xelle_fo_lc_24_records', JSON.stringify(records));
+            }
+        },
+
+        FO_LC_31: {
+            init: function () { },
+            scrapeRow: function (row) {
+                return Array.from(row.querySelectorAll('input, select, textarea')).map(el => {
+                    if (el.type === 'checkbox') return el.checked;
+                    return el.value;
+                });
+            },
+            fillRow: function (row, data) {
+                const fields = row.querySelectorAll('input, select, textarea');
+                (data || []).forEach((value, idx) => {
+                    const el = fields[idx];
+                    if (!el) return;
+                    if (el.type === 'checkbox') el.checked = Boolean(value);
+                    else el.value = value ?? '';
+                    el.dispatchEvent(new Event('input'));
+                    el.dispatchEvent(new Event('change'));
+                });
+            },
+            rebuildTable: function (tableSelector, rowsData, addRowFnName) {
+                const tbody = document.querySelector(`${tableSelector} tbody`);
+                if (!tbody || !Array.isArray(rowsData)) return;
+                tbody.innerHTML = '';
+                rowsData.forEach(rowData => {
+                    if (typeof window[addRowFnName] === 'function') {
+                        window[addRowFnName]();
+                        const row = tbody.lastElementChild;
+                        if (row) this.fillRow(row, rowData);
+                    }
+                });
+            },
+            getCustomData: function () {
+                const componentes = Array.from(document.querySelectorAll('#tbl-componentes tbody tr')).map(r => this.scrapeRow(r));
+                const materiales = Array.from(document.querySelectorAll('#tbl-materiales tbody tr')).map(r => this.scrapeRow(r));
+                const controles = Array.from(document.querySelectorAll('#tbl-control tbody tr')).map(r => this.scrapeRow(r));
+                return {
+                    t_comp_30: componentes,
+                    t_mat_30: materiales,
+                    t_control_30: controles
+                };
+            },
+            loadCustomData: function (data) {
+                if (Array.isArray(data?.t_comp_30)) this.rebuildTable('#tbl-componentes', data.t_comp_30, 'addCompRow');
+                if (Array.isArray(data?.t_mat_30)) this.rebuildTable('#tbl-materiales', data.t_mat_30, 'addMatRow');
+                if (Array.isArray(data?.t_control_30)) this.rebuildTable('#tbl-control', data.t_control_30, 'addControlRow');
+
+                if (typeof window.updateProductLogic === 'function') window.updateProductLogic();
+                if (typeof window.calcYield === 'function') window.calcYield();
+            }
+        },
+
+        // --- FO-LC-40 / FO-LC-40-B: BITÁCORA PREPARACIÓN MEDIOS ---
+        FO_LC_40: {
+            init: function () {
+                console.log('FO-LC-40: Inicializando...');
+                // Agregar una fila inicial si la tabla está vacía
+                if (document.querySelector('#tbl-medios tbody').children.length === 0) {
+                    this.addMedioRow();
+                }
+            },
+            addMedioRow: function () {
+                window.addGenericRow('tbl-medios', `
+                    <td style='vertical-align:top'><input type='date' class='cedit'></td>
+                    <td style='vertical-align:top'><textarea class='cedit' rows='3'></textarea></td>
+                    <td style='vertical-align:top'><input class='cedit' placeholder='Lote...'></td>
+                    <td style='vertical-align:top' class='col-ingredientes'><textarea class='cedit' rows='4' placeholder='Ej: DMEM (L:123) - 500ml...'></textarea></td>
+                    <td style='vertical-align:top'><input class='cedit'></td>
+                    <td style='vertical-align:top'><input type='date' class='cedit'></td>
+                    <td style='vertical-align:top'>
+                        <input class='cedit' placeholder='Realizó' style='margin-bottom:5px; border-bottom:1px solid #eee;'>
+                        <input class='cedit' placeholder='Verificó'>
+                    </td>
+                    <td class='no-print' style='vertical-align:top'><button class='btn-danger btn-mini' onclick='this.closest(\'tr\').remove()'>x</button></td>
+                `);
+            },
+            getCustomData: function () {
+                console.log('FO-LC-40: Recopilando datos de la tabla...');
+                const medios = [];
+                document.querySelectorAll('#tbl-medios tbody tr').forEach(row => {
+                    const inputs = row.querySelectorAll('input, textarea');
+                    // Cada fila tiene 8 inputs: fecha, nombre, lote, ingredientes, vol_final, caducidad, realizo, verifico
+                    const rowData = Array.from(inputs).map(el => el.value || '');
+                    medios.push(rowData);
+                });
+                console.log('FO-LC-40: Filas recopiladas:', medios.length);
+                return { t_medios: medios };
+            },
+            loadCustomData: function (data) {
+                console.log('FO-LC-40: Cargando datos de la tabla...', data);
+                if (data.t_medios && Array.isArray(data.t_medios)) {
+                    const tbody = document.querySelector('#tbl-medios tbody');
+                    if (tbody) {
+                        tbody.innerHTML = '';
+                        data.t_medios.forEach(rowData => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td style='vertical-align:top'><input type='date' class='cedit' value='${rowData[0] || ''}'></td>
+                                <td style='vertical-align:top'><textarea class='cedit' rows='3'>${rowData[1] || ''}</textarea></td>
+                                <td style='vertical-align:top'><input class='cedit' placeholder='Lote...' value='${rowData[2] || ''}'></td>
+                                <td style='vertical-align:top' class='col-ingredientes'><textarea class='cedit' rows='4' placeholder='Ej: DMEM (L:123) - 500ml...'>${rowData[3] || ''}</textarea></td>
+                                <td style='vertical-align:top'><input class='cedit' value='${rowData[4] || ''}'></td>
+                                <td style='vertical-align:top'><input type='date' class='cedit' value='${rowData[5] || ''}'></td>
+                                <td style='vertical-align:top'>
+                                    <input class='cedit' placeholder='Realizó' style='margin-bottom:5px; border-bottom:1px solid #eee;' value='${rowData[6] || ''}'>
+                                    <input class='cedit' placeholder='Verificó' value='${rowData[7] || ''}'>
+                                </td>
+                                <td class='no-print' style='vertical-align:top'><button class='btn-danger btn-mini' onclick='this.closest(\'tr\').remove()'>x</button></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                }
+                console.log('FO-LC-40: Datos cargados exitosamente');
+            }
+        },
+
+        FO_Generic: { init: function (id) { if (document.querySelector('table tbody').children.length === 0) { if (id.includes('41')) window.addMuestra41(); else if (id.includes('42')) window.addGenericRow('tbl-mp', `<td><input class='cedit'></td><td><input type='date' class='cedit'></td><td><input class='cedit'></td><td><input type='number' class='cedit'></td><td class='no-print'><button class='btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`); } } },
+        addGenericRow: function (id, html) { const r = document.createElement('tr'); r.innerHTML = html; document.querySelector(`#${id} tbody`).appendChild(r); }
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => App.init());
+
+window.saveForm = () => App.Universal.saveData(); window.printForm = () => App.Universal.printForm(); window.clearForm = () => App.Universal.clearForm(); window.addGenericRow = (i, h) => App.Docs.addGenericRow(i, h);
+window.addFlaskRow = () => App.Docs.FO_LC_20.addFlaskRow(); window.addSupplyRow = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="date"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.getElementById('supplies-table-body').appendChild(r); }; window.addFreezeRow = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input type="number" style="width:50px" value="1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" value="DMSO 10%"></td><td><input type="text"></td><td><input type="text"></td><td><select><option>Vial</option><option>Bolsa</option></select></td><td><input type="text"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.getElementById('freeze-table-body').appendChild(r); };
+window.agregarFilaInsumo = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td><td class="no-print"><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.querySelector('#tabla-insumos-dia tbody').appendChild(r); };
+window.addDosis24 = () => App.Docs.FO_LC_24.addDosis(); window.addMuestra41 = () => App.Docs.addGenericRow('tbl-micro', `<td><input class='cedit'></td><td><input type='date' class='cedit'></td><td><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td><td><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td><td><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td><td><input type='date' class='cedit'></td><td><input class='cedit'></td><td class='no-print'><button class='btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`);

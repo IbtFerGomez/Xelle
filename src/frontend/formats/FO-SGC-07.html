@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-SGC-07 Índice Maestro de PNOs</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Horizontal (Landscape) para Listados Maestros */
+        @page {
+            size: landscape;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #1e293b;
+        }
+
+        .container {
+            width: 26cm;
+            margin: 0 auto;
+            background: white;
+            padding: 0.8cm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-left: 4px solid #2E9D82;
+        }
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            table-layout: fixed;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 9px;
+            padding: 6px;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .compact-table td {
+            font-size: 9px;
+            padding: 4px 5px;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+        }
+
+        .compact-table input {
+            font-size: 9px;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 6px !important;
+        }
+
+        .group-th {
+            background-color: #0f172a !important;
+            color: #cbd5e1 !important;
+            font-size: 8px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: left !important;
+            padding-left: 10px !important;
+        }
+
+        .info-box {
+            background-color: #f0fdfa;
+            border: 1px solid #5eead4;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            color: #115e59;
+            margin-top: 10px;
+            line-height: 1.3;
+            text-align: justify;
+        }
+
+        .footer-unified {
+            margin-top: 25px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 10px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            color: #475569;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-sgc-07">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Formato</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <!-- HEADER MODULAR -->
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                        font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                        font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio del Listado</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-SGC-07-</span>
+                    <input type="text" id="reg-sgc07" class="registry-input generate-barcode cedit"
+                        data-target="barcode-sgc07" data-prefix="FO-SGC-07-" placeholder="202X-00">
+                </div>
+                <svg id="barcode-sgc07" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>ÍNDICE MAESTRO DE PROCEDIMIENTOS NORMALIZADOS DE OPERACIÓN (PNOs)</h1>
+            <div class="metadata">Código: FO-SGC-07 | Versión: 1.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="info-box">
+            <strong>Lineamientos GxP (Control Documental):</strong> Este formato consolida el listado oficial y estatus
+            de los Procedimientos Normalizados de Operación (PNOs) activos en el Sistema de Gestión de Calidad. Ningún
+            documento puede considerarse vigente si no está asentado en esta matriz con su respectivo código, versión y
+            fecha de autorización.
+        </div>
+
+        <div class="section-header">1. MATRIZ DE PROCEDIMIENTOS (CLASIFICACIÓN NORMATIVA)</div>
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th width="12%">Código</th>
+                    <th width="45%">Título del Procedimiento (PNO)</th>
+                    <th width="15%">Área / Dueño</th>
+                    <th width="8%">Versión</th>
+                    <th width="10%">Fecha de Vigor</th>
+                    <th width="10%">Estatus</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- GRUPO A -->
+                <tr>
+                    <th colspan="6" class="group-th">A. SISTEMA DE GESTIÓN DE CALIDAD (QA)</th>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QA-01" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Control y Emisión de Documentos: Creación, revisión y aprobación"></td>
+                    <td><input class="cedit text-center" value="SGC"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QA-02" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Control de Cambios: Evaluación de impacto a procesos/equipos"></td>
+                    <td><input class="cedit text-center" value="SGC"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QA-03" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Manejo de Desviaciones y No Conformidades"></td>
+                    <td><input class="cedit text-center" value="SGC"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QA-04" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Sistema CAPA: Acciones Correctivas y Preventivas"></td>
+                    <td><input class="cedit text-center" value="SGC"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QA-05" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Auditorías Internas y a Proveedores de Reactivos Críticos"></td>
+                    <td><input class="cedit text-center" value="SGC / Compras"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QA-06" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Capacitación y Calificación de Personal (Gowning Qualification)"></td>
+                    <td><input class="cedit text-center" value="SGC / RRHH"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+
+                <!-- GRUPO B -->
+                <tr>
+                    <th colspan="6" class="group-th">B. INSTALACIONES, EQUIPOS Y MATERIALES</th>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-01" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Ingreso y Salida de Personal y Materiales (Áreas ISO 8, 7 y 5)"></td>
+                    <td><input class="cedit text-center" value="Operaciones"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-02" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Limpieza y Sanitización de Áreas Controladas (Rotación Esporicidas)"></td>
+                    <td><input class="cedit text-center" value="Operaciones"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QA-08" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Monitoreo Ambiental: Placas de sedimentación, impacto e hisopos"></td>
+                    <td><input class="cedit text-center" value="QA / Micro"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-MN-01" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Mantenimiento y Calibración de Equipos (Incubadoras, HVAC)"></td>
+                    <td><input class="cedit text-center" value="Mantenimiento"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-03" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Operación de Cabinas de Bioseguridad (Encendido, Flujo y Limpieza)"></td>
+                    <td><input class="cedit text-center" value="Operaciones"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-11" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Control y Erradicación de Plagas y Fauna Nociva"></td>
+                    <td><input class="cedit text-center" value="Operaciones / Mantenimiento"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-12" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Técnica e Higiene de Lavado de Manos y Sanitización de Personal"></td>
+                    <td><input class="cedit text-center" value="SGC / Operaciones"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+
+                <!-- GRUPO C -->
+                <tr>
+                    <th colspan="6" class="group-th">C. OPERACIONES DE PRODUCCIÓN (UPSTREAM & DOWNSTREAM)</th>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-04" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Elegibilidad y Selección del Donante (Cumplimiento 21 CFR 1271)"></td>
+                    <td><input class="cedit text-center" value="Dirección Médica"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-05" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Recepción de Muestras/Tejidos: Criterios de aceptación y rechazo"></td>
+                    <td><input class="cedit text-center" value="Laboratorio"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-06" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Aislamiento Celular: Procesamiento inicial enzimático o mecánico"></td>
+                    <td><input class="cedit text-center" value="Bioprocesos"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-07" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Expansión y Pase Celular (Passaging y límite de pases PDL)"></td>
+                    <td><input class="cedit text-center" value="Bioprocesos"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-08" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Cosecha Celular y Lavado: Remoción de reactivos de cultivo"></td>
+                    <td><input class="cedit text-center" value="Bioprocesos"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-09" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Criopreservación: Uso de crioprotectores y congelador de tasa"></td>
+                    <td><input class="cedit text-center" value="Bioprocesos"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-13" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Dosificación, Llenado y Acondicionamiento de Producto Celular"></td>
+                    <td><input class="cedit text-center" value="Bioprocesos / Operaciones"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+
+                <!-- GRUPO D -->
+                <tr>
+                    <th colspan="6" class="group-th">D. CONTROL DE CALIDAD (QC) Y LIBERACIÓN DE LOTE</th>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QC-01" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Conteo Celular y Viabilidad (Métodos de exclusión / Tripano)"></td>
+                    <td><input class="cedit text-center" value="Laboratorio QC"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QC-02" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Prueba de Esterilidad Microbiológica (Bactec / USP <71>)">
+                    </td>
+                    <td><input class="cedit text-center" value="Laboratorio QC"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QC-03" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Detección de Micoplasma (Por PCR o cultivo)"></td>
+                    <td><input class="cedit text-center" value="Laboratorio QC"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QC-04" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Cuantificación de Endotoxinas (Prueba LAL)"></td>
+                    <td><input class="cedit text-center" value="Laboratorio QC"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QC-05" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Fenotipificación por Citometría de Flujo (Identidad MSCs)"></td>
+                    <td><input class="cedit text-center" value="Laboratorio QC"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QC-06" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Ensayos de Potencia (Diferenciación trilineal o inmunomodulación)"></td>
+                    <td><input class="cedit text-center" value="Laboratorio QC"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QA-10" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Criterios de Liberación de Lote y Firma de Persona Calificada"></td>
+                    <td><input class="cedit text-center" value="Resp. Sanitario"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QC-08" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Recepción, Verificación e Inspección de Insumos y Materias Primas"></td>
+                    <td><input class="cedit text-center" value="Laboratorio QC / Logística"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+
+                <!-- GRUPO E -->
+                <tr>
+                    <th colspan="6" class="group-th">E. ALMACENAMIENTO, DISTRIBUCIÓN Y RETIRO</th>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-LG-01" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Gestión de Cuarentena y Almacenamiento en Nitrógeno Líquido"></td>
+                    <td><input class="cedit text-center" value="Logística"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-LG-02" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Descongelación de Células (Instrucciones clínicas al médico)"></td>
+                    <td><input class="cedit text-center" value="Operaciones"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-LG-03" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Empaque y Envío de Células: Mantenimiento de cadena de frío"></td>
+                    <td><input class="cedit text-center" value="Logística"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QA-11" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Retiro de Producto del Mercado (Recall / Procedimiento Emergencia)"></td>
+                    <td><input class="cedit text-center" value="Resp. Sanitario"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-OP-10" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Manejo de Residuos Peligrosos Biológico-Infecciosos (RPBI)"></td>
+                    <td><input class="cedit text-center" value="Mantenimiento"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-LG-04" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Gestión de Compras y Evaluación de Proveedores Críticos"></td>
+                    <td><input class="cedit text-center" value="Compras / Logística"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-LG-05" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Gestión de Clientes, Captación Comercial y Alta de Cuentas"></td>
+                    <td><input class="cedit text-center" value="Ventas / Logística"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-LG-06" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Atención a Clientes, Gestión de Quejas y Control de Devoluciones"></td>
+                    <td><input class="cedit text-center" value="QA / Logística"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+
+                <!-- GRUPO F (AGREGADO NORMATIVO) -->
+                <tr>
+                    <th colspan="6" class="group-th">F. FARMACOVIGILANCIA, ASUNTOS REGULATORIOS Y VALIDACIÓN (REQUISITOS
+                        NOM-241)</th>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-RS-01" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Tecnovigilancia y Reporte de Eventos Adversos (Notificación)"></td>
+                    <td><input class="cedit text-center" value="Resp. Sanitario"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QC-07" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Investigación de Resultados Fuera de Especificación (OOS)"></td>
+                    <td><input class="cedit text-center" value="QA / Micro"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QA-09" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Gestión de Riesgos de Calidad (Metodología ICH Q9)"></td>
+                    <td><input class="cedit text-center" value="SGC"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QA-12" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Gestión del Talento Humano: Selección, Expediente Médico y Perfiles de Puesto"></td>
+                    <td><input class="cedit text-center" value="SGC / RRHH"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PNO-QA-13" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Diseño, Desarrollo y Transferencia Tecnológica de Nuevos Productos Celulares"></td>
+                    <td><input class="cedit text-center" value="Dirección Médica / Bioprocesos"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:25px;">
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">ELABORÓ (CONTROL DOCUMENTAL)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Consolidación del Índice</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">REVISÓ (ASEGURAMIENTO DE CALIDAD)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Alineación a NOM-241 / ISO 13485</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                <p style="font-weight:bold; font-size:10px; color:#14532d;">AUTORIZÓ (RESPONSABLE SANITARIO)</p>
+                <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#14532d;">Liberación del Listado Maestro</p>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-SGC-07 | Versión: 1.0 | Índice Maestro de Procedimientos Normalizados de
+                Operación | Xelle Scientific</div>
+            <div class="legal-data">Este documento es propiedad de Xelle Scientific, S.A.P.I. de C.V. Documento GxP
+                auditable. Prohibida su reproducción.</div>
+        </div>
+    </div>
+</body>
+
+</html>

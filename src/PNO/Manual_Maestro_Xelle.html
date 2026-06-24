@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>DOC-SGC-MAESTRO - Manual de Operaciones Xelle Scientific</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .page {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 2cm;
+            margin: 1cm auto;
+            background: white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+        .header {
+            border-bottom: 2px solid #1E3A5F;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo svg {
+            height: 50px;
+        }
+        .doc-info {
+            text-align: right;
+            font-size: 10px;
+            color: #666;
+        }
+        .doc-info strong {
+            color: #1E3A5F;
+        }
+        h1 {
+            color: #1E3A5F;
+            text-align: center;
+            font-size: 24px;
+            text-transform: uppercase;
+            margin-top: 50px;
+        }
+        h2 {
+            color: #2E9D82;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #1E3A5F;
+            font-size: 14px;
+        }
+        p, li {
+            font-size: 12px;
+            text-align: justify;
+        }
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 11px;
+        }
+        .table-custom th {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 8px;
+            text-align: left;
+        }
+        .table-custom td {
+            border: 1px solid #cbd5e1;
+            padding: 8px;
+        }
+        .cover-title {
+            text-align: center;
+            margin-top: 30%;
+        }
+        .cover-title h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .cover-title h2 {
+            font-size: 18px;
+            color: #64748b;
+            border: none;
+        }
+        .signatures {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .sign-box {
+            width: 30%;
+            text-align: center;
+            font-size: 10px;
+        }
+        .sign-line {
+            border-top: 1px solid #000;
+            margin-top: 40px;
+            padding-top: 5px;
+            font-weight: bold;
+        }
+        @media print {
+            body { background: none; }
+            .page { margin: 0; box-shadow: none; border: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        <div class="header">
+            <div class="logo">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="doc-info">
+                Código: <strong>DOC-SGC-MAESTRO</strong><br>
+                Versión: <strong>1.0</strong><br>
+                Fecha de Emisión: <strong>JUN 2026</strong>
+            </div>
+        </div>
+
+        <div class="cover-title">
+            <h1>MANUAL MAESTRO DE OPERACIONES Y CALIDAD</h1>
+            <h2>Cultivo y Producción de Células Madre Mesenquimales y Exosomas</h2>
+            <br><br><br>
+            <p style="text-align: center; font-size: 14px; color: #666;">
+                Este documento establece las políticas, normativas y procedimientos estandarizados que rigen las operaciones de Xelle Scientific S.A.P.I. de C.V., garantizando el cumplimiento de las Buenas Prácticas de Manufactura (cGMP).
+            </p>
+        </div>
+
+        <div class="signatures" style="margin-top: 150px;">
+            <div class="sign-box">
+                <div class="sign-line">Coordinación SGC</div>
+                <p>Elaboró</p>
+            </div>
+            <div class="sign-box">
+                <div class="sign-line">Aseguramiento de Calidad</div>
+                <p>Revisó</p>
+            </div>
+            <div class="sign-box">
+                <div class="sign-line">Responsable Dirección</div>
+                <p>Autorizó</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="header">
+            <div class="logo">
+                <strong style="color:#1E3A5F; font-size:18px;">XELLE SCIENTIFIC</strong>
+            </div>
+            <div class="doc-info">
+                Código: DOC-SGC-MAESTRO | Versión: 1.0
+            </div>
+        </div>
+
+        <h2>1. INTRODUCCIÓN Y ALCANCE</h2>
+        <p>El presente Manual Maestro de Calidad y Operaciones documenta el Sistema de Gestión de Calidad (SGC) de Xelle Scientific. Aplica a todas las áreas involucradas en la recepción de tejido placentario, procesamiento, cultivo celular, dosificación de exosomas, liofilización, control de calidad analítico, almacenamiento y distribución.</p>
+
+        <h2>2. ESTRUCTURA ORGANIZACIONAL Y RESPONSABILIDADES</h2>
+        <p>La toma de decisiones sobre la calidad del producto recae en la Unidad de Calidad, la cual opera con total independencia de las Gerencias de Operaciones y Producción.</p>
+        <ul>
+            <li><strong>Responsable Dirección / Sanitario:</strong> Máxima autoridad para la liberación final de lotes y matrices oficiales.</li>
+            <li><strong>Aseguramiento de Calidad (QA):</strong> Encargado de verificar y aprobar las evaluaciones de proveedores, auditorías internas y liberaciones de productos biológicos.</li>
+            <li><strong>Dirección Operativa:</strong> Ejecuta las operaciones estratégicas y verifica los procesos documentales del banco de células.</li>
+        </ul>
+
+        <h2>3. MÓDULO ADMINISTRATIVO Y RECURSOS HUMANOS</h2>
+        <p>Xelle Scientific garantiza que todo el personal que interviene en la producción de material biológico esté altamente calificado y evaluado.</p>
+        <table class="table-custom">
+            <tr>
+                <th>Código de Formato</th>
+                <th>Descripción del Procedimiento</th>
+                <th>Ejecución Principal</th>
+            </tr>
+            <tr>
+                <td>FO-AD-01</td>
+                <td>Perfil y Descripción de Puesto</td>
+                <td>Recursos Humanos</td>
+            </tr>
+            <tr>
+                <td>FO-AD-04</td>
+                <td>Evaluación y Selección de Proveedores</td>
+                <td>Compras / Logística</td>
+            </tr>
+            <tr>
+                <td>FO-AD-13</td>
+                <td>Calificación de Personal (Gowning y Técnica Aséptica)</td>
+                <td>Jefe de Área</td>
+            </tr>
+        </table>
+        <p><em>(Espacio reservado para expansión de políticas de contratación y capacitación corporativa...)</em></p>
+    </div>
+
+    <div class="page">
+        <div class="header">
+            <div class="logo">
+                <strong style="color:#1E3A5F; font-size:18px;">XELLE SCIENTIFIC</strong>
+            </div>
+            <div class="doc-info">
+                Código: DOC-SGC-MAESTRO | Versión: 1.0
+            </div>
+        </div>
+
+        <h2>4. MÓDULO DE OPERACIONES E INFRAESTRUCTURA</h2>
+        <p>El control del medio ambiente y los equipos críticos es esencial. Se mantienen registros estrictos de parámetros para garantizar el cumplimiento ISO de los cuartos limpios.</p>
+        <ul>
+            <li><strong>Control de Temperatura y Humedad:</strong> Operaciones y Almacén documentan continuamente en el <em>FO-OP-04 Registro Gráfico de Temperatura</em> y <em>FO-OP-08 Registro de Ultracongeladores</em>.</li>
+            <li><strong>Manejo de Tejidos Primarios:</strong> El personal médico y de enfermería es responsable de llenar la <em>FO-OP-13 Ficha Clínica de Recolección de Tejido Placentario</em>, que es verificada por la Gerencia Médica.</li>
+            <li><strong>Control Ambiental:</strong> Uso estandarizado documentado en la <em>FO-OP-18 Bitácora de Uso y Limpieza de Cabina de Bioseguridad</em> y el <em>FO-OP-56 Registro de Presión Diferencial</em>.</li>
+        </ul>
+
+        <h2>5. MÓDULO BANCO DE CÉLULAS Y PRODUCCIÓN (UPSTREAM/DOWNSTREAM)</h2>
+        <p>El núcleo biotecnológico de Xelle Scientific opera bajo estrictas bitácoras controladas para evitar la contaminación cruzada y la senescencia celular.</p>
+        <table class="table-custom">
+            <tr>
+                <th>Proceso</th>
+                <th>Código Aplicable</th>
+                <th>Responsabilidad</th>
+            </tr>
+            <tr>
+                <td>Procesamiento Inicial</td>
+                <td>FO-LC-20 Procesamiento</td>
+                <td>Técnico de Procesamiento</td>
+            </tr>
+            <tr>
+                <td>Cultivo y Expansión</td>
+                <td>FO-LC-21 Bitácora</td>
+                <td>Especialista de Cultivo Celular</td>
+            </tr>
+            <tr>
+                <td>Extracción de Exosomas</td>
+                <td>FO-LC-30 Recolección de Medios Condicionados</td>
+                <td>Técnico de Laboratorio / Producción</td>
+            </tr>
+            <tr>
+                <td>Criopreservación</td>
+                <td>FO-LC-22 Crio Banco</td>
+                <td>Operador de Banco Celular</td>
+            </tr>
+            <tr>
+                <td>Liofilización de Exosomas</td>
+                <td>FO-LC-43 Liof MC</td>
+                <td>Operador de Producción / Liofilización</td>
+            </tr>
+        </table>
+        <p><em>(Espacio reservado para expansión de detalles técnicos sobre formulaciones de medios, concentraciones de crioprotectores y rampas de liofilización...)</em></p>
+    </div>
+
+    <div class="page">
+        <div class="header">
+            <div class="logo">
+                <strong style="color:#1E3A5F; font-size:18px;">XELLE SCIENTIFIC</strong>
+            </div>
+            <div class="doc-info">
+                Código: DOC-SGC-MAESTRO | Versión: 1.0
+            </div>
+        </div>
+
+        <h2>6. LABORATORIO DE CALIDAD Y LIBERACIÓN DE LOTE (QC)</h2>
+        <p>Ningún lote puede ser liberado para su distribución comercial o uso clínico sin haber superado todos los ensayos analíticos estipulados.</p>
+        <ul>
+            <li><strong>Recepción de Muestras:</strong> Todo tejido ingresa mediante la <em>FO-LC-17 Recepción de Muestras y Datos Clínicos</em>.</li>
+            <li><strong>Dosificación y Cuantificación:</strong> Análisis realizado por el Técnico de Laboratorio documentado en la <em>FO-LC-25 Dosificación de Exosomas</em>.</li>
+            <li><strong>Ensayos Microbiológicos:</strong> El analista de microbiología documenta los resultados en el formato <em>FO-LC-41 Micro</em> para verificar la esterilidad y ausencia de micoplasma.</li>
+            <li><strong>Liberación:</strong> El Jefe de Calidad emite el <em>FO-QA-10 Certificado de Calidad de Lote (CoA)</em> para ser finalmente autorizado por el Responsable de Dirección.</li>
+        </ul>
+
+        <h2>7. SISTEMA DE GESTIÓN DE CALIDAD Y MEJORA CONTINUA (QA)</h2>
+        <p>Para asegurar la mejora continua y el cumplimiento con autoridades regulatorias, Xelle Scientific maneja un riguroso control documental y de riesgos.</p>
+        <table class="table-custom">
+            <tr>
+                <th>Herramienta de Calidad</th>
+                <th>Formato Aplicable</th>
+                <th>Ejecución y Seguimiento</th>
+            </tr>
+            <tr>
+                <td>Gestión de Riesgos</td>
+                <td>FO-QA-01 Matriz de Riesgos y Oportunidades</td>
+                <td>Responsable del Proceso</td>
+            </tr>
+            <tr>
+                <td>Auditorías Internas</td>
+                <td>FO-QA-02-SGC Lista de Verificación (Múltiples áreas)</td>
+                <td>Auditor Interno / Aseguramiento de Calidad</td>
+            </tr>
+            <tr>
+                <td>Acciones Correctivas (CAPA)</td>
+                <td>FO-QA-09 CAPA - Metodología AMFE</td>
+                <td>Responsable del Proceso</td>
+            </tr>
+            <tr>
+                <td>Control de Cambios</td>
+                <td>FO-QA-07 Solicitud y Control de Cambios</td>
+                <td>Responsable del Cambio</td>
+            </tr>
+        </table>
+        
+        <p style="margin-top: 30px; text-align: center; color: #94a3b8; font-size: 10px;">
+            --- FIN DEL FRAGMENTO DE PLANTILLA. CONTINUAR AÑADIENDO POLÍTICAS ESPECÍFICAS PARA ALCANZAR EL VOLUMEN DESEADO ---
+        </p>
+    </div>
+</body>
+</html>

@@ -212,8 +212,8 @@
 
                 <div class="header-main">
                         <h1>LISTADO MAESTRO DE FORMATOS</h1>
-                        <div class="metadata">Código: FO-SGC-04 | Versión: 2.0 | Vigencia: JUN 2026 | Área: Sistema de
-                                Gestión de Calidad | Página: 1 de 1</div>
+                        <div class="metadata">Código: FO-SGC-04 | Versión: 2.0 | Vigencia: JUN 2026 | Última
+                                Actualización: 2026-06-22 | Página: 1 de 1</div>
                 </div>
 
                 <div class="stats-box no-print">
@@ -232,259 +232,263 @@
                 </div>
 
                 <div class="alert-box">
-                        Este listado se reconstruye con base en todos los archivos FO-*.html existentes en la carpeta de
-                        formatos. El codigo y el nombre se cargan desde el catalogo maestro vigente, y el area se asigna
-                        con base en las siglas oficiales del sistema.
+                        Este listado contiene 148 formatos activos, reconstruido con base en todos los archivos
+                        FO-*.html existentes en la carpeta de
+                        formatos. El codigo y el nombre se cargan desde el catálogo maestro vigente
+                        (format-catalog-data.js), y el área se asigna
+                        con base en las siglas oficiales del sistema. Última actualización: 2026-06-22.
+
+                        <div class="section-header">1. REGISTRO DE FORMATOS DEL SISTEMA DE GESTIÓN DE CALIDAD</div>
+                        <div class="section">
+                                <table class="compact-table" id="tbl-formatos">
+                                        <thead>
+                                                <tr>
+                                                        <th width="8%">#</th>
+                                                        <th width="20%">CÓDIGO FORMATO</th>
+                                                        <th width="44%">NOMBRE DE FORMATO</th>
+                                                        <th width="28%">AREA</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                </table>
+                        </div>
+
+                        <div class="section-header">2. REFERENCIA DE AREAS Y SIGLAS</div>
+                        <div class="section">
+                                <table class="compact-table reference-table" id="tbl-area-reference">
+                                        <thead>
+                                                <tr>
+                                                        <th width="70%">AREA</th>
+                                                        <th width="30%">SIGLAS</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td class="text-left">Direccion General</td>
+                                                        <td>DG</td>
+                                                </tr>
+                                                <tr>
+                                                        <td class="text-left">Comercial</td>
+                                                        <td>CM</td>
+                                                </tr>
+                                                <tr>
+                                                        <td class="text-left">Regulacion Sanitaria</td>
+                                                        <td>RS</td>
+                                                </tr>
+                                                <tr>
+                                                        <td class="text-left">Administracion</td>
+                                                        <td>AD</td>
+                                                </tr>
+                                                <tr>
+                                                        <td class="text-left">Laboratorio y Calidad</td>
+                                                        <td>LC</td>
+                                                </tr>
+                                                <tr>
+                                                        <td class="text-left">Operaciones</td>
+                                                        <td>OP</td>
+                                                </tr>
+                                                <tr>
+                                                        <td class="text-left">Ventas</td>
+                                                        <td>VE</td>
+                                                </tr>
+                                                <tr>
+                                                        <td class="text-left">Contabilidad</td>
+                                                        <td>CO</td>
+                                                </tr>
+                                                <tr>
+                                                        <td class="text-left">Finanzas</td>
+                                                        <td>FI</td>
+                                                </tr>
+                                                <tr>
+                                                        <td class="text-left">Aseguramiento de Calidad</td>
+                                                        <td>QA</td>
+                                                </tr>
+                                                <tr>
+                                                        <td class="text-left">Sistema Gestion Calidad</td>
+                                                        <td>SGC</td>
+                                                </tr>
+                                                <tr>
+                                                        <td class="text-left">Compras</td>
+                                                        <td>CP</td>
+                                                </tr>
+                                        </tbody>
+                                </table>
+                        </div>
+
+                        <div class="footer">FO-SGC-04 | Versión: 2.0 | Listado Maestro de Formatos | Xelle Scientific |
+                                Página 1
+                                de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;,
+                                S.A.P.I.,
+                                de C. V., y está protegido por los derechos de autor, por lo que está prohibida su
+                                reproducción
+                                total o parcial.</div>
                 </div>
 
-                <div class="section-header">1. REGISTRO DE FORMATOS DEL SISTEMA DE GESTIÓN DE CALIDAD</div>
-                <div class="section">
-                        <table class="compact-table" id="tbl-formatos">
-                                <thead>
-                                        <tr>
-                                                <th width="8%">#</th>
-                                                <th width="20%">CÓDIGO FORMATO</th>
-                                                <th width="44%">NOMBRE DE FORMATO</th>
-                                                <th width="28%">AREA</th>
-                                        </tr>
-                                </thead>
-                                <tbody></tbody>
-                        </table>
-                </div>
+                <script>
+                        const areaBySigla = {
+                                DG: 'Direccion General',
+                                CM: 'Comercial',
+                                RS: 'Regulacion Sanitaria',
+                                AD: 'Administracion y Compras',
+                                LC: 'Laboratorio y Calidad',
+                                OP: 'Operaciones',
+                                VE: 'Ventas',
+                                CO: 'Contabilidad',
+                                FI: 'Finanzas',
+                                QA: 'Aseguramiento de Calidad',
+                                SGC: 'Sistema Gestion Calidad',
+                                CP: 'Compras',
+                                AC: 'Administracion y Compras',
+                                LG: 'Logistica'
+                        };
 
-                <div class="section-header">2. REFERENCIA DE AREAS Y SIGLAS</div>
-                <div class="section">
-                        <table class="compact-table reference-table" id="tbl-area-reference">
-                                <thead>
-                                        <tr>
-                                                <th width="70%">AREA</th>
-                                                <th width="30%">SIGLAS</th>
-                                        </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                                <td class="text-left">Direccion General</td>
-                                                <td>DG</td>
-                                        </tr>
-                                        <tr>
-                                                <td class="text-left">Comercial</td>
-                                                <td>CM</td>
-                                        </tr>
-                                        <tr>
-                                                <td class="text-left">Regulacion Sanitaria</td>
-                                                <td>RS</td>     
-                                        </tr>
-                                        <tr>
-                                                <td class="text-left">Administracion</td>
-                                                <td>AD</td>
-                                        </tr>
-                                        <tr>
-                                                <td class="text-left">Laboratorio y Calidad</td>
-                                                <td>LC</td>
-                                        </tr>
-                                        <tr>
-                                                <td class="text-left">Operaciones</td>
-                                                <td>OP</td>
-                                        </tr>
-                                        <tr>
-                                                <td class="text-left">Ventas</td>
-                                                <td>VE</td>
-                                        </tr>
-                                        <tr>
-                                                <td class="text-left">Contabilidad</td>
-                                                <td>CO</td>
-                                        </tr>
-                                        <tr>
-                                                <td class="text-left">Finanzas</td>
-                                                <td>FI</td>
-                                        </tr>
-                                        <tr>
-                                                <td class="text-left">Aseguramiento de Calidad</td>
-                                                <td>QA</td>
-                                        </tr>
-                                        <tr>
-                                                <td class="text-left">Sistema Gestion Calidad</td>
-                                                <td>SGC</td>
-                                        </tr>
-                                        <tr>
-                                                <td class="text-left">Compras</td>
-                                                <td>CP</td>
-                                        </tr>
-                                </tbody>
-                        </table>
-                </div>
+                        function safeValue(value, fallback = 'N/A') {
+                                if (value === null || value === undefined) return fallback;
+                                const text = String(value).trim();
+                                return text === '' ? fallback : text;
+                        }
 
-                <div class="footer">FO-SGC-04 | Versión: 2.0 | Listado Maestro de Formatos | Xelle Scientific | Página 1
-                        de 1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I.,
-                        de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción
-                        total o parcial.</div>
-        </div>
+                        function escapeHtml(value) {
+                                return String(value)
+                                        .replace(/&/g, '&amp;')
+                                        .replace(/</g, '&lt;')
+                                        .replace(/>/g, '&gt;')
+                                        .replace(/"/g, '&quot;')
+                                        .replace(/'/g, '&#39;');
+                        }
 
-        <script>
-                const areaBySigla = {
-                        DG: 'Direccion General',
-                        CM: 'Comercial',
-                        RS: 'Regulacion Sanitaria',
-                        AD: 'Administracion y Compras',
-                        LC: 'Laboratorio y Calidad',
-                        OP: 'Operaciones',
-                        VE: 'Ventas',
-                        CO: 'Contabilidad',
-                        FI: 'Finanzas',
-                        QA: 'Aseguramiento de Calidad',
-                        SGC: 'Sistema Gestion Calidad',
-                        CP: 'Compras',
-                        AC: 'Administracion y Compras',
-                        LG: 'Logistica'
-                };
+                        function sortByCode(a, b) {
+                                return a.code.localeCompare(b.code, 'es', { numeric: true, sensitivity: 'base' });
+                        }
 
-                function safeValue(value, fallback = 'N/A') {
-                        if (value === null || value === undefined) return fallback;
-                        const text = String(value).trim();
-                        return text === '' ? fallback : text;
-                }
+                        function editInput(rowCode, fieldName, value, extraClass = '') {
+                                const inputId = `fo_sgc_04_${rowCode}_${fieldName}`.replace(/[^a-zA-Z0-9_]/g, '_');
+                                const className = extraClass ? `cedit ${extraClass}` : 'cedit';
+                                return `<input id="${inputId}" class="${className}" value="${escapeHtml(safeValue(value))}">`;
+                        }
 
-                function escapeHtml(value) {
-                        return String(value)
-                                .replace(/&/g, '&amp;')
-                                .replace(/</g, '&lt;')
-                                .replace(/>/g, '&gt;')
-                                .replace(/"/g, '&quot;')
-                                .replace(/'/g, '&#39;');
-                }
+                        function resolveAreaName(item) {
+                                const code = safeValue(item.code, '');
+                                const parts = code.split('-');
+                                const sigla = parts.length > 1 ? parts[1].toUpperCase() : '';
+                                return areaBySigla[sigla] || 'Por clasificar';
+                        }
 
-                function sortByCode(a, b) {
-                        return a.code.localeCompare(b.code, 'es', { numeric: true, sensitivity: 'base' });
-                }
+                        function renderMasterList() {
+                                const source = Array.isArray(window.FORMAT_CATALOG) ? [...window.FORMAT_CATALOG] : [];
+                                source.sort(sortByCode);
 
-                function editInput(rowCode, fieldName, value, extraClass = '') {
-                        const inputId = `fo_sgc_04_${rowCode}_${fieldName}`.replace(/[^a-zA-Z0-9_]/g, '_');
-                        const className = extraClass ? `cedit ${extraClass}` : 'cedit';
-                        return `<input id="${inputId}" class="${className}" value="${escapeHtml(safeValue(value))}">`;
-                }
+                                const tbody = document.querySelector('#tbl-formatos tbody');
+                                tbody.innerHTML = '';
 
-                function resolveAreaName(item) {
-                        const code = safeValue(item.code, '');
-                        const parts = code.split('-');
-                        const sigla = parts.length > 1 ? parts[1].toUpperCase() : '';
-                        return areaBySigla[sigla] || 'Por clasificar';
-                }
-
-                function renderMasterList() {
-                        const source = Array.isArray(window.FORMAT_CATALOG) ? [...window.FORMAT_CATALOG] : [];
-                        source.sort(sortByCode);
-
-                        const tbody = document.querySelector('#tbl-formatos tbody');
-                        tbody.innerHTML = '';
-
-                        source.forEach((item, index) => {
-                                const code = safeValue(item.code);
-                                const row = document.createElement('tr');
-                                row.innerHTML = `
+                                source.forEach((item, index) => {
+                                        const code = safeValue(item.code);
+                                        const row = document.createElement('tr');
+                                        row.innerHTML = `
                                         <td>${index + 1}</td>
                                         <td>${editInput(code, 'code', code)}</td>
                                         <td class="text-left">${editInput(code, 'name', safeValue(item.name), 'text-left')}</td>
                                         <td class="text-left">${editInput(code, 'area', resolveAreaName(item), 'text-left')}</td>
                                 `;
-                                tbody.appendChild(row);
-                        });
-
-                        const families = new Set(source.map(item => safeValue(item.code).split('-')[1]).filter(Boolean));
-                        const activeAreas = new Set(source.map(item => resolveAreaName(item)).filter(area => area && area !== 'Por clasificar'));
-                        document.getElementById('stat-total').textContent = String(source.length);
-                        document.getElementById('stat-areas').textContent = String(activeAreas.size);
-                        document.getElementById('stat-familias').textContent = String(families.size);
-                }
-
-                let isOfflineMode = false;
-
-                function toggleOfflineMode() {
-                        isOfflineMode = !isOfflineMode;
-                        const btn = document.getElementById('btn-offline');
-                        if (isOfflineMode) {
-                                btn.textContent = 'Modo Online';
-                                btn.style.backgroundColor = '#f59e0b';
-
-                                document.querySelectorAll('select.cedit').forEach(sel => {
-                                        const input = document.createElement('input');
-                                        input.type = 'text';
-                                        input.className = sel.className;
-                                        input.value = sel.options[sel.selectedIndex]?.text || '';
-                                        input.setAttribute('data-original-type', 'select');
-                                        if (sel.style.cssText) input.style.cssText = sel.style.cssText;
-                                        const options = Array.from(sel.options).map(opt => opt.text).join('|');
-                                        input.setAttribute('data-select-options', options);
-                                        sel.parentNode.replaceChild(input, sel);
+                                        tbody.appendChild(row);
                                 });
 
-                                document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
-                                        inp.setAttribute('data-original-type', 'text');
-                                        inp.type = 'text';
-                                        inp.placeholder = 'DD/MM/AAAA';
-                                });
+                                const families = new Set(source.map(item => safeValue(item.code).split('-')[1]).filter(Boolean));
+                                const activeAreas = new Set(source.map(item => resolveAreaName(item)).filter(area => area && area !== 'Por clasificar'));
+                                document.getElementById('stat-total').textContent = String(source.length);
+                                document.getElementById('stat-areas').textContent = String(activeAreas.size);
+                                document.getElementById('stat-familias').textContent = String(families.size);
+                        }
 
-                                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
-                                        inp.setAttribute('data-original-type', 'time');
-                                        inp.type = 'text';
-                                        inp.placeholder = 'HH:MM';
-                                });
+                        let isOfflineMode = false;
 
-                                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
-                                        inp.setAttribute('data-original-type', 'number');
-                                        const currentPlaceholder = inp.placeholder;
-                                        inp.type = 'text';
-                                        if (currentPlaceholder) inp.placeholder = currentPlaceholder;
-                                });
-                        } else {
-                                btn.textContent = 'Modo Offline';
-                                btn.style.backgroundColor = '';
+                        function toggleOfflineMode() {
+                                isOfflineMode = !isOfflineMode;
+                                const btn = document.getElementById('btn-offline');
+                                if (isOfflineMode) {
+                                        btn.textContent = 'Modo Online';
+                                        btn.style.backgroundColor = '#f59e0b';
 
-                                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
-                                        const sel = document.createElement('select');
-                                        sel.className = inp.className;
-                                        if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
-                                        const options = inp.getAttribute('data-select-options')?.split('|') || [];
-                                        options.forEach(optText => {
-                                                const opt = document.createElement('option');
-                                                opt.text = optText;
-                                                sel.appendChild(opt);
+                                        document.querySelectorAll('select.cedit').forEach(sel => {
+                                                const input = document.createElement('input');
+                                                input.type = 'text';
+                                                input.className = sel.className;
+                                                input.value = sel.options[sel.selectedIndex]?.text || '';
+                                                input.setAttribute('data-original-type', 'select');
+                                                if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                                                const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                                                input.setAttribute('data-select-options', options);
+                                                sel.parentNode.replaceChild(input, sel);
                                         });
-                                        const currentValue = inp.value;
-                                        for (let i = 0; i < sel.options.length; i++) {
-                                                if (sel.options[i].text === currentValue) {
-                                                        sel.selectedIndex = i;
-                                                        break;
+
+                                        document.querySelectorAll('input[type="text"].cedit, input[type="text"].registry-date').forEach(inp => {
+                                                inp.setAttribute('data-original-type', 'text');
+                                                inp.type = 'text';
+                                                inp.placeholder = 'DD/MM/AAAA';
+                                        });
+
+                                        document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                                                inp.setAttribute('data-original-type', 'time');
+                                                inp.type = 'text';
+                                                inp.placeholder = 'HH:MM';
+                                        });
+
+                                        document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                                                inp.setAttribute('data-original-type', 'number');
+                                                const currentPlaceholder = inp.placeholder;
+                                                inp.type = 'text';
+                                                if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                                        });
+                                } else {
+                                        btn.textContent = 'Modo Offline';
+                                        btn.style.backgroundColor = '';
+
+                                        document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                                                const sel = document.createElement('select');
+                                                sel.className = inp.className;
+                                                if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                                                const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                                                options.forEach(optText => {
+                                                        const opt = document.createElement('option');
+                                                        opt.text = optText;
+                                                        sel.appendChild(opt);
+                                                });
+                                                const currentValue = inp.value;
+                                                for (let i = 0; i < sel.options.length; i++) {
+                                                        if (sel.options[i].text === currentValue) {
+                                                                sel.selectedIndex = i;
+                                                                break;
+                                                        }
                                                 }
-                                        }
-                                        inp.parentNode.replaceChild(sel, inp);
-                                });
+                                                inp.parentNode.replaceChild(sel, inp);
+                                        });
 
-                                document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
-                                        inp.type = 'text';
-                                        inp.placeholder = '';
-                                        inp.removeAttribute('data-original-type');
-                                });
+                                        document.querySelectorAll('input[data-original-type="text"]').forEach(inp => {
+                                                inp.type = 'text';
+                                                inp.placeholder = '';
+                                                inp.removeAttribute('data-original-type');
+                                        });
 
-                                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
-                                        inp.type = 'time';
-                                        inp.placeholder = '';
-                                        inp.removeAttribute('data-original-type');
-                                });
+                                        document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                                                inp.type = 'time';
+                                                inp.placeholder = '';
+                                                inp.removeAttribute('data-original-type');
+                                        });
 
-                                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
-                                        inp.type = 'number';
-                                        inp.removeAttribute('data-original-type');
-                                });
+                                        document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                                                inp.type = 'number';
+                                                inp.removeAttribute('data-original-type');
+                                        });
+                                }
                         }
-                }
 
-                document.addEventListener('DOMContentLoaded', function () {
-                        renderMasterList();
-                        if (typeof App !== 'undefined' && App.Universal && typeof App.Universal.ensureFieldIds === 'function') {
-                                App.Universal.ensureFieldIds(document.body.id);
-                        }
-                });
-        </script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                                renderMasterList();
+                                if (typeof App !== 'undefined' && App.Universal && typeof App.Universal.ensureFieldIds === 'function') {
+                                        App.Universal.ensureFieldIds(document.body.id);
+                                }
+                        });
+                </script>
 </body>
 
 </html>

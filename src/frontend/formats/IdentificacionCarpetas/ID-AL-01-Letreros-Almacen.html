@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Letreros de Identificación de Almacén (BPF)</title>
+    <style>
+        /* Configuración de Impresión - Tamaño Carta Horizontal */
+        @page { size: letter landscape; margin: 0; }
+        
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background-color: #e2e8f0; 
+            margin: 0; 
+            padding: 0;
+            -webkit-print-color-adjust: exact !important; 
+            print-color-adjust: exact !important; 
+        }
+
+        /* Contenedor principal de cada letrero (Una página por letrero) */
+        .sign-page {
+            width: 27.94cm; /* Ancho carta */
+            height: 21.59cm; /* Alto carta */
+            background-color: white;
+            margin: 20px auto;
+            box-sizing: border-box;
+            page-break-after: always;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .sign-page:last-child { page-break-after: auto; }
+
+        /* Header con Logo y Control Documental */
+        .sign-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5cm 2cm 0.5cm 2cm;
+            background: white;
+        }
+
+        .doc-control {
+            text-align: right;
+            font-size: 14px;
+            color: #475569;
+            font-weight: bold;
+        }
+
+        /* Cuerpo del Letrero */
+        .sign-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2cm;
+        }
+
+        .sign-title {
+            font-size: 110px;
+            font-weight: 900;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .sign-subtitle {
+            font-size: 32px;
+            font-weight: 700;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .sign-warning {
+            font-size: 22px;
+            margin-top: 40px;
+            font-weight: bold;
+            padding: 15px 30px;
+            border-radius: 8px;
+            background: white;
+        }
+
+        /* Footer del Letrero */
+        .sign-footer {
+            text-align: center;
+            padding: 1cm;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #1E3A5F;
+            color: white;
+        }
+
+        /* Temas de Color Normativos (NOM-059 / OMS) */
+        
+        /* 1. AMARILLO = CUARENTENA */
+        .theme-quarantine .sign-body { background-color: #fbbf24; color: #713f12; border-top: 15px solid #d97706; border-bottom: 15px solid #d97706; }
+        .theme-quarantine .sign-warning { color: #991b1b; border: 3px solid #dc2626; }
+
+        /* 2. VERDE = LIBERADO */
+        .theme-released .sign-body { background-color: #22c55e; color: #14532d; border-top: 15px solid #16a34a; border-bottom: 15px solid #16a34a; }
+        .theme-released .sign-warning { color: #14532d; border: 3px solid #15803d; }
+
+        /* 3. AZUL = RETENCIONES */
+        .theme-retention .sign-body { background-color: #60a5fa; color: #1e3a8a; border-top: 15px solid #2563eb; border-bottom: 15px solid #2563eb; }
+        .theme-retention .sign-warning { color: #1e3a8a; border: 3px solid #1d4ed8; }
+
+        @media print {
+            body { background-color: white; margin: 0; }
+            .sign-page { margin: 0; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LETRERO 1: CUARENTENA -->
+    <div class="sign-page theme-quarantine">
+        <div class="sign-header">
+            <svg viewBox="0 0 320 80" style="width: 250px;">
+                <defs><style>.c { fill: #2E9D82 }</style></defs>
+                <g transform="translate(0,-2) scale(0.85)">
+                    <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                    <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                </g>
+                <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+            </svg>
+            <div class="doc-control">
+                CÓDIGO: ID-AL-01<br>VERSIÓN: 1.0
+            </div>
+        </div>
+        <div class="sign-body">
+            <h1 class="sign-title">CUARENTENA</h1>
+            <div class="sign-subtitle">Material Pendiente de Dictamen</div>
+            <div class="sign-warning">
+                ⚠ ACCESO RESTRINGIDO - PROHIBIDO SU USO O DISTRIBUCIÓN HASTA SER LIBERADO POR CALIDAD
+            </div>
+        </div>
+        <div class="sign-footer">
+            SISTEMA DE GESTIÓN DE CALIDAD - ÁREA CONTROLADA BAJO NORMATIVA NOM-241-SSA1
+        </div>
+    </div>
+
+    <!-- LETRERO 2: PRODUCTO LIBERADO -->
+    <div class="sign-page theme-released">
+        <div class="sign-header">
+            <svg viewBox="0 0 320 80" style="width: 250px;">
+                <defs><style>.c { fill: #2E9D82 }</style></defs>
+                <g transform="translate(0,-2) scale(0.85)">
+                    <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                    <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                </g>
+                <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+            </svg>
+            <div class="doc-control">
+                CÓDIGO: ID-AL-02<br>VERSIÓN: 1.0
+            </div>
+        </div>
+        <div class="sign-body">
+            <h1 class="sign-title" style="font-size: 100px;">LIBERADO</h1>
+            <div class="sign-subtitle">Aprobado para Producción o Venta</div>
+            <div class="sign-warning">
+                ✔ INSUMOS Y PRODUCTO TERMINADO DICTAMINADOS CONFORME A ESPECIFICACIONES
+            </div>
+        </div>
+        <div class="sign-footer">
+            SISTEMA DE GESTIÓN DE CALIDAD - ÁREA CONTROLADA BAJO NORMATIVA NOM-241-SSA1
+        </div>
+    </div>
+
+    <!-- LETRERO 3: RETENCIONES -->
+    <div class="sign-page theme-retention">
+        <div class="sign-header">
+            <svg viewBox="0 0 320 80" style="width: 250px;">
+                <defs><style>.c { fill: #2E9D82 }</style></defs>
+                <g transform="translate(0,-2) scale(0.85)">
+                    <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                    <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                </g>
+                <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+            </svg>
+            <div class="doc-control">
+                CÓDIGO: ID-AL-03<br>VERSIÓN: 1.0
+            </div>
+        </div>
+        <div class="sign-body">
+            <h1 class="sign-title" style="font-size: 90px;">RETENCIONES</h1>
+            <div class="sign-subtitle">Muestras Testigo y Referencia</div>
+            <div class="sign-warning">
+                🔒 EXCLUSIVO ASEGURAMIENTO DE CALIDAD - PROHIBIDA LA EXTRACCIÓN DE MUESTRAS
+            </div>
+        </div>
+        <div class="sign-footer">
+            SISTEMA DE GESTIÓN DE CALIDAD - ÁREA CONTROLADA BAJO NORMATIVA NOM-241-SSA1
+        </div>
+    </div>
+
+</body>
+</html>
