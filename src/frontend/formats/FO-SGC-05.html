@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>FO-SGC-05 Inventario de Equipos</title>
     <link rel="stylesheet" href="format-styles.css">
+    <link rel="stylesheet" href="format-styles-sgc.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app.js"></script>
     <style>
@@ -42,62 +43,6 @@
             font-size: 8px;
         }
 
-        .section-header {
-            background-color: #1E3A5F;
-            color: white;
-            padding: 5px 10px;
-            font-weight: bold;
-            font-size: 11px;
-            margin-top: 10px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        .compact-table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-
-        .compact-table th {
-            background-color: #1E3A5F;
-            color: white;
-            font-size: 9px;
-            padding: 5px 3px;
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #cbd5e1;
-            line-height: 1.2;
-        }
-
-        .compact-table td {
-            font-size: 9px;
-            padding: 3px;
-            vertical-align: middle;
-            text-align: center;
-            border: 1px solid #cbd5e1;
-        }
-
-        .compact-table input,
-        .compact-table select,
-        .compact-table textarea {
-            font-size: 9px;
-            text-align: center;
-            width: 100%;
-            border: none;
-            background: transparent;
-            padding: 2px;
-            box-sizing: border-box;
-            font-family: inherit;
-        }
-
-        .compact-table input:focus,
-        .compact-table select:focus,
-        .compact-table textarea:focus {
-            background-color: #f8fafc;
-            outline: 1px dashed #3b82f6;
-        }
-
         .btn-add {
             background: #e2e8f0;
             border: 1px dashed #94a3b8;
@@ -107,11 +52,6 @@
             cursor: pointer;
             padding: 5px;
             margin-top: 5px;
-        }
-
-        .text-left {
-            text-align: left !important;
-            padding-left: 5px !important;
         }
 
         .signature-area {
@@ -427,31 +367,6 @@
             protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
     </div>
 
-    <script>
-        function addRowNumbered(tableId) {
-            const tbody = document.getElementById(tableId).querySelector('tbody');
-            const newRow = tbody.rows[0].cloneNode(true);
-            newRow.querySelectorAll('input, textarea').forEach(input => input.value = '');
-            tbody.appendChild(newRow);
-            updateNumbers(tableId);
-        }
-
-        function delRowNumbered(btn, tableId) {
-            const row = btn.closest('tr');
-            if (row.parentNode.rows.length > 1) {
-                row.remove();
-                updateNumbers(tableId);
-            }
-        }
-
-        function updateNumbers(tableId) {
-            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
-            rows.forEach((row, index) => {
-                const numCell = row.querySelector('.row-num');
-                if (numCell) numCell.innerText = index + 1;
-            });
-        }
-    </script>
 </body>
 
 </html>

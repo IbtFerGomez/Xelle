@@ -270,6 +270,7 @@
 <body>
 
     <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="loadFromCatalog()">↻ Cargar todas las carpetas</button>
         <button class="btn btn-success" onclick="addSpine()">➕ Agregar Lomo</button>
         <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir/Guardar PDF</button>
         <p style="font-size:12px; color:#475569; margin-left:15px; margin-bottom:0;">
@@ -344,42 +345,71 @@
         </div>
     </template>
 
+    <script src="folder-catalog-data.js"></script>
     <script>
         let spines = [];
-        const SPINES_PER_PAGE = 3; // 3 lomos por página en formato carta
+        const SPINES_PER_PAGE = 3;
 
-        // Inicializar con un lomo
-        function init() {
-            addSpine();
-        }
-
-        // Agregar un nuevo lomo
-        function addSpine() {
-            const template = document.getElementById('spine-template');
-            const clone = template.content.cloneNode(true);
-
-            // Guardar el elemento DOM para usarlo después
-            const spineElement = clone.querySelector('.spine-container');
-            spines.push(spineElement);
-
-            // Auto-ajustar textareas
-            const textareas = clone.querySelectorAll('textarea.cedit');
+        function setupTextareaAutosize(scope) {
+            const textareas = scope.querySelectorAll('textarea.cedit');
             textareas.forEach(ta => {
                 ta.addEventListener('input', function () {
                     this.style.height = 'auto';
-                    this.style.height = (this.scrollHeight) + 'px';
+                    this.style.height = this.scrollHeight + 'px';
                 });
-                // Trigger inicial después de agregar al DOM
                 setTimeout(() => {
                     ta.style.height = 'auto';
-                    ta.style.height = (ta.scrollHeight) + 'px';
+                    ta.style.height = ta.scrollHeight + 'px';
                 }, 10);
             });
+        }
 
+        function getCodesRange(formats) {
+            if (!formats || formats.length === 0) {
+                return 'SIN CODIGOS';
+            }
+            const first = formats[0].code;
+            const last = formats[formats.length - 1].code;
+            if (first === last) {
+                return first;
+            }
+            return first + '\n' + 'a ' + last;
+        }
+
+        function createSpineFromData(folder, index, total) {
+            const template = document.getElementById('spine-template');
+            const clone = template.content.cloneNode(true);
+            const spineElement = clone.querySelector('.spine-container');
+
+            clone.querySelector('.area-name').value = folder.area || 'Area por definir';
+            clone.querySelector('.doc-type').value = 'RECOPILADOR DE FORMATOS';
+            clone.querySelector('.doc-desc').value = folder.title || 'Carpeta SGC';
+            clone.querySelector('.codes-range').value = getCodesRange(folder.formats);
+            clone.querySelector('.period').value = 'VIGENTE JUN 2026\nREVISION JUN 2027';
+            clone.querySelector('.volume').value = 'Carpeta: ' + (index + 1) + ' de ' + total;
+
+            setupTextareaAutosize(clone);
+            spines.push(spineElement);
+        }
+
+        function loadFromCatalog() {
+            spines = [];
+            const folders = window.CARPETAS_SGC || [];
+            folders.forEach((folder, index) => {
+                createSpineFromData(folder, index, folders.length);
+            });
             reorganizePages();
         }
 
-        // Eliminar un lomo
+        function addSpine() {
+            const template = document.getElementById('spine-template');
+            const clone = template.content.cloneNode(true);
+            const spineElement = clone.querySelector('.spine-container');
+            setupTextareaAutosize(clone);
+            spines.push(spineElement);
+            reorganizePages();
+        }
+
         function deleteSpine(btn) {
             const spineElement = btn.closest('.spine-container');
             const index = spines.indexOf(spineElement);
@@ -389,36 +419,27 @@
             reorganizePages();
         }
 
-        // Reorganizar lomos en páginas
         function reorganizePages() {
             const container = document.getElementById('pages-container');
             container.innerHTML = '';
-
             if (spines.length === 0) {
                 return;
             }
 
-            // Crear páginas según sea necesario
             const numPages = Math.ceil(spines.length / SPINES_PER_PAGE);
-
             for (let i = 0; i < numPages; i++) {
                 const sheet = document.createElement('div');
                 sheet.className = 'sheet';
-
-                // Agregar lomos a esta página
                 const startIdx = i * SPINES_PER_PAGE;
                 const endIdx = Math.min(startIdx + SPINES_PER_PAGE, spines.length);
-
                 for (let j = startIdx; j < endIdx; j++) {
                     sheet.appendChild(spines[j]);
                 }
-
                 container.appendChild(sheet);
             }
         }
 
-        // Inicializar al cargar la página
-        window.addEventListener('DOMContentLoaded', init);
+        window.addEventListener('DOMContentLoaded', loadFromCatalog);
     </script>
 </body>
 

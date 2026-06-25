@@ -91,6 +91,18 @@
         .format-list li {
             margin-bottom: 3px;
         }
+         .footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                text-align: center;
+                padding: 10px 0;
+                border-top: 1px solid #eee;
+                font-size: 9px !important;
+                color: #000 !important;
+            }
 
         @media print {
             body {
@@ -101,6 +113,18 @@
             .sheet {
                 box-shadow: none;
                 padding: 0;
+            }
+            .footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                text-align: center;
+                padding: 10px 0;
+                border-top: 1px solid #eee;
+                font-size: 9px !important;
+                color: #000 !important;
             }
         }
     </style>
@@ -130,7 +154,7 @@
                 <td class="qms-meta">
                     <strong>Código:</strong> FO-SGC-02<br>
                     <strong>Versión:</strong> 2.0<br>
-                    <strong>Vigencia:</strong> JUN 2026<br>
+                    <strong>Vigencia:</strong> <br>JUN <br>2026<br>
                     <strong>Página:</strong> 1 de 1
                 </td>
             </tr>
@@ -139,12 +163,85 @@
         <table class="index-table">
             <thead>
                 <tr>
-                    <th width="35%">Nombre del Recopilador / Carpeta Física</th>
-                    <th width="15%">Área</th>
-                    <th width="50%">Formatos Contenidos (Código y Nombre)</th>
+                    <th width="28%">Nombre del Recopilador / Carpeta Física</th>
+                    <th width="16%">Área Propietaria</th>
+                    <th width="44%">Formatos Contenidos (Código y Nombre)</th>
+                    <th width="12%">Estatus</th>
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE ASEGURAMIENTO DE CALIDAD</td>
+                    <td style="text-align:center;">Aseguramiento de Calidad (QA)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-QA-01</strong> Matriz de Riesgos y Oportunidades</li>
+                            <li><strong>FO-QA-03</strong> Hoja de Inspección y Liberación de Calidad</li>
+                            <li><strong>FO-QA-05</strong> Checklist Semanal de QA</li>
+                            <li><strong>FO-QA-06</strong> Certificado de Liberación de Exosomas</li>
+                            <li><strong>FO-QA-07</strong> Solicitud y Control de Cambios</li>
+                            <li><strong>FO-QA-08</strong> Acta de Destrucción y Disposición Final PNC</li>
+                            <li><strong>FO-QA-09</strong> CAPA - Metodología AMFE</li>
+                            <li><strong>FO-QA-10</strong> Certificado de Calidad de Lote (CoA)</li>
+                            <li><strong>FO-QA-11</strong> Certificado de Liberación de Lote</li>
+                            <li><strong>FO-QA-12</strong> Bitácora de Uso y Fallas de Equipo</li>
+                            <li><strong>FO-QA-14</strong> Checklist de Seguridad e Higiene del Personal</li>
+                            <li><strong>FO-QA-18</strong> Certificado de Análisis y Liberación Interna de MP</li>
+                            <li><strong>FO-QA-19</strong> Acta de Baja, Inactivación y Destrucción de Muestras/Producto
+                            </li>
+                        </ul>
+                    </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
+                </tr>
+                <tr>
+                    <td class="folder-title">SISTEMA DE GESTIÓN DE LA CALIDAD (SGC) Y MEJORA CONTINUA</td>
+                    <td style="text-align:center;">Coordinación SGC / Calidad</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-AD-00</strong> Matriz Maestra de Puestos y Responsabilidades</li>
+                            <li><strong>FO-AD-00-B</strong> Catálogo de Firmas e Iniciales V2</li>
+                            <li><strong>FO-AD-06</strong> Informe Final de Auditoría Interna</li>
+                            <li><strong>FO-AD-07</strong> Minuta de Revisión por la Dirección</li>
+                            <li><strong>FO-AD-17</strong> Lista de Difusión de Documentos</li>
+                            <li><strong>FO-QA-02</strong> (y subcódigos -A, -ADM, -DIR, -LAB, -LOG, -OPE, -QA, -REG,
+                                -SGC) Listas de Verificación de Auditoría Interna</li>
+                            <li><strong>FO-QA-20</strong> Programa de Auditoría</li>
+                            <li><strong>FO-SGC-01</strong> Matriz de Responsabilidades por Módulo</li>
+                            <li><strong>FO-SGC-03</strong> Matriz de Formatos Activos</li>
+                            <li><strong>FO-SGC-03-B</strong> Control Maestro de Documentos y Formatos</li>
+                            <li><strong>FO-SGC-04</strong> Listado Maestro de Formatos</li>
+                            <li><strong>FO-SGC-07</strong> Índice Maestro de PNOs</li>
+                            <li><strong>FO-SGC-08</strong> Índice Maestro de Políticas</li>
+                        </ul>
+                    </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
+                </tr>
+                <tr>
+                    <td class="folder-title">GESTIÓN DE RECURSOS HUMANOS Y DESARROLLO DE PERSONAL</td>
+                    <td style="text-align:center;">Recursos Humanos</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-AD-01</strong> Perfil y Descripción de Puesto</li>
+                            <li><strong>FO-AD-02</strong> Matriz de Competencias y Habilidades</li>
+                            <li><strong>FO-AD-03</strong> Evaluación de Desempeño y Capacitación</li>
+                            <li><strong>FO-AD-08</strong> Requisición de Personal</li>
+                            <li><strong>FO-AD-09</strong> Descriptiva de Puesto V2</li>
+                            <li><strong>FO-AD-10</strong> Inducción al Puesto V2</li>
+                            <li><strong>FO-AD-11</strong> Convenio de Confidencialidad V2</li>
+                            <li><strong>FO-AD-12</strong> Plan Anual de Capacitación V2</li>
+                            <li><strong>FO-AD-13</strong> Calificación de Personal</li>
+                            <li><strong>FO-AD-14</strong> Solicitud de Curso Extraordinario</li>
+                            <li><strong>FO-AD-15</strong> Baja del Colaborador</li>
+                            <li><strong>FO-AD-16</strong> Entrevista de Salida</li>
+                            <li><strong>FO-AD-18</strong> Lista de Asistencia a Reunión</li>
+                            <li><strong>FO-AD-19</strong> Minuta de Reunión</li>
+                            <li><strong>FO-QA-16</strong> Detección de Necesidades de Capacitación (DNC)</li>
+                            <li><strong>FO-QA-17</strong> Lista de Asistencia y Evaluación</li>
+                            <li><strong>FO-QA-17-B</strong> Evaluación del Curso Impartido</li>
+                        </ul>
+                    </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
+                </tr>
                 <tr>
                     <td class="folder-title">REGISTROS OPERATIVOS DE CONTROL DE MUESTREO Y RETENCIÓN</td>
                     <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
@@ -156,23 +253,23 @@
                             <li><strong>FO-LC-46</strong> Registro de Muestreo de Producto Biológico</li>
                         </ul>
                     </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
                 </tr>
                 <tr>
-                    <td class="folder-title">REGISTROS OPERATIVOS DE INGRESO, RECEPCIÓN Y EVALUACIÓN DE TEJIDOS
-                        (PLACENTAS)</td>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE INGRESO, RECEPCIÓN Y EVALUACIÓN DE TEJIDOS</td>
                     <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
                     <td>
                         <ul class="format-list">
                             <li><strong>FO-LC-16</strong> Liberación de Línea Celular</li>
-                            <li><strong>FO-LC-17</strong> RECEPCIÓN DE MUESTRAS Y DATOS CLÍNICOS.</li>
+                            <li><strong>FO-LC-17</strong> Recepción de Muestras y Datos Clínicos</li>
                             <li><strong>FO-LC-18</strong> Macro</li>
                             <li><strong>FO-LC-19</strong> Calidad</li>
                         </ul>
                     </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
                 </tr>
                 <tr>
-                    <td class="folder-title">REGISTROS OPERATIVOS DE INSPECCIÓN, ACONDICIONAMIENTO Y DISPOSICIÓN DE
-                        PRODUCTO</td>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE INSPECCIÓN, ACONDICIONAMIENTO Y DISPOSICIÓN</td>
                     <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
                     <td>
                         <ul class="format-list">
@@ -180,13 +277,14 @@
                             <li><strong>FO-LC-35</strong> Bitácora de Disposición de Lotes</li>
                             <li><strong>FO-LC-47</strong> Revisión Calidad Muestreo</li>
                             <li><strong>FO-LC-48</strong> Resultados y Dictamen de Lote</li>
-                            <li><strong>FO-OP-20</strong> Liberación Alm</li>
+                            <li><strong>FO-OP-20</strong> Liberación Almacén</li>
+                            <li><strong>FO-OP-20-B</strong> Liberación Almacén</li>
                         </ul>
                     </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
                 </tr>
                 <tr>
-                    <td class="folder-title">REGISTROS OPERATIVOS DE CONTROL DE PROCESOS CELULARES, CULTIVO Y
-                        CRIOPRESERVACIÓN</td>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE CONTROL DE PROCESOS CELULARES Y CULTIVO</td>
                     <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
                     <td>
                         <ul class="format-list">
@@ -194,8 +292,10 @@
                             <li><strong>FO-LC-21</strong> Bitácora</li>
                             <li><strong>FO-LC-22</strong> Crio Banco</li>
                             <li><strong>FO-LC-23</strong> Bitácora Crio</li>
+                            <li><strong>FO-OP-03</strong> Control de Pasajes Líneas Celulares</li>
                         </ul>
                     </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
                 </tr>
                 <tr>
                     <td class="folder-title">REGISTROS OPERATIVOS DE DOSIFICACIÓN DE CÉLULAS Y EXOSOMAS</td>
@@ -204,64 +304,38 @@
                         <ul class="format-list">
                             <li><strong>FO-LC-24</strong> Dosificación</li>
                             <li><strong>FO-LC-25</strong> Dosificación de Exosomas</li>
+                            <li><strong>FO-LC-30</strong> Bitácora de Recolección de Medios Condicionados</li>
                         </ul>
                     </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
                 </tr>
                 <tr>
-                    <td class="folder-title">REGISTROS OPERATIVOS DE PROCESAMIENTO DE PLACENTAS PARA PRODUCCIÓN
-                        (LIOFILIZACIÓN)</td>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE PROCESAMIENTO DE PLACENTAS (LIOFILIZACIÓN)</td>
                     <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
                     <td>
                         <ul class="format-list">
                             <li><strong>FO-LC-14</strong> Histórico Placentas</li>
                             <li><strong>FO-LC-42</strong> Liof Placenta</li>
                             <li><strong>FO-LC-45</strong> Embalaje</li>
+                            <li><strong>FO-LC-15</strong> Histórico Líneas</li>
+                            <li><strong>FO-LC-43</strong> Liof MC</li>
                         </ul>
                     </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
                 </tr>
                 <tr>
                     <td class="folder-title">REGISTROS OPERATIVOS DE ANÁLISIS Y DICTAMEN MICROBIOLÓGICO</td>
                     <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
                     <td>
                         <ul class="format-list">
-                            <li><strong>FO-QA-06</strong> Certificado de Liberación de Exosomas</li>
                             <li><strong>FO-LC-41</strong> Micro</li>
                             <li><strong>FO-LC-44</strong> Lib Flasks</li>
+                            <li><strong>FO-LC-46</strong> Registro Muestreo Producto Biológico</li>
+                            <li><strong>FO-LC-47</strong> Revisión Calidad Muestreo</li>
+                            <li><strong>FO-LC-48</strong> Resultados y Dictamen de Lote</li>
                         </ul>
                     </td>
-                </tr>
-                <tr>
-                    <td class="folder-title">REGISTROS OPERATIVOS DE MONITOREO DIARIO DE EQUIPOS DE LABORATORIO</td>
-                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
-                    <td>
-                        <ul class="format-list">
-                            <li><strong>FO-OP-04</strong> Registro Gráfico de Temperatura</li>
-                            <li><strong>FO-OP-05</strong> Registro Gráfico de Temperatura de Congeladores</li>
-                            <li><strong>FO-OP-08</strong> Registro Gráfico de Temperatura de Ultracongeladores</li>
-                            <li><strong>FO-OP-09</strong> Registro Gráfico Incubadora CO2</li>
-                            <li><strong>FO-OP-12</strong> Bitácora de Recepción de Materiales</li>
-                            <li><strong>FO-OP-18</strong> Bitácora de Uso y Limpieza de Cabina de Bioseguridad</li>
-                        </ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="folder-title">ASEGURAMIENTO DE CALIDAD, DESVIACIONES Y CAPA</td>
-                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
-                    <td>
-                        <ul class="format-list">
-                            <li><strong>FO-LC-32-B</strong> Salida y Disposición de Muestras</li>
-                            <li><strong>FO-OP-51</strong> Producto No Conforme (Desviaciones)</li>
-                            <li><strong>FO-OP-52</strong> Reporte de MPNC</li>
-                            <li><strong>FO-QA-08</strong> Acta de Destrucción y Disposición Final PNC</li>
-                            <li><strong>FO-QA-09</strong> CAPA - Metodología AMFE</li>
-                            <li><strong>FO-QA-12</strong> Bitácora de Uso y Fallas de Equipo</li>
-                            <li><strong>FO-QA-14</strong> Checklist de Seguridad e Higiene</li>
-                            <li><strong>FO-QA-15</strong> Programa Anual de Mantenimiento</li>
-                            <li><strong>FO-QA-16</strong> Detección de Necesidades de Capacitación (DNC)</li>
-                            <li><strong>FO-QA-17</strong> Lista de Asistencia y Evaluación</li>
-                            <li><strong>FO-QA-17-B</strong> Evaluación del Curso Impartido</li>
-                        </ul>
-                    </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
                 </tr>
                 <tr>
                     <td class="folder-title">REGISTROS OPERATIVOS DE BITÁCORA CONTROL AMBIENTAL Y MANTENIMIENTO</td>
@@ -271,14 +345,15 @@
                             <li><strong>FO-OP-07</strong> Registro de Temperatura y Humedad</li>
                             <li><strong>FO-OP-19</strong> Registro de Limpieza de Áreas</li>
                             <li><strong>FO-LC-27</strong> Control Equipos</li>
-                            <li><strong>FO-LC-30</strong> Bitácora de Recolección de Medios Condicionados</li>
                             <li><strong>FO-QA-13</strong> Bitácora de Monitoreo Ambiental</li>
-                            <li><strong>FO-QA-15</strong> Programa Anual de Mantenimiento</li>
+                            <li><strong>FO-OP-54</strong> Reporte de Desviación de Procesos y Equipos</li>
+                            <li><strong>FO-OP-56</strong> Registro de Presión Diferencial</li>
                         </ul>
                     </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
                 </tr>
                 <tr>
-                    <td class="folder-title">BITÁCORAS OPERATIVAS Y CONTROL DE PROCESOS</td>
+                    <td class="folder-title">BITÁCORAS OPERATIVAS Y CONTROL DE PROCESOS (MEDIOS)</td>
                     <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
                     <td>
                         <ul class="format-list">
@@ -286,9 +361,9 @@
                             <li><strong>FO-LC-28</strong> Uso Equipos</li>
                             <li><strong>FO-LC-40</strong> Prep Medios</li>
                             <li><strong>FO-LC-40-B</strong> Prep Medios</li>
-                            <li><strong>FO-LC-43</strong> Liof MC</li>
                         </ul>
                     </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
                 </tr>
                 <tr>
                     <td class="folder-title">REGISTROS OPERATIVOS DE CONTROL DE PLAGAS Y FAUNA NOCIVA</td>
@@ -300,6 +375,7 @@
                             <li><strong>FO-OP-59</strong> Bitácora de Fumigaciones y Aplicación Química</li>
                         </ul>
                     </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
                 </tr>
                 <tr>
                     <td class="folder-title">REGISTROS OPERATIVOS DE MANEJO DE RPBI Y RESIDUOS PELIGROSOS</td>
@@ -307,131 +383,142 @@
                     <td>
                         <ul class="format-list">
                             <li><strong>FO-OP-49</strong> Bitácora de Almacenamiento Temporal de RPBI</li>
-                            <li><strong>FO-OP-50</strong> FORMATO MANIFIESTO DE ENTREGA, TRANSPORTE Y RECEPCIÓN DE
-                                RESIDUOS PELIGROSOS (GENERADOR)</li>
-                        </ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="folder-title">SISTEMA DE GESTIÓN DE LA CALIDAD Y NOTAS DE REMISIÓN</td>
-                    <td style="text-align:center;">Operaciones (OP)</td>
-                    <td>
-                        <ul class="format-list">
-                            <li>Políticas, Procedimientos, Manuales del SGC</li>
-                            <li>Notas de Remisión (Logística)</li>
-                        </ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="folder-title">EN ESPERA DE ASIGNACION</td>
-                    <td style="text-align:center;">Por definir</td>
-                    <td>
-                        <ul class="format-list">
-                            <li><strong>FO-AD-00</strong> Matriz Maestra de Puestos y Responsabilidades</li>
-                            <li><strong>FO-AD-00-B</strong> Catálogo de Firmas e Iniciales V2</li>
-                            <li><strong>FO-AD-01</strong> Perfil y Descripción de Puesto</li>
-                            <li><strong>FO-AD-02</strong> Matriz de Competencias y Habilidades</li>
-                            <li><strong>FO-AD-03</strong> Evaluación de Desempeño y Capacitación</li>
-                            <li><strong>FO-AD-04</strong> Evaluación y Selección de Proveedores</li>
-                            <li><strong>FO-AD-05</strong> Padrón de Proveedores Aprobados</li>
-                            <li><strong>FO-AD-06</strong> Informe Final de Auditoría Interna</li>
-                            <li><strong>FO-AD-07</strong> Minuta de Revisión por la Dirección</li>
-                            <li><strong>FO-AD-08</strong> Requisición de Personal</li>
-                            <li><strong>FO-AD-09</strong> Descriptiva de Puesto V2</li>
-                            <li><strong>FO-AD-10</strong> Inducción al Puesto V2</li>
-                            <li><strong>FO-AD-11</strong> Convenio de Confidencialidad V2</li>
-                            <li><strong>FO-AD-12</strong> Plan Anual de Capacitación V2</li>
-                            <li><strong>FO-AD-13</strong> Calificación de Personal</li>
-                            <li><strong>FO-AD-14</strong> Solicitud de Curso Extraordinario</li>
-                            <li><strong>FO-AD-15</strong> Baja del Colaborador</li>
-                            <li><strong>FO-AD-16</strong> Entrevista de Salida</li>
-                            <li><strong>FO-AD-17</strong> Lista de Difusión de Documentos</li>
-                            <li><strong>FO-AD-18</strong> Lista de Asistencia a Reunión</li>
-                            <li><strong>FO-AD-19</strong> Minuta de Reunión</li>
-                            <li><strong>FO-LC-12</strong> Dictamen de Concesión</li>
-                            <li><strong>FO-LC-15</strong> Histórico Líneas</li>
-                            <li><strong>FO-LC-29</strong> Bitácora TFF V1</li>
-                            <li><strong>FO-LC-30</strong> Bitácora de Recolección de Medios Condicionados</li>
-                            <li><strong>FO-LC-40-B</strong> Prep Medios</li>
-                            <li><strong>FO-LC-49</strong> Orden Maestra y Expediente de Producción</li>
+                            <li><strong>FO-OP-50</strong> Formato Manifiesto de Entrega, Transporte y Recepción</li>
                             <li><strong>FO-LC-50</strong> Manifiesto de Destrucción</li>
-                            <li><strong>FO-LC-51</strong> Registro de Cambio de CO2</li>
-                            <li><strong>FO-LC-51-B</strong> Bitácora Histórica de Reemplazo y Control de Gases Críticos
-                            </li>
-                            <li><strong>FO-LC-52</strong> Bitácora de Revisión Diaria de CO2</li>
-                            <li><strong>FO-LG-01</strong> Bitácora de Control de Flotilla y Transporte</li>
-                            <li><strong>FO-LG-01-B</strong> Bitácora de Control de Flotilla y Transporte</li>
+                        </ul>
+                    </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
+                </tr>
+                <tr>
+                    <td class="folder-title">EXPEDIENTES MAESTROS DE INGENIERÍA Y MANTENIMIENTO</td>
+                    <td style="text-align:center;">Mantenimiento</td>
+                    <td>
+                        <ul class="format-list">
                             <li><strong>FO-OP-01</strong> Programa Anual de Mantenimiento</li>
                             <li><strong>FO-OP-01-B</strong> Programa Anual de Mantenimiento</li>
-                            <li><strong>FO-OP-03</strong> Control de Pasajes Líneas Celulares</li>
-                            <li><strong>FO-OP-09-A</strong> Registro Gráfico Incubadora 35°C V2</li>
-                            <li><strong>FO-OP-09-B</strong> Registro Gráfico Incubadora Ambiente</li>
-                            <li><strong>FO-OP-10</strong> Registro de Devolución a Proveedores</li>
-                            <li><strong>FO-OP-13</strong> Ficha Clínica de Recolección de Tejido Placentario</li>
-                            <li><strong>FO-OP-13-B</strong> Ficha Clínica de Recolección de Tejido Placentario</li>
-                            <li><strong>FO-OP-14</strong> Lista de Verificación Recepción MP</li>
-                            <li><strong>FO-OP-15</strong> Pedido Maestro</li>
-                            <li><strong>FO-OP-16</strong> Surtido</li>
-                            <li><strong>FO-OP-17</strong> Remisión</li>
-                            <li><strong>FO-OP-17-B</strong> Remisión</li>
-                            <li><strong>FO-OP-19</strong> Registro de Limpieza de Áreas</li>
-                            <li><strong>FO-OP-39</strong> Lista de Verificación de Auditoría</li>
-                            <li><strong>FO-OP-40</strong> Orden Maestra de Producción</li>
-                            <li><strong>FO-OP-40-B</strong> Expediente de Lote de Producción</li>
-                            <li><strong>FO-OP-41</strong> Recepción de Insumos (Individual)</li>
-                            <li><strong>FO-OP-42</strong> Recepción de Insumos (Múltiple)</li>
-                            <li><strong>FO-OP-43</strong> Kárdex de Control de Inventarios</li>
-                            <li><strong>FO-OP-48</strong> Bitácora de Limpieza y Desinfección</li>
-                            <li><strong>FO-OP-54</strong> Reporte de Desviación de Procesos y Equipos</li>
                             <li><strong>FO-OP-55</strong> Expediente de Mantenimiento</li>
-                            <li><strong>FO-OP-56</strong> Registro de Presión Diferencial</li>
-                            <li><strong>FO-OP-60</strong> Registro Mensual de Actividades Críticas de Área (Control
-                                Semanal)</li>
                             <li><strong>FO-OP-61</strong> Hoja de Vida y Expediente Documental de Equipo</li>
                             <li><strong>FO-OP-62</strong> Historial de Modificaciones y Calibraciones</li>
-                            <li><strong>FO-QA-01</strong> Matriz de Riesgos y Oportunidades</li>
-                            <li><strong>FO-QA-02</strong> Cuestionario Maestro de Auditoría Interna</li>
-                            <li><strong>FO-QA-02-A</strong> - Lista de Verificación de Auditoría+</li>
-                            <li><strong>FO-QA-02-ADM</strong> Lista de Verificación de Auditoría - Administración y
-                                Compras</li>
-                            <li><strong>FO-QA-02-DIR</strong> Lista de Verificación de Auditoría - Dirección</li>
-                            <li><strong>FO-QA-02-LAB</strong> Lista de Verificación de Auditoría - Laboratorio y Calidad
-                            </li>
-                            <li><strong>FO-QA-02-LOG</strong> Lista de Verificación de Auditoría - Logística</li>
-                            <li><strong>FO-QA-02-OPE</strong> Lista de Verificación de Auditoría - Operaciones</li>
-                            <li><strong>FO-QA-02-QA</strong> Lista de Verificación de Auditoría - Aseguramiento de
-                                Calidad</li>
-                            <li><strong>FO-QA-02-REG</strong> Lista de Verificación de Auditoría - Regulación Sanitaria
-                            </li>
-                            <li><strong>FO-QA-02-SGC</strong> Lista de Verificación de Auditoría - Sistema Gestión
-                                Calidad</li>
-                            <li><strong>FO-QA-03</strong> Hoja de Inspección y Liberación de Calidad</li>
-                            <li><strong>FO-QA-05</strong> Checklist Semanal de QA</li>
-                            <li><strong>FO-QA-07</strong> Solicitud y Control de Cambios</li>
-                            <li><strong>FO-QA-10</strong> Certificado de Calidad de Lote (CoA)</li>
-                            <li><strong>FO-QA-11</strong> Certificado de Liberación de Lote</li>
-                            <li><strong>FO-QA-14</strong> Checklist de Seguridad e Higiene</li>
-                            <li><strong>FO-QA-15</strong> Programa Anual de Mantenimiento</li>
-                            <li><strong>FO-QA-16</strong> Detección de Necesidades de Capacitación (DNC)</li>
-                            <li><strong>FO-QA-17</strong> Lista de Asistencia y Evaluación</li>
-                            <li><strong>FO-QA-17-B</strong> Evaluación del Curso Impartido</li>
-                            <li><strong>FO-QA-18</strong> Liberación Interna de Materia Prima</li>
-                            <li><strong>FO-QA-19</strong> Acta de Destrucción de Muestras y Producto</li>
-                            <li><strong>FO-QA-20</strong> Programa de Auditoría</li>
-                            <li><strong>FO-RS-01</strong> Registro de Quejas y Satisfacción del Cliente</li>
-                            <li><strong>FO-RS-02</strong> Notificación de Evento Adverso</li>
-                            <li><strong>FO-SGC-01</strong> Matriz de Responsabilidades por Módulo</li>
-                            <li><strong>FO-SGC-03</strong> Matriz de Formatos Activos</li>
-                            <li><strong>FO-SGC-03-B</strong> Control Maestro de Documentos y Formatos</li>
-                            <li><strong>FO-SGC-04</strong> Listado Maestro de Formatos</li>
                             <li><strong>FO-SGC-05</strong> Inventario de Equipos</li>
                             <li><strong>FO-SGC-06</strong> Hoja de Vida de Termómetro</li>
-                            <li><strong>FO-SGC-07</strong> Índice Maestro de PNOs</li>
+                            <li><strong>FO-QA-15</strong> Programa Anual de Mantenimiento</li>
                         </ul>
                     </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
+                </tr>
+                <tr>
+                    <td class="folder-title">CONTROL DE LOGÍSTICA, EMBARQUES Y FLOTILLA</td>
+                    <td style="text-align:center;">Logística y Embarques</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-LG-01</strong> Bitácora de Control de Flotilla y Transporte</li>
+                            <li><strong>FO-LG-01-B</strong> Bitácora de Control de Flotilla y Transporte</li>
+                            <li><strong>FO-OP-17</strong> Remisión</li>
+                            <li><strong>FO-OP-17-B</strong> Remisión</li>
+                        </ul>
+                    </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
+                </tr>
+                <tr>
+                    <td class="folder-title">CRUCE DOCUMENTAL OBLIGATORIO: CICLO DE COMPRA, PEDIDO, FABRICACIÓN Y
+                        ENTREGA</td>
+                    <td style="text-align:center;">Operaciones / Comercial</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-CP-01</strong> Pedido Maestro (Orden de Compra)</li>
+                            <li><strong>FO-OP-15</strong> Pedido Maestro</li>
+                            <li><strong>FO-OP-15-B</strong> Acondicionamiento y Fabricación de Dosis</li>
+                            <li><strong>FO-OP-16</strong> Surtido</li>
+                            <li><strong>FO-OP-17</strong> Remisión (y entrega al cliente)</li>
+                        </ul>
+                        <p style="font-size:10px; color:#1E3A5F; margin:6px 0 0; font-weight:bold;">
+                            FO-CP-01 &#x2794; FO-OP-15 &#x2794; FO-OP-15-B &#x2794; FO-OP-16 &#x2794; FO-OP-17
+                        </p>
+                    </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
+                </tr>
+                <tr>
+                    <td class="folder-title">TRAZABILIDAD COMERCIAL, PEDIDOS Y RUTA OPERATIVA</td>
+                    <td style="text-align:center;">Operaciones / Embarques</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-AD-04</strong> Evaluación y Selección de Proveedores</li>
+                            <li><strong>FO-AD-05</strong> Padrón de Proveedores Aprobados</li>
+                            <li><strong>FO-CP-01</strong> Pedido Maestro</li>
+                            <li><strong>FO-OP-10</strong> Registro de Devolución a Proveedores</li>
+                            <li><strong>FO-OP-15</strong> Pedido Maestro</li>
+                            <li><strong>FO-RS-01</strong> Registro de Quejas y Satisfacción del Cliente</li>
+                            <li><strong>FO-RS-02</strong> Notificación de Evento Adverso</li>
+                        </ul>
+                    </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
+                </tr>
+                <tr>
+                    <td class="folder-title">REGISTROS OPERATIVOS DE CONTROL DE ALMACÉN E INVENTARIOS</td>
+                    <td style="text-align:center;">Almacén y Surtido</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-AL-01</strong> Salida de Almacén para Producción</li>
+                            <li><strong>FO-OP-12</strong> Bitácora de Recepción de Materiales</li>
+                            <li><strong>FO-OP-14</strong> Lista de Verificación Recepción MP</li>
+                            <li><strong>FO-OP-16</strong> Surtido</li>
+                            <li><strong>FO-OP-41</strong> Recepción de Insumos (Individual)</li>
+                            <li><strong>FO-OP-42</strong> Recepción de Insumos (Múltiple)</li>
+                            <li><strong>FO-OP-43</strong> Kardex de Control de Inventarios</li>
+                        </ul>
+                    </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
+                </tr>
+                <tr>
+                    <td class="folder-title">MONITOREO DIARIO Y GRÁFICOS DE EQUIPOS DE INCUBACIÓN Y CRIO</td>
+                    <td style="text-align:center;">Laboratorio y Calidad (LC)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-OP-04</strong> Registro Gráfico de Temperatura</li>
+                            <li><strong>FO-OP-05</strong> Registro Gráfico de Temperatura de Congeladores</li>
+                            <li><strong>FO-OP-08</strong> Registro Gráfico de Temperatura de Ultracongeladores</li>
+                            <li><strong>FO-OP-09</strong> Registro Gráfico Incubadora CO2</li>
+                            <li><strong>FO-OP-09-A</strong> Registro Gráfico Incubadora 35°C V2</li>
+                            <li><strong>FO-OP-09-B</strong> Registro Gráfico Incubadora Ambiente</li>
+                            <li><strong>FO-LC-51</strong> Registro de Cambio de CO2</li>
+                            <li><strong>FO-LC-51-B</strong> Bitácora Histórica de Reemplazo y Control de Gases</li>
+                            <li><strong>FO-LC-52</strong> Bitácora de Revisión Diaria de CO2</li>
+                        </ul>
+                    </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
+                </tr>
+                <tr>
+                    <td class="folder-title">EXPEDIENTES MAESTROS DE MANUFACTURA (BATCH RECORDS)</td>
+                    <td style="text-align:center;">Producción / Banco</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-LC-49</strong> Orden Maestra y Expediente de Producción</li>
+                            <li><strong>FO-OP-40</strong> Orden Maestra de Producción</li>
+                            <li><strong>FO-OP-40-B</strong> Expediente de Lote de Producción</li>
+                            <li><strong>FO-OP-21</strong> Reporte de Producción y Rendimiento de Lote</li>
+                        </ul>
+                    </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
+                </tr>
+                <tr>
+                    <td class="folder-title">EXPEDIENTES DE GESTIÓN DE DESVIACIONES Y CONTROL DE MPNC</td>
+                    <td style="text-align:center;">Aseguramiento de Calidad (QA)</td>
+                    <td>
+                        <ul class="format-list">
+                            <li><strong>FO-LC-12</strong> Dictamen de Concesión</li>
+                            <li><strong>FO-LC-32-B</strong> Salida y Disposición de Muestras</li>
+                            <li><strong>FO-OP-51</strong> Producto No Conforme (Desviaciones)</li>
+                            <li><strong>FO-OP-52</strong> Reporte de MPNC</li>
+                        </ul>
+                    </td>
+                    <td style="text-align:center;">VIGENTE <br>JUN 2026<br><br>REVISION <br> JUN 2027</td>
                 </tr>
             </tbody>
         </table>
+
+       <div class="footer"> FO-SGC-02 | ÍNDICE DE CARPETAS (Asignación de Formatos por Recopilador Físico) | Versión: 2.0<br>El contenido de este documento es propiedad de
+            &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
+            está prohibida su reproducción total o parcial.</div>
     </div>
 </body>
 

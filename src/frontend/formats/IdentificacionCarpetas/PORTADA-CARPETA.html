@@ -27,6 +27,14 @@
             align-items: center;
         }
 
+        #pages-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
         .btn {
             padding: 10px 20px;
             font-size: 14px;
@@ -59,6 +67,11 @@
             justify-content: space-between;
             box-sizing: border-box;
             overflow: hidden;
+            page-break-after: always;
+        }
+
+        .sheet:last-child {
+            page-break-after: auto;
         }
 
         .logo-container {
@@ -226,110 +239,137 @@
 <body>
 
     <div class="global-controls no-print">
-        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir Portada</button>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir Portadas</button>
+        <button class="btn btn-primary" onclick="renderFromCatalog()">↻ Recargar desde FO-SGC-02</button>
         <p style="font-size:12px; color:#475569; margin-left:15px; margin-bottom:0;">Formato Tamaño Carta. Haz clic en
             los textos para editarlos.</p>
     </div>
 
-    <div class="sheet">
-        <div class="logo-container">
-            <svg viewBox="0 0 320 80">
-                <defs>
-                    <style>
-                        .t {
-                            font-family: 'Arial Black', sans-serif;
-                            font-weight: 900;
-                            fill: #1E3A5F
-                        }
+    <div id="pages-container"></div>
 
-                        .s {
-                            font-family: 'Arial', sans-serif;
-                            font-weight: 700;
-                            fill: #1E3A5F;
-                            letter-spacing: 2px
-                        }
+    <template id="cover-template">
+        <div class="sheet">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1E3A5F
+                            }
 
-                        .c {
-                            fill: #2E9D82
-                        }
-                    </style>
-                </defs>
-                <g transform="translate(0,-2) scale(0.85)">
-                    <circle class="c" cx="25" cy="25" r="13" />
-                    <circle class="c" cx="75" cy="75" r="13" />
-                    <path class="c"
-                        d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
-                </g>
-                <text x="90" y="42" class="t" font-size="34">XELLE</text>
-                <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
-            </svg>
-        </div>
-        <div class="legal-name">XELLE SCIENTIFIC, S.A.P.I. DE C.V.</div>
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1E3A5F;
+                                letter-spacing: 2px
+                            }
 
-        <div class="title-box">
-            <span class="info-label">Título del Recopilador</span>
-            <textarea class="cedit folder-title" rows="2"
-                placeholder="Escriba aquí el título...">REGISTROS OPERATIVOS DE DOSIFICACIÓN Y ETIQUETADO</textarea>
-        </div>
-
-        <div class="info-grid">
-            <div class="info-box">
-                <span class="info-label">Área Propietaria / Custodia</span>
-                <input type="text" class="cedit" value="Laboratorio y Calidad (LC)"
-                    style="font-size: 16px; font-weight: bold; text-align: center;">
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
             </div>
-            <div class="info-box">
-                <span class="info-label">Datos de Rastreo (Periodo)</span>
-                <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 8px;">
-                    <div>
-                        <span style="font-size: 11px; color: #64748b;">Apertura:</span><br>
-                        <input type="text" class="cedit" placeholder="dd/mm/aaaa"
-                            style="font-weight:bold; font-size:14px; text-align:center;">
-                    </div>
-                    <div>
-                        <span style="font-size: 11px; color: #64748b;">Cierre:</span><br>
-                        <input type="text" class="cedit" placeholder="dd/mm/aaaa"
-                            style="font-weight:bold; font-size:14px; text-align:center;">
+            <div class="legal-name">XELLE SCIENTIFIC, S.A.P.I. DE C.V.</div>
+
+            <div class="title-box">
+                <span class="info-label">Título del Recopilador</span>
+                <textarea class="cedit folder-title" rows="2" placeholder="Escriba aquí el título..."></textarea>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-box">
+                    <span class="info-label">Área Propietaria / Custodia</span>
+                    <input type="text" class="cedit" value="Laboratorio y Calidad (LC)" data-field="area"
+                        style="font-size: 16px; font-weight: bold; text-align: center;">
+                </div>
+                <div class="info-box">
+                    <span class="info-label">Datos de Rastreo (Periodo)</span>
+                    <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 8px;">
+                        <div>
+                            <span style="font-size: 11px; color: #64748b;">Apertura:</span><br>
+                            <input type="text" class="cedit" placeholder="dd/mm/aaaa"
+                                style="font-weight:bold; font-size:14px; text-align:center;">
+                        </div>
+                        <div>
+                            <span style="font-size: 11px; color: #64748b;">Cierre:</span><br>
+                            <input type="text" class="cedit" placeholder="dd/mm/aaaa"
+                                style="font-weight:bold; font-size:14px; text-align:center;">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="content-box">
-            <span class="info-label" style="text-align: left;">Contenido Específico (Formatos Contenidos)</span>
-            <textarea class="cedit content-list" placeholder="Liste aquí los códigos y nombres de formatos...">• FO-LC-24 Dosificación (Células)
-• FO-LC-25 Dosificación de Exosomas
-• FO-LC-33 Etiquetado y Acondicionamiento</textarea>
-        </div>
-
-        <div class="legal-box">
-            <div class="legal-title">AVISO DE CONFIDENCIALIDAD</div>
-            <div style="text-align: center; padding: 0 10px;">
-                El contenido de los documentos en este recopilador es propiedad de
-                <strong>"Xelle Scientific", S.A.P.I., de C. V.</strong>, y está protegido por los derechos
-                de autor, por lo que está prohibida su reproducción total o parcial.
+            <div class="content-box">
+                <span class="info-label" style="text-align: left;">Contenido Específico (Formatos Contenidos)</span>
+                <textarea class="cedit content-list"
+                    placeholder="Liste aquí los códigos y nombres de formatos..."></textarea>
             </div>
 
-            <hr class="legal-hr">
+            <div class="legal-box">
+                <div class="legal-title">AVISO DE CONFIDENCIALIDAD</div>
+                <div style="text-align: center; padding: 0 10px;">
+                    El contenido de los documentos en este recopilador es propiedad de
+                    <strong>"Xelle Scientific", S.A.P.I., de C. V.</strong>, y está protegido por los derechos
+                    de autor, por lo que está prohibida su reproducción total o parcial.
+                </div>
 
-            <div class="legal-title">TIEMPO DE RESGUARDO</div>
-            <div style="text-align: center; font-weight: bold; font-size: 11px; color: #b45309;">
-                Físico: 1 año activo &nbsp;|&nbsp; Disposición Final: Archivo Muerto / Destrucción controlada.
+                <hr class="legal-hr">
+
+                <div class="legal-title">TIEMPO DE RESGUARDO</div>
+                <div style="text-align: center; font-weight: bold; font-size: 11px; color: #b45309;">
+                    Físico: 1 año activo &nbsp;|&nbsp; Disposición Final: Archivo Muerto / Destrucción controlada.
+                </div>
             </div>
         </div>
-    </div>
+    </template>
 
+    <script src="folder-catalog-data.js"></script>
     <script>
-        // Auto-ajustar altura de textareas
-        const textareas = document.querySelectorAll('textarea.cedit');
-        textareas.forEach(ta => {
-            ta.addEventListener('input', function () {
-                this.style.height = 'auto';
-                this.style.height = (this.scrollHeight) + 'px';
+        function autosizeTextareas(scope) {
+            const textareas = scope.querySelectorAll('textarea.cedit');
+            textareas.forEach(ta => {
+                ta.addEventListener('input', function () {
+                    this.style.height = 'auto';
+                    this.style.height = this.scrollHeight + 'px';
+                });
+                ta.style.height = 'auto';
+                ta.style.height = ta.scrollHeight + 'px';
             });
-            ta.style.height = 'auto';
-            ta.style.height = (ta.scrollHeight) + 'px';
-        });
+        }
+
+        function formatListText(formats) {
+            return (formats || []).map(item => '• ' + item.code + ' ' + item.name).join('\n');
+        }
+
+        function renderFromCatalog() {
+            const container = document.getElementById('pages-container');
+            const template = document.getElementById('cover-template');
+            container.innerHTML = '';
+
+            const folders = window.CARPETAS_SGC || [];
+            folders.forEach(folder => {
+                const clone = template.content.cloneNode(true);
+                clone.querySelector('.folder-title').value = folder.title || '';
+                clone.querySelector('[data-field="area"]').value = folder.area || '';
+                clone.querySelector('.content-list').value = formatListText(folder.formats);
+                autosizeTextareas(clone);
+                container.appendChild(clone);
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', renderFromCatalog);
     </script>
 </body>
 

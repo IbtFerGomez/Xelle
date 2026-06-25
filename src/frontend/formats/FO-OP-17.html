@@ -3,46 +3,355 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-OP-17 Remisión</title>
-    <link rel="stylesheet" id="op-styles" href="format-styles-operaciones.css">
+    <title>FO-OP-17 Remisión y Despacho a Repartición</title>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        (function () {
-            const styleEl = document.getElementById('op-styles');
-            const styleCandidates = [
-                'format-styles-operaciones.css',
-                '/formats/format-styles-operaciones.css'
-            ];
-            let styleIndex = 0;
-
-            styleEl.addEventListener('error', function () {
-                styleIndex += 1;
-                if (styleIndex < styleCandidates.length) {
-                    styleEl.href = styleCandidates[styleIndex];
-                }
-            });
-
-            const scriptCandidates = [
-                'format-app-operaciones.js',
-                '/formats/format-app-operaciones.js'
-            ];
-            let scriptIndex = 0;
-
-            const loadScript = function () {
-                if (scriptIndex >= scriptCandidates.length) return;
-                const script = document.createElement('script');
-                script.src = scriptCandidates[scriptIndex++];
-                script.onerror = loadScript;
-                document.head.appendChild(script);
-            };
-
-            loadScript();
-        })();
-    </script>
     <style>
-        /* Estilo para fijar el footer al final de la hoja en impresión */
+        /* ================================================================
+           FO-OP-17 — Estilos autocontenidos
+           ================================================================ */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --danger-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --border-color: #d1d5db;
+            --bg-color: #f3f4f6;
+            --input-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 12px;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: #333;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            background-color: white;
+            width: 95%;
+            max-width: 1400px;
+            margin: 0;
+            padding: 40px 50px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            min-height: 279mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .logo-container svg {
+            height: 70px;
+            width: auto;
+            display: block;
+        }
+
+        .header-main {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .header-main h1 {
+            font-size: 18px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .metadata {
+            font-size: 11px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .registry-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .registry-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 2px;
+        }
+
+        .registry-prefix {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 5px;
+            font-size: 14px;
+        }
+
+        .registry-input {
+            font-weight: bold;
+            color: var(--secondary-color);
+            text-align: center;
+            border: 1px dashed #ccc;
+            font-size: 14px;
+            width: 100px;
+        }
+
+        .registry-date {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            font-size: 10px;
+            color: #666;
+            text-align: right;
+            width: 110px;
+            background: transparent;
+        }
+
+        .barcode-svg {
+            max-height: 40px;
+            display: block;
+            margin-top: 5px;
+        }
+
+        input:not([type="checkbox"]):not([type="radio"]),
+        select,
+        textarea,
+        .cedit {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-bg);
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 11px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            background-color: white;
+            table-layout: fixed;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border-color);
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: middle;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .compact-table th,
+        .compact-table td {
+            padding: 4px 6px;
+            font-size: 10px;
+        }
+
+        .no-border-table,
+        .no-border-table td,
+        .no-border-table th {
+            border: none !important;
+            background: transparent !important;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #fff;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 5px 10px 5px 25px;
+            font-weight: bold;
+            margin: -15px -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .global-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: white;
+            font-size: 13px;
+            min-width: 100px;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+
+        .btn-mini {
+            padding: 4px 8px;
+            font-size: 10px;
+            border-radius: 4px;
+            margin-left: 5px;
+            color: white;
+            cursor: pointer;
+            min-width: auto;
+        }
+
+        .signature-area {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            width: 100%;
+            page-break-inside: avoid;
+        }
+
+        .signature-box {
+            width: 40%;
+            text-align: center;
+        }
+
+        .signature-box input {
+            border: none;
+            border-bottom: 1px solid #333;
+            text-align: center;
+            background: transparent;
+        }
+
+        .footer {
+            margin-top: auto;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            font-size: 9px;
+            color: #999;
+            text-align: center;
+            width: 100%;
+        }
+
+        .legend-box {
+            border: 1px solid #bee3f8;
+            background-color: #ebf8ff;
+            border-radius: 6px;
+            padding: 8px 14px;
+            font-size: 10px;
+            color: #2c5282;
+            margin-bottom: 18px;
+        }
+
+        .print-only-value {
+            display: none;
+        }
+
+        /* ---- Media Print ---- */
         @media print {
+            @page {
+                size: letter;
+                margin: 0.8cm;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: white;
+                display: block;
+            }
+
+            .container {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                min-height: auto;
+            }
+
+            .global-controls,
+            .no-print,
+            .btn {
+                display: none !important;
+            }
+
             .footer {
                 position: fixed;
                 bottom: 0;
@@ -60,11 +369,49 @@
                 padding-bottom: 50px;
             }
 
-            .no-print {
+            input:not([type="checkbox"]):not([type="radio"]),
+            textarea,
+            .cedit,
+            .registry-date {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                color: #000;
+                font-weight: 500;
+                resize: none;
+            }
+
+            select {
+                display: none !important;
+                -webkit-appearance: none !important;
+                -moz-appearance: none !important;
+                appearance: none !important;
+                background-image: none !important;
+            }
+
+            select::-ms-expand {
                 display: none !important;
             }
 
-            /* Permitir que las tablas y secciones se partan entre páginas */
+            .print-only-value {
+                display: inline-block !important;
+                font-weight: 500;
+                color: #000;
+            }
+
+            .section {
+                border: none !important;
+                padding: 0 !important;
+                margin-bottom: 20px !important;
+            }
+
+            .section-title {
+                background-color: #333 !important;
+                color: white !important;
+                border: 1px solid #000;
+            }
+
             .section {
                 page-break-inside: auto !important;
                 break-inside: auto !important;
@@ -114,15 +461,13 @@
                 color: transparent !important;
             }
 
-            select {
-                -webkit-appearance: none !important;
-                -moz-appearance: none !important;
-                appearance: none !important;
-                background-image: none !important;
+            input[type="date"]::-webkit-calendar-picker-indicator {
+                display: none !important;
             }
 
-            select::-ms-expand {
-                display: none !important;
+            input[type="date"] {
+                background: transparent !important;
+                min-width: 80px;
             }
         }
     </style>
@@ -183,12 +528,12 @@
         </div>
 
         <div class="header-main">
-            <h1>NOTA DE REMISIÓN Y ENTREGA</h1>
+            <h1>NOTA DE REMISIÓN Y DESPACHO A REPARTICIÓN</h1>
             <div class="metadata">Código: FO-OP-17 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
         </div>
         <div class="legend-box">
             <div><strong>Cruce Documental Obligatorio:</strong><br>FO-CP-01 (Orden compra) ➜ FO-OP-15 (Pedido) ➜
-                FO-OP-15-B (Fabricación) ➜ FO-OP-16 (Surtido) ➜ FO-OP-17 (Remision y entrega)</div>
+                FO-OP-15-B (Fabricación) ➜ FO-OP-16 (Surtido) ➜ FO-OP-17 (Remisión y despacho a repartición)</div>
         </div>
         <div class="section">
             <div class="section-title">1. Datos del Cliente y Referencias</div>
@@ -227,94 +572,498 @@
         </div>
 
         <div class="section">
-            <div class="section-title">3. Acuse de Recibo</div>
+            <div class="section-title">3. Cierre de Trazabilidad — Despacho a Repartición</div>
             <div style="border: 1px solid #ddd; padding: 15px; background-color: #fcfcfc;">
-                <p style="font-size:10px; text-align:justify; margin-bottom:15px;">
-                    Por medio de la presente, acuso recibo de los productos descritos anteriormente, validando que el
-                    empaque se encuentra íntegro, sellado y manteniendo las condiciones de temperatura requeridas para
-                    su conservación.
+                <p style="font-size:10px; text-align:justify; margin-bottom:12px; color:#555;">
+                    Este registro constituye el punto de cierre de trazabilidad de dosis. El producto sale de custodia
+                    de Xelle Scientific y es transferido a la paquetería o transportista responsable de la distribución.
+                    No aplica acuse de recibo por entrega final al cliente.
                 </p>
-                <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-                    <div style="width:30%">
-                        <strong>Fecha Recepción:</strong> <input type="text" class="cedit" name="fecha_recepcion">
+                <table class="no-border-table" style="width:100%; margin-bottom:10px;">
+                    <tr>
+                        <td><strong>Paquetería / Transportista:</strong>
+                            <input class="cedit" name="paqueteria" placeholder="Ej. FedEx, DHL, Estafeta...">
+                        </td>
+                        <td><strong>N° de Guía / Tracking:</strong>
+                            <input class="cedit" name="num_guia" placeholder="Número de guía">
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td><strong>Hora de Entrega a Paquetería:</strong>
+                            <input type="text" class="cedit" name="hora_despacho">
+                        </td>
+                        <td><strong>N° de Bultos / Paquetes:</strong>
+                            <input class="cedit" name="num_bultos" style="width:80px; text-align:center;"
+                                placeholder="0">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" style="width:fit-content;">
+                            <strong>Condición del Empaque al Despacho:</strong>
+                            <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:6px; font-size:10px;">
+                                <label style="display:flex; align-items:center; gap:4px;width:fit-content">
+                                    <input type="checkbox" name="cond_integro_sellado"> Íntegro y sellado
+                                </label>
+                                <label style="display:flex; align-items:center; gap:4px; width:fit-content">
+                                    <input type="checkbox" name="cond_empaque_cerrado"> Empaque cerrado / sin apertura
+                                </label>
+                                <label style="display:flex; align-items:center; gap:4px;width:fit-content">
+                                    <input type="checkbox" name="cond_etiqueta_visible"> Etiqueta visible y legible
+                                </label>
+                                <label style="display:flex; align-items:center; gap:4px;width:fit-content">
+                                    <input type="checkbox" name="cond_sin_humedad"> Sin signos de humedad o derrame
+                                </label>
+                                <label style="display:flex; align-items:center; gap:4px;width:fit-content">
+                                    <input type="checkbox" name="cond_temp_correcta"> Temperatura correcta al despacho
+                                </label>
+                                <label style="display:flex; align-items:center; gap:4px;width:fit-content">
+                                    <input type="checkbox" name="cond_dano_menor"> Daño menor (especificar en obs.)
+                                </label>
+                                <label style="display:flex; align-items:center; gap:4px;width:fit-content">
+                                    <input type="checkbox" name="cond_requiere_obs"> Requiere observación especial
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><strong>Observaciones:</strong>
+                            <TEXTAREA class="cedit" name="obs_despacho"
+                                placeholder="Instrucciones especiales, aclaraciones, etc."
+                                style="width:90%;"></TEXTAREA>
+                        </td>
+                    </tr>
+                </table>
+                <div style="display:flex; justify-content:space-around; align-items:flex-end; margin-top:30px;">
+
+                    <div style="width:40%; text-align:center;">
+                        <input type="text" class="cedit" name="receptor_paqueteria"
+                            style="width:100%; border:none; border-bottom:1px solid #333; text-align:center;">
+                        <div style="font-size:9px; margin-top:4px;">Nombre y Firma — Transportista
+                        </div>
                     </div>
-                    <div style="width:30%">
-                        <strong>Hora:</strong> <input type="text" class="cedit" name="hora_recepcion">
-                    </div>
-                    <!-- <div style="width:30%">
-                        <strong>Temp. Recepción:</strong> <input class="cedit" name="temperatura_recepcion"
-                            style="width:60px; text-align:center;">
-                        °C
-                    </div> -->
-                </div>
-                <div
-                    style="margin-top:40px; border-top:1px solid #333; width:60%; margin-left:auto; margin-right:auto; text-align:center; padding-top:5px;">
-                    Nombre y Firma de Conformidad
                 </div>
             </div>
         </div>
 
         <div class="signature-area" style="margin-top: 30px;">
             <div class="signature-box">
-                <p>Elaboró (Almacén / Logística):</p><input type="text">
+                <p>Elaboró Logística:</p><input type="text">
                 <p>Firma</p>
             </div>
             <div class="signature-box">
-                <p>Revisó (Coordinación de Embarques):</p><input type="text">
+                <p>Revisó Coordinación de Embarques:</p><input type="text">
                 <p>Firma</p>
             </div>
             <div class="signature-box">
-                <p>Autorizó (Gerencia de Operaciones):</p><input type="text">
+                <p>Autorizó Gerencia de Operaciones:</p><input type="text">
                 <p>Firma</p>
             </div>
         </div>
 
-        <div class="footer">FO-OP-17 | REMISIÓN | Versión: 1.0<br>El contenido de este documento es propiedad de
+        <div class="footer">FO-OP-17 | REMISIÓN Y DESPACHO A REPARTICIÓN | Versión: 1.0<br>El contenido de este
+            documento es propiedad de
             &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que
             está prohibida su reproducción total o parcial.</div>
     </div>
     <script>
-        let isOfflineMode = false;
+        /* ================================================================
+           FO-OP-17 — JS autocontenido (standalone)
+           No requiere format-app-operaciones.js externo
+           ================================================================ */
+        const API_URL = '/api';
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const barcodeInput = document.querySelector('.generate-barcode');
-            if (barcodeInput) {
-                const renderBarcode = function () {
-                    const targetId = barcodeInput.dataset.target;
-                    const prefix = barcodeInput.dataset.prefix || '';
-                    const value = String(barcodeInput.value || '').trim();
-                    const normalizedValue = prefix && value.startsWith(prefix)
-                        ? value.slice(prefix.length)
-                        : value;
-                    if (!targetId || !window.JsBarcode) return;
+        const AppCom = {
+            config: {
+                DB_PRODUCTS: {
+                    'Stem Xelle': { lotPre: 'XCM', pres: ['10 M', '25 M', '50 M', '100 M'] },
+                    'Stem Ortho': { lotPre: 'XOR', pres: ['10 M', '25 M', '50 M', '100 M'] },
+                    'Hybrid Xelle': { lotPre: 'XHY', pres: ['10M + 1B', '25M + 2B', '50M + 5B', '60M + 6B', '100M + 10B'] },
+                    'Hybrid Ortho': { lotPre: 'XHO', pres: ['10M + 1B', '25M + 2B', '50M + 5B', '60M + 6B', '100M + 10B'] },
+                    'X-Breath Nebulizer': { lotPre: 'XNB', pres: ['Única'] },
+                    'X-Exosomes': { lotPre: 'EXO', pres: ['3B', '9B', '15B', '30B', '75B', '90B'] },
+                    'X-Exosomes HA': { lotPre: 'XHA', pres: ['Única'] },
+                    'X-Implant': { lotPre: 'XIM', pres: ['1 G', '2 G'] },
+                    'X-Wound Care': { lotPre: 'XWC', pres: ['5 x 5', '10 x 10', '10 x 15'] },
+                    'Otro': { lotPre: '', pres: [] }
+                }
+            },
 
-                    if (normalizedValue !== value) {
-                        barcodeInput.value = normalizedValue;
+            init: function () {
+                const docId = document.body.id;
+                console.log('FO-OP-17 standalone v1.0 iniciando');
+                this.Universal.ensureFieldIds(docId);
+                this.Universal.setupDateInputs();
+                this.Universal.setupBarcodes();
+                this.Universal.loadData(docId);
+                this.Universal.setupPrintHandler();
+                this.FO_OP_17.init();
+            },
+
+            Universal: {
+                ensureFieldIds: function (docId) {
+                    const pfx = String(docId || '').replace(/^doc-/, '').replace(/-/g, '_');
+                    Array.from(document.querySelectorAll('input, select, textarea'))
+                        .filter(el => el.type !== 'submit' && el.type !== 'button')
+                        .forEach((el, i) => {
+                            if (!el.id) {
+                                if (el.name) el.id = `${pfx}_${el.name}`;
+                                else if (el.placeholder) el.id = `${pfx}_${el.placeholder.toLowerCase().replace(/[^a-z0-9]/g, '_').substring(0, 30)}_${i}`;
+                                else el.id = `${pfx}_${el.tagName.toLowerCase()}_${i}`;
+                            }
+                        });
+                },
+                getInstanceCode: function () {
+                    return (new URLSearchParams(window.location.search).get('instance') || '').trim();
+                },
+                isNewMode: function () {
+                    const v = String(new URLSearchParams(window.location.search).get('new') || '').toLowerCase();
+                    return v === '1' || v === 'true' || v === 'yes';
+                },
+                setInstanceCode: function (code) {
+                    if (!code) return;
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('instance', code);
+                    window.history.replaceState({}, '', url.toString());
+                },
+                getStorageKey: function (docId, instanceCode) {
+                    const code = String(instanceCode || this.getInstanceCode() || '').trim();
+                    return code ? `xelle_operaciones_${docId}_${code}` : `xelle_operaciones_${docId}`;
+                },
+                getSession: function () {
+                    try { return JSON.parse(localStorage.getItem('xelle_session') || 'null') || null; } catch (e) { return null; }
+                },
+                getCurrentUserId: function () {
+                    const s = this.getSession();
+                    const raw = s?.id ?? s?.userId ?? s?.user_id ?? null;
+                    const n = Number(raw);
+                    return Number.isFinite(n) ? n : null;
+                },
+                getFormatType: function (docId) {
+                    const inp = document.querySelector('.generate-barcode');
+                    const prefix = (inp?.dataset?.prefix || '').trim();
+                    if (prefix) return prefix.replace(/-$/, '');
+                    return String(docId || '').replace(/^doc-/, '').toUpperCase();
+                },
+                getFieldKey: function (el, i) {
+                    if (el.id) return `id:${el.id}`;
+                    if (el.name) return `name:${el.name}`;
+                    return `idx:${i}`;
+                },
+                collectData: function () {
+                    const data = {};
+                    Array.from(document.querySelectorAll('input, select, textarea'))
+                        .filter(el => el.type !== 'submit')
+                        .forEach((el, i) => {
+                            const k = this.getFieldKey(el, i);
+                            if (el.type === 'checkbox') data[k] = el.checked;
+                            else if (el.type === 'radio') { if (el.checked) data[k] = el.value; }
+                            else data[k] = el.value;
+                        });
+                    return data;
+                },
+                applyDataToForm: function (data) {
+                    if (!data || typeof data !== 'object') return;
+                    Array.from(document.querySelectorAll('input, select, textarea'))
+                        .filter(el => el.type !== 'submit')
+                        .forEach((el, i) => {
+                            const k = this.getFieldKey(el, i);
+                            if (!(k in data)) return;
+                            const val = data[k];
+                            if (el.type === 'checkbox') el.checked = Boolean(val);
+                            else if (el.type === 'radio') el.checked = String(el.value) === String(val);
+                            else el.value = val ?? '';
+                            el.dispatchEvent(new Event('input'));
+                            el.dispatchEvent(new Event('change'));
+                        });
+                },
+                normalizeBarcodeValue: function (input) {
+                    if (!input) return '';
+                    const prefix = String(input.dataset?.prefix || '').trim();
+                    let raw = String(input.value || '').trim();
+                    if (prefix && raw.startsWith(prefix)) raw = raw.slice(prefix.length).trim();
+                    if (input.value !== raw) input.value = raw;
+                    return raw;
+                },
+                ensureBarcodeValueFromCode: function (instanceCode) {
+                    const inp = document.querySelector('.generate-barcode');
+                    if (!inp || !instanceCode) return;
+                    const prefix = inp.dataset.prefix || '';
+                    let raw = instanceCode;
+                    if (prefix && instanceCode.startsWith(prefix)) raw = instanceCode.slice(prefix.length);
+                    inp.value = raw;
+                    inp.dispatchEvent(new Event('input'));
+                },
+                setupDateInputs: function () {
+                    document.querySelectorAll('input[type="date"]').forEach(inp => {
+                        if (!inp.value && !inp.classList.contains('no-auto-date')) inp.valueAsDate = new Date();
+                    });
+                },
+                setupBarcodes: function () {
+                    const process = (input) => {
+                        const prefix = input.dataset.prefix || '';
+                        const targetId = input.dataset.target;
+                        const val = this.normalizeBarcodeValue(input);
+                        const targetEl = targetId ? document.getElementById(targetId) : null;
+                        if (!val) { if (targetEl) targetEl.innerHTML = ''; return; }
+                        if (window.JsBarcode) {
+                            try { JsBarcode(`#${targetId}`, prefix + val, { format: 'CODE128', height: 30, displayValue: true, fontSize: 10, margin: 0 }); } catch (e) { }
+                        }
+                    };
+                    document.querySelectorAll('.generate-barcode').forEach(inp => {
+                        inp.addEventListener('input', (e) => process.call(this, e.target));
+                        if (inp.value) process.call(this, inp);
+                    });
+                },
+                setupPrintHandler: function () {
+                    const getSelectText = (sel) => {
+                        if (!sel) return '';
+                        const opt = sel.selectedOptions?.[0] || sel.options?.[sel.selectedIndex] || null;
+                        return String(opt?.text || sel.value || '').trim();
+                    };
+                    const ensureSpan = (sel) => {
+                        if (!sel || !sel.parentNode) return null;
+                        let span = sel.nextElementSibling;
+                        if (!span || !span.classList.contains('print-only-value')) {
+                            span = document.createElement('span');
+                            span.className = 'print-only-value';
+                            sel.parentNode.insertBefore(span, sel.nextSibling);
+                        }
+                        return span;
+                    };
+                    const sync = (sel) => { const span = ensureSpan(sel); if (span) span.textContent = getSelectText(sel); };
+                    document.addEventListener('change', (e) => { if (e.target?.tagName === 'SELECT') sync(e.target); });
+                    window.addEventListener('beforeprint', () => { document.querySelectorAll('select').forEach(sync); });
+                },
+                persistInstance: async function (docId, data) {
+                    const inp = document.querySelector('.generate-barcode');
+                    const prefix = inp?.dataset?.prefix || '';
+                    const raw = this.normalizeBarcodeValue(inp);
+                    if (!raw) throw new Error('Debe ingresar un código de folio único');
+                    const uniqueCode = `${prefix}${raw}`;
+                    const urlCode = this.getInstanceCode();
+                    const isUpdate = urlCode && uniqueCode === urlCode;
+                    const userId = this.getCurrentUserId();
+                    const formatType = this.getFormatType(docId);
+                    const payload = { unique_code: uniqueCode, format_type: formatType, status: 'DRAFT', data_payload: data, user_id: userId, notes: '' };
+                    let response;
+                    if (isUpdate) {
+                        response = await fetch(`${API_URL}/format-instances/${encodeURIComponent(uniqueCode)}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'DRAFT', data_payload: data, user_id: userId }) });
+                    } else {
+                        response = await fetch(`${API_URL}/format-instances`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    }
+                    const result = await response.json().catch(() => ({}));
+                    if (!response.ok) throw new Error(result.msg || 'No se pudo guardar en servidor');
+                    this.setInstanceCode(uniqueCode);
+                    return uniqueCode;
+                },
+                saveData: async function () {
+                    const docId = document.body.id;
+                    const inp = document.querySelector('.generate-barcode');
+                    if (!String(inp?.value || '').trim()) {
+                        Swal.fire({ icon: 'error', title: 'Error', text: 'Debe ingresar un folio antes de guardar', confirmButtonText: 'Entendido' });
+                        return;
+                    }
+                    const data = this.collectData();
+                    Object.assign(data, AppCom.FO_OP_17.getCustomData());
+                    try {
+                        const instanceCode = await this.persistInstance(docId, data);
+                        localStorage.setItem(this.getStorageKey(docId, instanceCode), JSON.stringify(data));
+                        const urlCode = new URLSearchParams(window.location.search).get('instance');
+                        const wasUpdate = urlCode && urlCode === instanceCode;
+                        Swal.fire({ icon: 'success', title: wasUpdate ? 'Actualizado' : 'Guardado', text: instanceCode, timer: 2500, showConfirmButton: false });
+                    } catch (e) {
+                        Swal.fire({ icon: 'error', title: 'Error al Guardar', text: e.message || 'No se pudo guardar el formato', confirmButtonText: 'Entendido' });
+                    }
+                },
+                loadData: async function (docId) {
+                    if (this.isNewMode()) return;
+                    const instanceCode = this.getInstanceCode();
+                    let data = null;
+                    if (instanceCode) {
+                        try {
+                            const res = await fetch(`${API_URL}/format-instances/${encodeURIComponent(instanceCode)}`);
+                            const payload = await res.json().catch(() => ({}));
+                            if (res.ok && payload?.data_payload) {
+                                data = payload.data_payload;
+                                this.ensureBarcodeValueFromCode(instanceCode);
+                                localStorage.setItem(this.getStorageKey(docId, instanceCode), JSON.stringify(data));
+                            }
+                        } catch (e) { console.error('Error cargando desde servidor:', e); }
+                    }
+                    if (!data && instanceCode) {
+                        const saved = localStorage.getItem(this.getStorageKey(docId, instanceCode));
+                        if (saved) { try { data = JSON.parse(saved); } catch (e) { data = null; } }
+                    }
+                    if (!data) return;
+                    AppCom.FO_OP_17.loadCustomData(data);
+                    this.applyDataToForm(data);
+                },
+                clearForm: function () {
+                    Swal.fire({ title: '¿Limpiar todo?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'Sí' }).then((r) => {
+                        if (r.isConfirmed) { localStorage.removeItem(this.getStorageKey(document.body.id)); location.reload(); }
+                    });
+                },
+                printForm: function () { window.print(); },
+                fillProdSelect: function (selectEl) {
+                    const opts = Object.keys(AppCom.config.DB_PRODUCTS).map(p => `<option value="${p}">${p}</option>`).join('');
+                    selectEl.innerHTML = `<option value="">Seleccionar Producto...</option>${opts}`;
+                },
+                getPresentationValue: function (row) {
+                    const presSelect = row?.querySelector('.pres-select');
+                    const presInput = row?.querySelector('.pres-input');
+
+                    if (presSelect) {
+                        const selected = String(presSelect.value || '').trim();
+                        if (!selected || selected === '-') return '';
+                        if (selected === 'Especial') {
+                            const custom = String(presInput?.value || '').trim();
+                            return custom ? `Especial: ${custom}` : 'Especial';
+                        }
+                        return selected;
                     }
 
-                    if (!normalizedValue) {
-                        const targetEl = document.getElementById(targetId);
-                        if (targetEl) targetEl.innerHTML = '';
+                    return String(presInput?.value || '').trim();
+                },
+                onProdChange: function (selectEl, storedPresentation = '') {
+                    const row = selectEl.closest('tr');
+                    const val = selectEl.value;
+                    const presCell = row.querySelector('.pres-select, .pres-input')?.parentElement;
+                    if (!presCell) return;
+
+                    const savedPresentation = String(storedPresentation || '').trim();
+
+                    if (val === 'Otro') {
+                        presCell.innerHTML = '<input type="text" class="cedit pres-input" placeholder="Presentación libre">';
+                        const freeInput = presCell.querySelector('.pres-input');
+                        if (freeInput) freeInput.value = savedPresentation;
                         return;
                     }
 
-                    try {
-                        JsBarcode(`#${targetId}`, prefix + normalizedValue, {
-                            format: 'CODE128',
-                            height: 30,
-                            displayValue: true,
-                            fontSize: 10,
-                            margin: 0
-                        });
-                    } catch (e) {
-                        console.warn('No se pudo renderizar el código de barras en FO-OP-17', e);
-                    }
-                };
+                    const product = AppCom.config.DB_PRODUCTS[val];
+                    const presOptions = product ? [...product.pres, 'Especial'] : [];
+                    presCell.innerHTML = `
+                        <select class="cedit pres-select"><option>-</option></select>
+                        <input type="text" class="cedit pres-input" placeholder="Presentación especial" style="display:none; margin-top:4px;">
+                    `;
 
-                barcodeInput.addEventListener('input', renderBarcode);
-                renderBarcode();
+                    const presSelect = presCell.querySelector('.pres-select');
+                    const presInput = presCell.querySelector('.pres-input');
+                    presOptions.forEach(p => presSelect.add(new Option(p, p)));
+
+                    const syncSpecialInput = () => {
+                        const isSpecial = presSelect.value === 'Especial';
+                        presInput.style.display = isSpecial ? 'block' : 'none';
+                        if (!isSpecial) presInput.value = '';
+                    };
+
+                    presSelect.addEventListener('change', syncSpecialInput);
+
+                    let selectedPresentation = savedPresentation;
+                    let customSpecial = '';
+
+                    if (/^Especial\s*:/i.test(savedPresentation)) {
+                        selectedPresentation = 'Especial';
+                        customSpecial = savedPresentation.replace(/^Especial\s*:/i, '').trim();
+                    } else if (savedPresentation && savedPresentation !== '-' && !presOptions.includes(savedPresentation)) {
+                        selectedPresentation = 'Especial';
+                        customSpecial = savedPresentation;
+                    }
+
+                    if (selectedPresentation && selectedPresentation !== '-' && presOptions.includes(selectedPresentation)) {
+                        presSelect.value = selectedPresentation;
+                    } else {
+                        presSelect.value = '-';
+                    }
+
+                    if (presSelect.value === 'Especial') {
+                        presInput.value = customSpecial;
+                    }
+
+                    syncSpecialInput();
+                }
+            },
+
+            FO_OP_17: {
+                init: function () {
+                    if (document.querySelector('#tbl-remision tbody').children.length === 0) this.addRemisionRow();
+                    this.ensureAutoBarcode();
+                },
+                ensureAutoBarcode: async function () {
+                    const inp = document.querySelector('.generate-barcode');
+                    if (!inp) return;
+                    const hasValue = Boolean(String(inp.value || '').trim());
+                    const hasInstance = Boolean(AppCom.Universal.getInstanceCode());
+                    if (hasValue || hasInstance) { if (hasValue) inp.dispatchEvent(new Event('input')); return; }
+                    try {
+                        const ft = AppCom.Universal.getFormatType(document.body.id);
+                        const res = await fetch(`${API_URL}/formats/generate-unique-code`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ format_type: ft }) });
+                        const payload = await res.json().catch(() => ({}));
+                        if (!res.ok || !payload.unique_code) throw new Error(payload.msg || 'Sin código único');
+                        const code = String(payload.unique_code).trim();
+                        AppCom.Universal.setInstanceCode(code);
+                        AppCom.Universal.ensureBarcodeValueFromCode(code);
+                    } catch (e) { console.warn('No se pudo autogenerar el folio de FO-OP-17', e); }
+                },
+                addRemisionRow: function () {
+                    const r = document.createElement('tr');
+                    r.innerHTML = `
+                        <td><input type="number" class="cedit text-center"></td>
+                        <td><select class="cedit prod-select" onchange="AppCom.Universal.onProdChange(this)"></select></td>
+                        <td><select class="cedit pres-select"><option>-</option></select></td>
+                        <td><input class="cedit" placeholder="Lote"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>`;
+                    document.querySelector('#tbl-remision tbody').appendChild(r);
+                    AppCom.Universal.fillProdSelect(r.querySelector('.prod-select'));
+                },
+                getCustomData: function () {
+                    const rows = [];
+                    document.querySelectorAll('#tbl-remision tbody tr').forEach(tr => {
+                        rows.push({
+                            c: tr.querySelector('td:nth-child(1) input')?.value || '',
+                            p: tr.querySelector('.prod-select')?.value || '',
+                            pr: AppCom.Universal.getPresentationValue(tr),
+                            l: tr.querySelector('td:nth-child(4) input')?.value || '',
+                            cad: tr.querySelector('td:nth-child(5) input')?.value || ''
+                        });
+                    });
+                    return { t_rem: rows };
+                },
+                loadCustomData: function (data) {
+                    if (!data?.t_rem) return;
+                    const tb = document.querySelector('#tbl-remision tbody');
+                    tb.innerHTML = '';
+                    data.t_rem.forEach(x => {
+                        this.addRemisionRow();
+                        const row = tb.lastElementChild;
+                        const cantEl = row.querySelector('td:nth-child(1) input');
+                        const prodEl = row.querySelector('.prod-select');
+                        const loteEl = row.querySelector('td:nth-child(4) input');
+                        const cadEl = row.querySelector('td:nth-child(5) input');
+                        if (cantEl) cantEl.value = x.c || '';
+                        if (prodEl) {
+                            prodEl.value = x.p || '';
+                            AppCom.Universal.onProdChange(prodEl, x.pr || '');
+                        }
+                        if (loteEl) loteEl.value = x.l || '';
+                        if (cadEl) cadEl.value = x.cad || '';
+                    });
+                }
             }
-        });
+        };
+
+        document.addEventListener('DOMContentLoaded', () => AppCom.init());
+
+        /* ---- Funciones globales expuestas a botones HTML ---- */
+        window.saveForm = () => AppCom.Universal.saveData();
+        window.printForm = () => AppCom.Universal.printForm();
+        window.clearForm = () => AppCom.Universal.clearForm();
+        window.addRemisionRow = () => AppCom.FO_OP_17.addRemisionRow();
+
+        /* ---- Modo Offline ---- */
+        let isOfflineMode = false;
 
         function toggleOfflineMode() {
             isOfflineMode = !isOfflineMode;
@@ -322,8 +1071,6 @@
             if (isOfflineMode) {
                 btn.textContent = 'Modo Online';
                 btn.style.backgroundColor = '#f59e0b';
-
-                // Convertir <select> a <input type="text">
                 document.querySelectorAll('select.cedit').forEach(sel => {
                     const input = document.createElement('input');
                     input.type = 'text';

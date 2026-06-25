@@ -26,7 +26,7 @@
             margin: 0 auto;
             background: white;
             padding: 0.8cm;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .section-header {
@@ -96,8 +96,13 @@
             outline: 1px dashed #3b82f6;
         }
 
-        .text-center { text-align: center !important; }
-        .text-left { text-align: left !important; }
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-left {
+            text-align: left !important;
+        }
 
         .group-header td {
             background-color: #f1f5f9;
@@ -146,11 +151,32 @@
         }
 
         @media print {
-            .global-controls, .no-print { display: none !important; }
-            body { background: white; padding: 0; }
-            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
-            ::-webkit-input-placeholder { color: transparent !important; }
-            ::placeholder { color: transparent !important; }
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
         }
     </style>
 </head>
@@ -167,34 +193,51 @@
         <div class="header-top">
             <div class="logo-container">
                 <svg viewBox="0 0 320 80" style="width: 200px;">
-                    <defs><style>.c { fill: #2E9D82 }</style></defs>
+                    <defs>
+                        <style>
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
                     <g transform="translate(0,-2) scale(0.85)">
-                        <circle class="c" cx="25" cy="25" r="13"/>
-                        <circle class="c" cx="75" cy="75" r="13"/>
-                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
                     </g>
-                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
-                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                        font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                        font-size="19">SCIENTIFIC</text>
                 </svg>
             </div>
             <div class="registry-container">
                 <label>Folio del Listado</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-SGC-08-</span>
-                    <input type="text" id="reg-sgc08" class="registry-input generate-barcode cedit" 
-                           data-target="barcode-sgc08" data-prefix="FO-SGC-08-" placeholder="202X-00" style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                    <input type="text" id="reg-sgc08" class="registry-input generate-barcode cedit"
+                        data-target="barcode-sgc08" data-prefix="FO-SGC-08-" placeholder="202X-00"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
                 </div>
                 <svg id="barcode-sgc08" class="barcode-svg" style="height:35px;"></svg>
             </div>
         </div>
 
         <div class="header-main">
-            <h1 style="color: #1E3A5F; text-align: center; margin: 0; font-size: 18px;">ÍNDICE MAESTRO DE POLÍTICAS DEL SISTEMA DE GESTIÓN DE CALIDAD</h1>
-            <div style="text-align: center; font-size: 10px; color: #666; margin-top: 5px;">Código: FO-SGC-08 | Versión: 1.0 | Vigencia: JUN 2026 | Página: 1 de 2</div>
+            <h1 style="color: #1E3A5F; text-align: center; margin: 0; font-size: 18px;">ÍNDICE MAESTRO DE POLÍTICAS DEL
+                SISTEMA DE GESTIÓN DE CALIDAD</h1>
+            <div style="text-align: center; font-size: 10px; color: #666; margin-top: 5px;">Código: FO-SGC-08 | Versión:
+                2.0 | Vigencia: JUN 2026 | Página: 1 de 2</div>
         </div>
 
         <div class="info-box">
-            <strong>Lineamientos GxP (Arquitectura y Control Documental):</strong> Este formato consolida el listado oficial y estatus de las Políticas (PO) activas en la organización. Las Políticas son el nivel superior jerárquico del SGC que dictan el "Qué se debe hacer" y rigen estructuralmente al <strong>Manual de Procedimientos (PR-XX-XX)</strong> ("Cómo hacerlo") y al <strong>Manual de Formatos (FO-XX-XX)</strong> ("Evidencia de hacerlo"). Todo documento debe estar vinculado en el <strong>Manual Maestro de Índices Globales</strong> para su total trazabilidad y cumplimiento normativo.
+            <strong>Lineamientos GxP (Arquitectura y Control Documental):</strong> Este formato consolida el listado
+            oficial y estatus de las Políticas (PO) activas en la organización. Las Políticas son el nivel superior
+            jerárquico del SGC que dictan el "Qué se debe hacer" y rigen estructuralmente al <strong>Manual de
+                Procedimientos (PR-XX-XX)</strong> ("Cómo hacerlo") y al <strong>Manual de Formatos (FO-XX-XX)</strong>
+            ("Evidencia de hacerlo"). Todo documento debe estar vinculado en el <strong>Manual Maestro de Índices
+                Globales</strong> para su total trazabilidad y cumplimiento normativo.
         </div>
 
         <div class="section-header">1. MATRIZ DE POLÍTICAS (CLASIFICACIÓN NORMATIVA NOM / ISO)</div>
@@ -217,21 +260,25 @@
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-LC-01" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Políticas para las Buenas Prácticas de Documentación (ALCOA+)"></td>
+                    <td><input class="cedit text-left"
+                            value="Políticas para las Buenas Prácticas de Documentación (ALCOA+)"></td>
                     <td><input class="cedit text-center" value="SGC / QA"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-QA-01" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Calidad y Seguridad del Paciente (ISO 13485 / 9001)"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Calidad y Seguridad del Paciente (ISO 13485 / 9001)"></td>
                     <td><input class="cedit text-center" value="Dirección / QA"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-QA-02" style="font-weight:bold;"></td>
@@ -239,17 +286,20 @@
                     <td><input class="cedit text-center" value="QA / Operaciones"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-QA-03" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Auditorías Internas e Inspecciones Regulatorias"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Auditorías Internas e Inspecciones Regulatorias"></td>
                     <td><input class="cedit text-center" value="QA"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
 
                 <!-- GRUPO B -->
@@ -258,30 +308,36 @@
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-AD-01" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Capacitación, Calificación y Competencia del Personal"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Capacitación, Calificación y Competencia del Personal"></td>
                     <td><input class="cedit text-center" value="RRHH / QA"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-AD-02" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Higiene, Salud y Vestimenta en Áreas Blancas (NOM-059)"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Higiene, Salud y Vestimenta en Áreas Blancas (NOM-059)"></td>
                     <td><input class="cedit text-center" value="Operaciones / QA"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-AD-03" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Confidencialidad, Integridad y Ética Profesional"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Confidencialidad, Integridad y Ética Profesional"></td>
                     <td><input class="cedit text-center" value="Dirección / RRHH"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
 
                 <!-- GRUPO C -->
@@ -290,30 +346,36 @@
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-OP-01" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Mantenimiento y Calibración de Equipos Críticos"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Mantenimiento y Calibración de Equipos Críticos"></td>
                     <td><input class="cedit text-center" value="Mantenimiento"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-OP-02" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Ingreso, Limpieza y Control de Áreas Limpias (ISO 14644)"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Ingreso, Limpieza y Control de Áreas Limpias (ISO 14644)"></td>
                     <td><input class="cedit text-center" value="Operaciones"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-OP-03" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Control de Proveedores y Compras Críticas (GxP)"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Control de Proveedores y Compras Críticas (GxP)"></td>
                     <td><input class="cedit text-center" value="Compras / QA"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
 
                 <!-- GRUPO D -->
@@ -322,30 +384,36 @@
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-LC-02" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Trazabilidad, Manejo y Liberación de Muestras y Lotes"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Trazabilidad, Manejo y Liberación de Muestras y Lotes"></td>
                     <td><input class="cedit text-center" value="Laboratorio / QA"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-LC-03" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Manejo de Producto No Conforme y Desviaciones"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Manejo de Producto No Conforme y Desviaciones"></td>
                     <td><input class="cedit text-center" value="QA / Laboratorio"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-OP-04" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Gestión Integral de RPBI (NOM-087-SEMARNAT)"></td>
+                    <td><input class="cedit text-left" value="Política de Gestión Integral de RPBI (NOM-087-SEMARNAT)">
+                    </td>
                     <td><input class="cedit text-center" value="Operaciones"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
 
                 <!-- GRUPO E -->
@@ -354,21 +422,26 @@
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-RS-01" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Tecnovigilancia y Farmacovigilancia (Notificación Eventos Adversos)"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Tecnovigilancia y Farmacovigilancia (Notificación Eventos Adversos)">
+                    </td>
                     <td><input class="cedit text-center" value="Resp. Sanitario"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
                 <tr>
                     <td><input class="cedit text-center" value="PO-RS-02" style="font-weight:bold;"></td>
-                    <td><input class="cedit text-left" value="Política de Atención de Quejas y Retiro de Producto del Mercado (Recall)"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Atención de Quejas y Retiro de Producto del Mercado (Recall)"></td>
                     <td><input class="cedit text-center" value="Resp. Sanitario / QA"></td>
                     <td><input class="cedit text-center" value="1.0"></td>
                     <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
-                    <td><input class="cedit text-center" value="Vigente" style="color:#166534; font-weight:bold;"></td>
-                    <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
             </tbody>
         </table>
@@ -394,8 +467,11 @@
         </div>
 
         <div class="footer-unified">
-            <div class="control-data">FO-SGC-08 | Versión: 1.0 | Índice Maestro de Políticas | Xelle Scientific | Página 1 de 2</div>
-            <div class="legal-data">Este documento es propiedad de Xelle Scientific, S.A.P.I. de C.V. Documento GxP auditable. Prohibida su reproducción.</div>
+            <div class="control-data">FO-SGC-08 | Índice Maestro de Políticas | Versión: 2.0<br>El contenido de este
+                documento es propiedad de Xelle Scientific, S.A.P.I. de C.V., y está protegido por los derechos de
+                autor, por lo que está prohibida su reproducción total o parcial.</div>
+            <div class="legal-data">Documento GxP auditable. Vigencia documental alineada con el Índice de Carpetas
+                FO-SGC-02.</div>
         </div>
     </div>
 

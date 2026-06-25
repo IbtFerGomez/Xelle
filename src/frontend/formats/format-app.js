@@ -1442,3 +1442,42 @@ window.saveForm = () => App.Universal.saveData(); window.printForm = () => App.U
 window.addFlaskRow = () => App.Docs.FO_LC_20.addFlaskRow(); window.addSupplyRow = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="date"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.getElementById('supplies-table-body').appendChild(r); }; window.addFreezeRow = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input type="number" style="width:50px" value="1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" value="DMSO 10%"></td><td><input type="text"></td><td><input type="text"></td><td><select><option>Vial</option><option>Bolsa</option></select></td><td><input type="text"></td><td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.getElementById('freeze-table-body').appendChild(r); };
 window.agregarFilaInsumo = () => { const r = document.createElement('tr'); r.innerHTML = `<td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input type="date" class="cedit"></td><td class="no-print"><button class="btn-danger btn-mini" onclick="this.closest('tr').remove()">X</button></td>`; document.querySelector('#tabla-insumos-dia tbody').appendChild(r); };
 window.addDosis24 = () => App.Docs.FO_LC_24.addDosis(); window.addMuestra41 = () => App.Docs.addGenericRow('tbl-micro', `<td><input class='cedit'></td><td><input type='date' class='cedit'></td><td><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td><td><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td><td><select class='cedit'><option>-</option><option>NEG</option><option>POS</option><option>NA</option></select></td><td><input type='date' class='cedit'></td><td><input class='cedit'></td><td class='no-print'><button class='btn-danger btn-mini' onclick='this.closest("tr").remove()'>x</button></td>`);
+window.addRowNumbered = (tableId) => {
+    const table = document.getElementById(tableId);
+    const tbody = table ? table.querySelector('tbody') : null;
+    if (!tbody || !tbody.rows.length) return;
+
+    const newRow = tbody.rows[0].cloneNode(true);
+    newRow.querySelectorAll('input, textarea, select').forEach((field) => {
+        if (field.type === 'checkbox' || field.type === 'radio') {
+            field.checked = false;
+        } else if (field.tagName === 'SELECT') {
+            field.selectedIndex = 0;
+        } else {
+            field.value = '';
+        }
+    });
+
+    tbody.appendChild(newRow);
+    window.updateNumbers(tableId);
+};
+
+window.delRowNumbered = (btn, tableId) => {
+    const row = btn && typeof btn.closest === 'function' ? btn.closest('tr') : null;
+    const table = document.getElementById(tableId);
+    const tbody = table ? table.querySelector('tbody') : null;
+    if (!row || !tbody || tbody.rows.length <= 1) return;
+
+    row.remove();
+    window.updateNumbers(tableId);
+};
+
+window.updateNumbers = (tableId) => {
+    const table = document.getElementById(tableId);
+    if (!table) return;
+
+    table.querySelectorAll('tbody tr').forEach((row, index) => {
+        const numCell = row.querySelector('.row-num');
+        if (numCell) numCell.textContent = String(index + 1);
+    });
+};

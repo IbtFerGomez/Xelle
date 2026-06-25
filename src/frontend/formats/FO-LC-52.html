@@ -169,6 +169,22 @@
                 box-shadow: none;
                 padding: 0;
             }
+
+            .compact-table th,
+            .compact-table td {
+                padding: 6px 4px;
+                border: 1.5px solid #64748b;
+            }
+
+            .compact-table input {
+                padding: 3px 2px;
+                min-height: 18px;
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
         }
     </style>
 </head>
@@ -286,51 +302,154 @@
                         <td><input class="cedit text-left" placeholder="Ninguna"></td>
                         <td><input class="cedit text-center" placeholder="Firma"></td>
                         <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
-                    </tr>
-                    <tr>
+                    </tr><tr>
                         <td><input type="text" class="cedit"></td>
                         <td><input type="text" class="cedit"></td>
-                        <td><input class="cedit text-center" style="font-weight: bold; color: #1E3A5F;"></td>
-                        <td><input type="number" class="cedit text-center"></td>
-                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
-                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
-                        <td><input class="cedit text-left"></td>
-                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: E-1123"
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="PSI"></td>
+                        <td><input class="cedit text-center" placeholder="O / R / V" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
                         <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
                     </tr>
                     <tr>
                         <td><input type="text" class="cedit"></td>
                         <td><input type="text" class="cedit"></td>
-                        <td><input class="cedit text-center" style="font-weight: bold; color: #1E3A5F;"></td>
-                        <td><input type="number" class="cedit text-center"></td>
-                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
-                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
-                        <td><input class="cedit text-left"></td>
-                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: E-1123"
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="PSI"></td>
+                        <td><input class="cedit text-center" placeholder="O / R / V" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
                         <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
                     </tr>
                     <tr>
                         <td><input type="text" class="cedit"></td>
                         <td><input type="text" class="cedit"></td>
-                        <td><input class="cedit text-center" style="font-weight: bold; color: #1E3A5F;"></td>
-                        <td><input type="number" class="cedit text-center"></td>
-                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
-                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
-                        <td><input class="cedit text-left"></td>
-                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: E-1123"
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="PSI"></td>
+                        <td><input class="cedit text-center" placeholder="O / R / V" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
                         <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
                     </tr>
                     <tr>
                         <td><input type="text" class="cedit"></td>
                         <td><input type="text" class="cedit"></td>
-                        <td><input class="cedit text-center" style="font-weight: bold; color: #1E3A5F;"></td>
-                        <td><input type="number" class="cedit text-center"></td>
-                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
-                        <td><input class="cedit text-center" style="font-weight: bold;"></td>
-                        <td><input class="cedit text-left"></td>
-                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: E-1123"
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="PSI"></td>
+                        <td><input class="cedit text-center" placeholder="O / R / V" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
                         <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
                     </tr>
+                    <tr>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: E-1123"
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="PSI"></td>
+                        <td><input class="cedit text-center" placeholder="O / R / V" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: E-1123"
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="PSI"></td>
+                        <td><input class="cedit text-center" placeholder="O / R / V" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: E-1123"
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="PSI"></td>
+                        <td><input class="cedit text-center" placeholder="O / R / V" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: E-1123"
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="PSI"></td>
+                        <td><input class="cedit text-center" placeholder="O / R / V" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: E-1123"
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="PSI"></td>
+                        <td><input class="cedit text-center" placeholder="O / R / V" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: E-1123"
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="PSI"></td>
+                        <td><input class="cedit text-center" placeholder="O / R / V" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: E-1123"
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="PSI"></td>
+                        <td><input class="cedit text-center" placeholder="O / R / V" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input type="text" class="cedit"></td>
+                        <td><input class="cedit text-center" placeholder="Ej: E-1123"
+                                style="font-weight: bold; color: #1E3A5F;"></td>
+                        <td><input type="number" class="cedit text-center" placeholder="PSI"></td>
+                        <td><input class="cedit text-center" placeholder="O / R / V" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-center" placeholder="C / NC" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ninguna"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRow(this)">x</button></td>
+                    </tr>
+                    
+                    
+                    
+                    
                 </tbody>
             </table>
             <button class="btn-add no-print" onclick="addRow('tbl-revision-co2')">+ AGREGAR NUEVO DÍA DE

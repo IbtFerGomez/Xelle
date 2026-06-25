@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-SGC-I Índice de Carpetas del SGC</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 4px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select,
+        .compact-table textarea {
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 2px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus,
+        .compact-table textarea:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 5px !important;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 5px;
+            font-size: 10px;
+            align-items: center;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .radio-group input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-sgc-i">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+        <button class="btn btn-warning" onclick="toggleOfflineMode()" id="btn-offline">Modo Offline</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Índice</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-SGC-I-</span>
+                    <input type="text" id="reg-sgci" class="registry-input generate-barcode cedit"
+                        data-target="barcode-sgci" data-prefix="FO-SGC-I-" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-sgci" class="barcode-svg"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>ÍNDICE DE CARPETAS DEL SGC</h1>
+            <div class="metadata">Código: FO-SGC-I | Versión: 2.0 | Vigencia: JUN 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. IDENTIFICACIÓN DE LA CARPETA</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr>
+                    <td width="25%"><strong>Nombre de la Carpeta / Sección:</strong></td>
+                    <td width="75%" colspan="3"><input class="cedit"
+                            style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:12px;"></td>
+                </tr>
+                <tr>
+                    <td width="25%"><strong>Número de Carpeta:</strong></td>
+                    <td width="25%">
+                        <div style="display:flex; align-items:center; justify-content:center;">
+                            <input type="text" class="cedit"
+                                style="width:40px; border-bottom:1px solid #ccc; text-align:center;">
+                            <span style="margin: 0 10px;">de</span>
+                            <input type="text" class="cedit"
+                                style="width:40px; border-bottom:1px solid #ccc; text-align:center;">
+                        </div>
+                    </td>
+                    <td width="20%"><strong>Ubicación Física/Digital:</strong></td>
+                    <td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Responsable de la Custodia:</strong></td>
+                    <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. CONTENIDO DETALLADO (ÍNDICE)</div>
+        <div class="section">
+            <p style="font-size:9px; color:#666; margin-bottom:5px;">Instrucción: Liste los documentos o expedientes
+                contenidos en esta sección. En caso de archivos físicos, use separadores numerados.</p>
+            <table class="compact-table" id="tbl-indice">
+                <thead>
+                    <tr>
+                        <th width="5%">No.</th>
+                        <th width="20%">Código del Documento / Folio</th>
+                        <th width="40%">Título del Documento o Nombre del Expediente</th>
+                        <th width="20%">Rango de Fechas (Inicio - Fin)</th>
+                        <th width="10%">Apartado / Separador</th>
+                        <th width="5%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">1</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit" placeholder="DD/MM/AA - DD/MM/AA"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-indice')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">2</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-indice')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">3</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-indice')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">4</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-indice')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold;">5</td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit"></td>
+                        <td><input class="cedit"></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-indice')">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRowNumbered('tbl-indice')">+ AGREGAR DOCUMENTO / EXPEDIENTE AL
+                ÍNDICE</button>
+        </div>
+
+        <div class="section-header">3. REGISTRO DE ARCHIVO MUERTO / TRANSFERENCIA</div>
+        <div class="section"
+            style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 4px;">
+            <p style="font-size:9px; color:#666; margin-bottom:10px;">Llenar únicamente cuando la carpeta se sature y
+                deba enviarse al archivo histórico o pasivo.</p>
+
+            <table class="no-border-table">
+                <tr>
+                    <td width="20%"><strong>Fecha de Cierre de Carpeta:</strong></td>
+                    <td width="20%"><input type="date" class="cedit" style="border-bottom:1px solid #ccc; width:100%;">
+                    </td>
+                    <td width="20%" style="text-align:right; padding-right:10px;"><strong>Folio de Caja de
+                            Archivo:</strong></td>
+                    <td width="40%"><input type="text" class="cedit" style="border-bottom:1px solid #ccc; width:100%;">
+                    </td>
+                </tr>
+            </table>
+
+            <div style="margin-top:10px;">
+                <strong>Destino de Transferencia:</strong>
+                <div class="radio-group" style="margin-top:5px;">
+                    <label><input type="radio" name="destino" class="cedit"> Archivo Pasivo Interno</label>
+                    <label><input type="radio" name="destino" class="cedit"> Resguardo Externo</label>
+                    <label style="color:#991b1b; display:flex; align-items:center;">
+                        <input type="radio" name="destino" class="cedit"> Destrucción (Fecha:
+                        <input type="date" class="cedit"
+                            style="border-bottom:1px solid #991b1b; width:110px; margin-left:5px; margin-right:5px; background:transparent;">)
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">4. VALIDACIÓN DEL ÍNDICE</div>
+        <div class="signature-area" style="margin-top: 15px;">
+            <div class="signature-box" style="flex:1;">
+                <p>Elaboró (Responsable del Área)</p>
+                <input class="cedit" placeholder="Nombre y Firma">
+                <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+            </div>
+            <div class="signature-box" style="flex:1;">
+                <p>Verificó (Aseguramiento de Calidad)</p>
+                <input class="cedit" placeholder="Nombre y Firma">
+                <p>Fecha: <input type="date" class="cedit" style="width:120px;"></p>
+            </div>
+        </div>
+
+        <div class="footer">FO-SGC-I | Versión: 2.0 | Índice de Carpetas del SGC | Xelle Scientific | Página 1 de
+            1<br>El contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está
+            protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+
+    <script>
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if (row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                const numCell = row.querySelector('.row-num');
+                if (numCell) numCell.innerText = index + 1;
+            });
+        }
+    </script>
+    <script>
+        let isOfflineMode = false;
+
+        function toggleOfflineMode() {
+            isOfflineMode = !isOfflineMode;
+            const btn = document.getElementById('btn-offline');
+            if (isOfflineMode) {
+                btn.textContent = 'Modo Online';
+                btn.style.backgroundColor = '#f59e0b';
+
+                // Convertir <select> a <input type="text">
+                document.querySelectorAll('select.cedit').forEach(sel => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = sel.className;
+                    input.value = sel.options[sel.selectedIndex]?.text || '';
+                    input.setAttribute('data-original-type', 'select');
+                    if (sel.style.cssText) input.style.cssText = sel.style.cssText;
+                    const options = Array.from(sel.options).map(opt => opt.text).join('|');
+                    input.setAttribute('data-select-options', options);
+                    sel.parentNode.replaceChild(input, sel);
+                });
+
+                // Convertir <input type="date"> a <input type="text">
+                document.querySelectorAll('input[type="date"].cedit, input[type="date"].registry-date').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'date');
+                    inp.type = 'text';
+                    inp.placeholder = 'DD/MM/AAAA';
+                });
+
+                // Convertir <input type="time"> a <input type="text">
+                document.querySelectorAll('input[type="time"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'time');
+                    inp.type = 'text';
+                    inp.placeholder = 'HH:MM';
+                });
+
+                // Convertir <input type="number"> a <input type="text">
+                document.querySelectorAll('input[type="number"].cedit').forEach(inp => {
+                    inp.setAttribute('data-original-type', 'number');
+                    const currentPlaceholder = inp.placeholder;
+                    inp.type = 'text';
+                    if (currentPlaceholder) inp.placeholder = currentPlaceholder;
+                });
+            } else {
+                btn.textContent = 'Modo Offline';
+                btn.style.backgroundColor = '';
+
+                // Restaurar <select> desde <input type="text">
+                document.querySelectorAll('input[data-original-type="select"]').forEach(inp => {
+                    const sel = document.createElement('select');
+                    sel.className = inp.className;
+                    if (inp.style.cssText) sel.style.cssText = inp.style.cssText;
+                    const options = inp.getAttribute('data-select-options')?.split('|') || [];
+                    options.forEach(optText => {
+                        const opt = document.createElement('option');
+                        opt.text = optText;
+                        sel.appendChild(opt);
+                    });
+                    const currentValue = inp.value;
+                    for (let i = 0; i < sel.options.length; i++) {
+                        if (sel.options[i].text === currentValue) {
+                            sel.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    inp.parentNode.replaceChild(sel, inp);
+                });
+
+                // Restaurar <input type="date">
+                document.querySelectorAll('input[data-original-type="date"]').forEach(inp => {
+                    inp.type = 'date';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="time">
+                document.querySelectorAll('input[data-original-type="time"]').forEach(inp => {
+                    inp.type = 'time';
+                    inp.placeholder = '';
+                    inp.removeAttribute('data-original-type');
+                });
+
+                // Restaurar <input type="number">
+                document.querySelectorAll('input[data-original-type="number"]').forEach(inp => {
+                    inp.type = 'number';
+                    inp.removeAttribute('data-original-type');
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

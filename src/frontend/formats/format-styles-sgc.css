@@ -1,0 +1,77 @@
+/* ==========================================================================
+   FORMAT-STYLES-SGC.CSS
+   Estilos compartidos para formatos SGC tipo listado/matriz
+   ========================================================================== */
+
+.section-header {
+    background-color: #1E3A5F;
+    color: white;
+    padding: 6px 10px;
+    font-weight: bold;
+    font-size: 11px;
+    margin-top: 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.compact-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.compact-table th {
+    background-color: #1E3A5F;
+    color: white;
+    font-size: 9px;
+    padding: 5px 4px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #cbd5e1;
+    line-height: 1.2;
+}
+
+.compact-table td {
+    font-size: 9px;
+    padding: 4px;
+    vertical-align: middle;
+    border: 1px solid #cbd5e1;
+}
+
+.compact-table input,
+.compact-table select,
+.compact-table textarea {
+    font-size: 9px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 2px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.compact-table input:focus,
+.compact-table select:focus,
+.compact-table textarea:focus {
+    background-color: #f8fafc;
+    outline: 1px dashed #3b82f6;
+}
+
+.text-left {
+    text-align: left !important;
+    padding-left: 6px !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.group-th {
+    background-color: #0f172a !important;
+    color: #cbd5e1 !important;
+    font-size: 8px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: left !important;
+    padding-left: 10px !important;
+}

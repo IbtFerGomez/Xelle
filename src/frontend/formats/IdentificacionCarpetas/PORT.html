@@ -1,51 +1,226 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Portada del Manual de Formatos SGC</title>
+    <title>PORT - Portadas de Carpetas SGC</title>
     <style>
-        @page { size: letter portrait; margin: 0; }
-        body { font-family: 'Arial', sans-serif; background-color: #f1f5f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .cover-sheet { background: white; width: 21.59cm; height: 27.94cm; padding: 3cm 2cm; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .hero-banner { background-color: #1E3A5F; height: 1.5cm; width: 100%; position: absolute; top: 0; left: 0; }
-        .bottom-banner { background-color: #2E9D82; height: 0.8cm; width: 100%; position: absolute; bottom: 0; left: 0; }
-        .logo-container { margin-top: 2cm; margin-bottom: 3cm; }
-        .title-main { font-size: 32px; font-weight: 900; color: #1E3A5F; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; line-height: 1.3; }
-        .subtitle { font-size: 20px; font-weight: 400; color: #475569; margin-bottom: 4cm; }
-        .info-box { border: 2px solid #cbd5e1; border-radius: 8px; padding: 30px; width: 70%; text-align: left; }
-        .info-row { margin-bottom: 15px; font-size: 14px; }
-        .info-row strong { color: #1E3A5F; display: inline-block; width: 120px; }
-        @media print { body { background: transparent; } .cover-sheet { box-shadow: none; } }
+        @page {
+            size: letter portrait;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .global-controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #2563eb;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        #pages-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cover-sheet {
+            background: white;
+            width: 21.59cm;
+            height: 27.94cm;
+            padding: 3cm 2cm;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            page-break-after: always;
+        }
+
+        .cover-sheet:last-child {
+            page-break-after: auto;
+        }
+
+        .hero-banner {
+            background-color: #1E3A5F;
+            height: 1.5cm;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .bottom-banner {
+            background-color: #2E9D82;
+            height: 0.8cm;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .logo-container {
+            margin-top: 2cm;
+            margin-bottom: 2cm;
+        }
+
+        .title-main {
+            font-size: 27px;
+            font-weight: 900;
+            color: #1E3A5F;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 2.2cm;
+            text-transform: uppercase;
+        }
+
+        .info-box {
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 22px;
+            width: 82%;
+            text-align: left;
+        }
+
+        .info-row {
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .info-row strong {
+            color: #1E3A5F;
+            display: inline-block;
+            width: 170px;
+        }
+
+        @media print {
+            body {
+                background: transparent;
+                padding: 0;
+            }
+
+            .global-controls {
+                display: none;
+            }
+
+            .cover-sheet {
+                box-shadow: none;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="cover-sheet">
-        <div class="hero-banner"></div>
-        
-        <div class="logo-container">
-            <svg viewBox="0 0 320 80" style="width: 250px; height: auto;">
-                <g transform="translate(0,-2) scale(0.85)">
-                    <circle fill="#2E9D82" cx="25" cy="25" r="13" />
-                    <circle fill="#2E9D82" cx="75" cy="75" r="13" />
-                    <path fill="#2E9D82" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
-                </g>
-                <text x="90" y="42" font-family="Arial Black" font-weight="900" font-size="34" fill="#1E3A5F">XELLE</text>
-                <text x="91" y="68" font-family="Arial" font-weight="700" font-size="19" fill="#1E3A5F" letter-spacing="2">SCIENTIFIC</text>
-            </svg>
-        </div>
 
-        <div class="title-main">MANUAL COMPLETO DE FORMATOS</div>
-        <div class="subtitle">SISTEMA DE GESTIÓN DE CALIDAD (SGC)</div>
-
-        <div class="info-box">
-            <div class="info-row"><strong>Empresa:</strong> Xelle Scientific, S.A.P.I. de C.V.</div>
-            <div class="info-row"><strong>Área Custodia:</strong> Aseguramiento de Calidad / SGC</div>
-            <div class="info-row"><strong>Fecha de Emisión:</strong> Mayo 2026</div>
-            <div class="info-row"><strong>Versión de Manual:</strong> 1.0</div>
-            <div class="info-row"><strong>Uso:</strong> Confidencial / Documento Controlado</div>
-        </div>
-        
-        <div class="bottom-banner"></div>
+    <div class="global-controls no-print">
+        <button class="btn" onclick="window.print()">Imprimir PORT</button>
+        <button class="btn" onclick="renderPorts()">Recargar desde FO-SGC-02</button>
+        <p style="font-size:12px; color:#475569; margin:0;">Se genera una PORT por cada carpeta.</p>
     </div>
+
+    <div id="pages-container"></div>
+
+    <template id="port-template">
+        <div class="cover-sheet">
+            <div class="hero-banner"></div>
+
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 250px; height: auto;">
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle fill="#2E9D82" cx="25" cy="25" r="13" />
+                        <circle fill="#2E9D82" cx="75" cy="75" r="13" />
+                        <path fill="#2E9D82"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" font-family="Arial Black" font-weight="900" font-size="34"
+                        fill="#1E3A5F">XELLE</text>
+                    <text x="91" y="68" font-family="Arial" font-weight="700" font-size="19" fill="#1E3A5F"
+                        letter-spacing="2">SCIENTIFIC</text>
+                </svg>
+            </div>
+
+            <div class="title-main">PORTADA DE CARPETA</div>
+            <div class="subtitle subtitle-folder"></div>
+
+            <div class="info-box">
+                <div class="info-row"><strong>Empresa:</strong> Xelle Scientific, S.A.P.I. de C.V.</div>
+                <div class="info-row"><strong>Carpeta:</strong> <span class="folder-title"></span></div>
+                <div class="info-row"><strong>Area Custodia:</strong> <span class="folder-area"></span></div>
+                <div class="info-row"><strong>Rango de Codigos:</strong> <span class="folder-codes"></span></div>
+                <div class="info-row"><strong>Fecha de Emision:</strong> Junio 2026</div>
+                <div class="info-row"><strong>Uso:</strong> Confidencial / Documento Controlado</div>
+            </div>
+
+            <div class="bottom-banner"></div>
+        </div>
+    </template>
+
+    <script src="folder-catalog-data.js"></script>
+    <script>
+        function getCodeRange(formats) {
+            if (!formats || formats.length === 0) {
+                return 'N/A';
+            }
+            const first = formats[0].code;
+            const last = formats[formats.length - 1].code;
+            return first === last ? first : first + ' a ' + last;
+        }
+
+        function renderPorts() {
+            const container = document.getElementById('pages-container');
+            const template = document.getElementById('port-template');
+            const folders = window.CARPETAS_SGC || [];
+            container.innerHTML = '';
+
+            folders.forEach(folder => {
+                const clone = template.content.cloneNode(true);
+                clone.querySelector('.subtitle-folder').textContent = 'SISTEMA DE GESTION DE CALIDAD (SGC)';
+                clone.querySelector('.folder-title').textContent = folder.title || '';
+                clone.querySelector('.folder-area').textContent = folder.area || '';
+                clone.querySelector('.folder-codes').textContent = getCodeRange(folder.formats);
+                container.appendChild(clone);
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', renderPorts);
+    </script>
 </body>
+
 </html>

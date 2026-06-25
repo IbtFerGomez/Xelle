@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-SGC-M Índice Maestro de Carpetas</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header {
+            background-color: #1E3A5F;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .compact-table th {
+            background-color: #1E3A5F;
+            color: white;
+            font-size: 10px;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table td {
+            font-size: 10px;
+            padding: 3px;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+        }
+
+        .compact-table input,
+        .compact-table select {
+            font-size: 9.5px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 4px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .compact-table input:focus,
+        .compact-table select:focus {
+            background-color: #f8fafc;
+            outline: 1px dashed #3b82f6;
+        }
+
+        .text-left {
+            text-align: left !important;
+            padding-left: 8px !important;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .btn-mini {
+            padding: 2px 5px;
+            font-size: 9px;
+            cursor: pointer;
+        }
+
+        /* Estilos del Footer Unificado y Legal */
+        .footer-unified {
+            margin-top: 20px;
+            border-top: 2px solid #1E3A5F;
+            padding-top: 8px;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.4;
+            page-break-inside: avoid;
+        }
+
+        .footer-unified .control-data {
+            font-weight: bold;
+            color: #1E3A5F;
+            margin-bottom: 3px;
+        }
+
+        .footer-unified .legal-data {
+            color: #475569;
+            font-style: italic;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-sgc-m">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Año / Revisión</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-SGC-M-</span>
+                    <input type="text" id="reg-sgcm" class="registry-input generate-barcode cedit"
+                        data-target="barcode-sgcm" data-prefix="FO-SGC-M-" placeholder="2026-01"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-sgcm" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>ÍNDICE MAESTRO DE CARPETAS</h1>
+            <p style="margin:0; font-size:11px; font-weight:normal;">(Inventario de Recopiladores Físicos Actuales)</p>
+            <div class="metadata" style="margin-top:5px;">Código: FO-SGC-M | Versión: 2.0 | Vigencia: JUN 2026 | Página:
+                1 de 1</div>
+        </div>
+
+        <div class="section-header">1. INVENTARIO DE CARPETAS FÍSICAS Y CUSTODIA</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-carpetas">
+                <thead>
+                    <tr>
+                        <th width="5%">#</th>
+                        <th width="60%">Nombre Oficial de la Carpeta / Recopilador Físico</th>
+                        <th width="15%">Área Custodia</th>
+                        <th width="15%">Estatus</th>
+                        <th width="5%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-num">1</td>
+                        <td><input class="cedit text-left" value="REGISTROS OPERATIVOS DE ASEGURAMIENTO DE CALIDAD"></td>
+                        <td><input class="cedit" value="QA"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">2</td>
+                        <td><input class="cedit text-left" value="SISTEMA DE GESTIÓN DE LA CALIDAD (SGC) Y MEJORA CONTINUA"></td>
+                        <td><input class="cedit" value="SGC / Calidad"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">3</td>
+                        <td><input class="cedit text-left" value="GESTIÓN DE RECURSOS HUMANOS Y DESARROLLO DE PERSONAL"></td>
+                        <td><input class="cedit" value="RH"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">4</td>
+                        <td><input class="cedit text-left" value="REGISTROS OPERATIVOS DE CONTROL DE MUESTREO Y RETENCIÓN"></td>
+                        <td><input class="cedit" value="LC"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">5</td>
+                        <td><input class="cedit text-left" value="REGISTROS OPERATIVOS DE INGRESO, RECEPCIÓN Y EVALUACIÓN DE TEJIDOS"></td>
+                        <td><input class="cedit" value="LC"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">6</td>
+                        <td><input class="cedit text-left" value="REGISTROS OPERATIVOS DE INSPECCIÓN, ACONDICIONAMIENTO Y DISPOSICIÓN"></td>
+                        <td><input class="cedit" value="LC"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">7</td>
+                        <td><input class="cedit text-left" value="REGISTROS OPERATIVOS DE CONTROL DE PROCESOS CELULARES Y CULTIVO"></td>
+                        <td><input class="cedit" value="LC"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">8</td>
+                        <td><input class="cedit text-left" value="REGISTROS OPERATIVOS DE DOSIFICACIÓN DE CÉLULAS Y EXOSOMAS"></td>
+                        <td><input class="cedit" value="LC"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">9</td>
+                        <td><input class="cedit text-left" value="REGISTROS OPERATIVOS DE PROCESAMIENTO DE PLACENTAS (LIOFILIZACIÓN)"></td>
+                        <td><input class="cedit" value="LC"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">10</td>
+                        <td><input class="cedit text-left" value="REGISTROS OPERATIVOS DE ANÁLISIS Y DICTAMEN MICROBIOLÓGICO"></td>
+                        <td><input class="cedit" value="LC"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">11</td>
+                        <td><input class="cedit text-left" value="REGISTROS OPERATIVOS DE BITÁCORA CONTROL AMBIENTAL Y MANTENIMIENTO"></td>
+                        <td><input class="cedit" value="OP"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">12</td>
+                        <td><input class="cedit text-left" value="BITÁCORAS OPERATIVAS Y CONTROL DE PROCESOS (MEDIOS)"></td>
+                        <td><input class="cedit" value="LC"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">13</td>
+                        <td><input class="cedit text-left" value="REGISTROS OPERATIVOS DE CONTROL DE PLAGAS Y FAUNA NOCIVA"></td>
+                        <td><input class="cedit" value="OP"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">14</td>
+                        <td><input class="cedit text-left" value="REGISTROS OPERATIVOS DE MANEJO DE RPBI Y RESIDUOS PELIGROSOS"></td>
+                        <td><input class="cedit" value="OP"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">15</td>
+                        <td><input class="cedit text-left" value="EXPEDIENTES MAESTROS DE INGENIERÍA Y MANTENIMIENTO"></td>
+                        <td><input class="cedit" value="Mantenimiento"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">16</td>
+                        <td><input class="cedit text-left" value="CONTROL DE LOGÍSTICA, EMBARQUES Y FLOTILLA"></td>
+                        <td><input class="cedit" value="LG"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">17</td>
+                        <td><input class="cedit text-left" value="CRUCE DOCUMENTAL OBLIGATORIO: CICLO DE COMPRA, PEDIDO, FABRICACIÓN Y ENTREGA"></td>
+                        <td><input class="cedit" value="OP / Comercial"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">18</td>
+                        <td><input class="cedit text-left" value="TRAZABILIDAD COMERCIAL, PEDIDOS Y RUTA OPERATIVA"></td>
+                        <td><input class="cedit" value="OP / Embarques"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">19</td>
+                        <td><input class="cedit text-left" value="REGISTROS OPERATIVOS DE CONTROL DE ALMACÉN E INVENTARIOS"></td>
+                        <td><input class="cedit" value="Almacén y Surtido"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">20</td>
+                        <td><input class="cedit text-left" value="MONITOREO DIARIO Y GRÁFICOS DE EQUIPOS DE INCUBACIÓN Y CRIO"></td>
+                        <td><input class="cedit" value="LC"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">21</td>
+                        <td><input class="cedit text-left" value="EXPEDIENTES MAESTROS DE MANUFACTURA (BATCH RECORDS)"></td>
+                        <td><input class="cedit" value="Producción / Banco"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num">22</td>
+                        <td><input class="cedit text-left" value="EXPEDIENTES DE GESTIÓN DE DESVIACIONES Y CONTROL DE MPNC"></td>
+                        <td><input class="cedit" value="QA"></td>
+                        <td><select class="cedit"><option>Activa</option><option>Inactiva / Archivo</option></select></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-carpetas')">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRowNumbered('tbl-carpetas')">+ AGREGAR NUEVA CARPETA /
+                RECOPILADOR</button>
+        </div>
+
+        <div class="section-header">2. REVISIÓN Y AUTORIZACIÓN DEL ÍNDICE</div>
+        <div class="section">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">ELABORÓ / ACTUALIZÓ</p>
+                    <span style="font-size:8px;">(Control Documental)</span>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #ccc; border-radius:0; margin-top:25px;">
+                    <p>Fecha: <input class="cedit" type="text" placeholder="Fecha" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">VERIFICÓ</p>
+                    <span style="font-size:8px;">(Aseguramiento de Calidad)</span>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #ccc; border-radius:0; margin-top:25px;">
+                    <p>Fecha: <input class="cedit" type="text" placeholder="Fecha" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1; background-color:#f0fdf4;">
+                    <p style="font-weight:bold; color:#14532d;">AUTORIZÓ</p>
+                    <span style="font-size:8px;">(Responsable Dirección)</span>
+                    <input class="cedit" placeholder="Nombre y Firma"
+                        style="border-top:1px solid #166534; border-radius:0; margin-top:25px; background:transparent;">
+                    <p>Fecha: <input class="cedit" type="text" placeholder="Fecha"
+                            style="width:120px; background:transparent;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-SGC-M | Versión: 2.0 | Índice Maestro de Carpetas | Xelle Scientific | Página 1
+                de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
+                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
+                parcial.</div>
+        </div>
+    </div>
+
+    <script>
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            newRow.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if (row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                const numCell = row.querySelector('.row-num');
+                if (numCell) numCell.innerText = index + 1;
+            });
+        }
+    </script>
+</body>
+
+</html>

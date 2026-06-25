@@ -518,29 +518,85 @@ const AppCom = {
             const prods = Object.keys(AppCom.config.DB_PRODUCTS).map(p => `<option value="${p}">${p}</option>`).join('');
             selectElement.innerHTML = `<option value="">Seleccionar Producto...</option>${prods}`;
         },
-        onProdChange: function (selectElement) {
+        getPresentationValue: function (row) {
+            const presSelect = row?.querySelector('.pres-select');
+            const presInput = row?.querySelector('.pres-input');
+
+            if (presSelect) {
+                const selected = String(presSelect.value || '').trim();
+                if (!selected || selected === '-') return '';
+                if (selected === 'Especial') {
+                    const custom = String(presInput?.value || '').trim();
+                    return custom ? `Especial: ${custom}` : 'Especial';
+                }
+                return selected;
+            }
+
+            return String(presInput?.value || '').trim();
+        },
+        onProdChange: function (selectElement, storedPresentation = '') {
             const row = selectElement.closest('tr');
             const val = selectElement.value;
             const presCell = row.querySelector('.pres-select, .pres-input')?.parentElement;
 
             if (!presCell) return;
 
+            const savedPresentation = String(storedPresentation || '').trim();
+
             if (val === 'Otro') {
                 presCell.innerHTML = '<input type="text" class="cedit pres-input" placeholder="Presentación libre">';
+                const freeInput = presCell.querySelector('.pres-input');
+                if (freeInput) freeInput.value = savedPresentation;
                 return;
             }
 
             const product = AppCom.config.DB_PRODUCTS[val];
             const presOptions = product ? [...product.pres, 'Especial'] : [];
-            presCell.innerHTML = '<select class="cedit pres-select"><option>-</option></select>';
+            presCell.innerHTML = `
+                <select class="cedit pres-select"><option>-</option></select>
+                <input type="text" class="cedit pres-input" placeholder="Presentación especial" style="display:none; margin-top:4px;">
+            `;
 
             const presSelect = presCell.querySelector('.pres-select');
+            const presInput = presCell.querySelector('.pres-input');
             presOptions.forEach(p => {
                 presSelect.add(new Option(p, p));
             });
 
+            const syncSpecialInput = () => {
+                const isSpecial = presSelect.value === 'Especial';
+                presInput.style.display = isSpecial ? 'block' : 'none';
+                if (!isSpecial) presInput.value = '';
+            };
+
+            presSelect.addEventListener('change', syncSpecialInput);
+
+            let selectedPresentation = savedPresentation;
+            let customSpecial = '';
+
+            if (/^Especial\s*:/i.test(savedPresentation)) {
+                selectedPresentation = 'Especial';
+                customSpecial = savedPresentation.replace(/^Especial\s*:/i, '').trim();
+            } else if (savedPresentation && savedPresentation !== '-' && !presOptions.includes(savedPresentation)) {
+                selectedPresentation = 'Especial';
+                customSpecial = savedPresentation;
+            }
+
+            if (selectedPresentation && selectedPresentation !== '-' && presOptions.includes(selectedPresentation)) {
+                presSelect.value = selectedPresentation;
+            } else {
+                presSelect.value = '-';
+            }
+
+            if (presSelect.value === 'Especial') {
+                presInput.value = customSpecial;
+            }
+
+            syncSpecialInput();
+
             if (!val) {
                 presSelect.value = '-';
+                syncSpecialInput();
             }
         }
     },
@@ -586,8 +642,13 @@ const AppCom = {
         getCustomData: function () {
             const r = [];
             document.querySelectorAll('#tbl-pedidos tbody tr').forEach(tr => {
-                const i = tr.querySelectorAll('input, select');
-                r.push({ c: i[0].value, p: i[1].value, pr: i[2].value, o: i[3].value, f: i[4].value, obs: i[5].value });
+                const c = tr.querySelector('td:nth-child(1) input')?.value || '';
+                const p = tr.querySelector('.prod-select')?.value || '';
+                const pr = AppCom.Universal.getPresentationValue(tr);
+                const o = tr.querySelector('td:nth-child(4) select')?.value || '';
+                const f = tr.querySelector('td:nth-child(5) input')?.value || '';
+                const obs = tr.querySelector('td:nth-child(6) input')?.value || '';
+                r.push({ c, p, pr, o, f, obs });
             });
             return { t_ped: r };
         },
@@ -597,15 +658,20 @@ const AppCom = {
                 d.t_ped.forEach(x => {
                     this.addPedidoRow();
                     const row = tb.lastElementChild;
-                    const fields = row.querySelectorAll('input, select');
-                    fields[0].value = x.c;
-                    fields[1].value = x.p;
-                    AppCom.Universal.onProdChange(fields[1]);
-                    const presField = row.querySelector('.pres-select, .pres-input');
-                    if (presField) presField.value = x.pr;
-                    fields[2].value = x.o;
-                    fields[3].value = x.f;
-                    fields[4].value = x.obs || '';
+                    const qtyInput = row.querySelector('td:nth-child(1) input');
+                    const prodSelect = row.querySelector('.prod-select');
+                    const origenSelect = row.querySelector('td:nth-child(4) select');
+                    const fechaInput = row.querySelector('td:nth-child(5) input');
+                    const obsInput = row.querySelector('td:nth-child(6) input');
+
+                    if (qtyInput) qtyInput.value = x.c || '';
+                    if (prodSelect) {
+                        prodSelect.value = x.p || '';
+                        AppCom.Universal.onProdChange(prodSelect, x.pr || '');
+                    }
+                    if (origenSelect) origenSelect.value = x.o || '';
+                    if (fechaInput) fechaInput.value = x.f || '';
+                    if (obsInput) obsInput.value = x.obs || '';
                 });
             }
         }
@@ -639,8 +705,14 @@ const AppCom = {
         getCustomData: function () {
             const r = [];
             document.querySelectorAll('#tbl-picking tbody tr').forEach(tr => {
-                const i = tr.querySelectorAll('input, select');
-                r.push({ p: i[0].value, pr: i[1].value, obs: i[2].value, u: i[3].value, l: i[4].value, cr: i[5].value, cs: i[6].value });
+                const p = tr.querySelector('.prod-select')?.value || '';
+                const pr = AppCom.Universal.getPresentationValue(tr);
+                const obs = tr.querySelector('td:nth-child(3) input')?.value || '';
+                const u = tr.querySelector('td:nth-child(4) input')?.value || '';
+                const l = tr.querySelector('td:nth-child(5) input')?.value || '';
+                const cr = tr.querySelector('td:nth-child(6) input')?.value || '';
+                const cs = tr.querySelector('td:nth-child(7) input')?.value || '';
+                r.push({ p, pr, obs, u, l, cr, cs });
             });
             return { t_pick: r };
         },
@@ -649,15 +721,23 @@ const AppCom = {
                 const tb = document.querySelector('#tbl-picking tbody'); tb.innerHTML = '';
                 d.t_pick.forEach(x => {
                     this.addPickingRow();
-                    const i = tb.lastElementChild.querySelectorAll('input, select');
-                    i[0].value = x.p;
-                    AppCom.Universal.onProdChange(i[0]);
-                    i[1].value = x.pr;
-                    i[2].value = x.obs;
-                    i[3].value = x.u;
-                    i[4].value = x.l;
-                    i[5].value = x.cr;
-                    i[6].value = x.cs;
+                    const row = tb.lastElementChild;
+                    const prodSelect = row.querySelector('.prod-select');
+                    const obsInput = row.querySelector('td:nth-child(3) input');
+                    const ubInput = row.querySelector('td:nth-child(4) input');
+                    const loteInput = row.querySelector('td:nth-child(5) input');
+                    const cantReqInput = row.querySelector('td:nth-child(6) input');
+                    const surtidoInput = row.querySelector('td:nth-child(7) input');
+
+                    if (prodSelect) {
+                        prodSelect.value = x.p || '';
+                        AppCom.Universal.onProdChange(prodSelect, x.pr || '');
+                    }
+                    if (obsInput) obsInput.value = x.obs || '';
+                    if (ubInput) ubInput.value = x.u || '';
+                    if (loteInput) loteInput.value = x.l || '';
+                    if (cantReqInput) cantReqInput.value = x.cr || '';
+                    if (surtidoInput) surtidoInput.value = x.cs || '';
                 });
             }
         }
@@ -705,7 +785,7 @@ const AppCom = {
             document.querySelectorAll('#tbl-remision tbody tr').forEach(tr => {
                 const c = tr.querySelector('td:nth-child(1) input')?.value || '';
                 const p = tr.querySelector('.prod-select')?.value || '';
-                const pr = tr.querySelector('.pres-select, .pres-input')?.value || '';
+                const pr = AppCom.Universal.getPresentationValue(tr);
                 const l = tr.querySelector('td:nth-child(4) input')?.value || '';
                 const cad = tr.querySelector('td:nth-child(5) input')?.value || '';
                 r.push({ c, p, pr, l, cad });
@@ -726,11 +806,8 @@ const AppCom = {
                     if (cantidadInput) cantidadInput.value = x.c || '';
                     if (productoSelect) {
                         productoSelect.value = x.p || '';
-                        AppCom.Universal.onProdChange(productoSelect);
+                        AppCom.Universal.onProdChange(productoSelect, x.pr || '');
                     }
-
-                    const presField = row.querySelector('.pres-select, .pres-input');
-                    if (presField) presField.value = x.pr || '';
                     if (loteInput) loteInput.value = x.l || '';
                     if (caducidadInput) caducidadInput.value = x.cad || '';
                 });
