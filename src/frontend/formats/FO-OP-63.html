@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-63 Inventario de Equipos</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <link rel="stylesheet" href="format-styles-sgc.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración para formato HORIZONTAL */
+        @page {
+            size: landscape;
+            margin: 0.8cm;
+        }
+
+        body {
+            margin: 0;
+            padding: 10px;
+            min-width: 1200px;
+        }
+
+        .container {
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 0 auto;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .header-main h1 {
+            font-size: 16px;
+            margin: 8px 0;
+        }
+
+        .metadata {
+            font-size: 8px;
+        }
+
+        .btn-add {
+            background: #e2e8f0;
+            border: 1px dashed #94a3b8;
+            width: 100%;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        .signature-area {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .signature-box {
+            flex: 1;
+            border: 1px solid #cbd5e1;
+            padding: 8px;
+        }
+
+        .signature-box table {
+            font-size: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 8px;
+            color: #64748b;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        @media print {
+
+            .global-controls,
+            .no-print {
+                display: none !important;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
+            }
+
+            .section {
+                page-break-inside: auto !important;
+            }
+
+            tr {
+                page-break-inside: avoid !important;
+            }
+
+            body {
+                padding: 0;
+            }
+
+            .footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 5px 0;
+                background: white;
+            }
+        }
+    </style>
+</head>
+
+<body id="doc-fo-op-63">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container" style="max-width:100%; width:100%;">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs>
+                        <style>
+                            .t {
+                                font-family: 'Arial Black', sans-serif;
+                                font-weight: 900;
+                                fill: #1D1D1B
+                            }
+
+                            .s {
+                                font-family: 'Arial', sans-serif;
+                                font-weight: 700;
+                                fill: #1D1D1B;
+                                letter-spacing: 2px
+                            }
+
+                            .c {
+                                fill: #2E9D82
+                            }
+                        </style>
+                    </defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13" />
+                        <circle class="c" cx="75" cy="75" r="13" />
+                        <path class="c"
+                            d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
+                    </g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
+                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="215" y="35" font-family="Arial" font-size="10" fill="#1D1D1B">®</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio del Inventario</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-63-</span>
+                    <input type="text" id="reg-op63" class="registry-input generate-barcode cedit"
+                        data-target="barcode-op63" data-prefix="FO-OP-63-" placeholder="000"
+                        style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-op63" class="barcode-svg" style="height:30px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>INVENTARIO DE EQUIPOS E INSTRUMENTOS</h1>
+            <div class="metadata">Código: FO-OP-63 | Versión: 1.0 | Vigencia: MAR 2026 | Área: Operaciones /
+                Mantenimiento | Página: 1 de 1</div>
+        </div>
+
+        <div class="section">
+            <table class="no-border-table" style="margin-bottom: 10px; margin-top: 10px;">
+                <tr>
+                    <td width="70%"></td>
+                    <td width="15%" style="text-align: right; font-weight: bold; color: #1E3A5F;">ACTUALIZADO AL:</td>
+                    <td width="15%"><input type="date" id="actualizado-op63" class="cedit"
+                            style="border-bottom: 2px solid #1E3A5F; font-weight: bold; width: 100%;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <table class="compact-table" id="tbl-inventario">
+                <thead>
+                    <tr>
+                        <th width="3%">No.</th>
+                        <th width="15%">Descripción</th>
+                        <th width="10%">ID Equipo / Instrumento</th>
+                        <th width="12%">Ubicación</th>
+                        <th width="10%">Marca</th>
+                        <th width="10%">Modelo</th>
+                        <th width="10%">Número de Serie</th>
+                        <th width="10%"><span style="white-space:normal;line-height:1.1;">Fecha de Calibración<br>/
+                                Calificación / Mantto.</span></th>
+                        <th width="8%">Días de Vigencia</th>
+                        <th width="12%">Observaciones</th>
+                        <th width="0%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-num" style="font-weight:bold; color:#1e3a5f;">1</td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><input class="cedit" style="font-weight:bold;"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td><input type="date" class="cedit"></td>
+                        <td><input class="cedit" placeholder="Ej. 365 días"></td>
+                        <td><textarea class="cedit text-left" rows="2"></textarea></td>
+                        <td class="no-print"><button class="btn btn-danger btn-mini"
+                                onclick="delRowNumbered(this, 'tbl-inventario')">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRowNumbered('tbl-inventario')">+ AGREGAR EQUIPO AL
+                INVENTARIO</button>
+            <p style="font-size: 9px; color: #64748b; font-weight: bold; text-align: center; margin-top: 5px;">
+                *NOTA: ADICIONAR O ELIMINAR FILAS DE ACUERDO AL NÚMERO DE EQUIPOS NECESARIOS.
+            </p>
+        </div>
+
+        <div class="section" style="margin-top: 30px;">
+            <div class="signature-area" style="display:flex; justify-content:space-around; gap:15px;">
+                <div class="signature-box" style="flex:1; border: 1px solid #cbd5e1; padding: 10px;">
+                    <p style="font-weight:bold; text-align: center; margin-bottom: 25px; color: #1E3A5F;">ELABORÓ</p>
+                    <table class="no-border-table" style="font-size: 9px;">
+                        <tr>
+                            <td width="30%">Nombre:</td>
+                            <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>Puesto:</td>
+                            <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>Firma:</td>
+                            <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>Fecha:</td>
+                            <td><input type="date" class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="signature-box" style="flex:1; border: 1px solid #cbd5e1; padding: 10px;">
+                    <p style="font-weight:bold; text-align: center; margin-bottom: 25px; color: #1E3A5F;">REVISÓ</p>
+                    <table class="no-border-table" style="font-size: 9px;">
+                        <tr>
+                            <td width="30%">Nombre:</td>
+                            <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>Puesto:</td>
+                            <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>Firma:</td>
+                            <td><input class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>Fecha:</td>
+                            <td><input type="date" class="cedit" style="border-bottom:1px solid #ccc; width:100%;"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="signature-box"
+                    style="flex:1; border: 1px solid #cbd5e1; padding: 10px; background-color: #f8fafc;">
+                    <p style="font-weight:bold; text-align: center; margin-bottom: 25px; color: #1E3A5F;">VO. BO.</p>
+                    <table class="no-border-table" style="font-size: 9px;">
+                        <tr>
+                            <td width="30%">Nombre:</td>
+                            <td><input class="cedit"
+                                    style="border-bottom:1px solid #ccc; width:100%; background:transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>Puesto:</td>
+                            <td><input class="cedit"
+                                    style="border-bottom:1px solid #ccc; width:100%; background:transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>Firma:</td>
+                            <td><input class="cedit"
+                                    style="border-bottom:1px solid #ccc; width:100%; background:transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>Fecha:</td>
+                            <td><input type="date" class="cedit"
+                                    style="border-bottom:1px solid #ccc; width:100%; background:transparent;"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">FO-OP-63 | Versión: 1.0 | Inventario de Equipos e Instrumentos | Xelle Scientific | Página
+            1 de 1<br>El
+            contenido de este documento es propiedad de &quot;Xelle Scientific&quot;, S.A.P.I., de C. V., y está
+            protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+    </div>
+
+    <script>
+        const inventarioFOOP63 = [
+            [1, 'Cabina bioseguridad, BCD-16513 NU-540-300 de 91 cm (3 pies) y 115 V, Clase IIA2', 'EQ-LCE-001', 'Laboratorio y Calidad / Expansion celular LCE', 'NuAire', 'Nu540-300', '210642010722', '2025-05-30', 'Ej. 365 dias', ''],
+            [2, 'Cabina bioseguridad, 1500 Serie A2 Clase II, tipo A2, 120 V', 'EQ-LCE-002', 'Laboratorio y Calidad / Expansion celular LCE', 'Thermo Scientific', '1575A2', '300662719', '2026-04-29', 'Ej. 365 dias', ''],
+            [3, 'Incubadora de CO2 con camisa de agua In-VitroCell NU-8600', 'EQ-LCE-003', 'Laboratorio y Calidad / Expansion celular LCE', 'NuAire', 'NU-8600W', '215261072722', '', 'Ej. 365 dias', ''],
+            [4, 'Incubadora de CO2 con camisa de agua In-VitroCell NU-8600', 'EQ-LCE-004', 'Laboratorio y Calidad / Expansion celular LCE', 'NuAire', 'NU-8600W', '215527081122', '', 'Ej. 365 dias', ''],
+            [5, 'Incubadora de CO2 con camisa de agua In-VitroCell NU-8600', 'EQ-LCE-005', 'Laboratorio y Calidad / Expansion celular LCE', 'NuAire', 'NU-8600W', '214321063022', '', 'Ej. 365 dias', ''],
+            [6, 'Incubadora de CO2 con camisa de agua Forma serie II 3110', 'EQ-LCE-006', 'Laboratorio y Calidad / Expansion celular LCE', 'Thermo Scientific', '3110', '32053136091', '', 'Ej. 365 dias', ''],
+            [7, 'Bano Maria Electrico (ZCK165B)', 'EQ-LCE-007', 'Laboratorio y Calidad / Expansion celular LCE', 'Concasse', 'ZCK165B', '14HL7074-086', '2025-05-30', 'Ej. 365 dias', ''],
+            [8, 'Centrifuga digital de mesa', 'EQ-LCE-008', 'Laboratorio y Calidad / Expansion celular LCE', 'VELAB', 'VE-4000', '1811053', '', 'Ej. 365 dias', ''],
+            [9, 'Microscopio binocular invertido de fases', 'EQ-LCE-009', 'Laboratorio y Calidad / Expansion celular LCE', 'MOTIC', 'AE-2000', '1280000197', '2025-05-23', 'Ej. 365 dias', ''],
+            [10, 'Centrifuga refrigerada Sirena 0,6L 120V/60Hz (AFI)', 'EQ-LCE-010', 'Laboratorio y Calidad / Expansion celular LCE', 'AFI-Sirena', 'AFI-C060R-R', '231060R3101', '', 'Ej. 365 dias', ''],
+            [11, 'Termohigrometro calibrado certificado Traceable Nist 4040cc', 'EQ-LCE-011', 'Laboratorio y Calidad / Expansion celular LCE', 'Traceable', '4040cc-90080-06', '221976300', '', 'Ej. 365 dias', ''],
+            [12, 'PIPETE CONTROLLER', 'EQ-LCE-012', 'Laboratorio y Calidad / Expansion celular LCE', '', '', '', '', 'Ej. 365 dias', ''],
+            [13, 'PIPETE CONTROLLER', 'EQ-LCE-013', 'Laboratorio y Calidad / Expansion celular LCE', '', '', '', '', 'Ej. 365 dias', ''],
+            [14, 'Centrifuga de laboratorio con rotor oscilante ICB FUGE IV. Rango de 100 a 5000 rpm. FCR maxima de 4420 xg', 'EQ-LCE-014', 'Laboratorio y Calidad / Expansion celular LCE', 'ICB', 'ICB-FUGE IV', '', '', 'Ej. 365 dias', ''],
+            [15, 'Balanza analitica Nimbus', 'EQ-LCE-015', 'Laboratorio y Calidad / Expansion celular LCE', 'Nimbus', 'NBL254i', 'AE9YX509', '2025-05-23', 'Ej. 365 dias', ''],
+            [16, 'ELMI Vortex mixer V-3. De 50 a 4000 RPM, amplitud de vibracion del rotor de 4 mm', 'EQ-LCE-016', 'Laboratorio y Calidad / Expansion celular LCE', 'ELMI', 'VORTEX V-3', '18300105N1', '2025-05-23', 'Ej. 365 dias', ''],
+            [17, 'BOMBA', 'EQ-LCE-017', 'Laboratorio y Calidad / Expansion celular LCE', 'DEVILBISS', '7305D', 'DD216131', '2025-05-23', 'Ej. 365 dias', ''],
+            [18, '', 'EQ-LCE-018', 'Laboratorio y Calidad / Expansion celular LCE', '', '', '', '', 'Ej. 365 dias', ''],
+            [19, '', 'EQ-LCE-019', 'Laboratorio y Calidad / Expansion celular LCE', '', '', '', '', 'Ej. 365 dias', ''],
+            [20, '', 'EQ-LCE-020', 'Laboratorio y Calidad / Expansion celular LCE', '', '', '', '', 'Ej. 365 dias', ''],
+            [21, '', 'EQ-LCE-021', 'Laboratorio y Calidad / Expansion celular LCE', '', '', '', '', 'Ej. 365 dias', ''],
+            [22, '', 'EQ-LCE-022', 'Laboratorio y Calidad / Expansion celular LCE', '', '', '', '', 'Ej. 365 dias', ''],
+            [23, '', 'EQ-LCE-023', 'Laboratorio y Calidad / Expansion celular LCE', '', '', '', '', 'Ej. 365 dias', ''],
+            [24, '', 'EQ-LCE-024', 'Laboratorio y Calidad / Expansion celular LCE', '', '', '', '', 'Ej. 365 dias', ''],
+            [25, '', 'EQ-LCE-025', 'Laboratorio y Calidad / Expansion celular LCE', '', '', '', '', 'Ej. 365 dias', ''],
+            [26, 'REFRIGERADOR ICEHAUS RV-2PS-SS-01 | Refrigerador Vertical 2 Solida | 1321 Litros | Acero Inoxidable', 'EQ-LCA-001', 'Laboratorio y Calidad / Acondicionamiento LCA', 'ICEHAUS', '367848793', 'RV-2PS-SS-01', '2025-05-30', 'Ej. 365 dias', ''],
+            [27, 'Termohigrometro calibrado certificado Traceable Nist 4040cc', 'EQ-LCA-002', 'Laboratorio y Calidad / Acondicionamiento LCA', 'Traceable', '4040cc-90080-06', '221976298', '', 'Ej. 365 dias', ''],
+            [28, 'Congelador de temperatura ultrabaja Blizzard NU-99578J de -86 C. 582 litros (20,6 pies cubicos)', 'EQ-LCA-003', 'Laboratorio y Calidad / Acondicionamiento LCA', 'NuAire', 'NU99578JGA', 'BEOH1HE1T00QGH3800', '2025-05-23', 'Ej. 365 dias', ''],
+            [29, 'Empacadora al vacio de mostrador para liquidos y solidos de 4 m3 por hora. De acero inoxidable con barra selladora de 28 cm. Bomba de vacio BUSCH', 'EQ-LCA-004', 'Laboratorio y Calidad / Acondicionamiento LCA', 'TORREY', 'EVD-4', 'H0J002000095', '2025-06-06', 'Ej. 365 dias', ''],
+            [30, 'Pistola de impresora de inyeccion de tinta portatil inteligente mejorada con visualizacion tactil LED de 5.6 pulgadas', 'EQ-LCA-005', 'Laboratorio y Calidad / Acondicionamiento LCA', 'TOAUTO', 'INK-PRINTER-V4', '', '', 'Ej. 365 dias', ''],
+            [31, 'Congelador horizontal 11 Cuft Blanco Mabe - CHM11B', 'EQ-LCA-006', 'Laboratorio y Calidad / Acondicionamiento LCA', 'MABE', 'CHM11BPS0', 'ST21111529EMIC025', '2025-05-30', 'Ej. 365 dias', ''],
+            [32, 'Dosificadoras peristalticas de sobremesa. Dosificacion desde 0,1 a 1.050 ml / Caudal hasta 6,4 l/min / Precision +/-0,5%', 'EQ-LCA-007', 'Laboratorio y Calidad / Acondicionamiento LCA', 'DARA', 'SX-50 SpeedFill', '', '', 'Ej. 365 dias', ''],
+            [33, '', 'EQ-LCA-008', 'Laboratorio y Calidad / Acondicionamiento LCA', '', '', '', '', 'Ej. 365 dias', ''],
+            [34, '', 'EQ-LCA-009', 'Laboratorio y Calidad / Acondicionamiento LCA', '', '', '', '', 'Ej. 365 dias', ''],
+            [35, '', 'EQ-LCA-010', 'Laboratorio y Calidad / Acondicionamiento LCA', '', '', '', '', 'Ej. 365 dias', ''],
+            [36, '', 'EQ-LCA-011', 'Laboratorio y Calidad / Acondicionamiento LCA', '', '', '', '', 'Ej. 365 dias', ''],
+            [37, '', 'EQ-LCA-012', 'Laboratorio y Calidad / Acondicionamiento LCA', '', '', '', '', 'Ej. 365 dias', ''],
+            [38, '', 'EQ-LCA-013', 'Laboratorio y Calidad / Acondicionamiento LCA', '', '', '', '', 'Ej. 365 dias', ''],
+            [39, '', 'EQ-LCA-014', 'Laboratorio y Calidad / Acondicionamiento LCA', '', '', '', '', 'Ej. 365 dias', ''],
+            [40, '', 'EQ-LCA-015', 'Laboratorio y Calidad / Acondicionamiento LCA', '', '', '', '', 'Ej. 365 dias', ''],
+            [41, 'Estufa universal UN30.', 'EQ-LCC-001', 'Laboratorio y Calidad / CEyE LCC', 'MEMMERT', 'UN-30', 'B121.0962', '2025-05-21', 'Ej. 365 dias', ''],
+            [42, 'Autoclave vertical BKQ-B II', 'EQ-LCC-002', 'Laboratorio y Calidad / CEyE LCC', 'BIOBASE', 'BKQ-B II', 'BKQB00112101506', '', 'Ej. 365 dias', ''],
+            [43, 'Termohigrometro calibrado certificado Traceable Nist 4040cc', 'EQ-LCC-003', 'Laboratorio y Calidad / CEyE LCC', 'Traceable', '4040cc-90080-06', '221976299', '', 'Ej. 365 dias', ''],
+            [44, 'Termohigrometro calibrado certificado Traceable Nist 4040cc', 'EQ-LAI-001', 'Laboratorio y Calidad / Ingreso cambiador a laboratorio LAI', 'Traceable', '4040cc-90080-06', '221976304', '', 'Ej. 365 dias', ''],
+            [45, 'Termohigrometro calibrado certificado Traceable Nist 4040cc', 'EQ-LES-001', 'Laboratorio y Calidad / Esclusa LES', 'Traceable', '4040cc-90080-06', '221976306', '', 'Ej. 365 dias', ''],
+            [46, 'Refrigerador vertical en acero inoxidable 1 puerta solida', 'EQ-LCB-001', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'Imbera', 'VRC-24-1DS', 'E11190400045', '2025-05-22', '365', ''],
+            [47, 'Termometro-Higrometro. Termometro temperatura y humedad HTC-2', 'EQ-LCB-002', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', 'HTC-2', '', '', 'Ej. 365 dias', ''],
+            [48, 'Incubadora de CO2 con camisa de agua Forma serie II 3110 a T. ambiente', 'EQ-LCB-003', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'Thermo Scientific', 'serie II 3110', '337117-36503', '2025-05-22', '365', ''],
+            [49, 'Incubadora de CO2 con camisa de agua Forma serie II 3110 a 30C', 'EQ-LCB-004', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'Thermo Scientific', 'serie II 3110', '320234-36789', '2025-05-22', '365', ''],
+            [50, 'Cabina de seguridad biologica Nuaire NU-430-600 Clase II B2 115V', 'EQ-LCB-005', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'NuAire', 'UN-430-600', '78687070102', '2025-05-22', '365', ''],
+            [51, 'Microondas Daewoo/Winia KOR-164H, horno de sobremesa de 1.6 pies cubicos con 1000W', 'EQ-LCB-006', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'DAEWOO', 'KOR-164H', 'TM202E35230180', '', 'Fuera de servicio', ''],
+            [52, 'Beckman L8-80M Ultracentrifuge', 'EQ-LCB-007', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'Beckman', 'L8-80M', '8H817', '', 'Fuera de servicio', 'Fuera de servicio. Instalacion: MAR1988'],
+            [53, 'Liofilizador serie BK-FD10. Stoppering chamber with 8 port manifold', 'EQ-LCB-008', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'BIOBASE', 'BK-FD10PT', 'BKFD1024070137K', '2025-06-06', '365', ''],
+            [54, 'Colector automatico de fracciones (AFC) V2 para vesiculas extracelulares (VE)', 'EQ-LCB-009', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'IZON', 'AFC-V2', 'AFC-V2-0095', '', 'Ej. 365 dias', ''],
+            [55, 'Fixed Speed Peristaltic Pump, 115 V/60 Hz', 'EQ-LCB-010', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'MasterFlex', '7555-00 07514-10', '1222023197', '', 'Ej. 365 dias', ''],
+            [56, 'Bomba de vacio 2XZ, bomba de paletas rotativas de dos etapas de acoplamiento directo', 'EQ-LCB-011', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '2XZ-2', '8527', '2026-04-06', '200 h uso', ''],
+            [57, 'Tamiz vibratorio electrico automatico VEVOR, tamizador de acero inoxidable con malla', 'EQ-LCB-012', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'Vevor', 'Vibrating Screen Mach', '2406285159130112', '', 'Ej. 365 dias', ''],
+            [58, 'LICUADORA WARING MX1300XTX', 'EQ-LCB-013', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'Waring', 'MX1300XTX', '230111', '', 'Ej. 365 dias', ''],
+            [59, 'Agitador de placas calefactoras Cimarec+, ambiente a 400 C, ceramica', 'EQ-LCB-014', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'Thermo Scientific', 'SP88857100', 'M3710023082108995', '', 'Ej. 365 dias', ''],
+            [60, 'Sistema de medicion TRPS de qNano Gold', 'EQ-LCB-015', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'IZON', 'qNano', '601A', '2025-06-09', 'Ej. 365 dias', ''],
+            [61, 'Inspiron 15 5502. Intel Core i7-10750H CPU @ 2.60GHz', 'EQ-LCB-016', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'DELL', 'P102F-003', '4M9ST93', '', 'Ej. 365 dias', ''],
+            [62, 'AHN pipet4u Oasis Pipette controller', 'EQ-LCB-017', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'Oasis', 'Ahn Pipet4u', 'SG93735', '', 'Ej. 365 dias', ''],
+            [63, 'Bascula CROWNFUL Rechargeable Food Kitchen Scale', 'EQ-LCB-018', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'Crownful', 'K210H', '', '', 'Ej. 365 dias', ''],
+            [64, 'Autoclave portatil Luzeren de 24.4 litros', 'EQ-LCB-019', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'Luzeren', 'YX-280B24', '22S-08156', '2025-05-22', '365', ''],
+            [65, 'Soporte Sartocon Slice 200. Soporte de acero inoxidable, dos Slice 200 de flujo cruzado (max. 400 cm2), bajo volumen de 20 ml a 5 l', 'EQ-LCB-020', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', 'Sartorius', 'Sartocon Slice 200', 'KZ6233', '', 'Ej. 365 dias', ''],
+            [66, '', 'EQ-LCB-021', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [67, '', 'EQ-LCB-022', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [68, '', 'EQ-LCB-023', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [69, '', 'EQ-LCB-024', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [70, '', 'EQ-LCB-025', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [71, '', 'EQ-LCB-026', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [72, '', 'EQ-LCB-027', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [73, '', 'EQ-LCB-028', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [74, '', 'EQ-LCB-029', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [75, '', 'EQ-LCB-030', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [76, '', 'EQ-LCB-031', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [77, '', 'EQ-LCB-032', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [78, '', 'EQ-LCB-033', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [79, '', 'EQ-LCB-034', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', ''],
+            [80, '', 'EQ-LCB-035', 'Laboratorio y Calidad / Calidad y bioprocesos LCB', '', '', '', '', 'Ej. 365 dias', '']
+        ];
+
+        function poblarInventarioFOOP63() {
+            const tabla = document.getElementById('tbl-inventario');
+            if (!tabla) return;
+
+            const tbody = tabla.querySelector('tbody');
+            const plantilla = tbody.rows[0].cloneNode(true);
+            tbody.innerHTML = '';
+
+            inventarioFOOP63.forEach((fila) => {
+                const [no, descripcion, idEquipo, ubicacion, marca, modelo, serie, fecha, vigencia, observaciones] = fila;
+                const tr = plantilla.cloneNode(true);
+                const celdas = tr.querySelectorAll('td');
+
+                celdas[0].textContent = no;
+                celdas[1].querySelector('textarea').value = descripcion;
+                celdas[2].querySelector('input').value = idEquipo;
+                celdas[3].querySelector('textarea').value = ubicacion;
+                celdas[4].querySelector('input, textarea').value = marca;
+                celdas[5].querySelector('input, textarea').value = modelo;
+                celdas[6].querySelector('input, textarea').value = serie;
+                celdas[7].querySelector('input').value = fecha;
+                celdas[8].querySelector('input').value = vigencia;
+                celdas[9].querySelector('textarea').value = observaciones;
+
+                tbody.appendChild(tr);
+            });
+
+            const actualizado = document.getElementById('actualizado-op63');
+            if (actualizado) {
+                actualizado.value = '2026-04-30';
+            }
+
+            const folio = document.getElementById('reg-op63');
+            if (folio && !folio.value) {
+                folio.value = '001';
+                folio.dispatchEvent(new Event('input'));
+            }
+
+            if (typeof updateNumbers === 'function') {
+                updateNumbers('tbl-inventario');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', poblarInventarioFOOP63);
+    </script>
+
+</body>
+
+</html>

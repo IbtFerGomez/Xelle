@@ -184,7 +184,7 @@
 
         <div class="header-main">
             <h1>ÍNDICE DE CARPETAS DEL SGC</h1>
-            <div class="metadata">Código: FO-SGC-I | Versión: 1.0 | Vigencia: Mar 2026 | Página: 1 de 1</div>
+            <div class="metadata">Código: FO-SGC-I | Versión: 1.0 | Vigencia: Jun 2026 | Página: 1 de 1</div>
         </div>
 
         <div class="section-header">1. IDENTIFICACIÓN DE LA CARPETA</div>
@@ -192,8 +192,17 @@
             <table class="no-border-table">
                 <tr>
                     <td width="25%"><strong>Nombre de la Carpeta / Sección:</strong></td>
-                    <td width="75%" colspan="3"><input class="cedit"
+                    <td width="75%" colspan="3"><input id="folder-name" class="cedit" list="sgc-folder-list"
                             style="width:100%; border-bottom:1px solid #ccc; font-weight:bold; font-size:12px;"></td>
+                </tr>
+                <tr>
+                    <td width="25%"><strong>Área Propietaria (FO-SGC-02):</strong></td>
+                    <td width="25%"><input id="folder-owner-area" class="cedit" readonly
+                            style="width:100%; border-bottom:1px solid #ccc; background:#f8fafc; font-weight:bold;">
+                    </td>
+                    <td width="20%"><strong>Estatus de Referencia:</strong></td>
+                    <td width="30%"><input class="cedit" value="VIGENTE JUN 2026 / REVISIÓN JUN 2027" readonly
+                            style="width:100%; border-bottom:1px solid #ccc; background:#f8fafc;"></td>
                 </tr>
                 <tr>
                     <td width="25%"><strong>Número de Carpeta:</strong></td>
@@ -214,6 +223,30 @@
                     <td colspan="3"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
                 </tr>
             </table>
+            <datalist id="sgc-folder-list">
+                <option value="REGISTROS OPERATIVOS DE ASEGURAMIENTO DE CALIDAD"></option>
+                <option value="SISTEMA DE GESTIÓN DE LA CALIDAD (SGC) Y MEJORA CONTINUA"></option>
+                <option value="GESTIÓN DE RECURSOS HUMANOS Y DESARROLLO DE PERSONAL"></option>
+                <option value="REGISTROS OPERATIVOS DE CONTROL DE MUESTREO Y RETENCIÓN"></option>
+                <option value="REGISTROS OPERATIVOS DE INGRESO, RECEPCIÓN Y EVALUACIÓN DE TEJIDOS"></option>
+                <option value="REGISTROS OPERATIVOS DE INSPECCIÓN, ACONDICIONAMIENTO Y DISPOSICIÓN"></option>
+                <option value="REGISTROS OPERATIVOS DE CONTROL DE PROCESOS CELULARES Y CULTIVO"></option>
+                <option value="REGISTROS OPERATIVOS DE DOSIFICACIÓN DE CÉLULAS Y EXOSOMAS"></option>
+                <option value="REGISTROS OPERATIVOS DE PROCESAMIENTO DE PLACENTAS (LIOFILIZACIÓN)"></option>
+                <option value="REGISTROS OPERATIVOS DE ANÁLISIS Y DICTAMEN MICROBIOLÓGICO"></option>
+                <option value="REGISTROS OPERATIVOS DE BITÁCORA CONTROL AMBIENTAL Y MANTENIMIENTO"></option>
+                <option value="BITÁCORAS OPERATIVAS Y CONTROL DE PROCESOS (MEDIOS)"></option>
+                <option value="REGISTROS OPERATIVOS DE CONTROL DE PLAGAS Y FAUNA NOCIVA"></option>
+                <option value="REGISTROS OPERATIVOS DE MANEJO DE RPBI Y RESIDUOS PELIGROSOS"></option>
+                <option value="EXPEDIENTES MAESTROS DE INGENIERÍA Y MANTENIMIENTO"></option>
+                <option value="CONTROL DE LOGÍSTICA, EMBARQUES Y FLOTILLA"></option>
+                <option value="CRUCE DOCUMENTAL OBLIGATORIO: CICLO DE COMPRA, PEDIDO, FABRICACIÓN Y ENTREGA"></option>
+                <option value="TRAZABILIDAD COMERCIAL, PEDIDOS Y RUTA OPERATIVA"></option>
+                <option value="REGISTROS OPERATIVOS DE CONTROL DE ALMACÉN E INVENTARIOS"></option>
+                <option value="MONITOREO DIARIO Y GRÁFICOS DE EQUIPOS DE INCUBACIÓN Y CRIO"></option>
+                <option value="EXPEDIENTES MAESTROS DE MANUFACTURA (BATCH RECORDS)"></option>
+                <option value="EXPEDIENTES DE GESTIÓN DE DESVIACIONES Y CONTROL DE MPNC"></option>
+            </datalist>
         </div>
 
         <div class="section-header">2. CONTENIDO DETALLADO (ÍNDICE)</div>
@@ -335,6 +368,48 @@
     </div>
 
     <script>
+        const folderOwnerByName = {
+            'REGISTROS OPERATIVOS DE ASEGURAMIENTO DE CALIDAD': 'Aseguramiento de Calidad (QA)',
+            'SISTEMA DE GESTIÓN DE LA CALIDAD (SGC) Y MEJORA CONTINUA': 'Coordinación SGC / Calidad',
+            'GESTIÓN DE RECURSOS HUMANOS Y DESARROLLO DE PERSONAL': 'Recursos Humanos',
+            'REGISTROS OPERATIVOS DE CONTROL DE MUESTREO Y RETENCIÓN': 'Laboratorio y Calidad (LC)',
+            'REGISTROS OPERATIVOS DE INGRESO, RECEPCIÓN Y EVALUACIÓN DE TEJIDOS': 'Laboratorio y Calidad (LC)',
+            'REGISTROS OPERATIVOS DE INSPECCIÓN, ACONDICIONAMIENTO Y DISPOSICIÓN': 'Laboratorio y Calidad (LC)',
+            'REGISTROS OPERATIVOS DE CONTROL DE PROCESOS CELULARES Y CULTIVO': 'Laboratorio y Calidad (LC)',
+            'REGISTROS OPERATIVOS DE DOSIFICACIÓN DE CÉLULAS Y EXOSOMAS': 'Laboratorio y Calidad (LC)',
+            'REGISTROS OPERATIVOS DE PROCESAMIENTO DE PLACENTAS (LIOFILIZACIÓN)': 'Laboratorio y Calidad (LC)',
+            'REGISTROS OPERATIVOS DE ANÁLISIS Y DICTAMEN MICROBIOLÓGICO': 'Laboratorio y Calidad (LC)',
+            'REGISTROS OPERATIVOS DE BITÁCORA CONTROL AMBIENTAL Y MANTENIMIENTO': 'Operaciones (OP)',
+            'BITÁCORAS OPERATIVAS Y CONTROL DE PROCESOS (MEDIOS)': 'Laboratorio y Calidad (LC)',
+            'REGISTROS OPERATIVOS DE CONTROL DE PLAGAS Y FAUNA NOCIVA': 'Operaciones (OP)',
+            'REGISTROS OPERATIVOS DE MANEJO DE RPBI Y RESIDUOS PELIGROSOS': 'Operaciones (OP)',
+            'EXPEDIENTES MAESTROS DE INGENIERÍA Y MANTENIMIENTO': 'Mantenimiento',
+            'CONTROL DE LOGÍSTICA, EMBARQUES Y FLOTILLA': 'Logística y Embarques',
+            'CRUCE DOCUMENTAL OBLIGATORIO: CICLO DE COMPRA, PEDIDO, FABRICACIÓN Y ENTREGA': 'Operaciones / Comercial',
+            'TRAZABILIDAD COMERCIAL, PEDIDOS Y RUTA OPERATIVA': 'Operaciones / Embarques',
+            'REGISTROS OPERATIVOS DE CONTROL DE ALMACÉN E INVENTARIOS': 'Almacén y Surtido',
+            'MONITOREO DIARIO Y GRÁFICOS DE EQUIPOS DE INCUBACIÓN Y CRIO': 'Laboratorio y Calidad (LC)',
+            'EXPEDIENTES MAESTROS DE MANUFACTURA (BATCH RECORDS)': 'Producción / Banco',
+            'EXPEDIENTES DE GESTIÓN DE DESVIACIONES Y CONTROL DE MPNC': 'Aseguramiento de Calidad (QA)'
+        };
+
+        function syncFolderOwnerArea() {
+            const folderInput = document.getElementById('folder-name');
+            const areaInput = document.getElementById('folder-owner-area');
+            if (!folderInput || !areaInput) return;
+            const area = folderOwnerByName[folderInput.value.trim()] || '';
+            areaInput.value = area;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const folderInput = document.getElementById('folder-name');
+            if (folderInput) {
+                folderInput.addEventListener('input', syncFolderOwnerArea);
+                folderInput.addEventListener('change', syncFolderOwnerArea);
+                syncFolderOwnerArea();
+            }
+        });
+
         function addRowNumbered(tableId) {
             const tbody = document.getElementById(tableId).querySelector('tbody');
             const newRow = tbody.rows[0].cloneNode(true);

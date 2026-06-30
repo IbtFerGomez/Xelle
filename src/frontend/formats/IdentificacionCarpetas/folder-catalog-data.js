@@ -35,8 +35,8 @@ window.CARPETAS_SGC = [
             { code: "FO-SGC-03", name: "Matriz de Formatos Activos" },
             { code: "FO-SGC-03-B", name: "Control Maestro de Documentos y Formatos" },
             { code: "FO-SGC-04", name: "Listado Maestro de Formatos" },
-            { code: "FO-SGC-07", name: "Indice Maestro de PNOs" },
-            { code: "FO-SGC-08", name: "Indice Maestro de Politicas" }
+            { code: "FO-SGC-05", name: "Indice Maestro de PNOs" },
+            { code: "FO-SGC-06", name: "Indice Maestro de Politicas" }
         ]
     },
     {
@@ -198,8 +198,6 @@ window.CARPETAS_SGC = [
             { code: "FO-OP-55", name: "Expediente de Mantenimiento" },
             { code: "FO-OP-61", name: "Hoja de Vida y Expediente Documental de Equipo" },
             { code: "FO-OP-62", name: "Historial de Modificaciones y Calibraciones" },
-            { code: "FO-SGC-05", name: "Inventario de Equipos" },
-            { code: "FO-SGC-06", name: "Hoja de Vida de Termometro" },
             { code: "FO-QA-15", name: "Programa Anual de Mantenimiento" }
         ]
     },

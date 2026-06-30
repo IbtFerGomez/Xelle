@@ -3,15 +3,36 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>FO-SGC-06 Hoja de Vida de Termómetro</title>
+    <title>FO-SGC-06 Índice Maestro de Políticas</title>
     <link rel="stylesheet" href="format-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="format-app.js"></script>
     <style>
+        /* Configuración para impresión (Landscape recomendado para matrices) */
+        @page {
+            size: landscape;
+            margin: 1cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 26cm;
+            margin: 0 auto;
+            background: white;
+            padding: 0.8cm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
         .section-header {
             background-color: #1E3A5F;
             color: white;
-            padding: 5px 10px;
+            padding: 6px 10px;
             font-weight: bold;
             font-size: 11px;
             margin-top: 15px;
@@ -19,28 +40,48 @@
             text-transform: uppercase;
         }
 
+        .info-box {
+            background-color: #f0fdfa;
+            border: 1px solid #2E9D82;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 9px;
+            color: #064e3b;
+            margin-top: 10px;
+            line-height: 1.4;
+            text-align: justify;
+        }
+
+        .info-box strong {
+            color: #1E3A5F;
+        }
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
         .compact-table th {
             background-color: #1E3A5F;
             color: white;
-            font-size: 10px;
+            font-size: 9px;
             padding: 6px;
             text-align: center;
             border: 1px solid #cbd5e1;
+            vertical-align: middle;
         }
 
         .compact-table td {
-            font-size: 10px;
-            padding: 5px;
+            font-size: 9px;
+            padding: 4px 6px;
             vertical-align: middle;
-            text-align: center;
             border: 1px solid #cbd5e1;
         }
 
         .compact-table input,
-        .compact-table select,
-        .compact-table textarea {
-            font-size: 10px;
-            text-align: center;
+        .compact-table select {
+            font-size: 9px;
             width: 100%;
             border: none;
             background: transparent;
@@ -49,14 +90,26 @@
             font-family: inherit;
         }
 
-        .compact-table input:focus {
+        .compact-table input:focus,
+        .compact-table select:focus {
             background-color: #f8fafc;
             outline: 1px dashed #3b82f6;
         }
 
+        .text-center {
+            text-align: center !important;
+        }
+
         .text-left {
             text-align: left !important;
-            padding-left: 8px !important;
+        }
+
+        .group-header td {
+            background-color: #f1f5f9;
+            color: #1E3A5F;
+            font-weight: bold;
+            font-size: 10px;
+            text-transform: uppercase;
         }
 
         .btn-add {
@@ -68,20 +121,24 @@
             cursor: pointer;
             padding: 5px;
             margin-top: 5px;
+            color: #1E3A5F;
         }
 
-        .audit-note {
-            background-color: #f1f5f9;
-            border-left: 4px solid #b45309;
+        .signature-area {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .signature-box {
+            flex: 1;
+            text-align: center;
+            border: 1px solid #cbd5e1;
             padding: 10px;
-            margin-top: 15px;
-            font-size: 9px;
-            color: #334155;
-            line-height: 1.4;
-            text-align: justify;
+            border-radius: 4px;
         }
 
-        /* Estilos del Footer Unificado y Legal */
         .footer-unified {
             margin-top: 20px;
             border-top: 2px solid #1E3A5F;
@@ -89,18 +146,8 @@
             text-align: center;
             font-size: 9px;
             line-height: 1.4;
-            page-break-inside: avoid;
-        }
-
-        .footer-unified .control-data {
-            font-weight: bold;
-            color: #1E3A5F;
-            margin-bottom: 3px;
-        }
-
-        .footer-unified .legal-data {
             color: #475569;
-            font-style: italic;
+            page-break-inside: avoid;
         }
 
         @media print {
@@ -110,11 +157,25 @@
                 display: none !important;
             }
 
+            body {
+                background: white;
+                padding: 0;
+            }
+
             .container {
-                max-width: 100%;
                 width: 100%;
+                max-width: 100%;
                 border: none;
                 box-shadow: none;
+                padding: 0;
+            }
+
+            ::-webkit-input-placeholder {
+                color: transparent !important;
+            }
+
+            ::placeholder {
+                color: transparent !important;
             }
         }
     </style>
@@ -128,24 +189,12 @@
     </div>
 
     <div class="container">
+        <!-- HEADER -->
         <div class="header-top">
             <div class="logo-container">
-                <svg viewBox="0 0 320 80">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
                     <defs>
                         <style>
-                            .t {
-                                font-family: 'Arial Black', sans-serif;
-                                font-weight: 900;
-                                fill: #1D1D1B
-                            }
-
-                            .s {
-                                font-family: 'Arial', sans-serif;
-                                font-weight: 700;
-                                fill: #1D1D1B;
-                                letter-spacing: 2px
-                            }
-
                             .c {
                                 fill: #2E9D82
                             }
@@ -157,16 +206,18 @@
                         <path class="c"
                             d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
                     </g>
-                    <text x="90" y="42" class="t" font-size="34">XELLE</text>
-                    <text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;"
+                        font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;"
+                        font-size="19">SCIENTIFIC</text>
                 </svg>
             </div>
             <div class="registry-container">
-                <label>ID DEL EQUIPO</label>
+                <label>Folio del Listado</label>
                 <div class="registry-wrapper">
                     <span class="registry-prefix">FO-SGC-06-</span>
                     <input type="text" id="reg-sgc06" class="registry-input generate-barcode cedit"
-                        data-target="barcode-sgc06" data-prefix="FO-SGC-06-" placeholder="TERM-000"
+                        data-target="barcode-sgc06" data-prefix="FO-SGC-06-" placeholder="202X-00"
                         style="font-weight:bold; font-size:14px; text-transform:uppercase;">
                 </div>
                 <svg id="barcode-sgc06" class="barcode-svg" style="height:35px;"></svg>
@@ -174,170 +225,270 @@
         </div>
 
         <div class="header-main">
-            <h1>REGISTRO INDIVIDUAL Y HOJA DE VIDA DE TERMÓMETRO</h1>
-            <div class="metadata">Código: FO-SGC-06 | Versión: 1.0 | Vigencia: ENE 2026 | Página: 1 de 1</div>
+            <h1 style="color: #1E3A5F; text-align: center; margin: 0; font-size: 18px;">ÍNDICE MAESTRO DE POLÍTICAS DEL
+                SISTEMA DE GESTIÓN DE CALIDAD</h1>
+            <div style="text-align: center; font-size: 10px; color: #666; margin-top: 5px;">Código: FO-SGC-06 | Versión:
+                1.0 | Vigencia: JUN 2026 | Página: 1 de 2</div>
         </div>
 
-        <div class="section-header">1. ESPECIFICACIONES TÉCNICAS</div>
-        <div class="section">
-            <table class="no-border-table">
+        <div class="info-box">
+            <strong>Lineamientos GxP (Arquitectura y Control Documental):</strong> Este formato consolida el listado
+            oficial y estatus de las Políticas (PO) activas en la organización. Las Políticas son el nivel superior
+            jerárquico del SGC que dictan el "Qué se debe hacer" y rigen estructuralmente al <strong>Manual de
+                Procedimientos (PR-XX-XX)</strong> ("Cómo hacerlo") y al <strong>Manual de Formatos (FO-XX-XX)</strong>
+            ("Evidencia de hacerlo"). Todo documento debe estar vinculado en el <strong>Manual Maestro de Índices
+                Globales</strong> para su total trazabilidad y cumplimiento normativo.
+        </div>
+
+        <div class="section-header">1. MATRIZ DE POLÍTICAS (CLASIFICACIÓN NORMATIVA NOM / ISO)</div>
+        <table class="compact-table" id="tbl-politicas">
+            <thead>
                 <tr>
-                    <td width="15%"><strong>Marca:</strong></td>
-                    <td width="35%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
-                    <td width="15%"><strong>Modelo:</strong></td>
-                    <td width="35%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <th width="12%">Código</th>
+                    <th width="40%">Título de la Política Institucional</th>
+                    <th width="15%">Área / Dueño</th>
+                    <th width="8%">Versión</th>
+                    <th width="10%">Fecha de Vigor</th>
+                    <th width="10%">Estatus</th>
+                    <th width="5%" class="no-print">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- GRUPO A -->
+                <tr class="group-header">
+                    <td colspan="7">A. SISTEMA DE GESTIÓN DE CALIDAD (SGC) Y DOCUMENTACIÓN</td>
                 </tr>
                 <tr>
-                    <td><strong>No. de Serie:</strong></td>
-                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
-                    <td><strong>Tipo Sensor:</strong></td>
-                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
-                            placeholder="Ej. Termopar K, PT100"></td>
+                    <td><input class="cedit text-center" value="PO-LC-01" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Políticas para las Buenas Prácticas de Documentación (ALCOA+)"></td>
+                    <td><input class="cedit text-center" value="SGC / QA"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
                 <tr>
-                    <td><strong>Rango:</strong></td>
-                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"
-                            placeholder="Ej. -50 a 150 °C"></td>
-                    <td><strong>Resolución:</strong></td>
-                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;" placeholder="Ej. 0.1 °C">
+                    <td><input class="cedit text-center" value="PO-QA-01" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Calidad y Seguridad del Paciente (ISO 13485 / 9001)"></td>
+                    <td><input class="cedit text-center" value="Dirección / QA"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PO-QA-02" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Política de Gestión de Riesgos de Calidad (NOM-241)"></td>
+                    <td><input class="cedit text-center" value="QA / Operaciones"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PO-QA-03" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Auditorías Internas e Inspecciones Regulatorias"></td>
+                    <td><input class="cedit text-center" value="QA"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+
+                <!-- GRUPO B -->
+                <tr class="group-header">
+                    <td colspan="7">B. PERSONAL, ÉTICA Y CAPACITACIÓN</td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PO-AD-01" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Capacitación, Calificación y Competencia del Personal"></td>
+                    <td><input class="cedit text-center" value="RRHH / QA"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PO-AD-02" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Higiene, Salud y Vestimenta en Áreas Blancas (NOM-059)"></td>
+                    <td><input class="cedit text-center" value="Operaciones / QA"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PO-AD-03" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Confidencialidad, Integridad y Ética Profesional"></td>
+                    <td><input class="cedit text-center" value="Dirección / RRHH"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+
+                <!-- GRUPO C -->
+                <tr class="group-header">
+                    <td colspan="7">C. OPERACIONES, PRODUCCIÓN E INFRAESTRUCTURA</td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PO-OP-01" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Mantenimiento y Calibración de Equipos Críticos"></td>
+                    <td><input class="cedit text-center" value="Mantenimiento"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PO-OP-02" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Ingreso, Limpieza y Control de Áreas Limpias (ISO 14644)"></td>
+                    <td><input class="cedit text-center" value="Operaciones"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PO-OP-03" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Control de Proveedores y Compras Críticas (GxP)"></td>
+                    <td><input class="cedit text-center" value="Compras / QA"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+
+                <!-- GRUPO D -->
+                <tr class="group-header">
+                    <td colspan="7">D. LABORATORIO, CONTROL DE CALIDAD Y BIOSEGURIDAD</td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PO-LC-02" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Trazabilidad, Manejo y Liberación de Muestras y Lotes"></td>
+                    <td><input class="cedit text-center" value="Laboratorio / QA"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PO-LC-03" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Manejo de Producto No Conforme y Desviaciones"></td>
+                    <td><input class="cedit text-center" value="QA / Laboratorio"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+                <tr>
+                    <td><input class="cedit text-center" value="PO-OP-04" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left" value="Política de Gestión Integral de RPBI (NOM-087-SEMARNAT)">
                     </td>
+                    <td><input class="cedit text-center" value="Operaciones"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+
+                <!-- GRUPO E -->
+                <tr class="group-header">
+                    <td colspan="7">E. REGULACIÓN SANITARIA Y ATENCIÓN AL CLIENTE</td>
                 </tr>
                 <tr>
-                    <td><strong>Área Asignada:</strong></td>
-                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
-                    <td><strong>Error Máximo:</strong></td>
-                    <td><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;"></td>
+                    <td><input class="cedit text-center" value="PO-RS-01" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Tecnovigilancia y Farmacovigilancia (Notificación Eventos Adversos)">
+                    </td>
+                    <td><input class="cedit text-center" value="Resp. Sanitario"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
                 </tr>
-            </table>
-        </div>
+                <tr>
+                    <td><input class="cedit text-center" value="PO-RS-02" style="font-weight:bold;"></td>
+                    <td><input class="cedit text-left"
+                            value="Política de Atención de Quejas y Retiro de Producto del Mercado (Recall)"></td>
+                    <td><input class="cedit text-center" value="Resp. Sanitario / QA"></td>
+                    <td><input class="cedit text-center" value="1.0"></td>
+                    <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                    <td><input class="cedit text-center" value="" style="color:#166534; font-weight:bold;"></td>
+                    <td class="no-print"><button class="btn btn-danger btn-mini"
+                            onclick="this.closest('tr').remove()">x</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn-add no-print" onclick="addBlankRow('tbl-politicas')">+ AGREGAR POLÍTICA ADICIONAL</button>
 
-        <div class="section-header">2. REGISTRO DE CALIBRACIONES EXTERNAS</div>
-        <div class="section">
-            <p style="font-size:9px; color:#666; margin-bottom:5px;">Anexe copia del certificado de calibración vigente
-                (Laboratorio acreditado ante EMA).</p>
-            <table class="compact-table" id="tbl-cal-ext">
-                <thead>
-                    <tr>
-                        <th width="15%">Fecha Calib.</th>
-                        <th width="25%">Laboratorio Prestador</th>
-                        <th width="20%">No. Certificado</th>
-                        <th width="15%">Resultado (P/NP)</th>
-                        <th width="15%">Vigencia</th>
-                        <th width="10%">Firma QA</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="date" class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><select class="cedit">
-                                <option>PASA</option>
-                                <option>NO PASA</option>
-                            </select></td>
-                        <td><input type="month" class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="btn-add no-print" onclick="addRow('tbl-cal-ext')">+ AGREGAR CERTIFICADO</button>
-        </div>
-
-        <div class="section-header">3. VERIFICACIONES INTERNAS DE RUTINA</div>
-        <div class="section">
-            <p style="font-size:9px; color:#666; margin-bottom:5px;">Pruebas de punto de hielo o comparación contra
-                termómetro patrón para asegurar que no hay derivas.</p>
-            <table class="compact-table" id="tbl-ver-int">
-                <thead>
-                    <tr>
-                        <th width="15%">Fecha</th>
-                        <th width="15%">Valor Patrón ($°C$)</th>
-                        <th width="15%">Valor Term. ($°C$)</th>
-                        <th width="15%">Desviación</th>
-                        <th width="20%">¿En Tolerancia?</th>
-                        <th width="20%">Firma</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="date" class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                        <td><select class="cedit">
-                                <option>SÍ</option>
-                                <option>NO</option>
-                            </select></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="btn-add no-print" onclick="addRow('tbl-ver-int')">+ AGREGAR VERIFICACIÓN</button>
-        </div>
-
-        <div class="section-header">4. HISTORIAL DE MANTENIMIENTO Y REPARACIONES</div>
-        <div class="section">
-            <table class="compact-table" id="tbl-mantenimiento">
-                <thead>
-                    <tr>
-                        <th width="15%">Fecha</th>
-                        <th width="45%">Descripción del Servicio / Falla</th>
-                        <th width="25%">Técnico / Proveedor</th>
-                        <th width="15%">Estatus Final</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="date" class="cedit"></td>
-                        <td><textarea class="cedit" rows="1"></textarea></td>
-                        <td><input class="cedit"></td>
-                        <td><input class="cedit"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button class="btn-add no-print" onclick="addRow('tbl-mantenimiento')">+ AGREGAR SERVICIO</button>
-        </div>
-
-        <div class="section-header">5. VALIDACIÓN DEL REGISTRO</div>
-        <div class="section">
-            <div class="signature-area" style="display:flex; justify-content:space-around; gap:20px; margin-top:15px;">
-                <div class="signature-box" style="flex:1;">
-                    <p style="font-weight:bold;">Responsable de Metrología</p>
-                    <input class="cedit" placeholder="Nombre, Firma y Fecha"
-                        style="border-top:1px solid #ccc; border-radius:0; margin-top:25px;">
-                </div>
-                <div class="signature-box" style="flex:1;">
-                    <p style="font-weight:bold;">Verificó (Aseguramiento de Calidad)</p>
-                    <input class="cedit" placeholder="Nombre, Firma y Fecha"
-                        style="border-top:1px solid #ccc; border-radius:0; margin-top:25px;">
-                </div>
+        <!-- PANEL DE FIRMAS -->
+        <div class="signature-area">
+            <div class="signature-box">
+                <p style="font-weight:bold; font-size:10px;">ELABORÓ (CONTROL DOCUMENTAL)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Consolidación del Índice</p>
+            </div>
+            <div class="signature-box">
+                <p style="font-weight:bold; font-size:10px;">REVISÓ (ASEGURAMIENTO DE CALIDAD)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Alineación a NOM-241 / ISO 13485</p>
+            </div>
+            <div class="signature-box" style="background-color:#f0fdf4; border-color:#166534;">
+                <p style="font-weight:bold; font-size:10px; color:#14532d;">AUTORIZÓ (RESPONSABLE SANITARIO)</p>
+                <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#14532d;">Liberación del Listado Maestro</p>
             </div>
         </div>
 
-        <div class="audit-note">
-            <strong>¿Por qué esta Hoja de Vida es fundamental?</strong><br>
-            • <strong>Defensa de Datos:</strong> Es tu defensa si un lote sale con excursión de temperatura. Puedes
-            demostrar que el instrumento estaba calibrado ese día.<br>
-            • <strong>Cumplimiento EMA:</strong> Facilita la consulta rápida de datos de certificados acreditados en
-            piso sin necesidad de buscar carpetas de laboratorio externas.
-        </div>
-
         <div class="footer-unified">
-            <div class="control-data">FO-SGC-06 | Versión: 1.0 | Registro Individual y Hoja de Vida de Termómetro |
-                Xelle Scientific | Página 1 de 1</div>
-            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C.
-                V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o
-                parcial.</div>
+            <div class="control-data">FO-SGC-06 | Índice Maestro de Políticas | Versión: 1.0<br>El contenido de este
+                documento es propiedad de Xelle Scientific, S.A.P.I. de C.V., y está protegido por los derechos de
+                autor, por lo que está prohibida su reproducción total o parcial.</div>
+            <div class="legal-data">Documento GxP auditable. Vigencia documental alineada con el Índice de Carpetas
+                FO-SGC-02.</div>
         </div>
     </div>
 
     <script>
-        function addRow(tableId) {
+        function addBlankRow(tableId) {
             const tbody = document.getElementById(tableId).querySelector('tbody');
-            const newRow = tbody.rows[0].cloneNode(true);
-            newRow.querySelectorAll('input').forEach(input => input.value = '');
-            newRow.querySelectorAll('textarea').forEach(textarea => textarea.value = '');
-            tbody.appendChild(newRow);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><input class="cedit text-center" style="font-weight:bold;"></td>
+                <td><input class="cedit text-left"></td>
+                <td><input class="cedit text-center"></td>
+                <td><input class="cedit text-center" value="1.0"></td>
+                <td><input type="text" class="cedit" placeholder="DD/MM/AAAA"></td>
+                <td><input class="cedit text-center" value="En Revisión" style="color:#b45309; font-weight:bold;"></td>
+                <td class="no-print"><button class="btn btn-danger btn-mini" onclick="this.closest('tr').remove()">x</button></td>
+            `;
+            tbody.appendChild(row);
         }
     </script>
 </body>
