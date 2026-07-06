@@ -883,6 +883,22 @@ window.FORMAT_CATALOG = [
   },
   {
     "type": "Formato",
+    "name": "Inventario de Equipos",
+    "area": "OP",
+    "vigencia": "JUN 2026",
+    "estado": "Vigente",
+    "code": "FO-OP-63"
+  },
+  {
+    "type": "Formato",
+    "name": "Hoja de Vida de Termómetro",
+    "area": "OP",
+    "vigencia": "JUN 2026",
+    "estado": "Vigente",
+    "code": "FO-OP-64"
+  },
+  {
+    "type": "Formato",
     "name": "Matriz de Riesgos y Oportunidades",
     "area": "QA",
     "vigencia": "JUN 2026",
