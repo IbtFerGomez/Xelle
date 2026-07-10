@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FO-OP-67 Programa Anual de Calibración</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        .section-header{background-color:#1E3A5F;color:white;padding:4px 8px;font-weight:bold;font-size:10px;margin-top:10px;border-radius:4px;text-transform:uppercase;}
+        .compact-table th{background-color:#1E3A5F;color:white;font-size:9px;padding:4px;text-align:center;border:1px solid #cbd5e1;vertical-align:middle;}
+        .compact-table td{font-size:10px;padding:2px;text-align:center;border:1px solid #cbd5e1;height:18px;vertical-align:middle;}
+        .compact-table input{border:none;background:transparent;text-align:center;width:100%;font-size:10px;box-sizing:border-box;}
+        .compact-table input:focus{background-color:#f8fafc;outline:1px dashed #3b82f6;}
+        .text-left{text-align:left !important;padding-left:5px !important;}
+        .footer-unified{margin-top:15px;border-top:2px solid #1E3A5F;padding-top:5px;text-align:center;font-size:9px;line-height:1.4;page-break-inside:avoid;}
+        .footer-unified .control-data{font-weight:bold;color:#1E3A5F;margin-bottom:2px;}
+        .footer-unified .legal-data{color:#475569;font-style:italic;}
+        @media print{.global-controls,.no-print{display:none !important;}.container{max-width:100%;width:100%;border:none;box-shadow:none;padding:0;}}
+    </style>
+</head>
+
+<body id="doc-foop67">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+
+    <div class="container">
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80">
+                    <defs><style>.t{font-family:'Arial Black',sans-serif;font-weight:900;fill:#1D1D1B}.s{font-family:'Arial',sans-serif;font-weight:700;fill:#1D1D1B;letter-spacing:2px}.c{fill:#2E9D82}</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)"><circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/><path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/></g>
+                    <text x="90" y="42" class="t" font-size="34">XELLE</text><text x="91" y="68" class="s" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Registro</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-OP-67-</span>
+                    <input type="text" id="reg-67" class="registry-input generate-barcode cedit" data-target="barcode-67" data-prefix="FO-OP-67-" placeholder="codigo unico" style="font-weight:bold; font-size:14px; text-transform:uppercase;">
+                </div>
+                <svg id="barcode-67" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>PROGRAMA ANUAL DE CALIBRACIÓN DE EQUIPOS</h1>
+            <div class="metadata">Código: FO-OP-67 | Versión: 1.0 | Vigencia: Jul 2026 | Página: 1 de 1</div>
+        </div>
+
+        <div class="section-header">1. DATOS GENERALES</div>
+        <div class="section">
+            <table class="no-border-table">
+                <tr><td width="15%"><strong>Año:</strong></td><td width="40%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;" placeholder="AAAA"></td><td width="15%"><strong>Responsable:</strong></td><td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;" placeholder="Nombre"></td></tr>
+                <tr><td width="15%"><strong>Área:</strong></td><td width="40%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;" placeholder="Área / Laboratorio"></td><td width="15%"><strong>Elaboró:</strong></td><td width="30%"><input class="cedit" style="width:100%; border-bottom:1px solid #ccc;" placeholder="Nombre"></td></tr>
+            </table>
+        </div>
+
+        <div class="section-header">2. PROGRAMA ANUAL DE CALIBRACIÓN</div>
+        <div class="section">
+            <p style="font-size:8.5px; color:#666; margin-bottom:4px;">Instrucción: Marque (P) programado y (R) realizado en el mes correspondiente.</p>
+            <table class="compact-table">
+                <thead><tr><th width="4%">#</th><th width="20%">EQUIPO</th><th width="10%">ID / SERIE</th><th width="10%">FRECUENCIA</th><th width="5%">ENE</th><th width="5%">FEB</th><th width="5%">MAR</th><th width="5%">ABR</th><th width="5%">MAY</th><th width="5%">JUN</th><th width="5%">JUL</th><th width="5%">AGO</th><th width="5%">SEP</th><th width="5%">OCT</th><th width="5%">NOV</th><th width="5%">DIC</th></tr></thead>
+                <tbody>
+                    <tr><td style="font-weight:bold; background-color:#f8fafc;">1</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="font-weight:bold; background-color:#f8fafc;">2</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="font-weight:bold; background-color:#f8fafc;">3</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="font-weight:bold; background-color:#f8fafc;">4</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="font-weight:bold; background-color:#f8fafc;">5</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="font-weight:bold; background-color:#f8fafc;">6</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="font-weight:bold; background-color:#f8fafc;">7</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="font-weight:bold; background-color:#f8fafc;">8</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="font-weight:bold; background-color:#f8fafc;">9</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="font-weight:bold; background-color:#f8fafc;">10</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="font-weight:bold; background-color:#f8fafc;">11</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                    <tr><td style="font-weight:bold; background-color:#f8fafc;">12</td><td><input class="cedit text-left"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td><td><input class="cedit"></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="section-header">VALIDACIÓN Y FIRMAS</div>
+        <div class="section">
+            <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:15px;">
+                <div class="signature-box" style="flex:1;">
+                    <p style="font-weight:bold;">RESPONSABLE DE METROLOGÍA / OPERACIONES</p>
+                    <span style="font-size:8px;">(Elaboró)</span>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #ccc; border-radius:0; margin-top:25px;">
+                    <p>Fecha: <input type="text" class="cedit" style="width:120px;"></p>
+                </div>
+                <div class="signature-box" style="flex:1; background-color:#f0fdf4;">
+                    <p style="font-weight:bold; color:#14532d;">ASEGURAMIENTO DE CALIDAD</p>
+                    <span style="font-size:8px;">(Autorizó)</span>
+                    <input class="cedit" placeholder="Nombre y Firma" style="border-top:1px solid #166534; border-radius:0; margin-top:25px; background:transparent;">
+                    <p>Fecha: <input type="text" class="cedit" style="width:120px; background:transparent;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-OP-67 | Versión: 1.0 | Programa Anual de Calibración | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">El contenido de este documento es propiedad de "Xelle Scientific", S.A.P.I., de C. V., y está protegido por los derechos de autor, por lo que está prohibida su reproducción total o parcial.</div>
+        </div>
+    </div>
+
+</body>
+
+</html>

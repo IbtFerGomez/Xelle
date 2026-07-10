@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-RS-07 Registro de Farmaco y Tecnovigilancia</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        @page { size: portrait; margin: 1cm; }
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; color: #1e293b; }
+        .container { width: 19cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 4px; }
+        
+        .section-header { background-color: #1E3A5F; color: white; padding: 6px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; border-left: 4px solid #2E9D82; }
+        
+        .compact-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 9px; padding: 6px; text-align: center; border: 1px solid #cbd5e1; vertical-align: middle; }
+        .compact-table td { font-size: 9px; padding: 5px; border: 1px solid #cbd5e1; vertical-align: middle; }
+        
+        .compact-table input, .compact-table textarea { font-size: 9px; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; text-align: center; }
+        .compact-table textarea { resize: none; overflow: auto; text-align: left; }
+        .compact-table input:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+        
+        .text-center { text-align: center !important; }
+        .text-left { text-align: left !important; padding-left: 6px !important; }
+        
+        .info-box { background-color: #f0fdfa; border: 1px solid #5eead4; padding: 8px; border-radius: 4px; font-size: 9px; color: #115e59; margin-top: 10px; line-height: 1.3; text-align: justify; }
+        .legend-box { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 8px; border-radius: 4px; font-size: 8.5px; color: #1e293b; margin-top: 5px; line-height: 1.4; display: flex; justify-content: space-between; }
+        
+        .footer-unified { margin-top: 25px; border-top: 2px solid #1E3A5F; padding-top: 10px; text-align: center; font-size: 9px; line-height: 1.4; color: #475569; }
+        .gray-th { background-color: #f1f5f9 !important; color: #1E3A5F !important; text-align: left !important; padding-left: 8px !important; font-weight: bold; }
+        
+        .alert-box { border: 2px solid #e74c3c; background-color: #fef2f2; padding: 10px; text-align: center; font-weight: bold; color: #991b1b; margin-top: 10px; border-radius: 4px; font-size: 9px; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body id="doc-fo-rs-07">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Formato</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER MODULAR -->
+        <table style="width: 100%; border-collapse: collapse; border: none; margin-bottom: 10px;">
+            <tr>
+                <td style="width: 50%; vertical-align: middle;">
+                    <div class="logo-container">
+                        <svg viewBox="0 0 320 80" style="width: 200px;">
+                            <defs><style>.c { fill: #2E9D82 }</style></defs>
+                            <g transform="translate(0,-2) scale(0.85)">
+                                <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                                <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                            </g>
+                            <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                            <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                        </svg>
+                    </div>
+                </td>
+                <td style="width: 50%; text-align: right; vertical-align: top;">
+                    <div class="registry-container" style="display:inline-block; text-align: left; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc;">
+                        <label style="font-size: 10px; font-weight: bold; color: #1E3A5F; display: block; margin-bottom: 5px;">Folio de Reporte RAM</label>
+                        <div class="registry-wrapper">
+                            <span class="registry-prefix" style="font-size: 11px; font-weight:bold; color: #1e293b;">FO-RS-07-</span>
+                            <input type="text" id="reg-rs07" class="registry-input generate-barcode cedit" style="width: 100px; font-size: 11px; font-weight:bold;"
+                                   data-target="barcode-rs07" data-prefix="FO-RS-07-" placeholder="202X-00">
+                        </div>
+                        <div style="margin-top: 5px;"><svg id="barcode-rs07" class="barcode-svg" style="height:35px;"></svg></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="text-align: center; border-bottom: 2px solid #1E3A5F; padding-bottom: 5px; margin-bottom: 10px;">
+            <h1 style="font-size: 16px; margin: 0; color: #1E3A5F;">REGISTRO DE TECNOVIGILANCIA Y EVENTOS ADVERSOS (RAM)</h1>
+            <div style="font-size: 9px; color: #64748b;">Código: FO-RS-07 | Versión: 2.0 | Vigencia: May 2026 | Cumplimiento NOM-240-SSA1</div>
+        </div>
+
+        <div class="alert-box">
+            Los datos personales y sensibles médicos recabados en este reporte están estrictamente protegidos de conformidad con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares. Uso exclusivo del Responsable Sanitario y COFEPRIS.
+        </div>
+        
+        <div class="legend-box">
+            <div><strong>[GRAV] Gravedad del Evento:</strong> LEV = Leve | MOD = Moderado | GRA = Grave (Requiere Notificación Inmediata COFEPRIS)</div>
+            <div><strong>[REL] Relación Causal (Imputabilidad):</strong> CIER = Cierta | PROB = Probable | POS = Posible | DUD = Dudosa</div>
+        </div>
+
+        <!-- 1. DATOS DEL NOTIFICADOR -->
+        <div class="section-header">1. DATOS DEL NOTIFICADOR (PACIENTE / MÉDICO TRATANTE)</div>
+        <table class="compact-table">
+            <tr>
+                <th width="20%" class="gray-th">Iniciales del Paciente:</th>
+                <td width="30%"><input class="cedit text-left" placeholder="A. B. C." style="font-weight: bold;"></td>
+                <th width="20%" class="gray-th">Sexo y Edad:</th>
+                <td width="30%"><input class="cedit text-center" placeholder="M/F - Edad"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">Nombre del Notificador / Médico:</th>
+                <td colspan="3"><input class="cedit text-left" placeholder="Nombre de quien reporta la RAM"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">Dirección (Ciudad/Estado):</th>
+                <td><input class="cedit text-left"></td>
+                <th class="gray-th">Fecha de Notificación:</th>
+                <td><input type="text" class="cedit text-center"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">Teléfono:</th>
+                <td><input class="cedit text-left" placeholder="10 dígitos"></td>
+                <th class="gray-th">Correo Electrónico:</th>
+                <td><input class="cedit text-left" placeholder="correo@... "></td>
+            </tr>
+        </table>
+
+        <!-- 2. DATOS DEL DISPOSITIVO MÉDICO / PRODUCTO -->
+        <div class="section-header">2. INFORMACIÓN DEL PRODUCTO / DISPOSITIVO MÉDICO SOSPECHOSO</div>
+        <table class="compact-table">
+            <tr>
+                <th width="20%" class="gray-th">Descripción Comercial:</th>
+                <td width="40%"><input class="cedit text-left" placeholder="Nombre completo del producto"></td>
+                <th width="20%" class="gray-th">ID / SKU:</th>
+                <td width="20%"><input class="cedit text-center" style="font-weight: bold; color: #1E3A5F;"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">Lote del Producto:</th>
+                <td><input class="cedit text-left" style="font-weight: bold; color: #991b1b;"></td>
+                <th class="gray-th">Fecha de Caducidad:</th>
+                <td><input type="text" class="cedit text-center"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">Fecha de Administración/Uso:</th>
+                <td><input type="text" class="cedit text-center"></td>
+                <th class="gray-th">Vía de Administración:</th>
+                <td><input class="cedit text-center" placeholder="Tópica/Inyectable/Intravenosa"></td>
+            </tr>
+        </table>
+
+        <!-- 3. DESCRIPCIÓN DE LA RAM -->
+        <div class="section-header">3. DESCRIPCIÓN DEL EVENTO ADVERSO / RAM (REACCIÓN ADVERSA)</div>
+        <table class="compact-table">
+            <tr>
+                <th width="20%" class="gray-th">Fecha de Inicio de Reacción:</th>
+                <td width="30%"><input type="text" class="cedit text-center"></td>
+                <th width="20%" class="gray-th">[GRAV] Gravedad del Evento:</th>
+                <td width="30%"><input class="cedit text-center" placeholder="LEV / MOD / GRA" style="font-weight: bold; color: #991b1b;"></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="padding: 10px;">
+                    <label style="font-size: 9px; font-weight: bold; color: #1E3A5F; display: block; margin-bottom: 5px;">Breve Descripción de la Reacción Adversa (Signos, síntomas y desenlace clínico):</label>
+                    <textarea class="cedit" rows="5" style="border: 1px solid #cbd5e1; border-radius: 3px; text-align: left; padding: 5px;" placeholder="Detalle cronológicamente el evento, tratamientos administrados para contrarrestar la reacción y el estado actual del paciente..."></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="padding: 10px;">
+                    <label style="font-size: 9px; font-weight: bold; color: #1E3A5F; display: block; margin-bottom: 5px;">Medicamentos / Terapias Concomitantes (Para descartar interacciones):</label>
+                    <textarea class="cedit" rows="2" style="border: 1px solid #cbd5e1; border-radius: 3px; text-align: left; padding: 5px;" placeholder="¿El paciente estaba tomando otros tratamientos simultáneamente?"></textarea>
+                </td>
+            </tr>
+        </table>
+
+        <!-- 4. DICTAMEN RESPONSABLE SANITARIO -->
+        <div class="section-header" style="background-color: #166534; border-left: 4px solid #14532d;">4. EVALUACIÓN Y DICTAMEN (USO EXCLUSIVO DEL RESPONSABLE SANITARIO)</div>
+        <table class="compact-table">
+            <tr>
+                <th width="25%" class="gray-th">[REL] Relación Causal (Algoritmo):</th>
+                <td width="25%"><input class="cedit text-center" placeholder="CIER/PROB/POS/DUD" style="font-weight: bold; color: #14532d;"></td>
+                <th width="25%" class="gray-th">¿Apertura de CAPA requerida?:</th>
+                <td width="25%"><input class="cedit text-center" placeholder="SI / NO" style="font-weight: bold;"></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="padding: 10px;">
+                    <label style="font-size: 9px; font-weight: bold; color: #1E3A5F; display: block; margin-bottom: 5px;">Dictamen Oficial, Conclusiones y Notificación Regulatoria:</label>
+                    <textarea class="cedit" rows="4" style="border: 1px solid #cbd5e1; border-radius: 3px; text-align: left; padding: 5px;" placeholder="Escriba la conclusión de causalidad. Si es 'Grave' (GRA), documente la fecha de notificación oficial a COFEPRIS en el formato CNFV..."></textarea>
+                </td>
+            </tr>
+        </table>
+
+        <!-- FIRMAS -->
+        <table style="width: 100%; border-collapse: collapse; margin-top: 25px;">
+            <tr>
+                <td style="width: 45%; text-align: center; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc;">
+                    <p style="font-weight: bold; font-size: 10px; margin: 0 0 35px 0;">REPORTÓ / RECOPILÓ LA INFORMACIÓN</p>
+                    <div style="border-top: 1px solid #ccc; width: 100%;"></div>
+                    <p style="font-size: 8px; margin-top: 5px; color: #475569;">Firma de Atención a Clientes / Asuntos Regulatorios</p>
+                </td>
+                <td style="width: 10%;"></td>
+                <td style="width: 45%; text-align: center; padding: 10px; border: 1px solid #166534; border-radius: 4px; background-color: #f0fdf4;">
+                    <p style="font-weight: bold; font-size: 10px; margin: 0 0 35px 0; color: #14532d;">EVALUÓ Y DICTAMINÓ (RESPONSABLE SANITARIO)</p>
+                    <div style="border-top: 1px solid #166534; width: 100%;"></div>
+                    <p style="font-size: 8px; margin-top: 5px; color: #14532d;">Firma de Liberación del Dictamen Técnico-Médico</p>
+                </td>
+            </tr>
+        </table>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-RS-07 | Versión: 2.0 | Registro de Farmaco/Tecnovigilancia | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">Archivo Confidencial Clínico. Su resguardo y protección está sujeto a la legislación sanitaria vigente.</div>
+        </div>
+    </div>
+</body>
+</html>

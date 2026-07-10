@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-CP-03 Bitácora de Visitantes</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Horizontal (Landscape) para Bitácoras Logísticas/Acceso */
+        @page { size: landscape; margin: 1cm; }
+        
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; color: #1e293b; }
+        .container { width: 26cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 4px; }
+
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; border-left: 4px solid #2E9D82; }
+        
+        .compact-table { width: 100%; border-collapse: collapse; margin-top: 5px; table-layout: fixed; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 8px; padding: 6px 2px; text-align: center; border: 1px solid #cbd5e1; vertical-align: middle; line-height: 1.2; }
+        .compact-table td { font-size: 8px; padding: 4px 2px; border: 1px solid #cbd5e1; vertical-align: middle; text-align: center; }
+        
+        .compact-table input { font-size: 8px; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; text-align: center; }
+        .compact-table input:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+
+        .text-center { text-align: center !important; }
+        .text-left { text-align: left !important; padding-left: 4px !important; }
+        
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 6px; margin-top: 5px; color: #1E3A5F; }
+        
+        .info-box { background-color: #f0fdfa; border: 1px solid #5eead4; padding: 8px; border-radius: 4px; font-size: 8.5px; color: #115e59; margin-top: 10px; line-height: 1.3; text-align: justify; }
+
+        .footer-unified { 
+            margin-top: 20px; border-top: 2px solid #1E3A5F; padding-top: 10px; 
+            text-align: center; font-size: 9px; line-height: 1.4; color: #475569;
+        }
+
+        /* Layout para Firmas con display: table para WeasyPrint / Impresión estable */
+        .signature-table-layout { display: table; width: 100%; margin-top: 20px; border-spacing: 20px 0; }
+        .signature-cell { display: table-cell; width: 50%; text-align: center; vertical-align: top; }
+        .signature-box-inner { border: 1px solid #e2e8f0; padding: 10px; border-radius: 4px; background-color: #fff; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body id="doc-fo-cp-03">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar Seguimiento</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Histórico</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER MODULAR -->
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs><style>.c { fill: #2E9D82 }</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio del Registro (Libro)</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-CP-03-</span>
+                    <input type="text" id="reg-cp03" class="registry-input generate-barcode cedit" 
+                           data-target="barcode-cp03" data-prefix="FO-CP-03-" placeholder="202X-00">
+                </div>
+                <svg id="barcode-cp03" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>BITÁCORA DE CONTROL Y REGISTRO DE VISITANTES</h1>
+            <div class="metadata">Código: FO-CP-03 | Versión: 1.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <!-- INDICACIONES DE OPERACIÓN Y BPF/ISO -->
+        <div class="info-box">
+            <strong>Instrucciones Regulatorias y de Bioseguridad (NOM-241-SSA1 / ISO 9001):</strong> Por política de calidad y seguridad de las instalaciones, todo visitante externo, auditor, proveedor o contratista debe registrar obligatoriamente su ingreso y salida de la planta de bioprocesos. La recepción debe asegurarse de entregar un gafete de identificación numerado. Al firmar este registro, el visitante acepta apegarse al reglamento de bioseguridad de la planta y a los lineamientos de confidencialidad de la información observada. No se permite el uso de celdas en blanco o comillas continuas ("").
+        </div>
+
+        <!-- MATRIZ DE REGISTRO DIARIO -->
+        <div class="section-header">1. REGISTRO CRONOLÓGICO DE ACCESOS</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-visitantes">
+                <thead>
+                    <tr>
+                        <th width="3%">No.</th>
+                        <th width="7%">Fecha</th>
+                        <th width="7%">Hora<br>Llegada</th>
+                        <th width="20%">Nombre Completo del Visitante</th>
+                        <th width="15%">Empresa / Procedencia</th>
+                        <th width="15%">Motivo de la Visita</th>
+                        <th width="12%">Área / Persona<br>Que Visita</th>
+                        <th width="7%">No. Gafete<br>Asignado</th>
+                        <th width="7%">Hora<br>Salida</th>
+                        <th width="7%">Firma /<br>Iniciales</th>
+                        <th width="3%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-num text-center" style="font-weight: bold;">1</td>
+                        <td><input type="text" class="cedit text-center" style="font-size:7px;"></td>
+                        <td><input type="text" class="cedit text-center"></td>
+                        <td><input class="cedit text-left" placeholder="Nombre Apellidos"></td>
+                        <td><input class="cedit text-left" placeholder="Empresa / Proveedor"></td>
+                        <td><input class="cedit text-left" placeholder="Motivo/Servicio"></td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b;"></td>
+                        <td><input type="text" class="cedit text-center"></td>
+                        <td><input class="cedit text-center" placeholder="Firma"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-visitantes')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num text-center" style="font-weight: bold;">2</td>
+                        <td><input type="text" class="cedit text-center" style="font-size:7px;"></td>
+                        <td><input type="text" class="cedit text-center"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b;"></td>
+                        <td><input type="text" class="cedit text-center"></td>
+                        <td><input class="cedit text-center"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-visitantes')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num text-center" style="font-weight: bold;">3</td>
+                        <td><input type="text" class="cedit text-center" style="font-size:7px;"></td>
+                        <td><input type="text" class="cedit text-center"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b;"></td>
+                        <td><input type="text" class="cedit text-center"></td>
+                        <td><input class="cedit text-center"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-visitantes')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num text-center" style="font-weight: bold;">4</td>
+                        <td><input type="text" class="cedit text-center" style="font-size:7px;"></td>
+                        <td><input type="text" class="cedit text-center"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b;"></td>
+                        <td><input type="text" class="cedit text-center"></td>
+                        <td><input class="cedit text-center"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-visitantes')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="row-num text-center" style="font-weight: bold;">5</td>
+                        <td><input type="text" class="cedit text-center" style="font-size:7px;"></td>
+                        <td><input type="text" class="cedit text-center"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b;"></td>
+                        <td><input type="text" class="cedit text-center"></td>
+                        <td><input class="cedit text-center"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-visitantes')">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRowNumbered('tbl-visitantes')">+ AGREGAR NUEVO VISITANTE</button>
+        </div>
+
+        <!-- FIRMAS DE CONTROL (CONFORME A JERARQUÍA DEL SISTEMA) -->
+        <div class="signature-table-layout">
+            <div class="signature-cell">
+                <div class="signature-box-inner">
+                    <p style="font-weight:bold; font-size:10px; margin: 0 0 5px 0;">SUPERVISIÓN DE INGRESO (SEGURIDAD / RECEPCIÓN)</p>
+                    <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:8px; margin-top:5px; color:#475569; margin-bottom: 0;">Firma de Cierre de Bitácora y Recuperación de Gafetes</p>
+                </div>
+            </div>
+            <div class="signature-cell">
+                <div class="signature-box-inner" style="background-color:#f0fdf4; border-color: #5eead4;">
+                    <p style="font-weight:bold; font-size:10px; color:#14532d; margin: 0 0 5px 0;">REVISIÓN DEL REGISTRO (ASEGURAMIENTO DE CALIDAD)</p>
+                    <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+                    <p style="font-size:8px; margin-top:5px; color:#14532d; margin-bottom: 0;">Verificación de Ausencia de Espacios en Blanco (ALCOA+)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER UNIFICADO -->
+        <div class="footer-unified">
+            <div class="control-data">FO-CP-03 | Versión: 1.0 | Bitácora de Visitantes | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">Este documento es propiedad de Xelle Scientific, S.A.P.I. de C.V. Documento de control interno ISO 9001.</div>
+        </div>
+    </div>
+
+    <script>
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if(row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => { 
+                const numCell = row.querySelector('.row-num');
+                if(numCell) numCell.innerText = index + 1; 
+            });
+        }
+    </script>
+</body>
+</html>

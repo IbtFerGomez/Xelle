@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-RS-08 Carta de Consentimiento Informado (Donación Placenta)</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        @page { size: portrait; margin: 1cm 1.5cm; }
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; color: #1e293b; line-height: 1.5; }
+        .container { width: 19cm; margin: 0 auto; background: white; padding: 1cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 4px; }
+        
+        .header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #2E9D82; padding-bottom: 10px; margin-bottom: 15px; }
+        .doc-meta { text-align: right; font-size: 9px; color: #475569; line-height: 1.3; }
+        
+        .title-main { font-size: 14px; font-weight: bold; color: #1E3A5F; text-align: center; margin: 10px 0 20px 0; border: 1px solid #1E3A5F; padding: 10px; border-radius: 4px; background-color: #f8fafc; }
+        
+        .cedit { font-size: 10px; border: none; background: transparent; padding: 2px; border-bottom: 1px dashed #94a3b8; font-family: inherit; width: 100%; box-sizing: border-box; }
+        .cedit:focus { background-color: #e2e8f0; outline: none; }
+        
+        .p-text { font-size: 10px; text-align: justify; margin-bottom: 10px; }
+        .p-text strong { color: #1E3A5F; }
+        
+        .data-grid { display: grid; grid-template-columns: 100%; gap: 8px; margin-bottom: 15px; }
+        .data-row { display: flex; align-items: baseline; font-size: 10px; }
+        .data-label { font-weight: bold; margin-right: 5px; white-space: nowrap; color: #1e293b; }
+        
+        .req-box { border: 1px solid #cbd5e1; padding: 10px; border-radius: 4px; background-color: #f8fafc; margin-bottom: 15px; }
+        .req-box h3 { font-size: 11px; margin: 0 0 8px 0; color: #1E3A5F; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; }
+        .req-list { margin: 0; padding-left: 20px; font-size: 9.5px; }
+        .req-list li { margin-bottom: 4px; }
+        
+        .signature-table { width: 100%; border-collapse: collapse; margin-top: 30px; page-break-inside: avoid; }
+        .signature-table td { width: 50%; padding: 10px; text-align: center; vertical-align: top; }
+        .sig-line { border-top: 1px solid #1e293b; width: 80%; margin: 40px auto 5px auto; }
+        .sig-name { font-size: 9px; font-weight: bold; }
+        .sig-role { font-size: 8px; color: #475569; }
+
+        .footer-unified { margin-top: 30px; border-top: 2px solid #1E3A5F; padding-top: 10px; text-align: center; font-size: 8px; line-height: 1.4; color: #475569; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body id="doc-fo-rs-08">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Documento Clínico</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER CLÍNICO -->
+        <div class="header-top">
+            <svg viewBox="0 0 320 80" style="width: 180px;">
+                <defs><style>.c { fill: #2E9D82 }</style></defs>
+                <g transform="translate(0,-2) scale(0.85)">
+                    <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                    <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                </g>
+                <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+            </svg>
+            <div class="doc-meta">
+                <strong>Clave:</strong> FO-RS-08<br>
+                <strong>Edición:</strong> 2.0<br>
+                <strong>Emisión:</strong> ENE 2026<br>
+                <strong>Página:</strong> 1 de 1
+            </div>
+        </div>
+
+        <div class="title-main">
+            CARTA DE CONSENTIMIENTO INFORMADO<br>DONACIÓN VOLUNTARIA DE PLACENTA PARA INVESTIGACIÓN Y OBTENCIÓN CELULAR
+        </div>
+
+        <!-- DATOS DE LA PACIENTE -->
+        <div class="data-grid">
+            <div class="data-row"><span class="data-label">Lugar y Fecha:</span> <input type="text" class="cedit text-left" placeholder="Ciudad, Estado, a DD de MM de AAAA"></div>
+            <div class="data-row"><span class="data-label">Nombre de la Donante:</span> <input type="text" class="cedit text-left" placeholder="Nombre completo"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+            <div class="data-row"><span class="data-label">Edad:</span> <input type="number" class="cedit text-center"></div>
+            <div class="data-row"><span class="data-label">Ocupación:</span> <input type="text" class="cedit text-left"></div>
+            <div class="data-row"><span class="data-label">Estado Civil:</span> <input type="text" class="cedit text-center"></div>
+        </div>
+        <div class="data-grid">
+            <div class="data-row"><span class="data-label">Domicilio Completo:</span> <input type="text" class="cedit text-left" placeholder="Calle, Número, Colonia, Código Postal"></div>
+            <div class="data-row">
+                <span class="data-label">Vacuna COVID-19 (Especifique SÍ/NO y dosis):</span> 
+                <input type="text" class="cedit text-left" placeholder="SI/NO - Marca y número de dosis">
+            </div>
+        </div>
+
+        <!-- CUERPO DE LA CARTA (Adaptado del Word original) -->
+        <div class="p-text">
+            <strong>Tipo de Donación:</strong> Voluntaria y/o Altruista.<br><br>
+            <strong>Objetivos del Acto de Donación:</strong> Se ha comprobado científica y médicamente que la placenta es una fuente rica en Células Madre Mesenquimales (MSC), las cuales pueden ser útiles para tratar diferentes enfermedades en terapias de medicina regenerativa avanzada. Por lo anterior, la invitamos a la donación altruista de su placenta con el fin de realizar investigación, obtención y criopreservación de las células antes mencionadas para el uso y manejo estricto de <strong>Xelle Scientific, S.A.P.I de C.V.</strong>
+        </div>
+
+        <div class="p-text">
+            <strong>Método de Colecta, Conservación y Transporte:</strong> Una vez que el médico tratante retira al bebé de su vientre y concluye con la atención obstétrica primaria, la placenta es expulsada y recolectada. Será colocada inmediatamente en una bolsa estéril con cierre hermético y a su vez en un contenedor rígido estéril con 50ml de solución salina al 10% adicionada con antibiótico/antimicótico. Todo el material será resguardado a temperatura de refrigeración controlada (2°C a 8°C) y transportado a los laboratorios de Xelle Scientific dentro de las primeras 24 horas posteriores a su obtención para su procesamiento bajo estándares de calidad internacional.
+        </div>
+
+        <div class="req-box">
+            <h3>Criterios Médicos y Clínicos para la Donación (Exclusión e Inclusión)</h3>
+            <div style="display: flex; gap: 15px;">
+                <div style="flex: 1;">
+                    <strong>Inclusión:</strong>
+                    <ul class="req-list">
+                        <li>Mujer sana y cursando un embarazo normo-evolutivo a término.</li>
+                        <li>Nacimiento por parto vaginal o cesárea programada.</li>
+                        <li>Serologías no reactivas (Negativas) para VIH I/II, Hepatitis B y C, Sífilis y Chagas.</li>
+                        <li>Aprobación para toma de muestra sanguínea a la donante (2 tubos).</li>
+                    </ul>
+                </div>
+                <div style="flex: 1;">
+                    <strong>Exclusión:</strong>
+                    <ul class="req-list">
+                        <li>Patologías o complicaciones gestacionales (Preeclampsia, diabetes gestacional, lupus, hemorragias).</li>
+                        <li>Consumo de drogas, alcohol o toxicomanías en los últimos 12 meses.</li>
+                        <li>Resultados serológicos positivos o reactivos en cualquiera de las pruebas virales aplicadas.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-text" style="font-style: italic; border-left: 3px solid #2E9D82; padding-left: 10px; background-color: #f0fdf4; padding: 8px;">
+            "Habiendo leído la información anterior y comprendido completamente los alcances, procedimientos y criterios de exclusión, declaro que participo en este programa de forma estrictamente libre, voluntaria y gratuita. Autorizo la recolección, estudio, procesamiento y aprovechamiento celular de mi placenta por parte de Xelle Scientific S.A.P.I. de C.V. renunciando a cualquier derecho patrimonial futuro sobre la misma y sus derivados, y acepto las pruebas de laboratorio aplicables a mi sangre."
+        </div>
+
+        <!-- FIRMAS -->
+        <table class="signature-table">
+            <tr>
+                <td>
+                    <div class="sig-line"></div>
+                    <div class="sig-name">NOMBRE Y FIRMA DE LA DONANTE</div>
+                    <div class="sig-role">Otorga Consentimiento Libre</div>
+                </td>
+                <td>
+                    <div class="sig-line"></div>
+                    <div class="sig-name">MÉDICO TRATANTE / PROCURADOR</div>
+                    <div class="sig-role">Responsable de la recolección en Quirófano<br>Cédula Profesional: <input type="text" style="width: 80px; font-size: 8px; border:none; border-bottom: 1px dotted #ccc; background:transparent;"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="sig-line" style="margin-top: 30px;"></div>
+                    <div class="sig-name">TESTIGO 1</div>
+                    <div class="sig-role">Firma y Parentesco/Relación</div>
+                </td>
+                <td>
+                    <div class="sig-line" style="margin-top: 30px;"></div>
+                    <div class="sig-name">TESTIGO 2</div>
+                    <div class="sig-role">Firma y Parentesco/Relación</div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- FOOTER UNIFICADO -->
+        <div class="footer-unified">
+            Vicente Fernandez 3, San Miguel Cuyutlán, Tlajomulco de Zúñiga, Jalisco. CP. 45660 | SGC - Xelle Scientific S.A.P.I. de C.V.<br>
+            La información clínica y personal recabada está protegida por la Ley de Protección de Datos y el Secreto Médico (NOM-004-SSA3).
+        </div>
+    </div>
+</body>
+</html>

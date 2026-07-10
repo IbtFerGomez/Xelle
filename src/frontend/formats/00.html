@@ -1,114 +1,108 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>FO-SGC-04 Listado Maestro de Formatos</title>
-    <link rel="stylesheet" href="format-styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <meta charset="utf-8">
+    <title>Comparativa de Formatos (Actualizada)</title>
     <style>
-        @page { size: portrait; margin: 1cm; }
-        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
-        .container { width: 19cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-        .section-header { background-color: #1E3A5F; color: #fff; padding: 6px 10px; font-weight: bold; font-size: 11px; margin-top: 14px; margin-bottom: 10px; border-radius: 4px; text-transform: uppercase; }
-        .compact-table { width: 100%; border-collapse: collapse; font-size: 9px; }
-        .compact-table th { background-color: #1E3A5F; color: #fff; font-size: 9px; padding: 6px; text-align: center; border: 1px solid #cbd5e1; }
-        .compact-table td { padding: 4px; border: 1px solid #cbd5e1; text-align: center; vertical-align: middle; }
-        .text-left { text-align: left !important; padding-left: 5px !important; }
-        .group-header { background-color: #f1f5f9; color: #1E3A5F; font-weight: bold; text-align: left !important; padding-left: 10px !important; }
-        .footer-unified { margin-top: 20px; border-top: 2px solid #1E3A5F; padding-top: 8px; text-align: center; font-size: 9px; color: #475569; }
-        @media print { .no-print { display: none !important; } body{background: white;} .container{box-shadow:none; width:100%;} }
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 40px; }
+        h1 { color: #2C3E50; }
+        h2 { color: #34495E; border-bottom: 2px solid #ecf0f1; padding-bottom: 5px; }
+        h3 { color: #2980B9; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+        th, td { border: 1px solid #bdc3c7; padding: 10px; text-align: left; }
+        th { background-color: #ecf0f1; }
+        code { background-color: #f9f9f9; padding: 2px 4px; border-radius: 4px; font-family: monospace; border: 1px solid #ddd; }
     </style>
 </head>
-<body id="doc-fo-sgc-04">
-    <div class="global-controls no-print" style="position:fixed; right:20px; top:20px; display:flex; flex-direction:column; gap:10px;">
-        <button onclick="window.print()" style="padding:10px; background:#1E3A5F; color:white; border:none; border-radius:5px; cursor:pointer;">Imprimir Listado</button>
-    </div>
-
-    <div class="container">
-        <div style="display:flex; justify-content:space-between; border-bottom:3px solid #1E3A5F; padding-bottom:10px;">
-            <svg viewBox="0 0 320 80" style="width: 200px;">
-                <circle fill="#2E9D82" cx="25" cy="25" r="13" /><circle fill="#2E9D82" cx="75" cy="75" r="13" />
-                <path fill="#2E9D82" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z" />
-                <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
-                <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
-            </svg>
-            <div style="text-align:right;">
-                <span style="font-weight:bold; color:#1E3A5F; font-size:14px;">FO-SGC-04</span><br>
-                <svg id="barcode" style="height:35px;"></svg>
-            </div>
-        </div>
-
-        <div style="text-align:center; margin-top:10px;">
-            <h1 style="color:#1E3A5F; font-size:16px; margin:0;">LISTADO MAESTRO DE FORMATOS DEL SGC</h1>
-            <p style="font-size:10px; color:#666; margin:5px 0;">Código: FO-SGC-04 | Versión: 2.0 | Vigencia: JUN 2026</p>
-        </div>
-
-        <div class="section-header">CONTROL DOCUMENTAL EN PISO</div>
-        <table class="compact-table" id="list-table">
-            <thead>
-                <tr>
-                    <th width="15%">Código</th>
-                    <th width="50%">Nombre del Formato</th>
-                    <th width="15%">Versión</th>
-                    <th width="20%">Vigencia</th>
-                </tr>
-            </thead>
-            <tbody>
-                </tbody>
-        </table>
-
-        <div class="footer-unified">
-            <div class="control-data">FO-SGC-04 | Listado Maestro de Formatos | Xelle Scientific | Página 1 de 1</div>
-            <div class="legal-data">Prohibida su reproducción sin autorización.</div>
-        </div>
-    </div>
-
-    <script>
-        JsBarcode("#barcode", "FO-SGC-04", { format: "CODE128", displayValue: false, height: 30 });
-
-        const dataList = [
-            { group: "A. ADMINISTRACIÓN Y RRHH (FO-AD)", items: [
-                { code: "FO-AD-00", name: "Matriz Maestra de Puestos", ver: "1.0", vig: "MAR 2026" },
-                { code: "FO-AD-01", name: "Perfil y Descripción de Puesto", ver: "1.0", vig: "MAR 2026" },
-                { code: "FO-AD-13", name: "Calificación de Personal", ver: "1.0", vig: "MAR 2026" }
-            ]},
-            { group: "B. OPERACIONES Y PRODUCCIÓN (FO-OP)", items: [
-                { code: "FO-OP-15", name: "Pedido Maestro", ver: "1.0", vig: "ENE 2026" },
-                { code: "FO-OP-40", name: "Orden Maestra de Producción", ver: "1.1", vig: "MAR 2026" },
-                { code: "FO-OP-51", name: "Producto No Conforme (Desviaciones)", ver: "1.0", vig: "ENE 2026" },
-                { code: "FO-OP-54", name: "Reporte de Desviación de Procesos", ver: "2.0", vig: "MAR 2026" }
-            ]},
-            { group: "C. LABORATORIO Y CALIDAD OPERATIVA (FO-LC)", items: [
-                { code: "FO-LC-16", name: "Certificado Liberación Línea Celular", ver: "3.0", vig: "MAR 2026" },
-                { code: "FO-LC-21", name: "Bitácora de Cultivo Celular", ver: "1.0", vig: "ENE 2026" },
-                { code: "FO-LC-48", name: "Resultados y Dictamen de Lote", ver: "1.0", vig: "ENE 2026" },
-                { code: "FO-LC-50", name: "Manifiesto de Destrucción RPBI", ver: "1.0", vig: "ENE 2026" }
-            ]},
-            { group: "D. ASEGURAMIENTO DE CALIDAD Y SGC (FO-QA / FO-SGC)", items: [
-                { code: "FO-QA-02", name: "Listas de Verificación de Auditoría", ver: "1.0", vig: "ENE 2026" },
-                { code: "FO-QA-09", name: "Reporte CAPA - AMFE", ver: "1.0", vig: "ENE 2026" },
-                { code: "FO-SGC-05", name: "Índice Maestro de PNOs", ver: "1.0", vig: "MAY 2026" },
-                { code: "FO-SGC-06", name: "Índice Maestro de Políticas", ver: "1.0", vig: "JUN 2026" }
-            ]}
-        ];
-
-        const tbody = document.querySelector("#list-table tbody");
-        dataList.forEach(group => {
-            const trGroup = document.createElement("tr");
-            trGroup.innerHTML = `<td colspan="4" class="group-header">${group.group}</td>`;
-            tbody.appendChild(trGroup);
-            
-            group.items.forEach(doc => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td style="font-weight:bold; color:#1E3A5F;">${doc.code}</td>
-                    <td class="text-left">${doc.name}</td>
-                    <td>${doc.ver}</td>
-                    <td>${doc.vig}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        });
-    </script>
+<body>
+    <h1>Comparativa de Formatos (Actualizada)</h1>
+    <p>He vuelto a revisar los formatos (<code>FO-xx-xx</code>) presentes en las carpetas de <code>DocumentoNoOrdenado</code> ("BITACORAS LAB" y "POLITICAS Y PROCESOS LAB") y los he comparado con la versión más reciente del catálogo del sistema en <code>Xelle/src/frontend/formats/format-catalog-data.js</code>.</p>
+    <p><strong>Cambios recientes notados en el catálogo de Xelle:</strong><br>
+    Los formatos de Inventario de Equipos (antes SGC-05) y Hoja de Vida de Termómetro (antes SGC-06) fueron reasignados recientemente a <code>FO-OP-63</code> y <code>FO-OP-64</code>.</p>
+    <h2>1. Formatos que FALTAN o no tienen una equivalencia clara en Xelle</h2>
+    <p>Estos formatos están en tus descargas, pero no encontré un código o nombre equivalente en el catálogo actual de Xelle:</p>
+    <ul>
+        <li><strong>Área AC (Administración / Compras):</strong>
+            <ul>
+                <li><code>FO-AC-02</code> - Solicitud de Compra</li>
+                <li><code>FO-AC-03</code> - Bitácora visitantes</li>
+                <li><code>FO-AC-04</code> - Lista Asistencia (Podría ser <code>FO-AD-18</code> en Xelle)</li>
+                <li><code>FO-AC-21</code> - Orden Compra</li>
+                <li><code>FO-AC-22</code> - Queja (Podría ser <code>FO-RS-01</code> Registro de Quejas en Xelle)</li>
+            </ul>
+        </li>
+        <li><strong>Área CO (Comercial):</strong>
+            <ul>
+                <li><code>FO-CO-01</code> - Devolución Clientes</li>
+            </ul>
+        </li>
+        <li><strong>Área OP (Operaciones):</strong>
+            <ul>
+                <li><code>FO-OP-06</code> - Registro Producción Liofilizado Placenta (En Xelle existe <code>FO-LC-42</code> Liof Placenta)</li>
+                <li><code>FO-OP-08</code> - Liberación Microbiológica Flasks (En Xelle existe <code>FO-LC-44</code> Lib Flasks)</li>
+                <li><code>FO-OP-16</code> - Registro Mantenimiento y Calibración de Equipos (Podría ser <code>FO-OP-62</code> Historial de Modificaciones)</li>
+                <li><code>FO-OP-17</code> - Registro Limpieza de Equipos (Podría ser <code>FO-OP-48</code> Bitácora de Limpieza)</li>
+                <li><code>FO-OP-20</code> - Reporte Cosecha y Dosificación (La cosecha/dosificación está en <code>FO-LC-24</code> Dosificación)</li>
+            </ul>
+        </li>
+        <li><strong>Área RS (Responsabilidad Sanitaria):</strong>
+            <ul>
+                <li><code>FO-RS-02</code> - Bitácora Retiro</li>
+                <li><code>FO-RS-03</code> - Retiro Producto</li>
+                <li><code>FO-RS-05</code> - Carta Consentimiento Informado Donación Placenta</li>
+            </ul>
+        </li>
+    </ul>
+    <h2>2. Comparativa de Cambios de Código / Nombre</h2>
+    <p>La siguiente tabla muestra cómo cambiaron los códigos y nombres desde los documentos no ordenados hasta el catálogo actual de Xelle.</p>
+    <h3>Área AD (Administración)</h3>
+    <table>
+        <tr><th>Documento No Ordenado</th><th>Nombre original</th><th>Equivalencia en Xelle</th><th>Nombre en Xelle</th></tr>
+        <tr><td><code>FO-AD-01</code></td><td>Requerimiento Personal</td><td><code>FO-AD-08</code></td><td>Requisición de Personal</td></tr>
+        <tr><td><code>FO-AD-02</code></td><td>Descriptiva de Puesto</td><td><code>FO-AD-09</code></td><td>Descriptiva de Puesto V2</td></tr>
+        <tr><td><code>FO-AD-04</code></td><td>Inducción Puesto</td><td><code>FO-AD-10</code></td><td>Inducción al Puesto V2</td></tr>
+        <tr><td><code>FO-AD-05</code></td><td>Convenio Confidencialidad</td><td><code>FO-AD-11</code></td><td>Convenio de Confidencialidad V2</td></tr>
+        <tr><td><code>FO-AD-08</code></td><td>Detección capacitación</td><td><code>FO-QA-16</code></td><td>Detección de Necesidades de Capacitación (DNC)</td></tr>
+        <tr><td><code>FO-AD-09</code></td><td>Plan Capacitación</td><td><code>FO-AD-12</code></td><td>Plan Anual de Capacitación V2</td></tr>
+        <tr><td><code>FO-AD-10</code></td><td>Evaluación Curso</td><td><code>FO-QA-17</code></td><td>Evaluación del Curso Impartido</td></tr>
+        <tr><td><code>FO-AD-11</code></td><td>Calificación Personal</td><td><code>FO-AD-13</code></td><td>Calificación de Personal</td></tr>
+        <tr><td><code>FO-AD-13</code></td><td>Solicitud curso extraordinario</td><td><code>FO-AD-14</code></td><td>Solicitud de Curso Extraordinario</td></tr>
+        <tr><td><code>FO-AD-15</code></td><td>Baja colaborador</td><td><code>FO-AD-15</code></td><td>Baja del Colaborador</td></tr>
+        <tr><td><code>FO-AD-16</code></td><td>Entrevista Salida</td><td><code>FO-AD-16</code></td><td>Entrevista de Salida</td></tr>
+    </table>
+    <h3>Área LC (Calidad) - Migración a AD y QA</h3>
+    <p>Todos los formatos LC del 01 al 10 en la carpeta no ordenada desaparecieron del área LC en Xelle (que ahora empieza en LC-12) y fueron movidos a AD o QA.</p>
+    <table>
+        <tr><th>Documento No Ordenado</th><th>Nombre original</th><th>Equivalencia en Xelle</th><th>Nombre en Xelle</th></tr>
+        <tr><td><code>FO-LC-01</code></td><td>Lista de difusión</td><td><code>FO-AD-17</code></td><td>Lista de Difusión de Documentos</td></tr>
+        <tr><td><code>FO-LC-02</code></td><td>Catalogo Firmas</td><td><code>FO-AD-00-B</code></td><td>Catálogo de Firmas e Iniciales V2</td></tr>
+        <tr><td><code>FO-LC-03</code></td><td>Programa Auditoría</td><td><code>FO-QA-20</code></td><td>Programa de Auditoría</td></tr>
+        <tr><td><code>FO-LC-04</code></td><td>Plan Auditoría</td><td><code>FO-QA-02</code></td><td>Cuestionario Maestro de Auditoría Interna</td></tr>
+        <tr><td><code>FO-LC-06</code></td><td>No Conformidad</td><td><code>FO-QA-08/09</code></td><td>Actas y CAPA</td></tr>
+        <tr><td><code>FO-LC-07</code></td><td>Informe Auditoria</td><td><code>FO-AD-06</code></td><td>Informe Final de Auditoría Interna</td></tr>
+        <tr><td><code>FO-LC-09</code></td><td>Solicitud Cambios</td><td><code>FO-QA-07</code></td><td>Solicitud y Control de Cambios</td></tr>
+        <tr><td><code>FO-LC-10</code></td><td>Matriz Riesgos</td><td><code>FO-QA-01</code></td><td>Matriz de Riesgos y Oportunidades</td></tr>
+    </table>
+    <h3>Área OP (Operaciones)</h3>
+    <table>
+        <tr><th>Documento No Ordenado</th><th>Nombre original</th><th>Equivalencia en Xelle</th><th>Nombre en Xelle</th></tr>
+        <tr><td><code>FO-OP-01</code></td><td>Programa Mantenimiento</td><td><code>FO-OP-01</code></td><td>Programa Anual de Mantenimiento</td></tr>
+        <tr><td><code>FO-OP-02</code></td><td>Inventario Equipos</td><td><code>FO-OP-63</code></td><td>Inventario de Equipos (Nuevo)</td></tr>
+        <tr><td><code>FO-OP-03</code></td><td>Control Pasajes Líneas Celulares</td><td><code>FO-OP-03</code></td><td>Control de Pasajes Líneas Celulares</td></tr>
+        <tr><td><code>FO-OP-04</code></td><td>Registro de Temperatura Refrigeradores</td><td><code>FO-OP-04</code></td><td>Registro Gráfico de Temperatura</td></tr>
+        <tr><td><code>FO-OP-05</code></td><td>Registro Temp. Congeladores</td><td><code>FO-OP-05</code></td><td>Registro Gráfico de Temperatura de Congeladores</td></tr>
+        <tr><td><code>FO-OP-10</code></td><td>Reg. Concentración CO2 Incubadora</td><td><code>FO-OP-09</code></td><td>Registro Gráfico Incubadora CO2</td></tr>
+        <tr><td><code>FO-OP-10</code></td><td>Devolución Proveedores</td><td><code>FO-OP-10</code></td><td>Registro de Devolución a Proveedores</td></tr>
+        <tr><td><code>FO-OP-12</code></td><td>Registro Temp. Ultracongelador</td><td><code>FO-OP-08</code></td><td>Registro Gráfico de Temperatura de Ultracongeladores</td></tr>
+        <tr><td><code>FO-OP-13</code></td><td>Monitoreo Ambiental Áreas Limpias</td><td><code>FO-QA-13</code></td><td>Bitácora de Monitoreo Ambiental</td></tr>
+        <tr><td><code>FO-OP-18</code></td><td>Registro Uso Cabina Bioseguridad</td><td><code>FO-OP-18</code></td><td>Bitácora de Uso y Limpieza de Cabina de Bioseguridad</td></tr>
+        <tr><td><code>FO-OP-19</code></td><td>Registro Limpieza Áreas</td><td><code>FO-OP-19</code></td><td>Registro de Limpieza de Áreas</td></tr>
+    </table>
+    <h3>Área RS (Responsabilidad Sanitaria)</h3>
+    <table>
+        <tr><th>Documento No Ordenado</th><th>Nombre original</th><th>Equivalencia en Xelle</th><th>Nombre en Xelle</th></tr>
+        <tr><td><code>FO-RS-01</code></td><td>Programa calibración</td><td><em>Desconocido/Movido</em></td><td>(En Xelle, RS-01 es Registro de Quejas)</td></tr>
+        <tr><td><code>FO-RS-04</code></td><td>Fármaco tecnovigilancia</td><td><code>FO-RS-02</code></td><td>Notificación de Evento Adverso</td></tr>
+    </table>
 </body>
 </html>

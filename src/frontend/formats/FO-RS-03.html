@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-RS-03 Registro e Investigación de Quejas</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Vertical (Portrait) */
+        @page { size: portrait; margin: 1cm; }
+        
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; color: #1e293b; }
+        .container { width: 19cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 4px; }
+
+        .section-header { background-color: #1E3A5F; color: white; padding: 6px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; border-left: 4px solid #2E9D82; }
+        
+        .compact-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 9px; padding: 6px; text-align: center; border: 1px solid #cbd5e1; vertical-align: middle; }
+        .compact-table td { font-size: 9px; padding: 5px; border: 1px solid #cbd5e1; vertical-align: middle; }
+        
+        .compact-table input, .compact-table textarea { font-size: 9px; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; text-align: center; }
+        .compact-table textarea { resize: none; overflow: auto; text-align: left; }
+        .compact-table input:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+
+        .text-center { text-align: center !important; }
+        .text-left { text-align: left !important; padding-left: 6px !important; }
+        
+        .info-box { background-color: #f0fdfa; border: 1px solid #5eead4; padding: 8px; border-radius: 4px; font-size: 9px; color: #115e59; margin-top: 10px; line-height: 1.3; text-align: justify; }
+        .legend-box { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 8px; border-radius: 4px; font-size: 8.5px; color: #1e293b; margin-top: 5px; line-height: 1.4; display: flex; justify-content: space-between; }
+
+        .footer-unified { 
+            margin-top: 25px; border-top: 2px solid #1E3A5F; padding-top: 10px; 
+            text-align: center; font-size: 9px; line-height: 1.4; color: #475569;
+        }
+
+        .gray-th { background-color: #f1f5f9 !important; color: #1E3A5F !important; text-align: left !important; padding-left: 8px !important; font-weight: bold; }
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 6px; margin-top: 5px; color: #1E3A5F; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body id="doc-fo-rs-03">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Formato</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER MODULAR -->
+        <div class="header-top">
+            <div class="logo-container">
+                <svg viewBox="0 0 320 80" style="width: 200px;">
+                    <defs><style>.c { fill: #2E9D82 }</style></defs>
+                    <g transform="translate(0,-2) scale(0.85)">
+                        <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                        <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                    </g>
+                    <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                    <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                </svg>
+            </div>
+            <div class="registry-container">
+                <label>Folio de Queja Oficial</label>
+                <div class="registry-wrapper">
+                    <span class="registry-prefix">FO-RS-03-</span>
+                    <input type="text" id="reg-rs03" class="registry-input generate-barcode cedit" 
+                           data-target="barcode-rs03" data-prefix="FO-RS-03-" placeholder="202X-00">
+                </div>
+                <svg id="barcode-rs03" class="barcode-svg" style="height:35px;"></svg>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <h1>REGISTRO DE INGRESO, INVESTIGACIÓN Y CIERRE DE QUEJAS</h1>
+            <div class="metadata">Código: FO-RS-03 | Versión: 1.0 | Vigencia: May 2026 | Página: 1 de 1</div>
+        </div>
+
+        <!-- INDICACIONES NORMATIVAS -->
+        <div class="info-box">
+            <strong>Instrucciones Normativas (Tecnovigilancia y Quejas - NOM-241 / ISO 13485):</strong> Toda notificación de insatisfacción sobre un producto, su calidad, identidad, integridad o servicio, debe ser documentada, evaluada por el Responsable Sanitario / Director de Calidad, y ligada a un Sistema CAPA si se comprueba impacto. 
+        </div>
+        
+        <div class="legend-box">
+            <div><strong>[TQ] Tipo de Queja:</strong> CAL = Calidad / Eficacia | LOG = Logística / Distribución | SRV = Servicio / Atención</div>
+            <div><strong>[EV] Evidencia Recibida:</strong> FOT = Fotográfica | DOC = Documental | MUE = Muestra Física | NA = No Aplica</div>
+            <div><strong>[REC] Retiro de Producto (Recall):</strong> REQ = Requerido | NO-REQ = No Requerido</div>
+        </div>
+
+        <!-- 1. DATOS DEL CLIENTE Y RECEPCIÓN DE QUEJA -->
+        <div class="section-header">1. DATOS DEL CLIENTE Y RECEPCIÓN DE LA QUEJA</div>
+        <table class="compact-table">
+            <tr>
+                <th width="20%" class="gray-th">Nombre del Cliente (Médico/Hospital):</th>
+                <td width="30%"><input class="cedit text-left" placeholder="Nombre completo o Institución"></td>
+                <th width="20%" class="gray-th">Teléfono de Contacto:</th>
+                <td width="30%"><input class="cedit text-left" placeholder="10 dígitos"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">Correo Electrónico:</th>
+                <td><input class="cedit text-left" placeholder="correo@ejemplo.com"></td>
+                <th class="gray-th">Fecha de Recepción:</th>
+                <td><input type="text" class="cedit text-center"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">[TQ] Tipo de Queja:</th>
+                <td><input class="cedit text-center" placeholder="CAL / LOG / SRV" style="font-weight: bold; color: #1E3A5F;"></td>
+                <th class="gray-th">[EV] Evidencia Entregada:</th>
+                <td><input class="cedit text-center" placeholder="FOT / DOC / MUE / NA" style="font-weight: bold; color: #1E3A5F;"></td>
+            </tr>
+        </table>
+
+        <!-- 2. DETALLE DEL PRODUCTO/SERVICIO AFECTADO -->
+        <div class="section-header">2. DETALLES DEL PRODUCTO O SERVICIO REPORTADO</div>
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th width="15%">ID / Código SKU</th>
+                    <th width="25%">Descripción del Producto</th>
+                    <th width="15%">Presentación</th>
+                    <th width="15%">Lote Afectado</th>
+                    <th width="15%">Fecha de Caducidad</th>
+                    <th width="7%">Cant. Vendida</th>
+                    <th width="8%">Cant. Reportada</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="cedit text-center" placeholder="SKU/ID"></td>
+                    <td><input class="cedit text-left" placeholder="Nombre del producto"></td>
+                    <td><input class="cedit text-center" placeholder="Vial/Jeringa/etc"></td>
+                    <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b;"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size:7px;"></td>
+                    <td><input type="number" class="cedit text-center"></td>
+                    <td><input type="number" class="cedit text-center" style="font-weight: bold;"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div style="margin-top: 10px;">
+            <label style="font-size: 9px; font-weight: bold; color: #1E3A5F;">Descripción del Motivo de la Queja (Como fue reportado por el cliente):</label>
+            <textarea class="cedit" rows="3" style="border: 1px solid #cbd5e1; border-radius: 3px; text-align: left; padding: 5px; background-color: #f8fafc;" placeholder="Describa el incidente, pérdida de eficacia, rotura de cadena de frío, error en facturación o servicio, etc."></textarea>
+        </div>
+
+        <!-- 3. INVESTIGACIÓN DE CALIDAD -->
+        <div class="section-header">3. INVESTIGACIÓN INTERNA (USO EXCLUSIVO DIRECTOR DE CALIDAD / RESPONSABLE SANITARIO)</div>
+        <table class="compact-table">
+            <tr>
+                <th width="20%" class="gray-th">Área Responsable de Investigación:</th>
+                <td width="30%"><input class="cedit text-left" placeholder="Laboratorio / Logística / Ventas"></td>
+                <th width="20%" class="gray-th">Fecha Límite de Cierre:</th>
+                <td width="30%"><input type="text" class="cedit text-center"></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="padding: 10px;">
+                    <label style="font-size: 9px; font-weight: bold; color: #1E3A5F; display: block; margin-bottom: 5px;">Resultados de la Investigación y Análisis de Causa Raíz (RCA):</label>
+                    <textarea class="cedit" rows="4" style="border: 1px solid #cbd5e1; border-radius: 3px; text-align: left; padding: 5px;" placeholder="Documente los hallazgos de la retención de muestras, revisión del Batch Record, validación logística, etc."></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th class="gray-th" colspan="2">[REC] ¿La investigación requiere Retiro de Producto (Recall) del mercado?</th>
+                <td colspan="2"><input class="cedit text-center" placeholder="REQ / NO-REQ" style="font-weight: bold; color: #991b1b;"></td>
+            </tr>
+        </table>
+
+        <!-- 4. ACCIONES A IMPLEMENTAR (CAPA) -->
+        <div class="section-header">4. PLAN DE ACCIONES A IMPLEMENTAR PARA RESOLUCIÓN Y PREVENCIÓN</div>
+        <div style="display:flex; justify-content: flex-end; padding: 4px; background-color: #f1f5f9; border: 1px solid #cbd5e1; border-bottom: none;">
+            <div style="font-size: 9px; font-weight: bold;">Folio de Acción Correctiva/Preventiva (CAPA) Vinculado: <input class="cedit text-center" style="width: 150px; background-color: white; border: 1px solid #cbd5e1; border-radius: 2px;" placeholder="Ej: FO-QA-03-XXXX"></div>
+        </div>
+        <table class="compact-table" id="tbl-acciones" style="margin-top:0;">
+            <thead>
+                <tr>
+                    <th width="5%">No.</th>
+                    <th width="55%">Descripción de la Acción (Inmediata o Correctiva)</th>
+                    <th width="15%">Responsable</th>
+                    <th width="12%">Estatus</th>
+                    <th width="10%">Fecha de Cierre</th>
+                    <th width="3%" class="no-print"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center row-num">1</td>
+                    <td><input class="cedit text-left" placeholder="Acción acordada"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center" placeholder="Pendiente/Cerrado"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size:7px;"></td>
+                    <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-acciones')">x</button></td>
+                </tr>
+                <tr>
+                    <td class="text-center row-num">2</td>
+                    <td><input class="cedit text-left"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size:7px;"></td>
+                    <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-acciones')">x</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn-add no-print" onclick="addRowNumbered('tbl-acciones')">+ AGREGAR NUEVA ACCIÓN AL PLAN</button>
+
+        <!-- 5. JUSTIFICACIÓN DE CIERRE Y FIRMAS -->
+        <div class="section-header">5. JUSTIFICACIÓN DEL CIERRE Y APROBACIÓN FINAL</div>
+        <table class="compact-table">
+            <tr>
+                <td style="padding: 10px; border-bottom: none;">
+                    <label style="font-size: 9px; font-weight: bold; color: #1E3A5F; display: block; margin-bottom: 5px;">Conclusión del Dictamen y Respuesta al Cliente:</label>
+                    <textarea class="cedit" rows="2" style="border: 1px solid #cbd5e1; border-radius: 3px; text-align: left; padding: 5px;" placeholder="Detalle cómo se procedió con el cliente (Reemplazo, reembolso, justificación de improcedencia)..."></textarea>
+                </td>
+            </tr>
+        </table>
+        
+        <div class="signature-area" style="display:flex; justify-content:space-between; gap:20px; margin-top:25px;">
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">REPORTE INICIAL (ATENCIÓN A CLIENTES)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Firma de Captura de la Queja</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center;">
+                <p style="font-weight:bold; font-size:10px;">EVALUÓ E INVESTIGÓ (DIR. DE LABORATORIO)</p>
+                <div style="border-top:1px solid #ccc; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#475569;">Firma de Responsabilidad de Área</p>
+            </div>
+            <div class="signature-box" style="flex:1; text-align:center; background-color:#f0fdf4;">
+                <p style="font-weight:bold; font-size:10px; color:#14532d;">DICTAMEN Y CIERRE (RESPONSABLE SANITARIO)</p>
+                <div style="border-top:1px solid #166534; width:100%; margin-top:35px;"></div>
+                <p style="font-size:8px; margin-top:5px; color:#14532d;">Firma de Liberación del CAPA y Dictamen Regulatorio</p>
+            </div>
+        </div>
+
+        <!-- FOOTER UNIFICADO -->
+        <div class="footer-unified">
+            <div class="control-data">FO-RS-03 | Versión: 1.0 | Registro de Ingreso, Investigación y Cierre de Quejas | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">Este documento es de uso confidencial. Parte integral del cumplimiento normativo GxP y Farmacovigilancia.</div>
+        </div>
+    </div>
+
+    <script>
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if(row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => { 
+                const numCell = row.querySelector('.row-num');
+                if(numCell) numCell.innerText = index + 1; 
+            });
+        }
+    </script>
+</body>
+</html>

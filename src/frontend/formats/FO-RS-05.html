@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-RS-05 Reporte Maestro de Retiro de Producto del Mercado y Balance de Conciliación</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        @page { size: portrait; margin: 1cm; }
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; color: #1e293b; }
+        .container { width: 19cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 4px; }
+        
+        .section-header { background-color: #1E3A5F; color: white; padding: 6px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; border-left: 4px solid #2E9D82; }
+        
+        .compact-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 9px; padding: 6px; text-align: center; border: 1px solid #cbd5e1; vertical-align: middle; }
+        .compact-table td { font-size: 9px; padding: 5px; border: 1px solid #cbd5e1; vertical-align: middle; }
+        
+        .compact-table input, .compact-table textarea { font-size: 9px; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; text-align: center; }
+        .compact-table textarea { resize: none; overflow: auto; text-align: left; }
+        .compact-table input:focus, .compact-table textarea:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+        
+        .text-center { text-align: center !important; }
+        .text-left { text-align: left !important; padding-left: 6px !important; }
+        
+        .info-box { background-color: #f0fdfa; border: 1px solid #5eead4; padding: 8px; border-radius: 4px; font-size: 9px; color: #115e59; margin-top: 10px; line-height: 1.3; text-align: justify; }
+        
+        .legend-table { width: 100%; border-collapse: collapse; margin-top: 5px; background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 4px; }
+        .legend-table td { font-size: 8.5px; padding: 8px; vertical-align: top; color: #1e293b; line-height: 1.4; border-right: 1px dashed #cbd5e1;}
+        .legend-table td:last-child { border-right: none; }
+        
+        .footer-unified { margin-top: 25px; border-top: 2px solid #1E3A5F; padding-top: 10px; text-align: center; font-size: 9px; line-height: 1.4; color: #475569; }
+        .gray-th { background-color: #f1f5f9 !important; color: #1E3A5F !important; text-align: left !important; padding-left: 8px !important; font-weight: bold; }
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 6px; margin-top: 5px; color: #1E3A5F; }
+
+        .balance-box { display: table; width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .balance-cell { display: table-cell; border: 1px solid #cbd5e1; padding: 5px; text-align: center; font-size: 9px; vertical-align: middle; }
+        .balance-hdr { background-color: #1E3A5F; color: white; font-weight: bold; padding: 5px; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body id="doc-fo-rs-05">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Formato</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER MODULAR -->
+        <table style="width: 100%; border-collapse: collapse; border: none; margin-bottom: 10px;">
+            <tr>
+                <td style="width: 50%; vertical-align: middle;">
+                    <div class="logo-container">
+                        <svg viewBox="0 0 320 80" style="width: 200px;">
+                            <defs><style>.c { fill: #2E9D82 }</style></defs>
+                            <g transform="translate(0,-2) scale(0.85)">
+                                <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                                <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                            </g>
+                            <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                            <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                        </svg>
+                    </div>
+                </td>
+                <td style="width: 50%; text-align: right; vertical-align: top;">
+                    <div class="registry-container" style="display:inline-block; text-align: left; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #fef2f2;">
+                        <label style="font-size: 10px; font-weight: bold; color: #991b1b; display: block; margin-bottom: 5px;">Folio Expediente (Recall)</label>
+                        <div class="registry-wrapper">
+                            <span class="registry-prefix" style="font-size: 11px; font-weight:bold; color: #991b1b;">FO-RS-05-</span>
+                            <input type="text" id="reg-rs05" class="registry-input generate-barcode cedit" style="width: 100px; font-size: 11px; font-weight:bold; color: #991b1b;"
+                                   data-target="barcode-rs05" data-prefix="FO-RS-05-" placeholder="202X-00">
+                        </div>
+                        <div style="margin-top: 5px;"><svg id="barcode-rs05" class="barcode-svg" style="height:35px;"></svg></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="text-align: center; border-bottom: 2px solid #1E3A5F; padding-bottom: 5px; margin-bottom: 10px;">
+            <h1 style="font-size: 16px; margin: 0; color: #1E3A5F;">REPORTE MAESTRO DE RETIRO DE PRODUCTO DEL MERCADO Y CONCILIACIÓN</h1>
+            <div style="font-size: 9px; color: #64748b;">Código: FO-RS-05 | Versión: 2.0 | Vigencia: May 2026 | Cumplimiento ALCOA+ y NOM-241</div>
+        </div>
+
+        <div class="info-box" style="border-color: #f87171; background-color: #fef2f2; color: #991b1b;">
+            <strong>¡ATENCIÓN! EVENTO CRÍTICO DE FARMACO/TECNOVIGILANCIA:</strong> Este documento consolida el balance maestro durante un procedimiento de Recall. Todo producto recolectado físicamente en ruta (Amparado en el FO-RS-06) debe ser sumado y conciliado en este registro para calcular la efectividad del retiro.
+        </div>
+        
+        <table class="legend-table">
+            <tr>
+                <td style="width: 100%;">
+                    <strong>[MR] Motivo de Retiro del Mercado:</strong><br>
+                    <span style="color:#991b1b; font-weight:bold;">AS</span> = Alerta Sanitaria (Riesgo inminente para la salud) | 
+                    <span style="color:#b45309; font-weight:bold;">APX</span> = A Petición Interna de Xelle (Desviación de Calidad) | 
+                    <span style="color:#166534; font-weight:bold;">SIM</span> = Simulacro Anual de Retiro
+                </td>
+            </tr>
+        </table>
+
+        <!-- 1. IDENTIFICACIÓN DEL PRODUCTO A RETIRAR -->
+        <div class="section-header">1. IDENTIFICACIÓN DEL LOTE Y PRODUCTO A RETIRAR (RECALL)</div>
+        <table class="compact-table">
+            <tr>
+                <th width="20%" class="gray-th">ID / SKU de Producto:</th>
+                <td width="30%"><input class="cedit text-left" placeholder="Código interno" style="font-weight: bold; color: #1E3A5F;"></td>
+                <th width="20%" class="gray-th">Presentación:</th>
+                <td width="30%"><input class="cedit text-left"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">Descripción de Producto:</th>
+                <td colspan="3"><input class="cedit text-left" placeholder="Nombre comercial completo"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">Lote Afectado:</th>
+                <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b; font-size: 11px;"></td>
+                <th class="gray-th">Fecha de Caducidad:</th>
+                <td><input type="text" class="cedit text-center"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">[MR] Motivo de Retiro:</th>
+                <td><input class="cedit text-center" placeholder="AS / APX / SIM" style="font-weight: bold; color: #991b1b;"></td>
+                <th class="gray-th">Fecha Autorización de Recall:</th>
+                <td><input type="text" class="cedit text-center"></td>
+            </tr>
+        </table>
+
+        <!-- 2. BALANCE GENERAL DE CONCILIACIÓN DE INVENTARIOS -->
+        <div class="section-header">2. BALANCE MAESTRO DE MEDICAMENTO / PRODUCTO A RETIRAR</div>
+        <div class="balance-box" style="margin-top: 10px;">
+            <div class="balance-cell balance-hdr">Piezas Retenidas en Almacén (PT/Proceso)</div>
+            <div class="balance-cell balance-hdr">Piezas Totales Vendidas / Distribuidas</div>
+            <div class="balance-cell balance-hdr" style="background-color: #166534;">Cantidad Efectivamente Recuperada</div>
+            <div class="balance-cell balance-hdr" style="background-color: #991b1b;">Cantidad NO Recuperada (Balance)</div>
+            <div class="balance-cell balance-hdr" style="background-color: #1E3A5F;">% Efectividad de Recolección</div>
+        </div>
+        <div class="balance-box">
+            <div class="balance-cell"><input type="number" id="bal-almacen" class="cedit text-center" style="font-size: 12px; font-weight: bold;" value="0" oninput="calcularBalance()"></div>
+            <div class="balance-cell"><input type="number" id="bal-vendidas" class="cedit text-center" style="font-size: 12px; font-weight: bold;" value="0" oninput="calcularBalance()"></div>
+            <div class="balance-cell"><input type="number" id="bal-recuperadas" class="cedit text-center" style="font-size: 12px; font-weight: bold; color: #166534;" value="0" oninput="calcularBalance()"></div>
+            <div class="balance-cell"><input type="number" id="bal-perdidas" class="cedit text-center" style="font-size: 12px; font-weight: bold; color: #991b1b;" readonly value="0"></div>
+            <div class="balance-cell"><input type="text" id="bal-porcentaje" class="cedit text-center" style="font-size: 12px; font-weight: bold; color: #1E3A5F;" readonly value="0.00 %"></div>
+        </div>
+        <p style="font-size: 8px; color: #64748b; margin-top: 4px; text-align: center;"><em>* Las piezas no recuperadas incluyen aquellas ya consumidas por los pacientes antes del aviso. Toda recuperación física se ampara con FO-RS-06.</em></p>
+
+        <!-- 3. TABLA DE RECUPERACIÓN INDIVIDUAL POR CLIENTE -->
+        <div class="section-header">3. MATRIZ DE RECUPERACIÓN INDIVIDUAL POR CLIENTE / DISTRIBUIDOR</div>
+        <table class="compact-table" id="tbl-clientes">
+            <thead>
+                <tr>
+                    <th width="4%">No.</th>
+                    <th width="35%">Nombre del Cliente / Entidad Médica</th>
+                    <th width="15%">Fecha de Venta Original</th>
+                    <th width="15%">Fecha Real de Recuperación</th>
+                    <th width="15%">Piezas Distribuidas / Vendidas</th>
+                    <th width="16%" style="background-color: #166534;">Piezas Físicas Recuperadas</th>
+                    <th width="3%" class="no-print"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center row-num">1</td>
+                    <td><input class="cedit text-left" placeholder="Clínica / Hospital / Médico"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 8px;"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 8px;"></td>
+                    <td><input type="number" class="cedit text-center sub-vendida" value="0" oninput="calcularSumaMatriz()"></td>
+                    <td><input type="number" class="cedit text-center sub-recuperada" value="0" oninput="calcularSumaMatriz()" style="font-weight: bold; color: #166534;"></td>
+                    <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-clientes')">x</button></td>
+                </tr>
+                <tr>
+                    <td class="text-center row-num">2</td>
+                    <td><input class="cedit text-left"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 8px;"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 8px;"></td>
+                    <td><input type="number" class="cedit text-center sub-vendida" value="0" oninput="calcularSumaMatriz()"></td>
+                    <td><input type="number" class="cedit text-center sub-recuperada" value="0" oninput="calcularSumaMatriz()" style="font-weight: bold; color: #166534;"></td>
+                    <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-clientes')">x</button></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr style="background-color: #f1f5f9;">
+                    <td colspan="4" class="text-right" style="font-weight: bold;">TOTALES CONCILIADOS DESDE LA MATRIZ:</td>
+                    <td><input type="number" id="sum-vendida" class="cedit text-center" readonly style="font-weight: bold;" value="0"></td>
+                    <td><input type="number" id="sum-recuperada" class="cedit text-center" readonly style="font-weight: bold; color: #166534;" value="0"></td>
+                    <td class="no-print"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <button class="btn-add no-print" onclick="addRowNumbered('tbl-clientes')">+ AGREGAR CLIENTE AL EXPEDIENTE DE RETIRO</button>
+
+        <!-- 4. CONCLUSIONES -->
+        <div class="section-header">4. CONCLUSIONES, DICTAMEN DE RIESGO Y DISPOSICIÓN FINAL (DESTRUCCIÓN)</div>
+        <textarea class="cedit" rows="3" style="border: 1px solid #cbd5e1; border-radius: 4px; padding: 8px; text-align: left; margin-top: 10px;" placeholder="Emita las conclusiones de efectividad del simulacro o del retiro real. Detalle la orden de confinamiento de las piezas recuperadas para su destrucción biológica (RPBI)..."></textarea>
+
+        <!-- FIRMAS -->
+        <table style="width: 100%; border-collapse: collapse; margin-top: 25px;">
+            <tr>
+                <td style="width: 31%; text-align: center; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc;">
+                    <p style="font-weight: bold; font-size: 10px; margin: 0 0 35px 0;">ELABORÓ Y CONCILIÓ (QA / LOGÍSTICA)</p>
+                    <div style="border-top: 1px solid #ccc; width: 100%;"></div>
+                    <p style="font-size: 8px; margin-top: 5px; color: #475569;">Firma de Consolidación de Balance</p>
+                </td>
+                <td style="width: 3.5%;"></td>
+                <td style="width: 31%; text-align: center; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc;">
+                    <p style="font-weight: bold; font-size: 10px; margin: 0 0 35px 0;">REVISÓ PROCEDIMIENTO (DIR. OPERACIONES)</p>
+                    <div style="border-top: 1px solid #ccc; width: 100%;"></div>
+                    <p style="font-size: 8px; margin-top: 5px; color: #475569;">Firma de Revisión Técnica y Ejecución</p>
+                </td>
+                <td style="width: 3.5%;"></td>
+                <td style="width: 31%; text-align: center; padding: 10px; border: 1px solid #166534; border-radius: 4px; background-color: #f0fdf4;">
+                    <p style="font-weight: bold; font-size: 10px; margin: 0 0 35px 0; color: #14532d;">AUTORIZA CIERRE DE RETIRO (RESP. SANITARIO)</p>
+                    <div style="border-top: 1px solid #166534; width: 100%;"></div>
+                    <p style="font-size: 8px; margin-top: 5px; color: #14532d;">Aprobación Final GxP</p>
+                </td>
+            </tr>
+        </table>
+
+        <!-- FOOTER UNIFICADO -->
+        <div class="footer-unified">
+            <div class="control-data">FO-RS-05 | Versión: 2.0 | Reporte Maestro de Retiro de Producto del Mercado y Balance | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">Evidencia oficial de cumplimiento NOM-241-SSA1. Uso exclusivo del Sistema de Gestión de Calidad.</div>
+        </div>
+    </div>
+
+    <script>
+        function calcularBalance() {
+            const vendidas = parseFloat(document.getElementById('bal-vendidas').value) || 0;
+            const recuperadas = parseFloat(document.getElementById('bal-recuperadas').value) || 0;
+            
+            let perdidas = vendidas - recuperadas;
+            if (perdidas < 0) perdidas = 0; // Prevenir negativos si se recupera extra misterioso
+            
+            let porcentaje = 0;
+            if (vendidas > 0) {
+                porcentaje = (recuperadas / vendidas) * 100;
+            }
+
+            document.getElementById('bal-perdidas').value = perdidas;
+            document.getElementById('bal-porcentaje').value = porcentaje.toFixed(2) + ' %';
+        }
+
+        function calcularSumaMatriz() {
+            let sumV = 0;
+            let sumR = 0;
+            document.querySelectorAll('.sub-vendida').forEach(inp => sumV += parseFloat(inp.value) || 0);
+            document.querySelectorAll('.sub-recuperada').forEach(inp => sumR += parseFloat(inp.value) || 0);
+            
+            document.getElementById('sum-vendida').value = sumV;
+            document.getElementById('sum-recuperada').value = sumR;
+            
+            // Auto actualizar balance maestro para reducir doble captura
+            document.getElementById('bal-vendidas').value = sumV;
+            document.getElementById('bal-recuperadas').value = sumR;
+            calcularBalance();
+        }
+
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => {
+                if(input.type === 'number') input.value = '0';
+                else input.value = '';
+            });
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if(row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+                calcularSumaMatriz();
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => { 
+                const numCell = row.querySelector('.row-num');
+                if(numCell) numCell.innerText = index + 1; 
+            });
+        }
+    </script>
+</body>
+</html>

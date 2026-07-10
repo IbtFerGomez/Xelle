@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-RS-08 Carta de Consentimiento Informado (Donación Placenta)</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        @page { size: portrait; margin: 1.5cm 1.5cm; }
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; color: #1e293b; line-height: 1.5; }
+        .container { width: 19cm; margin: 0 auto; background: white; padding: 1.5cm 1cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 4px; }
+        
+        .header-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #2E9D82; padding-bottom: 10px; margin-bottom: 15px; }
+        .doc-meta { text-align: right; font-size: 9px; color: #475569; line-height: 1.3; }
+        
+        .title-main { font-size: 13px; font-weight: bold; color: #1E3A5F; text-align: center; margin: 10px 0 20px 0; border: 1px solid #1E3A5F; padding: 10px; border-radius: 4px; background-color: #f8fafc; }
+        
+        .cedit { font-size: 10px; border: none; background: transparent; padding: 2px; border-bottom: 1px dashed #94a3b8; font-family: inherit; width: 100%; box-sizing: border-box; }
+        .cedit:focus { background-color: #e2e8f0; outline: none; }
+        
+        .p-text { font-size: 10px; text-align: justify; margin-bottom: 10px; line-height: 1.6; }
+        .p-text strong { color: #1E3A5F; }
+        
+        .data-grid { display: grid; grid-template-columns: 100%; gap: 8px; margin-bottom: 15px; }
+        .data-row { display: flex; align-items: baseline; font-size: 10px; }
+        .data-label { font-weight: bold; margin-right: 5px; white-space: nowrap; color: #1e293b; }
+        
+        .req-box { border: 1px solid #cbd5e1; padding: 10px; border-radius: 4px; background-color: #f8fafc; margin-bottom: 15px; page-break-inside: avoid; }
+        .req-box h3 { font-size: 11px; margin: 0 0 8px 0; color: #1E3A5F; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; }
+        .req-list { margin: 0; padding-left: 20px; font-size: 9.5px; }
+        .req-list li { margin-bottom: 4px; }
+        
+        .signature-table { width: 100%; border-collapse: collapse; margin-top: 30px; page-break-inside: avoid; }
+        .signature-table td { width: 50%; padding: 10px; text-align: center; vertical-align: top; }
+        .sig-line { border-top: 1px solid #1e293b; width: 80%; margin: 40px auto 5px auto; }
+        .sig-name { font-size: 9px; font-weight: bold; }
+        .sig-role { font-size: 8px; color: #475569; }
+
+        .footer-unified { margin-top: 30px; border-top: 2px solid #1E3A5F; padding-top: 10px; text-align: center; font-size: 8px; line-height: 1.4; color: #475569; }
+
+        .page-break { page-break-before: always; padding-top: 20px; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body id="doc-fo-rs-08">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Documento Clínico</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER CLÍNICO -->
+        <div class="header-top">
+            <svg viewBox="0 0 320 80" style="width: 180px;">
+                <defs><style>.c { fill: #2E9D82 }</style></defs>
+                <g transform="translate(0,-2) scale(0.85)">
+                    <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                    <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                </g>
+                <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+            </svg>
+            <div class="doc-meta">
+                <strong>Clave:</strong> FO-RS-08<br>
+                <strong>Edición:</strong> 2.0<br>
+                <strong>Emisión:</strong> ENE 2026<br>
+                <strong>Cumplimiento:</strong> NOM-004-SSA3 / NOM-241-SSA1
+            </div>
+        </div>
+
+        <div style="font-size: 10px; font-weight: bold; text-align: center; color: #475569; margin-bottom: 5px;">
+            XELLE SCIENTIFIC S.A.P.I DE C.V. / XELLE LAB SA DE CV<br>
+            Vicente Fernandez 3, San Miguel Cuyutlan, Tlajomulco de Zuñiga, Jalisco. CP. 45660
+        </div>
+
+        <div class="title-main">
+            CARTA DE CONSENTIMIENTO INFORMADO<br>DONACIÓN DE PLACENTA
+        </div>
+
+        <!-- DATOS DE LA DONANTE -->
+        <h3 style="font-size: 11px; color: #1E3A5F; border-bottom: 1px solid #1E3A5F; padding-bottom: 3px; margin-bottom: 10px;">DATOS DE LA DONANTE</h3>
+        
+        <div class="data-grid">
+            <div class="data-row"><span class="data-label">Lugar y Fecha:</span> <input type="text" class="cedit text-left" placeholder="Ciudad, Estado, a DD de MM de AAAA"></div>
+            <div class="data-row"><span class="data-label">Nombre completo:</span> <input type="text" class="cedit text-left" placeholder="Nombre completo de la donante"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+            <div class="data-row"><span class="data-label">Sexo:</span> <input type="text" class="cedit text-center" value="Femenino" readonly></div>
+            <div class="data-row"><span class="data-label">Edad:</span> <input type="number" class="cedit text-center"></div>
+            <div class="data-row"><span class="data-label">Estado Civil:</span> <input type="text" class="cedit text-center"></div>
+        </div>
+        <div class="data-grid">
+            <div class="data-row"><span class="data-label">Domicilio:</span> <input type="text" class="cedit text-left" placeholder="Calle, Número, Colonia, Código Postal, Ciudad"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-bottom: 15px;">
+            <div class="data-row"><span class="data-label">Ocupación:</span> <input type="text" class="cedit text-left"></div>
+            <div class="data-row" style="border: 1px solid #cbd5e1; padding: 2px 5px; background: #f8fafc;">
+                <span class="data-label">Vacuna COVID 19:</span> 
+                <input type="text" class="cedit text-center" placeholder="SI / NO" style="width: 50px;">
+            </div>
+        </div>
+
+        <!-- INFORMACIÓN DEL PROCEDIMIENTO -->
+        <h3 style="font-size: 11px; color: #1E3A5F; border-bottom: 1px solid #1E3A5F; padding-bottom: 3px; margin-top: 20px; margin-bottom: 10px;">I. INFORMACIÓN DEL PROCEDIMIENTO (DONACIÓN)</h3>
+
+        <div class="p-text">
+            <strong>Tipo de donación:</strong> Voluntaria y/o altruista.
+        </div>
+
+        <div class="p-text">
+            <strong>Objetivos del acto de donación:</strong><br>
+            Se ha comprobado que la placenta es rica en células madre mesenquimales, las cuales pueden ser útiles para tratar diferentes enfermedades en terapias regenerativas. Por lo anterior la invitamos a la donación altruista de su placenta con el fin de realizar investigación y obtención de las células antes mencionadas para uso y manejo de Xelle Scientific S.A.P.I DE C.V.
+        </div>
+
+        <div class="p-text">
+            <strong>Método de colecta:</strong><br>
+            Una vez que el médico que la atiende retira al bebé de su vientre y realiza lo correspondiente a su atención, la placenta es retirada y se colecta en una bolsa con cierre hermético para su traslado dentro de un kit especialmente diseñado para asegurar su conservación. La obtención de la placenta no interfiere de ninguna manera con el nacimiento de su bebé ni con su atención médica obstétrica.
+        </div>
+
+        <div class="p-text">
+            <strong>Conservación y transporte:</strong><br>
+            Para su transporte la placenta se debe colocar una vez dentro de la bolsa estéril con cierre hermético, en un contenedor estéril y con tapa, una vez que el medico coloque la placenta dentro de la bolsa se agregan 50ml de solución salina al 10% con antibiótico antimicótico a temperatura de refrigeración (2°C a 8° C) y se transportara al laboratorio dentro de las primeras 24 horas de su obtención para su posterior procesamiento o almacenamiento a condiciones de refrigeración. El límite de tiempo entre la recolección de placenta y el procesamiento de esta por parte del laboratorio es de 24 horas.
+        </div>
+
+        <!-- PAGE BREAK (PÁGINA 2) -->
+        <div class="page-break"></div>
+
+        <!-- CRITERIOS MÉDICOS Y CLÍNICOS -->
+        <h3 style="font-size: 11px; color: #1E3A5F; border-bottom: 1px solid #1E3A5F; padding-bottom: 3px; margin-bottom: 10px;">II. CRITERIOS MÉDICOS, CLÍNICOS Y SEROLÓGICOS</h3>
+        
+        <div class="req-box">
+            <h3 style="color: #166534; border-bottom-color: #bbf7d0;">CRITERIOS DE INCLUSIÓN</h3>
+            <ul class="req-list">
+                <li>Ausencia de cualquier patología o complicación del embarazo: preeclampsia, diabetes gestacional, lupus, placenta previa, hemorragia obstétrica, parto prematuro, anemias, enfermedades de la tiroides (hipo- o hiper- tiroidismo), amenaza de aborto, entre otras.</li>
+                <li>Serologías no reactivas para: virus de la inmunodeficiencia humana -HIV tipo I y II, Hepatitis B y C, Sífilis y trypanosoma cruzi.</li>
+                <li>Que acepte su inclusión mediante consentimiento informado firmado.</li>
+                <li>Aprobación de toma de muestra sanguínea a la donante (2 tubos rojos).</li>
+            </ul>
+        </div>
+
+        <div class="req-box" style="background-color: #fef2f2; border-color: #fecaca;">
+            <h3 style="color: #991b1b; border-bottom-color: #fecaca;">CRITERIOS DE EXCLUSIÓN</h3>
+            <ul class="req-list">
+                <li>Presencia de patologías del embarazo y/o enfermedades infectocontagiosas en cualquier momento del embarazo.</li>
+                <li>Consumo de drogas o toxicomanías en los últimos 12 meses.</li>
+                <li>Presencia de malformaciones fetales mayores.</li>
+                <li>Resultados serológicos positivos o Reactivos en cualquiera de los análisis realizados a las muestras sanguíneas de la madre.</li>
+            </ul>
+        </div>
+
+        <!-- DECLARACIONES Y CONSENTIMIENTO -->
+        <h3 style="font-size: 11px; color: #1E3A5F; border-bottom: 1px solid #1E3A5F; padding-bottom: 3px; margin-top: 20px; margin-bottom: 10px;">III. DECLARACIONES LEGALES Y AUTORIZACIÓN (ART. 320, 321 DE LA LEY GENERAL DE SALUD)</h3>
+
+        <div class="p-text">
+            <strong>1. Beneficios y Riesgos:</strong> Comprendo que la donación de placenta no representa un riesgo adicional para mi salud ni la de mi bebé, ya que dicho tejido es habitualmente desechado tras el parto. Comprendo que no recibiré retribución económica alguna, siendo un acto puramente altruista.
+        </div>
+        <div class="p-text">
+            <strong>2. Autorización de Pruebas:</strong> Autorizo la extracción de la muestra de sangre periférica (2 tubos rojos) que será utilizada de forma exclusiva para realizar los estudios serológicos antes mencionados, con el objetivo de garantizar la viabilidad y seguridad de la obtención celular.
+        </div>
+        <div class="p-text">
+            <strong>3. Confidencialidad:</strong> Fui informada de que toda la información médica, personal y resultados de laboratorio se mantendrá en estricta confidencialidad por el personal médico y de Xelle Scientific, apegándose a la Ley Federal de Protección de Datos Personales y a la NOM-004-SSA3 sobre el Expediente Clínico.
+        </div>
+        <div class="p-text">
+            <strong>4. Revocación del Consentimiento:</strong> Entiendo que mi participación es completamente voluntaria y tengo el derecho de retirar mi consentimiento o negarme a la donación en cualquier momento antes del parto, sin que esto afecte de ninguna manera la calidad de mi atención médica ni la de mi hijo/a.
+        </div>
+
+        <div class="p-text" style="font-style: italic; border-left: 3px solid #2E9D82; padding-left: 10px; background-color: #f0fdf4; padding: 10px; margin-top: 20px; font-size: 11px;">
+            "Habiendo leído la información anterior (o habiendo sido leída a mí por el médico responsable) y habiendo tenido la oportunidad de hacer preguntas que fueron respondidas satisfactoriamente, declaro que participo en este programa de forma estrictamente libre, voluntaria y gratuita. Autorizo la recolección, estudio, procesamiento y aprovechamiento celular de mi placenta por parte de Xelle Scientific S.A.P.I. de C.V. y/o Xelle Lab S.A. de C.V., renunciando a cualquier derecho patrimonial futuro sobre la misma y sus derivados, y acepto las pruebas de laboratorio aplicables a mi sangre."
+        </div>
+
+        <!-- FIRMAS -->
+        <table class="signature-table">
+            <tr>
+                <td>
+                    <div class="sig-line"></div>
+                    <div class="sig-name">NOMBRE Y FIRMA DE LA DONANTE</div>
+                    <div class="sig-role">Otorga Consentimiento Libre</div>
+                </td>
+                <td>
+                    <div class="sig-line"></div>
+                    <div class="sig-name">MÉDICO TRATANTE / PROCURADOR</div>
+                    <div class="sig-role">Médico que informa y recolecta en Quirófano<br>Cédula Profesional: <input type="text" style="width: 80px; font-size: 8px; border:none; border-bottom: 1px dotted #ccc; background:transparent;"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="sig-line" style="margin-top: 40px;"></div>
+                    <div class="sig-name">TESTIGO 1</div>
+                    <div class="sig-role">Nombre y Firma<br>Relación / Parentesco: <input type="text" style="width: 80px; font-size: 8px; border:none; border-bottom: 1px dotted #ccc; background:transparent;"></div>
+                </td>
+                <td>
+                    <div class="sig-line" style="margin-top: 40px;"></div>
+                    <div class="sig-name">TESTIGO 2</div>
+                    <div class="sig-role">Nombre y Firma<br>Relación / Parentesco: <input type="text" style="width: 80px; font-size: 8px; border:none; border-bottom: 1px dotted #ccc; background:transparent;"></div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- FOOTER UNIFICADO -->
+        <div class="footer-unified">
+            La información clínica y personal recabada está protegida por el Secreto Médico (NOM-004-SSA3). Expediente regulado por la Ley General de Salud aplicable a la disposición de órganos y tejidos.
+        </div>
+    </div>
+</body>
+</html>

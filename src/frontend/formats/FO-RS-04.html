@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-RS-04 Devolución de Clientes</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Vertical (Portrait) sin flex/grid para compatibilidad PDF total */
+        @page { size: portrait; margin: 1cm; }
+        
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; color: #1e293b; }
+        .container { width: 19cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 4px; }
+
+        .section-header { background-color: #1E3A5F; color: white; padding: 6px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; border-left: 4px solid #2E9D82; }
+        
+        .compact-table { width: 100%; border-collapse: collapse; margin-top: 5px; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 9px; padding: 6px; text-align: center; border: 1px solid #cbd5e1; vertical-align: middle; }
+        .compact-table td { font-size: 9px; padding: 5px; border: 1px solid #cbd5e1; vertical-align: middle; }
+        
+        .no-border-table { width: 100%; border-collapse: collapse; }
+        .no-border-table td { font-size: 9px; padding: 4px; vertical-align: top; border: none; }
+
+        .compact-table input, .compact-table textarea, .no-border-table input { font-size: 9px; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; }
+        .compact-table textarea { resize: none; overflow: auto; text-align: left; }
+        .compact-table input:focus, .compact-table textarea:focus, .no-border-table input:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+
+        .text-center { text-align: center !important; }
+        .text-left { text-align: left !important; padding-left: 6px !important; }
+        
+        .info-box { background-color: #f0fdfa; border: 1px solid #5eead4; padding: 8px; border-radius: 4px; font-size: 9px; color: #115e59; margin-top: 10px; line-height: 1.3; text-align: justify; }
+        
+        .legend-table { width: 100%; border-collapse: collapse; margin-top: 5px; background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 4px; }
+        .legend-table td { font-size: 8.5px; padding: 8px; vertical-align: top; color: #1e293b; line-height: 1.4; border-right: 1px dashed #cbd5e1;}
+        .legend-table td:last-child { border-right: none; }
+
+        .footer-unified { margin-top: 25px; border-top: 2px solid #1E3A5F; padding-top: 10px; text-align: center; font-size: 9px; line-height: 1.4; color: #475569; }
+
+        .gray-th { background-color: #f1f5f9 !important; color: #1E3A5F !important; text-align: left !important; padding-left: 8px !important; font-weight: bold; }
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 6px; margin-top: 5px; color: #1E3A5F; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body id="doc-fo-rs-04">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Formato</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER MODULAR (Layout sin flexbox) -->
+        <table style="width: 100%; border-collapse: collapse; border: none; margin-bottom: 10px;">
+            <tr>
+                <td style="width: 50%; vertical-align: middle;">
+                    <div class="logo-container">
+                        <svg viewBox="0 0 320 80" style="width: 200px;">
+                            <defs><style>.c { fill: #2E9D82 }</style></defs>
+                            <g transform="translate(0,-2) scale(0.85)">
+                                <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                                <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                            </g>
+                            <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                            <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                        </svg>
+                    </div>
+                </td>
+                <td style="width: 50%; text-align: right; vertical-align: top;">
+                    <div class="registry-container" style="display:inline-block; text-align: left; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc;">
+                        <label style="font-size: 10px; font-weight: bold; color: #1E3A5F; display: block; margin-bottom: 5px;">Folio de Devolución</label>
+                        <div class="registry-wrapper">
+                            <span class="registry-prefix" style="font-size: 11px; font-weight:bold; color: #1e293b;">FO-RS-04-</span>
+                            <input type="text" id="reg-rs04" class="registry-input generate-barcode cedit" style="width: 100px; font-size: 11px; font-weight:bold;"
+                                   data-target="barcode-rs04" data-prefix="FO-RS-04-" placeholder="202X-00">
+                        </div>
+                        <div style="margin-top: 5px;"><svg id="barcode-rs04" class="barcode-svg" style="height:35px;"></svg></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="text-align: center; border-bottom: 2px solid #1E3A5F; padding-bottom: 5px; margin-bottom: 10px;">
+            <h1 style="font-size: 16px; margin: 0; color: #1E3A5F;">REGISTRO DE DEVOLUCIÓN DE CLIENTES Y DICTAMEN DE DISPOSICIÓN FINAL</h1>
+            <div style="font-size: 9px; color: #64748b;">Código: FO-RS-04 | Versión: 2.0 | Vigencia: May 2026 | Conformidad ALCOA+</div>
+        </div>
+
+        <!-- INDICACIONES NORMATIVAS -->
+        <div class="info-box">
+            <strong>Instrucciones Normativas (ISO 9001 / Buenas Prácticas de Distribución):</strong> Toda devolución de cliente debe registrarse físicamente para aislar los productos afectados e impedir su reingreso automático al inventario de venta libre sin un dictamen de calidad previo por parte del Responsable Sanitario o Control de Calidad.
+        </div>
+        
+        <table class="legend-table">
+            <tr>
+                <td style="width: 50%;">
+                    <strong>[DIC] Dictamen Final de Calidad:</strong><br>
+                    <span style="color:#166534; font-weight:bold;">AP</span> = Aprobado (Cumple especificaciones)<br>
+                    <span style="color:#991b1b; font-weight:bold;">RE</span> = Rechazado (Desviación crítica de calidad o cadena de frío)
+                </td>
+                <td style="width: 50%;">
+                    <strong>[DIF] Disposición Física Final:</strong><br>
+                    <span style="color:#1e40af; font-weight:bold;">VTA</span> = Apto para reincorporarse a Venta<br>
+                    <span style="color:#991b1b; font-weight:bold;">DES</span> = Destrucción (Baja y manejo como RPBI)<br>
+                    <span style="color:#b45309; font-weight:bold;">CUA</span> = Cuarentena en investigación
+                </td>
+            </tr>
+        </table>
+
+        <!-- 1. DATOS DEL CLIENTE -->
+        <div class="section-header">1. DATOS DEL CLIENTE Y PROCEDENCIA DE LA DEVOLUCIÓN</div>
+        <table class="compact-table">
+            <tr>
+                <th width="20%" class="gray-th">Nombre del Cliente / Clínica:</th>
+                <td width="30%"><input class="cedit text-left" placeholder="Nombre completo"></td>
+                <th width="20%" class="gray-th">Contacto / Teléfono:</th>
+                <td width="30%"><input class="cedit text-left" placeholder="Persona autorizada y teléfono"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">Dirección de Origen:</th>
+                <td><input class="cedit text-left" placeholder="Calle, Colonia, Ciudad"></td>
+                <th class="gray-th">Fecha de Devolución:</th>
+                <td><input type="text" class="cedit text-center"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">Vendedor / Comercial que Autoriza:</th>
+                <td><input class="cedit text-left"></td>
+                <th class="gray-th">Fecha de Venta Original:</th>
+                <td><input type="text" class="cedit text-center"></td>
+            </tr>
+            <tr>
+                <th class="gray-th">No. de Remisión / Factura Original:</th>
+                <td colspan="3"><input class="cedit text-left" placeholder="Ej. REM-2026-1045" style="font-weight: bold; color: #1E3A5F;"></td>
+            </tr>
+        </table>
+
+        <!-- 2. DETALLE DE PRODUCTOS DEVUELTOS -->
+        <div class="section-header">2. INVENTARIO FÍSICO DE PRODUCTOS DEVUELTOS POR EL CLIENTE</div>
+        <div class="section">
+            <table class="compact-table" id="tbl-devolucion">
+                <thead>
+                    <tr>
+                        <th width="4%">No.</th>
+                        <th width="12%">ID / SKU</th>
+                        <th width="28%">Descripción del Producto</th>
+                        <th width="14%">Lote Afectado</th>
+                        <th width="10%">Caducidad</th>
+                        <th width="8%">Piezas Devueltas</th>
+                        <th width="21%">Motivo Específico de la Devolución</th>
+                        <th width="3%" class="no-print"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center row-num">1</td>
+                        <td><input class="cedit text-center" placeholder="SKU-..."></td>
+                        <td><input class="cedit text-left" placeholder="Nombre del producto cosmético"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b;"></td>
+                        <td><input type="text" class="cedit text-center" style="font-size:7px;"></td>
+                        <td><input type="number" step="1" class="cedit text-center" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left" placeholder="Ej. Empaque dañado, error surtido"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-devolucion')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">2</td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b;"></td>
+                        <td><input type="text" class="cedit text-center" style="font-size:7px;"></td>
+                        <td><input type="number" step="1" class="cedit text-center" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-devolucion')">x</button></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center row-num">3</td>
+                        <td><input class="cedit text-center"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b;"></td>
+                        <td><input type="text" class="cedit text-center" style="font-size:7px;"></td>
+                        <td><input type="number" step="1" class="cedit text-center" style="font-weight: bold;"></td>
+                        <td><input class="cedit text-left"></td>
+                        <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-devolucion')">x</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn-add no-print" onclick="addRowNumbered('tbl-devolucion')">+ AGREGAR PARTIDA DEVUELTA</button>
+        </div>
+
+        <!-- FIRMAS LOGISTICA/COMERCIAL -->
+        <table style="width: 100%; border-collapse: collapse; margin-top: 25px;">
+            <tr>
+                <td style="width: 31%; text-align: center; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc;">
+                    <p style="font-weight: bold; font-size: 10px; margin: 0 0 35px 0;">ENTREGA FÍSICA (CLIENTE/PAQUETERÍA)</p>
+                    <div style="border-top: 1px solid #ccc; width: 100%;"></div>
+                    <p style="font-size: 8px; margin-top: 5px; color: #475569;">Nombre, Firma y Fecha</p>
+                </td>
+                <td style="width: 3.5%;"></td>
+                <td style="width: 31%; text-align: center; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc;">
+                    <p style="font-weight: bold; font-size: 10px; margin: 0 0 35px 0;">AUTORIZA DEVOLUCIÓN (VENDEDOR)</p>
+                    <div style="border-top: 1px solid #ccc; width: 100%;"></div>
+                    <p style="font-size: 8px; margin-top: 5px; color: #475569;">Nombre y Firma - Validación Comercial</p>
+                </td>
+                <td style="width: 3.5%;"></td>
+                <td style="width: 31%; text-align: center; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc;">
+                    <p style="font-weight: bold; font-size: 10px; margin: 0 0 35px 0;">RECIBIÓ DE CONFORMIDAD (ALMACÉN)</p>
+                    <div style="border-top: 1px solid #ccc; width: 100%;"></div>
+                    <p style="font-size: 8px; margin-top: 5px; color: #475569;">Nombre y Firma - Verificación de Cantidades</p>
+                </td>
+            </tr>
+        </table>
+
+        <!-- 3. DICTAMEN FINAL -->
+        <div class="section-header" style="margin-top: 25px;">3. DICTAMEN DE DISPOSICIÓN FINAL (RESPONSABLE SANITARIO O CALIDAD)</div>
+        <table class="compact-table">
+            <tr>
+                <td colspan="4" style="padding: 10px;">
+                    <label style="font-size: 9px; font-weight: bold; color: #1E3A5F; display: block; margin-bottom: 5px;">Criterios de Aceptación / Rechazo (Justificación Técnica):</label>
+                    <textarea class="cedit" rows="3" style="border: 1px solid #cbd5e1; border-radius: 3px; text-align: left; padding: 5px; background-color: #fff;" placeholder="Evaluación del estado de los sellos de seguridad, verificación de conservación de temperatura, impacto en la calidad del producto, etc."></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th width="25%" class="gray-th">[DIC] Dictamen de Calidad:</th>
+                <td width="25%"><input class="cedit text-center" placeholder="AP / RE" style="font-weight: bold; color: #1E3A5F; font-size: 11px;"></td>
+                <th width="25%" class="gray-th">[DIF] Disposición Final:</th>
+                <td width="25%"><input class="cedit text-center" placeholder="VTA / DES / CUA" style="font-weight: bold; color: #991b1b; font-size: 11px;"></td>
+            </tr>
+        </table>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <tr>
+                <td style="width: 35%;"></td>
+                <td style="width: 30%; text-align: center; padding: 10px; border: 1px solid #166534; border-radius: 4px; background-color: #f0fdf4;">
+                    <p style="font-weight: bold; font-size: 10px; margin: 0 0 35px 0; color: #14532d;">AUTORIZA DICTAMEN (RESP. SANITARIO)</p>
+                    <div style="border-top: 1px solid #166534; width: 100%;"></div>
+                    <p style="font-size: 8px; margin-top: 5px; color: #14532d;">Firma Oficial de Liberación o Destrucción</p>
+                </td>
+                <td style="width: 35%;"></td>
+            </tr>
+        </table>
+
+        <!-- FOOTER UNIFICADO -->
+        <div class="footer-unified">
+            <div class="control-data">FO-RS-04 | Versión: 2.0 | Devolución de Clientes y Disposición Final | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">Este documento es auditable y propiedad de Xelle Scientific, S.A.P.I. de C.V. Uso exclusivo SGC.</div>
+        </div>
+    </div>
+
+    <script>
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => input.value = '');
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if(row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => { 
+                const numCell = row.querySelector('.row-num');
+                if(numCell) numCell.innerText = index + 1; 
+            });
+        }
+    </script>
+</body>
+</html>

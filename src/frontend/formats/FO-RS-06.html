@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FO-RS-06 Bitácora de Ruta y Recolección de Producto Retirado</title>
+    <link rel="stylesheet" href="format-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="format-app.js"></script>
+    <style>
+        /* Configuración Horizontal (Landscape) para Bitácora de Campo de Choferes/Logística */
+        @page { size: landscape; margin: 1cm; }
+        
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; color: #1e293b; }
+        .container { width: 26cm; margin: 0 auto; background: white; padding: 0.8cm; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 4px; }
+
+        .section-header { background-color: #1E3A5F; color: white; padding: 5px 10px; font-weight: bold; font-size: 11px; margin-top: 15px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; border-left: 4px solid #2E9D82; }
+        
+        .compact-table { width: 100%; border-collapse: collapse; margin-top: 5px; table-layout: fixed; }
+        .compact-table th { background-color: #1E3A5F; color: white; font-size: 8px; padding: 5px 2px; text-align: center; border: 1px solid #cbd5e1; vertical-align: middle; line-height: 1.2; }
+        .compact-table td { font-size: 8px; padding: 3px 2px; border: 1px solid #cbd5e1; vertical-align: middle; text-align: center; }
+        
+        .compact-table input { font-size: 8px; width: 100%; border: none; background: transparent; padding: 2px; box-sizing: border-box; font-family: inherit; text-align: center; }
+        .compact-table input:focus { background-color: #f8fafc; outline: 1px dashed #3b82f6; }
+
+        .text-center { text-align: center !important; }
+        .text-left { text-align: left !important; padding-left: 4px !important; }
+        
+        .btn-add { background:#e2e8f0; border:1px dashed #94a3b8; width:100%; font-size:10px; font-weight:bold; cursor:pointer; padding: 6px; margin-top: 5px; color: #1E3A5F; }
+        
+        .info-box { background-color: #f0fdfa; border: 1px solid #5eead4; padding: 8px; border-radius: 4px; font-size: 8.5px; color: #115e59; margin-top: 10px; line-height: 1.3; text-align: justify; }
+
+        .footer-unified { 
+            margin-top: 20px; border-top: 2px solid #1E3A5F; padding-top: 10px; 
+            text-align: center; font-size: 9px; line-height: 1.4; color: #475569;
+        }
+
+        .group-th { background-color: #0f172a !important; color: #cbd5e1 !important; font-size: 7.5px !important; text-transform: uppercase; letter-spacing: 0.3px; }
+
+        @media print {
+            .global-controls, .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .container { width: 100%; max-width: 100%; border: none; box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body id="doc-fo-rs-06">
+    <div class="global-controls no-print">
+        <button class="btn btn-success" onclick="saveForm()">Guardar Seguimiento</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimir Bitácora</button>
+        <button class="btn btn-danger" onclick="clearForm()">Limpiar</button>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER MODULAR -->
+        <table style="width: 100%; border-collapse: collapse; border: none; margin-bottom: 10px;">
+            <tr>
+                <td style="width: 40%; vertical-align: middle;">
+                    <div class="logo-container">
+                        <svg viewBox="0 0 320 80" style="width: 200px;">
+                            <defs><style>.c { fill: #2E9D82 }</style></defs>
+                            <g transform="translate(0,-2) scale(0.85)">
+                                <circle class="c" cx="25" cy="25" r="13"/><circle class="c" cx="75" cy="75" r="13"/>
+                                <path class="c" d="M15.8,65.8C28.5,53.1 33.7,59.2 46.5,46.5C59.2,33.7 53.1,28.5 65.8,15.8A13 13 0 1 1 84.2,34.2C71.5,46.9 66.3,40.8 53.5,53.5C40.8,66.3 46.9,71.5 34.2,84.2A13 13 0 1 1 15.8,65.8Z"/>
+                            </g>
+                            <text x="90" y="42" style="font-family:Arial Black; font-weight:900; fill:#1E3A5F;" font-size="34">XELLE</text>
+                            <text x="91" y="68" style="font-family:Arial; font-weight:700; fill:#1E3A5F; letter-spacing: 2px;" font-size="19">SCIENTIFIC</text>
+                        </svg>
+                    </div>
+                </td>
+                <td style="width: 60%; text-align: right; vertical-align: top;">
+                    <div class="registry-container" style="display:inline-block; text-align: left; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc;">
+                        <label style="font-size: 10px; font-weight: bold; color: #1E3A5F; display: block; margin-bottom: 5px;">Bitácora de Recolección Física (Campo)</label>
+                        <div class="registry-wrapper">
+                            <span class="registry-prefix" style="font-size: 11px; font-weight:bold; color: #1e293b;">FO-RS-06-</span>
+                            <input type="text" id="reg-rs06" class="registry-input generate-barcode cedit" style="width: 100px; font-size: 11px; font-weight:bold;"
+                                   data-target="barcode-rs06" data-prefix="FO-RS-06-" placeholder="202X-00">
+                        </div>
+                        <div style="margin-top: 5px;"><svg id="barcode-rs06" class="barcode-svg" style="height:35px;"></svg></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="text-align: center; border-bottom: 2px solid #1E3A5F; padding-bottom: 5px; margin-bottom: 10px;">
+            <h1 style="font-size: 16px; margin: 0; color: #1E3A5F;">BITÁCORA DE RUTA Y RECOLECCIÓN DE PRODUCTO RETIRADO DEL MERCADO</h1>
+            <div style="font-size: 9px; color: #64748b;">Código: FO-RS-06 | Versión: 2.0 | Vigencia: May 2026 | Auxiliar Directo de Expediente FO-RS-05</div>
+        </div>
+
+        <div class="info-box">
+            <strong>Instrucciones Logísticas para Choferes y Transportistas:</strong> Este formato funge como comprobante de custodia y cadena de suministro en reversa. Recabe la firma del cliente al entregar el producto defectuoso/retirado. Todo lote amparado en esta hoja será procesado para destrucción o cuarentena estricta al reingresar a las instalaciones. No acepte producto que no corresponda al Lote listado.
+        </div>
+
+        <!-- TABLA DE RECOLECCIÓN FÍSICA -->
+        <div class="section-header">1. REGISTRO DE RECOLECCIÓN FÍSICA (TRAYECTOS Y MANIOBRA)</div>
+        <table class="compact-table" id="tbl-ruta">
+            <thead>
+                <tr>
+                    <th rowspan="2" width="3%">No.</th>
+                    <th rowspan="2" width="13%">Nombre del Cliente / Entidad Médica</th>
+                    <th rowspan="2" width="6%">Fecha Prog.<br>Recolección</th>
+                    <th rowspan="2" width="8%">ID Producto</th>
+                    <th rowspan="2" width="13%">Descripción Corta</th>
+                    <th rowspan="2" width="10%">Lote Afectado</th>
+                    <th rowspan="2" width="7%">Fecha<br>Caducidad</th>
+                    <th colspan="2" class="group-th">Piezas (Unidades)</th>
+                    <th rowspan="2" width="6%">Fecha Real<br>Recuperado</th>
+                    <th colspan="2" class="group-th">Firmas de Entrega Legal</th>
+                    <th rowspan="2" width="10%">Observaciones (Motivo de Faltantes)</th>
+                    <th rowspan="2" width="3%" class="no-print"></th>
+                </tr>
+                <tr>
+                    <th width="5%">Vendidas</th>
+                    <th width="5%">Real Rec.</th>
+                    <th width="6%">Firma Cliente</th>
+                    <th width="5%">Firma Chofer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="row-num text-center" style="font-weight: bold;">1</td>
+                    <td><input class="cedit text-left" placeholder="Clínica..."></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 7px;"></td>
+                    <td><input class="cedit text-center" placeholder="ID/SKU"></td>
+                    <td><input class="cedit text-left"></td>
+                    <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b;"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 7px;"></td>
+                    <td><input type="number" class="cedit text-center qty-sold" value="0" oninput="sumarRuta()"></td>
+                    <td><input type="number" class="cedit text-center qty-recovered" value="0" oninput="sumarRuta()" style="font-weight: bold; color: #166534;"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 7px;"></td>
+                    <td><input class="cedit text-center" placeholder="Firma C."></td>
+                    <td><input class="cedit text-center" placeholder="Firma CH."></td>
+                    <td><input class="cedit text-left" placeholder="Comentarios..."></td>
+                    <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-ruta')">x</button></td>
+                </tr>
+                <tr>
+                    <td class="row-num text-center" style="font-weight: bold;">2</td>
+                    <td><input class="cedit text-left"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 7px;"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-left"></td>
+                    <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b;"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 7px;"></td>
+                    <td><input type="number" class="cedit text-center qty-sold" value="0" oninput="sumarRuta()"></td>
+                    <td><input type="number" class="cedit text-center qty-recovered" value="0" oninput="sumarRuta()" style="font-weight: bold; color: #166534;"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 7px;"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-left"></td>
+                    <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-ruta')">x</button></td>
+                </tr>
+                <tr>
+                    <td class="row-num text-center" style="font-weight: bold;">3</td>
+                    <td><input class="cedit text-left"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 7px;"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-left"></td>
+                    <td><input class="cedit text-center" style="font-weight: bold; color: #991b1b;"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 7px;"></td>
+                    <td><input type="number" class="cedit text-center qty-sold" value="0" oninput="sumarRuta()"></td>
+                    <td><input type="number" class="cedit text-center qty-recovered" value="0" oninput="sumarRuta()" style="font-weight: bold; color: #166534;"></td>
+                    <td><input type="text" class="cedit text-center" style="font-size: 7px;"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-center"></td>
+                    <td><input class="cedit text-left"></td>
+                    <td class="no-print"><button class="btn-danger btn-mini" onclick="delRowNumbered(this, 'tbl-ruta')">x</button></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr style="background-color: #f1f5f9;">
+                    <td colspan="7" class="text-right" style="font-weight: bold;">TOTALES DE LA RUTA LOGÍSTICA:</td>
+                    <td><input type="number" id="tot-sold" class="cedit text-center" readonly style="font-weight: bold;" value="0"></td>
+                    <td><input type="number" id="tot-recovered" class="cedit text-center" readonly style="font-weight: bold; color: #166534;" value="0"></td>
+                    <td colspan="5" class="no-print"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <button class="btn-add no-print" onclick="addRowNumbered('tbl-ruta')">+ AGREGAR PUNTO DE RECOLECCIÓN</button>
+
+        <!-- FIRMAS DE CIERRE DE RUTA -->
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <tr>
+                <td style="width: 31%; text-align: center; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc;">
+                    <p style="font-weight: bold; font-size: 10px; margin: 0 0 35px 0;">ENTREGÓ A PLANTA (CHOFER / LOGÍSTICA)</p>
+                    <div style="border-top: 1px solid #ccc; width: 100%;"></div>
+                    <p style="font-size: 8px; margin-top: 5px; color: #475569;">Firma de Término de Ruta Comercial</p>
+                </td>
+                <td style="width: 3.5%;"></td>
+                <td style="width: 31%; text-align: center; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; background-color: #f8fafc;">
+                    <p style="font-weight: bold; font-size: 10px; margin: 0 0 35px 0;">REVISÓ (ASEGURAMIENTO DE CALIDAD)</p>
+                    <div style="border-top: 1px solid #ccc; width: 100%;"></div>
+                    <p style="font-size: 8px; margin-top: 5px; color: #475569;">Validación Física vs Formato FO-RS-05</p>
+                </td>
+                <td style="width: 3.5%;"></td>
+                <td style="width: 31%; text-align: center; padding: 10px; border: 1px solid #1E3A5F; border-radius: 4px; background-color: #eff6ff;">
+                    <p style="font-weight: bold; font-size: 10px; margin: 0 0 35px 0; color: #1e3a8a;">RESGUARDO EN CUARENTENA (ALMACÉN)</p>
+                    <div style="border-top: 1px solid #1E3A5F; width: 100%;"></div>
+                    <p style="font-size: 8px; margin-top: 5px; color: #1e3a8a;">Recepción de Unidades para Destrucción</p>
+                </td>
+            </tr>
+        </table>
+
+        <div class="footer-unified">
+            <div class="control-data">FO-RS-06 | Versión: 2.0 | Bitácora de Ruta y Recolección de Producto Retirado | Xelle Scientific | Página 1 de 1</div>
+            <div class="legal-data">Este documento funge como manifiesto de recepción provisional y logística inversa bajo protocolos NOM-059-SSA1.</div>
+        </div>
+    </div>
+
+    <script>
+        function sumarRuta() {
+            let sSold = 0;
+            let sRec = 0;
+            document.querySelectorAll('.qty-sold').forEach(inp => sSold += parseFloat(inp.value) || 0);
+            document.querySelectorAll('.qty-recovered').forEach(inp => sRec += parseFloat(inp.value) || 0);
+            
+            document.getElementById('tot-sold').value = sSold;
+            document.getElementById('tot-recovered').value = sRec;
+        }
+
+        function addRowNumbered(tableId) {
+            const tbody = document.getElementById(tableId).querySelector('tbody');
+            const newRow = tbody.rows[0].cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => {
+                if(input.type === 'number') input.value = '0';
+                else input.value = '';
+            });
+            tbody.appendChild(newRow);
+            updateNumbers(tableId);
+        }
+
+        function delRowNumbered(btn, tableId) {
+            const row = btn.closest('tr');
+            if(row.parentNode.rows.length > 1) {
+                row.remove();
+                updateNumbers(tableId);
+                sumarRuta();
+            }
+        }
+
+        function updateNumbers(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+            rows.forEach((row, index) => { 
+                const numCell = row.querySelector('.row-num');
+                if(numCell) numCell.innerText = index + 1; 
+            });
+        }
+    </script>
+</body>
+</html>
